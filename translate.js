@@ -11,6 +11,12 @@ const DICT = {
 
     "Send Payment Proof": "إرسال دليل الدفع",
     "Send": "إرسال",
+    "Country": "البلد",
+    "Currency": "العملة",
+    "Polaris Bank Transfer": "تحويل بنك بولاريس",
+    "Upload Receipt": "رفع الإيصال",
+    "Please upload your payment receipt here for confirmation.": "يرجى رفع إيصال الدفع الخاص بك هنا للتأكيد.",
+    "Plan type": "نوع الخطة",
 
     "Test/Exam Timetable": "جدول الاخبار/المتحان",
     "Take Test/Exam": "ادخل للاخبار/للمتحان",

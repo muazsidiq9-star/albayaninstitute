@@ -416,6 +416,10 @@ body {
     width: 320px;
   }
 
+  .payment-form h2 {
+   font-size: 1rem;
+  }
+
   .payment-header h1 { font-size: 1.5rem; }
   .payment-header p  { font-size: 0.95rem; }
 }
