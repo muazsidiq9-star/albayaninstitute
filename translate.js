@@ -16,7 +16,7 @@ const DICT = {
     "Polaris Bank Transfer": "تحويل بنك بولاريس",
     "Upload Receipt": "رفع الإيصال",
     "Please upload your payment receipt here for confirmation.": "يرجى رفع إيصال الدفع الخاص بك هنا للتأكيد.",
-    "Plan type": "نوع الخطة",
+    "Plan Type": "نوع الخطة",
 
     "Test/Exam Timetable": "جدول الاخبار/المتحان",
     "Take Test/Exam": "ادخل للاخبار/للمتحان",
