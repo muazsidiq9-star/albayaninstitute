@@ -9,6 +9,9 @@ const DICT = {
     "Payment": "الدفع",
     "Schedule": "الجدول",
 
+    "Send Payment Proof": "إرسال دليل الدفع",
+    "Send": "إرسال",
+
     "Test/Exam Timetable": "جدول الاخبار/المتحان",
     "Take Test/Exam": "ادخل للاخبار/للمتحان",
     "Admission Letter": "رسالة القبول",
