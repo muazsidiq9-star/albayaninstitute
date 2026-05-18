@@ -1,0 +1,257 @@
+/* ✅ GLOBAL RESET (prevents browser weirdness) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ✅ SCREEN VIEW */
+body {
+  background: #f5f5f5;
+  font-family: Arial, sans-serif;
+}
+
+/* ✅ TRUE A4 DOCUMENT */
+.letter {
+  position: relative;
+
+  width: 210mm;
+  min-height: 297mm;
+
+  margin: 10mm auto;
+  background: white;
+
+  padding: 18mm;
+  border: 4px solid #0a3d62;
+  border-radius: 28px;
+
+  overflow: hidden;
+}
+
+
+/* ✅ LETTERHEAD */
+.letterhead {
+  text-align: center;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 6mm;
+  margin-top: -2mm;
+  margin-bottom: 6mm;
+}
+
+.letterhead img {
+  width: 22mm;
+}
+
+.letterhead h1 {
+  margin-top: 2mm;
+  font-size: 20px;
+  color: #0a3d62;
+}
+
+.letterhead h2 {
+  margin-top: 1mm;
+  font-size: 14px;
+  color: #0a6219;
+}
+
+.letterhead p {
+  margin-top: 2mm;
+  font-size: 15px;
+  color: #272727d8;
+}
+
+/* ✅ WATERMARK (true paper scaling) */
+.watermark {
+  position: absolute;
+  width: 65%;
+  opacity: 0.20;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  z-index: 0;
+  pointer-events: none;
+}
+
+.doc-date {
+  display: flex;
+  color: #030030;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: -25px;
+  font-weight: bold;
+  font-size: 0.6rem;
+}
+
+/* ✅ STUDENT INFO */
+.student-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8mm;
+  z-index: 2;
+  position: relative;
+}
+
+.student-details {
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+/* ✅ PASSPORT (CRITICAL FIX) */
+.passport {
+  width: 35mm;
+  height: 37mm;
+  object-fit: cover;
+  border: 1px solid #000;
+}
+
+/* ✅ BODY */
+.letter-body {
+  margin-top: 6mm;
+  line-height: 1.75;
+  text-align: justify;
+  font-size: 14.5px;
+  z-index: 2;
+  position: relative;
+}
+
+.letter-body h3 {
+  margin-bottom: 3mm;
+  font-size: 15px;
+}
+
+.letter-body h4 {
+  margin: 4mm 0;
+  text-align: center;
+  
+  font-size: 15px;
+}
+
+/* ✅ NOTICE BOX */
+.notice {
+  margin-top: 8mm;
+  font-size: 13.5px;
+
+  border: 1px solid black;
+  border-left: 4px solid black;
+
+  padding: 5mm;
+  background: #f9f9f9;
+
+  line-height: 1.6;
+}
+
+.notice strong {
+  font-size: 14px;
+  color: #cf0000;
+  text-transform: uppercase;
+}
+
+.notice ul {
+  margin-top: 2mm;
+  padding-left: 5mm;
+}
+
+/* ✅ FOOTER */
+.footer-section {
+  margin-top: 10mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 2;
+  position: relative;
+}
+
+.registrar {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.registrar img {
+  width: 20mm;
+  margin-left: 20px;
+  margin-top: 2mm;
+}
+
+.qr img {
+  width: 32mm;
+}
+
+.security-footer {
+  margin-top: 25px;
+  font-size: 12px;
+  text-align: center;
+  color: #555;
+  border-top: 1px dashed #999;
+  padding-top: 8px;
+}
+
+/* ✅ BUTTONS (screen only) */
+.print-btn {
+  margin-top: 8mm;
+  text-align: center;
+}
+
+.print-btn button {
+  padding: 10px 22px;
+  background: #0a3d62;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* ✅ PAGE SETTINGS */
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+/* ✅ PRINT ENGINE LOCK */
+@media print {
+
+  body {
+    background: white;
+  }
+
+  .letter {
+    width: 100%;
+    height: auto;
+
+    margin: 0;
+    padding: 18mm;
+
+    border: 4px solid #0a3d62;
+    border-radius: 28px;
+
+    page-break-after: always;
+  }
+
+  .print-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .letter {
+    width: 100%;
+    min-height: auto;
+
+    
+
+    padding: 16px;
+
+    transform: none !important;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}
+@media (max-width: 768px) {
+  .letter {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+}

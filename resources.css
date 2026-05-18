@@ -1,0 +1,219 @@
+/* learning-resources.css */
+
+/* Page Header Fix - Applies to Grades and Resources pages */
+
+/* ===== HEADER ===== */
+header.courses-header {
+  position: relative;
+  background: url('background-resources.jpg') center/cover no-repeat;
+  height: 300px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+}
+header.courses-header .header-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+header.courses-header img { width: 100px; margin-bottom: 10px; }
+header.courses-header h1 { font-size: 2rem; margin-bottom: 5px; }
+header.courses-header p { font-size: 1.1rem; }
+
+.resource-top-bar {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.resource-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.resources-controls {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.resources-controls input,
+.resources-controls select {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  font-size: 14px;
+  min-width: 220px;
+}
+
+.resources-controls input:focus,
+.resources-controls select:focus {
+  border-color: #1f6fe5;
+}
+
+/* Resources Grid */
+.resources-grid {
+  max-width: 1100px;
+  margin: 20px auto 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.resource-card {
+  background: var(--card-color);
+  padding: 24px 20px;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 170px;
+}
+
+.resource-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+
+.resource-card i {
+  font-size: 36px;
+  color: #1f6fe5;
+  margin-bottom: 10px;
+}
+.resource-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 14px;
+  color: var(--text-color);
+}
+
+.btn-primary {
+  display: inline-block;
+  text-decoration: none;
+  background: #1f6fe5;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  background: #1558c0;
+}
+.download-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #0a74da;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.download-btn:hover {
+  background-color: #0759a3;
+  transform: scale(1.05);
+}
+/* ===========================
+   FLOATING WHATSAPP
+   =========================== */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 55px;
+  height: 55px;
+  background-color: #25D366;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+
+  cursor: grab;
+}
+
+.whatsapp-float img {
+  width: 28px;
+  height: 28px;
+}
+
+.floating-whatsapp:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 600px) {
+  header.courses-header {
+    height: 240px;
+  }
+
+  header.courses-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .resource-card {
+    min-height: 150px;
+  }
+}
+
+/* SUBJECT CONTAINER */
+.subject {
+  margin-bottom: 18px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  background: var(--card-color);
+}
+
+/* BUTTON HEADER */
+.subject-toggle {
+  width: 100%;
+  padding: 16px 18px;
+  background: #1f6fe5;
+  color: white;
+  border: none;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* CONTENT AREA */
+.subject-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  padding: 0 18px;
+}
+
+/* OPEN STATE */
+.subject.active .subject-content {
+  padding: 18px;
+  max-height: 2000px; /* enough for all books */
+}

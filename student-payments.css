@@ -1,0 +1,316 @@
+/* ========== BODY + FLEX ========== */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+body {
+  overflow-x: hidden;
+}
+
+main, .payments-section {
+  flex: 1;
+  padding: 0 20px;
+}
+
+/* ========== HEADER (MATCH HTML) ========== */
+.profile-header {
+  position: relative;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.profile-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.profile-header .header-overlay {
+  position: relative;
+  text-align: center;
+  color: #fff;
+  padding: 15px;
+}
+
+.profile-header .header-logo {
+  width: 60px;
+  margin-bottom: 10px;
+}
+
+.profile-header h1 {
+  font-size: 1.8rem;
+}
+
+.profile-header p {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* =========================
+   STATS SECTION (PAYMENTS)
+========================= */
+.stats-section {
+  margin: 30px auto 50px;
+  padding: 0 20px;
+}
+
+.profile-info h2 {
+color: var(--text-color);
+margin: 30px auto 0px;
+}
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px; /* ✅ reduced from 300px */
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.stats-cards .card {
+  background: var(--card-color);
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 10px 30px rgba(15, 0, 41, 0.185);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.stats-cards .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+}
+
+.stats-cards .icon {
+  font-size: 36px;
+}
+
+.stats-cards .details h3 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.stats-cards .details p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+  .stats-cards {
+    grid-template-columns: 1fr; /* stack cards */
+    gap: 15px;
+  }
+
+  .stats-cards .card {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .stats-cards .details h3 {
+    font-size: 20px;
+  }
+}
+
+/* =========================
+   PAYMENT HISTORY
+========================= */
+.notifications-list {
+  max-width: 1100px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.notifications-card {
+  background: var(--card-color);
+  border-radius: 12px;
+  padding: 15px 18px;
+  box-shadow: 0 6px 18px rgba(5, 0, 48, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.notifications-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+}
+
+.notifications-card p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.notifications-card .time {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-color);
+}
+
+/* Status colors */
+.notifications-card.paid {
+  border-left: 5px solid #2ecc71;
+}
+
+.notifications-card.pending {
+  border-left: 5px solid #f39c12;
+}
+
+.notifications-card.failed {
+  border-left: 5px solid #e74c3c;
+}
+
+/* ========== FOOTER ========== */
+footer {
+  background-color: #0a4d92;
+  color: #fff;
+  text-align: center;
+  padding: 25px 15px;
+  font-size: 14px;
+}
+
+/* ========== WHATSAPP FLOAT ========== */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 55px;
+  height: 55px;
+  background-color: #25D366;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+
+  cursor: grab;
+}
+
+.whatsapp-float img {
+  width: 28px;
+  height: 28px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .profile-header { height: 200px; }
+  .profile-header h1 { font-size: 1.5rem; }
+}
+.download-btn {
+  background-color: #0a4d92;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.download-btn:hover {
+  background-color: #06326b;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* 👈 clean spacing between buttons */
+  margin: 20px 0;
+  flex-wrap: wrap; /* helps on mobile */
+}
+
+@media (max-width: 768px) {
+  .action-buttons {
+    gap: 10px;
+  }
+
+  .download-btn {
+    width: 100%; /* stack nicely */
+    max-width: 300px;
+  }
+}
+
+.payment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dropdown-icon {
+  font-size: 30px;
+}
+
+.notifications-dropdown {
+  max-height: 320px;
+  overflow-y: auto;
+  margin-top: 10px;
+  background: var(--card-color);
+  transform: translateY(-2px);
+}
+
+.hidden {
+  display: none;
+}
+
+.notifications-wrapper {
+  max-height: 300px;      /* adjust like dashboard */
+  overflow-y: auto;
+  padding-right: 5px;
+  background: var(--card-color);
+}
+
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.fee-alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #a5a5a5;
+  border-left: 5px solid #ff9800;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+  gap: 10px;
+}
+
+.fee-text {
+  color: #856404;
+}
+
+.fee-alert-icon {
+  font-size: 24px;
+}
+
+.amount-red {
+  color: red;
+  font-weight: bold;
+}
+
+.pay-btn {
+  background: #ff0000;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}

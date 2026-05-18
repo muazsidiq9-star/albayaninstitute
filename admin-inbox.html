@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>Admin Inbox</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="master.css">
+  <style>
+    body { background: var(--bg-color); color: var(--text-color); }
+    .inbox-container { max-width: 1100px; margin: auto; padding: 2rem; }
+    .message-card {
+      background: var(--card-color);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    .message-card:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .unread { border-left: 4px solid var(--primary-color); }
+
+    .unread::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+    }
+    .meta { font-size: 0.85rem; opacity: 0.7; }
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .modal-content {
+      background: var(--card-color);
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 90%;
+      position: relative;
+    }
+    .modal.show { display: flex; }
+    .btn { padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; border: none; margin-right: 0.5rem; }
+    .btn-primary { background: var(--primary-color); color: white; }
+    .btn-danger { background: crimson; color: white; }
+    .logout-btn {
+      background: #b30000;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 1000;
+      width: 100%;
+    }
+    .logout-btn:hover { background: #8a0000; }
+  </style>
+
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Logo"> Al-Bayan
+      </a>
+      <div class="hamburger">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="register.html">Register</a>
+        <a href="students-dashboard.html">Student Dashboard</a>
+        <a href="admin-inbox.html" class="active">
+  Emails <span id="unreadCounter" style="background: red; color: white; font-size: 0.75rem; border-radius: 50%; padding: 2px 6px; margin-left: 4px;">0</span>
+</a>
+        <a href="payment.html">Payments</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="contact.html">Contact</a>
+        <button id="logoutBtn" class="logout-btn">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+<div class="inbox-container">
+  <h1>📥 Admin Inbox</h1>
+  <div id="messages"></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="messageModal">
+  <div class="modal-content">
+    <h2 id="modalTitle"></h2>
+    <p class="meta" id="modalMeta"></p>
+    <p id="modalBody"></p>
+    <br>
+    <!-- Toggle Read/Unread -->
+    <button class="btn btn-primary" id="markReadBtn">Mark as Read</button>
+    <button class="btn btn-danger" id="deleteBtn">Delete</button>
+  </div>
+</div>
+
+<script>
+  // Hamburger menu
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('show'));
+  document.addEventListener('click', e => {
+    if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+      navLinks.classList.remove('show');
+    }
+  });
+</script>
+
+<script>
+const supabaseUrl = "https://cjrpjekmqrckozrbtwps.supabase.co";
+const supabaseKey = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+
+window.supabaseClient = supabase.createClient(
+  supabaseUrl,
+  supabaseKey
+);
+
+const db = window.supabaseClient;
+
+let selectedMessage = null;
+
+// ====================
+// LOAD MESSAGES
+// ====================
+async function loadMessages() {
+  const { data, error } = await db
+    .from("contact_messages")
+    .select("*")
+    .or("deleted.is.null,deleted.eq.false")
+    .order("created_at", { ascending: false });
+
+  if (error) return console.error(error);
+
+  const container = document.getElementById("messages");
+  container.innerHTML = "";
+
+  if (!data.length) {
+    container.innerHTML = "<p>No messages yet.</p>";
+    return;
+  }
+
+  data.forEach(msg => {
+    const div = document.createElement("div");
+    div.className = `message-card ${msg.is_read ? '' : 'unread'}`;
+    div.innerHTML = `
+      <strong>${msg.subject}</strong>
+      <div>${msg.name}</div>
+      <div class="meta">${msg.email} • ${msg.created_at.split('T')[0]}</div>
+    `;
+    div.onclick = () => openMessage(msg);
+    container.appendChild(div);
+  });
+}
+
+// ====================
+// OPEN MODAL
+// ====================
+function openMessage(msg) {
+  selectedMessage = msg;
+
+  document.getElementById("modalTitle").textContent = msg.subject;
+  document.getElementById("modalMeta").textContent = `${msg.name} • ${msg.email}`;
+  document.getElementById("modalBody").textContent = msg.message;
+
+  // Update Read/Unread button text
+  const markBtn = document.getElementById("markReadBtn");
+  markBtn.textContent = msg.is_read ? "Mark as Unread" : "Mark as Read";
+
+  document.getElementById("messageModal").classList.add("show");
+}
+
+// Close modal on background click
+const messageModal = document.getElementById("messageModal");
+messageModal.onclick = e => {
+  if (e.target.id === "messageModal") {
+    messageModal.classList.remove("show");
+  }
+};
+
+// ====================
+// MARK READ / UNREAD
+// ====================
+// Initial load
+loadMessages();
+
+// After marking read/unread
+markReadBtn.onclick = async () => {
+  if (!selectedMessage) return;
+  const newState = !selectedMessage.is_read;
+  const { error } = await db
+    .from("contact_messages")
+    .update({ is_read: newState })
+    .eq("id", selectedMessage.id);
+
+  if (error) return console.error(error);
+
+  selectedMessage.is_read = newState;
+  document.getElementById("messageModal").classList.remove("show");
+  loadMessages();
+  updateUnreadCounter(); // <- update badge
+};
+
+// After deleting
+deleteBtn.onclick = async () => {
+  if (!selectedMessage) return;
+  const { error } = await db
+    .from("contact_messages")
+    .update({ deleted: true })
+    .eq("id", selectedMessage.id);
+
+  if (error) return console.error(error);
+
+  document.getElementById("messageModal").classList.remove("show");
+  loadMessages();
+  updateUnreadCounter(); // <- update badge
+};
+</script>
+
+<script src="translate.js"></script>
+</body>
+</html>

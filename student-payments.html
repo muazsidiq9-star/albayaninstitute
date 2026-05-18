@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>My Payments - Al-Bayan</title>
+
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="student-payments.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+
+<!-- NAVIGATION -->
+<nav class="master-nav">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+    </a>
+    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="courses.html">Courses</a>
+      <a href="register.html">Register</a>
+      <a href="students-dashboard.html">Student Dashboard</a>
+      <a href="student-payment.html" class="active">Payment</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header class="profile-header" style="background-image: url('background-payment.jpg');">
+  <div class="header-overlay">
+    <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
+    <h1>My Payments</h1>
+    <p>View your payment history, total paid, and pending payments</p>
+  </div>
+</header>
+
+<!-- PAYMENT SUMMARY -->
+<section class="profile-info">
+  <h2>Payment Summary</h2>
+</section>
+
+<div id="overdueAlertContainer"></div>
+
+<section class="stats-section">
+  <div class="stats-cards">
+
+    <div class="card">
+  <div class="icon">💳</div>
+  <div class="details">
+    <h3 id="paymentStatus">--</h3>
+    <p id="paymentMonth">Current Month</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="icon">💰</div>
+  <div class="details">
+    <h3 id="monthlyAmount">₦0</h3>
+    <p id="amountMonth">Month Amount</p>
+  </div>
+</div>
+
+  </div>
+</section>
+
+<section class="profile-info">
+  <h2>Payment History</h2>
+
+  <div class="notifications-wrapper">
+    <div id="paymentHistory" class="notifications-list"></div>
+  </div>
+</section>
+<section class="action-buttons">
+  <button id="downloadReceiptBtn" class="download-btn">
+    <i class="fa-solid fa-download"></i> Download Latest Receipt (PDF)
+  </button>
+
+  <button id="downloadAllReceiptsBtn" class="download-btn">
+    <i class="fa-solid fa-download"></i> Download All Receipts (PDF)
+  </button>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Al-Bayan Arabic Institute Online</p>
+  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
+  <p id="footerCopyright">
+  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+</p>
+<a href="privacy.html">Privacy Policy</a>
+</footer>
+
+<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
+  <img src="whatsapp-icon.png" alt="WhatsApp">
+</a>
+
+<!-- MENU SCRIPT -->
+ <script src="translate.js"></script>
+<script>
+function toggleMenu() {
+  document.getElementById("navLinks").classList.toggle("show");
+}
+document.addEventListener("click", e => {
+  const nav = document.getElementById("navLinks");
+  const burger = document.querySelector(".hamburger");
+  if (!nav.contains(e.target) && !burger.contains(e.target)) {
+    nav.classList.remove("show");
+  }
+});
+</script>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+<script>
+
+const sb = supabase.createClient(
+  "https://cjrpjekmqrckozrbtwps.supabase.co",
+  "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b"
+);
+
+/* ===== STUDENT GUARD ===== */
+(function () {
+  const role = sessionStorage.getItem("role");
+  const matric = sessionStorage.getItem("matric");
+  if (role !== "student" || !matric) {
+    alert(t("Student login required"));
+    window.location.href = "login.html";
+  }
+})();
+
+/* ===== LOAD PAYMENTS ===== */
+async function loadPayments() {
+  const matric = sessionStorage.getItem("matric");
+  if (!matric) return;
+
+  try {
+    // ===========================
+    // Fetch payment records
+    // ===========================
+    const { data: payments, error } = await sb
+      .from("payments")
+      .select("amount, month, status, created_at, id")
+      .eq("matric_number", matric)
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    // ===========================
+    // FETCH OUTSTANDING FEES
+    // ===========================
+    const { data: outstanding } = await sb
+      .from("student_fee_status")
+      .select("month, amount_due")
+      .eq("matric_number", matric)
+      .eq("status", "unpaid");
+
+    // Remove duplicates (safety)
+    const uniqueMonths = [...new Set((outstanding || []).map(o => o.month))];
+
+    // Total outstanding amount
+    const totalOutstanding = (outstanding || []).reduce(
+      (sum, item) => sum + Number(item.amount_due),
+      0
+    );
+
+    // Format months
+    const outstandingMonths = uniqueMonths.length > 2
+      ? `${uniqueMonths.slice(0, 2).join(", ")} +${uniqueMonths.length - 2} more`
+      : uniqueMonths.join(",");
+
+   // ===========================
+// Render Overdue Alert
+// ===========================
+const alertContainer = document.getElementById("overdueAlertContainer");
+
+if (totalOutstanding > 0) {
+  alertContainer.innerHTML = `
+    <div class="fee-alert">
+      <div class="fee-alert-icon">⚠️</div>
+
+      <div>
+        <strong>${tmpl("outstanding_payment")}</strong><br>
+
+        ${tmpl("outstanding_message", {
+          amount: `<span class="amount-red">₦${totalOutstanding.toLocaleString()}</span>`,
+          months: `<b>${outstandingMonths}</b>`
+        })}
+      </div>
+
+      <button class="pay-btn" onclick="goToPayments()">
+        ${tmpl("pay_now")}
+      </button>
+    </div>
+  `;
+    } else {
+      alertContainer.innerHTML = "";
+    }
+
+    // ===========================
+// Current Month Stats
+// ===========================
+const now = new Date();
+const monthName = now.toLocaleString("default", { month: "long" });
+
+const monthlyPayments = payments?.filter(p =>
+  p.status === "paid" && p.month === monthName
+) || [];
+
+const monthlyTotal = monthlyPayments.reduce(
+  (sum, p) => sum + Number(p.amount),
+  0
+);
+
+const lastPayment = payments?.find(p => p.status === "paid");
+const lastPaidMonth = lastPayment?.month || null;
+
+let paymentStatus = "";
+let subText = "";
+
+if (monthlyTotal > 0) {
+  paymentStatus = tmpl("paid");
+  subText = tmpl("payment_month", { month: monthName });
+
+} else if (lastPaidMonth) {
+  paymentStatus = tmpl("unpaid");
+  subText = tmpl("last_paid", { month: lastPaidMonth });
+
+} else {
+  paymentStatus = tmpl("unpaid");
+  subText = tmpl("no_payment_yet");
+}
+
+    document.getElementById("paymentStatus").textContent = paymentStatus;
+    document.getElementById("paymentMonth").textContent = subText;
+    document.getElementById("monthlyAmount").textContent = "₦" + monthlyTotal.toLocaleString();
+    document.getElementById("amountMonth").textContent = tmpl("month_amount", { month: monthName });
+
+  
+    // ===========================
+    // Populate payment history
+    // ===========================
+    const history = document.getElementById("paymentHistory");
+    if (!payments || payments.length === 0) {
+      history.innerHTML = `<p>${t("No payments found.")}</p>`;
+    } else {
+      history.innerHTML = payments.map(p => `
+        <div class="notifications-card ${p.status}">
+          <p>
+            ${t("Amount")}: ₦${Number(p.amount).toLocaleString()}<br>
+            ${t("Month")}: <strong>${p.month.toUpperCase()}</strong><br>
+            ${t("Status")}: <strong>${t(p.status)}</strong>
+          </p>
+          <span class="time">${new Date(p.created_at).toLocaleString()}</span>
+        </div>
+      `).join("");
+    }
+
+  } catch (err) {
+    console.error("Failed to load payments:", err);
+    document.getElementById("paymentHistory").innerHTML =
+      `<p style="color:red">${t("Failed to load payments")}</p>`;
+  }
+}
+
+/* ===== GLOBAL FUNCTIONS ===== */
+function goToPayments() {
+  window.location.href = "payment.html";
+}
+
+
+/* ===== DOM READY ===== */
+document.addEventListener("DOMContentLoaded", () => {
+  loadPayments();
+
+  const toggle = document.getElementById("paymentToggle");
+  const dropdown = document.getElementById("paymentDropdown");
+
+  if (toggle && dropdown) {
+    toggle.addEventListener("click", () => {
+      dropdown.classList.toggle("hidden");
+    });
+  }
+});
+
+/* ===== HELPER: Generate Watermark ===== */
+function addWatermark(doc, text) {
+  doc.setTextColor(220, 220, 220);
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "bold");
+  for (let y = 50; y < 800; y += 40) {
+    for (let x = 40; x < doc.internal.pageSize.getWidth(); x += 100) {
+      doc.text(text, x, y, { angle: 45 });
+    }
+  }
+  doc.setTextColor(0, 0, 0); // reset color
+}
+
+/* ===== DOWNLOAD SINGLE OR MULTIPLE RECEIPTS ===== */
+async function generateReceiptPDF(payments, student, options = { all: false }) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
+  const pageWidth = doc.internal.pageSize.getWidth();
+
+  // Signature image URL
+  const signURL = "sign.png"; // put your signature here
+
+  for (let i = 0; i < payments.length; i++) {
+    if (!options.all && i > 0) break; // single receipt only
+
+    const payment = payments[i];
+
+    // ===== Watermark =====
+    addWatermark(doc, "Al-Bayan Arabic Institute Online");
+
+    // ===== Logo =====
+    const logo = new Image();
+    logo.src = "logo.png";
+    await new Promise(resolve => {
+      logo.onload = () => {
+        const logoWidth = 80;
+        const logoHeight = (logo.height / logo.width) * logoWidth;
+        doc.addImage(logo, "PNG", pageWidth / 2 - logoWidth / 2, 20, logoWidth, logoHeight);
+        resolve();
+      };
+      logo.onerror = resolve;
+    });
+
+    // ===== Header =====
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor("#1A237E"); // dark blue header
+    doc.text("Al-Bayan Arabic Institute Online", pageWidth / 2, 120, { align: "center" });
+
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor("#000000");
+    doc.text("Payment Receipt", pageWidth / 2, 140, { align: "center" });
+
+    // ===== Student Info =====
+    let startY = 170;
+    doc.setFontSize(12);
+    doc.text(`Name: ${student.fullname}`, 40, startY);
+    doc.text(`Student ID: ${student.matric_number}`, 300, startY);
+    startY += 20;
+    doc.text(`Level: ${student.level_arabic}`, 40, startY);
+    doc.text(`Email: ${student.email}`, 300, startY);
+
+    // ===== Payment Info =====
+    startY += 30;
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor("#2E7D32"); // green for amount
+    doc.text(`Amount Paid: ₦${Number(payment.amount).toLocaleString()}`, 40, startY);
+    doc.text(`Month Paid: ${(payment.month).toLocaleString()}`, 43, startY + 20);
+
+    startY += 25;
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor("#424298");
+    doc.text(`Payment Date: ${new Date(payment.created_at).toLocaleDateString()}`, 40, startY + 22);
+    doc.text(`Status: ${payment.status.toUpperCase()}`, 300, startY + 22);
+
+    // ===== Friendly Message =====
+    startY += 40;
+    doc.setFontSize(12);
+    doc.setTextColor("#000000");
+    doc.text(
+      "Thank you for your payment! Your support helps us continue providing quality Arabic education.\n\n" +
+  "We appreciate your commitment to learning the Arabic language and the Qur’an. May Allah place barakah in your knowledge, grant you understanding, and reward you abundantly.",
+      40,
+      startY + 5,
+      { maxWidth: pageWidth - 40 }
+    );
+
+    // ===== QR Code =====
+    startY += 70;
+    const qrCanvas = document.createElement("canvas");
+    await QRCode.toCanvas(qrCanvas, `${student.matric_number}|${payment.id}|${payment.amount}|${student.fullname}`, { width: 80 });
+    const qrData = qrCanvas.toDataURL("image/png");
+    doc.addImage(qrData, "PNG", pageWidth - 120, startY - 2, 80, 80);
+
+    // ===== Signature =====
+    startY -= 45;
+    const sign = new Image();
+    sign.src = signURL;
+    await new Promise(resolve => {
+      sign.onload = () => {
+        doc.addImage(sign, "PNG", 40, startY + 30, 160, 70);
+        resolve();
+      };
+      sign.onerror = resolve;
+    });
+
+    // Bursar's Name below signature
+doc.setFontSize(12);
+doc.setFont("helvetica", "bold");
+doc.text("Ustaz Musa Abdullah Labeeb", 40, startY + 98);
+doc.setFont("helvetica", "normal");
+doc.text("Bursar, Al-Bayan Arabic Institute", 40, startY + 115);
+
+    // ===== Footer =====
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "italic");
+    doc.text("This is a computer-generated receipt.", pageWidth / 2, 780, { align: "center" });
+
+    if (options.all && i < payments.length - 1) doc.addPage();
+  }
+
+  // Save PDF
+  const filename = options.all ? `Receipts_${student.matric_number}.pdf` : `Receipt_${student.matric_number}_${payments[0].id}.pdf`;
+  doc.save(filename);
+}
+
+/* ===== BUTTONS ===== */
+async function downloadReceipt(single = true) {
+  const matric = sessionStorage.getItem("matric");
+  if (!matric) return alert("Student info missing");
+
+  const { data: student, error: studentError } = await sb
+    .from("students")
+    .select("fullname, matric_number, level_arabic, email")
+    .eq("matric_number", matric)
+    .single();
+  if (studentError) return alert("Failed to fetch student info");
+
+  const { data: payments, error: paymentError } = await sb
+    .from("payments")
+    .select("*")
+    .eq("matric_number", matric)
+    .order("created_at", { ascending: true });
+  if (paymentError || !payments) return alert("Failed to fetch payments");
+
+  await generateReceiptPDF(payments, student, { all: !single });
+}
+
+/* ===== EVENT LISTENERS ===== */
+document.getElementById("downloadReceiptBtn").addEventListener("click", () => downloadReceipt(true)); // Single receipt
+document.getElementById("downloadAllReceiptsBtn")?.addEventListener("click", () => downloadReceipt(false)); // All payments
+
+</script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+/* =====================================================
+   RESET & BASE
+===================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+/* =====================================================
+   HEADER
+===================================================== */
+.register-header {
+  position: relative;
+  height: 200px; /* fixed, not full screen */
+  background: url("Background-Register.jpg") center/cover no-repeat;
+  margin-top: 0px; /* push below nav */
+}
+
+.header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.header-logo {
+  width: 45px;
+  height: auto;
+  margin-bottom: 0.1rem;
+  animation: heartbeat 1.5s infinite;
+}
+
+.register-header h1 {
+  color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 0.1rem;
+}
+
+.register-header p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  margin-bottom: 0rem;
+}
+
+/* Heartbeat animation */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.1); }
+}
+
+/* =====================================================
+   REGISTRATION FORM
+===================================================== */
+.register-section {
+  max-width: 900px;
+  margin: 2rem auto 4rem;
+  padding: 2.5rem;
+  background: var(--card-color);
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+}
+
+form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1f6fe5;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #2d6a4f;
+  box-shadow: 0 0 0 2px rgba(45,106,79,0.15);
+}
+
+textarea {
+  resize: vertical;
+}
+.passport-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+#passport-preview {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  margin-top: 6px;
+}
+.passport-note {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  margin-top: 1px;
+}
+.register-note {
+  color: #1a73e8;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.register-note1 {
+  font-size: 1.1rem;
+  color: #ff0000;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* Submit button with heartbeat */
+button[type="submit"] {
+  margin-top: 1.2rem;
+  padding: 0.85rem 0;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  background: #1f6fe5;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  animation: heartbeat 1.5s infinite;
+  transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background: #40916c;
+  transform: scale(1.05);
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+footer {
+  background: #1f6fe5;
+  color: #eaf4f4;
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+footer p {
+  margin-bottom: 0.4rem;
+}
+
+/* =====================================================
+   WHATSAPP FLOAT
+===================================================== */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 55px;
+  height: 55px;
+  background-color: #25D366;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+
+  cursor: grab;
+}
+
+.whatsapp-float img {
+  width: 28px;
+  height: 28px;
+}
+
+#passport-preview {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #1e7f4f;
+  background: var(--card-color);
+  animation: softPulse 2.5s infinite;
+}
+
+/* subtle heartbeat */
+@keyframes softPulse {
+  0% { box-shadow: 0 0 0 0 rgba(30,127,79,0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(30,127,79,0); }
+  100% { box-shadow: 0 0 0 0 rgba(30,127,79,0); }
+}
+
+#passport-warning {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.success-toast {
+  position: fixed;
+  top: -120px; /* start hidden */
+  right: 20px;
+  background: #28a745;
+  color: white;
+  padding: 1rem 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  z-index: 9999;
+  transition: top 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+.success-toast.show {
+  top: 20px;
+  opacity: 1;
+}
+.success-toast button {
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.9);
+  color: #28a745;
+  font-weight: 600;
+}
+.success-toast button:hover {
+  background: white;
+}

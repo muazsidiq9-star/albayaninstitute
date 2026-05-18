@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>Admission Letter - Al-Bayan Arabic Institute</title>
+
+  <link rel="stylesheet" href="admission.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<body>
+
+<div class="letter" id="letter">
+  <img src="logo.png" class="watermark">
+
+  <!-- LETTERHEAD -->
+  <div class="letterhead">
+    <img src="logo.png">
+    <h1>Al-Bayan Arabic Institute Online</h1>
+    <h2>MOTTO: Knowledge is light</h2>
+    <p>Office of the Registrar</p>
+
+    <div class="doc-date">
+    <strong>Document Ref:</strong> <span id="docRef"></span><br>
+    <strong>Date Issued:</strong> <span id="date"></span>
+  </div>
+  </div>
+
+  <!-- STUDENT INFO -->
+  <div class="student-section">
+    <div class="student-details">
+      <strong>Matric Number:</strong> <span id="matric"></span><br>
+      <strong>Full Name:</strong> <span id="fullname"></span><br>
+      <strong>Email:</strong> <span id="email"></span><br>
+      <strong>Country:</strong> <span id="country"></span><br>
+      <strong>Level Admitted:</strong> <span id="level"></span><br>
+    </div>
+
+    <img id="passport" class="passport" src="passport-placeholder.png">
+  </div>
+
+  <!-- BODY -->
+  <div class="letter-body">
+    <h3>Dear <span id="nameInline"></span>,</h3>
+
+    <h4>OFFER OF PROVISIONAL ADMISSION TO <strong><span id="level2"></span></strong> PROGRAMME</h4>
+
+    <p>
+      We are pleased to formally inform you that following the successful review of your registration details and academic records, you have been granted admission into <strong>Al-Bayan Arabic Institute Online</strong>.
+    </p>
+
+    <p>
+      You have been admitted into the <strong><span id="level3"></span></strong> programme. This admission confirms your eligibility to participate fully in the academic activities, lectures, assessments, and institutional engagements associated with your level.
+    </p>
+
+    <p>
+      The Institute remains committed to providing a structured, disciplined, and intellectually enriching environment designed to facilitate excellence in Arabic language studies. You are therefore advised to uphold the values of dedication, integrity, discipline, and academic responsibility expected of every Al-Bayan student.
+    </p>
+
+    <p>
+      Students are expected to participate actively in lectures, class engagements, continuous assessments, and all academic exercises prescribed within their programme. Regular attendance, timely submission of academic tasks, and adherence to institutional standards are fundamental requirements of this admission.
+    </p>
+
+    <p>
+      Kindly note that this admission remains provisional and subject to compliance with all academic and administrative regulations of the Institute. Failure to meet required standards, ethical expectations, or participation guidelines may affect academic standing.
+    </p>
+
+    <p>
+      The Institute prays that your academic journey becomes a source of beneficial knowledge, intellectual growth, and lasting success.
+    </p>
+  </div>
+
+  <!-- NOTICE -->
+  <div class="notice">
+    <strong>Notice:</strong>
+    <ul>
+      <li>This letter serves as an official proof of admission.</li>
+      <li>All academic and administrative regulations must be observed.</li>
+      <li>Verification can be done using the QR code below.</li>
+    </ul>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-section">
+    <div class="registrar">
+      <strong>Registrar</strong><br>
+     Al-Bayan Arabic Institute Online<br>
+      <strong>Muaz Abubakar Sidiq</strong><br>
+      <img src="stamp.jpg">
+    </div>
+
+    <div class="qr">
+      <img id="qrCode">
+    </div>
+  </div>
+
+  <div class="security-footer">
+  This is a computer-generated admission document.  
+  Any alteration renders it invalid.  
+  Verify authenticity via the QR code.
+</div>
+
+  <!-- PRINT -->
+  <div class="print-btn">
+    <button onclick="window.print()">Print Admission Letter</button>
+    <button onclick="downloadPDF()">Download PDF</button>
+  </div>
+
+</div>
+
+<!-- SUPABASE -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+<script>
+  const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // Guard
+  (function() {
+    const role = sessionStorage.getItem("role");
+    const matric = sessionStorage.getItem("matric");
+
+    if (role !== "student" || !matric) {
+      alert("Student login required");
+      window.location.href = "login.html";
+    }
+  })();
+
+  window.onload = () => {
+    alert(`
+ATTENTION:
+
+Use Google Chrome for best quality print out.
+This letter must be printed in coloured ink.
+Paper Size: A4
+Scale: 100%
+Margins: Default
+For PDF → Choose "Save as PDF"
+`);
+  };
+
+  function generateDocNumber(matric) {
+  const year = new Date().getFullYear();
+  return `DUH-ADM-${year}-${matric}`;
+}
+
+async function loadAdmission() {
+  const matricNumber = sessionStorage.getItem("matric");
+
+  const { data, error } = await sb
+    .from("students")
+    .select("fullname, email, matric_number, level_arabic, country, passport_url, admission_approved")
+    .eq("matric_number", matricNumber)
+    .single();
+
+  if (error || !data) return;
+
+  // ❌ If not approved, hide letter and show friendly message
+  if (!data.admission_approved) {
+    document.getElementById("letter").style.display = "none";
+    document.body.insertAdjacentHTML(
+      "beforeend",
+      `<p style="text-align:center; margin-top:50px; font-size:1.2rem;">
+        Your admission letter has not yet been approved by the Admin.<br>
+        Please check back later.
+      </p>`
+    );
+    return;
+  }
+
+  // ✅ Populate letter as usual
+  document.getElementById("fullname").textContent = data.fullname;
+  document.getElementById("email").textContent = data.email;
+  document.getElementById("matric").textContent = data.matric_number;
+  document.getElementById("level").textContent = data.level_arabic;
+  document.getElementById("level2").textContent = data.level_arabic;
+  document.getElementById("level3").textContent = data.level_arabic;
+  document.getElementById("country").textContent = data.country || "N/A";
+  document.getElementById("nameInline").textContent = data.fullname;
+
+  document.getElementById("date").textContent = new Date().toLocaleDateString();
+
+  if (data.passport_url) {
+    document.getElementById("passport").src = data.passport_url;
+  }
+
+  const docNumber = generateDocNumber(data.matric_number);
+  document.getElementById("docRef").textContent = docNumber;
+
+  const verificationURL = `https://darulhikam.netlify.app/verify.html?doc=${docNumber}`;
+
+  QRCode.toDataURL(verificationURL, function(err, url) {
+    document.getElementById("qrCode").src = url;
+  });
+}
+
+function downloadPDF() {
+  window.print();   // EXACTLY like university portals
+}
+
+document.addEventListener("DOMContentLoaded", loadAdmission);
+</script>
+
+</body>
+</html>

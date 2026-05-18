@@ -1,0 +1,229 @@
+/* =====================================================
+   RESET & BASE
+===================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* =====================================================
+   HUB HEADER
+===================================================== */
+.hub-header {
+  position: relative;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+  background-size: cover;
+  background-position: center;
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+.header-overlay {
+  position: relative;
+  background: rgba(0, 0, 0, 0.45);
+  text-align: center;
+  color: #fff;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+}
+
+.header-logo {
+  width: 45px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.hub-header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0;
+}
+
+.hub-header p {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 0;
+}
+
+/* Heartbeat animation */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.1); }
+}
+
+/* Heartbeat animation */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.1); }
+}
+
+/* =====================================================
+   HUB BUTTONS / CARDS
+===================================================== */
+.register-hub {
+  max-width: 1200px;
+  margin: 0 auto 4rem;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.register-hub h2 {
+  font-size: 1.5rem;
+  color: #0a4d92;
+  margin-bottom: 0.5rem;
+}
+
+.register-hub p {
+  font-size: 0.9rem;
+  margin-bottom: 1.3rem;
+  opacity: 0.85;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+footer {
+  background: #0a4d92;
+  color: #eaf4f4;
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+}
+
+footer p {
+  margin-bottom: 0.4rem;
+}
+
+/* =====================================================
+   WHATSAPP FLOAT
+===================================================== */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 55px;
+  height: 55px;
+  background-color: #25D366;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+
+  cursor: grab;
+}
+
+.whatsapp-float img {
+  width: 28px;
+  height: 28px;
+}
+
+/* ===== HUB BUTTONS ===== */
+.hub-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 20px;
+}
+
+/* Base hub card */
+.hub-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card-color);
+  border-radius: 20px;
+  padding: 1.2rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  cursor: pointer;
+  text-decoration: none;
+  gap: 0.5rem;
+  transition: all 0.35s ease;
+}
+
+/* Icons */
+.hub-card .icon {
+  font-size: 1.6rem;
+}
+
+/* Arrows with animation */
+.hub-card .arrow {
+  font-size: 1.3rem;
+  display: inline-block;
+  animation: arrow-slide 1s infinite;
+}
+
+/* Hover effects */
+.hub-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+  background: #c7f8f8;
+}
+
+.hub-card:hover .arrow {
+  transform: translateX(5px);
+}
+
+/* Icon heartbeat on hover */
+.hub-card:hover .icon {
+  animation: heartbeat 1.4s infinite;
+}
+
+/* ===== PLATFORM COLORS ===== */
+.hub-card.zoom { color: #2d8cff; border-left: 6px solid #2d8cff; }
+.hub-card.telegram { color: #0088cc; border-left: 6px solid #0088cc; }
+.hub-card.whatsapp { color: #25D366; border-left: 6px solid #25D366; }
+.hub-card.meet { color: #0f9d58; border-left: 6px solid #0f9d58; }
+
+/* Arrow colors match platform */
+.hub-card.zoom .arrow { color: #2d8cff; }
+.hub-card.telegram .arrow { color: #0088cc; }
+.hub-card.whatsapp .arrow { color: #25D366; }
+.hub-card.meet .arrow { color: #0f9d58; }
+
+/* ===== KEYFRAMES ===== */
+@keyframes arrow-slide {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.1); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .hub-buttons { grid-template-columns: 1fr; }
+  .hub-card { font-size: 0.95rem; padding: 1rem 1.2rem; }
+}

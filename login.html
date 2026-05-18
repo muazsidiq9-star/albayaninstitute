@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>Login - Al-Bayan Arabic Institute</title>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+  <!-- MASTER CSS -->
+  <link rel="stylesheet" href="master.css">
+  <!-- Page-specific CSS -->
+  <link rel="stylesheet" href="login.css">
+
+  <!-- Optional favicon -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+
+  <!-- ================= NAVIGATION ================= -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+      </a>
+      <div class="hamburger">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="register.html">Register</a>
+        <a href="payment.html">Payment</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================= LOGIN HEADER ================= -->
+  <header class="login-header">
+    <div class="login-overlay">
+      <img src="logo.png" alt="Al-Bayan Logo" class="login-logo">
+      <div class="welcome-note">
+        <h1>Welcome to Al-Bayan Arabic Institute</h1>
+        <p>Please login to continue to your account</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= LOGIN FORM ================= -->
+  <main class="login-main">
+  <section class="login-section">
+    <h2>LOGIN</h2>
+
+    <form id="loginForm">
+        <select id="userType" required>
+          <option value="">Select User</option>
+          <option value="admin">Admin</option>
+          <option value="student">Student</option>
+        </select>
+        <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your Email" required>
+      </div>
+
+      <div class="form-group password-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+      </div>
+
+      <div class="options">
+       <label>
+  <input type="checkbox" id="rememberMe">
+  <span data-i18n="remember_me">Remember me</span>
+</label>
+        <a href="forgot-password.html" class="forgot-password">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="submit-btn">Login</button>
+    </form>
+  </section>
+</main>
+  <!-- ================= FOOTER ================= -->
+  <footer>
+  <p>Al-Bayan Arabic Institute Online</p>
+  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
+  <p id="footerCopyright">
+  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+</p>
+<a href="privacy.html">Privacy Policy</a>
+</footer>
+
+  <!-- ================= SCRIPTS ================= -->
+
+<!-- Supabase library -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<!-- Initialize Supabase ONCE, globally -->
+<script>
+  const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+
+  // ONE global client
+  window.supabase = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  console.log("Supabase client ready:", window.supabase);
+</script>
+
+<!-- Hamburger menu -->
+<script>
+  // Hamburger menu
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('show'));
+  document.addEventListener('click', e => {
+    if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+      navLinks.classList.remove('show');
+    }
+  });
+</script>
+
+<!-- Toggle password -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const togglePassword = document.querySelector(".toggle-password");
+  const passwordInput = document.getElementById("password");
+
+  if (!togglePassword || !passwordInput) return;
+
+  togglePassword.addEventListener("click", () => {
+    const type = passwordInput.type === "password" ? "text" : "password";
+    passwordInput.type = type;
+
+    togglePassword.classList.toggle("fa-eye");
+    togglePassword.classList.toggle("fa-eye-slash");
+  });
+});
+</script>
+<script src="translate.js"></script>
+<!-- Login logic (uses the SAME client) -->
+<script src="login.js"></script>
+</body>
+</html>

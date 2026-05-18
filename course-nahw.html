@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>Nahw (Grammar) - Al-Bayan</title>
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="course-pages.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+
+<!-- Navigation -->
+<nav class="master-nav">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+    </a>
+    <div class="hamburger">☰</div>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="courses.html" class="active page-indicator">Courses</a>
+      <a href="register.html" data-translate="Register">Register</a>
+      <a href="students-dashboard.html">Dashboard</a>
+      <a href="payment.html">Payment</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="indiv-course-header" style="background-image: url('course-nahw.jpg');">
+  <div class="header-overlay">
+    <h1>Nahw (Grammar)</h1>
+    <p>Deep dive into Arabic syntax and sentence structure for advanced understanding.</p>
+    <a href="register.html" class="register-btn">Register Now</a>
+  </div>
+</header>
+
+<section class="course-content-section">
+
+  <div class="content-card intro-card fade-in">
+    <p>
+      This course focuses exclusively on Nahw (Arabic grammar), helping learners master rules, sentence structures, and advanced syntax with clarity.
+    </p>
+  </div>
+
+  <div class="content-card fade-in">
+    <h2>Module 1: Nominal Sentences</h2>
+    <p>Understanding structure, subject-predicate agreement, and usage of الخبر (predicate).</p>
+  </div>
+
+  <div class="content-card fade-in">
+    <h2>Module 2: Verbal Sentences</h2>
+    <p>Explore الفعل (verbs), فاعل (subject), and the proper order and conjugation rules.</p>
+  </div>
+
+  <div class="content-card fade-in">
+    <h2>Module 3: Cases & Endings</h2>
+    <p>Master إعراب (i‘rāb) of nouns, verbs, and adjectives in different sentence positions.</p>
+  </div>
+
+  <div class="content-card fade-in">
+    <h2>Module 4: Particles & Connectors</h2>
+    <p>Learn about حروف الجر (prepositions), أدوات الربط (connectors), and conditional phrases.</p>
+  </div>
+
+  <div class="content-card fade-in">
+    <h2>Module 5: Complex Sentences</h2>
+    <p>Combine nominal and verbal sentences, subordinate clauses, and advanced syntactic structures.</p>
+  </div>
+
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>Al-Bayan Arabic Institute Online</p>
+  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
+  <p id="footerCopyright">
+  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+</p>
+<a href="privacy.html">Privacy Policy</a>
+</footer>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
+  <img src="whatsapp-icon.png" alt="WhatsApp">
+</a>
+
+<!-- Scripts -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.getElementById('navLinks');
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', e => {
+      e.stopPropagation();
+      navLinks.classList.toggle('show');
+    });
+    document.addEventListener('click', e => {
+      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+        navLinks.classList.remove('show');
+      }
+    });
+  }
+
+  const elements = document.querySelectorAll(".fade-in");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add("show");
+    });
+  }, { threshold: 0.2 });
+  elements.forEach(el => observer.observe(el));
+});
+</script>
+<script src="translate.js"></script>
+</body>
+</html>

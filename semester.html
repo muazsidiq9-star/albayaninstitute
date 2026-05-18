@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>Semester Activities</title>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="master.css">
+
+  <style>
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    .semester-container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .semester-block {
+      margin-bottom: 3rem;
+    }
+
+    .semester-title {
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+      border-left: 5px solid var(--primary-color);
+      padding-left: 10px;
+    }
+
+    /* Timeline */
+    .timeline {
+      border-left: 2px solid var(--border-color);
+      padding-left: 20px;
+      margin-top: 1rem;
+    }
+
+    .timeline-item {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      position: absolute;
+      left: -27px;
+      top: 4px;
+    }
+
+    .timeline-title {
+      font-weight: bold;
+    }
+
+    .timeline-date {
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+
+    /* Outline Box */
+    .outline-box {
+      background: var(--card-color);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .outline-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<body>
+
+<!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="register.html">Register</a>
+        <a href="students-dashboard.html">Student Dashboard</a>
+        <a href="semester.html"  class="active page-indicator">Semester Activities</a>
+        <a href="payment.html">Payment</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+<div class="semester-container">
+  <h1>📚 Semester Activities</h1>
+  <div id="semesterContent"></div>
+</div>
+
+<!-- HAMBURGER MENU -->
+   <script src="translate.js"></script>
+  <script>
+    function toggleMenu() {
+      const nav = document.getElementById("navLinks");
+      nav.classList.toggle("show");
+    }
+    document.addEventListener("click", function(e) {
+      const nav = document.getElementById("navLinks");
+      const hamburger = document.querySelector(".hamburger");
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+        nav.classList.remove("show");
+      }
+    });
+  </script>
+
+<script>
+const supabaseUrl = "https://cjrpjekmqrckozrbtwps.supabase.co";
+const supabaseKey = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+
+const db = supabase.createClient(supabaseUrl, supabaseKey);
+
+async function loadSemester() {
+  const { data, error } = await db
+    .from("semester_schedule")
+    .select("*")
+    .order("start_date", { ascending: true });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  const container = document.getElementById("semesterContent");
+  container.innerHTML = "";
+
+  if (!data.length) {
+    container.innerHTML = "<p>No semester data available.</p>";
+    return;
+  }
+
+  /* Group by semester */
+  const grouped = {};
+
+  data.forEach(item => {
+    if (!grouped[item.semester]) grouped[item.semester] = [];
+    grouped[item.semester].push(item);
+  });
+
+  Object.keys(grouped).forEach(semester => {
+
+    const block = document.createElement("div");
+    block.className = "semester-block";
+
+    block.innerHTML = `<div class="semester-title">${semester}</div>`;
+
+    const timeline = document.createElement("div");
+    timeline.className = "timeline";
+
+    grouped[semester].forEach(item => {
+
+      if (item.type === "activity") {
+
+        const div = document.createElement("div");
+        div.className = "timeline-item";
+
+        div.innerHTML = `
+          <div class="timeline-title">${item.title}</div>
+          <div>${item.description}</div>
+          <div class="timeline-date">
+            ${item.start_date || ""} 
+            ${item.end_date ? " → " + item.end_date : ""}
+          </div>
+        `;
+
+        timeline.appendChild(div);
+      }
+
+      if (item.type === "course_outline") {
+
+        const outline = document.createElement("div");
+        outline.className = "outline-box";
+
+        outline.innerHTML = `
+          <div class="outline-title">${item.title}</div>
+          <div>${item.description}</div>
+        `;
+
+        timeline.appendChild(outline);
+      }
+
+    });
+
+    block.appendChild(timeline);
+    container.appendChild(block);
+  });
+}
+
+loadSemester();
+</script>
+</body>
+</html>

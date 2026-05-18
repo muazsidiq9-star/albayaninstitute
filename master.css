@@ -1,0 +1,476 @@
+/* ===============================
+   GLOBAL RESET
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ===============================
+   NAVIGATION BAR
+================================ */
+.master-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  background: #0277d6;
+  z-index: 1000;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.logo img {
+  width: 36px;
+  height: auto;
+}
+
+/* ===============================
+   HAMBURGER ICON
+================================ */
+.hamburger {
+  font-size: 26px;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ===============================
+   HAMBURGER MENU PANEL
+================================ */
+.nav-links {
+  position: fixed;
+  top: 64px;                 /* 👈 starts UNDER nav */
+  left: -260px;              /* hidden by default */
+  width: 260px;
+  height: calc(100vh - 64px);
+  background: var(--card-color);
+
+  padding: 20px 0;
+  overflow-y: auto;
+
+  transition: left 0.35s ease;
+  z-index: 999;
+}
+
+/* Show menu */
+.nav-links.show {
+  left: 0;
+}
+
+/* ===============================
+   HAMBURGER LINKS
+================================ */
+.nav-links a {
+  display: block;
+  padding: 14px 22px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 700 !important; /* bold */
+  text-align: left;
+  position: relative;
+}
+
+/* tiny underline separator */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  bottom: 6px;
+  width: calc(100% - 44px);
+  height: 1px;
+  background: var(--card-color);
+}
+
+/* hover */
+.nav-links a:hover {
+  background: #0277d6;
+}
+
+/* ACTIVE PAGE INDICATOR */
+.nav-links a.active::after {
+  background: #025eaa;
+  height: 2px;
+}
+
+/* ===============================
+   PAGE OFFSET (VERY IMPORTANT)
+================================ */
+main {
+  margin-top: 64px; /* only main content needs offset */
+}
+
+/* ===============================
+   FLOATING WHATSAPP ENHANCED
+================================ */
+ 
+/* ================= WHATSAPP FLOAT ================= */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 55px;
+  height: 55px;
+  background-color: #25D366;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+
+  cursor: grab;
+}
+
+.whatsapp-float img {
+  width: 28px;
+  height: 28px;
+}
+
+.whatsapp-float,
+#langToggleBtn {
+  touch-action: none;
+}
+
+/* STRONGER HEARTBEAT ANIMATION */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.15); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.15); }
+  70% { transform: scale(1); }
+}
+
+/* Hover effect for extra liveliness */
+.whatsapp-float:hover {
+  transform: scale(1.25);
+  box-shadow: 0 12px 30px rgba(37,211,102,0.6);
+}
+
+/* ===============================
+   FOOTER
+================================ */
+footer {
+  width: 100%;
+  background: #0277d6;
+  color: #fff;
+  text-align: center;
+  padding: 14px 10px;
+  font-size: 14px;
+}
+
+footer p {
+  margin: 4px 0;
+}
+footer {
+  background: #0277d6 !important;
+  color: #fff !important;
+  text-align: center !important;
+  padding: 20px 10px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  bottom: 0;
+}
+/* ---------- MASTER FOOTER ---------- */
+footer {
+  width: 100%;                 /* Full width */
+  background-color: #0277d6;   /* Dark gray, adjust if needed */
+  color: #fff;                 /* Text color */
+  padding: 5px 0;             /* Reasonable height */
+  text-align: center;           /* Center content horizontally */
+  font-size: 14px;              /* Adjust font size */
+  position: relative;           /* Not fixed, so stays at bottom */
+  box-sizing: border-box;
+  margin: 0;
+}
+
+footer a {
+  color: #fff;                  /* Keep links readable */
+  text-decoration: none;
+  margin: 0 8px;
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  color: #facc15;               /* Highlight on hover */
+}
+
+footer p {
+  margin: 5px 0 0 0;           /* Minimal spacing */
+}
+
+@media screen and (max-width: 768px) {
+  footer {
+    font-size: 13px;
+    padding: 5px 0;
+  }
+}
+/* Stick footer to bottom without affecting nav/header */
+footer {
+  position: relative;  /* keeps it in flow */
+  bottom: 0;           /* ensures it’s at bottom of container */
+  width: 100%;         /* full width */
+  min-height: 13px;    /* adjust as needed for shorter/taller footer */
+  line-height: 13px;   /* centers content vertically */
+  text-align: center;  /* centers text inside */
+  background-color: #0277d6; /* optional styling */
+  color: #fff;            /* optional styling */
+}
+
+/* Main content should grow to fill space */
+main, .courses-section, .hub-buttons, .notifications-section {
+  flex: 1 0 auto; /* allow growing but don't shrink footer */
+}
+
+/* Footer should stay at bottom */
+footer {
+  flex-shrink: 0;
+  background-color: #f8f8f8; /* optional, adjust your design */
+  padding: 8px 0;
+  text-align: center;
+}
+
+/* ================================
+   THEME VARIABLES
+================================ */
+:root {
+  --bg-color: #ffffff;
+  --surface-color: #f7f7f7;
+  --card-color: #ffffff;
+  --text-color: #1a1a1a;
+  --border-color: #dddddd;
+  --table-header-bg: #f0f0f0;
+  --primary-color: #1a237e;
+}
+
+/* Dark mode */
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --surface-color: #1e1e1e;
+  --card-color: #1c1c1c;
+  --text-color: #eaeaea;
+  --border-color: #333;
+  --table-header-bg: #242424;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+.main,
+.container,
+.dashboard {
+  background: var(--surface-color);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card-color);
+  color: var(--text-color);
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+}
+
+th {
+  background: var(--table-header-bg);
+}
+
+.card,
+.modal,
+.box {
+  background: var(--card-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+input,
+select,
+textarea {
+  background: var(--surface-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+button {
+  background: var(--primary-color);
+  color: var(--text-color);
+}
+
+/* ================================
+   GLOBAL SURFACE FIX
+================================ */
+body,
+main,
+section,
+.container,
+.content,
+.page,
+.wrapper {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.card,
+.resource-card,
+.box,
+.panel,
+.tile {
+  background-color: var(--card-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+table {
+  background: var(--card-color);
+  color: var(--text-color);
+  border-collapse: collapse;
+}
+
+thead {
+  background: var(--table-header-bg);
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 10px;
+}
+
+tbody tr {
+  background: var(--card-color);
+}
+
+tbody tr:nth-child(even) {
+  background: var(--surface-color);
+}
+
+input,
+select,
+textarea {
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #999;
+}
+
+header,
+.navbar,
+.topbar {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.master-nav select {
+  outline: none;
+}
+
+.master-nav select {
+  height: 34px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  width: 250px;
+  background: var(--surface-color);
+  color: var(--text-color);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+:root {
+  --nav-height: 60px; /* adjust if your nav is taller */
+}
+
+/* ALWAYS push page content below fixed nav */
+body {
+  padding-top: var(--nav-height);
+}
+
+.page-header,
+.register-header,
+.schedule-header {
+  position: relative;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.page-header::before,
+.register-header::before,
+.schedule-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1;
+}
+
+.header-overlay {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  padding: 20px;
+}
+
+.header-logo {
+  width: 90px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 3;
+}
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 50px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .master-nav select {
+    width: 95%;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+}

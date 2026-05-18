@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Privacy Policy | Al-Bayan Arabic Institute</title>
+
+  <style>
+    :root{
+      --gold:#f5b041;
+      --bg:#0b0b0b;
+      --card:rgba(255,255,255,0.03);
+      --border:rgba(255,255,255,0.08);
+      --text:#f5f5f5;
+      --muted:#b8b8b8;
+    }
+
+    body.light-mode{
+      --bg:#f8f8f8;
+      --card:#ffffff;
+      --border:#e4e4e4;
+      --text:#111111;
+      --muted:#555555;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .privacy-header{
+      position: sticky;
+      top:0;
+      z-index:999;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+
+    body.light-mode .privacy-header{
+      background: rgba(255,255,255,0.85);
+    }
+
+    .header-inner{
+      max-width:1100px;
+      margin:auto;
+      padding:18px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      color:var(--text);
+      font-weight:700;
+      font-size:18px;
+    }
+
+    .logo img{
+      width:45px;
+      height:45px;
+      object-fit:cover;
+      border-radius:50%;
+    }
+
+    .theme-btn{
+      background:var(--card);
+      border:1px solid var(--border);
+      color:var(--text);
+      width:45px;
+      height:45px;
+      border-radius:12px;
+      cursor:pointer;
+      font-size:18px;
+    }
+
+    .privacy-hero{
+      padding:90px 20px 50px;
+    }
+
+    .privacy-container{
+      max-width:900px;
+      margin:auto;
+    }
+
+    .tag{
+      display:inline-block;
+      padding:8px 16px;
+      border-radius:999px;
+      background:rgba(245,176,65,0.12);
+      border:1px solid rgba(245,176,65,0.25);
+      color:var(--gold);
+      margin-bottom:20px;
+      font-size:14px;
+    }
+
+    .privacy-hero h1{
+      font-size: clamp(38px, 6vw, 64px);
+      line-height:1.1;
+      margin-bottom:20px;
+    }
+
+    .hero-text{
+      color:var(--muted);
+      max-width:760px;
+      font-size:18px;
+    }
+
+    .privacy-content{
+      padding:20px;
+    }
+
+    .policy-card{
+      max-width:900px;
+      margin:auto;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:40px;
+    }
+
+    .policy-section{
+      margin-bottom:40px;
+    }
+
+    .policy-section:last-child{
+      margin-bottom:0;
+    }
+
+    .policy-section h2{
+      color:var(--gold);
+      font-size:28px;
+      margin-bottom:15px;
+    }
+
+    .policy-section p{
+      color:var(--muted);
+      margin-bottom:15px;
+    }
+
+    .policy-section ul{
+      padding-left:20px;
+    }
+
+    .policy-section li{
+      color:var(--muted);
+      margin-bottom:10px;
+    }
+
+    .contact-box{
+      background:rgba(245,176,65,0.08);
+      border:1px solid rgba(245,176,65,0.2);
+      border-radius:20px;
+      padding:25px;
+      margin-top:20px;
+    }
+
+    .contact-box a{
+      color:var(--gold);
+      text-decoration:none;
+    }
+
+    .footer{
+      margin-top:70px;
+      border-top:1px solid var(--border);
+      padding:30px 20px;
+    }
+
+    .footer-inner{
+      max-width:1100px;
+      margin:auto;
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .footer p{
+      color:var(--muted);
+    }
+
+    .footer-links{
+      display:flex;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .footer-links a{
+      color:var(--muted);
+      text-decoration:none;
+      transition:0.25s ease;
+    }
+
+    .footer-links a:hover{
+      color:var(--gold);
+    }
+
+    @media(max-width:768px){
+
+      .policy-card{
+        padding:25px;
+        border-radius:22px;
+      }
+
+      .privacy-hero{
+        padding-top:70px;
+      }
+
+      .privacy-hero h1{
+        font-size:42px;
+      }
+
+      .policy-section h2{
+        font-size:24px;
+      }
+
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="privacy-header">
+
+    <div class="header-inner">
+
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan Arabic Institute</span>
+      </a>
+
+      <button id="themeToggle" class="theme-btn">
+        🌙
+      </button>
+
+    </div>
+
+  </header>
+
+  <!-- HERO -->
+  <section class="privacy-hero">
+
+    <div class="privacy-container">
+
+      <span class="tag">
+        Privacy & Data Protection
+      </span>
+
+      <h1>
+        Privacy Policy
+      </h1>
+
+      <p class="hero-text">
+        At Al-Bayan Arabic Institute, we respect your privacy and are committed
+        to protecting your personal information. This page explains how we collect,
+        use, and safeguard your information when you use our website or enroll in our programs.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- CONTENT -->
+  <section class="privacy-content">
+
+    <div class="policy-card">
+
+      <div class="policy-section">
+
+        <h2>1. Information We Collect</h2>
+
+        <p>
+          We may collect the following information during registration,
+          enrollment, or payment verification:
+        </p>
+
+        <ul>
+          <li>Full name</li>
+          <li>Email address</li>
+          <li>Country or location</li>
+          <li>Payment details submitted by students</li>
+          <li>Uploaded payment receipts</li>
+          <li>Program selection and learning preferences</li>
+        </ul>
+
+      </div>
+
+      <div class="policy-section">
+
+        <h2>2. How We Use Your Information</h2>
+
+        <p>
+          Your information is used only for educational and administrative purposes.
+        </p>
+
+        <ul>
+          <li>To verify and confirm enrollment</li>
+          <li>To process payment confirmations</li>
+          <li>To communicate important class updates</li>
+          <li>To provide student support and guidance</li>
+          <li>To improve learning experience and services</li>
+        </ul>
+
+      </div>
+
+      <div class="policy-section">
+
+        <h2>3. Payment Processing</h2>
+
+        <p>
+          Some payments may be processed through trusted third-party payment platforms.
+          Al-Bayan Arabic Institute does not store your debit or credit card information.
+        </p>
+
+        <p>
+          Payment receipts submitted by students are used strictly for payment verification purposes.
+        </p>
+
+      </div>
+
+      <div class="policy-section">
+
+        <h2>4. Data Protection</h2>
+
+        <p>
+          We take reasonable measures to protect student information against
+          unauthorized access, misuse, or disclosure.
+        </p>
+
+        <p>
+          However, while we strive to protect your information, no online system
+          can guarantee absolute security.
+        </p>
+
+      </div>
+
+      <div class="policy-section">
+
+        <h2>5. Third-Party Services</h2>
+
+        <p>
+          We may use trusted external services to support our platform and payment operations.
+        </p>
+
+        <ul>
+          <li>Selar (payment processing)</li>
+          <li>Supabase (database/storage)</li>
+          <li>EmailJS (email communication)</li>
+        </ul>
+
+      </div>
+
+      <div class="policy-section">
+
+        <h2>6. Student Responsibility</h2>
+
+        <p>
+          Students are responsible for ensuring that the information
+          submitted during registration and payment confirmation is accurate.
+        </p>
+
+      </div>
+
+      <div class="policy-section">
+
+        <h2>7. Contact & Support</h2>
+
+        <div class="contact-box">
+
+          <p>
+            If you have any questions regarding this Privacy Policy,
+            please contact us:
+          </p>
+
+          <p>
+            Email:
+            <a href="mailto:albayaninstitute068@gmail.com">
+              albayaninstitute068@gmail.com
+            </a>
+          </p>
+
+          <p>
+            WhatsApp:
+            <a href="https://wa.me/2347054711066" target="_blank">
+              +234 705 471 1066
+            </a>
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+
+    <div class="footer-inner">
+
+      <p>
+        © <span id="year"></span> Al-Bayan Arabic Institute.
+        All rights reserved.
+      </p>
+
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="payment.html">Payments</a>
+        <a href="mailto:albayaninstitute068@gmail.com">Support</a>
+      </div>
+
+    </div>
+
+  </footer>
+
+  <!-- JS -->
+  <script>
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    const toggle = document.getElementById("themeToggle");
+
+    toggle.addEventListener("click", () => {
+
+      document.body.classList.toggle("light-mode");
+
+      if(document.body.classList.contains("light-mode")){
+        toggle.textContent = "☀️";
+      } else {
+        toggle.textContent = "🌙";
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>

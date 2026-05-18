@@ -1,0 +1,231 @@
+/* ========== GLOBAL ========== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: var(--bg-color); color: var(--text-color); overflow-x: hidden; }
+
+/* ========== HEADER FIX (CLEAN + MOBILE SAFE) ========== */
+
+.courses-header {
+  position: relative;
+  height: 180px;
+  margin-top:0; /* IMPORTANT: matches navbar height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+/* dark overlay */
+.courses-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1;
+}
+
+/* content wrapper */
+.courses-header .header-overlay {
+  position: relative;
+  z-index: 2;
+
+  text-align: center;
+  color: #fff;
+
+  padding: 15px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* logo FIX (prevents hiding under navbar visually) */
+.courses-header .header-logo {
+  width: 60px;
+  margin-bottom: 10px;
+  animation: heartbeat 1.6s infinite;
+  position: relative;
+  z-index: 3;
+}
+
+/* text stays inside properly */
+.courses-header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+
+.courses-header p {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* ========== MOBILE FIX ========== */
+@media (max-width: 768px) {
+  .courses-header {
+    height: 200px;
+    margin-top: 0; /* still safe for fixed navbar */
+  }
+
+  .courses-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .courses-header p {
+    font-size: 0.9rem;
+  }
+
+  .courses-header .header-logo {
+    width: 50px;
+  }
+}
+
+/* ===== COURSES CARDS ===== */
+.cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+  margin: 40px 0;
+}
+.course-card {
+  background: var(--card-color);
+  border-radius: 14px;
+  padding: 20px;
+  width: 250px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.course-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+}
+.course-card h3 { font-size: 1.2rem; margin-bottom: 10px; }
+.course-card p { font-size: 0.95rem; margin-bottom: 12px; color: var(--text-color); }
+
+/* ===== BUTTONS ===== */
+.btn-explore, .btn-register, .btn-unavailable {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+.btn-explore {
+  background-color: #1a73e8;
+  color: white;
+}
+.btn-explore i {
+  margin-left: 6px;
+  animation: arrow 1s infinite alternate;
+}
+.btn-explore:hover { animation: pulse 0.8s infinite; }
+.btn-register {
+  background-color: #25d366;
+  color: white;
+  margin-left: 6px;
+}
+.btn-register:hover { animation: pulse 0.8s infinite; }
+
+.btn-unavailable {
+  background-color: #999;
+  color: #eee;
+  cursor: not-allowed;
+}
+.btn-unavailable i {
+  margin-left: 6px;
+  animation: arrow 1s infinite alternate;
+}
+.btn-unavailable:hover { animation: pulse 0.8s infinite; }
+
+/* ===== ANIMATIONS ===== */
+@keyframes arrow {
+  from { transform: translateX(0); }
+  to { transform: translateX(6px); }
+}
+@keyframes pulse {
+  50% { transform: scale(1.08); }
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background-color: #1a73e8;
+  color: white;
+  text-align: center;
+  padding: 25px 10px;
+  font-size: 14px;
+}
+
+/* ===== WHATSAPP FLOAT ===== */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 55px;
+  height: 55px;
+  background-color: #25D366;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+
+  cursor: grab;
+}
+
+.whatsapp-float img {
+  width: 28px;
+  height: 28px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:768px) {
+  .cards-grid { flex-direction: column; align-items: center; }
+  .course-card { width: 80%; max-width: 350px; }
+  header.-header { height: 250px; }
+  header.courses-header h1 { font-size: 2rem; }
+  header.courses-header p { font-size: 1rem; }
+}
+
+.register-btn {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* REGISTER (default) */
+.register-btn[data-registered="false"] {
+  background: #0d6efd;
+  color: #fff;
+}
+
+.register-btn[data-registered="false"]:hover {
+  background: #0b5ed7;
+}
+
+/* REGISTERED */
+.register-btn[data-registered="true"] {
+  background: #acf9ff;
+  color: #0055f1;
+  border: 1px solid #0d6efd;
+}
+
+.register-btn[data-registered="true"]:hover {
+  background: #0d6efd;
+  color: #fff;
+}

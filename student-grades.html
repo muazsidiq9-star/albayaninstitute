@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>My Grades - Al-Bayan</title>
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="student-grades.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="register.html">Register</a>
+        <a href="students-dashboard.html">Dashboard</a>
+        <a href="payment.html">Payment</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="page-header grades-header">
+    <div class="header-overlay">
+      <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
+      <h1>My Grades</h1>
+      <p>View your scores, assessments, and overall progress</p>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="grades-section">
+    <div class="grades-controls">
+      <input type="text" id="gradesSearch" class="search-input" placeholder="Search by course...">
+      <select id="gradesFilter" class="filter-select">
+        <option value="all">All</option>
+        <option value="pass">Pass</option>
+        <option value="average">Average</option>
+        <option value="fail">Fail</option>
+      </select>
+    </div>
+    
+    <div class="table-wrapper">
+    <table class="grades-table">
+      <thead>
+        <tr>
+          <th>Matric Number</th>
+          <th>Level</th>
+          <th>Course</th>
+          <th>Semester</th>
+          <th>Assessment</th>
+          <th>Exam</th>
+          <th>Total Score (%)</th>
+          <th>Remark</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="gradesBody">
+        <!-- Rows will be populated dynamically from Supabase -->
+      </tbody>
+    </table>
+    </div>
+
+    <div class="download-wrapper">
+      <button class="download-btn" onclick="downloadGradesPDF()">
+        <i class="fa-solid fa-download"></i> Download My Grades (PDF)
+      </button>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+  <p>Al-Bayan Arabic Institute Online</p>
+  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
+  <p id="footerCopyright">
+  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+</p>
+<a href="privacy.html">Privacy Policy</a>
+</footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
+  <img src="whatsapp-icon.png" alt="WhatsApp">
+</a>
+<script>
+function toggleMenu() {
+  document.getElementById("navLinks").classList.toggle("show");
+}
+document.addEventListener("click", e => {
+  const nav = document.getElementById("navLinks");
+  const burger = document.querySelector(".hamburger");
+  if (!nav.contains(e.target) && !burger.contains(e.target)) {
+    nav.classList.remove("show");
+  }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <!-- Supabase -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+</script>
+<script src="student-grades.js"></script>
+<script src="translate.js"></script>
+</body>
+</html>

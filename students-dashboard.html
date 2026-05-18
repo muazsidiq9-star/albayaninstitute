@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>Student Dashboard - Al-Bayan</title>
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="students-dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ 
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="register.html">Register</a>
+        <a href="students-dashboard.html" class="active page-indicator">Student Dashboard</a>
+        <a href="payment.html">Payment</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="contact.html">Contact</a>
+        <button id="logoutBtn" class="logout-btn">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+   
+   <header class="home-header">
+
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="background-all.mp4" type="video/mp4">
+  </video>
+    
+  <div class="header-overlay">
+
+    <img src="logo.png" alt="Logo" class="header-logo">
+      <h1>Student Dashboard</h1>
+      <p>Welcome back! Manage your registration, payments, courses, resources, and online classes from one place.</p>
+    </div>
+  </header>
+
+  <!-- ===== Stats Section ===== -->
+  <section class="stats-section">
+  <div id="stats-cards" class="stats-cards">
+    <!-- JS injects stat cards here -->
+  </div>
+</section>
+
+  <!-- HUB BUTTONS -->
+  <section class="register-hub">
+    <h2>Quick Access Tools</h2>
+    <p>Click any card below to manage your student activities.</p>
+
+    <div class="hub-buttons">
+      <!-- Profile -->
+      <a href="student-profile.html" class="hub-card">
+  <span class="icon">🧑</span>
+  <span class="card-text">My Profile</span>
+  <span class="arrow">➔</span>
+</a>
+
+<!-- Payment -->
+<a href="payment.html" class="hub-card">
+  <span class="icon">💳</span>
+  <span class="card-text">Make Payment</span>
+  <span class="arrow">➔</span>
+</a>
+
+     <!--Students Payment -->
+      <a href="student-payments.html" class="hub-card">
+        <span class="icon">📄</span>
+       <span class="card-text">Payment History</span>
+        <span class="arrow">➔</span>
+      </a>
+
+      <!-- Courses -->
+      <a href="courses.html" class="hub-card">
+        <span class="icon">📚</span>
+        <span class="card-text">All Courses</span>
+        <span class="arrow">➔</span>
+      </a>
+      
+      <!-- Register Courses -->
+      <a href="register-courses.html" class="hub-card">
+        <span class="icon">📚</span>
+        <span class="card-text">Register Courses</span>
+        <span class="arrow">➔</span>
+      </a>
+
+      <!-- My Courses -->
+      <a href="my-courses.html" class="hub-card">
+        <span class="icon">📚</span>
+        <span class="card-text">My Courses</span>
+        <span class="arrow">➔</span>
+      </a>
+
+      <!-- Semester Activities -->
+      <a href="semester.html" class="hub-card">
+        <span class="icon">📚</span>
+        <span class="card-text">Semester Activities</span>
+        <span class="arrow">➔</span>
+      </a>
+
+      <a href="admission.html" class="hub-card">
+        <span class="icon">📄</span>
+       <span class="card-text">Admission Letter</span>
+        <span class="arrow">➔</span>
+      </a>
+      
+
+      <!-- Schedule -->
+      <a href="schedule.html" class="hub-card">
+        <span class="icon">📅</span>
+        
+        <span class="card-text">Class Schedule</span>
+        <span class="arrow">➔</span>
+      </a>
+
+      <!-- Exam Schedule -->
+      <a href="student-exam-timetable.html" class="hub-card">
+        <span class="icon">📅</span>
+        
+        <span class="card-text">Test/Exam Timetable</span>
+        <span class="arrow">➔</span>
+      </a>
+
+      <!-- Grades -->
+      <a href="student-grades.html" class="hub-card">
+        <span class="icon">📝</span>
+        
+        <span class="card-text">My Grades</span>
+        <span class="arrow">➔</span>
+      </a>
+
+      <!-- Resources -->
+      <a href="resources.html" class="hub-card">
+        <span class="icon">📂</span>
+        
+        <span class="card-text">Learning Resources</span>
+        <span class="arrow">➔</span>
+      </a>
+
+      <!-- Online Classes -->
+      <a href="online-classes.html" class="hub-card">
+        <span class="icon">💻</span>
+        
+        <span class="card-text">Join Online Class</span>
+        <span class="arrow">➔</span>
+      </a>
+
+      <!-- Welcome -->
+      <a href="test-welcome.html" class="hub-card">
+        <span class="icon">📝</span>
+        
+        <span class="card-text">Take Test/Exam</span>
+        <span class="arrow">➔</span>
+      </a>
+
+      <!-- Contact / Support -->
+      <a href="contact.html" class="hub-card">
+        <span class="icon">📞</span>
+        <span class="card-text">Contact / Support</span>
+        <span class="arrow">➔</span>
+      </a>
+    </div>
+  </section>
+
+  <div id="reminderModal" class="reminder-modal hidden">
+  <div class="reminder-box">
+    <h3>⚠️ Payment Reminder</h3>
+    <p id="reminderText"></p>
+
+    <div class="reminder-actions">
+      <button onclick="goToPayments()" class="send-btn">Pay Now</button>
+      <a id="whatsappReminder" target="_blank" class="whatsapp-btn">
+        Remind Me Later
+      </a>
+    </div>
+
+    <span class="close-btn" onclick="closeReminder()">×</span>
+  </div>
+</div>
+
+  <!-- NOTIFICATIONS -->
+<section class="notifications">
+  <h2>🔔 Notifications</h2>
+  <div class="notification-dropdown">
+    <div class="notification-latest" onclick="toggleNotifications()">
+      <!-- Latest notification content will be injected by JS-->
+      <span class="dropdown-arrow">▼</span>
+    </div>
+    <div class="notifications-list" style="display:none;">
+      <!-- JS will populate notifications based on student -->
+    </div>
+  </div>
+</section>
+
+  <!-- FOOTER -->
+  <footer>
+  <p>Al-Bayan Arabic Institute Online</p>
+  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
+  <p id="footerCopyright">
+  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+</p>
+<a href="privacy.html">Privacy Policy</a>
+</footer>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
+  <img src="whatsapp-icon.png" alt="WhatsApp">
+</a>
+
+  <!-- HAMBURGER MENU -->
+   <script src="translate.js"></script>
+  <script>
+    function toggleMenu() {
+      const nav = document.getElementById("navLinks");
+      nav.classList.toggle("show");
+    }
+    document.addEventListener("click", function(e) {
+      const nav = document.getElementById("navLinks");
+      const hamburger = document.querySelector(".hamburger");
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+        nav.classList.remove("show");
+      }
+    });
+  </script>
+
+<!-- Supabase CDN -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<script>
+  const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+
+  window.sb = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  console.log("Supabase ready in dashboard:", sb);
+</script>
+
+<!-- Dashboard JS -->
+<script src="students-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+/* ==========================
+   BASE LAYOUT FIX
+========================== */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Page wrapper */
+.page-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================
+   HEADER SECTION
+========================== */
+
+.hall-header {
+  position: relative; /* IMPORTANT FIX */
+  background-image: url('background-main.jpg');
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  text-align: center;
+  padding: 4rem 1rem 2rem;
+  overflow: hidden;
+}
+
+/* dark overlay */
+.hall-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 1;
+}
+
+/* content */
+.header-overlay {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hall-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hall-header p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ==========================
+   EXAM INFO BOX
+========================== */
+
+.exam-info {
+  background: var(--card-color);
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-size: 1.1rem;
+}
+
+.exam-info p {
+  margin: 0.8rem 0;
+}
+
+/* ==========================
+   BUTTON (FIXED ID)
+========================== */
+
+#attemptBtn {
+  background-color: #1E90FF;
+  color: #fff;
+  font-weight: bold;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+#attemptBtn:hover:not(:disabled) {
+  background-color: #187bcd;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0,0,0,0.25);
+}
+
+#attemptBtn:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ==========================
+   SPINNER (MISSING FIX)
+========================== */
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.7s linear infinite;
+  margin-right: 6px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ==========================
+   WHATSAPP FLOAT
+========================== */
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 55px;
+  height: 55px;
+  background-color: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+footer {
+  background-color: #222;
+  color: #fff;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  margin-top: auto;
+  font-size: 0.9rem;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 768px) {
+  .hall-header h1 {
+    font-size: 2rem;
+  }
+
+  .hall-header p {
+    font-size: 1rem;
+  }
+
+  .exam-info {
+    margin: 1rem;
+    padding: 1.5rem;
+    font-size: 1rem;
+  }
+
+  #attemptBtn {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+}

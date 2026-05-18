@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>Semester Management - Admin</title>
+  <link rel="stylesheet" href="master.css">
+  <style>
+    body { background: var(--bg-color); color: var(--text-color); font-family: sans-serif; }
+    .container { max-width: 1100px; margin: auto; padding: 2rem; margin-top: 2.5rem; }
+    h1 { text-align: center; margin-bottom: 2rem; }
+    form { background: var(--card-color); padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; }
+    form .form-group { margin-bottom: 1rem; }
+    form label { display: block; margin-bottom: 0.3rem; }
+    form input, form select, form textarea { width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid var(--border-color); }
+    .btn { padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; border: none; margin-right: 0.5rem; }
+    .btn-primary { background: var(--primary-color); color: white; }
+    .btn-danger { background: crimson; color: white; }
+    .entry-card { background: var(--surface-color); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; border-left: 4px solid var(--primary-color); }
+    .entry-meta { font-size: 0.85rem; opacity: 0.7; margin-bottom: 0.5rem; }
+    .entry-actions { text-align: right; }
+    .modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); }
+    .modal.show { display: flex; }
+    .modal-content { background: var(--card-color); padding: 2rem; border-radius: 12px; width: 90%; max-width: 600px; }
+    button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.undo-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: black;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.undo-toast button {
+  margin-left: 10px;
+  background: white;
+  color: black;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+  </style>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Logo"> Al-Bayan
+      </a>
+      <div class="hamburger">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="register.html">Register</a>
+        <a href="students-dashboard.html">Student Dashboard</a>
+        <a href="semester.admin.html" class="active">Semester Work</a>
+        <a href="admin-inbox.html">Emails <span id="unreadCounter" style="background: red; color: white; font-size: 0.75rem; border-radius: 50%; padding: 2px 6px; margin-left: 4px;">0</span>
+</a>
+        <a href="payment.html">Payments</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Semester Management</h1>
+
+    <!-- Form -->
+    <form id="semesterForm">
+      <div class="form-group">
+        <label for="semester">Semester</label>
+        <input type="text" id="semester" placeholder="e.g., Spring 2022" required>
+      </div>
+      <div class="form-group">
+        <label for="type">Type</label>
+        <select id="type">
+          <option value="activity">Activity</option>
+          <option value="course_outline">Course Outline</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" rows="4" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="start_date">Start Date</label>
+        <input type="date" id="start_date">
+      </div>
+      <div class="form-group">
+        <label for="end_date">End Date</label>
+        <input type="date" id="end_date">
+      </div>
+      <button type="submit" class="btn btn-primary" id="saveEntry">Save Entry</button>
+      <button type="button" class="btn btn-danger" id="cancelEdit">Cancel Edit</button>
+    </form>
+
+    <!-- Entries -->
+     <input type="text" id="searchInput" placeholder="Search title...">
+
+<select id="filterSemester">
+  <option value="">All Semesters</option>
+  <option value="">Harmattan</option>
+  <option value="">Spring</option>
+</select>
+
+<select id="filterType">
+  <option value="">All Types</option>
+</select>
+    <div id="entriesContainer"></div>
+
+  </div>
+
+  <!-- Scripts -->
+   
+<script>
+  // Hamburger menu
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('show'));
+  document.addEventListener('click', e => {
+    if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+      navLinks.classList.remove('show');
+    }
+  });
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="translate.js"></script>
+  <script src="semester-admin.js"></script>
+</body>
+</html>

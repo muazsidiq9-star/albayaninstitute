@@ -1,0 +1,187 @@
+/* ================= BODY ================= */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main, .grades-section {
+  flex: 1;
+  padding: 0 20px;
+}
+
+/* ================= HEADER ================= */
+.page-header.grades-header {
+  position: relative;
+  background: url("result-check.jpg") center/cover no-repeat;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+}
+
+.page-header.grades-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.page-header .header-overlay {
+  position: relative;
+  text-align: center;
+  color: #fff;
+  padding: 15px;
+}
+
+.page-header .header-logo {
+  width: 55px;
+  margin-bottom: 10px;
+}
+
+.page-header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+}
+
+.page-header p {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* ================= CONTROLS ================= */
+.grades-controls {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.search-input, .filter-select {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  min-width: 150px;
+  flex: 1;
+}
+
+/* ================= TABLE WRAPPER (KEY FIX) ================= */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+}
+
+/* ================= TABLE ================= */
+.grades-table {
+  width: 100%;
+  min-width: 800px; /* keeps horizontal scroll */
+  border-collapse: collapse;
+  background: var(--card-color);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.grades-table th {
+  background-color: #1a73e8;
+  color: #f1f7ff;
+  padding: 12px 15px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.grades-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.grades-table tr:hover {
+  background-color: #c1d9f82d;
+}
+
+/* ================= FOOTER ================= */
+footer {
+  background-color: #1a73e8;
+  color: #fff;
+  text-align: center;
+  padding: 25px 15px;
+  font-size: 14px;
+}
+
+/* ================= WHATSAPP ================= */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 55px;
+  height: 55px;
+  background-color: #25D366;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+
+  cursor: grab;
+}
+
+.whatsapp-float img {
+  width: 28px;
+  height: 28px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .grades-controls {
+    flex-direction: column;
+  }
+
+  .grades-table {
+    min-width: 750px;
+  }
+
+  .page-header.grades-header {
+    height: 220px;
+  }
+}
+
+
+.download-wrapper {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.download-btn {
+  margin-top: 20px;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, #1a73e8, #155ab5);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(26, 115, 232, 0.45);
+}
+
+.grades-table {
+  direction: ltr;
+}
+
+.grades-table th,
+.grades-table td {
+  text-align: center;
+}

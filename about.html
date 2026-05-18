@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>About - Al-Bayan Arabic Institute</title>
+
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="about.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+
+<!-- NAVIGATION -->
+<nav class="master-nav">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+    </a>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="courses.html">Courses</a>
+      <a href="register.html">Register</a>
+      <a href="students-dashboard.html">Dashboard</a>
+      <a href="payment.html">Payment</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="login-btn pulse">Log in</a>
+
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header class="home-header">
+
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="background.mp4" type="video/mp4">
+  </video>
+    
+  <div class="header-overlay">
+
+    <img src="logo.png" alt="Logo" class="header-logo">
+    <h1>About Al-Bayan Arabic Institute</h1>
+    <p>Dedicated to providing quality Arabic education online for learners worldwide</p>
+  </div>
+</header>
+
+<!-- ABOUT CONTENT -->
+<section class="about-content">
+  <div class="container">
+
+    <h2>Who We Are</h2>
+    <p>
+     Al-Bayan Arabic Institute Online is an educational platform committed to teaching the Arabic language through structured and guided online learning. We serve students from different parts of the world who desire to understand Arabic for religious, academic, and conversational purposes.
+    </p>
+
+    <h2>Our Mission</h2>
+    <p>
+      Our mission is to empower students to understand the Arabic language clearly and confidently, especially the language of the Qur’an. We aim to remove fear and confusion from learning Arabic by using step-by-step methods guided by experienced teachers.
+    </p>
+
+    <h2>Our Vision</h2>
+    <p>
+      Our vision is to become a trusted online Arabic institute that nurtures a generation of learners who can read, understand, and communicate in Arabic with clarity, confidence, and correct understanding.
+    </p>
+
+    <h2>What Makes Us Different</h2>
+    <ul>
+      <li>Qualified and experienced Arabic instructors</li>
+      <li>Well-structured curriculum from beginner to advanced level</li>
+      <li>Strong focus on understanding, not memorization alone</li>
+      <li>Interactive classes with real student engagement</li>
+      <li>Flexible online learning environment</li>
+    </ul>
+
+    <h2>Who Can Join</h2>
+    <p>
+      Our programs are suitable for beginners with no prior knowledge of Arabic, intermediate learners seeking improvement, and advanced students aiming to strengthen their understanding of grammar and Arabic texts.
+    </p>
+
+    <h2>Our Commitment</h2>
+    <p>
+      We are committed to delivering quality education, maintaining academic integrity, supporting our students consistently, and creating a learning environment that encourages growth, discipline, and excellence.
+    </p>
+
+  </div>
+</section>
+
+  <!-- FOOTER -->
+  <footer>
+  <p>Al-Bayan Arabic Institute Online</p>
+  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
+  <p id="footerCopyright">
+  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+</p>
+<a href="privacy.html">Privacy Policy</a>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
+  <img src="whatsapp-icon.png" alt="WhatsApp">
+</a>
+  <!-- HAMBURGER JS (inside the page for simplicity) -->
+  <script>
+    function toggleMenu() {
+      const nav = document.getElementById('navLinks');
+      nav.classList.toggle('show');
+    }
+    document.addEventListener('click', function(e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+        nav.classList.remove('show');
+      }
+    });
+  </script>
+<script src="translate.js"></script>
+</body>
+</html>

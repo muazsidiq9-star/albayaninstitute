@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>Read & Write Arabic - Al-Bayan</title>
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="course-pages.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+
+<!-- Navigation -->
+<nav class="master-nav">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+    </a>
+    <div class="hamburger">☰</div>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="courses.html" class="active page-indicator">Courses</a>
+      <a href="register.html" data-translate="Register">Register</a>
+      <a href="students-dashboard.html">Dashboard</a>
+      <a href="payment.html">Payment</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="indiv-course-header" style="background-image: url('course-beginner.jpg');">
+  <div class="header-overlay">
+    <h1>Read & Write Arabic</h1>
+    <p>Learn how to read and write Arabic letters confidently from scratch.</p>
+    <a href="register.html" class="register-btn">Register Now</a>
+  </div>
+</header>
+
+<section class="course-content-section">
+
+  <div class="content-card intro-card fade-in">
+    <p>
+      This course is designed for absolute beginners who want to learn Arabic reading and writing step by step, with clarity and ease.
+    </p>
+  </div>
+
+  <div class="content-card fade-in">
+    <h2>Module 1: Arabic Alphabet</h2>
+    <p>Introduction to Arabic letters, shapes, and proper pronunciation.</p>
+  </div>
+
+  <div class="content-card fade-in">
+    <h2>Module 2: Letter Forms</h2>
+    <p>Learn how letters change shape at the beginning, middle, and end of words.</p>
+  </div>
+
+  <div class="content-card fade-in">
+    <h2>Module 3: Vowels & Harakāt</h2>
+    <p>Understanding short vowels, sukūn, tanwīn, and long vowels.</p>
+  </div>
+
+  <div class="content-card fade-in">
+    <h2>Module 4: Reading Practice</h2>
+    <p>Guided practice on reading words and simple sentences.</p>
+  </div>
+
+  <div class="content-card fade-in">
+    <h2>Module 5: Writing Practice</h2>
+    <p>Step-by-step writing exercises to build confidence and accuracy.</p>
+  </div>
+
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>Al-Bayan Arabic Institute Online</p>
+  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
+  <p id="footerCopyright">
+  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+</p>
+<a href="privacy.html">Privacy Policy</a>
+</footer>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
+  <img src="whatsapp-icon.png" alt="WhatsApp">
+</a>
+
+<!-- Scripts -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Hamburger toggle
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.getElementById('navLinks');
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', e => {
+      e.stopPropagation();
+      navLinks.classList.toggle('show');
+    });
+    document.addEventListener('click', e => {
+      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+        navLinks.classList.remove('show');
+      }
+    });
+  }
+
+  // Fade-in effect
+  const elements = document.querySelectorAll(".fade-in");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add("show");
+    });
+  }, { threshold: 0.2 });
+  elements.forEach(el => observer.observe(el));
+});
+</script>
+<script src="translate.js"></script>
+</body>
+</html>

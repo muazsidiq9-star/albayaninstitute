@@ -1,0 +1,739 @@
+/* ================= BASE ================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body, html {
+    min-height: 100%;
+    background-color: var(--bg-color);
+}
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+/* ================= HEADER ================= */
+.hall-header {
+    background-color: #cfe2f7;
+    padding: 40px 20px;
+    text-align: center;
+
+    /* REMOVE fixed height */
+    height: auto;
+}
+
+.hall-header h1 {
+    color: #004080;
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+.hall-header p {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+#timer {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #004080;
+}
+
+#countdownBarContainer,
+#progressBarContainer {
+    width: 100%;
+    height: 15px;
+    background-color: #ccc;
+    border-radius: 7px;
+    margin-bottom: 10px;
+}
+
+#countdownBar,
+#progressBar {
+    height: 100%;
+    width: 100%;
+    background-color: #00b300;
+    border-radius: 7px;
+    transition: width 0.5s ease;
+}
+
+/* ================= QUESTIONS ================= */
+#questionsContainer {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    width: 100%;
+    flex: 1;
+}
+
+#questionsContainer p {
+    
+    font-size: 100em;
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* MCQ Options stacked vertically */
+#questionsContainer label {
+    display: block;
+    background-color: #cfe2f7;
+    color: #333;
+    padding: 10px 12px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#questionsContainer label:hover {
+    background-color: #9ffef4;
+}
+
+#questionsContainer input[type="radio"] {
+    margin-left: 0;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Free text */
+#questionsContainer textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    resize: vertical;
+}
+
+/* ================= NAVIGATION BUTTONS ================= */
+.question-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 10px 0;
+}
+
+.btn-nav {
+    background-color: #004080;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-nav:hover:not(:disabled) {
+    background-color: #0066cc;
+    transform: translateY(-2px);
+}
+
+.btn-nav:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* ================= REVIEW MODAL ================= */
+#reviewModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+#reviewModal .modal-content {
+    background: var(--card-color);
+    padding: 24px;
+    border-radius: 10px;
+    max-width: 900px;
+    width: 95%;
+    max-height: 90vh;
+    height: 90hv;
+    overflow-y: auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* Title */
+#reviewModal h2 {
+    margin-bottom: 16px;
+    color: #004080;
+    text-align: center;
+}
+
+/* Review list */
+#reviewList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Each review item */
+#reviewList li {
+    background: #f5f7fa;
+    border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Question */
+#reviewList .question {
+    font-weight: bold;
+    color: #222;
+    text-align: left;
+}
+
+/* Answer */
+#reviewList .answer {
+    color: #004080;
+    text-align: left;
+    padding-left: 10px;
+    border-left: 3px solid #004080;
+    word-break: break-word;
+}
+
+#finalSubmitBtn {
+    background-color: #4CAF50;
+    color: #fff;
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+#finalSubmitBtn:hover:not(:disabled) {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+#finalSubmitBtn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* ================= COMPLETION MODAL ================= */
+#completionModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+#completionModal .modal-content {
+    background: var(--card-color);
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+}
+
+#completionModal button {
+    background-color: #004080;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    border: none;
+    margin: 10px 5px 0 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#completionModal button:hover {
+    background-color: #0066cc;
+    transform: translateY(-2px);
+}
+
+/* ================= FOOTER ================= */
+footer {
+    background-color: #004080;
+    color: #fff;
+    padding: 15px 20px;
+    text-align: center;
+
+    width: 100%;
+    flex-shrink: 0;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+/* ================= WHATSAPP FLOAT ================= */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 55px;
+  height: 55px;
+  background-color: #25D366;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+
+  cursor: grab;
+}
+
+.whatsapp-float img {
+  width: 28px;
+  height: 28px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .question-nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* ================= TIMER WARNINGS ================= */
+
+.time-warning {
+  margin-top: 8px;
+  margin-bottom: 2px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #fff;
+  background-color: #d32f2f; /* red */
+}
+
+/* hidden by default */
+.time-warning.hidden {
+  display: none;
+}
+
+/* ===== Countdown States ===== */
+
+#countdownBar.countdown-safe {
+  background-color: #00b300; /* green */
+}
+
+#countdownBar.countdown-warning-mid {
+  background-color: #ff9800; /* orange */
+}
+
+#countdownBar.countdown-warning-critical {
+  background-color: #d32f2f; /* red */
+  animation: flashRed 1s infinite;
+}
+/* already existed before – restoring behaviour */
+@keyframes flashRed {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+/* ================= RESPONSIVE (TABLET + MOBILE) ================= */
+
+/* Tablets */
+@media (max-width: 992px) {
+    .hall-header {
+        padding: 40px 20px;
+        height: auto;
+    }
+
+    .hall-header h1 {
+        font-size: 1.5em;
+    }
+
+    #questionsContainer {
+        padding: 15px;
+    }
+}
+
+/* Phones */
+@media (max-width: 768px) {
+
+    body, html {
+        font-size: 15px;
+    }
+
+    .hall-header {
+        padding: 25px 15px;
+        height: auto;
+    }
+
+    .hall-header h1 {
+        font-size: 1.3em;
+    }
+
+    #timer {
+        font-size: 1rem;
+    }
+
+    /* Progress bars */
+    #countdownBarContainer,
+    #progressBarContainer {
+        height: 12px;
+    }
+
+    /* Questions container */
+    #questionsContainer {
+        padding: 12px;
+        margin: 10px auto;
+    }
+
+    #questionsContainer p {
+        font-size: 1rem;
+    }
+
+    /* Options become more touch-friendly */
+    #questionsContainer label {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+
+    #questionsContainer textarea {
+        font-size: 0.95rem;
+    }
+
+    /* Navigation buttons */
+    .question-nav {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 10px 15px;
+    }
+
+    .btn-nav {
+        width: 100%;
+        font-size: 1rem;
+        padding: 14px;
+    }
+
+    /* Modal adjustments */
+    #reviewModal .modal-content {
+        width: 95%;
+        height: 85vh;
+        padding: 16px;
+    }
+
+    #reviewList li {
+        font-size: 0.95rem;
+    }
+
+    /* Completion modal */
+    #completionModal .modal-content {
+        width: 92%;
+        padding: 20px;
+    }
+
+    /* WhatsApp button */
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .whatsapp-float img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* Extra small phones */
+@media (max-width: 480px) {
+
+    .hall-header h1 {
+        font-size: 1.1em;
+    }
+
+    #questionsContainer p {
+        font-size: 0.95rem;
+    }
+
+    .btn-nav {
+        font-size: 0.95rem;
+        padding: 12px;
+    }
+
+    #reviewModal h2 {
+        font-size: 1.1rem;
+    }
+}
+
+.question-text,
+.question-text *,
+label span {
+  direction: auto;
+  unicode-bidi: plaintext;
+  text-align: start;
+}
+
+.question-text {
+  direction: auto;
+  unicode-bidi: plaintext;
+
+  text-align: start;
+
+  width: 100%;
+  font-weight: bold;
+
+  margin-bottom: 15px;
+  line-height: 1.7;
+
+  font-size: 1.05rem;
+}
+
+/* =========================
+   MODAL ACTION BUTTONS
+========================= */
+
+#closeReviewModal,
+#backToExamBtn {
+  background: #dc3545;
+  color: #fff;
+
+  border: none;
+  border-radius: 10px;
+
+  padding: 10px 18px;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+/* Hover */
+#closeReviewModal:hover,
+#backToExamBtn:hover {
+  background: #b02a37;
+  transform: translateY(-1px);
+}
+
+/* Active click */
+#closeReviewModal:active,
+#backToExamBtn:active {
+  transform: scale(0.97);
+}
+
+/* Close X button positioning */
+#closeReviewModal {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  width: 40px;
+  height: 40px;
+
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  font-size: 1rem;
+}
+
+/* Back button spacing */
+#backToExamBtn {
+  margin-top: 15px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+  #closeReviewModal {
+    width: 36px;
+    height: 36px;
+
+    font-size: 0.9rem;
+  }
+
+  #backToExamBtn {
+    width: 100%;
+  }
+}
+#reviewModal .modal-content {
+  position: relative;
+}
+#closeReviewModal {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+  border: none;
+
+  background: #dc3545;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.hall-header {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    footer {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    footer {
+        font-size: 0.85rem;
+        padding: 10px;
+    }
+}
+
+/* ================= HEADER (IMPROVED) ================= */
+.hall-header {
+    position: relative;
+    
+    text-align: center;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: #fff;
+
+    
+}
+
+/* dark overlay for readability */
+.hall-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 20, 50, 0.65);
+    z-index: 0;
+}
+
+.header-overlay {
+    position: relative;
+    z-index: 1;
+
+    max-width: 900px;
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* TITLE */
+.hall-header h1 {
+    font-size: 2rem;
+    color: #fff;
+  
+}
+
+/* MESSAGE */
+.hall-header p {
+    color: rgba(255,255,255,0.85);
+    font-size: 1rem;
+}
+
+/* TIMER */
+#timer {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-top: 3px;
+}
+
+/* WARNING */
+.time-warning {
+    margin: 10px auto 0;
+    max-width: 500px;
+}
+
+/* PROGRESS CONTAINERS */
+#countdownBarContainer,
+#progressBarContainer {
+    width: 100%;
+    height: 10px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.2);
+    overflow: hidden;
+}
+
+/* BARS */
+#countdownBar,
+#progressBar {
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.4s ease;
+}
+
+/* optional glow effect */
+#countdownBar {
+    box-shadow: 0 0 10px rgba(0,255,0,0.3);
+}
+.hall-header {
+    padding: 18px 20px;
+}
+
+.hall-header h1 { margin-bottom: 3px; }
+.hall-header p { margin-bottom: 3px; }
+#timer { margin-bottom: 3px; }
+
+#countdownBarContainer,
+#progressBarContainer {
+    margin-bottom: 3px;
+}
+
+/* ================= MOBILE FIX ================= */
+@media (max-width: 768px) {
+    .hall-header {
+        padding: 30px 10px 19px;
+    }
+
+    .hall-header h1 {
+        font-size: 1.5rem;
+    }
+
+    #timer {
+        font-size: 1rem;
+    }
+}

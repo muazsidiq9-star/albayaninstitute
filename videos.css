@@ -1,0 +1,249 @@
+/* =========================
+   BODY & MAIN
+========================= */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding-top: 60px;
+  background: var(--bg-color);
+}
+
+main.videos-page {
+  max-width: 1200px;
+  margin: 100px auto 50px auto;
+  padding: 0 20px;
+}
+
+/* =========================
+   HEADER
+========================= */
+header.courses-header {
+  position: relative;
+  background: url('background-resources.jpg') center/cover no-repeat;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+header.courses-header .header-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+header.courses-header img {
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+header.courses-header h1 {
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+header.courses-header p {
+  font-size: 1.1rem;
+}
+
+/* =========================
+   VIDEO GRID
+========================= */
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* =========================
+   VIDEO CARD
+========================= */
+
+.video-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 210px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  font-weight: bold;
+  background-size: cover;
+  background-position: center;
+}
+
+.video-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 180px;
+}
+
+.video-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+}
+
+.video-card .watch-btn {
+  display: none; /* hide text button since we now have the play icon */
+}
+
+/* Play icon overlay */
+.play-btn::after {
+  content: '▶️';
+  font-size: 3rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  cursor: pointer;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(0,0,0,0.7);
+}
+
+.video-card:not(.locked) .lock-overlay {
+  display: none;
+}
+
+/* Lock overlay */
+.lock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.65);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1rem;
+  opacity: 1;
+  transition: opacity 0.3s;
+  z-index: 2;
+}
+
+.video-card:not(.locked) .lock-overlay {
+  display: none;
+}
+
+
+/* =========================
+   VIDEO MODAL
+========================= */
+.video-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  background-color: var(--card-color);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-content iframe {
+  width: 100%;
+  height: 450px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  color: #ff0303;
+  top: 3px;
+  right: 18px;
+  font-size: 2rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Telegram button */
+.telegram-btn {
+  padding: 8px 15px;
+  background-color: #0088cc;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.telegram-btn:hover {
+  background-color: #006699;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  header.courses-header {
+    height: 220px;
+  }
+
+  header.courses-header h1 {
+    font-size: 1.6rem;
+  }
+
+  header.courses-header p {
+    font-size: 1rem;
+  }
+
+  .modal-content iframe {
+    height: 300px;
+  }
+}
+/* ===== WHATSAPP FLOAT ===== */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 55px;
+  height: 55px;
+  background-color: #25D366;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+
+  cursor: grab;
+}
+
+.whatsapp-float img {
+  width: 28px;
+  height: 28px;
+}

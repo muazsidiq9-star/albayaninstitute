@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>Learning Videos - Al-Bayan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="videos.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+
+<!-- ================= NAV ================= -->
+<nav class="master-nav">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+    </a>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="courses.html">Courses</a>
+      <a href="register.html">Register</a>
+      <a href="students-dashboard.html">Student Dashboard</a>
+      <a href="videos.html" class="active">Videos</a>
+      <a href="payment.html">Payment</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= HEADER ================= -->
+<header class="courses-header">
+  <div class="header-overlay">
+    <img src="logo.png" alt="Al-Bayan Logo">
+    <h1>🎬 Learning Videos</h1>
+    <p>Access videos based on your active subscription</p>
+  </div>
+</header>
+
+<!-- ================= MAIN ================= -->
+<main class="videos-page">
+  <section class="videos-grid">
+    <!-- JS injects video cards here -->
+  </section>
+</main>
+
+<!-- ================= VIDEO MODAL ================= -->
+<div id="videoModal" class="video-modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+
+    <iframe
+      id="youtubeFrame"
+      src=""
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
+
+    <a id="telegramLink"
+       href="#"
+       target="_blank"
+       class="telegram-btn">
+      Watch on Telegram
+    </a>
+  </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <p>Al-Bayan Arabic Institute Online</p>
+  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
+  <p id="footerCopyright">
+  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+</p>
+<a href="privacy.html">Privacy Policy</a>
+</footer>
+
+<!-- ================= WHATSAPP FLOAT ================= -->
+<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
+  <img src="whatsapp-icon.png" alt="WhatsApp">
+</a>
+
+<!-- ================= SCRIPTS ================= -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="videos.js"></script>
+<script src="translate.js"></script>
+<script>
+  function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("show");
+  }
+
+  document.addEventListener("click", function (e) {
+    const menu = document.getElementById("navLinks");
+    const burger = document.querySelector(".hamburger");
+    if (!menu.contains(e.target) && !burger.contains(e.target)) {
+      menu.classList.remove("show");
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+/* =========================
+   HEADER
+========================= */
+.schedule-header {
+  position: relative;
+  background: url("background-schedule.jpg") center/cover no-repeat;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0; /* match navbar height */
+}
+
+.schedule-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.schedule-header .header-overlay {
+  position: relative;
+  text-align: center;
+  color: #fff;
+  padding: 20px;
+  z-index: 2;
+}
+
+.header-logo {
+  width: 90px;
+  margin-bottom: 10px;
+}
+
+.schedule-header h1 {
+  font-size: 2.4rem;
+  margin-bottom: 6px;
+}
+
+.schedule-header p {
+  font-size: 1rem;
+  opacity: 0.95;
+}
+
+/* =========================
+   SECTION
+========================= */
+.schedule-section {
+  max-width: 1100px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.schedule-section h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #039752;
+}
+
+/* =========================
+   TABLE WRAPPER (SCROLL)
+========================= */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* scrollbar styling */
+.table-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: #1a73e8;
+  border-radius: 10px;
+}
+
+/* =========================
+   TABLE
+========================= */
+.schedule-table {
+  width: 100%;
+  min-width: 750px; /* forces horizontal scroll */
+  border-collapse: separate; /* IMPORTANT for sticky */
+  border-spacing: 0;
+
+  background: var(--card-color);
+  border-radius: 12px;
+  overflow: hidden;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* =========================
+   HEADER (STICKY)
+========================= */
+.schedule-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+
+  background: #0f5132;
+  color: #fff;
+}
+
+/* =========================
+   CELLS
+========================= */
+.schedule-table th,
+.schedule-table td {
+  padding: 14px 16px;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 0.95rem;
+}
+
+/* =========================
+   ROW STYLES
+========================= */
+.schedule-table tbody tr:nth-child(even) {
+  background: var(--surface-color);
+}
+
+.schedule-table tbody tr:hover {
+  background: #a3bef707;
+}
+
+/* =========================
+   STICKY FIRST COLUMN
+========================= */
+.schedule-table th:first-child,
+.schedule-table td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 4;
+  background: var(--card-color);
+}
+
+/* keep header above everything */
+.schedule-table thead th:first-child {
+  z-index: 6;
+  background: #0f5132;
+}
+
+/* subtle separation shadow */
+.schedule-table th:first-child,
+.schedule-table td:first-child {
+  box-shadow: 2px 0 6px rgba(0,0,0,0.08);
+}
+
+/* =========================
+   COLUMN HIGHLIGHTS
+========================= */
+.schedule-table td:nth-child(1) {
+  font-weight: 600;
+  color: #0f766e;
+}
+
+.schedule-table td:nth-child(4) {
+  font-weight: 600;
+}
+
+/* =========================
+   BADGES & STATES
+========================= */
+.status-badge {
+  padding: 3px 8px;
+  border-radius: 6px;
+  color: #f0fdfa;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-badge.scheduled { background-color: #3498db; }
+.status-badge.completed { background-color: #2ecc71; }
+.status-badge.cancelled { background-color: #e74c3c; }
+
+.join-btn {
+  background-color: #03a9f4;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.join-btn:hover {
+  background-color: #0288d1;
+}
+
+/* =========================
+   SPECIAL STATES
+========================= */
+.today-class {
+  border-left: 5px solid #0f766e;
+}
+
+.ended {
+  color: #94a3b8;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+/* =========================
+   BUTTON BASE
+========================= */
+.btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.25s ease;
+}
+
+/* =========================
+   ENTER EXAM BUTTON
+========================= */
+.btn-start {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+  color: #fff;
+
+  padding: 8px 14px;
+  border-radius: 8px;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Hover effect */
+.btn-start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(255,152,0,0.4);
+}
+
+/* Active (tap feel on mobile) */
+.btn-start:active {
+  transform: scale(0.95);
+}
+/* =========================
+   FOOTER
+========================= */
+footer {
+  background-color: #1a73e8;
+  color: #ffffff;
+  text-align: center;
+  padding: 25px 15px;
+  font-size: 14px;
+  margin-top: 60px;
+}
+
+footer p {
+  margin-bottom: 6px;
+}
+
+/* =========================
+   WHATSAPP FLOAT
+========================= */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 55px;
+  height: 55px;
+  background-color: #25D366;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+
+  cursor: grab;
+}
+
+.whatsapp-float img {
+  width: 28px;
+  height: 28px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 768px) {
+
+  .schedule-header {
+    height: 240px;
+  }
+
+  .header-logo {
+    width: 70px;
+  }
+
+  .schedule-header h1 {
+    font-size: 1.9rem;
+  }
+
+  .schedule-table th,
+  .schedule-table td {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Glow for ongoing exam */
+.btn-start {
+  animation: pulse-glow 1.5s infinite;
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 0 rgba(255,152,0,0.4); }
+  50% { box-shadow: 0 0 12px rgba(255,152,0,0.8); }
+  100% { box-shadow: 0 0 0 rgba(255,152,0,0.4); }
+}

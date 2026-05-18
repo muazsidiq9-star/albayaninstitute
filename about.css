@@ -1,0 +1,335 @@
+/* ===========================
+   ABOUT PAGE STYLES
+=========================== */
+
+/* ---------- HEADER ---------- */
+.about-header {
+  position: relative;
+  min-height: 70vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+
+.about-header .header-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.55); /* semi-transparent overlay */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.home-header .header-logo {
+  width: 70px;  /* adjust size */
+  margin-bottom: 20px;
+  display: block;
+  animation: heartbeat 2s infinite;
+}
+
+.about-header h1 {
+  font-size: clamp(28px, 5vw, 42px);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.about-header p {
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: 650px;
+}
+
+/* ================================
+   ABOUT PAGE CONTENT STYLES ONLY
+   ================================ */
+
+/* General section spacing */
+.about-content {
+  padding: 4rem 1.2rem;
+  background: var(--bg-color);
+}
+
+.about-content .container {
+  max-width: 900px;
+  margin: auto;
+  background: var(--card-color);
+  padding: 3rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 19, 59, 0.116);
+}
+
+/* Headings */
+.about-content h2 {
+  font-size: 1.9rem;
+  margin-bottom: 0.8rem;
+  color: var(--text-color);
+  position: relative;
+  /*text-align: center;*/
+}
+
+.about-content h2::after {
+  content: "";
+  display: block;
+  width: 200px;
+  height: 4px;
+  background: #4CAF50;
+  margin-top: 8px;
+  border-radius: 4px;
+}
+
+/* Paragraphs */
+.about-content p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-color);
+  margin-bottom: 2rem;
+  text-align: justify;
+}
+
+/* Lists */
+.about-content ul {
+  margin: 1.2rem 0 2.5rem 1.2rem;
+  padding-left: 1rem;
+}
+
+.about-content ul li {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 0.7rem;
+  color: var(--text-color);
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.about-content ul li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .about-content {
+    padding: 2.5rem 1rem;
+  }
+
+  .about-content .container {
+    padding: 2rem 1.4rem;
+  }
+
+  .about-content h2 {
+    font-size: 1.6rem;
+  }
+
+  .about-content p,
+  .about-content ul li {
+    font-size: 1rem;
+  }
+}
+/* ---------- FLOATING WHATSAPP ---------- */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 55px;
+  height: 55px;
+  background-color: #25D366;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+
+  cursor: grab;
+}
+
+.whatsapp-float img {
+  width: 28px;
+  height: 28px;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+  background: #1a73e8;
+  color: var(--text-color);
+  text-align: center;
+  padding: 18px 10px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ---------- HEARTBEAT ANIMATION ---------- */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.1); }
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .about-header {
+    min-height: 50vh;
+  }
+}
+
+
+/* =========================
+   HERO HEADER (CLEAN)
+========================= */
+
+.home-header {
+  position: relative;
+  height: 85vh;
+  min-height: 520px;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* VIDEO */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* DARK OVERLAY */
+.home-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1;
+}
+
+/* CONTENT */
+.header-overlay {
+  position: relative;
+  z-index: 2;
+
+  text-align: center;
+  color: white;
+
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* LOGO */
+.header-logo {
+  width: 80px;
+  margin-bottom: 15px;
+}
+
+/* TEXT */
+.home-header h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.home-header p {
+  font-size: 1rem;
+  max-width: 500px;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+  .home-header {
+    height: 55vh;
+    min-height: 350px;
+  }
+
+  .header-logo {
+    width: 60px;
+    margin-bottom: 10px;
+  }
+
+  .home-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .home-header p {
+    font-size: 0.9rem;
+    padding: 0 10px;
+  }
+
+  .hero-video {
+    display: none; /* optional: improves performance */
+  }
+
+  .home-header {
+    background: url('mobile-hero.jpg') center/cover no-repeat;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 768px) {
+
+  .home-header {
+    height: 55vh;
+    min-height: 350px;
+  }
+
+  /* KEEP VIDEO BUT CONTROL IT */
+  .hero-video {
+    display: block;
+    object-fit: cover;
+    object-position: center center;
+    transform: scale(1.1); /* slight zoom so it fills better */
+  }
+
+  /* optional fallback overlay clarity */
+  .home-header::before {
+    background: rgba(0,0,0,0.55);
+  }
+
+  .header-logo {
+    width: 60px;
+    margin-bottom: 10px;
+  }
+
+  .home-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .home-header p {
+    font-size: 0.9rem;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-video {
+    filter: brightness(0.85) contrast(1.1);
+  }
+}

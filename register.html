@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>Register | Al-Bayan Arabic Institute</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="register.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+
+<!-- ================= NAVIGATION ================= -->
+<nav class="master-nav">
+  <div class="nav-container">
+    <a href="register.html" class="logo">
+      <img src="logo.png" alt="Al-Bayan Logo">
+      <span>Al-Bayan</span>
+    </a>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <div class="nav-links" id="navLinks">
+      <!--a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="courses.html">Courses</a>
+      <a href="register.html" class="active">Register</a>
+      <a href="students-dashboard.html">Dashboard</a>
+      <a href="payment.html">Payment</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="login-btn pulse">Log in</a-->
+
+    </div>
+  </div>
+</nav>
+<div class="menu-overlay" id="menuOverlay"></div> 
+
+<!-- ================= HEADER ================= -->
+<header class="register-header">
+  <div class="header-overlay">
+    <img src="logo.png" alt="Al-Bayan Logo" class="header-logo">
+    <h1>Online Registration</h1>
+    <p>Join Al-Bayan Arabic Institute Online Classes</p>
+    <p>Kindly fill in your details correctly</p>
+  </div>
+</header>
+
+<!-- ================= FORM SECTION ================= -->
+<section class="register-section">
+  <form id="registration-form">
+<p class="register-note">KINDLY FILL IN ALL REQUIRED INFORMATIONS CORRECTLY.</p>
+    <label for="fullname">Full Name *</label>
+    <input type="text" id="fullname" name="fullname" required>
+
+    <label for="email">Email Address *</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="gender">Gender *</label>
+    <select id="gender" name="gender" required>
+      <option value="">Select</option>
+      <option>Male</option>
+      <option>Female</option>
+    </select>
+
+    <label for="age">Age *</label>
+    <input type="number" id="age" name="age" required>
+
+    <label for="nationality">Nationality *</label>
+    <input type="text" id="nationality" name="nationality" required>
+
+    <label for="country">Country of Residence *</label>
+    <input type="text" id="country" name="country" required>
+
+    <label for="whatsapp">WhatsApp Phone Number *</label>
+    <input type="tel" id="whatsapp" name="whatsapp" placeholder="+234..." required>
+
+    <label for="levelArabic">Current Level of Arabic *</label>
+    <select id="levelArabic" name="levelArabic" required>
+      <option value="">Select</option>
+      <option>Read & Write Arabic</option>
+      <option>Beginner</option>
+      <option>Intermediate</option>
+      <option>Advanced</option>
+    </select>
+
+    <label for="readQuran">Can you read the Qur'an with Tajweed? *</label>
+    <select id="readQuran" name="readQuran" required>
+      <option value="">Select</option>
+      <option>Yes</option>
+      <option>No</option>
+      <option>A little</option>
+    </select>
+
+    <label for="attendOnline">Can you attend online classes consistently? *</label>
+    <select id="attendOnline" name="attendOnline" required>
+      <option value="">Select</option>
+      <option>Yes</option>
+      <option>No</option>
+    </select>
+
+    <label for="hearAbout">How did you hear about us?</label>
+    <select id="hearAbout" name="hearAbout">
+      <option value="">Select</option>
+      <option>Social Media</option>
+      <option>A Friend / Relative</option>
+      <option>Personal search</option>
+    </select>
+
+    <label for="classTime">Preferred Class Time</label>
+    <input type="text" id="classTime" name="classTime" placeholder="Include time zone">
+
+    <label for="reasonArabic">Why do you want to learn Arabic?</label>
+    <select id="reasonArabic" name="reasonArabic">
+      <option value="">Select</option>
+      <option>Understanding the Qur'an</option>
+      <option>Speaking Arabic</option>
+      <option>Islamic studies</option>
+      <option>Personal interest</option>
+      <option>Other</option>
+      <option>All of the above</option>
+    </select>
+
+    <label for="additional">Additional information</label>
+    <textarea id="additional" name="additional" rows="4"></textarea>
+
+    <!-- Passport / Profile Picture -->
+    <div class="passport-upload">
+      <label for="passport">Upload Passport (Max 2MB):</label>
+      <p class="passport-note">Niqāb-wearing females may upload photos with their faces covered.</p>
+      <input type="file" id="passport" accept="image/*">
+      <img id="passport-preview" src="passport-placeholder.png" alt="Passport Preview">
+      <small id="passport-warning" style="display:none;color:red;">
+        Passport must not exceed 2MB
+      </small>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="submit-btn">
+  <span data-i18n="Submit Registration">Submit Registration</span>
+  <span class="arrow">➔</span>
+</button>
+        <p class="register-note1">⚠️ Don't submit two forms. Click submit button once!.</p>
+      </div>
+
+    <!-- Success & Error Messages -->
+    <p id="success-msg" style="display:none;color:green;"></p>
+    <p id="error-msg" style="display:none;color:red;"></p>
+
+  </form>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <p>Al-Bayan Arabic Institute Online</p>
+  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
+  <p id="footerCopyright">
+  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+</p>
+<a href="privacy.html">Privacy Policy</a>
+</footer>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
+  <img src="whatsapp-icon.png" alt="WhatsApp">
+</a>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+function toggleMenu() {
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.getElementById('navLinks');
+  if (!hamburger || !navLinks) return;
+  navLinks.classList.toggle('show');
+}
+
+// Close menu if clicked outside
+document.addEventListener('click', function(e) {
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.getElementById('navLinks');
+  if (!hamburger || !navLinks) return;
+  if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+    navLinks.classList.remove('show');
+  }
+});
+</script>
+
+<!-- Supabase JS library -->
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<script>
+  const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+
+  window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  
+</script>
+
+<script src="register.js" defer></script>
+<script src="translate.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>Test Hall - Al-Bayan</title>
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="test-hall.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+
+<!-- Navigation -->
+<nav class="master-nav">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+    </a>
+    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="students-dashboard.html">Student Dashboard</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<header class="hall-header" data-no-translate="true" style="background-image: url('background-main.jpg');">
+    <div class="header-overlay">
+  <h1 id="examTitle" data-no-translate="true">Loading Test...</h1>
+  <p id="examMessage" data-no-translate="true">Your test details will appear here once it starts</p>  <div id="timer">Time Left: <span id="time">--:--</span></div>
+  <div id="timeWarning" class="time-warning hidden">
+  ⚠️ Only 2 minutes remaining. Please finalize your answers
+</div>
+  <div id="countdownBarContainer">
+    <div id="countdownBar"></div>
+  </div>
+  <div id="progressBarContainer">
+    <div id="progressBar"></div>
+  </div>
+</header>
+
+<!-- Questions Container -->
+<section id="questionsContainer">
+  <!-- JS injects one question at a time here -->
+</section>
+
+<!-- Navigation Buttons -->
+<div class="question-nav">
+  <button id="prevBtn" class="btn-nav" disabled>Previous</button>
+  <button id="reviewBtn" class="btn-nav" disabled>Review</button>
+  <button id="nextBtn" class="btn-nav" disabled>Next</button>
+</div>
+
+<!-- Review Modal -->
+<div id="reviewModal">
+  <div class="modal-content">
+    <button id="closeReviewModal" class="close-modal-btn">✖</button>
+    <h2>Review Your Answers</h2>
+    <div id="reviewList"></div>
+    <button id="backToExamBtn">Back to Exam</button>
+    <button id="finalSubmitBtn">Submit All Answers</button>
+  </div>
+</div>
+
+<div id="completionModal" style="display:none;">
+  <div class="modal-content">
+    <h2>✅ Test/Exam Submitted</h2>
+    <p>Thank you. Your test/exam has been successfully submitted. Results will be released later.</p>
+
+    <button id="goDashboardBtn">Go to Dashboard</button>
+    <button id="logoutBtn">Logout</button>
+  </div>
+</div>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
+  <img src="whatsapp-icon.png" alt="WhatsApp">
+</a>
+
+<footer>
+  <p>Al-Bayan Arabic Institute Online</p>
+  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
+  <p id="footerCopyright">
+  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+</p>
+<a href="privacy.html">Privacy Policy</a>
+</footer>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<script>
+  // Hamburger Menu
+  function toggleMenu() {
+    const nav = document.getElementById("navLinks");
+    nav.classList.toggle("show");
+  }
+  document.addEventListener("click", function(e) {
+    const nav = document.getElementById("navLinks");
+    const hamburger = document.querySelector(".hamburger");
+    if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+      nav.classList.remove("show");
+    }
+  });
+</script>
+<script src="test-hall.js"></script>
+<script src="translate.js"></script>
+
+</body>
+</html>

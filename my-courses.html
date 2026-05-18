@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>My Courses - Al-Bayan</title>
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="my-courses.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="register.html">Register</a>
+        <a href="students-dashboard.html">Dashboard</a>
+       
+        <a href="payment.html">Payment</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="my-courses-header"style="background-image: url('background-resources.jpg');">
+    <div class="header-overlay">
+      <img src="logo.png" alt="Al-Bayan Logo" class="header-logo">
+      <h1>My Courses</h1>
+      <p>All courses you are enrolled in, with quick links to schedules</p>
+    </div>
+  </header>
+
+  <!-- COURSES CARDS -->
+  <main>
+    <section class="courses-section" id="coursesSection">
+      <h2>Your Enrolled Courses</h2>
+      <div class="courses-container" id="coursesContainer">
+        <!-- JS will populate course cards here -->
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+  <p>Al-Bayan Arabic Institute Online</p>
+  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
+  <p id="footerCopyright">
+  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+</p>
+<a href="privacy.html">Privacy Policy</a>
+</footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
+  <img src="whatsapp-icon.png" alt="WhatsApp">
+</a>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <script>
+const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+console.log("Supabase:", window.supabase);
+console.log("Client:", sb);
+</script>
+
+  <!-- SCRIPT -->
+  <script src="my-courses.js"></script>
+  <script>
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("show");
+    }
+    document.addEventListener("click", function(e) {
+      const menu = document.getElementById("navLinks");
+      const burger = document.querySelector(".hamburger");
+      if (!menu.contains(e.target) && !burger.contains(e.target)) {
+        menu.classList.remove("show");
+      }
+    });
+  </script>
+  <script src="translate.js"></script>
+</body>
+</html>

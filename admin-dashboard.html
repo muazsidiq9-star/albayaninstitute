@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>Admin Dashboard | Al-Bayan Arabic Institute</title>
+
+  <!-- MASTER STYLES -->
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="admin-dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="admin-dashboard.html" class="logo">
+        <img src="logo.png" alt="Logo"> Al-Bayan
+      </a>
+      <button id="sendWelcomeEmails" class="btn btn-email">
+  Send Welcome Emails
+</button>
+      <button class="btn btn-undo" onclick="undoDelete()" title="Undo">
+  <i class="fas fa-undo"></i>
+</button>
+      <div class="hamburger">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="register.html">Register</a>
+        <a href="students-dashboard.html">Student Dashboard</a>
+        <a href="admin-dashboard.html" class="active">Admin Dashboard</a>
+        <a href="admin-inbox.html">Emails<span id="unreadCounter" style="background: red; color: white; font-size: 0.75rem; border-radius: 50%; padding: 2px 6px; margin-left: 4px;">0</span>
+</a>
+        <a href="semester-admin.html">Semester Work</a>
+        <a href="payment.html">Payments</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="contact.html">Contact</a>
+        <button id="logoutBtn" class="logout-btn">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="home-header">
+
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="background.mp4" type="video/mp4">
+  </video>
+
+  <div class="header-overlay">
+    <img src="logo.png" class="header-logo">
+    <h1>Admin Dashboard</h1>
+    <h3 id="dashboardGreeting"></h3>
+    <p>Manage Students, Payments, Grades & Schedule</p>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <section class="stats">
+  <div class="stat-card">
+    <h3 id="totalStudents" data-no-translate="true">0</h3>
+    <p>Students</p>
+  </div>
+
+  <div class="stat-card">
+    <h3 id="totalPayments" data-no-translate="true">0</h3>
+    <p>Payments</p>
+  </div>
+
+  <div class="stat-card">
+    <h3 id="totalAmountPaid" data-no-translate="true">₦0</h3>
+    <p>Amount Paid</p>
+  </div>
+</section>
+
+  <!-- STUDENTS SECTION -->
+  <section>
+    <div class="section-header">
+      <h2>Students</h2>
+      <input type="text" id="searchStudents" class="search-input" placeholder="🔍 Search Students...">
+      <button class="add-btn" onclick="openModal('studentModal')">+ Add Student</button>
+    </div>
+    <div class="table-container">
+      <table id="students-table">
+        <thead>
+          <tr>
+            <th>Photo</th><th>Matric Number</th><th>Name</th><th>Email</th><th>WhatsApp</th><th>Country</th><th>Gender</th><th>Age</th><th>Level</th><th>Status</th><th>Admission</th><th>Actions</th><th>Welcome Email</th><th>Edit</th><th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="6" style="text-align:center;">No students yet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PAYMENTS SECTION -->
+  <section>
+    <div class="section-header">
+      <h2>Payments</h2>
+      <input type="text" id="searchPayments" class="search-input" placeholder="🔍 Search Payments...">
+      <button class="add-btn" onclick="openModal('paymentModal')">+ Add Payment</button>
+    </div>
+    <div class="table-container">
+      <table id="payments-table">
+        <thead>
+          <tr>
+            <th>Receipt</th><th>Student Name</th><th>Matric Number</th><th>Email</th><th>Level</th><th>Amount</th><th>Month</th><th>Method</th><th>Date</th><th>Status</th><th>Mark</th><th>Edit</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="6" style="text-align:center;">No payments yet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+  <section>
+  <div class="admin-container">
+
+  <div class="card">
+  <h2>💳 Manage Student Fees</h2>
+
+  <!-- FORM -->
+  <select id="studentSelect">
+  <option value="">Select Student</option>
+</select>
+
+    <select id="month">
+      <option value="">Select Month</option>
+      <option>January</option>
+      <option>February</option>
+      <option>March</option>
+      <option>April</option>
+      <option>May</option>
+      <option>June</option>
+      <option>July</option>
+      <option>August</option>
+      <option>September</option>
+      <option>October</option>
+      <option>November</option>
+      <option>December</option>
+    </select>
+
+    <input id="amount" type="number" placeholder="Amount" />
+
+    <button class="btn btn-save" onclick="saveFee()">💾 Save</button>
+  </div>
+  </div>
+
+  <!-- SEARCH -->
+  <input 
+    id="search" 
+    placeholder="🔍 Search by matric..." 
+    oninput="filterFees()" 
+    class="search-box"
+  />
+
+  <!-- TABLE -->
+  <div id="feeTable"></div>
+</section>
+</div>
+
+
+  <!-- GRADES SECTION -->
+  <section>
+    <div class="section-header">
+      <h2>Grades</h2>
+      <input type="text" id="searchGrades" class="search-input" placeholder="🔍 Search Grades...">
+      <button class="add-btn" onclick="openModal('gradeModal')">+ Add Grade</button>
+    </div>
+    <div class="table-container">
+      <table id="grades-table">
+        <thead>
+          <tr>
+            <th>Student</th><th>Matric Number</th><th>Level</th><th>Course</th><th>Semester</th><th>Assessment</th><th>Exam</th><th>Total</th><th>Status</th><th>Remark</th><th>Released</th><th>Edit</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="6" style="text-align:center;">No grades yet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SCHEDULE SECTION -->
+  <section>
+    <div class="section-header">
+      <h2>Schedule</h2>
+      <input type="text" id="searchSchedule" class="search-input" placeholder="🔍 Search Schedule...">
+      <button class="add-btn" onclick="openModal('scheduleModal')">+ Add Class</button>
+      </div>
+    <div class="table-container">
+      <table id="schedule-table">
+        <thead>
+          <tr>
+            <th>Level</th><th>Course</th><th>Instructor</th><th>Date</th><th>Time</th><th>Link</th><th>Status</th><th>Edit</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="6" style="text-align:center;">No classes yet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ASSESSMENTS SECTION -->
+<section>
+  <div class="section-header">
+    <h2>Assessments</h2>
+    <input type="text" id="searchAssessments" class="search-input" placeholder="🔍 Search Assessments...">
+    <button class="add-btn" onclick="openModal('assessmentModal')">+ Add Assessment</button>
+  </div>
+
+  <div class="table-container">
+    <table id="assessments-table">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Title</th>
+          <th>Level</th>
+          <th>Course</th>
+          <th>Semester</th>
+          <th>Type</th>
+          <th>Max Score</th>
+          <th>Duration</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Status</th>
+          <th>Active</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="assessments-body">
+        <tr>
+          <td colspan="6" style="text-align:center;">No assessments yet</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+  <!-- MODALS -->
+  <div class="modal" id="studentModal">
+  <div class="modal-content modal-large">
+    <span class="btn btn-close" onclick="closeModal('studentModal')">&times;</span>
+    <h2>Add Student</h2>
+    <div class="modal-grid">
+      <label>Name</label>
+      <input type="text" id="studentName" placeholder="Full Name">
+
+      <label>Email</label>
+      <input type="email" id="studentEmail" placeholder="Email Address">
+
+      <label for="whatsapp">WhatsApp Phone Number *</label>
+      <input type="tel" id="studentWhatsApp" name="whatsapp" placeholder="+234..." required>
+
+      <label>Country</label>
+      <input type="Country" id="studentCountry" placeholder="Country">
+
+      <label>Gender</label>
+      <input type="Gender" id="studentGender" placeholder="Gender">
+
+      <label>Age</label>
+      <input type="age" id="studentAge" placeholder="Age">
+
+      <label>Level</label>
+        <select id="studentLevel" required>
+          <option value="">-- Choose Level --</option>
+          <option>Read and Write Arabic</option>
+          <option>Beginner</option>
+          <option>Intermediate</option>
+          <option>Advanced</option>
+        </select>
+
+      <label>Status</label>
+      <select id="studentStatus">
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+
+      <label>Admission</label>
+        <select id="studentAdmission">
+          <option value="true">✅ Approved</option>
+        <option value="false">❌ Not Approved</option>
+        </select>
+
+      <label>Passport Photo</label>
+      <input type="file" id="studentPassport" accept="image/*">
+    </div>
+    <div class="modal-actions">
+      <button id="addStudentBtn" class="btn btn-save" onclick="addStudent()">Save</button>
+      <button class="btn btn-cancel" onclick="closeModal('studentModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+  <div class="modal" id="paymentModal">
+  <div class="modal-content modal-large">
+    <span class="btn btn-close" onclick="closeModal('paymentModal')">&times;</span>
+    <h2>Add Payment</h2>
+    <div class="modal-grid">
+      <label>Student</label>
+    <select id="paymentStudent">
+      <option value="">Select a student</option>
+    </select>
+
+      <label>Level</label>
+        <select id="paymentLevel" required>
+          <option value="">-- Select Level --</option>
+          <option>Read and Write Arabic</option>
+          <option>Beginner</option>
+          <option>Intermediate</option>
+          <option>Advanced</option>
+        </select>
+
+      <label>Amount</label>
+      <input type="number" id="paymentAmount" placeholder="Amount Paid">
+      
+     
+  <label>Currency</label>
+  <select id="paymentCurrency" required>
+    <option value="NGN">₦ NGN - Nigerian Naira</option>
+
+<option value="USD">$ USD - US Dollar</option>
+<option value="EUR">€ EUR - Euro</option>
+<option value="GBP">£ GBP - British Pound</option>
+
+<option value="GHS">₵ GHS - Ghanaian Cedi</option>
+<option value="XOF">CFA XOF - West African CFA Franc</option>
+<option value="XAF">CFA XAF - Central African CFA Franc</option>
+<option value="ZAR">R ZAR - South African Rand</option>
+<option value="KES">KSh KES - Kenyan Shilling</option>
+
+<option value="EGP">£ EGP - Egyptian Pound</option>
+<option value="MAD">MAD - Moroccan Dirham</option>
+<option value="DZD">DZD - Algerian Dinar</option>
+<option value="TND">TND - Tunisian Dinar</option>
+
+<option value="UGX">UGX - Ugandan Shilling</option>
+<option value="TZS">TZS - Tanzanian Shilling</option>
+<option value="RWF">RWF - Rwandan Franc</option>
+
+<option value="CAD">$ CAD - Canadian Dollar</option>
+<option value="AUD">$ AUD - Australian Dollar</option>
+<option value="NZD">$ NZD - New Zealand Dollar</option>
+
+<option value="JPY">¥ JPY - Japanese Yen</option>
+<option value="CNY">¥ CNY - Chinese Yuan</option>
+<option value="INR">₹ INR - Indian Rupee</option>
+
+<option value="CHF">CHF - Swiss Franc</option>
+<option value="SEK">kr SEK - Swedish Krona</option>
+<option value="NOK">kr NOK - Norwegian Krone</option>
+<option value="DKK">kr DKK - Danish Krone</option>
+
+<option value="AED">د.إ AED - UAE Dirham</option>
+<option value="SAR">﷼ SAR - Saudi Riyal</option>
+<option value="QAR">﷼ QAR - Qatari Riyal</option>
+<option value="KWD">د.ك KWD - Kuwaiti Dinar</option>
+<option value="BHD">د.ب BHD - Bahraini Dinar</option>
+
+<option value="SGD">$ SGD - Singapore Dollar</option>
+<option value="HKD">$ HKD - Hong Kong Dollar</option>
+  </select>
+
+      <label>Month</label>
+      <select id="paymentMonth" required>
+  <option value="">Select Month</option>
+  <option value="January">January</option>
+  <option value="February">February</option>
+  <option value="March">March</option>
+  <option value="April">April</option>
+  <option value="May">May</option>
+  <option value="June">June</option>
+  <option value="July">July</option>
+  <option value="August">August</option>
+  <option value="September">September</option>
+  <option value="October">October</option>
+  <option value="November">November</option>
+  <option value="December">December</option>
+</select>
+
+      <label>Date</label>
+      <input type="date" id="paymentDate">
+
+      <label>Method</label>
+      <input type="text" id="paymentMethod">
+
+      <label>Status</label>
+      <select id="paymentStatus">
+        <option value="paid">Paid</option>
+        <option value="pending">Pending</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button id="addPaymentBtn" class="btn btn-save" onclick="addPayment()">Save</button>
+      <button class="btn btn-cancel" onclick="closeModal('paymentModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+  <div class="modal" id="gradeModal">
+  <div class="modal-content modal-large">
+    <span class="btn btn-close" onclick="closeModal('gradeModal')">&times;</span>
+    <h2>Add Grade</h2>
+    <div class="modal-grid">
+      <label>Student</label>
+      <select id="gradeStudent">
+        <option value="">Select a student</option>
+        <!-- JS will populate options here with fullname as text, matric_number as value -->
+      </select>
+
+      <input type="hidden" id="gradeStudentId">
+
+      <label>Level</label>
+        <select id="gradeLevel" required>
+          <option value="">-- Choose Level --</option>
+          <option>Read and Write Arabic</option>
+          <option>Beginner</option>
+          <option>Intermediate</option>
+          <option>Advanced</option>
+        </select>
+
+      <label>Course</label>
+      <input type="text" id="gradeCourse" placeholder="Course Name">
+
+      <label>Semester</label>
+        <select id="gradeSemester" required>
+          <option value="">-- Select Semester --</option>
+          <option>First</option>
+          <option>Second</option>
+        </select>
+
+      <label>Assessment Score</label>
+      <input type="number" id="gradeAssessment" placeholder="Assessment">
+
+      <label>Exam Score</label>
+      <input type="number" id="gradeExams" placeholder="Exam">
+
+      <label>Total Score</label>
+      <input type="number" id="gradeTotal" placeholder="Total" disabled>
+
+      <label>Status</label>
+      <select id="gradeStatus">
+        <option value="completed">Complete</option>
+        <option value="loading">Loadiong</option>
+        <option value="cancelled">Cancelled</option>
+
+      </select>
+
+      <label>Remark</label>
+      <select id="gradeRemark">
+        <option value="pass">Pass</option>
+        <option value="average">Average</option>
+        <option value="fail">Fail</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button id="addGradeBtn" class="btn btn-save" onclick="addGrade()">Save</button>
+      <button class="btn btn-cancel" onclick="closeModal('gradeModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+  <div class="modal" id="scheduleModal">
+  <div class="modal-content modal-large">
+    <span class="btn btn-close" onclick="closeModal('scheduleModal')">&times;</span>
+    <h2>Add Class</h2>
+    <div class="modal-grid">
+
+      <label>Level</label>
+        <select id="classLevel" required>
+          <option value="">-- Choose Level --</option>
+          <option>Read and Write Arabic</option>
+          <option>Beginner</option>
+          <option>Intermediate</option>
+          <option>Advanced</option>
+        </select>
+
+      <label>Course</label>
+      <input type="text" id="classCourse" placeholder="Course Name">
+
+      <label>Instructor</label>
+      <input type="text" id="Instructor" placeholder="Instructor Name">
+
+      <label>Date</label>
+      <input type="date" id="classDate">
+
+      <label>Time</label>
+      <input type="time" id="classTime">
+
+      <label>Link</label>
+      <input type="text" id="classLink" placeholder="Meeting Link">
+
+      <label>Status</label>
+      <select id="classStatus">
+        <option value="scheduled">Scheduled</option>
+        <option value="completed">Completed</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button id="addScheduleBtn" class="btn btn-save" onclick="addSchedule()">Save</button>
+      <button class="btn btn-cancel" onclick="closeModal('scheduleModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ASSESSMENT MODAL -->
+<div class="modal" id="assessmentModal">
+  <div class="modal-content modal-large">
+    
+    <span class="btn btn-close" onclick="closeModal('assessmentModal')">&times;</span>
+    
+    <h2>Add Assessment</h2>
+
+    <div class="modal-grid">
+
+      <label>Description</label>
+      <input type="text" id="assessmentDescription" placeholder="Description">
+
+      <label>Title</label>
+      <input type="text" id="assessmentTitle" placeholder="Assessment Title">
+
+      <label>Level</label>
+        <select id="assessmentLevel">
+          <option value="">-- Choose Level --</option>
+          <option>Read and Write Arabic</option>
+          <option>Beginner</option>
+          <option>Intermediate</option>
+          <option>Advanced</option>
+        </select>
+
+     <label>Course</label>
+      <input type="text" id="assessmentCourse" placeholder="Course Name">
+
+      <label>Semester</label>
+        <select id="assessmentSemester">
+          <option value="">-- Select Semester --</option>
+          <option>First</option>
+          <option>Second</option>
+        </select>
+
+        <label>Type</label>
+        <select id="assessmentType">
+          <option value="">-- Select type --</option>
+          <option value="test">Test</option>
+          <option value="exam">Exam</option>
+       </select>
+
+       <label>Max Score</label>
+      <input type="number" id="assessmentScore" placeholder="Max Score">
+
+        <label>Duration</label>
+       <input 
+  type="number" 
+  id="assessmentDuration" 
+  placeholder="Duration (minutes)" 
+  min="1">
+
+      <label>Start Time</label>
+      <input type="datetime-local" id="assessmentStart">
+
+      <label>End Time</label>
+      <input type="datetime-local" id="assessmentEnd">
+
+      <label>Status</label>
+      <select id="assessmentStatus">
+        <option value="">-- Select Status --</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+
+    </div>
+
+    <button class="btn btn-primary" id="addAssessmentBtn" onclick="addAssessment()">
+      Save Assessment
+    </button>
+    <button class="btn btn-cancel" onclick="closeModal('assessmentModal')">Cancel</button>
+
+  </div>
+</div>
+
+  <!-- TOAST -->
+  <div id="admin-toast" class="toast"></div>
+
+  <section>
+    <div class="card">
+  <h2>Add Course</h2>
+
+<div class="form-group">
+  <input type="text" id="courseName" placeholder="Course Name">
+  <input type="text" id="courseLevel" placeholder="Level">
+  <input type="text" id="courseInstructor" placeholder="Instructor">
+
+<button class="btn btn-primary" onclick="addCourse()">Add Course</button>
+</div>
+
+<hr>
+
+  <h2>All Courses</h2>
+
+
+<div id="adminCoursesList"></div>
+</section>
+</div>
+
+<div class="password-grid">
+<!-- ================= MY PASSWORD ================= -->
+<section class="card password1-card">
+  <h2>🔐 Change My Password</h2>
+
+  <div class="form-group1">
+    <label>Current Password</label>
+    <div class="input-group">
+      <input id="oldPassword" type="password" placeholder="Enter current password">
+      <button type="button" class="toggle-btn" onclick="togglePassword('oldPassword')">👁️</button>
+    </div>
+  </div>
+
+  <div class="form-group1">
+    <label>New Password</label>
+    <div class="input-group">
+      <input id="newPassword" type="password" placeholder="Enter new password">
+      <button type="button" class="toggle-btn" onclick="togglePassword('newPassword')">👁️</button>
+    </div>
+  </div>
+
+  <button class="btn btn-save full-btn" onclick="changeMyPassword()">
+    Update Password
+  </button>
+</section>
+
+<!-- ================= ADMIN RESET STUDENT PASSWORD ================= -->
+<section class="card password-card">
+  <h2>🔐 Reset Student Password</h2>
+
+  <div class="form-group1">
+    <label>Select Student</label>
+    <select id="passwordStudentSelect"></select>
+  </div>
+
+  <div class="form-group1">
+    <label>New Password</label>
+    <div class="input-group">
+      <input id="newStudentPassword" type="password" placeholder="Enter new password">
+      <button type="button" class="toggle-btn" onclick="togglePassword('newStudentPassword')">👁️</button>
+    </div>
+  </div>
+
+  <button class="btn btn-save full-btn" onclick="resetStudentPassword()">
+    Update Password
+  </button>
+</section>
+</div>
+
+<div id="receiptModal" class="receipt-modal">
+  <div class="receipt-modal-content">
+
+    <span class="close-receipt-modal">&times;</span>
+
+    <img id="receiptPreview" src="" alt="Receipt Preview" />
+
+  </div>
+</div>
+
+<div id="passportModal" class="receipt-modal">
+  <div class="receipt-modal-content">
+    <span class="close-passport-modal">&times;</span>
+    <img id="passportPreview" src="" alt="Passport Preview" />
+  </div>
+</div>
+
+  <!-- FOOTER -->
+  <footer>
+  <p>Al-Bayan Arabic Institute Online</p>
+  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
+  <p id="footerCopyright">
+  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+</p>
+<a href="privacy.html">Privacy Policy</a>
+</footer>
+  <!-- WHATSAPP -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
+  <img src="whatsapp-icon.png" alt="WhatsApp">
+</a>
+  <script>
+   
+  </script>
+  <!-- ADMIN JS -->
+  <script>
+    // Hamburger
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('show'));
+    document.addEventListener('click', e => {
+      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+        navLinks.classList.remove('show');
+      }
+    });
+
+    // Modals
+    function openModal(id) {
+      document.getElementById(id).classList.add('show');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('show');
+    }
+  </script>
+  <!-- SUPABASE -->
+<!-- 1️⃣ Supabase library -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+
+  window.supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  console.log("Supabase client ready:", window.supabaseClient);
+</script>
+
+<script src="translate.js"></script>
+
+<script src="admin-dashboard.js"></script>
+</body>
+</html>

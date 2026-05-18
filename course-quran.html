@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>Tajweedul Qur'an - Al-Bayan</title>
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="course-pages.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+
+<!-- Navigation -->
+<nav class="master-nav">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+    </a>
+    <div class="hamburger">☰</div>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="courses.html" class="active page-indicator">Courses</a>
+      <a href="register.html" data-translate="Register">Register</a>
+      <a href="students-dashboard.html">Dashboard</a>
+      <a href="payment.html">Payment</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="indiv-course-header" style="background-image: url('course-quran.jpg');">
+  <div class="header-overlay">
+    <h1>Tajweedul Qur'an</h1>
+    <p>Master the rules of Qur’anic recitation and improve pronunciation.</p>
+    <a href="register.html" class="register-btn">Register Now</a>
+  </div>
+</header>
+
+<section class="course-content-section">
+
+  <div class="content-card intro-card fade-in">
+    <p>
+      This course is designed for learners who want to perfect their Qur’anic recitation, understand Tajweed rules, and recite fluently with proper pronunciation.
+    </p>
+  </div>
+
+  <div class="content-card fade-in">
+    <h2>Module 1: Introduction to Tajweed</h2>
+    <p>Learn the basics of Tajweed, its importance, and how it affects Qur’anic recitation.</p>
+  </div>
+
+  <div class="content-card fade-in">
+    <h2>Module 2: Makharij & Sifaat</h2>
+    <p>Understand articulation points (makharij) and characteristics (sifaat) of Arabic letters.</p>
+  </div>
+
+  <div class="content-card fade-in">
+    <h2>Module 3: Rules of Noon & Meem</h2>
+    <p>Learn the proper application of Noon Saakinah and Meem Saakinah rules in recitation.</p>
+  </div>
+
+  <div class="content-card fade-in">
+    <h2>Module 4: Qalqalah & Madd</h2>
+    <p>Practice Qalqalah letters and various types of Madd (elongation) in the Qur’an.</p>
+  </div>
+
+  <div class="content-card fade-in">
+    <h2>Module 5: Recitation Practice</h2>
+    <p>Guided recitation exercises with feedback to improve fluency and accuracy.</p>
+  </div>
+
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>Al-Bayan Arabic Institute Online</p>
+  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
+  <p id="footerCopyright">
+  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+</p>
+<a href="privacy.html">Privacy Policy</a>
+</footer>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
+  <img src="whatsapp-icon.png" alt="WhatsApp">
+</a>
+
+<!-- Scripts -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Hamburger toggle
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.getElementById('navLinks');
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', e => {
+      e.stopPropagation();
+      navLinks.classList.toggle('show');
+    });
+    document.addEventListener('click', e => {
+      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+        navLinks.classList.remove('show');
+      }
+    });
+  }
+
+  // Fade-in effect
+  const elements = document.querySelectorAll(".fade-in");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add("show");
+    });
+  }, { threshold: 0.2 });
+  elements.forEach(el => observer.observe(el));
+});
+</script>
+<script src="translate.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="google" content="notranslate">
+  <title>Online Classes - Al-Bayan Arabic Institute</title>
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="online-classes.css"> <!-- Use your hub & general styles -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<body>
+
+<!-- Navigation -->
+<nav class="master-nav">
+   <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="register.html">Register</a>
+        <a href="students-dashboard.html">Dashboard</a>
+
+        <a href="payment.html">Payment</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+<!-- Page Header -->
+ <header class="hub-header" style="background-image: url('online-classes.png');">
+    <div class="header-overlay">
+      <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
+    <h1>Online Classes</h1>
+    <p>Access your Zoom, Telegram, WhatsApp and other online class platforms here</p>
+  </div>
+</header>
+
+<!-- Online Classes Section -->
+<section class="register-hub">
+  <h1>Join Your Online Classes</h1>
+  <p>Click the links below to enter your class sessions</p>
+
+  <div class="hub-buttons">
+
+    <!-- Monday - Zoom -->
+    <a href="https://zoom.us/j/123456789" target="_blank" class="hub-card zoom">
+      <span class="icon">🖥️</span>
+      Monday - Zoom
+      <span class="arrow">➔</span>
+    </a>
+
+    <!-- Tuesday - Telegram -->
+    <a href="https://t.me/AlBayanClass" target="_blank" class="hub-card telegram">
+      <span class="icon">💬</span>
+      Tuesday - Telegram
+      <span class="arrow">➔</span>
+    </a>
+
+    <!-- Wednesday - WhatsApp -->
+    <a href="https://wa.me/2347054711066" target="_blank" class="hub-card whatsapp">
+      <span class="icon">📱</span>
+      Wednesday - WhatsApp
+      <span class="arrow">➔</span>
+    </a>
+
+    <!-- Thursday - Google Meet -->
+    <a href="https://meet.google.com/abc-defg-hij" target="_blank" class="hub-card meet">
+      <span class="icon">🌐</span>
+      Thursday - Google Meet
+      <span class="arrow">➔</span>
+    </a>
+
+    <!-- Friday - Zoom -->
+    <a href="https://zoom.us/j/987654321" target="_blank" class="hub-card zoom">
+      <span class="icon">🖥️</span>
+      Friday - Zoom
+      <span class="arrow">➔</span>
+    </a>
+
+    <!-- Saturday - Telegram -->
+    <a href="https://t.me/AlBayanWeekend" target="_blank" class="hub-card telegram">
+      <span class="icon">💬</span>
+      Saturday - Telegram
+      <span class="arrow">➔</span>
+    </a>
+
+    <!-- Sunday - Google Meet -->
+    <a href="https://meet.google.com/xyz-uvw-rst" target="_blank" class="hub-card meet">
+      <span class="icon">🌐</span>
+      Sunday - Google Meet
+      <span class="arrow">➔</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>Al-Bayan Arabic Institute Online</p>
+  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
+  <p id="footerCopyright">
+  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+</p>
+<a href="privacy.html">Privacy Policy</a>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
+  <img src="whatsapp-icon.png" alt="WhatsApp">
+</a>
+
+<script>
+  function toggleMenu() {
+    const nav = document.getElementById('navLinks');
+    nav.classList.toggle('show');
+  }
+
+  document.addEventListener('click', function (e) {
+    const nav = document.getElementById('navLinks');
+    const hamburger = document.querySelector('.hamburger');
+    if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+      nav.classList.remove('show');
+    }
+  });
+</script>
+<script>
+function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("show");
+  }
+
+  document.addEventListener("click", function(e) {
+    const menu = document.getElementById("navLinks");
+    const burger = document.querySelector(".hamburger");
+
+    if (!menu.contains(e.target) && !burger.contains(e.target)) {
+      menu.classList.remove("show");
+    }
+  });
+ </script>
+ <script src="translate.js"></script>
+</body>
+</html>
