@@ -28,6 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
+ // Disable button and show processing
+      submitBtn.disabled = true;
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = t('Processing... ⏳');
+      
     try {
       // ----- Gather form data -----
       const formData = new FormData(form);
@@ -106,10 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
         passportUrl = urlData.publicUrl;
       }
 
-      // Disable button and show processing
-      submitBtn.disabled = true;
-      const originalText = submitBtn.innerHTML;
-      submitBtn.innerHTML = t('Processing... ⏳');
 
       // ----- Insert Student -----
       const { data, error } = await sb
@@ -136,11 +137,43 @@ document.addEventListener("DOMContentLoaded", () => {
         .select("matric_number")
         .single(); // Return the inserted row
 
-      if (error) {
+         if (error) {
         console.error(error);
         alert(t("Registration failed. Check console for details."));
         return;
       }
+
+try {
+await fetch("https://api.web3forms.com/submit", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    access_key: "73556940-2533-43e1-8458-aab6b0e894dc",
+
+    subject: "New Student Registration 🎓",
+
+    message: `
+A new student just registered:
+
+Name: ${fullName}
+Email: ${email}
+WhatsApp: ${whatsapp}
+Country: ${country}
+Level: ${levelArabic}
+Matric: ${data.matric_number}
+    `
+  })
+});
+} catch(emailError) {
+
+  console.error(
+    "Registration email failed:",
+    emailError
+  );
+
+}
 
       // ----- Success Notification with Matric Number -----
 function showSuccessNotification(matricNumber) {
@@ -184,7 +217,7 @@ showSuccessNotification(data.matric_number);
       alert(t("Unexpected error occurred. Check console."));
     } finally {
       submitBtn.disabled = false;
-      submitBtn.innerHTML = 'Register';
+      submitBtn.innerHTML = originalText;
     }
   });
 

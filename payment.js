@@ -133,7 +133,8 @@ paymentForm.addEventListener('submit', async (e) => {
 
       if (receiptFile) {
         const fileExt = receiptFile.name.split('.').pop();
-        const fileName = `${Date.now()}_${Math.random()}.${fileExt}`;
+        const fileName =
+  `${Date.now()}-${Math.floor(Math.random() * 100000)}.${fileExt}`;
 
         const { error: uploadError } = await supabase.storage
           .from('payment_receipts')
@@ -162,8 +163,46 @@ paymentForm.addEventListener('submit', async (e) => {
         status: "pending"
       };
 
+  
       const { error } = await supabase.from("payments").insert([insertData]);
       if (error) throw error;
+
+      try {
+
+  await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      access_key: "73556940-2533-43e1-8458-aab6b0e894dc",
+
+      subject: "New Payment Submitted 💰",
+
+      message: `
+Payment received:
+
+Name: ${fullname}
+Email: ${email}
+Matric: ${currentStudent?.matric_number || "N/A"}
+Amount: ${amount} ${currency}
+Plan: ${plan_type}
+Country: ${country}
+Month: ${month}
+Payment Method: ${method}
+Receipt: ${receipt_url || "No receipt uploaded"}
+`
+    })
+  });
+
+} catch (emailError) {
+
+  console.error(
+    "Web3Forms notification failed:",
+    emailError
+  );
+
+}
 
       paymentForm.reset();
 
