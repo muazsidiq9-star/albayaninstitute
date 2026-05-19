@@ -53,6 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentStudent = JSON.parse(sessionStorage.getItem('currentStudent'));
   console.log("Current student from session:", currentStudent);
 
+  let detectedStudent = null;
+
   // Auto-fill form if logged in
 if (currentStudent) {
 
@@ -97,6 +99,73 @@ if (currentStudent) {
     }
   }
 }
+
+const emailInput =
+  document.getElementById('student-email');
+
+emailInput?.addEventListener('blur', async () => {
+
+  const email =
+    emailInput.value.trim().toLowerCase();
+
+  if (!email) return;
+
+  try {
+
+    const { data, error } = await supabase
+      .from("students")
+      .select("*")
+      .eq("email", email)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    if (!data) return;
+
+    detectedStudent = data;
+
+    console.log(
+      "Student detected:",
+      detectedStudent
+    );
+
+    // AUTO-FILL FORM
+    document.getElementById('student-name').value =
+      data.fullname || '';
+
+    document.getElementById('country').value =
+      data.country || '';
+
+    // LEVEL
+    const levelSelect =
+      document.getElementById('level-arabic');
+
+    for (let option of levelSelect.options) {
+
+      if (
+        option.value === data.level_arabic
+      ) {
+        option.selected = true;
+        break;
+      }
+    }
+
+    // OPTIONAL SUCCESS MESSAGE
+    successMsg.textContent =
+      t('Student record found automatically.');
+
+    successMsg.style.display = 'block';
+
+  } catch (err) {
+
+    console.error(
+      "Student lookup failed:",
+      err
+    );
+
+  }
+
+});
 
 
 paymentForm.addEventListener('submit', async (e) => {
@@ -148,7 +217,9 @@ paymentForm.addEventListener('submit', async (e) => {
       }
 
       const insertData = {
-        matric_number: currentStudent?.matric_number || null,
+        matric_number:
+  (detectedStudent || currentStudent)
+    ?.matric_number || null,
         payer_name: fullname || null,
         payer_email: email || null,
         country,
@@ -184,7 +255,8 @@ Payment received:
 
 Name: ${fullname}
 Email: ${email}
-Matric: ${currentStudent?.matric_number || "N/A"}
+Matric:
+${(detectedStudent || currentStudent)?.matric_number || "N/A"}
 Amount: ${amount} ${currency}
 Plan: ${plan_type}
 Country: ${country}
