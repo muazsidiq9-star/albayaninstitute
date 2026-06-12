@@ -120,6 +120,12 @@
         <span class="arrow">➔</span>
       </a>
       
+      <a href="my-certificate.html" class="hub-card">
+  <span class="icon">🎓</span>
+  <span class="card-text">My Certificates</span>
+  <span class="arrow">➔</span>
+</a>
+      
 
       <!-- Schedule -->
       <a href="schedule.html" class="hub-card">
@@ -197,14 +203,34 @@
   <!-- NOTIFICATIONS -->
 <section class="notifications">
   <h2>🔔 Notifications</h2>
+
   <div class="notification-dropdown">
+
     <div class="notification-latest" onclick="toggleNotifications()">
-      <!-- Latest notification content will be injected by JS-->
       <span class="dropdown-arrow">▼</span>
     </div>
+
     <div class="notifications-list" style="display:none;">
-      <!-- JS will populate notifications based on student -->
+
+      <div class="notification-tools">
+        <input
+          type="text"
+          id="notificationSearch"
+          placeholder="🔍 Search notifications..."
+        >
+
+        <button
+          class="show-hidden-btn"
+          onclick="restoreNotifications()"
+        >
+          Restore Hidden Notifications
+        </button>
+      </div>
+
+      <div id="notificationCards"></div>
+
     </div>
+
   </div>
 </section>
 
@@ -213,7 +239,7 @@
   <p>Al-Bayan Arabic Institute Online</p>
   <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
   <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+  © 2026 - <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
 </p>
 <a href="privacy.html">Privacy Policy</a>
 </footer>

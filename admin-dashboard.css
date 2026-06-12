@@ -59,23 +59,51 @@ body {
 }
 
 
-/* STATS */
-.stats-section {padding:20px;}
-.stats-cards {display:flex; gap:20px; flex-wrap:wrap; justify-content:center;}
-.stats-card {background:var(--card-color); padding:20px; border-radius:10px; width:150px; text-align:center; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
-.stats-card h3 {margin:0; font-size:28px; color:#0077cc;}
-.stats-card p {margin:5px 0 0; font-size:16px; color:#333;}
+
 
 /* TABLES */
 .section-header {display:flex; justify-content:space-between; align-items:center; padding:10px 20px;}
 .section-header h2 {margin:0;}
-.add-btn {padding:5px 10px; background:#0077cc; color:#fff; border:none; border-radius:5px; cursor:pointer;}
+.add-btn {padding:5px 10px; background:var(--primary-color); color:#fff; border:none; border-radius:5px; text-weight: bold; cursor:pointer;}
 .add-btn:hover {background:#005fa3;}
-.search-input {padding:5px; margin-left:10px; border-radius:5px; border:1px solid #0c01ac;}
+.search-input {padding:5px; margin-left:10px; border-radius:5px; border: 1px solid var(--border-color);}
 .table-container {overflow-x:auto; margin:10px 20px 30px;}
 table {width:100%; border-collapse:collapse; background:var(--card-color);}
-table th, table td {padding:10px; border:1px solid #ddd; text-align:left;}
-table th {background:#0077cc; color:#fff;}
+table th,
+table td {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+table th {
+  background: var(--table-header-bg);
+  color: var(--text-color);    
+  font-weight: 600;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin: 10px 20px 30px;
+
+  background: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table tbody tr {
+  transition: background 0.2s ease;
+}
+
+table tbody tr:hover {
+  background: rgba(0, 119, 204, 0.05);
+}
 
 /* =========================
    MODALS (FIXED MOBILE SAFE)
@@ -270,34 +298,47 @@ table th {background:#0077cc; color:#fff;}
 }
 
 .stat-card {
-  background: linear-gradient(135deg, #6a11cb, #2575fc); /* subtle gradient */
-  color: #fff;
-  padding: 25px 40px;
-  border-radius: 15px;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  flex: 1 1 200px; /* responsive width */
-  transition: transform 0.3s, box-shadow 0.3s;
+  background: var(--card-color);
+
+  border: 1px solid var(--border-color);
+
+  border-left: 5px solid var(--primary-color);
+
+  color: var(--text-color);
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
 .stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 12px 25px rgba(0,0,0,0.15),
+    0 0 15px rgba(0,117,30,0.25);
 }
 
 .stat-card h3 {
+  color: var(--primary-color);
   font-size: 2.5rem;
-  margin: 0 0 10px 0;
   font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .stat-card p {
-  font-size: 1.1rem;
-  margin: 0;
-  letter-spacing: 0.5px;
+  font-size: 1rem;
+  
+  text-align: center;
+
+  letter-spacing: 1px;
+
   text-transform: uppercase;
-  opacity: 0.9;
+
+  color: rgba(255,255,255,0.9);
+
+  margin: 0;
 }
+
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
@@ -361,12 +402,12 @@ table th {background:#0077cc; color:#fff;}
 }
 /* SAVE / PRIMARY */
 .btn-save {
-  background: #2563eb;
+  background: #3f51b5;
   color: #fff;
 }
 
 .btn-save:hover {
-  background: #1e40af;
+  background: #1a237e;
   transform: translateY(-1px);
 }
 /*CANCEL / PRIMARY */
@@ -613,13 +654,6 @@ h2 {
   cursor: pointer;
 }
 
-.search-box {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
 
 table {
   width: 100%;
@@ -631,9 +665,10 @@ th {
   text-align: left;
 }
 
-td, th {
+td,
+th {
   padding: 10px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .status-paid {
@@ -654,7 +689,7 @@ td, th {
 }
 
 .toggle1-btn {
-  background: #2196F3;
+  background: var(--primary-color);
   color: white;
 }
 
@@ -687,24 +722,24 @@ td, th {
    SAVE BUTTON
 ========================= */
 .btn-save {
-  background: #198754;
+  background: var(--primary-color);
   color: white;
 }
 
 .btn-save:hover {
-  background: #157347;
+  background: #1a237e;
 }
 
 /* =========================
    PRIMARY (Add Course)
 ========================= */
 .btn-primary {
-  background: #0d6efd;
+  background: var(--primary-color);
   color: white;
 }
 
 .btn-primary:hover {
-  background: #0b5ed7;
+  background: #1a237e;
 }
 
 /* =========================
@@ -754,11 +789,20 @@ td, th {
 .admin-container select,
 .admin-container input {
   width: 100%;
-  padding: 10px;
+  padding: 11px 14px;
+
+  border-radius: 8px;
+
+  border: 1px solid var(--border-color);
+
+  background: var(--surface-color);
+
+  color: var(--text-color);
+
   margin-bottom: 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  
   font-size: 14px;
+
   transition: border 0.2s ease;
 }
 
@@ -769,50 +813,209 @@ td, th {
 }
 
 /* =========================
+   STUDENT FEES SECTION
+========================= */
+
+.admin-container .card {
+  background: var(--card-color);
+  border: 1px solid var(--border-color);
+
+  border-radius: 12px;
+
+  padding: 20px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+
+  margin-bottom: 20px;
+}
+
+.admin-container .card h2 {
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+/* =========================
    FORM GROUP (COURSES)
 ========================= */
-.form-group {
-  background: var(--card-color);
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+/* =========================
+   COURSES SECTION
+========================= */
+.courses-section {
+  padding: 10px 16px;
 }
 
-/* =========================
-   ADMIN CONTAINER
-========================= */
-.form-group {
+.courses-section .card {
+  background: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
   max-width: 900px;
-  margin: 5px auto;
-  padding: 20px;
-}
-
-.card {
-  background: var(--card-color);
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin: 0 auto 20px;
 }
 
 /* =========================
-   FORM LAYOUT
+   SECTION TITLE
 ========================= */
-.form-group select,
-.form-group input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  transition: border 0.2s ease;
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 16px;
 }
 
-.form-group select:focus,
-.form-group input:focus {
-  border-color: #0d6efd;
+/* =========================
+   COURSE FORM
+========================= */
+.course-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.course-form input {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--text-color);
+  font-size: 0.95rem;
+  transition: border 0.2s ease;
+  box-sizing: border-box;
+}
+
+.course-form input:focus {
+  border-color: var(--primary-color);
   outline: none;
+}
+
+.course-form input::placeholder {
+  color: #999;
+}
+
+.course-form .btn-primary {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  background: var(--primary-color);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.course-form .btn-primary:hover {
+  background: #005a18;
+  transform: translateY(-1px);
+}
+
+.course-form .btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* =========================
+   DIVIDER
+========================= */
+.section-divider {
+  margin: 24px 0;
+  border: none;
+  border-top: 2px solid var(--border-color);
+}
+
+/* =========================
+   COURSE LIST ITEMS
+========================= */
+.course-item {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.course-item > div:first-child {
+  flex: 1;
+  font-size: 0.92rem;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+.course-item strong {
+  display: block;
+  font-size: 0.98rem;
+  color: var(--text-color);
+  margin-bottom: 2px;
+}
+
+.course-item .course-meta {
+  font-size: 0.82rem;
+  color: #888;
+}
+
+.course-item-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.course-item-actions .btn {
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  border-radius: 6px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 768px) {
+
+  .courses-section {
+    padding: 8px 10px;
+  }
+
+  .courses-section .card {
+    padding: 16px 12px;
+    border-radius: 10px;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    margin-bottom: 14px;
+  }
+
+  .course-form input {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .course-form .btn-primary {
+    padding: 11px;
+    font-size: 0.95rem;
+  }
+
+  .course-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .course-item-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .course-item-actions .btn {
+    flex: 1;
+    text-align: center;
+    padding: 8px;
+  }
 }
 
 
@@ -821,14 +1024,24 @@ td, th {
 ========================= */
 .search-box {
   width: 100%;
-  padding: 10px;
-  margin: 15px 0;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+
+  padding: 11px 14px;
+
+  margin: 0 auto 15px;
+
+  border-radius: 8px;
+
+  border: 1px solid var(--border-color);
+
+  background: var(--card-color);
+
+  color: var(--text-color);
+
+  transition: border 0.2s ease;
 }
 
 .search-box:focus {
-  border-color: #0d6efd;
+  border-color: var(--primary-color);
   outline: none;
 }
 
@@ -836,32 +1049,19 @@ td, th {
    TABLE CONTAINER
 ========================= */
 #feeTable {
-  margin-bottom: 15px;
   overflow-x: auto;
-}
 
-/* =========================
-   COURSE LIST ITEMS
-========================= */
-.course-item {
   background: var(--card-color);
+
   border: 1px solid var(--border-color);
-  padding: 12px;
-  border-radius: 6px;
-  margin-bottom: 10px;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  border-radius: 12px;
 
-/* =========================
-   DIVIDER
-========================= */
-hr {
-  margin: 30px 0;
-  border: none;
-  border-top: 1px solid #1900ff;
+  padding: 0;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+
+  margin-bottom: 20px;
 }
 
 /* =========================
@@ -883,97 +1083,20 @@ hr {
   opacity: 1;
 }
 
-.form-group1 {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  font-size: 0.9rem;
-  margin-bottom: 5px;
-  font-weight: 600;
-  color: #333;
-}
-
-.input-group {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #fff;
-}
-
-.input-group input {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  outline: none;
-  font-size: 0.95rem;
-}
-
-.toggle-btn {
-  background: #f3f3f3;
-  border: none;
-  padding: 0 12px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.toggle-btn:hover {
-  background: #e7e7e7;
-}
-
-.full-btn {
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  border-radius: 8px;
-}
-
-.password-card select,
-.password-card input {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  transition: border 0.2s ease;
-}
-
-.password-card select:focus,
-.password-card input:focus {
-  border-color: #0d6efd;
-  outline: none;
-}
-
-.password1-card select,
-.password1-card input {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  transition: border 0.2s ease;
-}
-
-.password1-card select:focus,
-.password1-card input:focus {
-  border-color: #0d6efd;
-  outline: none;
-}
-
+/* =========================
+   PASSWORD GRID
+========================= */
 .password-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 30px;
   align-items: start;
   position: relative;
+  padding: 0 16px;
+  margin-bottom: 20px;
 }
 
-/* subtle divider line between the two cards */
+/* Subtle divider between cards */
 .password-grid::before {
   content: "";
   position: absolute;
@@ -990,23 +1113,174 @@ hr {
   transform: translateX(-50%);
 }
 
-/* ensure cards sit above divider */
-.password-card {
-  position: relative;
-  z-index: 1;
-}
+/* =========================
+   PASSWORD CARDS
+========================= */
+.password-card,
 .password1-card {
   position: relative;
   z-index: 1;
+  background: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
-/* MOBILE: remove grid + divider */
+
+.password-card h2,
+.password1-card h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 18px;
+}
+
+/* =========================
+   FORM GROUP
+========================= */
+.form-group1 {
+  margin-bottom: 15px;
+}
+
+.form-group1 label {
+  display: block;
+  font-size: 0.88rem;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+/* =========================
+   INPUT GROUP (password + eye)
+========================= */
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--surface-color);
+  transition: border-color 0.2s ease;
+}
+
+.input-group:focus-within {
+  border-color: var(--primary-color);
+}
+
+.input-group input {
+  flex: 1;
+  padding: 10px 12px;
+  border: none;
+  outline: none;
+  font-size: 0.92rem;
+  background: transparent;
+  color: var(--text-color);
+  min-width: 0; /* prevents overflow */
+}
+
+.input-group input::placeholder {
+  color: #999;
+}
+
+.toggle-btn {
+  background: var(--surface-color);
+  border: none;
+  border-left: 1px solid var(--border-color);
+  padding: 0 12px;
+  height: 100%;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--text-color);
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.toggle-btn:hover {
+  background: var(--border-color);
+}
+
+/* =========================
+   SELECT INSIDE PASSWORD CARDS
+========================= */
+.password-card select,
+.password1-card select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 4px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--text-color);
+  font-size: 0.92rem;
+  transition: border 0.2s ease;
+  box-sizing: border-box;
+}
+
+.password-card select:focus,
+.password1-card select:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+/* =========================
+   FULL WIDTH BUTTON
+========================= */
+.full-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  margin-top: 4px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
 @media (max-width: 768px) {
+
   .password-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 0 10px;
   }
 
   .password-grid::before {
     display: none;
+  }
+
+  .password-card,
+  .password1-card {
+    padding: 16px 14px;
+    border-radius: 10px;
+  }
+
+  .password-card h2,
+  .password1-card h2 {
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+  }
+
+  .input-group input {
+    font-size: 0.88rem;
+    padding: 9px 10px;
+  }
+
+  .toggle-btn {
+    padding: 0 10px;
+    font-size: 0.95rem;
+  }
+
+  .full-btn {
+    padding: 11px;
+    font-size: 0.9rem;
+  }
+
+  .password-card select,
+  .password1-card select {
+    font-size: 0.88rem;
+    padding: 9px 10px;
   }
 }
 
@@ -1090,6 +1364,9 @@ html, body {
   }
 }
 
+.btn-small {
+    color: white;
+}
 /* =========================
    SMALLER NAV BUTTONS ON MOBILE
 ========================= */
@@ -1098,12 +1375,12 @@ html, body {
   #sendWelcomeEmails,
   .btn-undo {
     padding: 5px 8px;
-    font-size: 12px;
+    font-size: 9px;
     border-radius: 5px;
   }
 
   .btn-undo i {
-    font-size: 13px;
+    font-size: 10px;
   }
 
   .nav-container {
@@ -1136,145 +1413,6 @@ html, body {
   }
 }
 
-/* =========================
-   HERO HEADER (CLEAN)
-========================= */
-
-.home-header {
-  position: relative;
-  height: 85vh;
-  min-height: 520px;
-  overflow: hidden;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* VIDEO */
-.hero-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
-
-/* DARK OVERLAY */
-.home-header::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: 1;
-}
-
-/* CONTENT */
-.header-overlay {
-  position: relative;
-  z-index: 2;
-
-  text-align: center;
-  color: white;
-
-  padding: 20px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-/* LOGO */
-.header-logo {
-  width: 80px;
-  margin-bottom: 15px;
-}
-
-/* TEXT */
-.home-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-}
-
-.home-header p {
-  font-size: 1.25rem;
-  max-width: 500px;
-}
-
-/* ================= MOBILE ================= */
-@media (max-width: 768px) {
-
-  .home-header {
-    height: 40vh;
-    min-height: 340px;
-  }
-
-  .header-logo {
-    width: 70px;
-    margin-bottom: 10px;
-  }
-
-  .home-header h1 {
-    font-size: 2rem;
-  }
-
-  .home-header p {
-    font-size: 0.9rem;
-    padding: 0 10px;
-  }
-
-  .hero-video {
-    display: none; /* optional: improves performance */
-  }
-
-  .home-header {
-    background: url('mobile-hero.jpg') center/cover no-repeat;
-  }
-}
-
-/* Extra small phones */
-@media (max-width: 768px) {
-
-  .home-header {
-    height: 40vh;
-    min-height: 340px;
-  }
-
-  /* KEEP VIDEO BUT CONTROL IT */
-  .hero-video {
-    display: block;
-    object-fit: cover;
-    object-position: center center;
-    transform: scale(1.1); /* slight zoom so it fills better */
-  }
-
-  /* optional fallback overlay clarity */
-  .home-header::before {
-    background: rgba(0,0,0,0.55);
-  }
-
-  .header-logo {
-    width: 70px;
-    margin-bottom: 10px;
-  }
-
-  .home-header h1 {
-    font-size: 2rem;
-  }
-
-  .home-header p {
-    font-size: 0.9rem;
-    padding: 0 10px;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-video {
-    filter: brightness(0.85) contrast(1.1);
-  }
-}
 
 /* =========================
    HERO HEADER (CLEAN)
@@ -1488,8 +1626,13 @@ nav,
   max-width: 95vw;
   max-height: 90vh;
   overflow: auto;
-  background: var(--card);
+
+  background: var(--card-color);
+
+  border: 1px solid var(--border-color);
+
   border-radius: 16px;
+
   padding: 10px;
 }
 
@@ -1502,11 +1645,14 @@ nav,
 }
 
 .receipt-link {
-  color: var(--gold);
+  color: var(--primary-color);
+
   cursor: pointer;
   font-size: 13px;
   text-decoration: underline;
+
   display: inline-block;
+
   transition: 0.2s ease;
 }
 
@@ -1520,7 +1666,7 @@ nav,
   object-fit: cover;
   border-radius: 6px;
   cursor: pointer;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border-color);
   transition: transform 0.2s ease;
 }
 
@@ -1534,10 +1680,31 @@ nav,
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border-color);
   transition: transform 0.2s ease;
 }
 
 .passport-thumb:hover {
   transform: scale(1.1);
+}
+
+.receipt-thumb,
+.passport-thumb {
+  border: 2px solid var(--primary-color);
+}
+
+.btn-cert {
+  background: #004211;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+
+.btn-cert:hover {
+  background: #00751e;
+  transform: translateY(-1px);
 }

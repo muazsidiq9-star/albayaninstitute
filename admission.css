@@ -22,7 +22,7 @@ body {
   background: white;
 
   padding: 18mm;
-  border: 4px solid #0a3d62;
+  border: 4px solid #0a621c;
   border-radius: 28px;
 
   overflow: hidden;
@@ -45,7 +45,7 @@ body {
 .letterhead h1 {
   margin-top: 2mm;
   font-size: 20px;
-  color: #0a3d62;
+  color: #0a6221;
 }
 
 .letterhead h2 {
@@ -64,7 +64,7 @@ body {
 .watermark {
   position: absolute;
   width: 65%;
-  opacity: 0.20;
+  opacity: 0.25;
 
   top: 50%;
   left: 50%;
@@ -76,7 +76,7 @@ body {
 
 .doc-date {
   display: flex;
-  color: #030030;
+  color: #003002;
   justify-content: space-between;
   margin-top: 20px;
   margin-bottom: -25px;
@@ -96,6 +96,12 @@ body {
 .student-details {
   line-height: 1.7;
   font-size: 15px;
+
+  /* ✅ Fix long email stretching */
+  word-break: break-all;
+  overflow-wrap: break-word;
+  min-width: 0;
+  max-width: calc(100% - 40mm); /* ✅ leaves room for passport photo */
 }
 
 /* ✅ PASSPORT (CRITICAL FIX) */
@@ -189,15 +195,19 @@ body {
 
 /* ✅ BUTTONS (screen only) */
 .print-btn {
-  margin-top: 8mm;
-  text-align: center;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .print-btn button {
-  padding: 10px 22px;
+  padding: 12px 20px;
   background: #0a3d62;
   color: white;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
 }
@@ -222,7 +232,7 @@ body {
     margin: 0;
     padding: 18mm;
 
-    border: 4px solid #0a3d62;
+    border: 4px solid #0a6211;
     border-radius: 28px;
 
     page-break-after: always;
@@ -233,6 +243,20 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+
+  .print-btn {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .print-btn button {
+    width: 100%;
+    max-width: 320px;
+  }
+
+}
 @media (max-width: 768px) {
 
   .letter {

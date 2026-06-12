@@ -115,7 +115,7 @@ a {
   border-radius: 50%;
   object-fit: cover;
 
-  border: 2px solid #4CAF50;
+  border: 2px solid var(--border-color);
   display: block;
 }
 
@@ -129,7 +129,7 @@ a {
 
 .profile-info h2 {
   font-size: 1.8rem;
-  color: #00ac78;
+  color: #1a237e;
   margin-bottom: 1rem;
   text-align: center;
 }
@@ -148,6 +148,8 @@ a {
   padding: 0.5rem 0;
   border-bottom: 1px solid rgba(15,111,229,0.1);
   font-size: 1rem;
+  gap: 1rem; /* ✅ breathing room between label and value */
+  min-width: 0;
 }
 
 .profile-data .label {
@@ -158,6 +160,11 @@ a {
 .profile-data .value {
   font-weight: 500;
   color: var(--text-color);
+
+  /* ✅ Fix long email stretching */
+  word-break: break-all;
+  overflow-wrap: break-word;
+  min-width: 0; /* ✅ Allows flex children to shrink */
 }
 
 /* =========================

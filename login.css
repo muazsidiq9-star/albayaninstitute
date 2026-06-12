@@ -146,18 +146,21 @@ select:focus {
   justify-content: space-between;
   align-items: center;
   font-size: 0.85rem;
+  font-weight: bold;
   margin: 10px 0 18px;
   color: #0a7cff;;
 }
 
 .options a {
   color: #60a5fa;
+  font-weight: bold;
   text-decoration: none;
 }
 
 .options label {
   display: flex;
   align-items: center;
+  font-weight: bold;
   gap: 6px;
 }
 
@@ -173,7 +176,7 @@ select:focus {
   padding: 12px;
   border-radius: 10px;
 
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  background: #1a237e;
   border: none;
 
   color: #fff;
@@ -185,6 +188,7 @@ select:focus {
 }
 
 .submit-btn:hover {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(37,99,235,0.4);
 }

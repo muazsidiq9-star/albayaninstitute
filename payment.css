@@ -62,6 +62,15 @@ body {
 
 /* ================= REGISTER NOTE ================= */
 .register-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  margin-top: 1rem;
+  border-radius: 8px;
+  background: #fff4e5;
+  border: 1px solid #ffcc80;
+  
   max-width: 1200px;
   margin: 2rem auto 0.5rem;
   padding: 0 1.5rem;
@@ -70,7 +79,7 @@ body {
 
 .register-note {
   font-size: 1rem;
-  color: var(--text-color);
+  color: #7986cb;
   font-weight: 600;
 }
 
@@ -290,6 +299,15 @@ body {
 }
 
 .payment-form h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  margin-top: 1rem;
+  border-radius: 8px;
+  background: #fff4e5;
+  border: 1px solid #ffcc80;
+  
   font-size: 1.5rem;
   color: #0a4d92;
   text-align: center;

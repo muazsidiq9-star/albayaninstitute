@@ -76,6 +76,7 @@ margin: 30px auto 0px;
 .stats-cards .card {
   background: var(--card-color);
   border-radius: 16px;
+  border-left: 5px solid var(--border-color);
   padding: 22px;
   display: flex;
   align-items: center;

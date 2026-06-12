@@ -34,7 +34,7 @@ const DICT = {
 
   "Our Mission": "رسالتنا",
   "Our mission is to empower students to understand the Arabic language clearly and confidently, especially the language of the Qur’an. We aim to remove fear and confusion from learning Arabic by using step-by-step methods guided by experienced teachers.":
-    "رسالتنا هي تمكين الطلاب من فهم اللغة العربية والعلوم الإسلامية بوضوح وثقة، وخاصة لغة القرآن الكريم. نسعى إلى إزالة الخوف والارتباك من تعتم العربية والإسلامية من خلال أساليب تدريجية يشرف عليها معلمون ذوو خبرة.",
+    "رسالتنا هي تمكين الطلاب من فهم اللغة العربية والعلوم الإسلامية بوضوح وثقة، وخاصة لغة القرآن الكريم. نسعى إلى إزالة الخوف والارتباك من تعلم العربية والإسلامية من خلال أساليب تدريجية يشرف عليها معلمون ذوو خبرة.",
 
   "Our Vision": "رؤيتنا",
   "Our vision is to become a trusted online Arabic institute that nurtures a generation of learners who can read, understand, and communicate in Arabic with clarity, confidence, and correct understanding.":
@@ -204,6 +204,11 @@ const DICT = {
 "Password Updated": "تم تحديث كلمة المرور",
 "Your account password has been updated by the admin. Please log in with your new password.": "تم تحديث كلمة مرور حسابك من قبل الإدارة. يرجى تسجيل الدخول باستخدام كلمة المرور الجديدة.",
 
+"Password Reset": "إعادة تعيين كلمة المرور",
+"Your temporary password is:": "كلمة مرورك المؤقتة هي:",
+"Temporary password generated:": "تم إنشاء كلمة مرور مؤقتة:",
+"Something went wrong. Check console.": "حدث خطأ ما. راجع وحدة التحكم.",
+
 "Pass": "ناجح",
 "Average": "متوسط",
 "Fail": "راسب",
@@ -330,7 +335,7 @@ const DICT = {
   "Login": "تسجيل الدخول",
   
   "Sign Up": "إنشاء حساب جديد",
-  "Sign In": "الدخول إلى الحساب",
+  "Log In": "الدخول إلى الحساب",
 
 // Alerts / JS messages
 "Please fill all fields": "يرجى ملء جميع الحقول",
@@ -344,6 +349,38 @@ const DICT = {
 "Login failed. Check console for details.": "فشل تسجيل الدخول. تحقق من وحدة التحكم لمزيد من التفاصيل.",
 "Welcome back, {username}!": "مرحبًا بعودتك، {username}!",
 "Welcome back, Admin {username}!": "مرحبًا بعودتك، المسؤول {username}!",
+
+"Please fill all fields": "يرجى ملء جميع الحقول",
+"Processing... ⏳": "جارٍ المعالجة... ⏳",
+"Login": "تسجيل الدخول",
+"Invalid login credentials": "بيانات تسجيل الدخول غير صحيحة",
+"Invalid login": "تسجيل دخول غير صحيح",
+"Profile not found. Contact administrator.": "لم يتم العثور على الملف الشخصي. يرجى التواصل مع الإدارة.",
+"Unauthorized role": "دور غير مصرح به",
+"Login failed. Check console for details.": "فشل تسجيل الدخول. راجع وحدة التحكم للتفاصيل",
+"Access denied. You selected a wrong account type.": "تم رفض الوصول. لقد اخترت نوع حساب غير صحيح",
+
+"Please enter your email": "يرجى إدخال بريدك الإلكتروني",
+"No student found with this email.": "لم يتم العثور على طالب بهذا البريد الإلكتروني",
+"Failed to reset password. Try again later.": "فشل إعادة تعيين كلمة المرور. حاول مرة أخرى لاحقاً",
+"Password Reset": "إعادة تعيين كلمة المرور",
+"Your temporary password is:": "كلمة المرور المؤقتة الخاصة بك هي:",
+"Temporary password copied to clipboard!": "تم نسخ كلمة المرور المؤقتة إلى الحافظة!",
+
+"Something went wrong. Check console.": "حدث خطأ ما. تحقق من وحدة التحكم",
+"Contact administrator": "تواصل مع المسؤول",
+"Invalid request": "طلب غير صالح",
+
+"Edit Class":        "تعديل الدرس",
+"Add Class":         "إضافة درس",
+"Save Class":        "حفظ الدرس",
+"Update Class":      "تحديث الدرس",
+"Schedule updated ✅": "تم تحديث الجدول ✅",
+"Class added ✅":     "تمت إضافة الدرس ✅",
+"Failed to save schedule.": "فشل حفظ الجدول.",
+"Select Course":     "اختر المادة",
+"Edit":              "تعديل",
+"Cancel":            "إلغاء",
 
 "Welcome": "مرحبًا",
 
@@ -739,7 +776,7 @@ const DICT = {
 
   // HEADER / HERO
   "Al-Bayan Arabic Institute Online": "معهد البيان للدراسات العربية والإسلامية عبر الإنترنت",
-  "Learn Arabic with Confidence Online": "تعتم العربية والإسلامية بثقة عبر الإنترنت",
+  "Learn Arabic with Confidence Online": "تعلم العربية والإسلامية بثقة عبر الإنترنت",
   "Structured online Arabic classes for beginners, intermediate and advanced learners, guided by qualified teachers.": "دروس عربية منظمة عبر الإنترنت للمبتدئين والمتوسطين والمتقدمين، بإشراف معلمين مؤهلين.",
   "Get Ready": "ابدأ الآن",
 
@@ -785,7 +822,7 @@ const DICT = {
 "- أحمد، المملكة المتحدة",
 
   // CALL TO ACTION
-  "Ready to Start Your Arabic Journey?": "هل أنت مستعد لبدء رحلتك في تعتم العربية والإسلامية؟",
+  "Ready to Start Your Arabic Journey?": "هل أنت مستعد لبدء رحلتك في تعلم العربية والإسلامية؟",
   "Sign up today and join our growing family of learners worldwide.": "سجّل اليوم وانضم إلى عائلتنا المتنامية من المتعلمين حول العالم.",
   "Register Now": "سجل الآن",
 
@@ -1206,6 +1243,70 @@ const DICT = {
 
 "Matric Number copied to clipboard ✅": "تم نسخ الرقم الجامعي إلى الحافظة ✅",
 
+// ======= STAFF DASHBOARD =======
+"Staff Dashboard": "لوحة تحكم الموظف",
+"My Courses & Students": "موادي وطلابي",
+"Manage your courses and students": "إدارة موادك وطلابك",
+"My Courses": "موادي",
+"My Students": "طلابي",
+"No courses assigned to you yet.": "لم يتم تعيين أي مواد لك بعد.",
+"No students enrolled yet": "لا يوجد طلاب مسجلون بعد",
+"Failed to load courses.": "فشل تحميل المواد.",
+"Loading your courses...": "جاري تحميل موادك...",
+"🔍 Search students...": "🔍 البحث عن الطلاب...",
+"Staff": "موظف",
+"Teacher": "معلم",
+"Access denied. Teachers only.": "الوصول مرفوض. للمعلمين فقط.",
+
+// ======= CERTIFICATE SYSTEM =======
+"Issue Certificate": "إصدار شهادة",
+"🎓 Issue": "🎓 إصدار",
+"My Certificates": "شهاداتي",
+"Download your certificates of completion": "تحميل شهادات الإتمام الخاصة بك",
+"Certificate of Completion": "شهادة إتمام",
+"No Certificates Yet": "لا توجد شهادات بعد",
+"You haven't been issued any certificates yet.": "لم يتم إصدار أي شهادة لك بعد.",
+"Complete your courses to earn a certificate.": "أكمل موادك للحصول على شهادة.",
+"Download PDF": "تحميل PDF",
+"Loading your certificates...": "جاري تحميل شهاداتك...",
+"Failed to load certificates.": "فشل تحميل الشهادات.",
+"Student:": "الطالب:",
+"Issued by:": "صادرة من:",
+"Date:": "التاريخ:",
+"✅ Certificate of Completion": "✅ شهادة إتمام",
+"Certificate Issued": "تم إصدار الشهادة",
+"Issued Certificates": "الشهادات الصادرة",
+"Active": "نشطة",
+"Revoked": "ملغاة",
+"Revoke": "إلغاء",
+"Restore": "استعادة",
+"Please select a course before issuing.": "يرجى اختيار المادة قبل الإصدار.",
+"A certificate for this course has already been issued to this student.": "تم إصدار شهادة لهذه المادة لهذا الطالب مسبقًا.",
+"Failed to issue certificate. See console.": "فشل إصدار الشهادة. راجع وحدة التحكم.",
+"Failed to revoke certificate.": "فشل إلغاء الشهادة.",
+"Failed to restore certificate.": "فشل استعادة الشهادة.",
+"Revoke this certificate? The student will no longer see it.": "إلغاء هذه الشهادة؟ لن يتمكن الطالب من رؤيتها بعد الآن.",
+"Restore this certificate? The student will see it again.": "استعادة هذه الشهادة؟ سيتمكن الطالب من رؤيتها مرة أخرى.",
+"Certificate revoked.": "تم إلغاء الشهادة.",
+"Certificate restored ✅": "تمت استعادة الشهادة ✅",
+"No courses found": "لا توجد مواد",
+"Loading courses...": "جاري تحميل المواد...",
+"Select Course": "اختر المادة",
+"Student Name": "اسم الطالب",
+"Matric Number": "الرقم الجامعي",
+"Course": "المادة",
+"No courses found": "لا توجد مواد",
+"Certificate ID:": "رقم الشهادة:",
+"This certificate was issued by Dar Al-Ulum Wal Hikam Arabic And Islamic Institute Online": "تم إصدار هذه الشهادة من معهد دار العلوم والحكم للغة العربية والدراسات الإسلامية عبر الإنترنت",
+"DAR AL-ULUM WAL HIKAM ARABIC AND ISLAMIC INSTITUTE": "دار العلوم والحكم للغة العربية والدراسات الإسلامية",
+"has successfully completed the course": "أتمّ بنجاح المادة",
+"This is to certify that": "نشهد بأن",
+"Date of Issue:": "تاريخ الإصدار:",
+"Matric No:": "الرقم الجامعي:",
+"Mudeer": "المدير",
+"Bursar, Dar Al-Ulum Wal Hikam Arabic And Islamic Institute": "المحاسب، دار العلوم والحكم للغة العربية والدراسات الإسلامية",
+"My Certificates": "شهاداتي",
+
 "Submit Registration": "إرسال التسجيل",
 "Please login to view your exam timetable": "يرجى تسجيل الدخول لعرض جدول الاختبارات",
 
@@ -1346,8 +1447,213 @@ const DICT = {
 "Load assessment error:": "خطأ في تحميل الاختبار:",
 "Check submission error:": "خطأ في التحقق من الإرسال:",
 
-"© {year} Al-Bayan Arabic Institute Online. All rights reserved.":
-"© {year} البيان لتعليم العربية والدراسات الإسلامية أونلاين. جميع الحقوق محفوظة.",
+"© 2026 - {year} Al-Bayan Arabic Institute Online. All rights reserved.":
+"© 2026 - {year} البيان لتعليم العربية والدراسات الإسلامية أونلاين. جميع الحقوق محفوظة.",
+
+// ======= LOGIN PAGE =======
+"Staff": "موظف",
+"Invalid staff login": "تسجيل دخول الموظف غير صالح",
+"No profile found. Contact administrator.": "لم يتم العثور على ملف. تواصل مع المسؤول.",
+"Access denied. This login is for teachers only.": "الوصول مرفوض. هذا الدخول للمعلمين فقط.",
+"Invalid admin login": "تسجيل دخول المسؤول غير صالح",
+"No role assigned. Contact developer.": "لم يتم تعيين دور. تواصل مع المطور.",
+
+// ======= STAFF DASHBOARD — HTML STRINGS =======
+"My Dashboard": "لوحتي",
+"Manage your courses, students and grades": "إدارة موادك وطلابك ودرجاتك",
+"My Courses": "موادي",
+"Grades": "الدرجات",
+"Schedule": "الجدول",
+"My Profile": "ملفي الشخصي",
+"My Courses & Students": "موادي وطلابي",
+"🔍 Search students...": "🔍 البحث عن الطلاب...",
+"Loading your courses...": "جاري تحميل موادك...",
+"📝 Post a Grade": "📝 تسجيل درجة",
+"Student": "الطالب",
+"Course": "المادة",
+"Level": "المستوى",
+"Semester": "الفصل الدراسي",
+"Assessment Score": "درجة التقييم",
+"Exam Score": "درجة الامتحان",
+"Total Score": "المجموع الكلي",
+"Status": "الحالة",
+"Remark": "الملاحظة",
+"Select Student": "اختر الطالب",
+"Select Course": "اختر المادة",
+"Select Semester": "اختر الفصل الدراسي",
+"First": "الأول",
+"Second": "الثاني",
+"Completed": "مكتمل",
+"Loading": "جارٍ التحميل",
+"Cancelled": "ملغى",
+"Pass": "ناجح",
+"Average": "متوسط",
+"Fail": "راسب",
+"Submit Grade": "إرسال الدرجة",
+"Submitting...": "جارٍ الإرسال...",
+"📊 Posted Grades": "📊 الدرجات المسجلة",
+"🔍 Search grades...": "🔍 البحث في الدرجات...",
+"Matric": "الرقم الجامعي",
+"Assessment": "التقييم",
+"Exam": "الامتحان",
+"Total": "المجموع",
+"Released": "تم النشر",
+"Pending": "قيد الانتظار",
+"Loading grades...": "جاري تحميل الدرجات...",
+"📅 My Class Schedule": "📅 جدول حصصي",
+"Loading schedule...": "جاري تحميل الجدول...",
+"Date": "التاريخ",
+"Time": "الوقت",
+"Link": "الرابط",
+
+// ======= STAFF DASHBOARD — PROFILE TAB =======
+"👤 My Profile": "👤 ملفي الشخصي",
+"Full Name": "الاسم الكامل",
+"Email": "البريد الإلكتروني",
+"Role": "الدور",
+"Save Profile": "حفظ الملف",
+"Saving...": "جارٍ الحفظ...",
+"Profile saved ✅": "تم حفظ الملف ✅",
+"Name cannot be empty.": "لا يمكن أن يكون الاسم فارغًا.",
+"Failed to save profile.": "فشل حفظ الملف.",
+"Only image files are allowed.": "يُسمح بملفات الصور فقط.",
+"Photo must not exceed 2MB.": "يجب ألا تتجاوز الصورة 2 ميجابايت.",
+"Change photo": "تغيير الصورة",
+
+// ======= STAFF DASHBOARD — PASSWORD TAB =======
+"🔐 Change Password": "🔐 تغيير كلمة المرور",
+"New Password": "كلمة المرور الجديدة",
+"Confirm Password": "تأكيد كلمة المرور",
+"Enter new password": "أدخل كلمة المرور الجديدة",
+"Confirm new password": "أكد كلمة المرور الجديدة",
+"Update Password": "تحديث كلمة المرور",
+"Updating...": "جارٍ التحديث...",
+"Password must be at least 6 characters.": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.",
+"Passwords do not match.": "كلمتا المرور غير متطابقتين.",
+"Password updated successfully 🔐": "تم تحديث كلمة المرور بنجاح 🔐",
+"Failed to update password.": "فشل تحديث كلمة المرور.",
+
+// ======= STAFF DASHBOARD — JS TOASTS & ALERTS =======
+"Grade submitted ✅": "تم إرسال الدرجة ✅",
+"Failed to submit grade.": "فشل إرسال الدرجة.",
+"Please fill all required fields.": "يرجى ملء جميع الحقول المطلوبة.",
+"No courses assigned to you yet.": "لم يتم تعيين أي مواد لك بعد.",
+"No students enrolled yet": "لا يوجد طلاب مسجلون بعد",
+"Failed to load courses.": "فشل تحميل المواد.",
+"No students assigned yet.": "لم يتم تعيين أي طلاب بعد.",
+"No grades posted yet.": "لم يتم تسجيل أي درجات بعد.",
+"Failed to load grades.": "فشل تحميل الدرجات.",
+"No courses assigned yet.": "لم يتم تعيين أي مواد بعد.",
+"No classes scheduled yet.": "لم يتم جدولة أي حصص بعد.",
+"Failed to load schedule.": "فشل تحميل الجدول.",
+"Access denied. Teachers only.": "الوصول مرفوض. للمعلمين فقط.",
+
+// ======= MY CERTIFICATE PAGE =======
+"My Certificates": "شهاداتي",
+"Download your certificates of completion": "تحميل شهادات الإتمام الخاصة بك",
+"Loading your certificates...": "جاري تحميل شهاداتك...",
+"No Certificates Yet": "لا توجد شهادات بعد",
+"You haven't been issued any certificates yet.": "لم يتم إصدار أي شهادة لك بعد.",
+"Complete your courses to earn a certificate.": "أكمل موادك للحصول على شهادة.",
+"Student:": "الطالب:",
+"Issued by:": "صادرة من:",
+"✅ Certificate of Completion": "✅ شهادة إتمام",
+"Download PDF": "تحميل PDF",
+"Failed to load certificates.": "فشل تحميل الشهادات.",
+"Student login required": "تسجيل دخول الطالب مطلوب",
+"Certificate": "الشهادة",
+
+// ======= ADMIN DASHBOARD — CERTIFICATE MODAL =======
+"Issue Certificate": "إصدار شهادة",
+"Grade Note (optional)": "ملاحظة الدرجة (اختياري)",
+"e.g. with a total score of 85%": "مثال: بمجموع درجات 85%",
+"Please select a course before issuing.": "يرجى اختيار المادة قبل الإصدار.",
+"Failed to issue certificate. See console.": "فشل إصدار الشهادة. راجع وحدة التحكم.",
+"Certificate issued to": "تم إصدار شهادة لـ",
+"Issued Certificates": "الشهادات الصادرة",
+"Grade Note": "ملاحظة الدرجة",
+"Active": "نشطة",
+"Revoked": "ملغاة",
+"Edit": "تعديل",
+"Revoke": "إلغاء",
+"Restore": "استعادة",
+"🗑 Delete": "🗑 حذف",
+"Save Changes": "حفظ التغييرات",
+"Cancel": "إلغاء",
+"Edit Certificate": "تعديل الشهادة",
+"Course Name": "اسم المادة",
+"Failed to update certificate.": "فشل تحديث الشهادة.",
+"Certificate updated ✅": "تم تحديث الشهادة ✅",
+"Revoke this certificate? The student will no longer see it.": "إلغاء هذه الشهادة؟ لن يتمكن الطالب من رؤيتها بعد الآن.",
+"Failed to revoke certificate.": "فشل إلغاء الشهادة.",
+"Certificate revoked.": "تم إلغاء الشهادة.",
+"Restore this certificate? The student will see it again.": "استعادة هذه الشهادة؟ سيتمكن الطالب من رؤيتها مرة أخرى.",
+"Failed to restore certificate.": "فشل استعادة الشهادة.",
+"Certificate restored ✅": "تمت استعادة الشهادة ✅",
+"Permanently delete this certificate?\n\nThis cannot be undone.": "حذف هذه الشهادة نهائيًا؟\n\nلا يمكن التراجع عن هذا الإجراء.",
+"Failed to delete certificate.": "فشل حذف الشهادة.",
+"Certificate permanently deleted 🗑": "تم حذف الشهادة نهائيًا 🗑",
+"Nothing was updated — check RLS policies in Supabase.": "لم يتم تحديث أي شيء — تحقق من سياسات RLS في Supabase.",
+
+// ======= ADMIN DASHBOARD — COURSES SECTION =======
+"Add Course": "إضافة مادة",
+"Course Name": "اسم المادة",
+"Instructor": "المدرس",
+"All Courses": "جميع المواد",
+"No courses yet": "لا توجد مواد بعد",
+"Course name is required": "اسم المادة مطلوب",
+"Error updating course": "خطأ في تحديث المادة",
+"Course updated ✅": "تم تحديث المادة ✅",
+"Error adding course": "خطأ في إضافة المادة",
+"Course added ✅": "تمت إضافة المادة ✅",
+"Update Course": "تحديث المادة",
+"Delete this course? This cannot be undone.": "حذف هذه المادة؟ لا يمكن التراجع عن هذا الإجراء.",
+"Course deleted ✅": "تم حذف المادة ✅",
+"Level:": "المستوى:",
+"Instructor:": "المدرس:",
+
+// ======= ADMIN DASHBOARD — GENERAL =======
+"Grades Posted": "الدرجات المسجلة",
+"My Students": "طلابي",
+"My Courses": "موادي",
+"Grade released": "تم نشر الدرجة",
+"Grade hidden": "تم إخفاء الدرجة",
+"Nothing to undo": "لا يوجد شيء للتراجع عنه",
+"Undo successful": "تم التراجع بنجاح",
+"No role assigned": "لم يتم تعيين دور",
+"Manage Your Office": "أدر مكتبك",
+"Password must be at least 6 characters": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
+"Password updated successfully 🔐": "تم تحديث كلمة المرور بنجاح 🔐",
+"No pending welcome emails 🙂": "لا توجد رسائل ترحيب معلقة 🙂",
+"Failed to fetch students": "فشل في جلب بيانات الطلاب",
+"All welcome emails sent successfully 🎉": "تم إرسال جميع رسائل الترحيب بنجاح 🎉",
+"All emails failed to send 😢": "فشل إرسال جميع الرسائل 😢",
+"Sending... ⏳": "جارٍ الإرسال... ⏳",
+"Email Progress": "تقدم الإرسال",
+"Student admission approved!": "تمت الموافقة على قبول الطالب!",
+"Error approving student:": "خطأ في الموافقة على الطالب:",
+"Delete this": "حذف هذا",
+"You can undo this.": "يمكنك التراجع عن هذا.",
+"deleted. Undo?": "تم الحذف. تراجع؟",
+"No records found": "لا توجد سجلات",
+"Error saving": "خطأ في الحفظ",
+"Delete this record?": "حذف هذا السجل؟",
+"Toggle": "تبديل",
+"No role assigned": "لم يتم تعيين دور",
+"Failed to save student. See console.": "فشل حفظ الطالب. راجع وحدة التحكم.",
+"Failed to save payment. See console.": "فشل حفظ الدفع. راجع وحدة التحكم.",
+"Failed to save grade. See console.": "فشل حفظ الدرجة. راجع وحدة التحكم.",
+"Failed to save schedule. See console.": "فشل حفظ الجدول. راجع وحدة التحكم.",
+"Failed to save assessment": "فشل حفظ التقييم",
+"Invalid start date": "تاريخ البداية غير صالح",
+"Invalid end date": "تاريخ النهاية غير صالح",
+"Assessment updated": "تم تحديث التقييم",
+"Assessment added": "تمت إضافة التقييم",
+"Failed to update assessment": "فشل تحديث التقييم",
+"Unexpected error occurred": "حدث خطأ غير متوقع",
+"No pending welcome emails 🙂": "لا توجد رسائل ترحيب معلقة",
+
+"Privacy Policy": "سياسة الخصوصية",
 
   /* ===== DYNAMIC TEMPLATES ===== */
 
@@ -1459,6 +1765,15 @@ en: {
   "Payment Confirmed": "Payment Confirmed",
   "New Grade Posted": "New Grade Posted",
   "New Class Scheduled": "New Class Scheduled",
+  
+  "CERTIFICATE_ISSUED": "Your certificate for {course} has been issued",
+"certificate_issued_title": "Certificate Issued 🎓",
+
+// Staff dashboard templates
+"GRADE_SUBMITTED": "Grade submitted for {course}",
+"PROFILE_SAVED": "Profile saved successfully",
+"NO_COURSES_ASSIGNED": "No courses assigned to you yet",
+"NO_STUDENTS_ENROLLED": "No students enrolled in this course",
 },
 
 ar: {
@@ -1582,6 +1897,14 @@ ar: {
   "Payment Confirmed": "تم تأكيد الدفع",
   "New Grade Posted": "تم نشر نتيجة جديدة",
   "New Class Scheduled": "تم تحديد حصة جديدة",
+  
+  "CERTIFICATE_ISSUED": "تم إصدار شهادتك لمادة {course}",
+"certificate_issued_title": "تم إصدار الشهادة 🎓",
+
+"GRADE_SUBMITTED": "تم إرسال الدرجة لمادة {course}",
+"PROFILE_SAVED": "تم حفظ الملف الشخصي بنجاح",
+"NO_COURSES_ASSIGNED": "لم يتم تعيين أي مواد لك بعد",
+"NO_STUDENTS_ENROLLED": "لا يوجد طلاب مسجلون في هذه المادة",
 },
 };
 // ================================
@@ -1676,9 +1999,10 @@ function translate(lang) {
 if (el.dataset.noTranslate === "true") return;
 if (el.dataset.i18n) {
   const key = el.dataset.i18n;
+  if (!el.dataset.original) el.dataset.original = el.textContent.trim();
   el.textContent = (lang === "ar")
-    ? (DICT[key] || key)
-    : key;
+    ? (DICT.ar?.[key] || DICT[key] || el.dataset.original)
+    : el.dataset.original;
   return;
 }
     if (
@@ -1743,10 +2067,10 @@ function updateYear() {
 
   if (lang === "ar") {
     footer.textContent =
-      `© ${year} البيان لتعليم العربية والدراسات الإسلامية أونلاين. جميع الحقوق محفوظة.`;
+      `© 2026 - ${year} البيان لتعليم العربية والدراسات الإسلامية أونلاين. جميع الحقوق محفوظة.`;
   } else {
     footer.textContent =
-      `© ${year} Al-Bayan Arabic Institute Online. All rights reserved.`;
+      `© 2026 - ${year} Al-Bayan Arabic Institute Online. All rights reserved.`;
   }
 }
 

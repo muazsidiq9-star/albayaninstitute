@@ -45,6 +45,23 @@ body { font-family: Arial, sans-serif; background: var(--bg-color); color: var(-
 .contact-section { max-width: 700px; margin: 30px auto; padding: 0 20px; }
 .contact-section h2 { font-size: 1.8rem; color: #1a73e8; margin-bottom: 10px; text-align: center; }
 .contact-section h3 { 
+display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  
+  margin-bottom: 20px;
+  margin-top: 1rem;
+  border-radius: 8px;
+  background: #fff4e5;
+  border: 1px solid #ffcc80;
+  color: #8a5a00;
+  font-size: 0.9rem;
+  
+text-align: center;
+margin-bottom: 10px;
+}
+.contact-section h4 { 
 text-align: center;
 margin-bottom: 10px;
 }
@@ -58,6 +75,11 @@ margin-bottom: 10px;
 /* ===== CONTACT INFO ===== */
 .contact-info { margin-top: 30px; text-align: center; }
 .contact-info h3 { font-size: 1.6rem; color: #1a73e8; margin-bottom: 15px; }
+.contact-info h4 {
+  font-size: 1.6rem;
+  color: #1a73e8;
+  margin-bottom: 20px;
+}
 .contact-info p { font-size: 1rem; margin: 6px 0; }
 .contact-info a { color: #1a73e8; text-decoration: none; }
 .contact-info a:hover { text-decoration: underline; }
@@ -115,6 +137,7 @@ footer {
   color: #1a73e8;
   margin-bottom: 20px;
 }
+
 .contact-cards {
   display: flex;
   flex-wrap: wrap;
@@ -137,6 +160,7 @@ footer {
 .contact-card i {
   font-size: 1.2rem;
 }
+
 .contact-card:hover {
   background-color: var(--card-color);
   transform: translateY(-3px);
@@ -151,5 +175,11 @@ footer {
   .contact-card {
     width: 80%;
     justify-content: center;
+  }
+  .contact-card i {
+  font-size: 0.9rem;
+}
+  .contact-card span {
+    font-size: 0.9rem;
   }
 }

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" content="notranslate">
+  <title>Staff Dashboard | Al-Bayan Arabic Institute</title>
+
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="staff-dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="staff-dashboard.html" class="logo">
+        <img src="logo.png" alt="Logo"> Al-Bayan
+      </a>
+      <div class="hamburger">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="staff-dashboard.html" class="active">My Dashboard</a>
+        <a href="contact.html">Contact</a>
+        <button id="logoutBtn" class="logout-btn">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="home-header">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="background-all.mp4" type="video/mp4">
+    </video>
+    <div class="header-overlay">
+      <img src="logo.png" alt="Logo" class="header-logo">
+      <h1>Staff Dashboard</h1>
+      <h3 id="staffGreeting" style="color:#fff; margin: 8px 0;"></h3>
+      <p>Manage your courses, students and grades</p>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat-card">
+      <h3 id="totalCourses">0</h3>
+      <p>My Courses</p>
+    </div>
+    <div class="stat-card">
+      <h3 id="totalStudents">0</h3>
+      <p>My Students</p>
+    </div>
+    <div class="stat-card">
+      <h3 id="totalGrades">0</h3>
+      <p>Grades Posted</p>
+    </div>
+  </section>
+
+  <!-- TAB NAVIGATION -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('courses')">My Courses</button>
+    <button class="tab-btn" onclick="switchTab('grades')">Grades</button>
+    <button class="tab-btn" onclick="switchTab('schedule')">Schedule</button>
+    <button class="tab-btn" onclick="switchTab('profile')">My Profile</button>
+  </div>
+
+  <!-- ===== TAB: MY COURSES ===== -->
+  <div class="tab-content active" id="tab-courses">
+    <div class="section-header">
+      <h2>My Courses & Students</h2>
+      <input type="text" id="searchStudents" class="search-input"
+        placeholder="🔍 Search students...">
+    </div>
+    <div id="coursesList">
+      <p class="empty-state">Loading your courses...</p>
+    </div>
+  </div>
+
+  <!-- ===== TAB: GRADES ===== -->
+  <div class="tab-content" id="tab-grades">
+
+    <!-- POST GRADE FORM -->
+    <div class="staff-card">
+      <h2 class="section-title">📝 Post a Grade</h2>
+
+      <div class="grade-form">
+        <div class="grade-form-row">
+          <div class="grade-form-field">
+            <label>Student</label>
+            <select id="gradeStudentSelect">
+            <option value="">Select Student</option>
+            </select>
+          </div>
+
+          <div class="grade-form-field">
+            <label>Course</label>
+            <select id="gradeCourseSelect">
+            <option value="">Select Course</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grade-form-row">
+          <div class="grade-form-field">
+            <label>Level</label>
+            <input type="text" id="gradeLevelInput" placeholder="Level" readonly>
+          </div>
+
+          <div class="grade-form-field">
+            <label>Semester</label>
+            <select id="gradeSemesterSelect">
+              <option value="">Select Semester</option>
+              <option value="First">First</option>
+              <option value="Second">Second</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grade-form-row">
+          <div class="grade-form-field">
+            <label>Assessment Score</label>
+            <input type="number" id="gradeAssessmentInput"
+              placeholder="Assessment" min="0">
+          </div>
+
+          <div class="grade-form-field">
+            <label>Exam Score</label>
+            <input type="number" id="gradeExamInput"
+              placeholder="Exam" min="0">
+          </div>
+
+          <div class="grade-form-field">
+            <label>Total Score</label>
+            <input type="number" id="gradeTotalInput"
+              placeholder="Total" readonly>
+          </div>
+        </div>
+
+        <div class="grade-form-row">
+          <div class="grade-form-field">
+            <label>Status</label>
+            <select id="gradeStatusSelect">
+              <option value="completed">Completed</option>
+              <option value="loading">Loading</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div class="grade-form-field">
+            <label>Remark</label>
+            <select id="gradeRemarkSelect">
+              <option value="pass">Pass</option>
+              <option value="average">Average</option>
+              <option value="fail">Fail</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn btn-save grade-submit-btn" onclick="submitGrade()">
+          <i class="fas fa-paper-plane"></i> Submit Grade
+        </button>
+      </div>
+    </div>
+
+    <!-- GRADES TABLE -->
+    <div class="staff-card">
+      <div class="section-header">
+        <h2 class="section-title">📊 Posted Grades</h2>
+        <input type="text" id="searchGrades" class="search-input"
+          placeholder="🔍 Search grades...">
+      </div>
+      <div class="table-container">
+        <table class="staff-table" id="staffGradesTable">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Matric</th>
+              <th>Course</th>
+              <th>Semester</th>
+              <th>Assessment</th>
+              <th>Exam</th>
+              <th>Total</th>
+              <th>Remark</th>
+              <th>Released</th>
+            </tr>
+          </thead>
+          <tbody id="staffGradesBody">
+            <tr><td colspan="9" class="empty-state">Loading grades...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+<!-- ===== TAB: SCHEDULE ===== -->
+<div class="tab-content" id="tab-schedule">
+
+  <!-- ADD / EDIT FORM -->
+  <div class="staff-card" id="scheduleFormCard" style="display:none;">
+    <h2 class="section-title" id="scheduleFormTitle">📅 Add Class</h2>
+    <input type="hidden" id="scheduleEditId">
+
+    <div class="grade-form">
+      <div class="grade-form-row">
+        <div class="grade-form-field">
+          <label>Course</label>
+          <select id="schedCourseSelect">
+            <option value="">Select Course</option>
+          </select>
+        </div>
+        <div class="grade-form-field">
+          <label>Level</label>
+          <input type="text" id="schedLevelInput" placeholder="Level" readonly>
+        </div>
+      </div>
+
+      <div class="grade-form-row">
+        <div class="grade-form-field">
+          <label>Date</label>
+          <input type="date" id="schedDateInput">
+        </div>
+        <div class="grade-form-field">
+          <label>Time</label>
+          <input type="time" id="schedTimeInput">
+        </div>
+      </div>
+
+      <div class="grade-form-row">
+        <div class="grade-form-field">
+          <label>Meeting Link</label>
+          <input type="url" id="schedLinkInput" placeholder="https://zoom.us/...">
+        </div>
+        <div class="grade-form-field">
+          <label>Status</label>
+          <select id="schedStatusSelect">
+            <option value="scheduled">Scheduled</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+        <button class="btn btn-save" onclick="saveSchedule()">
+          <i class="fas fa-save"></i> <span id="schedSaveBtnText">Save Class</span>
+        </button>
+        <button class="btn" style="background:var(--danger,#e74c3c);color:#fff;"
+          onclick="cancelScheduleForm()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE CARD -->
+  <div class="staff-card">
+    <div class="section-header">
+      <h2 class="section-title">📅 My Class Schedule</h2>
+      <button class="btn btn-save" onclick="openScheduleForm()">+ Add Class
+      </button>
+    </div>
+    <div class="table-container">
+      <table class="staff-table" id="staffScheduleTable">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Level</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Link</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="staffScheduleBody">
+          <tr><td colspan="7" class="empty-state">Loading schedule...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+ <!-- ===== TAB: MY PROFILE ===== -->
+<div class="tab-content" id="tab-profile">
+  <div class="staff-card">
+    <h2 class="section-title">👤 My Profile</h2>
+
+    <!-- AVATAR / PHOTO -->
+    <div class="profile-avatar-wrap">
+      <div class="profile-avatar-container">
+        <img id="profileAvatarImg"
+          src=""
+          alt="Profile Photo"
+          class="profile-avatar-img hidden"
+          onclick="openAvatarPreview()"
+        >
+        <div id="profileAvatarInitial" class="profile-avatar">👤</div>
+
+        <!-- Edit overlay -->
+        <label for="profilePhotoInput" class="profile-avatar-edit-btn"
+          title="Change photo">
+          <i class="fas fa-camera"></i>
+        </label>
+        <input type="file" id="profilePhotoInput"
+          accept="image/*" style="display:none"
+          onchange="handleAvatarChange(event)">
+      </div>
+    </div>
+
+    <!-- PREVIEW MODAL -->
+    <div id="avatarPreviewModal" class="avatar-preview-modal hidden"
+      onclick="closeAvatarPreview()">
+      <img id="avatarPreviewImg" src="" alt="Preview">
+    </div>
+
+    <div class="profile-form">
+      <div class="profile-field">
+        <label>Full Name</label>
+        <input type="text" id="profileName" placeholder="Full Name">
+      </div>
+      <div class="profile-field">
+        <label>Email</label>
+        <input type="email" id="profileEmail" placeholder="Email" readonly>
+      </div>
+      <div class="profile-field">
+        <label>Role</label>
+        <input type="text" id="profileRole" placeholder="Role" readonly>
+      </div>
+    </div>
+
+    <button class="btn btn-save full-btn" onclick="saveProfile()">
+      Save Profile
+    </button>
+  </div>
+
+  <!-- CHANGE PASSWORD -->
+  <div class="staff-card">
+    <h2 class="section-title">🔐 Change Password</h2>
+
+    <div class="form-group1">
+      <label>New Password</label>
+      <div class="input-group">
+        <input id="newPassword" type="password"
+          placeholder="Enter new password">
+        <button type="button" class="toggle-btn"
+          onclick="togglePassword('newPassword')">👁️</button>
+      </div>
+    </div>
+
+    <div class="form-group1">
+      <label>Confirm Password</label>
+      <div class="input-group">
+        <input id="confirmPassword" type="password"
+          placeholder="Confirm new password">
+        <button type="button" class="toggle-btn"
+          onclick="togglePassword('confirmPassword')">👁️</button>
+      </div>
+    </div>
+
+    <button class="btn btn-save full-btn" onclick="changeMyPassword()">
+      Update Password
+    </button>
+  </div>
+</div>
+
+  <!-- TOAST -->
+  <div id="staff-toast" class="toast"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Al-Bayan Arabic Institute Online</p>
+    <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
+    <p>© <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.</p>
+    <a href="privacy.html">Privacy Policy</a>
+  </footer>
+
+  <!-- WHATSAPP -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
+
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('show'));
+    document.addEventListener('click', e => {
+      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+        navLinks.classList.remove('show');
+      }
+    });
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  </script>
+
+  <script src="translate.js"></script>
+  <script src="staff-dashboard.js"></script>
+
+</body>
+</html>

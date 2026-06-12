@@ -93,7 +93,7 @@
       <table id="students-table">
         <thead>
           <tr>
-            <th>Photo</th><th>Matric Number</th><th>Name</th><th>Email</th><th>WhatsApp</th><th>Country</th><th>Gender</th><th>Age</th><th>Level</th><th>Status</th><th>Admission</th><th>Actions</th><th>Welcome Email</th><th>Edit</th><th>Delete</th>
+            <th>Photo</th><th>Matric Number</th><th>Name</th><th>Email</th><th>WhatsApp</th><th>Country</th><th>Gender</th><th>Age</th><th>Level</th><th>Status</th><th>Admission</th><th>Actions</th><th>Welcome Email</th><th>Edit</th><th>Delete</th><th>Certificate</th>
           </tr>
         </thead>
         <tbody>
@@ -592,27 +592,62 @@
   </div>
 </div>
 
+<!-- CERTIFICATE MODAL -->
+<div class="modal" id="certificateModal">
+  <div class="modal-content modal-large">
+    <span class="btn btn-close" onclick="closeModal('certificateModal')">&times;</span>
+    <h2>Issue Certificate</h2>
+    <div class="modal-grid">
+
+      <label>Student Name</label>
+      <input type="text" id="certStudentName" disabled>
+
+      <label>Matric Number</label>
+      <input type="text" id="certMatric" disabled>
+
+      <label>Level</label>
+      <input type="text" id="certLevel" disabled>
+      
+      <label>Grade Note (optional)</label>
+<input type="text" id="certGradeNote" placeholder="e.g. with a total score of 85%">
+
+      <label>Course</label>
+      <select id="certCourse">
+        <option value="">Select Course</option>
+      </select>
+
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-save" onclick="issueCertificate()">Issue Certificate</button>
+      <button class="btn btn-cancel" onclick="closeModal('certificateModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
   <!-- TOAST -->
   <div id="admin-toast" class="toast"></div>
 
-  <section>
-    <div class="card">
-  <h2>Add Course</h2>
+  <section class="courses-section">
+  <div class="card">
 
-<div class="form-group">
-  <input type="text" id="courseName" placeholder="Course Name">
-  <input type="text" id="courseLevel" placeholder="Level">
-  <input type="text" id="courseInstructor" placeholder="Instructor">
+    <h2 class="section-title">Add Course</h2>
 
-<button class="btn btn-primary" onclick="addCourse()">Add Course</button>
-</div>
+    <div class="course-form">
+      <input type="text" id="courseName" placeholder="Course Name">
+      <input type="text" id="courseLevel" placeholder="Level">
+      <input type="text" id="courseInstructor" placeholder="Instructor">
+      <button class="btn btn-primary" id="addCourseBtn" onclick="addCourse()">
+        Add Course
+      </button>
+    </div>
 
-<hr>
+    <hr class="section-divider">
 
-  <h2>All Courses</h2>
+    <h2 class="section-title">All Courses</h2>
 
+    <div id="adminCoursesList"></div>
 
-<div id="adminCoursesList"></div>
+  </div>
 </section>
 </div>
 
@@ -687,7 +722,7 @@
   <p>Al-Bayan Arabic Institute Online</p>
   <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
   <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+  © 2026 - <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
 </p>
 <a href="privacy.html">Privacy Policy</a>
 </footer>

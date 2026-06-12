@@ -58,10 +58,12 @@
 
     <form id="loginForm">
         <select id="userType" required>
-          <option value="">Select User</option>
-          <option value="admin">Admin</option>
-          <option value="student">Student</option>
-        </select>
+  <option value="">Select User</option>
+  <option value="admin">Admin</option>
+  <option value="staff">Staff</option>
+  <option value="student">Student</option>
+</select>
+
         <div class="form-group">
         <label for="email">Email</label>
         <input type="email" id="email" placeholder="Enter your Email" required>
@@ -78,7 +80,8 @@
   <input type="checkbox" id="rememberMe">
   <span data-i18n="remember_me">Remember me</span>
 </label>
-        <a href="forgot-password.html" class="forgot-password">Forgot password?</a>
+        <a id="forgotPasswordLink" class="forgot-password"
+href="forgot-password.html">Forgot password?</a>
       </div>
 
       <button type="submit" class="submit-btn">Login</button>
@@ -90,7 +93,7 @@
   <p>Al-Bayan Arabic Institute Online</p>
   <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
   <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
+  © 2026 - <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
 </p>
 <a href="privacy.html">Privacy Policy</a>
 </footer>
