@@ -103,6 +103,22 @@ document.addEventListener("DOMContentLoaded", () => {
           })
         );
 
+        // Persist student session for 7 days
+const studentSession = {
+  role: "student",
+  matric: student.matric_number,
+  currentStudent: JSON.stringify({
+    matric_number: student.matric_number,
+    fullname: student.fullname,
+    email: student.email,
+    level: student.level_arabic,
+    country: student.country,
+    plan_type: student.plan_type
+  }),
+  expiresAt: Date.now() + (7 * 24 * 60 * 60 * 1000) // 7 days
+};
+localStorage.setItem("studentSession", JSON.stringify(studentSession));
+
         username = student.fullname;
         redirectPage = "students-dashboard.html";
 

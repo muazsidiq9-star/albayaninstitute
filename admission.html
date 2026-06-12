@@ -194,7 +194,7 @@ async function loadAdmission() {
   const docNumber = generateDocNumber(data.matric_number);
   document.getElementById("docRef").textContent = docNumber;
 
-  const verificationURL = `https://darulhikam.netlify.app/verify.html?doc=${docNumber}`;
+  const verificationURL = `https://albayaninstitute.netlify.app/verify.html?doc=${docNumber}`;
 
   QRCode.toDataURL(verificationURL, function(err, url) {
     document.getElementById("qrCode").src = url;

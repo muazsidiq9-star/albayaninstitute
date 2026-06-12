@@ -1,17 +1,42 @@
 // ===========================
-// Student Guard (with DEV bypass)
+// Student Session Restore + Guard
 // ===========================
-const DEV_BYPASS = false; // 🔴 switch to true skips login
-const matric = sessionStorage.getItem("matric");
+const DEV_BYPASS = false;
 
 (function () {
   if (DEV_BYPASS) return;
+
+  // Try to restore from localStorage if sessionStorage is empty
   const role = sessionStorage.getItem("role");
-  if (role !== "student" || !matric) {
+  if (!role) {
+    const raw = localStorage.getItem("studentSession");
+    if (raw) {
+      try {
+        const saved = JSON.parse(raw);
+        if (saved.expiresAt && Date.now() < saved.expiresAt) {
+          sessionStorage.setItem("role", saved.role);
+          sessionStorage.setItem("matric", saved.matric);
+          sessionStorage.setItem("currentStudent", saved.currentStudent);
+        } else {
+          // Expired — clean up
+          localStorage.removeItem("studentSession");
+        }
+      } catch (e) {
+        localStorage.removeItem("studentSession");
+      }
+    }
+  }
+
+  const restoredRole = sessionStorage.getItem("role");
+  const restoredMatric = sessionStorage.getItem("matric");
+
+  if (restoredRole !== "student" || !restoredMatric) {
     alert(t("Student login required"));
     window.location.href = "login.html";
   }
 })();
+
+const matric = sessionStorage.getItem("matric");
 
 // ===========================
 // Students Dashboard JS
@@ -561,8 +586,9 @@ document.addEventListener(
 const logoutBtn = document.getElementById("logoutBtn");
 if (logoutBtn) {
   logoutBtn.addEventListener("click", () => {
-    sessionStorage.clear();
-    localStorage.removeItem("rememberedEmail");
-    window.location.href = "login.html";
-  });
+  sessionStorage.clear();
+  localStorage.removeItem("rememberedEmail");
+  localStorage.removeItem("studentSession"); // 👈 add this
+  window.location.href = "login.html";
+});
 }

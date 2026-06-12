@@ -24,25 +24,25 @@ const DICT = {
     "Pay Now": "ادفع الآن",
 
     // ===== ABOUT PAGE =====
-  "About Al-Bayan Arabic Institute": "عن معهد البيان للغة العربية والعلوم الإسلامية",
+  "About Al-Bayan Arabic Institute": "عن معهد البيان لتعليم اللغة العربية",
   "Dedicated to providing quality Arabic education online for learners worldwide":
     "نكرّس جهودنا لتقديم تعليم عربي عالي الجودة عبر الإنترنت للمتعلمين حول العالم",
 
   "Who We Are": "من نحن",
   "Al-Bayan Arabic Institute Online is an educational platform committed to teaching the Arabic language through structured and guided online learning. We serve students from different parts of the world who desire to understand Arabic for religious, academic, and conversational purposes.":
-    "معهد البيان للدراسات العربية عبر الإنترنت هو منصة تعليمية تهدف إلى تعليم اللغة العربية والعلوم الإسلامية بأسلوب منظم وموجّه. نخدم طلابًا من مختلف أنحاء العالم الراغبين في تعلّم العربية لأغراض دينية وأكاديمية وتواصلية.",
+    "معهد البيان لتعليم اللغة العربية عبر الإنترنت هو منصة تعليمية تهدف إلى تعليم اللغة العربية بأسلوب منظم وموجّه. نخدم طلابًا من مختلف أنحاء العالم الراغبين في تعلّم العربية لأغراض دينية وأكاديمية وتواصلية.",
 
   "Our Mission": "رسالتنا",
   "Our mission is to empower students to understand the Arabic language clearly and confidently, especially the language of the Qur’an. We aim to remove fear and confusion from learning Arabic by using step-by-step methods guided by experienced teachers.":
-    "رسالتنا هي تمكين الطلاب من فهم اللغة العربية والعلوم الإسلامية بوضوح وثقة، وخاصة لغة القرآن الكريم. نسعى إلى إزالة الخوف والارتباك من تعلم العربية والإسلامية من خلال أساليب تدريجية يشرف عليها معلمون ذوو خبرة.",
+    "رسالتنا هي تمكين الطلاب من فهم اللغة العربية بوضوح وثقة، وخاصة لغة القرآن الكريم. نسعى إلى إزالة الخوف والارتباك من تعلم العربية والإسلامية من خلال أساليب تدريجية يشرف عليها معلمون ذوو خبرة.",
 
   "Our Vision": "رؤيتنا",
   "Our vision is to become a trusted online Arabic institute that nurtures a generation of learners who can read, understand, and communicate in Arabic with clarity, confidence, and correct understanding.":
-    "رؤيتنا أن نصبح معهدًا موثوقًا للدراسات العربية والإسلامية عبر الإنترنت، يساهم في إعداد جيل قادر على القراءة والفهم والتواصل باللغة العربية والعلوم الإسلامية بوضوح وثقة وفهم سليم.",
+    "رؤيتنا أن نصبح معهدًا موثوقًا للدراسات العربية والإسلامية عبر الإنترنت، يساهم في إعداد جيل قادر على القراءة والفهم والتواصل باللغة العربية بوضوح وثقة وفهم سليم.",
 
   "What Makes Us Different": "ما الذي يميزنا",
   "Qualified and experienced Arabic instructors":
-    "مدرسون مؤهلون وذوو خبرة في تعليم اللغة العربية والعلوم الإسلامية",
+    "مدرسون مؤهلون وذوو خبرة في تعليم اللغة العربية",
   "Well-structured curriculum from beginner to advanced level":
     "منهج دراسي منظم من المستوى المبتدئ إلى المتقدم",
   "Strong focus on understanding, not memorization alone":
@@ -225,7 +225,7 @@ const DICT = {
 "Emails": "الرسائل",
 
 "Al-Bayan Arabic Institute Online":
-"معهد البيان للدراسات العربية عبر الإنترنت",
+"معهد البيان لتعليم اللغة العربية عبر الإنترنت",
 
 "Admin access only": "الدخول مخصص للمشرف فقط",
 
@@ -304,10 +304,10 @@ const DICT = {
 "البريد الإلكتروني: albayaninstitute068@gmail.com",
 
 "Al-Bayan Arabic Institute Online":
-"معهد البيان للدراسات العربية عبر الإنترنت",
+"معهد البيان لتعليم اللغة العربية عبر الإنترنت",
 
 "© 2022 Al-Bayan Arabic Institute Online. All rights reserved.":
-"© 2022 معهد البيان للدراسات العربية عبر الإنترنت. جميع الحقوق محفوظة.",
+"© 2022 معهد البيان لتعليم اللغة العربية عبر الإنترنت. جميع الحقوق محفوظة.",
 
 // Add to your DICT object
 "Forgot Your Password?": "هل نسيت كلمة المرور؟",
@@ -475,7 +475,7 @@ const DICT = {
 "Nationality *": "الجنسية *",
 "Country of Residence *": "بلد الإقامة *",
 "WhatsApp Phone Number *": "رقم واتساب *",
-"Current Level of Arabic *": "المستوى الحالي للغة العربية والعلوم الإسلامية *",
+"Current Level of Arabic *": "المستوى الحالي للغة العربية *",
 "Can read the Qur'an only": "يمكنه قراءة القرآن فقط",
 "Beginner": "مبتدئ",
 "Intermediate": "متوسط",
@@ -491,7 +491,7 @@ const DICT = {
 "Personal search": "بحث شخصي",
 "Preferred Class Time": "الوقت المفضل للحصة",
 "Include time zone": "قم بتضمين المنطقة الزمنية",
-"Why do you want to learn Arabic?": "لماذا تريد تعلم اللغة العربية والعلوم الإسلامية؟",
+"Why do you want to learn Arabic?": "لماذا تريد تعلم اللغة العربية؟",
 "Understanding the Qur'an": "لفهم القرآن",
 "Speaking Arabic": "لتحدث العربية",
 "Islamic studies": "الدراسات الإسلامية",
@@ -576,7 +576,7 @@ const DICT = {
 "Link": "الرابط",
 "Status": "الحالة",
 "Email: albayaninstitute068@gmail.com | Phone: +2347054711066": "البريد الإلكتروني: albayaninstitute068@gmail.com | الهاتف: ٠٨٠٥٤٧١١٠٦٦",
-"© 2022 Al-Bayan Arabic Institute Online. All rights reserved.": "© 2022 معهد البيان للدراسات العربية والإسلامية عبر الإنترنت. جميع الحقوق محفوظة.",
+"© 2022 Al-Bayan Arabic Institute Online. All rights reserved.": "© 2022 معهد البيان لتعليم اللغة العربية والإسلامية عبر الإنترنت. جميع الحقوق محفوظة.",
 "View your Upcoming Test/Exam Schedule": "عرض توقيت الاختبارات / المتحانات القادمة",
 
 
@@ -626,7 +626,7 @@ const DICT = {
 
 "No grades to download.": "لا توجد درجات للتحميل",
 
-"Al-Bayan Arabic Institute": "معهد البيان للدراسات العربية والإسلامية",
+"Al-Bayan Arabic Institute": "معهد البيان لتعليم اللغة العربية والإسلامية",
 "My Grades Report": "تقرير الدرجات",
 
 "Student Name:": "اسم الطالب:",
@@ -775,7 +775,7 @@ const DICT = {
 
 
   // HEADER / HERO
-  "Al-Bayan Arabic Institute Online": "معهد البيان للدراسات العربية والإسلامية عبر الإنترنت",
+  "Al-Bayan Arabic Institute Online": "معهد البيان لتعليم اللغة العربية والإسلامية عبر الإنترنت",
   "Learn Arabic with Confidence Online": "تعلم العربية والإسلامية بثقة عبر الإنترنت",
   "Structured online Arabic classes for beginners, intermediate and advanced learners, guided by qualified teachers.": "دروس عربية منظمة عبر الإنترنت للمبتدئين والمتوسطين والمتقدمين، بإشراف معلمين مؤهلين.",
   "Get Ready": "ابدأ الآن",
@@ -795,7 +795,7 @@ const DICT = {
 "Expert Teachers": "مدرسون خبراء",
 
 "Global Recognition": "اعتراف عالمي",
-"Certificates recognized internationally for Arabic proficiency.": "شهادات معترف بها دولياً لإتقان اللغة العربية والعلوم الإسلامية.",
+"Certificates recognized internationally for Arabic proficiency.": "شهادات معترف بها دولياً لإتقان اللغة العربية.",
 
 "Innovative Teaching Methods": "طرق تعليم مبتكرة",
 "Interactive lessons designed to boost retention and confidence.": "دروس تفاعلية مصممة لتعزيز الفهم والثقة.",
@@ -804,7 +804,7 @@ const DICT = {
 "Learn at your own speed with recorded lessons and practice materials.": "تعلم بالسرعة التي تناسبك مع دروس مسجلة ومواد تدريبية.",
 
 "Proven Success": "نجاح مثبت",
-"Thousands of students have successfully mastered Arabic with us.": "آلاف الطلاب أتقنوا اللغة العربية والعلوم الإسلامية معنا بنجاح.",
+"Thousands of students have successfully mastered Arabic with us.": "آلاف الطلاب أتقنوا اللغة العربية معنا بنجاح.",
 
   // TESTIMONIALS
   "What Our Students Say": "ماذا يقول طلابنا",
@@ -838,7 +838,7 @@ const DICT = {
 
 
   "Our Courses": "دوراتنا",
-  "Choose your path in learning Arabic online. Click \"Explore\" to see course details.": "اختر مسارك في تعلم اللغة العربية والعلوم الإسلامية عبر الإنترنت. اضغط على \"استكشف\" لرؤية تفاصيل الدورة.",
+  "Choose your path in learning Arabic online. Click \"Explore\" to see course details.": "اختر مسارك في تعلم اللغة العربية عبر الإنترنت. اضغط على \"استكشف\" لرؤية تفاصيل الدورة.",
   
   // Core Courses
   "Read & Write Arabic": "اقرأ واكتب بالعربية",
@@ -898,13 +898,13 @@ const DICT = {
 
   /* ===== Advanced Arabic Course ===== */
 
-  "Advanced Arabic": "اللغة العربية والعلوم الإسلامية المتقدمة",
+  "Advanced Arabic": "اللغة العربية المتقدمة",
 
   "Refine your Arabic skills and master advanced grammar, vocabulary, and comprehension.":
-  "طوّر مهاراتك في اللغة العربية والعلوم الإسلامية وأتقن القواعد المتقدمة والمفردات والفهم العميق.",
+  "طوّر مهاراتك في اللغة العربية وأتقن القواعد المتقدمة والمفردات والفهم العميق.",
 
   "Take your Arabic to the next level with advanced lessons, interactive exercises, and comprehensive practice. Perfect for learners who want mastery.":
-  "ارتقِ بمستواك في اللغة العربية والعلوم الإسلامية من خلال دروس متقدمة، وتمارين تفاعلية، وتطبيقات شاملة. هذا المستوى مناسب لمن يسعون إلى الإتقان.",
+  "ارتقِ بمستواك في اللغة العربية من خلال دروس متقدمة، وتمارين تفاعلية، وتطبيقات شاملة. هذا المستوى مناسب لمن يسعون إلى الإتقان.",
 
 
   /* ===== Modules ===== */
@@ -945,7 +945,7 @@ const DICT = {
 
 
   "Al-Bayan": "البيان",
-  "Learn how to read and write Arabic letters confidently from scratch.": "تعلم قراءة وكتابة حروف اللغة العربية والعلوم الإسلامية بثقة من البداية.",
+  "Learn how to read and write Arabic letters confidently from scratch.": "تعلم قراءة وكتابة حروف اللغة العربية بثقة من البداية.",
   "Register Now": "سجل الآن",
   "This course is designed for absolute beginners who want to learn Arabic reading and writing step by step, with clarity and ease.": "تم تصميم هذه الدورة للمبتدئين تمامًا الذين يرغبون في تعلم القراءة والكتابة العربية خطوة بخطوة بوضوح وسهولة.",
   "Module 1: Arabic Alphabet": "الوحدة 1: الحروف العربية",
@@ -961,12 +961,12 @@ const DICT = {
 
   // Header
   "Arabic for Beginners": "العربية للمبتدئين",
-  "Start speaking, reading, and understanding Arabic with easy-to-follow lessons.": "ابدأ التحدث والقراءة وفهم اللغة العربية والعلوم الإسلامية من خلال دروس سهلة المتابعة.",
+  "Start speaking, reading, and understanding Arabic with easy-to-follow lessons.": "ابدأ التحدث والقراءة وفهم اللغة العربية من خلال دروس سهلة المتابعة.",
   "Register Now": "سجل الآن",
 
   // Intro section
   "This course is perfect for absolute beginners aiming to speak, read, and understand Arabic in practical, everyday situations.": 
-  "هذه الدورة مثالية للمبتدئين تمامًا الذين يهدفون إلى التحدث والقراءة وفهم اللغة العربية والعلوم الإسلامية في المواقف اليومية العملية.",
+  "هذه الدورة مثالية للمبتدئين تمامًا الذين يهدفون إلى التحدث والقراءة وفهم اللغة العربية في المواقف اليومية العملية.",
 
   // Modules
   "Module 1: Greetings & Introductions": "الوحدة 1: التحيات والتعريف بالنفس",
@@ -991,7 +991,7 @@ const DICT = {
 
   // Intro section
   "This course is ideal for learners who have basic knowledge of Arabic and want to improve their fluency, understanding, and communication skills.": 
-  "هذه الدورة مثالية للمتعلمين الذين لديهم معرفة أساسية باللغة العربية والعلوم الإسلامية ويرغبون في تحسين طلاقتهم وفهمهم ومهارات التواصل لديهم.",
+  "هذه الدورة مثالية للمتعلمين الذين لديهم معرفة أساسية باللغة العربية ويرغبون في تحسين طلاقتهم وفهمهم ومهارات التواصل لديهم.",
 
   // Modules
   "Module 1: Vocabulary Expansion": "الوحدة 1: توسيع المفردات",
@@ -1027,12 +1027,12 @@ const DICT = {
 
 
 "Conversational Arabic": "محادثة عربية",
-"Focus on real-life speaking skills and everyday conversations in Arabic.": "التركيز على مهارات التحدث الواقعية والمحادثات اليومية باللغة العربية والعلوم الإسلامية.",
-"This course helps learners build confidence in speaking Arabic for daily situations, greetings, shopping, and travel conversations.": "يساعد هذا الدورة المتعلمين على بناء الثقة في التحدث باللغة العربية والعلوم الإسلامية في المواقف اليومية، التحيات، التسوق، والسفر.",
+"Focus on real-life speaking skills and everyday conversations in Arabic.": "التركيز على مهارات التحدث الواقعية والمحادثات اليومية باللغة العربية.",
+"This course helps learners build confidence in speaking Arabic for daily situations, greetings, shopping, and travel conversations.": "يساعد هذا الدورة المتعلمين على بناء الثقة في التحدث باللغة العربية في المواقف اليومية، التحيات، التسوق، والسفر.",
 "Module 1: Greetings & Introductions": "الوحدة 1: التحيات والتعارف",
-"Learn how to greet people, introduce yourself, and ask basic questions in Arabic.": "تعلم كيفية تحية الناس، تقديم نفسك، وطرح الأسئلة الأساسية باللغة العربية والعلوم الإسلامية.",
+"Learn how to greet people, introduce yourself, and ask basic questions in Arabic.": "تعلم كيفية تحية الناس، تقديم نفسك، وطرح الأسئلة الأساسية باللغة العربية.",
 "Module 2: Everyday Conversations": "الوحدة 2: المحادثات اليومية",
-"Practice talking about family, hobbies, and daily routines in Arabic.": "تدرب على الحديث عن العائلة، الهوايات، والروتين اليومي باللغة العربية والعلوم الإسلامية.",
+"Practice talking about family, hobbies, and daily routines in Arabic.": "تدرب على الحديث عن العائلة، الهوايات، والروتين اليومي باللغة العربية.",
 "Module 3: Shopping & Food": "الوحدة 3: التسوق والطعام",
 "Learn how to ask prices, order food, and communicate in markets or restaurants.": "تعلم كيفية السؤال عن الأسعار، طلب الطعام، والتواصل في الأسواق أو المطاعم.",
 "Module 4: Travel & Directions": "الوحدة 4: السفر والاتجاهات",
@@ -1297,14 +1297,14 @@ const DICT = {
 "Course": "المادة",
 "No courses found": "لا توجد مواد",
 "Certificate ID:": "رقم الشهادة:",
-"This certificate was issued by Dar Al-Ulum Wal Hikam Arabic And Islamic Institute Online": "تم إصدار هذه الشهادة من معهد دار العلوم والحكم للغة العربية والدراسات الإسلامية عبر الإنترنت",
+"This certificate was issued by AL-BAYAN ARABIC INSTITUE ONLINE": "تم إصدار هذه الشهادة من معهدالبيان لتعليم اللغة العربية عبر الإنترنت",
 "DAR AL-ULUM WAL HIKAM ARABIC AND ISLAMIC INSTITUTE": "دار العلوم والحكم للغة العربية والدراسات الإسلامية",
 "has successfully completed the course": "أتمّ بنجاح المادة",
 "This is to certify that": "نشهد بأن",
 "Date of Issue:": "تاريخ الإصدار:",
 "Matric No:": "الرقم الجامعي:",
 "Mudeer": "المدير",
-"Bursar, Dar Al-Ulum Wal Hikam Arabic And Islamic Institute": "المحاسب، دار العلوم والحكم للغة العربية والدراسات الإسلامية",
+"Bursar, AL-BAYAN ARABIC INSTITUE": "المحاسب،البيان لتعليم اللغة العربية",
 "My Certificates": "شهاداتي",
 
 "Submit Registration": "إرسال التسجيل",
