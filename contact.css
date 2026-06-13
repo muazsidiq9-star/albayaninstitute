@@ -82,7 +82,7 @@ margin-bottom: 10px;
 }
 .contact-info p { font-size: 1rem; margin: 6px 0; }
 .contact-info a { color: #1a73e8; text-decoration: none; }
-.contact-info a:hover { text-decoration: underline; }
+.contact-info a:hover { text-decoration: underline; background-color: #1a73e8; color: #fff; border-radius: 4px; transition: all 0.3s ease; }
 
 /* ===== FOOTER ===== */
 footer { 

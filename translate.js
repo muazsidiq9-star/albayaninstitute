@@ -297,17 +297,15 @@ const DICT = {
 "Other Ways to Reach Us": "طرق أخرى للتواصل معنا",
 
 "Director: +2347054711066": "المدير: +2347054711066",
-"Registrar: +2348012345678": "المسجل: +2348012345678",
+"Registrar: +2348125219561": "المسجل: +2348125219561",
 
 "WhatsApp: +2347054711066": "واتساب: +2347054711066",
+"WhatsApp: +2348125219561": "واتساب: +2348125219561",
 "Email: albayaninstitute068@gmail.com":
 "البريد الإلكتروني: albayaninstitute068@gmail.com",
 
 "Al-Bayan Arabic Institute Online":
 "معهد البيان لتعليم اللغة العربية عبر الإنترنت",
-
-"© 2022 Al-Bayan Arabic Institute Online. All rights reserved.":
-"© 2022 معهد البيان لتعليم اللغة العربية عبر الإنترنت. جميع الحقوق محفوظة.",
 
 // Add to your DICT object
 "Forgot Your Password?": "هل نسيت كلمة المرور؟",
@@ -1655,6 +1653,8 @@ const DICT = {
 
 "Privacy Policy": "سياسة الخصوصية",
 
+"Other Ways": "طرق أخرى للتواصل معنا",
+
   /* ===== DYNAMIC TEMPLATES ===== */
 
 en: {
@@ -1994,7 +1994,7 @@ function translate(lang) {
   // TEXT ELEMENTS
   // =========================
   document.querySelectorAll(
-    "[data-i18n], p, h1, h2, h3, span, a, button, label"
+    "[data-i18n], i, p, h1, h2, h3, h4, span, a, li, button, label"
   ).forEach(el => {
 if (el.dataset.noTranslate === "true") return;
 if (el.dataset.i18n) {
