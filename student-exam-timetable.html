@@ -9,18 +9,20 @@
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="schedule.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <body>
 
   <!-- NAVIGATION -->
   <nav class="master-nav">
     <div class="nav-container">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
-      </a>
+        <img src="logo.png" alt="Al-Bayan Logo">
+      <span>Al-Bayan</span>
+    </a>
       <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
       <div class="nav-links" id="navLinks">
         <a href="index.html">Home</a>
@@ -29,66 +31,75 @@
       <a href="register.html">Register</a>
       <a href="students-dashboard.html">Dashboard</a>
       <a href="student-payment.html">Payment</a>
-     <!-- <a href="student-exan-timetable.html" class="active">Test/Exam Timetable</a> -->
+     <a href="student-exan-timetable.html" class="active">Test/Exam Timetable</a>
       <a href="schedule.html">Schedule</a>
       <a href="contact.html">Contact</a>
       </div>
     </div>
   </nav>
 
-  <!-- HEADER -->
+  <!-- HEADER -->  
   <header class="schedule-header">
     <div class="header-overlay">
       <img src="logo.png" alt="Al-Bayan Logo" class="header-logo">
-      <h1>Test/Exam Timetable</h1>
-      <p>View your Upcoming Test/Exam Schedule</p>
+      <h1 data-translate="Class Schedule">Test/Exam Timetable</h1>
+      <p data-translate="View your Upcoming Test/Exam Schedule">
+        View your Upcoming Test/Exam Schedule
+      </p>
     </div>
   </header>
 
   <!-- SCHEDULE TABLE -->
-   
-  <main>
-    <section class="schedule-section">
-  <h2>Test/Exam Timetable</h2>
 
-  <div class="table-wrapper">
-    <table class="schedule-table">
-      
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Course</th>
-      <th>Level</th>
-      <th>Semester</th>
-      <th>Type</th>
-      <th>Start</th>
-      <th>End</th>
-      <th>Status</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody id="scheduleTable">
-          <!-- JS will populate this dynamically -->
-        </tbody>
-</table>
-</div>
-</section>
-</main>
+<main>
+    <section class="schedule-section">
+
+      <div class="section-header">
+        <h2>
+          <i class="fa-solid fa-calendar-days"></i>
+          <span data-translate="Test/Exam Timetable">Test/Exam Timetable</span>
+        </h2>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th data-translate="Title">Title</th>
+              <th data-translate="Course">Course</th>
+              <th data-translate="Level">Level</th>
+              <th data-translate="Semester">Semester</th>
+              <th data-translate="Type">Type</th>
+              <th data-translate="Start">Start</th>
+              <th data-translate="End">End</th>
+              <th data-translate="Status">Status</th>
+              <th data-translate="Action">Action</th>
+            </tr>
+          </thead>
+          <tbody id="scheduleTable">
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+  </main>
+
 
   <!-- FOOTER -->
   <footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
 
   <!-- WHATSAPP FLOAT -->
-  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
 
   <!-- SCRIPTS -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>

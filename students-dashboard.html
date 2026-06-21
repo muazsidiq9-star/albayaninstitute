@@ -3,258 +3,360 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Student Dashboard - Al-Bayan</title>
+  <title>Student Dashboard | Al-Bayan Arabic Institute Online</title>
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="students-dashboard.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
- 
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
+
   <!-- NAVIGATION -->
   <nav class="master-nav">
     <div class="nav-container">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
       </a>
-      <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
       <div class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="courses.html">Courses</a>
-        <a href="register.html">Register</a>
-        <a href="students-dashboard.html" class="active page-indicator">Student Dashboard</a>
-        <a href="payment.html">Payment</a>
-        <a href="schedule.html">Schedule</a>
-        <a href="contact.html">Contact</a>
-        <button id="logoutBtn" class="logout-btn">Logout</button>
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" class="active" data-translate="Dashboard">Dashboard</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="schedule.html" data-translate="Schedule">Schedule</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+        <button id="logoutBtn" class="logout-btn">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span data-translate="Logout">Logout</span>
+        </button>
       </div>
     </div>
   </nav>
 
-  <!-- HEADER -->
-   
-   <header class="home-header">
+  <!-- ================================================
+       HERO
+  ================================================ -->
+  <header class="sd-hero">
+    <video class="sd-hero-video" autoplay muted loop playsinline>
+      <source src="background-all.mp4" type="video/mp4">
+    </video>
+    <div class="sd-hero-overlay"></div>
 
-  <video class="hero-video" autoplay muted loop playsinline>
-    <source src="background-all.mp4" type="video/mp4">
-  </video>
-    
-  <div class="header-overlay">
+    <div class="sd-hero-content">
+      <img src="logo.png" alt="Al-Bayan Logo" class="header-logo">
 
-    <img src="logo.png" alt="Logo" class="header-logo">
-      <h1>Student Dashboard</h1>
-      <p>Welcome back! Manage your registration, payments, courses, resources, and online classes from one place.</p>
+      <span class="sd-eyebrow">
+        <i class="fa-solid fa-gauge-high"></i>
+        <span data-translate="Student Dashboard">Student Dashboard</span>
+      </span>
+
+      <h1 data-translate="Student Dashboard">Student Dashboard</h1>
+
+      <p data-translate="Welcome back! Manage your registration, payments, courses, resources, and online classes from one place.">
+        Welcome back! Manage your registration, payments, courses, resources, and online classes from one place.
+      </p>
+
+      <!-- Floating quick-action pills inside hero -->
+      <div class="sd-hero-pills">
+        <a href="schedule.html" class="sd-hero-pill">
+  <i class="fa-solid fa-calendar-days"></i>
+  <span data-translate="Class Schedule">Class Schedule</span>
+</a>
+
+<a href="student-grades.html" class="sd-hero-pill">
+  <i class="fa-solid fa-chart-bar"></i>
+  <span data-translate="My Grades">My Grades</span>
+</a>
+
+<a href="payment.html" class="sd-hero-pill">
+  <i class="fa-solid fa-credit-card"></i>
+  <span data-translate="Make Payment">Make Payment</span>
+</a>
+      </div>
     </div>
   </header>
 
-  <!-- ===== Stats Section ===== -->
-  <section class="stats-section">
-  <div id="stats-cards" class="stats-cards">
-    <!-- JS injects stat cards here -->
-  </div>
-</section>
-
-  <!-- HUB BUTTONS -->
-  <section class="register-hub">
-    <h2>Quick Access Tools</h2>
-    <p>Click any card below to manage your student activities.</p>
-
-    <div class="hub-buttons">
-      <!-- Profile -->
-      <a href="student-profile.html" class="hub-card">
-  <span class="icon">🧑</span>
-  <span class="card-text">My Profile</span>
-  <span class="arrow">➔</span>
-</a>
-
-<!-- Payment -->
-<a href="payment.html" class="hub-card">
-  <span class="icon">💳</span>
-  <span class="card-text">Make Payment</span>
-  <span class="arrow">➔</span>
-</a>
-
-     <!--Students Payment -->
-      <a href="student-payments.html" class="hub-card">
-        <span class="icon">📄</span>
-       <span class="card-text">Payment History</span>
-        <span class="arrow">➔</span>
-      </a>
-
-      <!-- Courses -->
-      <a href="courses.html" class="hub-card">
-        <span class="icon">📚</span>
-        <span class="card-text">All Courses</span>
-        <span class="arrow">➔</span>
-      </a>
-      
-      <!-- Register Courses -->
-      <a href="register-courses.html" class="hub-card">
-        <span class="icon">📚</span>
-        <span class="card-text">Register Courses</span>
-        <span class="arrow">➔</span>
-      </a>
-
-      <!-- My Courses -->
-      <a href="my-courses.html" class="hub-card">
-        <span class="icon">📚</span>
-        <span class="card-text">My Courses</span>
-        <span class="arrow">➔</span>
-      </a>
-
-      <!-- Semester Activities -->
-      <a href="semester.html" class="hub-card">
-        <span class="icon">📚</span>
-        <span class="card-text">Semester Activities</span>
-        <span class="arrow">➔</span>
-      </a>
-
-      <a href="admission.html" class="hub-card">
-        <span class="icon">📄</span>
-       <span class="card-text">Admission Letter</span>
-        <span class="arrow">➔</span>
-      </a>
-      
-
-      <!-- Schedule -->
-      <a href="schedule.html" class="hub-card">
-        <span class="icon">📅</span>
-        
-        <span class="card-text">Class Schedule</span>
-        <span class="arrow">➔</span>
-      </a>
-
-      <!-- Exam Schedule -->
-      <a href="student-exam-timetable.html" class="hub-card">
-        <span class="icon">📅</span>
-        
-        <span class="card-text">Test/Exam Timetable</span>
-        <span class="arrow">➔</span>
-      </a>
-
-      <!-- Grades -->
-      <a href="student-grades.html" class="hub-card">
-        <span class="icon">📝</span>
-        
-        <span class="card-text">My Grades</span>
-        <span class="arrow">➔</span>
-      </a>
-
-      <!-- Resources -->
-      <a href="resources.html" class="hub-card">
-        <span class="icon">📂</span>
-        
-        <span class="card-text">Learning Resources</span>
-        <span class="arrow">➔</span>
-      </a>
-
-      <!-- Online Classes -->
-      <a href="online-classes.html" class="hub-card">
-        <span class="icon">💻</span>
-        
-        <span class="card-text">Join Online Class</span>
-        <span class="arrow">➔</span>
-      </a>
-
-      <!-- Welcome -->
-      <a href="test-welcome.html" class="hub-card">
-        <span class="icon">📝</span>
-        
-        <span class="card-text">Take Test/Exam</span>
-        <span class="arrow">➔</span>
-      </a>
-
-      <!-- Contact / Support -->
-      <a href="contact.html" class="hub-card">
-        <span class="icon">📞</span>
-        <span class="card-text">Contact / Support</span>
-        <span class="arrow">➔</span>
-      </a>
-    </div>
+  <!-- ================================================
+       STATS
+  ================================================ -->
+  <section class="sd-stats-section">
+    <!-- JS injects .card elements here -->
+    <div id="stats-cards" class="sd-stats-grid"></div>
   </section>
 
-  <div id="reminderModal" class="reminder-modal hidden">
-  <div class="reminder-box">
-    <h3>⚠️ Payment Reminder</h3>
-    <p id="reminderText"></p>
+  <!-- ================================================
+       PAYMENT REMINDER MODAL
+  ================================================ -->
+  <div id="reminderModal" class="sd-reminder-modal hidden">
+    <div class="sd-reminder-box">
+      <button class="sd-reminder-close" onclick="closeReminder()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="sd-reminder-icon">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <h3 data-translate="⚠️ Payment Reminder">⚠️ Payment Reminder</h3>
+      <p id="reminderText"></p>
+      <div class="sd-reminder-actions">
+        <button onclick="goToPayments()" class="sd-pay-btn">
+          <i class="fa-solid fa-credit-card"></i>
+          <span data-translate="Pay Now">Pay Now</span>
+        </button>
+        <a id="whatsappReminder" target="_blank" class="sd-later-btn">
+          <i class="fa-solid fa-clock"></i>
+          <span data-translate="Remind Me Later">Remind Me Later</span>
+        </a>
+      </div>
+    </div>
+  </div>
 
-    <div class="reminder-actions">
-      <button onclick="goToPayments()" class="send-btn">Pay Now</button>
-      <a id="whatsappReminder" target="_blank" class="whatsapp-btn">
-        Remind Me Later
+  <!-- ================================================
+       MAIN CONTENT
+  ================================================ -->
+  <main class="sd-main">
+
+    <!-- HUB HEADER -->
+    <div class="sd-hub-header">
+      <div class="sd-hub-header-label" data-translate="Your Tools">Your Tools</div>
+      <h2 data-translate="Quick Access Tools">Quick Access Tools</h2>
+      <p data-translate="Click any card below to manage your student activities.">
+        Click any card below to manage your student activities.
+      </p>
+    </div>
+
+    <!-- HUB GRID -->
+    <div class="sd-hub-grid">
+
+      <a href="student-profile.html" class="sd-hub-card">
+        <div class="sd-hub-icon" style="background:#dcfce7; color:#15803d;">
+          <i class="fa-solid fa-circle-user"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="My Profile">My Profile</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
       </a>
+
+      <a href="payment.html" class="sd-hub-card">
+        <div class="sd-hub-icon" style="background:#dbeafe; color:#1d4ed8;">
+          <i class="fa-solid fa-credit-card"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="Make Payment">Make Payment</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
+      </a>
+
+      <a href="student-payments.html" class="sd-hub-card">
+        <div class="sd-hub-icon" style="background:#fef9c3; color:#854d0e;">
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="Payment History">Payment History</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
+      </a>
+
+      <a href="courses.html" class="sd-hub-card">
+        <div class="sd-hub-icon" style="background:#dcfce7; color:#15803d;">
+          <i class="fa-solid fa-book-open"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="All Courses">All Courses</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
+      </a>
+
+      <a href="register-courses.html" class="sd-hub-card">
+        <div class="sd-hub-icon" style="background:#f3e8ff; color:#7e22ce;">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="Register Courses">Register Courses</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
+      </a>
+
+      <a href="my-courses.html" class="sd-hub-card">
+        <div class="sd-hub-icon" style="background:#dcfce7; color:#15803d;">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="My Courses">My Courses</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
+      </a>
+
+      <a href="semester.html" class="sd-hub-card">
+        <div class="sd-hub-icon" style="background:#fef9c3; color:#854d0e;">
+          <i class="fa-solid fa-calendar-check"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="Semester Activities">Semester Activities</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
+      </a>
+
+      <a href="admission.html" class="sd-hub-card">
+        <div class="sd-hub-icon" style="background:#dbeafe; color:#1d4ed8;">
+          <i class="fa-solid fa-envelope-open-text"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="Admission Letter">Admission Letter</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
+      </a>
+
+      <a href="my-certificate.html" class="sd-hub-card">
+        <div class="sd-hub-icon" style="background:#fef9c3; color:#854d0e;">
+          <i class="fa-solid fa-certificate"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="My Certificates">My Certificates</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
+      </a>
+
+      <a href="schedule.html" class="sd-hub-card">
+        <div class="sd-hub-icon" style="background:#dcfce7; color:#15803d;">
+          <i class="fa-solid fa-calendar-days"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="Class Schedule">Class Schedule</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
+      </a>
+
+      <a href="student-exam-timetable.html" class="sd-hub-card">
+        <div class="sd-hub-icon" style="background:#f3e8ff; color:#7e22ce;">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="Test/Exam Timetable">Test/Exam Timetable</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
+      </a>
+
+      <a href="student-grades.html" class="sd-hub-card">
+        <div class="sd-hub-icon" style="background:#dbeafe; color:#1d4ed8;">
+          <i class="fa-solid fa-chart-bar"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="My Grades">My Grades</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
+      </a>
+
+      <a href="resources.html" class="sd-hub-card">
+        <div class="sd-hub-icon" style="background:#dcfce7; color:#15803d;">
+          <i class="fa-solid fa-folder-open"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="Learning Resources">Learning Resources</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
+      </a>
+
+      <a href="online-classes.html" class="sd-hub-card">
+        <div class="sd-hub-icon" style="background:#dbeafe; color:#1d4ed8;">
+          <i class="fa-solid fa-laptop"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="Join Online Class">Join Online Class</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
+      </a>
+
+      <a href="test-welcome.html" class="sd-hub-card highlight-card">
+        <div class="sd-hub-icon" style="background:#fef9c3; color:#854d0e;">
+          <i class="fa-solid fa-pen-clip"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="Take Test/Exam">Take Test/Exam</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
+      </a>
+
+      <a href="contact.html" class="sd-hub-card">
+        <div class="sd-hub-icon" style="background:#dcfce7; color:#15803d;">
+          <i class="fa-solid fa-headset"></i>
+        </div>
+        <span class="sd-hub-label" data-translate="Contact / Support">Contact / Support</span>
+        <i class="fa-solid fa-arrow-right sd-hub-arrow"></i>
+      </a>
+
     </div>
 
-    <span class="close-btn" onclick="closeReminder()">×</span>
-  </div>
-</div>
+    <!-- ================================================
+         NOTIFICATIONS
+    ================================================ -->
+    <section class="sd-notifications">
 
-  <!-- NOTIFICATIONS -->
-<section class="notifications">
-  <h2>🔔 Notifications</h2>
-  <div class="notification-dropdown">
-    <div class="notification-latest" onclick="toggleNotifications()">
-      <!-- Latest notification content will be injected by JS-->
-      <span class="dropdown-arrow">▼</span>
-    </div>
-    <div class="notifications-list" style="display:none;">
-      <!-- JS will populate notifications based on student -->
-    </div>
-  </div>
-</section>
+      <div class="sd-notif-header notification-latest" onclick="toggleNotifications()">
+        <div class="sd-notif-title">
+          <div class="sd-notif-bell">
+            <i class="fa-solid fa-bell"></i>
+          </div>
+          <div>
+            <h2>
+              <span data-translate="Notifications">Notifications</span>
+            </h2>
+            <p class="sd-notif-sub" data-translate="Your latest updates and alerts will appear here.">
+              Your latest updates and alerts will appear here.
+            </p>
+          </div>
+        </div>
+        <!-- Live animated chevron -->
+        <span class="dropdown-arrow" id="notifChevron">
+          <i class="fa-solid fa-chevron-down"></i>
+        </span>
+      </div>
+
+      <div class="notifications-list sd-notif-body">
+        <div class="sd-notif-tools">
+          <input
+            type="text"
+            id="notificationSearch"
+            placeholder="🔍 Search notifications..."
+            data-translate-placeholder="🔍 Search notifications..."
+          >
+          <button class="sd-restore-btn" onclick="restoreNotifications()">
+            <i class="fa-solid fa-rotate-left"></i>
+            <span data-translate="Restore Hidden Notifications">Restore Hidden Notifications</span>
+          </button>
+        </div>
+        <div id="notificationCards" class="sd-notif-list"></div>
+      </div>
+
+    </section>
+
+  </main>
 
   <!-- FOOTER -->
   <footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
 
-  <!-- Floating WhatsApp Button -->
-  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
 
-  <!-- HAMBURGER MENU -->
-   <script src="translate.js"></script>
+  <!-- SCRIPTS -->
   <script>
+    
     function toggleMenu() {
-      const nav = document.getElementById("navLinks");
-      nav.classList.toggle("show");
+      document.getElementById('navLinks').classList.toggle('show');
     }
-    document.addEventListener("click", function(e) {
-      const nav = document.getElementById("navLinks");
-      const hamburger = document.querySelector(".hamburger");
-      if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
-        nav.classList.remove("show");
-      }
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
     });
+
+    /* ── Scroll reveal for hub cards ── */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 40);
+          revealObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.sd-hub-card').forEach(el => revealObserver.observe(el));
   </script>
 
-<!-- Supabase CDN -->
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="translate.js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  </script>
+  <script src="students-dashboard.js"></script>
 
-<script>
-  const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
-
-  window.sb = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-  console.log("Supabase ready in dashboard:", sb);
-</script>
-
-<!-- Dashboard JS -->
-<script src="students-dashboard.js"></script>
 </body>
 </html>

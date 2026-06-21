@@ -3,125 +3,262 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>About - Al-Bayan Arabic Institute</title>
-
+  <title>About - Al-Bayan Arabic Institute Online</title>
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="about.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="course-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
-<!-- NAVIGATION -->
-<nav class="master-nav">
-  <div class="nav-container">
-    <a href="index.html" class="logo">
-      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
-    </a>
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-    <div class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="about.html" class="active">About</a>
-      <a href="courses.html">Courses</a>
-      <a href="register.html">Register</a>
-      <a href="students-dashboard.html">Dashboard</a>
-      <a href="payment.html">Payment</a>
-      <a href="schedule.html">Schedule</a>
-      <a href="contact.html">Contact</a>
-      <a href="login.html" class="login-btn pulse">Log in</a>
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" class="active" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+        <a href="login.html" class="login-btn" data-translate="Log in">Log in</a>
+      </div>
+    </div>
+  </nav>
 
+  <!-- ================================================
+       PAGE HEADER BANNER
+  ================================================ -->
+  <header class="page-banner">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="background.mp4" type="video/mp4">
+    </video>
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+      <img src="logo.png" alt="Al-Bayan Logo" class="header-logo">
+      <p class="banner-eyebrow" data-translate="Our Story">Our Story</p>
+      <h1 data-translate="About Al-Bayan Arabic Institute Online">
+        About Al-Bayan Arabic Institute Online
+      </h1>
+      <p data-translate="Dedicated to providing quality Arabic and Islamic education for learners worldwide.">
+        Dedicated to providing quality Arabic and Islamic education for learners worldwide.
+      </p>
+    </div>
+  </header>
+
+  <!-- ================================================
+       INTRO STRIP — quick identity statement
+  ================================================ -->
+  <div class="intro-strip">
+    <div class="intro-inner">
+      <div class="intro-pill">
+        <i class="fa-solid fa-location-dot"></i>
+        <span data-translate="100% Online">100% Online</span>
+      </div>
+      <div class="intro-pill">
+        <i class="fa-solid fa-earth-africa"></i>
+        <span data-translate="Students from 10+ Countries">Students from 10+ Countries</span>
+      </div>
+      <div class="intro-pill">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span data-translate="Beginner to Advanced">Beginner to Advanced</span>
+      </div>
+      <div class="intro-pill">
+        <i class="fa-solid fa-book-quran"></i>
+        <span data-translate="Arabic & Islamic Sciences">Arabic &amp; Islamic Sciences</span>
+      </div>
     </div>
   </div>
-</nav>
 
-<!-- HEADER -->
-<header class="home-header">
+  <!-- ================================================
+       ABOUT CONTENT
+  ================================================ -->
+  <section class="about-content">
+    <div class="about-container">
 
-  <video class="hero-video" autoplay muted loop playsinline>
-    <source src="background.mp4" type="video/mp4">
-  </video>
-    
-  <div class="header-overlay">
+      <!-- WHO WE ARE -->
+      <div class="about-block">
+        <div class="about-icon">
+          <i class="fa-solid fa-school"></i>
+        </div>
+        <div class="about-text">
+          <h2 data-translate="Who We Are">Who We Are</h2>
+          <p data-translate="Al-Bayan Arabic Institute Online is an educational platform committed to teaching the Arabic language through structured and guided online learning. We serve students from different parts of the world who desire to understand Arabic for religious, academic, and conversational purposes.">
+            Al-Bayan Arabic Institute Online is an educational platform committed to teaching the Arabic language through structured and guided online learning. We serve students from different parts of the world who desire to understand Arabic for religious, academic, and conversational purposes.
+          </p>
+        </div>
+      </div>
 
-    <img src="logo.png" alt="Logo" class="header-logo">
-    <h1>About Al-Bayan Arabic Institute</h1>
-    <p>Dedicated to providing quality Arabic education online for learners worldwide</p>
-  </div>
-</header>
+      <div class="about-divider"></div>
 
-<!-- ABOUT CONTENT -->
-<section class="about-content">
-  <div class="container">
+      <!-- OUR MISSION -->
+      <div class="about-block">
+        <div class="about-icon mission">
+          <i class="fa-solid fa-bullseye"></i>
+        </div>
+        <div class="about-text">
+          <h2 data-translate="Our Mission">Our Mission</h2>
+          <p data-translate="Our mission is to empower students to understand the Arabic language clearly and confidently, especially the language of the Qur'an. We aim to remove fear and confusion from learning Arabic by using step-by-step methods guided by experienced teachers.">
+            Our mission is to empower students to understand the Arabic language clearly and confidently, especially the language of the Qur'an. We aim to remove fear and confusion from learning Arabic by using step-by-step methods guided by experienced teachers.
+          </p>
+        </div>
+      </div>
 
-    <h2>Who We Are</h2>
-    <p>
-     Al-Bayan Arabic Institute Online is an educational platform committed to teaching the Arabic language through structured and guided online learning. We serve students from different parts of the world who desire to understand Arabic for religious, academic, and conversational purposes.
+      <div class="about-divider"></div>
+
+      <!-- OUR VISION -->
+      <div class="about-block">
+        <div class="about-icon vision">
+          <i class="fa-solid fa-eye"></i>
+        </div>
+        <div class="about-text">
+          <h2 data-translate="Our Vision">Our Vision</h2>
+          <p data-translate="Our vision is to become a trusted online Arabic institute that nurtures a generation of learners who can read, understand, and communicate in Arabic with clarity, confidence, and correct understanding.">
+            Our vision is to become a trusted online Arabic institute that nurtures a generation of learners who can read, understand, and communicate in Arabic with clarity, confidence, and correct understanding.
+          </p>
+        </div>
+      </div>
+
+      <div class="about-divider"></div>
+
+      <!-- WHAT MAKES US DIFFERENT -->
+      <div class="about-block column">
+        <div class="about-text full">
+          <h2 data-translate="What Makes Us Different">What Makes Us Different</h2>
+          <div class="diff-grid">
+            <div class="diff-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span data-translate="Qualified and experienced Arabic instructors">Qualified and experienced Arabic instructors</span>
+            </div>
+            <div class="diff-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span data-translate="Well-structured curriculum from beginner to advanced level">Well-structured curriculum from beginner to advanced level</span>
+            </div>
+            <div class="diff-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span data-translate="Strong focus on understanding, not memorisation alone">Strong focus on understanding, not memorisation alone</span>
+            </div>
+            <div class="diff-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span data-translate="Interactive classes with real student engagement">Interactive classes with real student engagement</span>
+            </div>
+            <div class="diff-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span data-translate="Flexible online learning environment">Flexible online learning environment</span>
+            </div>
+            <div class="diff-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span data-translate="Internationally recognised certificates">Internationally recognised certificates</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-divider"></div>
+
+      <!-- WHO CAN JOIN -->
+      <div class="about-block">
+        <div class="about-icon join">
+          <i class="fa-solid fa-users"></i>
+        </div>
+        <div class="about-text">
+          <h2 data-translate="Who Can Join">Who Can Join</h2>
+          <p data-translate="Our programs are suitable for beginners with no prior knowledge of Arabic, intermediate learners seeking improvement, and advanced students aiming to strengthen their understanding of grammar and Arabic texts.">
+            Our programs are suitable for beginners with no prior knowledge of Arabic, intermediate learners seeking improvement, and advanced students aiming to strengthen their understanding of grammar and Arabic texts.
+          </p>
+          <div class="level-badges">
+            <span class="level-badge beginner" data-translate="Beginner">Beginner</span>
+            <span class="level-badge intermediate" data-translate="Intermediate">Intermediate</span>
+            <span class="level-badge advanced" data-translate="Advanced">Advanced</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-divider"></div>
+
+      <!-- OUR COMMITMENT -->
+      <div class="about-block">
+        <div class="about-icon commit">
+          <i class="fa-solid fa-handshake"></i>
+        </div>
+        <div class="about-text">
+          <h2 data-translate="Our Commitment">Our Commitment</h2>
+          <p data-translate="We are committed to delivering quality education, maintaining academic integrity, supporting our students consistently, and creating a learning environment that encourages growth, discipline, and excellence.">
+            We are committed to delivering quality education, maintaining academic integrity, supporting our students consistently, and creating a learning environment that encourages growth, discipline, and excellence.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================
+       CTA BANNER
+  ================================================ -->
+  <section class="about-cta">
+    <h2 data-translate="Ready to Be Part of Our Story?">Ready to Be Part of Our Story?</h2>
+    <p data-translate="Join Al-Bayan today and begin your journey towards understanding Arabic and the Qur'an.">
+      Join Al-Bayan today and begin your journey towards understanding Arabic and the Qur'an.
     </p>
-
-    <h2>Our Mission</h2>
-    <p>
-      Our mission is to empower students to understand the Arabic language clearly and confidently, especially the language of the Qur’an. We aim to remove fear and confusion from learning Arabic by using step-by-step methods guided by experienced teachers.
-    </p>
-
-    <h2>Our Vision</h2>
-    <p>
-      Our vision is to become a trusted online Arabic institute that nurtures a generation of learners who can read, understand, and communicate in Arabic with clarity, confidence, and correct understanding.
-    </p>
-
-    <h2>What Makes Us Different</h2>
-    <ul>
-      <li>Qualified and experienced Arabic instructors</li>
-      <li>Well-structured curriculum from beginner to advanced level</li>
-      <li>Strong focus on understanding, not memorization alone</li>
-      <li>Interactive classes with real student engagement</li>
-      <li>Flexible online learning environment</li>
-    </ul>
-
-    <h2>Who Can Join</h2>
-    <p>
-      Our programs are suitable for beginners with no prior knowledge of Arabic, intermediate learners seeking improvement, and advanced students aiming to strengthen their understanding of grammar and Arabic texts.
-    </p>
-
-    <h2>Our Commitment</h2>
-    <p>
-      We are committed to delivering quality education, maintaining academic integrity, supporting our students consistently, and creating a learning environment that encourages growth, discipline, and excellence.
-    </p>
-
-  </div>
-</section>
+    <a href="register.html" class="cta-btn pulse" data-translate="Register Now">Register Now</a>
+  </section>
 
   <!-- FOOTER -->
   <footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
 
-<!-- FLOATING WHATSAPP -->
-  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
-  <!-- HAMBURGER JS (inside the page for simplicity) -->
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
+
   <script>
+    
+
     function toggleMenu() {
-      const nav = document.getElementById('navLinks');
-      nav.classList.toggle('show');
+      document.getElementById('navLinks').classList.toggle('show');
     }
-    document.addEventListener('click', function(e) {
+
+    document.addEventListener('click', function (e) {
       const nav = document.getElementById('navLinks');
       const hamburger = document.querySelector('.hamburger');
       if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
         nav.classList.remove('show');
       }
     });
+
+    /* Scroll reveal */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.about-block, .intro-pill, .diff-item')
+      .forEach(el => observer.observe(el));
   </script>
-<script src="translate.js"></script>
+  <script src="translate.js"></script>
 </body>
 </html>

@@ -1,0 +1,366 @@
+/* ============================================================
+   Al-Bayan — SEMESTER ACTIVITIES  (semester.css)
+   All JS-injected class names preserved exactly:
+   .semester-block, .semester-title, .timeline,
+   .timeline-item, .timeline-title, .timeline-date,
+   .outline-box, .outline-title
+============================================================ */
+
+html, body { overflow-x: hidden; }
+
+
+/* ============================================================
+   PAGE BANNER
+============================================================ */
+.page-banner {
+  position: relative;
+  height: 46vh;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f1d2a 0%, #1a3b4a 100%);
+  overflow: hidden;
+}
+
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(0,0,0,0.35) 0%, rgba(0,40,14,0.45) 100%);
+  z-index: 1;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 660px;
+}
+
+.header-logo {
+  width: 72px;
+  height: auto;
+  margin-bottom: 14px;
+  animation: gentlePulse 3s ease-in-out infinite;
+}
+
+@keyframes gentlePulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.05); }
+}
+
+.banner-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #bbf7d0;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 999px;
+  padding: 5px 14px;
+  margin-bottom: 14px;
+}
+
+.page-banner h1 {
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.page-banner > .banner-content > p:last-child {
+  font-size: clamp(0.88rem, 2vw, 1rem);
+  color: rgba(255,255,255,0.78);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .page-banner { height: 40vh; min-height: 240px; }
+  .header-logo { width: 58px; }
+  .page-banner h1 { font-size: 1.4rem; }
+}
+
+
+/* ============================================================
+   SEMESTER CONTAINER  (JS targets this wrapper)
+============================================================ */
+.semester-container {
+  max-width: 860px;
+  margin: 48px auto 72px;
+  padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+  .semester-container { margin: 32px auto 52px; padding: 0 14px; }
+}
+
+
+/* ============================================================
+   LOADING STATE
+============================================================ */
+.sem-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.sem-spinner {
+  width: 38px;
+  height: 38px;
+  border: 3px solid var(--border-light);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+
+/* ============================================================
+   EMPTY STATE
+============================================================ */
+.sem-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.sem-empty i {
+  font-size: 3rem;
+  color: var(--border-light);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.sem-empty h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 8px;
+}
+
+.sem-empty p { font-size: 0.88rem; line-height: 1.65; }
+
+
+/* ============================================================
+   SEMESTER BLOCK  (JS class: .semester-block)
+============================================================ */
+.semester-block {
+  margin-bottom: 48px;
+  animation: fadeUp 0.4s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ============================================================
+   SEMESTER TITLE  (JS class: .semester-title)
+============================================================ */
+.semester-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-color);
+  border-left: 5px solid var(--primary);
+  padding: 10px 16px;
+  background: var(--primary-xlight);
+  border-radius: 0 10px 10px 0;
+  margin-bottom: 24px;
+}
+
+.sem-title-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .semester-title { background: #143f53; }
+
+
+/* ============================================================
+   TIMELINE  (JS class: .timeline)
+============================================================ */
+.timeline {
+  border-left: 2px solid var(--border-light);
+  padding-left: 28px;
+  margin-top: 8px;
+  position: relative;
+}
+
+
+/* ============================================================
+   TIMELINE ITEM  (JS class: .timeline-item)
+============================================================ */
+.timeline-item {
+  margin-bottom: 20px;
+  position: relative;
+  background: var(--card-color);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  transition: transform 0.25s, box-shadow 0.25s;
+
+  /* scroll-reveal */
+  opacity: 0;
+  transform: translateX(-8px);
+}
+
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.4s ease, transform 0.4s ease,
+              box-shadow 0.25s;
+}
+
+.timeline-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.09);
+}
+
+/* Connector dot on the timeline line */
+.timeline-item::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  background: var(--primary);
+  border: 3px solid var(--bg-color);
+  border-radius: 50%;
+  position: absolute;
+  left: -36px;
+  top: 18px;
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+
+/* ============================================================
+   TIMELINE TITLE  (JS class: .timeline-title)
+============================================================ */
+.timeline-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.97rem;
+  color: var(--text-color);
+  margin-bottom: 6px;
+}
+
+.timeline-dot-icon {
+  color: var(--primary);
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Description injected below title */
+.timeline-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 8px;
+}
+
+
+/* ============================================================
+   TIMELINE DATE  (JS class: .timeline-date)
+============================================================ */
+.timeline-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  background: var(--primary-xlight);
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-light);
+}
+
+.timeline-date i { font-size: 0.72rem; }
+
+
+/* ============================================================
+   OUTLINE BOX  (JS class: .outline-box)
+============================================================ */
+.outline-box {
+  background: var(--card-color);
+  border: 1px solid var(--border-light);
+  border-left: 4px solid #f59e0b;
+  border-radius: 0 12px 12px 0;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  transition: transform 0.25s, box-shadow 0.25s;
+
+  /* scroll-reveal */
+  opacity: 0;
+  transform: translateX(-8px);
+}
+
+.outline-box.visible {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.4s ease, transform 0.4s ease,
+              box-shadow 0.25s;
+}
+
+.outline-box:hover {
+  transform: translateX(4px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+
+/* ============================================================
+   OUTLINE TITLE  (JS class: .outline-title)
+============================================================ */
+.outline-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  margin-bottom: 8px;
+}
+
+.outline-icon {
+  color: #f59e0b;
+  font-size: 0.88rem;
+  flex-shrink: 0;
+}
+
+/* Description below outline title */
+.outline-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+[data-theme="dark"] .outline-box { border-left-color: #d97706; }

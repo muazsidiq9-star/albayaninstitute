@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const country = formData.get("country")?.trim();
       const whatsapp = formData.get("whatsapp")?.trim();
       const levelArabic = formData.get("levelArabic");
+      const planType = formData.get("planType");
       const readQuran = formData.get("readQuran");
       const attendOnline = formData.get("attendOnline");
       const hearAbout = formData.get("hearAbout");
@@ -125,6 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
             country: country,
             whatsapp: whatsapp,
             level_arabic: levelArabic,
+            plan_type: planType,
             read_quran: readQuran,
             attend_online: attendOnline,
             hear_about: hearAbout,
@@ -138,23 +140,28 @@ document.addEventListener("DOMContentLoaded", () => {
         .single(); // Return the inserted row
 
          if (error) {
-        console.error(error);
-        alert(t("Registration failed. Check console for details."));
-        return;
-      }
+  console.log("ERROR OBJECT:", error);
+  alert(
+    `Message: ${error.message}\n\n` +
+    `Details: ${error.details || "None"}\n\n` +
+    `Hint: ${error.hint || "None"}\n\n` +
+    `Code: ${error.code || "None"}`
+  );
+  return;
+}
 
 try {
-await fetch("https://api.web3forms.com/submit", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    access_key: "73556940-2533-43e1-8458-aab6b0e894dc",
-
-    subject: "New Student Registration 🎓",
-
-    message: `
+  const response = await fetch(
+    "https://api.web3forms.com/submit",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        access_key: "YOUR_ACCESS_KEY",
+        subject: "New Student Registration 🎓",
+        message: `
 A new student just registered:
 
 Name: ${fullName}
@@ -162,17 +169,22 @@ Email: ${email}
 WhatsApp: ${whatsapp}
 Country: ${country}
 Level: ${levelArabic}
+Plan: ${planType}
 Matric: ${data.matric_number}
-    `
-  })
-});
-} catch(emailError) {
-
-  console.error(
-    "Registration email failed:",
-    emailError
+Passport: ${passportUrl || "Not uploaded"}
+        `
+      })
+    }
   );
 
+  const result = await response.json();
+
+  if (!result.success) {
+    console.error("Web3Forms error:", result);
+  }
+
+} catch (emailError) {
+  console.error("Registration email failed:", emailError);
 }
 
       // ----- Success Notification with Matric Number -----
@@ -183,10 +195,22 @@ function showSuccessNotification(matricNumber) {
   const toast = document.createElement("div");
   toast.className = "success-toast";
   toast.innerHTML = `
-    <p>${tmpl("registration_successful")}</p>
-    <p>${tmpl("matric_info", { matric: `<strong>${matricNumber}</strong>` })}</p>
-    <button id="copyMatricBtn">${tmpl("copy")}</button>
-  `;
+  <p>
+    <i class="fa-solid fa-circle-check"></i>
+    ${tmpl("registration_successful")}
+  </p>
+
+  <p>
+    ${tmpl("matric_info", {
+      matric: `<strong>${matricNumber}</strong>`
+    })}
+  </p>
+
+  <button id="copyMatricBtn">
+    <i class="fa-solid fa-copy"></i>
+    ${tmpl("copy")}
+  </button>
+`;
 
   document.body.appendChild(toast);
 

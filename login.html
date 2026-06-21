@@ -3,149 +3,178 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Login - Al-Bayan Arabic Institute</title>
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-/>
-  <!-- MASTER CSS -->
+  <title>Login - Al-Bayan Arabic Institute Online</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="master.css">
-  <!-- Page-specific CSS -->
   <link rel="stylesheet" href="login.css">
-
-  <!-- Optional favicon -->
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
-  <!-- ================= NAVIGATION ================= -->
+  <!-- NAVIGATION -->
   <nav class="master-nav">
     <div class="nav-container">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
       </a>
-      <div class="hamburger">☰</div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
       <div class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="courses.html">Courses</a>
-        <a href="register.html">Register</a>
-        <a href="payment.html">Payment</a>
-        <a href="contact.html">Contact</a>
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
       </div>
     </div>
   </nav>
 
-  <!-- ================= LOGIN HEADER ================= -->
-  <header class="login-header">
-    <div class="login-overlay">
-      <img src="logo.png" alt="Al-Bayan Logo" class="login-logo">
-      <div class="welcome-note">
-        <h1>Welcome to Al-Bayan Arabic Institute</h1>
-        <p>Please login to continue to your account</p>
+  <!-- ================================================
+       SPLIT LAYOUT — left panel + right form
+  ================================================ -->
+  <main class="login-page">
+
+    <!-- LEFT PANEL -->
+    <div class="login-panel">
+      <div class="panel-overlay"></div>
+      <div class="panel-content">
+        <img src="logo.png" alt="Al-Bayan Logo" class="login-logo">
+        <h1 data-translate="Al-Bayan Arabic Institute Online">
+          Al-Bayan Arabic Institute Online
+        </h1>
+        <p data-translate="Your gateway to structured Arabic and Islamic education.">
+          Your gateway to structured Arabic and Islamic education.
+        </p>
+        <div class="panel-badges">
+          <span><i class="fa-solid fa-circle-check"></i> <span data-translate="Qualified Teachers">Qualified Teachers</span></span>
+          <span><i class="fa-solid fa-circle-check"></i> <span data-translate="Flexible Schedule">Flexible Schedule</span></span>
+          <span><i class="fa-solid fa-circle-check"></i> <span data-translate="Certified Courses">Certified Courses</span></span>
+        </div>
       </div>
     </div>
-  </header>
 
-  <!-- ================= LOGIN FORM ================= -->
-  <main class="login-main">
-  <section class="login-section">
-    <h2>LOGIN</h2>
+    <!-- RIGHT — FORM -->
+    <div class="login-form-side">
+      <div class="login-card">
 
-    <form id="loginForm">
-        <select id="userType" required>
-          <option value="">Select User</option>
-          <option value="admin">Admin</option>
-          <option value="student">Student</option>
-        </select>
-        <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Enter your Email" required>
+        <div class="login-card-header">
+          <div class="login-icon">
+            <i class="fa-solid fa-right-to-bracket"></i>
+          </div>
+          <h2 data-translate="Welcome Back">Welcome Back</h2>
+          <p data-translate="Sign in to access your account">Sign in to access your account</p>
+        </div>
+
+        <form id="loginForm">
+
+          <div class="form-group">
+            <label for="userType" data-translate="Login As">Login As</label>
+            <div class="select-wrap">
+              <select id="userType" required>
+                <option value="" data-translate="Select user type">Select user type</option>
+                <option value="admin" data-translate="Admin">Admin</option>
+                <option value="staff" data-translate="Staff">Staff</option>
+                <option value="student" data-translate="Student">Student</option>
+              </select>
+              <i class="fa-solid fa-chevron-down select-arrow"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email" data-translate="Email Address">Email Address</label>
+            <div class="input-wrap">
+              <i class="fa-solid fa-envelope input-icon"></i>
+              <input type="email" id="email" placeholder="your@email.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password" data-translate="Password">Password</label>
+            <div class="input-wrap password-group">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <input type="password" id="password"
+                     placeholder="Enter your password"
+                     data-translate-placeholder="Enter your password" required>
+              <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+            </div>
+          </div>
+
+          <div class="login-options">
+            <label class="remember-label">
+              <input type="checkbox" id="rememberMe">
+              <span data-translate="Remember Me">Remember Me</span>
+            </label>
+            
+            <a id="forgotPasswordLink" class="forgot-link"
+href="forgot-password.html" data-translate="Forgot Password?">Forgot Password?</a>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <span data-translate="Sign In">Sign In</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+
+          <p class="register-link">
+            <span data-translate="Don't have an account?">Don't have an account?</span>
+            <a href="register.html" data-translate="Register here">Register here</a>
+          </p>
+
+        </form>
       </div>
+    </div>
 
-      <div class="form-group password-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter your password" required>
-        <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
-      </div>
+  </main>
 
-      <div class="options">
-       <label>
-  <input type="checkbox" id="rememberMe">
-  <span data-i18n="remember_me">Remember me</span>
-</label>
-        <a href="forgot-password.html" class="forgot-password">Forgot password?</a>
-      </div>
-
-      <button type="submit" class="submit-btn">Login</button>
-    </form>
-  </section>
-</main>
-  <!-- ================= FOOTER ================= -->
+  <!-- FOOTER -->
   <footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
 
-  <!-- ================= SCRIPTS ================= -->
+  <!-- SCRIPTS -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    window.supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  </script>
 
-<!-- Supabase library -->
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    
 
-<!-- Initialize Supabase ONCE, globally -->
-<script>
-  const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
-
-  // ONE global client
-  window.supabase = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-  console.log("Supabase client ready:", window.supabase);
-</script>
-
-<!-- Hamburger menu -->
-<script>
-  // Hamburger menu
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.getElementById('navLinks');
-  hamburger.addEventListener('click', () => navLinks.classList.toggle('show'));
-  document.addEventListener('click', e => {
-    if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
-      navLinks.classList.remove('show');
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
     }
-  });
-</script>
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+    });
 
-<!-- Toggle password -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const togglePassword = document.querySelector(".toggle-password");
-  const passwordInput = document.getElementById("password");
-
-  if (!togglePassword || !passwordInput) return;
-
-  togglePassword.addEventListener("click", () => {
-    const type = passwordInput.type === "password" ? "text" : "password";
-    passwordInput.type = type;
-
-    togglePassword.classList.toggle("fa-eye");
-    togglePassword.classList.toggle("fa-eye-slash");
-  });
-});
-</script>
-<script src="translate.js"></script>
-<!-- Login logic (uses the SAME client) -->
-<script src="login.js"></script>
+    /* Toggle password visibility */
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggle = document.getElementById('togglePassword');
+      const pwd    = document.getElementById('password');
+      if (!toggle || !pwd) return;
+      toggle.addEventListener('click', () => {
+        pwd.type = pwd.type === 'password' ? 'text' : 'password';
+        toggle.classList.toggle('fa-eye');
+        toggle.classList.toggle('fa-eye-slash');
+      });
+    });
+  </script>
+  <script src="translate.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>

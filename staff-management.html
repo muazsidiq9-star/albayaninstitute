@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" content="notranslate">
+  <title>Staff Management | Al-Bayan Arabic Institute Online</title>
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="admin-dashboard.css">
+  <link rel="stylesheet" href="staff-management.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="admin-dashboard.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
+      </a>
+
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Student Dashboard">Student Dashboard</a>
+        <a href="admin-dashboard.html" data-translate="Admin Dashboard">Admin Dashboard</a>
+        <a href="admin-inbox.html" data-translate="Emails">
+          Emails
+          <span id="unreadCounter" class="unread-badge">0</span>
+        </a>
+        <a href="semester-admin.html" data-translate="Semester Work">Semester Work</a>
+        <a href="payment.html" data-translate="Payments">Payments</a>
+        <a href="schedule.html" data-translate="Schedule">Schedule</a>
+        <a href="staff-management.html" class="active" data-translate="Staff Management">Staff Management</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+        <button id="logoutBtn" class="logout-btn">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span data-translate="Logout">Logout</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO HEADER -->
+  <header class="admin-hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="background.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
+      <h1 data-translate="Staff Management">Staff Management</h1>
+      <h3 id="dashboardGreeting" class="greeting"></h3>
+      <p data-translate="Manage Staff Records, Roles & Monthly Payments">
+        Manage Staff Records, Roles &amp; Monthly Payments
+      </p>
+    </div>
+  </header>
+
+  <!-- STATS STRIP -->
+  <section class="stats">
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fa-solid fa-users-gear"></i></div>
+      <div class="stat-info">
+        <h3 id="totalStaff" data-no-translate="true">0</h3>
+        <p data-translate="Total Staff">Total Staff</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon payments"><i class="fa-solid fa-user-check"></i></div>
+      <div class="stat-info">
+        <h3 id="activeStaff" data-no-translate="true">0</h3>
+        <p data-translate="Active Staff">Active Staff</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon amount"><i class="fa-solid fa-naira-sign"></i></div>
+      <div class="stat-info">
+        <h3 id="totalPayroll" data-no-translate="true">₦0</h3>
+        <p data-translate="Monthly Payroll">Monthly Payroll</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAFF TABLE SECTION -->
+  <section class="dash-section" id="staffSection">
+    <div class="section-header">
+      <h2 data-translate="Staff">Staff</h2>
+      <input type="text" id="searchStaff" class="search-input"
+             placeholder="🔍 Search Staff..."
+             data-translate-placeholder="🔍 Search Staff...">
+
+      <!-- Filter by role -->
+      <select id="filterRole" class="search-input" style="max-width:160px;">
+        <option value="" data-translate="All Roles">All Roles</option>
+        <option value="mudeer" data-translate="Director">Director</option>
+        <option value="assistant_mudeer" data-translate="Asst. Director">Asst. Director</option>
+        <option value="bursar" data-translate="Bursar">Bursar</option>
+        <option value="registrar" data-translate="Registrar">Registrar</option>
+        <option value="teacher" data-translate="Teacher">Teacher</option>
+      </select>
+
+      <!-- Filter by status -->
+      <select id="filterStatus" class="search-input" style="max-width:140px;">
+        <option value="" data-translate="All Status">All Status</option>
+        <option value="active" data-translate="Active">Active</option>
+        <option value="inactive" data-translate="Inactive">Inactive</option>
+        <option value="on_leave" data-translate="On Leave">On Leave</option>
+      </select>
+
+      <button class="add-btn" onclick="openModal('staffModal')">
+        <i class="fa-solid fa-plus"></i>
+        <span data-translate="Add Staff">Add Staff</span>
+      </button>
+    </div>
+
+    <div class="table-container">
+      <table id="staff-table">
+        <thead>
+          <tr>
+            <th data-translate="Photo">Photo</th>
+            <th data-translate="Name">Name</th>
+            <th data-translate="Role">Role</th>
+            <th data-translate="Type">Type</th>
+            <th data-translate="Department">Department</th>
+            <th data-translate="Email">Email</th>
+            <th data-translate="Phone">Phone</th>
+            <th data-translate="Joined">Joined</th>
+            <th data-translate="Salary">Salary</th>
+            <th data-translate="Status">Status</th>
+            <th data-translate="Registered">Registered</th>
+            <th data-translate="View / Edit">View / Edit</th>
+            <th data-translate="Pay">Pay</th>
+            <th data-translate="Delete">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="14" class="empty-row" data-translate="No staff yet">No staff yet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- =============================================
+       ADD / EDIT STAFF MODAL
+  ============================================= -->
+  <div class="modal" id="staffModal">
+    <div class="modal-content modal-large">
+      <button class="btn btn-close" onclick="closeModal('staffModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 id="staffModalTitle" data-translate="Add Staff Record">Add Staff Record</h2>
+
+      <!-- Role tag preview -->
+      <div class="staff-tag-preview" id="staffTagPreview" style="display:none;">
+        <span id="staffTagBadge" class="badge"></span>
+      </div>
+
+      <div class="modal-grid">
+        <label data-translate="Full Name">Full Name</label>
+        <input type="text" id="staffName" placeholder="Full Name"
+               data-translate-placeholder="Full Name">
+
+        <label data-translate="Email">Email</label>
+        <input type="email" id="staffEmail" placeholder="Email Address"
+               data-translate-placeholder="Email Address">
+
+        <label data-translate="Phone">Phone</label>
+        <input type="text" id="staffPhone" placeholder="Phone Number"
+               data-translate-placeholder="Phone Number">
+
+        <label data-translate="Role">Role</label>
+        <select id="staffRole" onchange="updateRoleTagPreview()">
+          <option value="" data-translate="Select Role">-- Select Role --</option>
+          <option value="mudeer" data-translate="Director (Mudeer)">Director (Mudeer)</option>
+          <option value="assistant_mudeer" data-translate="Asst. Director">Asst. Director</option>
+          <option value="bursar" data-translate="Bursar">Bursar</option>
+          <option value="registrar" data-translate="Registrar">Registrar</option>
+          <option value="teacher" data-translate="Teacher">Teacher</option>
+        </select>
+
+        <label data-translate="Staff Type">Staff Type</label>
+        <select id="staffType">
+          <option value="" data-translate="Select Type">-- Select Type --</option>
+          <option value="full_time" data-translate="Full-time">Full-time</option>
+          <option value="part_time" data-translate="Part-time">Part-time</option>
+          <option value="contract" data-translate="Contract">Contract</option>
+          <option value="volunteer" data-translate="Volunteer">Volunteer</option>
+        </select>
+
+        <label data-translate="Department">Department</label>
+        <select id="staffDepartment">
+          <option value="" data-translate="Select Department">-- Select Department --</option>
+          <option value="teaching" data-translate="Teaching">Teaching</option>
+          <option value="admin" data-translate="Admin">Admin</option>
+          <option value="finance" data-translate="Finance">Finance</option>
+          <option value="it" data-translate="IT">IT</option>
+        </select>
+
+        <label data-translate="Date Joined">Date Joined</label>
+        <input type="date" id="staffDateJoined">
+
+        <label data-translate="Monthly Salary">Monthly Salary</label>
+        <input type="number" id="staffSalary" placeholder="0.00"
+               data-translate-placeholder="0.00" min="0">
+
+        <label data-translate="Status">Status</label>
+        <select id="staffStatus">
+          <option value="active" data-translate="Active">Active</option>
+          <option value="inactive" data-translate="Inactive">Inactive</option>
+          <option value="on_leave" data-translate="On Leave">On Leave</option>
+        </select>
+
+        <label data-translate="Passport Photo">Passport Photo</label>
+        <input type="file" id="staffPassport" accept="image/*">
+      </div>
+
+      <p class="staff-note">
+        <i class="fa-solid fa-circle-info"></i>
+        <span data-translate="Note: This creates a pending invite. Click the Invite button next to their name in the table to send them a registration email.">
+          Note: This creates a pending invite. Click the Invite button next to their name in the table to send them a registration email.
+        </span>
+      </p>
+
+      <div class="modal-actions">
+        <button id="saveStaffBtn" class="btn btn-save" onclick="saveStaff()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span data-translate="Save Staff">Save Staff</span>
+        </button>
+        <button class="btn btn-cancel" onclick="closeModal('staffModal')">
+          <span data-translate="Cancel">Cancel</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       VIEW STAFF MODAL (with payment history tab)
+  ============================================= -->
+  <div class="modal" id="viewStaffModal">
+    <div class="modal-content modal-large">
+      <button class="btn btn-close" onclick="closeModal('viewStaffModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- Staff profile card at top -->
+      <div class="staff-profile-card">
+        <div class="staff-photo-wrap">
+          <img id="viewStaffPhoto" src="passport-placeholder.png" alt="Staff Photo" class="staff-photo-large">
+          <span id="viewStaffRoleTag" class="badge staff-role-badge"></span>
+        </div>
+        <div class="staff-profile-info">
+          <h2 id="viewStaffName"></h2>
+          <p id="viewStaffTypeDept" class="text-muted"></p>
+          <span id="viewStaffStatusBadge" class="badge"></span>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="staff-tabs">
+        <button class="staff-tab active" onclick="switchStaffTab('details', this)" data-translate="Details">Details</button>
+        <button class="staff-tab" onclick="switchStaffTab('payments', this)" data-translate="Payment History">Payment History</button>
+      </div>
+
+      <!-- DETAILS TAB -->
+      <div id="tabDetails" class="staff-tab-content active">
+        <div class="modal-grid">
+          <label data-translate="Full Name">Full Name</label>
+          <input type="text" id="viewStaffFullName">
+
+          <label data-translate="Email">Email</label>
+          <input type="email" id="viewStaffEmail">
+
+          <label data-translate="Phone">Phone</label>
+          <input type="text" id="viewStaffPhone">
+
+          <label data-translate="Role">Role</label>
+          <select id="viewStaffRole" onchange="updateViewRoleTagPreview()">
+            <option value="mudeer">Director (Mudeer)</option>
+            <option value="assistant_mudeer">Asst. Director</option>
+            <option value="bursar">Bursar</option>
+            <option value="registrar">Registrar</option>
+            <option value="teacher">Teacher</option>
+          </select>
+
+          <label data-translate="Staff Type">Staff Type</label>
+          <select id="viewStaffType">
+            <option value="full_time">Full-time</option>
+            <option value="part_time">Part-time</option>
+            <option value="contract">Contract</option>
+            <option value="volunteer">Volunteer</option>
+          </select>
+
+          <label data-translate="Department">Department</label>
+          <select id="viewStaffDepartment">
+            <option value="teaching">Teaching</option>
+            <option value="admin">Admin</option>
+            <option value="finance">Finance</option>
+            <option value="it">IT</option>
+          </select>
+
+          <label data-translate="Date Joined">Date Joined</label>
+          <input type="date" id="viewStaffDateJoined">
+
+          <label data-translate="Monthly Salary">Monthly Salary (₦)</label>
+          <input type="number" id="viewStaffSalary" min="0">
+
+          <label data-translate="Status">Status</label>
+          <select id="viewStaffStatus">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="on_leave">On Leave</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-save" onclick="updateStaff()">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span data-translate="Save Changes">Save Changes</span>
+          </button>
+          <button class="btn btn-cancel" onclick="closeModal('viewStaffModal')">
+            <span data-translate="Cancel">Cancel</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- PAYMENT HISTORY TAB -->
+      <div id="tabPayments" class="staff-tab-content" style="display:none;">
+        <div class="payment-history-header">
+          <h3 data-translate="Payment History">Payment History</h3>
+          <button class="add-btn" onclick="openPaymentModal()">
+            <i class="fa-solid fa-plus"></i>
+            <span data-translate="Add Payment">Add Payment</span>
+          </button>
+        </div>
+        <div class="table-container">
+          <table id="payment-history-table">
+            <thead>
+              <tr>
+                <th data-translate="Month">Month</th>
+                <th data-translate="Year">Year</th>
+                <th data-translate="Amount">Amount</th>
+                <th data-translate="Currency">Currency</th>
+                <th data-translate="Status">Status</th>
+                <th data-translate="Paid On">Paid On</th>
+                <th data-translate="Note">Note</th>
+                <th data-translate="Edit">Edit</th>
+                <th data-translate="Delete">Delete</th>
+              </tr>
+            </thead>
+            <tbody id="paymentHistoryBody">
+              <tr><td colspan="9" class="empty-row" data-translate="No payments yet">No payments yet</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =============================================
+       PAYMENT MODAL
+  ============================================= -->
+  <div class="modal" id="paymentModal">
+    <div class="modal-content">
+      <button class="btn btn-close" onclick="closeModal('paymentModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 id="paymentModalTitle" data-translate="Record Payment">Record Payment</h2>
+      <p id="paymentStaffName" class="text-muted" style="margin-bottom:12px;font-weight:600;"></p>
+
+      <div class="modal-grid">
+        <label data-translate="Month">Month</label>
+        <select id="payMonth">
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+
+        <label data-translate="Year">Year</label>
+        <input type="number" id="payYear" min="2020" max="2099">
+
+        <label data-translate="Amount Paid">Amount Paid</label>
+        <input type="number" id="payAmount" placeholder="0.00" min="0">
+
+        <label data-translate="Currency">Currency</label>
+        <select id="payCurrency">
+          <option value="NGN">NGN (₦)</option>
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="GBP">GBP (£)</option>
+        </select>
+
+        <label data-translate="Status">Status</label>
+        <select id="payStatus">
+          <option value="paid" data-translate="Paid">Paid</option>
+          <option value="partial" data-translate="Partial">Partial</option>
+          <option value="unpaid" data-translate="Unpaid">Unpaid</option>
+        </select>
+
+        <label data-translate="Date Paid">Date Paid</label>
+        <input type="date" id="payDate">
+
+        <label data-translate="Note (optional)">Note (optional)</label>
+        <input type="text" id="payNote" placeholder="Any remarks..."
+               data-translate-placeholder="Any remarks...">
+      </div>
+
+      <div class="modal-actions">
+        <button id="savePaymentBtn" class="btn btn-save" onclick="savePayment()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span data-translate="Save Payment">Save Payment</span>
+        </button>
+        <button class="btn btn-cancel" onclick="closeModal('paymentModal')">
+          <span data-translate="Cancel">Cancel</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Passport Preview Modal -->
+  <div id="staffPassportModal" class="receipt-modal">
+    <div class="receipt-modal-content">
+      <span class="close-passport-modal" onclick="closeStaffPassportModal()">&times;</span>
+      <img id="staffPassportPreview" src="" alt="Staff Passport Preview">
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="admin-toast" class="toast"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
+
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
+
+  <!-- SCRIPTS -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
+    }
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+    });
+
+    function openModal(id) {
+      document.getElementById(id).classList.add('show');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('show');
+    }
+  </script>
+  <script src="translate.js"></script>
+  <script src="staff-management.js"></script>
+</body>
+</html>

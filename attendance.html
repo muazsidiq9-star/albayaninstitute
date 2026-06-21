@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" content="notranslate">
+  <title>Attendance - Al-Bayan Arabic Institute Online</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="attendance.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- Don't let WhatsApp/Telegram/anything cache a stale attendance state -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================================================
+       SINGLE CENTERED CARD (no split panel — this page
+       has one job, keep it focused)
+  ================================================ -->
+  <main class="login-page attendance-page">
+
+    <div class="login-form-side attendance-form-side">
+      <div class="login-card attendance-card">
+
+        <!-- STATE: LOADING -->
+        <div id="state-loading" class="attendance-state">
+          <div class="login-card-header">
+            <div class="login-icon">
+              <i class="fa-solid fa-spinner fa-spin"></i>
+            </div>
+            <h2 data-translate="Checking session...">Checking session...</h2>
+            <p data-translate="Please wait a moment.">Please wait a moment.</p>
+          </div>
+        </div>
+
+        <!-- STATE: NOT LOGGED IN -->
+        <div id="state-not-logged-in" class="attendance-state" style="display:none;">
+          <div class="login-card-header">
+            <div class="login-icon">
+              <i class="fa-solid fa-user-lock"></i>
+            </div>
+            <h2 data-translate="Please Log In">Please Log In</h2>
+            <p data-translate="You need to log in as a student before you can mark attendance.">
+              You need to log in as a student before you can mark attendance.
+            </p>
+          </div>
+          <a id="loginRedirectBtn" href="#" class="submit-btn">
+            <span data-translate="Go to Login">Go to Login</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- STATE: INVALID/MISSING TOKEN -->
+        <div id="state-invalid-link" class="attendance-state" style="display:none;">
+          <div class="login-card-header">
+            <div class="login-icon icon-error">
+              <i class="fa-solid fa-link-slash"></i>
+            </div>
+            <h2 data-translate="Invalid Attendance Link">Invalid Attendance Link</h2>
+            <p data-translate="This attendance link is missing or invalid. Please check the link your teacher shared.">
+              This attendance link is missing or invalid. Please check the link your teacher shared.
+            </p>
+          </div>
+        </div>
+
+        <!-- STATE: READY TO MARK -->
+        <div id="state-ready" class="attendance-state" style="display:none;">
+          <div class="login-card-header">
+            <div class="login-icon">
+              <i class="fa-solid fa-clipboard-check"></i>
+            </div>
+            <h2 id="sessionTitle">—</h2>
+            <p id="sessionLevel">—</p>
+          </div>
+
+          <p class="form-feedback error-msg" id="readyError" style="display:none;"></p>
+
+          <button id="markAttendanceBtn" type="button" class="submit-btn">
+            <span data-translate="Mark Me Present">✅ Mark Me Present</span>
+          </button>
+
+          <p id="studentNameLine" class="register-link"></p>
+        </div>
+
+        <!-- STATE: SUCCESS -->
+        <div id="state-success" class="attendance-state" style="display:none;">
+          <div class="login-card-header">
+            <div class="login-icon icon-success">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h2 data-translate="Attendance Marked!">Attendance Marked!</h2>
+            <p id="successMessage">You've been marked present.</p>
+          </div>
+          <a id="joinClassBtnSuccess" href="#" target="_blank" rel="noopener" class="submit-btn" style="display:none;">
+            <span data-translate="Join Class">Join Class</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+
+        <!-- STATE: ALREADY MARKED -->
+        <div id="state-already" class="attendance-state" style="display:none;">
+          <div class="login-card-header">
+            <div class="login-icon icon-success">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h2 data-translate="Already Marked">Already Marked</h2>
+            <p id="alreadyMessage">You were already marked present for this session.</p>
+          </div>
+          <a id="joinClassBtnAlready" href="#" target="_blank" rel="noopener" class="submit-btn" style="display:none;">
+            <span data-translate="Join Class">Join Class</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+
+        <!-- STATE: CLOSED / NOT OPEN / ERROR -->
+        <div id="state-blocked" class="attendance-state" style="display:none;">
+          <div class="login-card-header">
+            <div class="login-icon icon-error">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <h2 id="blockedTitle">Attendance Window Closed</h2>
+            <p id="blockedMessage">This attendance session is no longer accepting check-ins.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    window.supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  </script>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
+    }
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+    });
+  </script>
+
+  <script src="translate.js"></script>
+  <script src="attendance.js"></script>
+</body>
+</html>

@@ -1,30 +1,87 @@
-/* ===============================
-   GLOBAL RESET
-================================ */
-* {
+/* ============================================================
+   Al-Bayan Arabic Institute Online
+   master.css — Global Styles
+   Version: 1.0
+============================================================ */
+
+
+/* ============================================================
+   1. RESET
+============================================================ */
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+
+/* ============================================================
+   2. THEME VARIABLES
+============================================================ */
+:root {
+  --primary:        #3f51b5;
+  --primary-dark:   #0515c4;
+  --primary-light:  #c5cae9;
+  --primary-xlight: #e8eaf6;
+
+  --bg-color:           #ffffff;
+  --surface-color:      #f7f7f7;
+  --card-color:         #ffffff;
+  --text-color:         #1a1a1a;
+  --text-muted:         #555555;
+  --border-color:       #0212bd;
+  --border-light:       #c5cae9;
+  --table-header-bg:    #e8eaf6;
+  --nav-height:         64px;
+}
+
+[data-theme="dark"] {
+  --bg-color:           #0f0f0f;
+  --surface-color:      #1a1a1a;
+  --card-color:         #1e1e1e;
+  --text-color:         #eaeaea;
+  --text-muted:         #aaaaaa;
+  --border-color:       #0212bd;
+  --border-light:       #0225e9;
+  --table-header-bg:    #1a1a2e;
+  --primary-xlight:     #0515c4;
+}
+
+
+/* ============================================================
+   3. BASE
+============================================================ */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Segoe UI", Tahoma, sans-serif;
+  font-size: 15px;
   line-height: 1.6;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  padding-top: var(--nav-height);
 }
 
-/* ===============================
-   NAVIGATION BAR
-================================ */
+main {
+  flex: 1 0 auto;
+}
+
+
+/* ============================================================
+   4. NAVIGATION
+============================================================ */
 .master-nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 64px;
-  background: #0277d6;
+  height: var(--nav-height);
+  background: var(--primary-dark);
   z-index: 1000;
 }
 
@@ -33,7 +90,6 @@ body {
   margin: 0 auto;
   height: 100%;
   padding: 0 16px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,394 +99,97 @@ body {
 .logo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   color: #fff;
   font-weight: 700;
   text-decoration: none;
+  font-size: 1rem;
 }
 
 .logo img {
-  width: 36px;
+  width: 38px;
   height: auto;
 }
 
-/* ===============================
-   HAMBURGER ICON
-================================ */
+/* Hamburger icon */
 .hamburger {
   font-size: 26px;
   color: #fff;
   cursor: pointer;
   user-select: none;
+  line-height: 1;
 }
 
-/* ===============================
-   HAMBURGER MENU PANEL
-================================ */
-.nav-links {
-  position: fixed;
-  top: 64px;                 /* 👈 starts UNDER nav */
-  left: -260px;              /* hidden by default */
-  width: 260px;
-  height: calc(100vh - 64px);
-  background: var(--card-color);
-
-  padding: 20px 0;
-  overflow-y: auto;
-
-  transition: left 0.35s ease;
-  z-index: 999;
-}
-
-/* Show menu */
-.nav-links.show {
-  left: 0;
-}
-
-/* ===============================
-   HAMBURGER LINKS
-================================ */
-.nav-links a {
-  display: block;
-  padding: 14px 22px;
-  color: var(--text-color);
-  text-decoration: none;
-  font-weight: 700 !important; /* bold */
-  text-align: left;
-  position: relative;
-}
-
-/* tiny underline separator */
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 22px;
-  bottom: 6px;
-  width: calc(100% - 44px);
-  height: 1px;
-  background: var(--card-color);
-}
-
-/* hover */
-.nav-links a:hover {
-  background: #0277d6;
-}
-
-/* ACTIVE PAGE INDICATOR */
-.nav-links a.active::after {
-  background: #025eaa;
-  height: 2px;
-}
-
-/* ===============================
-   PAGE OFFSET (VERY IMPORTANT)
-================================ */
-main {
-  margin-top: 64px; /* only main content needs offset */
-}
-
-/* ===============================
-   FLOATING WHATSAPP ENHANCED
-================================ */
- 
-/* ================= WHATSAPP FLOAT ================= */
-.whatsapp-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-
-  width: 55px;
-  height: 55px;
-  background-color: #25D366;
-  border-radius: 50%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-  z-index: 9999;
-
-  cursor: grab;
-}
-
-.whatsapp-float img {
-  width: 28px;
-  height: 28px;
-}
-
-.whatsapp-float,
-#langToggleBtn {
-  touch-action: none;
-}
-
-/* STRONGER HEARTBEAT ANIMATION */
-@keyframes heartbeat {
-  0%, 100% { transform: scale(1); }
-  14% { transform: scale(1.15); }
-  28% { transform: scale(1); }
-  42% { transform: scale(1.15); }
-  70% { transform: scale(1); }
-}
-
-/* Hover effect for extra liveliness */
-.whatsapp-float:hover {
-  transform: scale(1.25);
-  box-shadow: 0 12px 30px rgba(37,211,102,0.6);
-}
-
-/* ===============================
-   FOOTER
-================================ */
-footer {
-  width: 100%;
-  background: #0277d6;
-  color: #fff;
-  text-align: center;
-  padding: 14px 10px;
-  font-size: 14px;
-}
-
-footer p {
-  margin: 4px 0;
-}
-footer {
-  background: #0277d6 !important;
-  color: #fff !important;
-  text-align: center !important;
-  padding: 20px 10px !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-  position: relative !important;
-  bottom: 0;
-}
-/* ---------- MASTER FOOTER ---------- */
-footer {
-  width: 100%;                 /* Full width */
-  background-color: #0277d6;   /* Dark gray, adjust if needed */
-  color: #fff;                 /* Text color */
-  padding: 5px 0;             /* Reasonable height */
-  text-align: center;           /* Center content horizontally */
-  font-size: 14px;              /* Adjust font size */
-  position: relative;           /* Not fixed, so stays at bottom */
-  box-sizing: border-box;
-  margin: 0;
-}
-
-footer a {
-  color: #fff;                  /* Keep links readable */
-  text-decoration: none;
-  margin: 0 8px;
-  transition: color 0.3s;
-}
-
-footer a:hover {
-  color: #facc15;               /* Highlight on hover */
-}
-
-footer p {
-  margin: 5px 0 0 0;           /* Minimal spacing */
-}
-
-@media screen and (max-width: 768px) {
-  footer {
-    font-size: 13px;
-    padding: 5px 0;
-  }
-}
-/* Stick footer to bottom without affecting nav/header */
-footer {
-  position: relative;  /* keeps it in flow */
-  bottom: 0;           /* ensures it’s at bottom of container */
-  width: 100%;         /* full width */
-  min-height: 13px;    /* adjust as needed for shorter/taller footer */
-  line-height: 13px;   /* centers content vertically */
-  text-align: center;  /* centers text inside */
-  background-color: #0277d6; /* optional styling */
-  color: #fff;            /* optional styling */
-}
-
-/* Main content should grow to fill space */
-main, .courses-section, .hub-buttons, .notifications-section {
-  flex: 1 0 auto; /* allow growing but don't shrink footer */
-}
-
-/* Footer should stay at bottom */
-footer {
-  flex-shrink: 0;
-  background-color: #f8f8f8; /* optional, adjust your design */
-  padding: 8px 0;
-  text-align: center;
-}
-
-/* ================================
-   THEME VARIABLES
-================================ */
-:root {
-  --bg-color: #ffffff;
-  --surface-color: #f7f7f7;
-  --card-color: #ffffff;
-  --text-color: #1a1a1a;
-  --border-color: #dddddd;
-  --table-header-bg: #f0f0f0;
-  --primary-color: #1a237e;
-}
-
-/* Dark mode */
-[data-theme="dark"] {
-  --bg-color: #121212;
-  --surface-color: #1e1e1e;
-  --card-color: #1c1c1c;
-  --text-color: #eaeaea;
-  --border-color: #333;
-  --table-header-bg: #242424;
-}
-
-body {
-  background: var(--bg-color);
-  color: var(--text-color);
-}
-
-.main,
-.container,
-.dashboard {
-  background: var(--surface-color);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--card-color);
-  color: var(--text-color);
-}
-
-th, td {
-  padding: 10px;
-  border: 1px solid var(--border-color);
-}
-
-th {
-  background: var(--table-header-bg);
-}
-
-.card,
-.modal,
-.box {
-  background: var(--card-color);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-}
-
-input,
-select,
-textarea {
-  background: var(--surface-color);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-}
-
-button {
-  background: var(--primary-color);
-  color: var(--text-color);
-}
-
-/* ================================
-   GLOBAL SURFACE FIX
-================================ */
-body,
-main,
-section,
-.container,
-.content,
-.page,
-.wrapper {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-}
-
-.card,
-.resource-card,
-.box,
-.panel,
-.tile {
-  background-color: var(--card-color);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-}
-
-table {
-  background: var(--card-color);
-  color: var(--text-color);
-  border-collapse: collapse;
-}
-
-thead {
-  background: var(--table-header-bg);
-}
-
-th, td {
-  border: 1px solid var(--border-color);
-  padding: 10px;
-}
-
-tbody tr {
-  background: var(--card-color);
-}
-
-tbody tr:nth-child(even) {
-  background: var(--surface-color);
-}
-
-input,
-select,
-textarea {
-  background-color: var(--surface-color);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: #999;
-}
-
-header,
-.navbar,
-.topbar {
-  background: var(--primary-color);
-  color: #fff;
-}
-
-.master-nav select {
-  outline: none;
-}
-
+/* Nav search/select */
 .master-nav select {
   height: 34px;
-  padding: 4px 8px;
+  padding: 4px 10px;
   border-radius: 6px;
-  border: 1px solid var(--border-color);
-  width: 250px;
+  border: 1px solid var(--border-light);
+  width: 240px;
   background: var(--surface-color);
   color: var(--text-color);
   font-size: 0.85rem;
   cursor: pointer;
+  outline: none;
 }
 
-:root {
-  --nav-height: 60px; /* adjust if your nav is taller */
+
+/* ============================================================
+   5. SIDEBAR MENU
+============================================================ */
+.nav-links {
+  position: fixed;
+  top: var(--nav-height);
+  left: -270px;
+  width: 270px;
+  height: calc(100vh - var(--nav-height));
+  background: var(--card-color);
+  padding: 16px 0;
+  overflow-y: auto;
+  transition: left 0.3s ease;
+  z-index: 999;
+  border-right: 1px solid var(--border-light);
 }
 
-/* ALWAYS push page content below fixed nav */
-body {
-  padding-top: var(--nav-height);
+.nav-links.show {
+  left: 0;
 }
 
+.nav-links a {
+  display: block;
+  padding: 13px 22px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--border-light);
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-links a:hover {
+  background: var(--primary-xlight);
+  color: var(--text-color);
+}
+
+.nav-links a.active {
+  color: var(--primary);
+  border-left: 3px solid var(--border-light);
+  padding-left: 19px;
+  border-style: dashed;
+}
+.nav-links a.active:hover {
+  color: var(--text-color);
+}
+
+/* ============================================================
+   6. PAGE HEADER BANNER
+============================================================ */
 .page-header,
 .register-header,
 .schedule-header {
   position: relative;
-  height: 300px;
+  height: 280px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -443,7 +202,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0, 0, 0, 0.48);
   z-index: 1;
 }
 
@@ -456,21 +215,272 @@ body {
 }
 
 .header-logo {
-  width: 90px;
+  width: 85px;
   margin-bottom: 10px;
-  position: relative;
-  z-index: 3;
 }
+
+
+/* ============================================================
+   7. CARDS & SURFACES
+============================================================ */
+.card,
+.box,
+.panel,
+.tile,
+.modal,
+.resource-card {
+  background-color: var(--card-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+}
+
+
+/* ============================================================
+   8. TABLES
+============================================================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card-color);
+  color: var(--text-color);
+}
+
+thead {
+  background: var(--table-header-bg);
+}
+
+th, td {
+  padding: 10px 12px;
+  border: 1px solid var(--border-light);
+  font-size: 0.9rem;
+}
+
+th {
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+tbody tr:nth-child(even) {
+  background: var(--surface-color);
+}
+
+tbody tr:hover {
+  background: var(--primary-xlight);
+}
+
+
+/* ============================================================
+   9. FORM ELEMENTS
+============================================================ */
+input,
+select,
+textarea {
+  background: var(--surface-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.15);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #999;
+}
+
+
+/* ============================================================
+   10. BUTTONS
+============================================================ */
+button,
+.btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 18px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+button:hover,
+.btn:hover {
+  background: var(--primary-dark);
+}
+
+button:active,
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+
+.btn-outline:hover {
+  background: var(--primary-xlight);
+}
+
+
+/* ============================================================
+   11. FOOTER
+============================================================ */
+footer {
+  flex-shrink: 0;
+  width: 100%;
+  background: var(--primary-dark);
+  color: #fff;
+  text-align: center;
+  padding: 18px 16px;
+  font-size: 13.5px;
+  line-height: 1.8;
+}
+
+footer p {
+  margin: 2px 0;
+  color: var(--primary-light);
+}
+
+footer a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  margin: 0 8px;
+  transition: color 0.2s;
+}
+
+footer a:hover {
+  color: var(--primary-light);
+}
+
+
+/* ============================================================
+   12. WHATSAPP FLOAT
+============================================================ */
+.whatsapp-float {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  width: 54px;
+  height: 54px;
+  background-color: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  z-index: 9999;
+  cursor: pointer;
+  touch-action: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.whatsapp-float img {
+  width: 28px;
+  height: 28px;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.12);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45);
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14%       { transform: scale(1.12); }
+  28%       { transform: scale(1); }
+  42%       { transform: scale(1.12); }
+  70%       { transform: scale(1); }
+}
+
+
+/* ============================================================
+   13. UTILITIES
+============================================================ */
+.text-muted   { color: var(--text-muted); }
+.text-primary { color: var(--primary); }
+.text-center  { text-align: center; }
+.text-right   { text-align: right; }
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+
+.flex         { display: flex; }
+.flex-center  { display: flex; align-items: center; justify-content: center; }
+.gap-1        { gap: 0.5rem; }
+.gap-2        { gap: 1rem; }
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+.badge-danger  { background: #fee2e2; color: #991b1b; }
+.badge-warning { background: #fef9c3; color: #854d0e; }
+.badge-success { background: #dcfce7; color: #15803d; }
+.badge-info    { background: #dbeafe; color: #1d4ed8; }
+
+
+/* ============================================================
+   14. RESPONSIVE
+============================================================ */
 @media (max-width: 768px) {
   :root {
-    --nav-height: 50px;
+    --nav-height: 56px;
+  }
+
+  .master-nav select {
+    width: 100%;
+    margin: 6px 0;
+  }
+
+  footer {
+    font-size: 11px;
+    padding: 14px 12px;
+  }
+
+  .page-header,
+  .register-header,
+  .schedule-header {
+    height: 220px;
   }
 }
 
-@media (max-width: 1000px) {
-  .master-nav select {
-    width: 95%;
-    margin-top: 8px;
-    margin-bottom: 8px;
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
   }
+}
+
+/* Force ALL numeric-looking content LTR regardless of RTL page */
+.detail-value,
+[data-ltr] {
+  direction: ltr;
+  unicode-bidi: embed;
+  /* NO display: inline-block here */
 }

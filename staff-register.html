@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" content="notranslate">
+  <title>Staff Registration - Al-Bayan Arabic Institute Online</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="staff-management.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================================================
+       SPLIT LAYOUT — left panel + right form
+       (same pattern as login.html)
+  ================================================ -->
+  <main class="login-page">
+
+    <!-- LEFT PANEL -->
+    <div class="login-panel">
+      <div class="panel-overlay"></div>
+      <div class="panel-content">
+        <img src="logo.png" alt="Al-Bayan Logo" class="login-logo">
+        <h1 data-translate="Al-Bayan Arabic Institute Online">
+          Al-Bayan Arabic Institute Online
+        </h1>
+        <p data-translate="You've been invited to join our staff team.">
+          You've been invited to join our staff team.
+        </p>
+        <div class="panel-badges">
+          <span><i class="fa-solid fa-circle-check"></i> <span data-translate="Secure Account Setup">Secure Account Setup</span></span>
+          <span><i class="fa-solid fa-circle-check"></i> <span data-translate="One-time Registration">One-time Registration</span></span>
+          <span><i class="fa-solid fa-circle-check"></i> <span data-translate="Takes Less Than a Minute">Takes Less Than a Minute</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT — FORM -->
+    <div class="login-form-side">
+      <div class="login-card">
+
+        <div class="login-card-header">
+          <div class="login-icon">
+            <i class="fa-solid fa-user-check"></i>
+          </div>
+          <h2 data-translate="Complete Your Registration">Complete Your Registration</h2>
+          <p data-translate="Set a password to activate your staff account">Set a password to activate your staff account</p>
+        </div>
+
+        <!-- LOADING STATE -->
+        <div id="loadingState">
+          <p style="text-align:center;padding:24px 0;color:var(--text-muted);">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            <span data-translate="Checking your invitation...">Checking your invitation...</span>
+          </p>
+        </div>
+
+        <!-- ERROR STATE -->
+        <div id="errorState" class="form-feedback error-msg" style="display:none;">
+          <span id="errorMessage"></span>
+        </div>
+
+        <!-- SUCCESS STATE -->
+        <div id="successState" style="display:none; text-align:center;">
+          <div class="form-feedback success-msg" style="display:block;">
+            <span data-translate="Your account has been activated successfully.">Your account has been activated successfully.</span>
+          </div>
+          <a href="login.html" class="submit-btn" style="text-decoration:none; margin-top:6px;">
+            <span data-translate="Go to Login">Go to Login</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- REGISTRATION FORM -->
+        <div id="formState" style="display:none;">
+
+          <!-- Invite summary card -->
+          <div class="staff-profile-card" id="inviteSummaryCard" style="margin-bottom:22px;">
+            <div class="staff-profile-info">
+              <h2 id="inviteName" style="font-size:1.05rem;"></h2>
+              <p id="inviteEmail" class="text-muted"></p>
+              <span id="inviteRoleTag" class="badge"></span>
+            </div>
+          </div>
+
+          <div class="form-feedback error-msg" id="formAlert"></div>
+
+          <form id="registerForm">
+
+            <div class="form-group">
+              <label for="password" data-translate="Password">Password</label>
+              <div class="input-wrap password-group">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="password" placeholder="Enter a password" minlength="6" required>
+                <i class="fa-solid fa-eye toggle-password" data-target="password"></i>
+              </div>
+              <p class="text-muted" style="margin-top:6px; font-size:0.78rem;" data-translate="At least 6 characters">At least 6 characters</p>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword" data-translate="Confirm Password">Confirm Password</label>
+              <div class="input-wrap password-group">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="confirmPassword" placeholder="Re-enter your password" minlength="6" required>
+                <i class="fa-solid fa-eye toggle-password" data-target="confirmPassword"></i>
+              </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+              <span data-translate="Activate My Account">Activate My Account</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- TOAST -->
+  <div id="admin-toast" class="toast"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
+
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
+
+  <!-- SCRIPTS -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    window.supabaseClient = db;
+  </script>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
+    }
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+    });
+
+    /* Toggle password visibility (supports multiple fields) */
+    document.querySelectorAll('.toggle-password').forEach(icon => {
+      icon.addEventListener('click', () => {
+        const input = document.getElementById(icon.dataset.target);
+        if (!input) return;
+        input.type = input.type === 'password' ? 'text' : 'password';
+        icon.classList.toggle('fa-eye');
+        icon.classList.toggle('fa-eye-slash');
+      });
+    });
+  </script>
+
+  <script>
+    // ===========================================================
+    // STAFF REGISTRATION LOGIC
+    // ===========================================================
+    let currentInvite = null;
+    let currentUser = null;
+
+    function showToast(msg) {
+      const toast = document.getElementById("admin-toast");
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 3000);
+    }
+
+    function showState(stateId) {
+      ["loadingState", "errorState", "successState", "formState"].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.style.display = id === stateId ? "block" : "none";
+      });
+    }
+
+    function showError(message) {
+      const el = document.getElementById("errorMessage");
+      if (el) el.textContent = message;
+      const box = document.getElementById("errorState");
+      if (box) box.style.display = "block";
+      document.getElementById("loadingState").style.display = "none";
+    }
+
+    function showFormAlert(message) {
+      const el = document.getElementById("formAlert");
+      el.textContent = message;
+      el.style.display = "block";
+    }
+
+    function clearFormAlert() {
+      const el = document.getElementById("formAlert");
+      el.textContent = "";
+      el.style.display = "none";
+    }
+
+    function formatStaffType(type) {
+      const map = { full_time: "Full-time", part_time: "Part-time", contract: "Contract", volunteer: "Volunteer" };
+      return map[type] || (type || "—");
+    }
+
+    function formatRole(role) {
+      const map = { mudeer: "Director", assistant_mudeer: "Asst. Director", bursar: "Bursar", registrar: "Registrar", teacher: "Teacher" };
+      return map[role] || (role || "—");
+    }
+
+    function getRoleBadgeClass(role) {
+      const map = {
+        mudeer: "badge-success",
+        assistant_mudeer: "badge-info",
+        bursar: "badge-warning",
+        registrar: "badge-default",
+        teacher: "badge-teacher"
+      };
+      return map[role] || "badge-default";
+    }
+
+    // ===========================================================
+    // INIT
+    // ===========================================================
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const { data: { user }, error: userError } = await db.auth.getUser();
+
+        if (userError || !user || !user.email) {
+          showError("We couldn't verify your invitation link. It may have expired — please ask your administrator to resend it.");
+          return;
+        }
+
+        currentUser = user;
+
+        const { data: invite, error: inviteError } = await db
+          .from("staff_invites")
+          .select("*")
+          .eq("email", user.email)
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (inviteError || !invite) {
+          showError("No staff invitation was found for this email address. Please contact your administrator.");
+          return;
+        }
+
+        if (invite.registered) {
+          showError("This account has already been activated. Please go to the login page instead.");
+          return;
+        }
+
+        currentInvite = invite;
+
+        document.getElementById("inviteName").textContent = invite.full_name || "—";
+        document.getElementById("inviteEmail").textContent = invite.email || "—";
+
+        const roleTag = document.getElementById("inviteRoleTag");
+        roleTag.textContent = formatRole(invite.role);
+        roleTag.className = `badge ${getRoleBadgeClass(invite.role)}`;
+
+        document.getElementById("loadingState").style.display = "none";
+        showState("formState");
+
+      } catch (err) {
+        console.error("Init error:", err);
+        showError("An unexpected error occurred. Please try again or contact your administrator.");
+      }
+    });
+
+    // ===========================================================
+    // FORM SUBMIT
+    // ===========================================================
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearFormAlert();
+
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const submitBtn = document.getElementById("submitBtn");
+
+      if (password.length < 6) {
+        showFormAlert("Password must be at least 6 characters.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showFormAlert("Passwords do not match.");
+        return;
+      }
+
+      if (!currentInvite || !currentUser) {
+        showFormAlert("Invitation data missing. Please reload the page.");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span data-translate="Activating...">Activating...</span>`;
+
+      try {
+        const { error: pwError } = await db.auth.updateUser({ password });
+        if (pwError) throw pwError;
+
+        const { error: profileError } = await db.from("profiles").insert([{
+          id: currentUser.id,
+          full_name: currentInvite.full_name,
+          email: currentInvite.email,
+          role: currentInvite.role,
+          phone: currentInvite.phone,
+          department: currentInvite.department,
+          staff_type: currentInvite.staff_type,
+          monthly_salary: currentInvite.monthly_salary,
+          passport_url: currentInvite.passport_url,
+          passport_path: currentInvite.passport_path,
+          status: currentInvite.status || "active",
+          date_joined: currentInvite.date_joined
+        }]);
+
+        if (profileError) throw profileError;
+
+        const { error: updateError } = await db
+          .from("staff_invites")
+          .update({
+            registered: true,
+            registered_at: new Date().toISOString()
+          })
+          .eq("id", currentInvite.id);
+
+        if (updateError) throw updateError;
+
+        showToast("Account activated successfully");
+        showState("successState");
+
+      } catch (err) {
+        console.error("Registration error:", err);
+        showFormAlert(err.message || "Failed to complete registration. Please try again.");
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span data-translate="Activate My Account">Activate My Account</span> <i class="fa-solid fa-arrow-right"></i>`;
+      }
+    });
+  </script>
+
+  <script src="translate.js"></script>
+</body>
+</html>

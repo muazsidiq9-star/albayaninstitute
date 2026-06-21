@@ -3,243 +3,315 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Courses - Al-Bayan Arabic Institute</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- MASTER CSS -->
+  <title>Courses - Al-Bayan Arabic Institute Online</title>
   <link rel="stylesheet" href="master.css">
-  
-  <!-- Page-specific CSS -->
   <link rel="stylesheet" href="courses.css">
-  
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="course-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
   <!-- NAVIGATION -->
   <nav class="master-nav">
     <div class="nav-container">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
       </a>
-      <div class="hamburger">☰</div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
       <div class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="courses.html" class="active page-indicator">Courses</a>
-        <a href="register.html">Register</a>
-        <a href="students-dashboard.html">Dashboard</a>
-        <a href="payment.html">Payment</a>
-        <a href="schedule.html">Schedule</a>
-        <a href="contact.html">Contact</a>
-        <a href="login.html" class="login-btn pulse">Log in</a>
-
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" class="active" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+        <a href="login.html" class="login-btn" data-translate="Log in">Log in</a>
       </div>
     </div>
   </nav>
 
-  <!-- HEADER -->
-  <header class="courses-header" style="background-image: url('background-main.jpg');">
-    <div class="header-overlay">
+  <!-- PAGE BANNER -->
+  <header class="page-banner" style="background-image: url('background-main.jpg');">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
       <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
-      <h1>Our Courses</h1>
-      <p>Choose your path in learning Arabic online. Click "Explore" to see course details.</p>
+      <p class="banner-eyebrow" data-translate="Learn at your own pace">Learn at your own pace</p>
+      <h1 data-translate="Our Courses">Our Courses</h1>
+      <p data-translate="Choose your path in learning Arabic and Islamic sciences online.">
+        Choose your path in learning Arabic and Islamic sciences online.
+      </p>
     </div>
   </header>
 
-  <!-- MAIN CONTENT -->
-  <main>
-    <section class="courses-section">
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all" data-translate="All Courses">All Courses</button>
+    <button class="filter-btn" data-filter="arabic" data-translate="Arabic Language">Arabic Language</button>
+    <button class="filter-btn" data-filter="quran" data-translate="Qur'an & Tafseer">Qur'an &amp; Tafseer</button>
+    <button class="filter-btn" data-filter="islamic" data-translate="Islamic Sciences">Islamic Sciences</button>
+    <button class="filter-btn" data-filter="coming" data-translate="Coming Soon">Coming Soon</button>
+  </div>
+
+  <!-- COURSES GRID -->
+  <main class="courses-main">
+
+    <!-- ARABIC LANGUAGE GROUP -->
+    <div class="course-group">
+      <h2 class="group-title">
+        <i class="fa-solid fa-language"></i>
+        <span data-translate="Arabic Language">Arabic Language</span>
+      </h2>
       <div class="cards-grid">
 
-        <!-- Core Courses -->
-        <div class="course-card">
-          <h3>Read & Write Arabic</h3>
-          <p>Learn the Arabic alphabet, pronunciation, and basic writing skills from scratch.</p>
-          <a href="course-read-write.html" class="btn-explore" data-translate="Explore">
-            Explore <i class="fa-solid fa-arrow-right"></i>
-          </a>
-          <a href="register-courses.html" class="btn-register" data-translate="Register">Register</a>
+        <div class="course-card" data-category="arabic">
+          <div class="course-icon green"><i class="fa-solid fa-pen-nib"></i></div>
+          <div class="course-level-badge preliminary" data-translate="Preliminary">Preliminary</div>
+          <h3 data-translate="Arabic for Preliminary">Arabic for Preliminary</h3>
+          <p data-translate="Learn the Arabic alphabet, pronunciation, and basic writing skills from scratch.">Learn the Arabic alphabet, pronunciation, and basic writing skills from scratch.</p>
+          <div class="card-actions">
+            <a href="course-read-write.html" class="btn-explore"><span data-translate="Explore">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="register.html" class="btn-register" data-translate="Enrol">Enrol</a>
+          </div>
         </div>
 
-        <div class="course-card">
-          <h3>Arabic for Beginners</h3>
-          <p>Start speaking, reading, and understanding Arabic with easy-to-follow lessons.</p>
-          <a href="course-beginner.html" class="btn-explore" data-translate="Explore">
-            Explore <i class="fa-solid fa-arrow-right"></i>
-          </a>
-          <a href="register-courses.html" class="btn-register" data-translate="Register">Register</a>
+        <div class="course-card" data-category="arabic">
+          <div class="course-icon green"><i class="fa-solid fa-book-open-reader"></i></div>
+          <div class="course-level-badge beginner" data-translate="Beginner">Beginner</div>
+          <h3 data-translate="Arabic for Beginners">Arabic for Beginners</h3>
+          <p data-translate="Start speaking, reading, and understanding Arabic with easy-to-follow lessons.">Start speaking, reading, and understanding Arabic with easy-to-follow lessons.</p>
+          <div class="card-actions">
+            <a href="course-beginner.html" class="btn-explore"><span data-translate="Explore">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="register.html" class="btn-register" data-translate="Enrol">Enrol</a>
+          </div>
         </div>
 
-        <div class="course-card">
-          <h3>Intermediate Arabic</h3>
-          <p>Enhance your Arabic vocabulary, grammar, and conversational skills.</p>
-          <a href="course-intermediate.html" class="btn-explore" data-translate="Explore">
-            Explore <i class="fa-solid fa-arrow-right"></i>
-          </a>
-          <a href="register-courses.html" class="btn-register" data-translate="Register">Register</a>
+        <div class="course-card" data-category="arabic">
+          <div class="course-icon orange"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div class="course-level-badge intermediate" data-translate="Intermediate">Intermediate</div>
+          <h3 data-translate="Intermediate Arabic">Intermediate Arabic</h3>
+          <p data-translate="Enhance your Arabic vocabulary, grammar, and conversational skills.">Enhance your Arabic vocabulary, grammar, and conversational skills.</p>
+          <div class="card-actions">
+            <a href="course-intermediate.html" class="btn-explore"><span data-translate="Explore">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="register.html" class="btn-register" data-translate="Enrol">Enrol</a>
+          </div>
         </div>
 
-        <div class="course-card">
-          <h3>Advanced Arabic</h3>
-          <p>Refine your fluency of complex Arabic texts and conversations.</p>
-          <a href="course-advance.html" class="btn-explore" data-translate="Explore">
-            Explore <i class="fa-solid fa-arrow-right"></i>
-          </a>
-          <a href="register-courses.html" class="btn-register" data-translate="Register">Register</a>
+        <div class="course-card" data-category="arabic">
+          <div class="course-icon blue"><i class="fa-solid fa-star"></i></div>
+          <div class="course-level-badge advanced" data-translate="Advanced">Advanced</div>
+          <h3 data-translate="Advanced Arabic">Advanced Arabic</h3>
+          <p data-translate="Refine your fluency with complex Arabic texts and conversations.">Refine your fluency with complex Arabic texts and conversations.</p>
+          <div class="card-actions">
+            <a href="course-advance.html" class="btn-explore"><span data-translate="Explore">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="register.html" class="btn-register" data-translate="Enrol">Enrol</a>
+          </div>
         </div>
 
-        <div class="course-card">
-          <h3>Nahw (Grammar)</h3>
-          <p>Coming soon! Learn Arabic sentence structure and grammar rules.</p>
-          <a href="course-nahw.html" class="btn-explore" data-translate="Explore">
-            Explore <i class="fa-solid fa-arrow-right"></i>
-          </a>
-          <a href="register-courses.html" class="btn-register" data-translate="Register">Register</a>
+        <div class="course-card" data-category="arabic">
+          <div class="course-icon orange"><i class="fa-solid fa-spell-check"></i></div>
+          <div class="course-level-badge intermediate" data-translate="Intermediate">Intermediate</div>
+          <h3 data-translate="Nahw (Grammar)">Nahw (Grammar)</h3>
+          <p data-translate="Learn Arabic sentence structure and grammar rules in depth.">Learn Arabic sentence structure and grammar rules in depth.</p>
+          <div class="card-actions">
+            <a href="course-nahw.html" class="btn-explore"><span data-translate="Explore">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="register.html" class="btn-register" data-translate="Enrol">Enrol</a>
+          </div>
         </div>
 
-        <div class="course-card">
-          <h3>Sarf (Morphology)</h3>
-          <p>Coming soon! Understand how words are derived and structured.</p>
-          <a href="course-sarf.html" class="btn-explore" data-translate="Explore">
-            Explore <i class="fa-solid fa-arrow-right"></i>
-          </a>
-          <a href="register-courses.html" class="btn-register" data-translate="Register">Register</a>
+        <div class="course-card" data-category="arabic">
+          <div class="course-icon blue"><i class="fa-solid fa-shapes"></i></div>
+          <div class="course-level-badge advanced" data-translate="Advanced">Advanced</div>
+          <h3 data-translate="Sarf (Morphology)">Sarf (Morphology)</h3>
+          <p data-translate="Understand how Arabic words are derived and structured.">Understand how Arabic words are derived and structured.</p>
+          <div class="card-actions">
+            <a href="course-sarf.html" class="btn-explore"><span data-translate="Explore">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="register.html" class="btn-register" data-translate="Enrol">Enrol</a>
+          </div>
         </div>
 
-        <div class="course-card">
-          <h3>Tajweedul Qur'an</h3>
-          <p>Master the rules of Qur’anic recitation and improve pronunciation.</p>
-          <a href="course-quran.html" class="btn-explore" data-translate="Explore">
-            Explore <i class="fa-solid fa-arrow-right"></i>
-          </a>
-          <a href="register-courses.html" class="btn-register" data-translate="Register">Register</a>
+        <div class="course-card coming-soon" data-category="arabic coming">
+          <div class="course-icon muted"><i class="fa-solid fa-comments"></i></div>
+          <div class="course-level-badge coming" data-translate="Coming Soon">Coming Soon</div>
+          <h3 data-translate="Conversational Arabic">Conversational Arabic</h3>
+          <p data-translate="Focus on real-life speaking skills and practical everyday communication.">Focus on real-life speaking skills and practical everyday communication.</p>
+          <div class="card-actions">
+            <span class="btn-unavailable" data-translate="Not Available Yet">Not Available Yet</span>
+          </div>
         </div>
 
-        <div class="course-card">
-          <h3>Tafseerul Qur'an</h3>
-          <p>Coming soon! Understand the meaning and interpretation of the Qur’an.</p>
-          <a href="course-tafseer.html" class="btn-explore" data-translate="Explore">
-            Explore <i class="fa-solid fa-arrow-right"></i>
-          </a>
-          <a href="register-courses.html" class="btn-register" data-translate="Register">Register</a>
+        <div class="course-card coming-soon" data-category="arabic coming">
+          <div class="course-icon muted"><i class="fa-solid fa-feather-pointed"></i></div>
+          <div class="course-level-badge coming" data-translate="Coming Soon">Coming Soon</div>
+          <h3 data-translate="Arabic Poetry">Arabic Poetry</h3>
+          <p data-translate="Discover the beauty of Arabic poetry and its unique expression.">Discover the beauty of Arabic poetry and its unique expression.</p>
+          <div class="card-actions">
+            <span class="btn-unavailable" data-translate="Not Available Yet">Not Available Yet</span>
+          </div>
         </div>
 
-        <!-- Coming Soon Courses -->
-        <div class="course-card">
-          <h3>Conversational Arabic</h3>
-          <p>Coming soon! Focus on real-life speaking skills and practical communication.</p>
-          <a class="btn-unavailable" data-translate="Course Not Available">
-            Course Not Available <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-
-        <div class="course-card">
-          <h3>Arabic Literature</h3>
-          <p>Coming soon! Explore classical and modern Arabic literature.</p>
-          <a class="btn-unavailable" data-translate="Course Not Available">
-            Course Not Available <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-
-        <div class="course-card">
-          <h3>Arabic Poetry</h3>
-          <p>Coming soon! Learn the beauty of Arabic poetry and expression.</p>
-          <a class="btn-unavailable" data-translate="Course Not Available">
-            Course Not Available <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-
-        <div class="course-card">
-          <h3>Al-Fiqh</h3>
-          <p>Coming soon! Study Islamic jurisprudence and practical rulings.</p>
-          <a class="btn-unavailable" data-translate="Course Not Available">
-            Course Not Available <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-
-        <div class="course-card">
-          <h3>At-Tawheed</h3>
-          <p>Coming soon! Learn the fundamentals of Islamic monotheism.</p>
-          <a class="btn-unavailable" data-translate="Course Not Available">
-            Course Not Available <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-
-        <div class="course-card">
-          <h3>Al-Hadeeth</h3>
-          <p>Coming soon! Study the sayings and teachings of the Prophet ﷺ.</p>
-          <a class="btn-unavailable" data-translate="Course Not Available">
-            Course Not Available <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-
-        <div class="course-card">
-          <h3>Seerah/Taareekh</h3>
-          <p>Coming soon! Study Islamic stories and histories from the life of the Prophet ﷺ.</p>
-          <a class="btn-unavailable" data-translate="Course Not Available">
-            Course Not Available <i class="fa-solid fa-arrow-right"></i>
-          </a>
+        <div class="course-card coming-soon" data-category="arabic coming">
+          <div class="course-icon muted"><i class="fa-solid fa-book"></i></div>
+          <div class="course-level-badge coming" data-translate="Coming Soon">Coming Soon</div>
+          <h3 data-translate="Arabic Literature">Arabic Literature</h3>
+          <p data-translate="Explore classical and modern Arabic literary works.">Explore classical and modern Arabic literary works.</p>
+          <div class="card-actions">
+            <span class="btn-unavailable" data-translate="Not Available Yet">Not Available Yet</span>
+          </div>
         </div>
 
       </div>
-    </section>
+    </div>
+
+    <!-- QUR'AN & TAFSEER GROUP -->
+    <div class="course-group">
+      <h2 class="group-title">
+        <i class="fa-solid fa-book-quran"></i>
+        <span data-translate="Qur'an & Tafseer">Qur'an &amp; Tafseer</span>
+      </h2>
+      <div class="cards-grid">
+
+        <div class="course-card" data-category="quran">
+          <div class="course-icon green"><i class="fa-solid fa-microphone"></i></div>
+          <div class="course-level-badge beginner" data-translate="All Levels">All Levels</div>
+          <h3 data-translate="Tajweedul Qur'an">Tajweedul Qur'an</h3>
+          <p data-translate="Master the rules of Qur'anic recitation and improve your pronunciation.">Master the rules of Qur'anic recitation and improve your pronunciation.</p>
+          <div class="card-actions">
+            <a href="course-quran.html" class="btn-explore"><span data-translate="Explore">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="register.html" class="btn-register" data-translate="Enrol">Enrol</a>
+          </div>
+        </div>
+
+        <div class="course-card coming-soon" data-category="quran coming">
+          <div class="course-icon muted"><i class="fa-solid fa-magnifying-glass"></i></div>
+          <div class="course-level-badge coming" data-translate="Coming Soon">Coming Soon</div>
+          <h3 data-translate="Tafseerul Qur'an">Tafseerul Qur'an</h3>
+          <p data-translate="Understand the meaning and interpretation of the Qur'an.">Understand the meaning and interpretation of the Qur'an.</p>
+          <div class="card-actions">
+            <span class="btn-unavailable" data-translate="Not Available Yet">Not Available Yet</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ISLAMIC SCIENCES GROUP -->
+    <div class="course-group">
+      <h2 class="group-title">
+        <i class="fa-solid fa-moon"></i>
+        <span data-translate="Islamic Sciences">Islamic Sciences</span>
+      </h2>
+      <div class="cards-grid">
+
+        <div class="course-card coming-soon" data-category="islamic coming">
+          <div class="course-icon muted"><i class="fa-solid fa-scale-balanced"></i></div>
+          <div class="course-level-badge coming" data-translate="Coming Soon">Coming Soon</div>
+          <h3 data-translate="Al-Fiqh">Al-Fiqh</h3>
+          <p data-translate="Study Islamic jurisprudence and practical rulings.">Study Islamic jurisprudence and practical rulings.</p>
+          <div class="card-actions">
+            <span class="btn-unavailable" data-translate="Not Available Yet">Not Available Yet</span>
+          </div>
+        </div>
+
+        <div class="course-card coming-soon" data-category="islamic coming">
+          <div class="course-icon muted"><i class="fa-solid fa-hand-holding-heart"></i></div>
+          <div class="course-level-badge coming" data-translate="Coming Soon">Coming Soon</div>
+          <h3 data-translate="At-Tawheed">At-Tawheed</h3>
+          <p data-translate="Learn the fundamentals of Islamic monotheism and Aqeedah.">Learn the fundamentals of Islamic monotheism and Aqeedah.</p>
+          <div class="card-actions">
+            <span class="btn-unavailable" data-translate="Not Available Yet">Not Available Yet</span>
+          </div>
+        </div>
+
+        <div class="course-card coming-soon" data-category="islamic coming">
+          <div class="course-icon muted"><i class="fa-solid fa-scroll"></i></div>
+          <div class="course-level-badge coming" data-translate="Coming Soon">Coming Soon</div>
+          <h3 data-translate="Al-Hadeeth">Al-Hadeeth</h3>
+          <p data-translate="Study the sayings and teachings of the Prophet ﷺ.">Study the sayings and teachings of the Prophet ﷺ.</p>
+          <div class="card-actions">
+            <span class="btn-unavailable" data-translate="Not Available Yet">Not Available Yet</span>
+          </div>
+        </div>
+
+        <div class="course-card coming-soon" data-category="islamic coming">
+          <div class="course-icon muted"><i class="fa-solid fa-timeline"></i></div>
+          <div class="course-level-badge coming" data-translate="Coming Soon">Coming Soon</div>
+          <h3 data-translate="Seerah / Taareekh">Seerah / Taareekh</h3>
+          <p data-translate="Study Islamic history and the life of the Prophet ﷺ.">Study Islamic history and the life of the Prophet ﷺ.</p>
+          <div class="card-actions">
+            <span class="btn-unavailable" data-translate="Not Available Yet">Not Available Yet</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </main>
+
+  <!-- CTA -->
+  <section class="courses-cta">
+    <h2 data-translate="Ready to Start Learning?">Ready to Start Learning?</h2>
+    <p data-translate="Register today and join our growing community of Arabic and Islamic studies learners.">
+      Register today and join our growing community of Arabic and Islamic studies learners.
+    </p>
+    <a href="register.html" class="cta-btn pulse" data-translate="Register Now">Register Now</a>
+  </section>
 
   <!-- FOOTER -->
   <footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
 
-  <!-- FLOATING WHATSAPP -->
-  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
 
-  <!-- HAMBURGER MENU SCRIPT -->
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    
+
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
+    }
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
       const hamburger = document.querySelector('.hamburger');
-      const navLinks = document.getElementById('navLinks');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+    });
 
-      if (!hamburger || !navLinks) return;
-
-      hamburger.addEventListener('click', function (e) {
-        e.stopPropagation();
-        navLinks.classList.toggle('show');
-      });
-
-      document.addEventListener('click', function (e) {
-        if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
-          navLinks.classList.remove('show');
-        }
+    /* Filter tabs */
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.course-card').forEach(card => {
+          const cats = card.dataset.category || '';
+          card.style.display = (filter === 'all' || cats.includes(filter)) ? '' : 'none';
+        });
       });
     });
-  </script>
 
-  <!-- TRANSLATION SCRIPT -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll("[data-translate]").forEach(el => {
-        const key = el.getAttribute("data-translate");
-        // Replace only the text, leave any child icons intact
-        const textNode = Array.from(el.childNodes).find(n => n.nodeType === Node.TEXT_NODE);
-        if (textNode) textNode.textContent = t(key) + " ";
+    /* Scroll reveal */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
       });
-    });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.course-card').forEach(el => observer.observe(el));
   </script>
-
   <script src="translate.js"></script>
 </body>
 </html>

@@ -6,23 +6,29 @@
 
   <meta name="google" content="notranslate">
   <title>Register Courses - Al-Bayan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="courses.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
+
 <body>
 
   <!-- NAVIGATION -->
   <nav class="master-nav">
     <div class="nav-container">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
       </a>
+
       <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+
       <div class="nav-links" id="navLinks">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
@@ -32,66 +38,84 @@
         <a href="payment.html">Payment</a>
         <a href="schedule.html">Schedule</a>
         <a href="contact.html">Contact</a>
-    
       </div>
     </div>
   </nav>
 
-  <!-- HEADER -->
+  <!-- HEADER (MATCHED TO COURSES STYLE) -->
   <header class="courses-header" style="background-image: url('Register-now.jpg');">
-    <div class="header-overlay">
-      <h1>Register Courses</h1>
-      <p>Select courses you want to enroll in.</p>
-      <p>Ensure to select all the courses of your level completely first.</p>
+    <div class="banner-overlay"></div>
+
+    <div class="banner-content">
+      <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
+
+      <h1 data-translate="Register Courses">Register Courses</h1>
+
+      <p data-translate="Select courses you want to enroll in.">
+        Select courses you want to enroll in.
+      </p>
+
+      <p data-translate="Ensure to select all the courses of your level completely first.">
+        Ensure to select all the courses of your level completely first.
+      </p>
     </div>
   </header>
 
   <!-- COURSES -->
   <main>
     <section class="courses-section">
-      <div id="coursesContainer" class="cards-grid"></div>
+
+      <div id="coursesContainer" class="cards-grid">
+        <!-- JS will populate course cards here -->
+      </div>
+
     </section>
   </main>
 
   <!-- FOOTER -->
-  <footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
+   <footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
 
-  <!-- Floating WhatsApp Button -->
+  <!-- WHATSAPP -->
   <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
 
   <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
   <script>
     const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   </script>
 
+  <!-- MENU -->
   <script>
     function toggleMenu() {
       document.getElementById("navLinks").classList.toggle("show");
     }
-    document.addEventListener("click", function(e) {
+
+    document.addEventListener("click", function (e) {
       const menu = document.getElementById("navLinks");
       const burger = document.querySelector(".hamburger");
+
       if (!menu.contains(e.target) && !burger.contains(e.target)) {
         menu.classList.remove("show");
       }
     });
   </script>
 
- <script src="translate.js"></script>
-<script src="register-courses.js"></script>
+  <script src="translate.js"></script>
+  <script src="register-courses.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,408 @@
+/* ============================================================
+   Al-Bayan — SEMESTER ADMIN STYLES (semester-admin.css)
+   All IDs and JS-dependent classes preserved exactly
+============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+
+/* ============================================================
+   PAGE HEADER
+============================================================ */
+.page-header {
+  position: relative;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--primary-dark);
+}
+
+.page-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.50) 0%, rgba(0,50,20,0.65) 100%);
+  z-index: 1;
+}
+
+.header-overlay {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-logo {
+  width: 80px;
+  height: auto;
+  margin-bottom: 12px;
+}
+
+.header-overlay h1 {
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.header-overlay p {
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  color: #dff4f5;
+}
+
+@media (max-width: 768px) {
+  .page-header { height: 220px; }
+  .header-logo { width: 62px; }
+}
+
+
+/* ============================================================
+   LAYOUT
+============================================================ */
+.sem-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.dash-section {
+  margin-bottom: 36px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px 12px;
+  border-bottom: 2px solid var(--border-light);
+  margin-bottom: 18px;
+}
+
+.section-header h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.section-header h2 i {
+  color: var(--primary);
+}
+
+
+/* ============================================================
+   FORM CARD
+============================================================ */
+.sem-form-card {
+  padding: 24px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+
+.sem-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.sem-full {
+  grid-column: 1 / -1;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 7px;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--text-color);
+  font-size: 0.88rem;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.13);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #9ca3af;
+}
+
+.sem-form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .sem-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .sem-form-actions {
+    flex-direction: column;
+  }
+  .sem-form-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+
+/* ============================================================
+   BUTTONS
+============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: inherit;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-save {
+  background: var(--primary);
+  color: #fff;
+}
+.btn-save:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+.btn-cancel {
+  background: #dc2626;
+  color: #fff;
+}
+.btn-cancel:hover { background: #b91c1c; transform: translateY(-1px); }
+
+.btn-edit {
+  background: #fef08a;
+  color: #713f12;
+}
+.btn-edit:hover { background: #fde047; transform: translateY(-1px); }
+
+.btn-danger {
+  background: #dc2626;
+  color: #fff;
+}
+.btn-danger:hover { background: #b91c1c; }
+
+
+/* ============================================================
+   FILTERS BAR
+============================================================ */
+.filters-bar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  flex-wrap: wrap;
+}
+
+.filters-bar input,
+.filters-bar select {
+  flex: 1;
+  min-width: 180px;
+  padding: 9px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: var(--surface-color);
+  color: var(--text-color);
+  font-size: 0.88rem;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.filters-bar input:focus,
+.filters-bar select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+}
+
+@media (max-width: 640px) {
+  .filters-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .filters-bar input,
+  .filters-bar select {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+
+/* ============================================================
+   ENTRY CARDS (JS-rendered — keep class names)
+============================================================ */
+.entry-card {
+  background: var(--card-color);
+  border: 1px solid var(--border-light);
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.entry-card:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.entry-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.entry-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.entry-card h3 {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 6px;
+}
+
+.entry-card p {
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.entry-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.entry-actions .btn {
+  padding: 6px 13px;
+  font-size: 0.82rem;
+}
+
+/* Type badge on entry cards */
+.entry-type-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+.entry-type-badge.course_outline {
+  background: #dbeafe;
+  color: #1dd82d;
+}
+
+
+/* ============================================================
+   UNREAD BADGE (nav)
+============================================================ */
+.unread-badge {
+  background: #dc2626;
+  color: #fff;
+  font-size: 0.7rem;
+  border-radius: 50%;
+  padding: 1px 5px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+
+/* ============================================================
+   UNDO TOAST
+============================================================ */
+.undo-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #1f2937;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 9999999;
+}
+
+.undo-toast button {
+  background: #fff;
+  color: #1f2937;
+  border: none;
+  padding: 4px 12px;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.undo-toast button:hover {
+  background: var(--primary-light);
+}

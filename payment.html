@@ -3,305 +3,473 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Payment - Al-Bayan Arabic Institute</title>
+  <title>Payment - Al-Bayan Arabic Institute Online</title>
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="payment.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
   <!-- NAVIGATION -->
   <nav class="master-nav">
     <div class="nav-container">
-      <a href="payment.html" class="logo">
-        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
       </a>
       <div class="hamburger">&#9776;</div>
       <div class="nav-links" id="navLinks">
-        <a href="payment.html" class="active page-indicator">Payment</a>
-        <a href="register.html">Register</a>
-        <a href="contact.html">Contact</a>
-        <!--a href="index.html">Home</a>
+        <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="courses.html">Courses</a>
         <a href="register.html">Register</a>
         <a href="students-dashboard.html">Dashboard</a>
         <a href="payment.html" class="active page-indicator">Payment</a>
-        <a href="schedule.html">Schedule</a>
-        <a href="contact.html">Contact</a-->
+        
+        <a href="contact.html">Contact</a>
       </div>
     </div>
   </nav>
 
-  <!-- HEADER -->
-  <header class="payment-header" style="background-image: url('background-payment.jpg');">
-    <div class="header-overlay">
+  <!-- COPY TOAST -->
+  <div id="copy-toast">
+    <i class="fa-solid fa-check"></i>
+    <span data-translate="Copied to clipboard">Copied to clipboard</span>
+  </div>
+
+  <!-- ================================================
+       PAGE BANNER
+  ================================================ -->
+  <header class="page-banner" style="background-image: url('background-payment.jpg');">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
       <img src="logo.png" alt="Al-Bayan Logo" class="header-logo">
-      <h1>Make a Payment</h1>
-      <p>Securely pay for your courses and track your payment history</p>
+      <p class="banner-eyebrow" data-translate="Secure & Easy">Secure &amp; Easy</p>
+      <h1 data-translate="Make a Payment">Make a Payment</h1>
+      <p data-translate="Pay for your courses securely and upload your receipt for confirmation.">
+        Pay for your courses securely and upload your receipt for confirmation.
+      </p>
     </div>
   </header>
 
-  <!-- Toast for copy notification -->
-  <div id="copy-toast">Copied to clipboard</div>
-
-  <!-- ================= PAYMENT METHODS ================= -->
-  <section class="payment-details">
-
-    <div class="register-form">
-      <p class="register-note">Make your payment and ensure to fill the form bellow with payment details.</p>
+  <!-- ================================================
+       HOW TO PAY — STEPS STRIP
+  ================================================ -->
+  <div class="how-strip">
+    <div class="how-step">
+      <div class="how-num">1</div>
+      <span data-translate="Choose a payment method below">Choose a payment method below</span>
     </div>
+    <i class="fa-solid fa-chevron-right how-arrow"></i>
+    <div class="how-step">
+      <div class="how-num">2</div>
+      <span data-translate="Send payment using your name as narration">Send payment using your name as narration</span>
+    </div>
+    <i class="fa-solid fa-chevron-right how-arrow"></i>
+    <div class="how-step">
+      <div class="how-num">3</div>
+      <span data-translate="Fill the form below and upload your receipt">Fill the form below and upload your receipt</span>
+    </div>
+  </div>
+
+  <!-- ================================================
+       PAYMENT METHOD CARDS
+  ================================================ -->
+  <section class="payment-details">
 
     <!-- Polaris Bank -->
     <div class="payment-card">
       <div class="payment-card-header">
-        <img src="polaris.png" alt="Polaris Bank Logo">
-        <span>Polaris Bank Transfer</span>
+        <div class="bank-icon sterling">
+          <img src="polaris.png" alt="Polaris Bank">
+        </div>
+        <div>
+          <span class="bank-name" data-translate="Polaris Bank">Polaris Bank</span>
+          <span class="bank-type" data-translate="Bank Transfer">Bank Transfer</span>
+        </div>
       </div>
       <div class="payment-detail">
-        <span>Account Name</span>
-        <span>Omodadi Mustafa</span>
-        <i class="fa-solid fa-copy copy-icon" onclick="copyText('Omodadi Mustafa')"></i>
+        <span class="detail-label" data-translate="Account Name">Account Name</span>
+        <span class="detail-value">Omodadi Mustafa</span>
+        <i class="fa-solid fa-copy copy-icon" onclick="copyText('Omodadi Mustafa')" title="Copy"></i>
       </div>
       <div class="payment-detail">
-        <span>Account Number</span>
-        <span>3082691844</span>
-        <i class="fa-solid fa-copy copy-icon" onclick="copyText('3082691844')"></i>
+        <span class="detail-label" data-translate="Account Number">Account Number</span>
+        <span class="detail-value">3082691844</span>
+        <i class="fa-solid fa-copy copy-icon" onclick="copyText('3082691844')" title="Copy"></i>
       </div>
       <div class="payment-detail">
-        <span>Bank</span>
-        <span>Polaris Bank</span>
-        <i class="fa-solid fa-copy copy-icon" onclick="copyText('Polaris Bank')"></i>
+        <span class="detail-label" data-translate="Bank">Bank</span>
+        <span class="detail-value">Polaris Bank</span>
+        <i class="fa-solid fa-copy copy-icon" onclick="copyText('Polaris Bank')" title="Copy"></i>
       </div>
-      <p class="payment-note">Use your full name as payment narration.</p>
+      <p class="payment-note">
+        <i class="fa-solid fa-circle-info"></i>
+        <span data-translate="Use your full name as payment narration.">Use your full name and email as payment narration.</span>
+      </p>
     </div>
 
     <!-- GTBank -->
     <div class="payment-card">
       <div class="payment-card-header">
-        <img src="gtbank.png" alt="GTBank Logo">
-        <span>GTBank Transfer</span>
+        <div class="bank-icon gtbank">
+          <img src="gtbank.png" alt="GTBank">
+        </div>
+        <div>
+          <span class="bank-name">GTBank</span>
+          <span class="bank-type" data-translate="Bank Transfer">Bank Transfer</span>
+        </div>
       </div>
       <div class="payment-detail">
-        <span>Account Name</span>
-        <span>Omodadi Mustafa</span>
-        <i class="fa-solid fa-copy copy-icon" onclick="copyText('Omodadi Mustafa')"></i>
+        <span class="detail-label" data-translate="Account Name">Account Name</span>
+        <span class="detail-value">Omodadi Mustafa</span>
+        <i class="fa-solid fa-copy copy-icon" onclick="copyText('Omodadi Mustafa)" title="Copy"></i>
       </div>
       <div class="payment-detail">
-        <span>Account Number</span>
-        <span>0843461081</span>
-        <i class="fa-solid fa-copy copy-icon" onclick="copyText('0843461081')"></i>
+        <span class="detail-label" data-translate="Account Number">Account Number</span>
+        <span class="detail-value">0843461081</span>
+        <i class="fa-solid fa-copy copy-icon" onclick="copyText('0843461081')" title="Copy"></i>
       </div>
       <div class="payment-detail">
-        <span>Bank</span>
-        <span>GTBank</span>
-        <i class="fa-solid fa-copy copy-icon" onclick="copyText('GTBank')"></i>
+        <span class="detail-label" data-translate="Bank">Bank</span>
+        <span class="detail-value">GTBank</span>
+        <i class="fa-solid fa-copy copy-icon" onclick="copyText('GTBank')" title="Copy"></i>
       </div>
-      <p class="payment-note">After payment, keep your receipt for confirmation.</p>
+      <p class="payment-note">
+        <i class="fa-solid fa-circle-info"></i>
+        <span data-translate="After payment, keep your receipt for confirmation.">After payment, keep your receipt for confirmation.</span>
+      </p>
     </div>
 
-    <!-- Opay Bank -->
+    <!-- Opay -->
     <div class="payment-card">
       <div class="payment-card-header">
-        <img src="opay.png" alt="Opay Bank Logo">
-        <span>Opay Bank Transfer</span>
+        <div class="bank-icon opay">
+          <img src="opay.png" alt="Opay">
+        </div>
+        <div>
+          <span class="bank-name">Opay</span>
+          <span class="bank-type" data-translate="Bank Transfer">Bank Transfer</span>
+        </div>
       </div>
       <div class="payment-detail">
-        <span>Account Name</span>
-        <span>Omodadi Mustafa</span>
-        <i class="fa-solid fa-copy copy-icon" onclick="copyText('Omodadi Mustafa')"></i>
+        <span class="detail-label" data-translate="Account Name">Account Name</span>
+        <span class="detail-value">Omodadi Mustafa</span>
+        <i class="fa-solid fa-copy copy-icon" onclick="copyText('Omodadi Mustafa')" title="Copy"></i>
+      </div>
+      <div class="payment-detail">
+        <span class="detail-label" data-translate="Account Number">Account Number</span>
+        <span class="detail-value">9160277952</span>
+        <i class="fa-solid fa-copy copy-icon" onclick="copyText('9160277952')" title="Copy"></i>
+      </div>
+      <div class="payment-detail">
+        <span class="detail-label" data-translate="Bank">Bank</span>
+        <span class="detail-value">Opay</span>
+        <i class="fa-solid fa-copy copy-icon" onclick="copyText('Opay')" title="Copy"></i>
+      </div>
+      <p class="payment-note">
+        <i class="fa-solid fa-circle-info"></i>
+        <span data-translate="After payment, keep your receipt for confirmation.">After payment, keep your receipt for confirmation.</span>
+      </p>
     </div>
 
-      <div class="payment-detail">
-        <span>Account Number</span>
-        <span>9160277952</span>
-        <i class="fa-solid fa-copy copy-icon" onclick="copyText('9160277952')"></i>
+    <!-- EUR — Clear Junction -->
+    <!-- div class="payment-card intl-card">
+      <div class="payment-card-header">
+        <div class="bank-icon intl">
+          <img src="limited.png" alt="Clear Junction">
+        </div>
+        <div>
+          <span class="bank-name">Grey EUR Account</span>
+          <span class="bank-type">Clear Junction Limited</span>
+        </div>
       </div>
       <div class="payment-detail">
-        <span>Bank</span>
-        <span>Opay Bank</span>
-        <i class="fa-solid fa-copy copy-icon" onclick="copyText('Opay Bank')"></i>
+        <span class="detail-label" data-translate="Account Name">Account Name</span>
+        <span class="detail-value">Mauzu Hassan</span>
+        <i class="fa-solid fa-copy copy-icon" onclick="copyText('Mauzu Hassan')" title="Copy"></i>
       </div>
-      <p class="payment-note">After payment, keep your receipt for confirmation.</p>
-    </div>
-    
-     
+      <div class="payment-detail">
+        <span class="detail-label" data-translate="Account Number">Account Number</span>
+        <span class="detail-value">69310930</span>
+        <i class="fa-solid fa-copy copy-icon" onclick="copyText('69310930')" title="Copy"></i>
+      </div>
+      <div class="payment-detail">
+        <span class="detail-label" data-translate="Bank">Bank</span>
+        <span class="detail-value">Clear Junction Limited</span>
+        <i class="fa-solid fa-copy copy-icon" onclick="copyText('Clear Junction Limited')" title="Copy"></i>
+      </div>
+      <div class="payment-warning">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span data-translate="For international (foreign currency) payments only.">For international (foreign currency) payments only.</span>
+      </div>
+    </div -->
 
-    <!-- Selar Online Payment -->
+    <!-- USD — nbkc Bank -->
+    <!-- div class="payment-card intl-card">
+      <div class="payment-card-header">
+        <div class="bank-icon intl">
+          <img src="usd.png" alt="nbkc Bank">
+        </div>
+        <div>
+          <span class="bank-name">Grey USD Account</span>
+          <span class="bank-type">nbkc Bank</span>
+        </div>
+      </div>
+      <div class="payment-detail">
+        <span class="detail-label" data-translate="Account Name">Account Name</span>
+        <span class="detail-value">Mauzu Hassan</span>
+        <i class="fa-solid fa-copy copy-icon" onclick="copyText('Mauzu Hassan')" title="Copy"></i>
+      </div>
+      <div class="payment-detail">
+        <span class="detail-label" data-translate="Account Number">Account Number</span>
+        <span class="detail-value">218977608939</span>
+        <i class="fa-solid fa-copy copy-icon" onclick="copyText('218977608939')" title="Copy"></i>
+      </div>
+      <div class="payment-detail">
+        <span class="detail-label" data-translate="Bank">Bank</span>
+        <span class="detail-value">nbkc Bank</span>
+        <i class="fa-solid fa-copy copy-icon" onclick="copyText('nbkc Bank')" title="Copy"></i>
+      </div>
+      <div class="payment-warning">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span data-translate="For international (foreign currency) payments only.">For international (foreign currency) payments only.</span>
+      </div>
+    </div -->
+
+    <!-- Selar Online -->
     <div class="payment-card selar-card">
       <div class="payment-card-header">
-        <img src="selar.png" alt="Selar Logo" class="selar-logo">
-        <span>Pay Online via Selar</span>
+        <div class="bank-icon selar">
+          <img src="selar.png" alt="Selar">
+        </div>
+        <div>
+          <span class="bank-name" data-translate="Pay Online">Pay Online</span>
+          <span class="bank-type">Selar</span>
+        </div>
       </div>
-      <div class="payment-detail">
-        <span>Secure Online Payment</span>
-        <span>Click the button below to pay</span>
-      </div>
-      <button type="button" class="selar-btn">Pay with Selar</button>
-      <p class="payment-note">After payment, keep your receipt for confirmation.</p>
+      <p class="selar-desc" data-translate="Click below to pay securely via Selar's online payment platform.">
+        Click below to pay securely via Selar's online payment platform.
+      </p>
+      <button type="button" class="selar-btn" data-translate="Pay with Selar">Pay with Selar</button>
+      <p class="payment-note">
+        <i class="fa-solid fa-circle-info"></i>
+        <span data-translate="After payment, keep your receipt for confirmation.">After payment, keep your receipt for confirmation.</span>
+      </p>
     </div>
+
   </section>
 
-  <!-- ================= PAYMENT FORM ================= -->
+  <!-- ================================================
+       RECEIPT UPLOAD FORM
+  ================================================ -->
   <section class="payment-form-section">
-    <form class="payment-form">
-      <h2>Please upload your payment receipt here for confirmation.</h2>
-
-      <div class="form-group">
-        <label for="student-name">Full Name</label>
-        <input type="text" id="student-name" required>
-      </div>
-
-      <div class="form-group">
-        <label for="student-email">Email</label>
-        <input type="text" id="student-email" required>
-      </div>
-      
-      <div class="form-group">
-  <label for="country">Country</label>
-  <input type="text" id="country">
-</div>
-
-      <div class="form-group" id="planTypeGroup">
-  <label for="plan-type">Plan Type</label>
-
-  <select id="plan-type">
-    <option value="">Select Plan</option>
-    <option value="general">General</option>
-    <option value="private">Premium</option>
-  </select>
-</div>
-
-      <div class="form-group">
-        <label for="level-arabic">Select Level</label>
-        <select id="level-arabic" required>
-          <option value="">-- Choose Level --</option>
-          <option>Can read the Qur'an only</option>
-          <option>Beginner</option>
-          <option>Intermediate</option>
-          <option>Advanced</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="payment-method">Payment Method (Bank Sent to)</label>
-        <input type="text" id="payment-method" required>
-      </div>
-
-      <div class="form-group">
-        <label for="amount">Amount</label>
-        <input type="number" id="amount" required>
-      </div>
-      
-      <div class="form-group">
-  <label for="currency">Currency</label>
-  <select id="currency" required>
-    <option value="NGN">₦ NGN - Nigerian Naira</option>
-
-<option value="USD">$ USD - US Dollar</option>
-<option value="EUR">€ EUR - Euro</option>
-<option value="GBP">£ GBP - British Pound</option>
-
-<option value="GHS">₵ GHS - Ghanaian Cedi</option>
-<option value="XOF">CFA XOF - West African CFA Franc</option>
-<option value="XAF">CFA XAF - Central African CFA Franc</option>
-<option value="ZAR">R ZAR - South African Rand</option>
-<option value="KES">KSh KES - Kenyan Shilling</option>
-
-<option value="EGP">£ EGP - Egyptian Pound</option>
-<option value="MAD">MAD - Moroccan Dirham</option>
-<option value="DZD">DZD - Algerian Dinar</option>
-<option value="TND">TND - Tunisian Dinar</option>
-
-<option value="UGX">UGX - Ugandan Shilling</option>
-<option value="TZS">TZS - Tanzanian Shilling</option>
-<option value="RWF">RWF - Rwandan Franc</option>
-
-<option value="CAD">$ CAD - Canadian Dollar</option>
-<option value="AUD">$ AUD - Australian Dollar</option>
-<option value="NZD">$ NZD - New Zealand Dollar</option>
-
-<option value="JPY">¥ JPY - Japanese Yen</option>
-<option value="CNY">¥ CNY - Chinese Yuan</option>
-<option value="INR">₹ INR - Indian Rupee</option>
-
-<option value="CHF">CHF - Swiss Franc</option>
-<option value="SEK">kr SEK - Swedish Krona</option>
-<option value="NOK">kr NOK - Norwegian Krone</option>
-<option value="DKK">kr DKK - Danish Krone</option>
-
-<option value="AED">د.إ AED - UAE Dirham</option>
-<option value="SAR">﷼ SAR - Saudi Riyal</option>
-<option value="QAR">﷼ QAR - Qatari Riyal</option>
-<option value="KWD">د.ك KWD - Kuwaiti Dinar</option>
-<option value="BHD">د.ب BHD - Bahraini Dinar</option>
-
-<option value="SGD">$ SGD - Singapore Dollar</option>
-<option value="HKD">$ HKD - Hong Kong Dollar</option>
-  </select>
-</div>
-
+    <div class="form-header-banner">
+      <i class="fa-solid fa-receipt"></i>
       <div>
-        <label>Date</label>
-        <input type="date" id="payment-date">
+        <h2 data-translate="Upload Payment Receipt">Upload Payment Receipt</h2>
+        <p data-translate="Fill in your details and attach your payment receipt below.">
+          Fill in your details and attach your payment receipt below.
+        </p>
+      </div>
+    </div>
+
+    <form class="payment-form" id="paymentForm">
+
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label for="student-name" data-translate="Full Name">Full Name</label>
+          <input type="text" id="student-name" placeholder="Your full name"
+                 data-translate-placeholder="Your full name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="student-email" data-translate="Email Address">Email Address</label>
+          <input type="email" id="student-email" placeholder="your@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="country" data-translate="Country">Country</label>
+          <input type="text" id="country" placeholder="Your country"
+                 data-translate-placeholder="Your country">
+        </div>
+
+        <div class="form-group">
+          <label for="plan-type" data-translate="Plan Type">Plan Type</label>
+          <select id="plan-type">
+            <option value="" data-translate="Select Plan">Select Plan</option>
+            <option value="general" data-translate="General">General</option>
+            <option value="private" data-translate="Premium">Premium</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="level-arabic" data-translate="Level">Level</label>
+          <select id="level-arabic" required>
+            <option value="" data-translate="Choose Level">-- Choose Level --</option>
+            <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+            <option value="Beginner" data-translate="Beginner">Beginner</option>
+            <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+            <option value="Advanced" data-translate="Advanced">Advanced</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="payment-method" data-translate="Payment Method (Bank)">Payment Method (Bank)</label>
+          <input type="text" id="payment-method"
+                 placeholder="e.g. GTBank"
+                 data-translate-placeholder="e.g. GTBank" required>
+        </div>
+
+        <div class="form-group">
+          <label for="amount" data-translate="Amount Paid">Amount Paid</label>
+          <input type="number" id="amount" placeholder="0.00"
+                 data-translate-placeholder="0.00" required>
+        </div>
+
+        <div class="form-group">
+          <label for="currency" data-translate="Currency">Currency</label>
+          <select id="currency" required>
+            <option value="NGN">₦ NGN - Nigerian Naira</option>
+            <option value="USD">$ USD - US Dollar</option>
+            <option value="EUR">€ EUR - Euro</option>
+            <option value="GBP">£ GBP - British Pound</option>
+            <option value="GHS">₵ GHS - Ghanaian Cedi</option>
+            <option value="XOF">CFA XOF - West African CFA Franc</option>
+            <option value="XAF">CFA XAF - Central African CFA Franc</option>
+            <option value="ZAR">R ZAR - South African Rand</option>
+            <option value="KES">KSh KES - Kenyan Shilling</option>
+            <option value="EGP">£ EGP - Egyptian Pound</option>
+            <option value="MAD">MAD - Moroccan Dirham</option>
+            <option value="DZD">DZD - Algerian Dinar</option>
+            <option value="TND">TND - Tunisian Dinar</option>
+            <option value="UGX">UGX - Ugandan Shilling</option>
+            <option value="TZS">TZS - Tanzanian Shilling</option>
+            <option value="RWF">RWF - Rwandan Franc</option>
+            <option value="CAD">$ CAD - Canadian Dollar</option>
+            <option value="AUD">$ AUD - Australian Dollar</option>
+            <option value="NZD">$ NZD - New Zealand Dollar</option>
+            <option value="JPY">¥ JPY - Japanese Yen</option>
+            <option value="CNY">¥ CNY - Chinese Yuan</option>
+            <option value="INR">₹ INR - Indian Rupee</option>
+            <option value="CHF">CHF - Swiss Franc</option>
+            <option value="SEK">kr SEK - Swedish Krona</option>
+            <option value="NOK">kr NOK - Norwegian Krone</option>
+            <option value="DKK">kr DKK - Danish Krone</option>
+            <option value="AED">د.إ AED - UAE Dirham</option>
+            <option value="SAR">﷼ SAR - Saudi Riyal</option>
+            <option value="QAR">﷼ QAR - Qatari Riyal</option>
+            <option value="KWD">د.ك KWD - Kuwaiti Dinar</option>
+            <option value="BHD">د.ب BHD - Bahraini Dinar</option>
+            <option value="SGD">$ SGD - Singapore Dollar</option>
+            <option value="HKD">$ HKD - Hong Kong Dollar</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="payment-date" data-translate="Payment Date">Payment Date</label>
+          <input type="date" id="payment-date">
+        </div>
+
+        <div class="form-group">
+          <label for="month" data-translate="Payment Month">Payment Month</label>
+          <select id="month" required>
+            <option value="" data-translate="Select Month">Select Month</option>
+            <option value="January" data-translate="January">January</option>
+            <option value="February" data-translate="February">February</option>
+            <option value="March" data-translate="March">March</option>
+            <option value="April" data-translate="April">April</option>
+            <option value="May" data-translate="May">May</option>
+            <option value="June" data-translate="June">June</option>
+            <option value="July" data-translate="July">July</option>
+            <option value="August" data-translate="August">August</option>
+            <option value="September" data-translate="September">September</option>
+            <option value="October" data-translate="October">October</option>
+            <option value="November" data-translate="November">November</option>
+            <option value="December" data-translate="December">December</option>
+          </select>
+        </div>
+
+        <div class="form-group full">
+          <label for="receipt" data-translate="Upload Receipt">Upload Receipt</label>
+          <label for="receipt" class="receipt-upload-label">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span id="receipt-label-text" data-translate="Click to choose receipt image">Click to choose receipt image</span>
+          </label>
+          <input type="file" id="receipt" accept="image/*" style="display:none;">
+        </div>
+
       </div>
 
+      <button type="submit" class="submit-btn">
+        <i class="fa-solid fa-paper-plane"></i>
+        <span data-translate="Submit Payment">Submit Payment</span>
+      </button>
 
-      <div class="form-group">
-        <label for="payment-month">Select Month</label>
-        <select id="month" required>
-  <option value="">Select Month</option>
-  <option value="January">January</option>
-  <option value="February">February</option>
-  <option value="March">March</option>
-  <option value="April">April</option>
-  <option value="May">May</option>
-  <option value="June">June</option>
-  <option value="July">July</option>
-  <option value="August">August</option>
-  <option value="September">September</option>
-  <option value="October">October</option>
-  <option value="November">November</option>
-  <option value="December">December</option>
-</select>
-      </div>
-      
-      <div class="form-group">
-  <label for="receipt">Upload Receipt</label>
-  <input type="file" id="receipt" accept="image/*">
-</div>
+      <p class="success-msg" id="success-msg" style="display:none;"></p>
+      <p class="error-msg"   id="error-msg"   style="display:none;"></p>
 
-      <div class="form-group">
-        <button type="submit" class="submit-btn">Send <span class="arrow">➔</span></button>
-      </div>
-
-      <p class="success-msg">Payment submitted successfully!</p>
-      <p class="error-msg">Please fill all fields correctly.</p>
     </form>
   </section>
 
   <!-- FOOTER -->
   <footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
 
-  <!-- FLOATING WHATSAPP -->
-  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
 
-  <!-- ================= SCRIPTS ================= -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    
+
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
+    }
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+    });
+
+    /* Copy to clipboard */
+    function copyText(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const toast = document.getElementById('copy-toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+      });
+    }
+
+    /* Receipt file label update */
+    document.getElementById('receipt').addEventListener('change', function () {
+      const label = document.getElementById('receipt-label-text');
+      label.textContent = this.files[0] ? this.files[0].name : 'Click to choose receipt image';
+    });
+
+    /* Scroll reveal */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.payment-card').forEach(el => observer.observe(el));
+  </script>
   <script src="payment.js" defer></script>
   <script src="translate.js"></script>
 </body>

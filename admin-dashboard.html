@@ -3,738 +3,1359 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Admin Dashboard | Al-Bayan Arabic Institute</title>
-
-  <!-- MASTER STYLES -->
+  <title>Admin Dashboard | Al-Bayan Arabic Institute Online</title>
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="admin-dashboard.css">
+  <link rel="stylesheet" href="course-pages.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
   <!-- NAVIGATION -->
   <nav class="master-nav">
     <div class="nav-container">
       <a href="admin-dashboard.html" class="logo">
-        <img src="logo.png" alt="Logo"> Al-Bayan
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
       </a>
-      <button id="sendWelcomeEmails" class="btn btn-email">
-  Send Welcome Emails
-</button>
-      <button class="btn btn-undo" onclick="undoDelete()" title="Undo">
-  <i class="fas fa-undo"></i>
-</button>
-      <div class="hamburger">☰</div>
+
+      <div class="nav-admin-actions">
+        <button id="sendWelcomeEmails" class="btn btn-email" title="Send Welcome Emails">
+          <i class="fa-solid fa-envelope"></i>
+          <span class="btn-label">Welcome Emails</span>
+        </button>
+        <button class="btn btn-undo" onclick="undoDelete()" title="Undo Last Delete">
+          <i class="fa-solid fa-rotate-left"></i>
+        </button>
+      </div>
+
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+
       <div class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="courses.html">Courses</a>
-        <a href="register.html">Register</a>
-        <a href="students-dashboard.html">Student Dashboard</a>
-        <a href="admin-dashboard.html" class="active">Admin Dashboard</a>
-        <a href="admin-inbox.html">Emails<span id="unreadCounter" style="background: red; color: white; font-size: 0.75rem; border-radius: 50%; padding: 2px 6px; margin-left: 4px;">0</span>
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Student Dashboard">Student Dashboard</a>
+        <a href="admin-dashboard.html" class="active" data-translate="Admin Dashboard">Admin Dashboard</a>
+        <a href="staff-management.html" data-translate="Staff Management">Staff Management</a>
+        <a href="admin-inbox.html">
+  <span data-translate="Emails">Emails</span>
+  <span id="unreadCounter" class="unread-badge">0</span>
 </a>
-        <a href="semester-admin.html">Semester Work</a>
-        <a href="payment.html">Payments</a>
-        <a href="schedule.html">Schedule</a>
-        <a href="contact.html">Contact</a>
-        <button id="logoutBtn" class="logout-btn">Logout</button>
+        <a href="semester-admin.html" data-translate="Semester Work">Semester Work</a>
+        <a href="payment.html" data-translate="Payments">Payments</a>
+        <a href="schedule.html" data-translate="Schedule">Schedule</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+        <button id="logoutBtn" class="logout-btn">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span data-translate="Logout">Logout</span>
+        </button>
       </div>
     </div>
   </nav>
 
-  <!-- HEADER -->
-  <header class="home-header">
-
-  <video class="hero-video" autoplay muted loop playsinline>
-    <source src="background.mp4" type="video/mp4">
-  </video>
-
-  <div class="header-overlay">
-    <img src="logo.png" class="header-logo">
-    <h1>Admin Dashboard</h1>
-    <h3 id="dashboardGreeting"></h3>
-    <p>Manage Students, Payments, Grades & Schedule</p>
+  <!-- ================================================
+       HERO HEADER
+  ================================================ -->
+  <header class="admin-hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="background.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
+      <h1 data-translate="Admin Dashboard">Admin Dashboard</h1>
+      <h3 id="dashboardGreeting" class="greeting"></h3>
+      <p data-translate="Manage Students, Payments, Grades & Schedule">
+        Manage Students, Payments, Grades &amp; Schedule
+      </p>
     </div>
   </header>
 
-  <!-- STATS -->
+  <!-- ================================================
+       STATS STRIP
+  ================================================ -->
   <section class="stats">
-  <div class="stat-card">
-    <h3 id="totalStudents" data-no-translate="true">0</h3>
-    <p>Students</p>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+      <div class="stat-info">
+        <h3 id="totalStudents" data-no-translate="true">0</h3>
+        <p data-translate="Students">Students</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon payments"><i class="fa-solid fa-money-bill-wave"></i></div>
+      <div class="stat-info">
+        <h3 id="totalPayments" data-no-translate="true">0</h3>
+        <p data-translate="Payments">Payments</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon amount"><i class="fa-solid fa-naira-sign"></i></div>
+      <div class="stat-info">
+        <h3 id="totalAmountPaid" data-no-translate="true">₦0</h3>
+        <p data-translate="Amount Paid">Amount Paid</p>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+  <!-- ================================================
+       DASHBOARD TAB BAR
+  ================================================ -->
+  <div class="dash-tab-bar" id="dashTabBar">
+    <button class="dash-tab active" data-tab="tab-profile" onclick="switchDashTab('tab-profile', this)">
+      <i class="fa-solid fa-user-circle"></i>
+      <span data-translate="My Profile">My Profile</span>
+    </button>
+    <button class="dash-tab" data-tab="tab-mypayments" onclick="switchDashTab('tab-mypayments', this)">
+  <i class="fa-solid fa-money-bill-wave"></i>
+  <span data-translate="My Payments">My Payments</span>
+</button>
+    <button class="dash-tab" data-tab="tab-students" onclick="switchDashTab('tab-students', this)">
+      <i class="fa-solid fa-users"></i>
+      <span data-translate="Students">Students</span>
+    </button>
+    <button class="dash-tab" data-tab="tab-payments" onclick="switchDashTab('tab-payments', this)">
+      <i class="fa-solid fa-money-bill-wave"></i>
+      <span data-translate="Payments">Payments</span>
+    </button>
+    <button class="dash-tab" data-tab="tab-fees" onclick="switchDashTab('tab-fees', this)">
+      <i class="fa-solid fa-credit-card"></i>
+      <span data-translate="Fees">Fees</span>
+    </button>
+    <button class="dash-tab" data-tab="tab-grades" onclick="switchDashTab('tab-grades', this)">
+      <i class="fa-solid fa-chart-bar"></i>
+      <span data-translate="Grades">Grades</span>
+    </button>
+    <button class="dash-tab" data-tab="tab-schedule" onclick="switchDashTab('tab-schedule', this)">
+      <i class="fa-solid fa-calendar-days"></i>
+      <span data-translate="Schedule">Schedule</span>
+    </button>
+    <button class="dash-tab" data-tab="tab-assessments" onclick="switchDashTab('tab-assessments', this)">
+      <i class="fa-solid fa-file-pen"></i>
+      <span data-translate="Assessments">Assessments</span>
+    </button>
+    <button class="dash-tab" data-tab="tab-courses" onclick="switchDashTab('tab-courses', this)">
+      <i class="fa-solid fa-book-open"></i>
+      <span data-translate="Courses">Courses</span>
+    </button>
+    <button class="dash-tab" data-tab="tab-certificates" onclick="switchDashTab('tab-certificates', this)">
+      <i class="fa-solid fa-certificate"></i>
+      <span data-translate="Certificates">Certificates</span>
+    </button>
+    <button class="dash-tab" data-tab="tab-passwords" onclick="switchDashTab('tab-passwords', this)">
+      <i class="fa-solid fa-lock"></i>
+      <span data-translate="Passwords">Passwords</span>
+    </button>
+    <button class="dash-tab" data-tab="tab-attendance" onclick="switchDashTab('tab-attendance', this)">
+      <i class="fa-solid fa-clipboard-user"></i>
+      <span data-translate="Attendance">Attendance</span>
+    </button>
+    <button class="dash-tab" data-tab="tab-deleted" onclick="switchDashTab('tab-deleted', this)">
+      <i class="fa-solid fa-trash"></i>
+      <span data-translate="Deleted">Deleted</span>
+    </button>
   </div>
 
-  <div class="stat-card">
-    <h3 id="totalPayments" data-no-translate="true">0</h3>
-    <p>Payments</p>
-  </div>
+  <!-- ================================================
+       MY PROFILE SECTION (tab-profile)
+  ================================================ -->
+  <div class="dash-tab-panel" id="tab-profile">
+    <section class="dash-section">
+      <div class="admin-profile-card">
+        <div class="admin-photo-wrap">
+          <img id="adminProfilePhoto" src="passport-placeholder.png" alt="Profile Photo" class="admin-photo-large">
+          <span id="adminRoleTag" class="badge admin-role-badge"></span>
+        </div>
+        <div class="admin-profile-meta">
+          <h2 id="adminProfileName" data-no-translate="true">—</h2>
+          <p id="adminProfileTypeDept" class="text-muted"></p>
+        </div>
+      </div>
 
-  <div class="stat-card">
-    <h3 id="totalAmountPaid" data-no-translate="true">₦0</h3>
-    <p>Amount Paid</p>
-  </div>
-</section>
+      <div class="card" style="max-width:700px; margin: 24px auto 0; padding: 24px 20px;">
+        <h3 class="profile-section-title">
+          <i class="fa-solid fa-user-pen"></i>
+          <span data-translate="Edit My Profile">Edit My Profile</span>
+        </h3>
+        <div class="modal-grid">
+          <label data-translate="Full Name">Full Name</label>
+          <input type="text" id="adminFullName" placeholder="Full Name"
+                 data-translate-placeholder="Full Name">
 
-  <!-- STUDENTS SECTION -->
-  <section>
+          <label data-translate="Email">Email</label>
+          <input type="email" id="adminEmail" placeholder="Email Address"
+                 data-translate-placeholder="Email Address" disabled>
+
+          <label data-translate="Phone">Phone</label>
+          <input type="text" id="adminPhone" placeholder="Phone Number"
+                 data-translate-placeholder="Phone Number">
+
+          <label data-translate="Department">Department</label>
+          <select id="adminDepartment">
+            <option value="">-- Select --</option>
+            <option value="teaching" data-translate="Teaching">Teaching</option>
+            <option value="admin" data-translate="Admin">Admin</option>
+            <option value="finance" data-translate="Finance">Finance</option>
+            <option value="it" data-translate="IT">IT</option>
+          </select>
+
+          <label data-translate="Passport Photo">Passport Photo</label>
+          <input type="file" id="adminPassportFile" accept="image/*">
+        </div>
+
+        <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+          <button id="saveAdminProfileBtn" class="btn btn-save" onclick="saveAdminProfile()">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span data-translate="Save Profile">Save Profile</span>
+          </button>
+        </div>
+
+        <hr style="margin: 24px 0; border-color: var(--border-light);">
+
+        <h3 class="profile-section-title">
+          <i class="fa-solid fa-lock"></i>
+          <span data-translate="Change My Password">Change My Password</span>
+        </h3>
+        <div class="modal-grid">
+          <label data-translate="Current Password">Current Password</label>
+          <div class="input-group">
+            <input id="adminOldPassword" type="password"
+                   placeholder="Enter current password"
+                   data-translate-placeholder="Enter current password">
+            <button type="button" class="toggle-btn" onclick="togglePassword('adminOldPassword')">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+
+          <label data-translate="New Password">New Password</label>
+          <div class="input-group">
+            <input id="adminNewPassword" type="password"
+                   placeholder="Enter new password"
+                   data-translate-placeholder="Enter new password">
+            <button type="button" class="toggle-btn" onclick="togglePassword('adminNewPassword')">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div style="margin-top:16px; display:flex; justify-content:flex-end;">
+          <button class="btn btn-save" onclick="changeMyPassword()">
+            <i class="fa-solid fa-check"></i>
+            <span data-translate="Update Password">Update Password</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <!-- ================================================
+     MY PAYMENTS SECTION (tab-mypayments)
+================================================ -->
+<div class="dash-tab-panel" id="tab-mypayments" style="display:none;">
+  <section class="dash-section">
     <div class="section-header">
-      <h2>Students</h2>
-      <input type="text" id="searchStudents" class="search-input" placeholder="🔍 Search Students...">
-      <button class="add-btn" onclick="openModal('studentModal')">+ Add Student</button>
+      <h2 data-translate="My Salary Payments">My Salary Payments</h2>
+    </div>
+
+    <!-- Summary strip -->
+    <div class="payment-summary-strip">
+      <div class="pay-summary-card">
+        <span id="adminPaySummaryMonthly" class="pay-summary-amount" data-no-translate="true">₦0</span>
+        <span class="pay-summary-label" data-translate="Monthly Salary">Monthly Salary</span>
+      </div>
+      <div class="pay-summary-card">
+        <span id="adminPaySummaryPaidCount" class="pay-summary-amount" data-no-translate="true">0</span>
+        <span class="pay-summary-label" data-translate="Months Paid">Months Paid</span>
+      </div>
+      <div class="pay-summary-card">
+        <span id="adminPaySummaryTotal" class="pay-summary-amount" data-no-translate="true">₦0</span>
+        <span class="pay-summary-label" data-translate="Total Received">Total Received</span>
+      </div>
+    </div>
+
+    <div class="table-container" style="margin-top:16px;">
+      <table>
+        <thead>
+          <tr>
+            <th data-translate="Month">Month</th>
+            <th data-translate="Year">Year</th>
+            <th data-translate="Amount">Amount</th>
+            <th data-translate="Currency">Currency</th>
+            <th data-translate="Status">Status</th>
+            <th data-translate="Date Paid">Date Paid</th>
+            <th data-translate="Note">Note</th>
+          </tr>
+        </thead>
+        <tbody id="adminMyPaymentsBody">
+          <tr>
+            <td colspan="7" class="empty-row" data-translate="Loading payments...">
+              Loading payments...
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div><!-- /tab-mypayments -->
+
+  <!-- ================================================
+       STUDENTS SECTION (tab-students)
+  ================================================ -->
+  <div class="dash-tab-panel" id="tab-students" style="display:none;">
+
+  <!-- ================================================
+       STUDENTS SECTION
+  ================================================ -->
+  <section class="dash-section">
+    <div class="section-header">
+      <h2 data-translate="Students">Students</h2>
+      <input type="text" id="searchStudents" class="search-input"
+             placeholder="🔍 Search Students..."
+             data-translate-placeholder="🔍 Search Students...">
+      <button class="add-btn" onclick="openModal('studentModal')">
+        <i class="fa-solid fa-plus"></i>
+        <span data-translate="Add Student">Add Student</span>
+      </button>
     </div>
     <div class="table-container">
       <table id="students-table">
         <thead>
           <tr>
-            <th>Photo</th><th>Matric Number</th><th>Name</th><th>Email</th><th>WhatsApp</th><th>Country</th><th>Gender</th><th>Age</th><th>Level</th><th>Status</th><th>Admission</th><th>Actions</th><th>Welcome Email</th><th>Edit</th><th>Delete</th>
+            <th data-translate="Photo">Photo</th>
+            <th data-translate="Matric No.">Matric No.</th>
+            <th data-translate="Name">Name</th>
+            <th data-translate="Email">Email</th>
+            <th data-translate="WhatsApp">WhatsApp</th>
+            <th data-translate="Country">Country</th>
+            <th data-translate="Gender">Gender</th>
+            <th data-translate="Age">Age</th>
+            <th data-translate="Level">Level</th>
+            <th data-translate="Status">Status</th>
+            <th data-translate="Admission">Admission</th>
+            <th data-translate="Actions">Actions</th>
+            <th data-translate="Welcome Email">Welcome Email</th>
+            <th data-translate="Edit">Edit</th>
+            <th data-translate="Delete">Delete</th>
+            <th data-translate="🗑️">🗑️</th>
+            <th data-translate="Certificate">Certificate</th>
+            
           </tr>
         </thead>
         <tbody>
-          <tr><td colspan="6" style="text-align:center;">No students yet</td></tr>
+          <tr><td colspan="16" class="empty-row" data-translate="No students yet">No students yet</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
-  <!-- PAYMENTS SECTION -->
-  <section>
+  </div><!-- /tab-students -->
+
+  <!-- ================================================
+       PAYMENTS SECTION (tab-payments)
+  ================================================ -->
+  <div class="dash-tab-panel" id="tab-payments" style="display:none;">
+  <section class="dash-section">
     <div class="section-header">
-      <h2>Payments</h2>
-      <input type="text" id="searchPayments" class="search-input" placeholder="🔍 Search Payments...">
-      <button class="add-btn" onclick="openModal('paymentModal')">+ Add Payment</button>
+      <h2 data-translate="Payments">Payments</h2>
+      <input type="text" id="searchPayments" class="search-input"
+             placeholder="🔍 Search Payments..."
+             data-translate-placeholder="🔍 Search Payments...">
+      <button class="add-btn" onclick="openModal('paymentModal')">
+        <i class="fa-solid fa-plus"></i>
+        <span data-translate="Add Payment">Add Payment</span>
+      </button>
     </div>
     <div class="table-container">
       <table id="payments-table">
         <thead>
           <tr>
-            <th>Receipt</th><th>Student Name</th><th>Matric Number</th><th>Email</th><th>Level</th><th>Amount</th><th>Month</th><th>Method</th><th>Date</th><th>Status</th><th>Mark</th><th>Edit</th><th>Actions</th>
+            <th data-translate="Receipt">Receipt</th>
+            <th data-translate="Student Name">Student Name</th>
+            <th data-translate="Matric No.">Matric No.</th>
+            <th data-translate="Email">Email</th>
+            <th data-translate="Level">Level</th>
+            <th data-translate="Amount">Amount</th>
+            <th data-translate="Month">Month</th>
+            <th data-translate="Method">Method</th>
+            <th data-translate="Date">Date</th>
+            <th data-translate="Status">Status</th>
+            <th data-translate="Mark">Mark</th>
+            <th data-translate="Edit">Edit</th>
+            <th data-translate="Actions">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td colspan="6" style="text-align:center;">No payments yet</td></tr>
+          <tr><td colspan="13" class="empty-row" data-translate="No payments yet">No payments yet</td></tr>
         </tbody>
       </table>
     </div>
   </section>
-  
-  <section>
-  <div class="admin-container">
+  </div><!-- /tab-payments -->
 
-  <div class="card">
-  <h2>💳 Manage Student Fees</h2>
+  <!-- ================================================
+       FEES SECTION (tab-fees)
+  ================================================ -->
+  <div class="dash-tab-panel" id="tab-fees" style="display:none;">
+  <!-- ================================================
+       STUDENT FEES SECTION
+  ================================================ -->
+  <section class="dash-section">
+    <div class="admin-container">
+      <div class="card">
+        <h2 class="section-title">
+          <i class="fa-solid fa-credit-card"></i> 
+          <span data-translate="Manage Student Fees">Manage Student Fees</span>
+        </h2>
+        <div class="fee-form">
+          <select id="studentSelect">
+            <option value="" data-translate="Select Student">Select Student</option>
+          </select>
+          <select id="month">
+            <option value="" data-translate="Select Month">Select Month</option>
+            <option>January</option><option>February</option><option>March</option>
+            <option>April</option><option>May</option><option>June</option>
+            <option>July</option><option>August</option><option>September</option>
+            <option>October</option><option>November</option><option>December</option>
+          </select>
+          <input id="amount" type="number" placeholder="Amount"
+                 data-translate-placeholder="Amount">
+          <button class="btn btn-save" onclick="saveFee()">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span data-translate="Save">Save</span>
+          </button>
+        </div>
+      </div>
+      <input id="search" class="search-box"
+             placeholder="🔍 Search by matric..."
+             data-translate-placeholder="🔍 Search by matric..."
+             oninput="filterFees()">
+      <div id="feeTable"></div>
+    </div>
+  </section>
+  </div><!-- /tab-fees -->
 
-  <!-- FORM -->
-  <select id="studentSelect">
-  <option value="">Select Student</option>
-</select>
-
-    <select id="month">
-      <option value="">Select Month</option>
-      <option>January</option>
-      <option>February</option>
-      <option>March</option>
-      <option>April</option>
-      <option>May</option>
-      <option>June</option>
-      <option>July</option>
-      <option>August</option>
-      <option>September</option>
-      <option>October</option>
-      <option>November</option>
-      <option>December</option>
-    </select>
-
-    <input id="amount" type="number" placeholder="Amount" />
-
-    <button class="btn btn-save" onclick="saveFee()">💾 Save</button>
-  </div>
-  </div>
-
-  <!-- SEARCH -->
-  <input 
-    id="search" 
-    placeholder="🔍 Search by matric..." 
-    oninput="filterFees()" 
-    class="search-box"
-  />
-
-  <!-- TABLE -->
-  <div id="feeTable"></div>
-</section>
-</div>
-
-
-  <!-- GRADES SECTION -->
-  <section>
+  <!-- ================================================
+       GRADES SECTION (tab-grades)
+  ================================================ -->
+  <div class="dash-tab-panel" id="tab-grades" style="display:none;">
+  <!-- ================================================
+       GRADES SECTION
+  ================================================ -->
+  <section class="dash-section">
     <div class="section-header">
-      <h2>Grades</h2>
-      <input type="text" id="searchGrades" class="search-input" placeholder="🔍 Search Grades...">
-      <button class="add-btn" onclick="openModal('gradeModal')">+ Add Grade</button>
+      <h2 data-translate="Grades">Grades</h2>
+      <input type="text" id="searchGrades" class="search-input"
+             placeholder="🔍 Search Grades..."
+             data-translate-placeholder="🔍 Search Grades...">
+      <button class="add-btn" onclick="openModal('gradeModal')">
+        <i class="fa-solid fa-plus"></i>
+        <span data-translate="Add Grade">Add Grade</span>
+      </button>
     </div>
     <div class="table-container">
       <table id="grades-table">
         <thead>
           <tr>
-            <th>Student</th><th>Matric Number</th><th>Level</th><th>Course</th><th>Semester</th><th>Assessment</th><th>Exam</th><th>Total</th><th>Status</th><th>Remark</th><th>Released</th><th>Edit</th><th>Actions</th>
+            <th data-translate="Student">Student</th>
+            <th data-translate="Matric No.">Matric No.</th>
+            <th data-translate="Level">Level</th>
+            <th data-translate="Course">Course</th>
+            <th data-translate="Semester">Semester</th>
+            <th data-translate="Assessment">Assessment</th>
+            <th data-translate="Exam">Exam</th>
+            <th data-translate="Total">Total</th>
+            <th data-translate="Status">Status</th>
+            <th data-translate="Remark">Remark</th>
+            <th data-translate="Released">Released</th>
+            <th data-translate="Edit">Edit</th>
+            <th data-translate="Actions">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td colspan="6" style="text-align:center;">No grades yet</td></tr>
+          <tr><td colspan="13" class="empty-row" data-translate="No grades yet">No grades yet</td></tr>
         </tbody>
       </table>
     </div>
   </section>
+  </div><!-- /tab-grades -->
 
-  <!-- SCHEDULE SECTION -->
-  <section>
+  <!-- ================================================
+       SCHEDULE SECTION (tab-schedule)
+  ================================================ -->
+  <div class="dash-tab-panel" id="tab-schedule" style="display:none;">
+  <!-- ================================================
+       SCHEDULE SECTION
+  ================================================ -->
+  <section class="dash-section">
     <div class="section-header">
-      <h2>Schedule</h2>
-      <input type="text" id="searchSchedule" class="search-input" placeholder="🔍 Search Schedule...">
-      <button class="add-btn" onclick="openModal('scheduleModal')">+ Add Class</button>
-      </div>
+      <h2 data-translate="Schedule">Schedule</h2>
+      <input type="text" id="searchSchedule" class="search-input"
+             placeholder="🔍 Search Schedule..."
+             data-translate-placeholder="🔍 Search Schedule...">
+      <button class="add-btn" onclick="openModal('scheduleModal')">
+        <i class="fa-solid fa-plus"></i>
+        <span data-translate="Add Class">Add Class</span>
+      </button>
+    </div>
     <div class="table-container">
       <table id="schedule-table">
         <thead>
           <tr>
-            <th>Level</th><th>Course</th><th>Instructor</th><th>Date</th><th>Time</th><th>Link</th><th>Status</th><th>Edit</th><th>Actions</th>
+            <th data-translate="Level">Level</th>
+            <th data-translate="Course">Course</th>
+            <th data-translate="Instructor">Instructor</th>
+            <th data-translate="Date">Date</th>
+            <th data-translate="Time">Time</th>
+            <th data-translate="Link">Link</th>
+            <th data-translate="Status">Status</th>
+            <th data-translate="Edit">Edit</th>
+            <th data-translate="Actions">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td colspan="6" style="text-align:center;">No classes yet</td></tr>
+          <tr><td colspan="9" class="empty-row" data-translate="No classes yet">No classes yet</td></tr>
         </tbody>
       </table>
     </div>
   </section>
+  </div><!-- /tab-schedule -->
 
-  <!-- ASSESSMENTS SECTION -->
-<section>
-  <div class="section-header">
-    <h2>Assessments</h2>
-    <input type="text" id="searchAssessments" class="search-input" placeholder="🔍 Search Assessments...">
-    <button class="add-btn" onclick="openModal('assessmentModal')">+ Add Assessment</button>
+  <!-- ================================================
+       ATTENDANCE SECTION (tab-attendance)
+  ================================================ -->
+  <div class="dash-tab-panel" id="tab-attendance" style="display:none;">
+  <section class="dash-section">
+    <div class="section-header">
+      <h2 data-translate="Attendance">Attendance</h2>
+      <input type="text" id="searchAttendance" class="search-input"
+             placeholder="🔍 Search Sessions..."
+             data-translate-placeholder="🔍 Search Sessions...">
+      <button class="add-btn" onclick="openModal('attendanceSessionModal')">
+        <i class="fa-solid fa-plus"></i>
+        <span data-translate="Create Session">Create Session</span>
+      </button>
+    </div>
+    <div class="table-container">
+      <table id="attendance-sessions-table">
+        <thead>
+          <tr>
+            <th data-translate="Title">Title</th>
+            <th data-translate="Level">Level</th>
+            <th data-translate="Opens">Opens</th>
+            <th data-translate="Closes">Closes</th>
+            <th data-translate="Present">Present</th>
+            <th data-translate="Active">Active</th>
+            <th data-translate="Actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="attendance-sessions-body">
+          <tr><td colspan="7" class="empty-row" data-translate="No attendance sessions yet">No attendance sessions yet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  </div><!-- /tab-attendance -->
+
+  <!-- ================================================
+       ASSESSMENTS SECTION (tab-assessments)
+  ================================================ -->
+  <div class="dash-tab-panel" id="tab-assessments" style="display:none;">
+  <!-- ================================================
+       ASSESSMENTS SECTION
+  ================================================ -->
+  <section class="dash-section">
+    <div class="section-header">
+      <h2 data-translate="Assessments">Assessments</h2>
+      <input type="text" id="searchAssessments" class="search-input"
+             placeholder="🔍 Search Assessments..."
+             data-translate-placeholder="🔍 Search Assessments...">
+      <button class="add-btn" onclick="openModal('assessmentModal')">
+        <i class="fa-solid fa-plus"></i>
+        <span data-translate="Add Assessment">Add Assessment</span>
+      </button>
+    </div>
+    <div class="table-container">
+      <table id="assessments-table">
+        <thead>
+          <tr>
+            <th data-translate="Description">Description</th>
+            <th data-translate="Title">Title</th>
+            <th data-translate="Level">Level</th>
+            <th data-translate="Course">Course</th>
+            <th data-translate="Semester">Semester</th>
+            <th data-translate="Type">Type</th>
+            <th data-translate="Max Score">Max Score</th>
+            <th data-translate="Duration">Duration</th>
+            <th data-translate="Start Time">Start Time</th>
+            <th data-translate="End Time">End Time</th>
+            <th data-translate="Status">Status</th>
+            <th data-translate="Active">Active</th>
+            <th data-translate="Actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="assessments-body">
+          <tr><td colspan="13" class="empty-row" data-translate="No assessments yet">No assessments yet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  </div><!-- /tab-assessments -->
+
+  <!-- ================================================
+       COURSES SECTION (tab-courses)
+  ================================================ -->
+  <div class="dash-tab-panel" id="tab-courses" style="display:none;">
+  <!-- ================================================
+       COURSES SECTION
+  ================================================ -->
+  <section class="courses-section dash-section">
+    <div class="card">
+      <h2 class="section-title">
+        <i class="fa-solid fa-circle-plus"></i>
+        <span data-translate="Add Course">Add Course</span>
+      </h2>
+      <div class="course-form">
+        <input type="text" id="courseName" placeholder="Course Name"
+               data-translate-placeholder="Course Name">
+        <input type="text" id="courseLevel" placeholder="Level"
+               data-translate-placeholder="Level">
+        <input type="text" id="courseInstructor" placeholder="Instructor"
+               data-translate-placeholder="Instructor">
+        <button class="btn btn-primary" id="addCourseBtn" onclick="addCourse()">
+          <i class="fa-solid fa-plus"></i>
+          <span data-translate="Add Course">Add Course</span>
+        </button>
+      </div>
+      <hr class="section-divider">
+      <h2 class="section-title">
+        <i class="fa-solid fa-list"></i>
+        <span data-translate="All Courses">All Courses</span>
+      </h2>
+      <div id="adminCoursesList"></div>
+    </div>
+  </section>
+  </div><!-- /tab-courses -->
+
+  <!-- ================================================
+       CERTIFICATES SECTION (tab-certificates)
+  ================================================ -->
+  <div class="dash-tab-panel" id="tab-certificates" style="display:none;">
+  <section class="dash-section">
+    <div class="section-header">
+      <h2 data-translate="Certificates">Certificates</h2>
+    </div>
+    <div class="card" style="max-width:700px; margin:0 auto; padding:24px 20px;">
+      <p style="color:var(--text-muted); font-size:0.9rem;" data-translate="Open a student record and click Issue Certificate to generate.">
+        Open a student record and click Issue Certificate to generate.
+      </p>
+    </div>
+  </section>
+  
+   <section class="dash-section" style="margin-top: 30px;">
+      <div class="section-header">
+        <h2 data-translate="Issued Certificates History">Issued Certificates History</h2>
+        <input type="text" id="searchCertRegistry" class="search-input" 
+               placeholder="🔍 Search certificates history..." 
+               data-translate-placeholder="🔍 Search certificates history...">
+      </div>
+      <div class="table-container">
+        <table id="cert-registry-table">
+          <thead>
+            <tr>
+              <th data-translate="Student Name">Student Name</th>
+              <th data-translate="Matric No.">Matric No.</th>
+              <th data-translate="Course">Course</th>
+              <th data-translate="Level">Level</th>
+              <th data-translate="Status">Status</th>
+              <th data-translate="Date Issued">Date Issued</th>
+              <th data-translate="Actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="certRegistryTabBody">
+            <tr>
+              <td colspan="7" class="empty-row" data-translate="Loading history logs...">Loading history logs...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div><!-- /tab-certificates -->
+
+  <!-- ================================================
+       PASSWORDS SECTION (tab-passwords)
+  ================================================ -->
+  <div class="dash-tab-panel" id="tab-passwords" style="display:none;">
+  <div class="password-grid">
+    <section class="card password1-card">
+      <h2>
+        <i class="fa-solid fa-lock"></i>
+        <span data-translate="Change My Password">Change My Password</span>
+      </h2>
+      <div class="form-group1">
+        <label data-translate="Current Password">Current Password</label>
+        <div class="input-group">
+          <input id="oldPassword" type="password"
+                 placeholder="Enter current password"
+                 data-translate-placeholder="Enter current password">
+          <button type="button" class="toggle-btn" onclick="togglePassword('oldPassword')">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+      </div>
+      <div class="form-group1">
+        <label data-translate="New Password">New Password</label>
+        <div class="input-group">
+          <input id="newPassword" type="password"
+                 placeholder="Enter new password"
+                 data-translate-placeholder="Enter new password">
+          <button type="button" class="toggle-btn" onclick="togglePassword('newPassword')">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+      </div>
+      <button class="btn btn-save full-btn" onclick="changeMyPassword()">
+        <i class="fa-solid fa-check"></i>
+        <span data-translate="Update Password">Update Password</span>
+      </button>
+    </section>
+
+    <section class="card password-card">
+      <h2>
+        <i class="fa-solid fa-user-lock"></i>
+        <span data-translate="Reset Student Password">Reset Student Password</span>
+      </h2>
+      <div class="form-group1">
+        <label data-translate="Select Student">Select Student</label>
+        <select id="passwordStudentSelect"></select>
+      </div>
+      <div class="form-group1">
+        <label data-translate="New Password">New Password</label>
+        <div class="input-group">
+          <input id="newStudentPassword" type="password"
+                 placeholder="Enter new password"
+                 data-translate-placeholder="Enter new password">
+          <button type="button" class="toggle-btn" onclick="togglePassword('newStudentPassword')">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+      </div>
+      <button class="btn btn-save full-btn" onclick="resetStudentPassword()">
+        <i class="fa-solid fa-check"></i>
+        <span data-translate="Update Password">Update Password</span>
+      </button>
+    </section>
   </div>
+  </div><!-- /tab-passwords -->
 
-  <div class="table-container">
-    <table id="assessments-table">
-      <thead>
-        <tr>
-          <th>Description</th>
-          <th>Title</th>
-          <th>Level</th>
-          <th>Course</th>
-          <th>Semester</th>
-          <th>Type</th>
-          <th>Max Score</th>
-          <th>Duration</th>
-          <th>Start Time</th>
-          <th>End Time</th>
-          <th>Status</th>
-          <th>Active</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="assessments-body">
-        <tr>
-          <td colspan="6" style="text-align:center;">No assessments yet</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
+  <!-- ================================================
+       DELETED / TRASH BIN SECTION (tab-deleted)
+       Consolidated trash bin for every soft-deletable table.
+       Switch between entity types using the category chips;
+       the table head + body are rebuilt dynamically by JS
+       (see TRASH_CATEGORIES / loadDeletedTabPanelContent in admin-dashboard.js)
+  ================================================ -->
+      <div class="dash-tab-panel" id="tab-deleted" style="display:none;">
+    <section class="dash-section">
+      <div class="section-header">
+        <h2 data-translate="🗑️ Trash Bin">🗑️ Trash Bin</h2>
+        <input type="text" id="searchTrashTab" class="search-input"
+               placeholder="🔍 Search in Trash Bin..."
+               data-translate-placeholder="🔍 Search in Trash Bin...">
+      </div>
+      <div class="trash-chip-row" id="trashCategoryChips"></div>
+      <div class="table-container">
+        <table id="students-trash-panel-table">
+          <thead id="trashTabPanelHead">
+            <tr>
+              <th data-translate="Photo">Photo</th>
+              <th data-translate="Matric">Matric</th>
+              <th data-translate="Name">Name</th>
+              <th data-translate="Email">Email</th>
+              <th data-translate="Country">Country</th>
+              <th data-translate="Level">Level</th>
+              <th data-translate="Actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="trashTabPanelBody">
+            <tr>
+              <td colspan="7" class="empty-row" data-translate="Trash bin is empty.">Trash bin is empty.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div><!-- /tab-deleted -->
 
+  <!-- ================================================
+       MODALS
+  ================================================ -->
 
-  <!-- MODALS -->
+  <!-- Student Modal -->
   <div class="modal" id="studentModal">
-  <div class="modal-content modal-large">
-    <span class="btn btn-close" onclick="closeModal('studentModal')">&times;</span>
-    <h2>Add Student</h2>
-    <div class="modal-grid">
-      <label>Name</label>
-      <input type="text" id="studentName" placeholder="Full Name">
-
-      <label>Email</label>
-      <input type="email" id="studentEmail" placeholder="Email Address">
-
-      <label for="whatsapp">WhatsApp Phone Number *</label>
-      <input type="tel" id="studentWhatsApp" name="whatsapp" placeholder="+234..." required>
-
-      <label>Country</label>
-      <input type="Country" id="studentCountry" placeholder="Country">
-
-      <label>Gender</label>
-      <input type="Gender" id="studentGender" placeholder="Gender">
-
-      <label>Age</label>
-      <input type="age" id="studentAge" placeholder="Age">
-
-      <label>Level</label>
+    <div class="modal-content modal-large">
+      <button class="btn btn-close" onclick="closeModal('studentModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 data-translate="Add Student">Add Student</h2>
+      <div class="modal-grid">
+        <label data-translate="Name">Name</label>
+        <input type="text" id="studentName" placeholder="Full Name"
+               data-translate-placeholder="Full Name">
+        <label data-translate="Email">Email</label>
+        <input type="email" id="studentEmail" placeholder="Email Address"
+               data-translate-placeholder="Email Address">
+        <label data-translate="WhatsApp">WhatsApp</label>
+        <input type="tel" id="studentWhatsApp" placeholder="+234..."
+               data-translate-placeholder="+234...">
+        <label data-translate="Country">Country</label>
+        <input type="text" id="studentCountry" placeholder="Country"
+               data-translate-placeholder="Country">
+        <label data-translate="Gender">Gender</label>
+        <input type="text" id="studentGender" placeholder="Gender"
+               data-translate-placeholder="Gender">
+        <label data-translate="Age">Age</label>
+        <input type="number" id="studentAge" placeholder="Age"
+               data-translate-placeholder="Age">
+        <label data-translate="Level">Level</label>
         <select id="studentLevel" required>
-          <option value="">-- Choose Level --</option>
-          <option>Read and Write Arabic</option>
-          <option>Beginner</option>
-          <option>Intermediate</option>
-          <option>Advanced</option>
+          <option value="" data-translate="Choose Level">-- Choose Level --</option>
+          <option data-translate="Preliminary">Preliminary</option>
+          <option data-translate="Beginner">Beginner</option>
+          <option data-translate="Intermediate">Intermediate</option>
+          <option data-translate="Advanced">Advanced</option>
         </select>
-
-      <label>Status</label>
-      <select id="studentStatus">
-        <option value="active">Active</option>
-        <option value="inactive">Inactive</option>
-      </select>
-
-      <label>Admission</label>
+        <label data-translate="Status">Status</label>
+        <select id="studentStatus">
+          <option value="active" data-translate="Active">Active</option>
+          <option value="inactive" data-translate="Inactive">Inactive</option>
+        </select>
+        <label data-translate="Admission">Admission</label>
         <select id="studentAdmission">
-          <option value="true">✅ Approved</option>
-        <option value="false">❌ Not Approved</option>
+          <option value="true" data-translate="Approved">✅ Approved</option>
+          <option value="false" data-translate="Not Approved">❌ Not Approved</option>
         </select>
-
-      <label>Passport Photo</label>
-      <input type="file" id="studentPassport" accept="image/*">
-    </div>
-    <div class="modal-actions">
-      <button id="addStudentBtn" class="btn btn-save" onclick="addStudent()">Save</button>
-      <button class="btn btn-cancel" onclick="closeModal('studentModal')">Cancel</button>
+        <label data-translate="Passport Photo">Passport Photo</label>
+        <input type="file" id="studentPassport" accept="image/*">
+      </div>
+      <div class="modal-actions">
+        <button id="addStudentBtn" class="btn btn-save" onclick="addStudent()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span data-translate="Save">Save</span>
+        </button>
+        <button class="btn btn-cancel" onclick="closeModal('studentModal')">
+          <span data-translate="Cancel">Cancel</span>
+        </button>
+      </div>
     </div>
   </div>
-</div>
 
+  <!-- Payment Modal -->
   <div class="modal" id="paymentModal">
-  <div class="modal-content modal-large">
-    <span class="btn btn-close" onclick="closeModal('paymentModal')">&times;</span>
-    <h2>Add Payment</h2>
-    <div class="modal-grid">
-      <label>Student</label>
-    <select id="paymentStudent">
-      <option value="">Select a student</option>
-    </select>
-
-      <label>Level</label>
+    <div class="modal-content modal-large">
+      <button class="btn btn-close" onclick="closeModal('paymentModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 data-translate="Add Payment">Add Payment</h2>
+      <div class="modal-grid">
+        <label data-translate="Student">Student</label>
+        <select id="paymentStudent">
+          <option value="" data-translate="Select a student">Select a student</option>
+        </select>
+        <label data-translate="Level">Level</label>
         <select id="paymentLevel" required>
-          <option value="">-- Select Level --</option>
-          <option>Read and Write Arabic</option>
-          <option>Beginner</option>
-          <option>Intermediate</option>
-          <option>Advanced</option>
+          <option value="" data-translate="Select Level">-- Select Level --</option>
+          <option data-translate="Preliminary">Preliminary</option>
+          <option data-translate="Beginner">Beginner</option>
+          <option data-translate="Intermediate">Intermediate</option>
+          <option data-translate="Advanced">Advanced</option>
         </select>
-
-      <label>Amount</label>
-      <input type="number" id="paymentAmount" placeholder="Amount Paid">
-      
-     
-  <label>Currency</label>
-  <select id="paymentCurrency" required>
-    <option value="NGN">₦ NGN - Nigerian Naira</option>
-
-<option value="USD">$ USD - US Dollar</option>
-<option value="EUR">€ EUR - Euro</option>
-<option value="GBP">£ GBP - British Pound</option>
-
-<option value="GHS">₵ GHS - Ghanaian Cedi</option>
-<option value="XOF">CFA XOF - West African CFA Franc</option>
-<option value="XAF">CFA XAF - Central African CFA Franc</option>
-<option value="ZAR">R ZAR - South African Rand</option>
-<option value="KES">KSh KES - Kenyan Shilling</option>
-
-<option value="EGP">£ EGP - Egyptian Pound</option>
-<option value="MAD">MAD - Moroccan Dirham</option>
-<option value="DZD">DZD - Algerian Dinar</option>
-<option value="TND">TND - Tunisian Dinar</option>
-
-<option value="UGX">UGX - Ugandan Shilling</option>
-<option value="TZS">TZS - Tanzanian Shilling</option>
-<option value="RWF">RWF - Rwandan Franc</option>
-
-<option value="CAD">$ CAD - Canadian Dollar</option>
-<option value="AUD">$ AUD - Australian Dollar</option>
-<option value="NZD">$ NZD - New Zealand Dollar</option>
-
-<option value="JPY">¥ JPY - Japanese Yen</option>
-<option value="CNY">¥ CNY - Chinese Yuan</option>
-<option value="INR">₹ INR - Indian Rupee</option>
-
-<option value="CHF">CHF - Swiss Franc</option>
-<option value="SEK">kr SEK - Swedish Krona</option>
-<option value="NOK">kr NOK - Norwegian Krone</option>
-<option value="DKK">kr DKK - Danish Krone</option>
-
-<option value="AED">د.إ AED - UAE Dirham</option>
-<option value="SAR">﷼ SAR - Saudi Riyal</option>
-<option value="QAR">﷼ QAR - Qatari Riyal</option>
-<option value="KWD">د.ك KWD - Kuwaiti Dinar</option>
-<option value="BHD">د.ب BHD - Bahraini Dinar</option>
-
-<option value="SGD">$ SGD - Singapore Dollar</option>
-<option value="HKD">$ HKD - Hong Kong Dollar</option>
-  </select>
-
-      <label>Month</label>
-      <select id="paymentMonth" required>
-  <option value="">Select Month</option>
-  <option value="January">January</option>
-  <option value="February">February</option>
-  <option value="March">March</option>
-  <option value="April">April</option>
-  <option value="May">May</option>
-  <option value="June">June</option>
-  <option value="July">July</option>
-  <option value="August">August</option>
-  <option value="September">September</option>
-  <option value="October">October</option>
-  <option value="November">November</option>
-  <option value="December">December</option>
-</select>
-
-      <label>Date</label>
-      <input type="date" id="paymentDate">
-
-      <label>Method</label>
-      <input type="text" id="paymentMethod">
-
-      <label>Status</label>
-      <select id="paymentStatus">
-        <option value="paid">Paid</option>
-        <option value="pending">Pending</option>
-      </select>
-    </div>
-    <div class="modal-actions">
-      <button id="addPaymentBtn" class="btn btn-save" onclick="addPayment()">Save</button>
-      <button class="btn btn-cancel" onclick="closeModal('paymentModal')">Cancel</button>
+        <label data-translate="Amount">Amount</label>
+        <input type="number" id="paymentAmount" placeholder="Amount Paid"
+               data-translate-placeholder="Amount Paid">
+        <label data-translate="Currency">Currency</label>
+        <select id="paymentCurrency" required>
+          <option value="NGN">₦ NGN - Nigerian Naira</option>
+          <option value="USD">$ USD - US Dollar</option>
+          <option value="EUR">€ EUR - Euro</option>
+          <option value="GBP">£ GBP - British Pound</option>
+          <option value="GHS">₵ GHS - Ghanaian Cedi</option>
+          <option value="XOF">CFA XOF - West African CFA Franc</option>
+          <option value="XAF">CFA XAF - Central African CFA Franc</option>
+          <option value="ZAR">R ZAR - South African Rand</option>
+          <option value="KES">KSh KES - Kenyan Shilling</option>
+          <option value="EGP">£ EGP - Egyptian Pound</option>
+          <option value="MAD">MAD - Moroccan Dirham</option>
+          <option value="AED">د.إ AED - UAE Dirham</option>
+          <option value="SAR">﷼ SAR - Saudi Riyal</option>
+          <option value="CAD">$ CAD - Canadian Dollar</option>
+          <option value="AUD">$ AUD - Australian Dollar</option>
+        </select>
+        <label data-translate="Month">Month</label>
+        <select id="paymentMonth" required>
+          <option value="" data-translate="Select Month">Select Month</option>
+          <option value="January">January</option><option value="February">February</option>
+          <option value="March">March</option><option value="April">April</option>
+          <option value="May">May</option><option value="June">June</option>
+          <option value="July">July</option><option value="August">August</option>
+          <option value="September">September</option><option value="October">October</option>
+          <option value="November">November</option><option value="December">December</option>
+        </select>
+        <label data-translate="Date">Date</label>
+        <input type="date" id="paymentDate">
+        <label data-translate="Method">Method</label>
+        <input type="text" id="paymentMethod" placeholder="e.g. GTBank"
+               data-translate-placeholder="e.g. GTBank">
+        <label data-translate="Status">Status</label>
+        <select id="paymentStatus">
+          <option value="paid" data-translate="Paid">Paid</option>
+          <option value="pending" data-translate="Pending">Pending</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button id="addPaymentBtn" class="btn btn-save" onclick="addPayment()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span data-translate="Save">Save</span>
+        </button>
+        <button class="btn btn-cancel" onclick="closeModal('paymentModal')">
+          <span data-translate="Cancel">Cancel</span>
+        </button>
+      </div>
     </div>
   </div>
-</div>
 
+  <!-- Grade Modal -->
   <div class="modal" id="gradeModal">
-  <div class="modal-content modal-large">
-    <span class="btn btn-close" onclick="closeModal('gradeModal')">&times;</span>
-    <h2>Add Grade</h2>
-    <div class="modal-grid">
-      <label>Student</label>
-      <select id="gradeStudent">
-        <option value="">Select a student</option>
-        <!-- JS will populate options here with fullname as text, matric_number as value -->
-      </select>
-
-      <input type="hidden" id="gradeStudentId">
-
-      <label>Level</label>
+    <div class="modal-content modal-large">
+      <button class="btn btn-close" onclick="closeModal('gradeModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 data-translate="Add Grade">Add Grade</h2>
+      <div class="modal-grid">
+        <label data-translate="Student">Student</label>
+        <select id="gradeStudent">
+          <option value="" data-translate="Select a student">Select a student</option>
+        </select>
+        <input type="hidden" id="gradeStudentId">
+        <label data-translate="Level">Level</label>
         <select id="gradeLevel" required>
-          <option value="">-- Choose Level --</option>
-          <option>Read and Write Arabic</option>
-          <option>Beginner</option>
-          <option>Intermediate</option>
-          <option>Advanced</option>
+          <option value="" data-translate="Choose Level">-- Choose Level --</option>
+          <option data-translate="Preliminary">Preliminary</option>
+          <option data-translate="Beginner">Beginner</option>
+          <option data-translate="Intermediate">Intermediate</option>
+          <option data-translate="Advanced">Advanced</option>
         </select>
-
-      <label>Course</label>
-      <input type="text" id="gradeCourse" placeholder="Course Name">
-
-      <label>Semester</label>
+        <label data-translate="Course">Course</label>
+        <input type="text" id="gradeCourse" placeholder="Course Name"
+               data-translate-placeholder="Course Name">
+        <label data-translate="Semester">Semester</label>
         <select id="gradeSemester" required>
-          <option value="">-- Select Semester --</option>
-          <option>First</option>
-          <option>Second</option>
+          <option value="" data-translate="Select Semester">-- Select Semester --</option>
+          <option data-translate="First">First</option>
+          <option data-translate="Second">Second</option>
         </select>
-
-      <label>Assessment Score</label>
-      <input type="number" id="gradeAssessment" placeholder="Assessment">
-
-      <label>Exam Score</label>
-      <input type="number" id="gradeExams" placeholder="Exam">
-
-      <label>Total Score</label>
-      <input type="number" id="gradeTotal" placeholder="Total" disabled>
-
-      <label>Status</label>
-      <select id="gradeStatus">
-        <option value="completed">Complete</option>
-        <option value="loading">Loadiong</option>
-        <option value="cancelled">Cancelled</option>
-
-      </select>
-
-      <label>Remark</label>
-      <select id="gradeRemark">
-        <option value="pass">Pass</option>
-        <option value="average">Average</option>
-        <option value="fail">Fail</option>
-      </select>
-    </div>
-    <div class="modal-actions">
-      <button id="addGradeBtn" class="btn btn-save" onclick="addGrade()">Save</button>
-      <button class="btn btn-cancel" onclick="closeModal('gradeModal')">Cancel</button>
+        <label data-translate="Assessment Score">Assessment Score</label>
+        <input type="number" id="gradeAssessment" placeholder="Assessment"
+               data-translate-placeholder="Assessment">
+        <label data-translate="Exam Score">Exam Score</label>
+        <input type="number" id="gradeExams" placeholder="Exam"
+               data-translate-placeholder="Exam">
+        <label data-translate="Total Score">Total Score</label>
+        <input type="number" id="gradeTotal" placeholder="Total"
+               data-translate-placeholder="Total" disabled>
+        <label data-translate="Status">Status</label>
+        <select id="gradeStatus">
+          <option value="completed" data-translate="Complete">Complete</option>
+          <option value="loading" data-translate="Loading">Loading</option>
+          <option value="cancelled" data-translate="Cancelled">Cancelled</option>
+        </select>
+        <label data-translate="Remark">Remark</label>
+        <select id="gradeRemark">
+          <option value="pass" data-translate="Pass">Pass</option>
+          <option value="average" data-translate="Average">Average</option>
+          <option value="fail" data-translate="Fail">Fail</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button id="addGradeBtn" class="btn btn-save" onclick="addGrade()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span data-translate="Save">Save</span>
+        </button>
+        <button class="btn btn-cancel" onclick="closeModal('gradeModal')">
+          <span data-translate="Cancel">Cancel</span>
+        </button>
+      </div>
     </div>
   </div>
-</div>
 
+  <!-- Schedule Modal -->
   <div class="modal" id="scheduleModal">
-  <div class="modal-content modal-large">
-    <span class="btn btn-close" onclick="closeModal('scheduleModal')">&times;</span>
-    <h2>Add Class</h2>
-    <div class="modal-grid">
-
-      <label>Level</label>
+    <div class="modal-content modal-large">
+      <button class="btn btn-close" onclick="closeModal('scheduleModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 data-translate="Add Class">Add Class</h2>
+      <div class="modal-grid">
+        <label data-translate="Level">Level</label>
         <select id="classLevel" required>
-          <option value="">-- Choose Level --</option>
-          <option>Read and Write Arabic</option>
-          <option>Beginner</option>
-          <option>Intermediate</option>
-          <option>Advanced</option>
+          <option value="" data-translate="Choose Level">-- Choose Level --</option>
+          <option data-translate="Preliminary">Preliminary</option>
+          <option data-translate="Beginner">Beginner</option>
+          <option data-translate="Intermediate">Intermediate</option>
+          <option data-translate="Advanced">Advanced</option>
         </select>
-
-      <label>Course</label>
-      <input type="text" id="classCourse" placeholder="Course Name">
-
-      <label>Instructor</label>
-      <input type="text" id="Instructor" placeholder="Instructor Name">
-
-      <label>Date</label>
-      <input type="date" id="classDate">
-
-      <label>Time</label>
-      <input type="time" id="classTime">
-
-      <label>Link</label>
-      <input type="text" id="classLink" placeholder="Meeting Link">
-
-      <label>Status</label>
-      <select id="classStatus">
-        <option value="scheduled">Scheduled</option>
-        <option value="completed">Completed</option>
-        <option value="cancelled">Cancelled</option>
-      </select>
-    </div>
-    <div class="modal-actions">
-      <button id="addScheduleBtn" class="btn btn-save" onclick="addSchedule()">Save</button>
-      <button class="btn btn-cancel" onclick="closeModal('scheduleModal')">Cancel</button>
+        <label data-translate="Course">Course</label>
+        <input type="text" id="classCourse" placeholder="Course Name"
+               data-translate-placeholder="Course Name">
+        <label data-translate="Instructor">Instructor</label>
+        <input type="text" id="Instructor" placeholder="Instructor Name"
+               data-translate-placeholder="Instructor Name">
+        <label data-translate="Date">Date</label>
+        <input type="date" id="classDate">
+        <label data-translate="Time">Time</label>
+        <input type="time" id="classTime">
+        <label data-translate="Meeting Link">Meeting Link</label>
+        <input type="text" id="classLink" placeholder="Meeting Link"
+               data-translate-placeholder="Meeting Link">
+        <label data-translate="Status">Status</label>
+        <select id="classStatus">
+          <option value="scheduled" data-translate="Scheduled">Scheduled</option>
+          <option value="completed" data-translate="Completed">Completed</option>
+          <option value="cancelled" data-translate="Cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button id="addScheduleBtn" class="btn btn-save" onclick="addSchedule()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span data-translate="Save">Save</span>
+        </button>
+        <button class="btn btn-cancel" onclick="closeModal('scheduleModal')">
+          <span data-translate="Cancel">Cancel</span>
+        </button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ASSESSMENT MODAL -->
-<div class="modal" id="assessmentModal">
-  <div class="modal-content modal-large">
-    
-    <span class="btn btn-close" onclick="closeModal('assessmentModal')">&times;</span>
-    
-    <h2>Add Assessment</h2>
+  <!-- Attendance Session Modal -->
+  <div class="modal" id="attendanceSessionModal">
+    <div class="modal-content modal-large">
+      <button class="btn btn-close" onclick="closeModal('attendanceSessionModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 id="attendanceModalTitle" data-translate="Create Attendance Session">Create Attendance Session</h2>
+      <div class="modal-grid">
+        <label data-translate="Title">Title</label>
+        <input type="text" id="attendanceTitle" placeholder="e.g. Beginner Arabic - Lesson 5"
+               data-translate-placeholder="e.g. Beginner Arabic - Lesson 5">
+        <label data-translate="Level">Level</label>
+        <select id="attendanceLevel">
+          <option value="" data-translate="Choose Level">-- Choose Level --</option>
+          <option data-translate="Preliminary">Preliminary</option>
+          <option data-translate="Beginner">Beginner</option>
+          <option data-translate="Intermediate">Intermediate</option>
+          <option data-translate="Advanced">Advanced</option>
+        </select>
+        <label data-translate="Opens At">Opens At</label>
+        <input type="datetime-local" id="attendanceOpensAt">
+        <label data-translate="Closes At">Closes At</label>
+        <input type="datetime-local" id="attendanceClosesAt">
+        <label data-translate="Class Link (Meet/Telegram/WhatsApp)">Class Link (Meet/Telegram/WhatsApp)</label>
+        <input type="url" id="attendancePlatformLink" placeholder="https://meet.google.com/..."
+               data-translate-placeholder="https://meet.google.com/...">
+      </div>
 
-    <div class="modal-grid">
+      <!-- Shown only after the session is saved -->
+      <div id="attendanceLinkBox" style="display:none; margin-top:14px;">
+        <label data-translate="Attendance Link (share this with students)">Attendance Link (share this with students)</label>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <input type="text" id="attendanceGeneratedLink" readonly style="flex:1;">
+          <button class="btn btn-edit" type="button" onclick="copyAttendanceLink()">
+            <i class="fa-solid fa-copy"></i> <span data-translate="Copy">Copy</span>
+          </button>
+        </div>
+      </div>
 
-      <label>Description</label>
-      <input type="text" id="assessmentDescription" placeholder="Description">
+      <div class="modal-actions">
+        <button class="btn btn-save" id="addAttendanceSessionBtn" onclick="addAttendanceSession()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span data-translate="Save Session">Save Session</span>
+        </button>
+        <button class="btn btn-cancel" onclick="closeModal('attendanceSessionModal')">
+          <span data-translate="Cancel">Cancel</span>
+        </button>
+      </div>
+    </div>
+  </div>
 
-      <label>Title</label>
-      <input type="text" id="assessmentTitle" placeholder="Assessment Title">
+  <!-- Attendance Records Viewer Modal (who's present for a session) -->
+  <div class="modal" id="attendanceRecordsModal">
+    <div class="modal-content modal-large">
+      <button class="btn btn-close" onclick="closeModal('attendanceRecordsModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 id="attendanceRecordsTitle" data-translate="Attendance Records">Attendance Records</h2>
+      <div class="table-container">
+        <table id="attendance-records-table">
+          <thead>
+            <tr>
+              <th data-translate="Matric Number">Matric Number</th>
+              <th data-translate="Name">Name</th>
+              <th data-translate="Time">Time</th>
+            </tr>
+          </thead>
+          <tbody id="attendance-records-body">
+            <tr><td colspan="3" class="empty-row" data-translate="Loading...">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-      <label>Level</label>
+  <!-- Assessment Modal -->
+  <div class="modal" id="assessmentModal">
+    <div class="modal-content modal-large">
+      <button class="btn btn-close" onclick="closeModal('assessmentModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 data-translate="Add Assessment">Add Assessment</h2>
+      <div class="modal-grid">
+        <label data-translate="Description">Description</label>
+        <input type="text" id="assessmentDescription" placeholder="Description"
+               data-translate-placeholder="Description">
+        <label data-translate="Title">Title</label>
+        <input type="text" id="assessmentTitle" placeholder="Assessment Title"
+               data-translate-placeholder="Assessment Title">
+        <label data-translate="Level">Level</label>
         <select id="assessmentLevel">
-          <option value="">-- Choose Level --</option>
-          <option>Read and Write Arabic</option>
-          <option>Beginner</option>
-          <option>Intermediate</option>
-          <option>Advanced</option>
+          <option value="" data-translate="Choose Level">-- Choose Level --</option>
+          <option data-translate="Preliminary">Preliminary</option>
+          <option data-translate="Beginner">Beginner</option>
+          <option data-translate="Intermediate">Intermediate</option>
+          <option data-translate="Advanced">Advanced</option>
         </select>
-
-     <label>Course</label>
-      <input type="text" id="assessmentCourse" placeholder="Course Name">
-
-      <label>Semester</label>
+        <label data-translate="Course">Course</label>
+        <input type="text" id="assessmentCourse" placeholder="Course Name"
+               data-translate-placeholder="Course Name">
+        <label data-translate="Semester">Semester</label>
         <select id="assessmentSemester">
-          <option value="">-- Select Semester --</option>
-          <option>First</option>
-          <option>Second</option>
+          <option value="" data-translate="Select Semester">-- Select Semester --</option>
+          <option data-translate="First">First</option>
+          <option data-translate="Second">Second</option>
         </select>
-
-        <label>Type</label>
+        <label data-translate="Type">Type</label>
         <select id="assessmentType">
-          <option value="">-- Select type --</option>
-          <option value="test">Test</option>
-          <option value="exam">Exam</option>
-       </select>
-
-       <label>Max Score</label>
-      <input type="number" id="assessmentScore" placeholder="Max Score">
-
-        <label>Duration</label>
-       <input 
-  type="number" 
-  id="assessmentDuration" 
-  placeholder="Duration (minutes)" 
-  min="1">
-
-      <label>Start Time</label>
-      <input type="datetime-local" id="assessmentStart">
-
-      <label>End Time</label>
-      <input type="datetime-local" id="assessmentEnd">
-
-      <label>Status</label>
-      <select id="assessmentStatus">
-        <option value="">-- Select Status --</option>
-        <option value="active">Active</option>
-        <option value="inactive">Inactive</option>
-      </select>
-
+          <option value="" data-translate="Select Type">-- Select Type --</option>
+          <option value="test" data-translate="Test">Test</option>
+          <option value="exam" data-translate="Exam">Exam</option>
+        </select>
+        <label data-translate="Max Score">Max Score</label>
+        <input type="number" id="assessmentScore" placeholder="Max Score"
+               data-translate-placeholder="Max Score">
+        <label data-translate="Duration (minutes)">Duration (minutes)</label>
+        <input type="number" id="assessmentDuration" placeholder="Duration (minutes)"
+               data-translate-placeholder="Duration (minutes)" min="1">
+        <label data-translate="Start Time">Start Time</label>
+        <input type="datetime-local" id="assessmentStart">
+        <label data-translate="End Time">End Time</label>
+        <input type="datetime-local" id="assessmentEnd">
+        <label data-translate="Status">Status</label>
+        <select id="assessmentStatus">
+          <option value="" data-translate="Select Status">-- Select Status --</option>
+          <option value="active" data-translate="Active">Active</option>
+          <option value="inactive" data-translate="Inactive">Inactive</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-save" id="addAssessmentBtn" onclick="addAssessment()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span data-translate="Save Assessment">Save Assessment</span>
+        </button>
+        <button class="btn btn-cancel" onclick="closeModal('assessmentModal')">
+          <span data-translate="Cancel">Cancel</span>
+        </button>
+      </div>
     </div>
-
-    <button class="btn btn-primary" id="addAssessmentBtn" onclick="addAssessment()">
-      Save Assessment
-    </button>
-    <button class="btn btn-cancel" onclick="closeModal('assessmentModal')">Cancel</button>
-
   </div>
-</div>
+
+  <!-- Certificate Modal -->
+  <div class="modal" id="certificateModal">
+    <div class="modal-content modal-large cert-modal-content">
+      <button class="btn btn-close" onclick="closeModal('certificateModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <!-- Sticky form top — stays fixed while cert table below scrolls -->
+      <div class="cert-modal-form">
+        <h2 data-translate="Issue Certificate">Issue Certificate</h2>
+        <div class="modal-grid">
+          <label data-translate="Student Name">Student Name</label>
+          <input type="text" id="certStudentName" disabled>
+          <label data-translate="Matric Number">Matric Number</label>
+          <input type="text" id="certMatric" disabled>
+          <label data-translate="Level">Level</label>
+          <input type="text" id="certLevel" disabled>
+          <label data-translate="Grade Note (optional)">Grade Note (optional)</label>
+          <input type="text" id="certGradeNote"
+                 placeholder="e.g. with a total score of 85%"
+                 data-translate-placeholder="e.g. with a total score of 85%">
+          <label data-translate="Course">Course</label>
+          <select id="certCourse">
+            <option value="" data-translate="Select Course">Select Course</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-save" onclick="issueCertificate()">
+            <i class="fa-solid fa-certificate"></i>
+            <span data-translate="Issue Certificate">Issue Certificate</span>
+          </button>
+          <button class="btn btn-cancel" onclick="closeModal('certificateModal')">
+            <span data-translate="Cancel">Cancel</span>
+          </button>
+        </div>
+      </div>
+      <!-- Scrollable certs list — JS injects existingCertsList here -->
+      <div class="cert-modal-table-scroll" id="certHistoryScroll"></div>
+    </div>
+  </div>
+
+  <!-- Receipt / Passport Preview Modals -->
+  <div id="receiptModal" class="receipt-modal">
+    <div class="receipt-modal-content">
+      <span class="close-receipt-modal">&times;</span>
+      <img id="receiptPreview" src="" alt="Receipt Preview">
+    </div>
+  </div>
+
+  <div id="passportModal" class="receipt-modal">
+    <div class="receipt-modal-content">
+      <span class="close-passport-modal">&times;</span>
+      <img id="passportPreview" src="" alt="Passport Preview">
+    </div>
+  </div>
 
   <!-- TOAST -->
   <div id="admin-toast" class="toast"></div>
 
-  <section>
-    <div class="card">
-  <h2>Add Course</h2>
-
-<div class="form-group">
-  <input type="text" id="courseName" placeholder="Course Name">
-  <input type="text" id="courseLevel" placeholder="Level">
-  <input type="text" id="courseInstructor" placeholder="Instructor">
-
-<button class="btn btn-primary" onclick="addCourse()">Add Course</button>
-</div>
-
-<hr>
-
-  <h2>All Courses</h2>
-
-
-<div id="adminCoursesList"></div>
-</section>
-</div>
-
-<div class="password-grid">
-<!-- ================= MY PASSWORD ================= -->
-<section class="card password1-card">
-  <h2>🔐 Change My Password</h2>
-
-  <div class="form-group1">
-    <label>Current Password</label>
-    <div class="input-group">
-      <input id="oldPassword" type="password" placeholder="Enter current password">
-      <button type="button" class="toggle-btn" onclick="togglePassword('oldPassword')">👁️</button>
-    </div>
-  </div>
-
-  <div class="form-group1">
-    <label>New Password</label>
-    <div class="input-group">
-      <input id="newPassword" type="password" placeholder="Enter new password">
-      <button type="button" class="toggle-btn" onclick="togglePassword('newPassword')">👁️</button>
-    </div>
-  </div>
-
-  <button class="btn btn-save full-btn" onclick="changeMyPassword()">
-    Update Password
-  </button>
-</section>
-
-<!-- ================= ADMIN RESET STUDENT PASSWORD ================= -->
-<section class="card password-card">
-  <h2>🔐 Reset Student Password</h2>
-
-  <div class="form-group1">
-    <label>Select Student</label>
-    <select id="passwordStudentSelect"></select>
-  </div>
-
-  <div class="form-group1">
-    <label>New Password</label>
-    <div class="input-group">
-      <input id="newStudentPassword" type="password" placeholder="Enter new password">
-      <button type="button" class="toggle-btn" onclick="togglePassword('newStudentPassword')">👁️</button>
-    </div>
-  </div>
-
-  <button class="btn btn-save full-btn" onclick="resetStudentPassword()">
-    Update Password
-  </button>
-</section>
-</div>
-
-<div id="receiptModal" class="receipt-modal">
-  <div class="receipt-modal-content">
-
-    <span class="close-receipt-modal">&times;</span>
-
-    <img id="receiptPreview" src="" alt="Receipt Preview" />
-
-  </div>
-</div>
-
-<div id="passportModal" class="receipt-modal">
-  <div class="receipt-modal-content">
-    <span class="close-passport-modal">&times;</span>
-    <img id="passportPreview" src="" alt="Passport Preview" />
-  </div>
-</div>
-
   <!-- FOOTER -->
   <footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
-  <!-- WHATSAPP -->
-  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
+
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
+
+  <!-- SCRIPTS -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
-   
-  </script>
-  <!-- ADMIN JS -->
-  <script>
-    // Hamburger
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.getElementById('navLinks');
-    hamburger.addEventListener('click', () => navLinks.classList.toggle('show'));
-    document.addEventListener('click', e => {
-      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
-        navLinks.classList.remove('show');
-      }
+    const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+    
+
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
+    }
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
     });
 
-    // Modals
     function openModal(id) {
       document.getElementById(id).classList.add('show');
     }
     function closeModal(id) {
-      document.getElementById(id).classList.remove('show');
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.remove('show');
+      // Clear stale certificate student context when certificate modal is closed
+      if (id === 'certificateModal') window.certStudentData = null;
     }
+
+    // ===========================
+    // DASHBOARD TAB SYSTEM
+    // ===========================
+    const TAB_ROLE_MAP = {
+      mudeer:           ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-grades","tab-schedule","tab-attendance","tab-assessments","tab-courses","tab-certificates","tab-passwords","tab-deleted"],
+      assistant_mudeer: ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-grades","tab-schedule","tab-attendance","tab-assessments","tab-courses","tab-certificates","tab-passwords","tab-deleted"],
+      h_o_d:           ["tab-profile","tab-mypayments","tab-students","tab-grades","tab-schedule","tab-attendance","tab-courses","tab-passwords"],
+      registrar:        ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-attendance","tab-courses"],
+      bursar:           ["tab-profile","tab-mypayments","tab-payments","tab-fees"]
+    };
+
+    function initDashTabs() {
+      const role = sessionStorage.getItem("role") || "mudeer";
+      const allowed = TAB_ROLE_MAP[role] || ["tab-profile"];
+      const allTabs = document.querySelectorAll(".dash-tab");
+
+      allTabs.forEach(btn => {
+        const tab = btn.dataset.tab;
+        btn.style.display = allowed.includes(tab) ? "" : "none";
+      });
+
+      // Activate first allowed tab
+      const firstTab = allowed[0];
+      switchDashTab(firstTab, document.querySelector(`.dash-tab[data-tab="${firstTab}"]`));
+    }
+
+                function switchDashTab(tabId, btn) {
+      document.querySelectorAll(".dash-tab-panel").forEach(p => p.style.display = "none");
+      document.querySelectorAll(".dash-tab").forEach(b => b.classList.remove("active"));
+      
+      const panel = document.getElementById(tabId);
+      if (panel) panel.style.display = "block";
+      if (btn) btn.classList.add("active");
+
+      // Load certificate records under the text inputs when clicking the certificate tab
+      if (tabId === "tab-certificates") {
+        if (typeof loadCertificatesRegistryData === "function") {
+          loadCertificatesRegistryData();
+        }
+      }
+
+      // Load your standalone deleted students trash layout when clicking the deleted tab
+      if (tabId === "tab-deleted") {
+        if (typeof loadDeletedTabPanelContent === "function") {
+          loadDeletedTabPanelContent();
+        }
+      }
+      
+      // Load attendance sessions when clicking the attendance tab
+      if (tabId === "tab-attendance") {
+        if (typeof loadAttendanceSessions === "function") {
+          loadAttendanceSessions();
+        }
+      }
+
+      if (tabId === "tab-mypayments" && typeof loadAdminMyPayments === "function") loadAdminMyPayments();
+
+      sessionStorage.setItem("activeTab", tabId);
+    }
+
+
+    // Run tabs after role is set (called from admin-dashboard.js after auth)
+    window.initDashTabs = initDashTabs;
   </script>
-  <!-- SUPABASE -->
-<!-- 1️⃣ Supabase library -->
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script>
-  const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
-  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
-
-  window.supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
-
-  console.log("Supabase client ready:", window.supabaseClient);
-</script>
-
-<script src="translate.js"></script>
-
-<script src="admin-dashboard.js"></script>
+  <script src="translate.js"></script>
+  <script src="admin-dashboard.js"></script>
 </body>
 </html>

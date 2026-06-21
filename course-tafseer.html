@@ -3,121 +3,240 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Tafseerul Qur'an - Al-Bayan</title>
+
+  <title data-translate="Tafseerul Qur'an">
+    Tafseerul Qur'an
+  </title>
+
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="course-pages.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+
+  <!-- FIX FOR ICONS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
+
 <body>
 
-<!-- Navigation -->
+<!-- NAVIGATION -->
 <nav class="master-nav">
   <div class="nav-container">
     <a href="index.html" class="logo">
-      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+      <img src="logo.png" alt="Al-Bayan Logo">
+      <span>Al-Bayan</span>
     </a>
-    <div class="hamburger">☰</div>
+
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+
     <div class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="courses.html" class="active page-indicator">Courses</a>
+      <a href="index.html" data-translate="Home">Home</a>
+      <a href="about.html" data-translate="About">About</a>
+      <a href="courses.html" class="active" data-translate="Courses">Courses</a>
       <a href="register.html" data-translate="Register">Register</a>
-      <a href="students-dashboard.html">Dashboard</a>
-      <a href="payment.html">Payment</a>
-      <a href="schedule.html">Schedule</a>
-      <a href="contact.html">Contact</a>
+      <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
+      <a href="payment.html" data-translate="Payment">Payment</a>
+      <a href="contact.html" data-translate="Contact">Contact</a>
+      <a href="login.html" class="login-btn" data-translate="Log in">Log in</a>
     </div>
   </div>
 </nav>
 
-<header class="indiv-course-header" style="background-image: url('course-tafseer.jpg');">
-  <div class="header-overlay">
-    <h1>Tafseerul Qur'an</h1>
-    <p>Understand the meanings, wisdom, and lessons of the Qur’an in depth.</p>
-    <a href="register.html" class="register-btn">Register Now</a>
+<!-- HERO -->
+<header class="course-banner" style="background-image: url('course-quranic-arabic.jpg');">
+  <div class="course-banner-overlay"></div>
+
+  <div class="course-banner-content">
+    <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
+
+    <span class="course-eyebrow">
+      <i class="fa-solid fa-book-quran"></i>
+      <span data-translate="Qur'anic Studies">Qur'anic Studies</span>
+    </span>
+
+    <h1 data-translate="Tafseerul Qur'an">Tafseerul Qur'an</h1>
+
+    <p data-translate="Study the meanings, wisdom, and guidance of the Qur'an through structured explanation and reflection.">
+      Study the meanings, wisdom, and guidance of the Qur'an through structured explanation and reflection.
+    </p>
+
+    <div class="course-banner-meta">
+      <span class="meta-badge">
+        <i class="fa-solid fa-signal"></i>
+        <span data-translate="Deep Learning">Deep Learning</span>
+      </span>
+
+      <span class="meta-badge">
+        <i class="fa-solid fa-clock"></i>
+        <span data-translate="Flexible Schedule">Flexible Schedule</span>
+      </span>
+
+      <span class="meta-badge">
+        <i class="fa-solid fa-globe"></i>
+        <span data-translate="Online">Online</span>
+      </span>
+    </div>
+
+    <a href="register-courses.html" class="course-enrol-btn">
+      <span data-translate="Enroll Now">Enroll Now</span>
+      <i class="fa-solid fa-arrow-right"></i>
+    </a>
   </div>
 </header>
 
-<section class="course-content-section">
+<!-- MAIN CONTENT -->
+<main class="course-main">
 
-  <div class="content-card intro-card fade-in">
-    <p>
-      This course takes students on a journey through the Qur’an, exploring the meanings of its verses, context of revelation, and timeless guidance for life.
-    </p>
+  <!-- INTRO -->
+  <div class="cp-intro-card fade-in">
+    <div class="cp-intro-icon">
+      <i class="fa-solid fa-book-open"></i>
+    </div>
+
+    <div class="cp-intro-text">
+      <h2 data-translate="About This Course">About This Course</h2>
+
+      <p data-translate="This course guides students through Tafseer, explaining Qur'anic verses, their context, and practical lessons for daily life.">
+        This course guides students through Tafseer, explaining Qur'anic verses, their context, and practical lessons for daily life.
+      </p>
+    </div>
   </div>
 
-  <div class="content-card fade-in">
-    <h2>Module 1: Introduction to Tafseer</h2>
-    <p>Learn what Tafseer is, its importance, and the key principles for understanding the Qur’an correctly.</p>
-  </div>
+  <!-- MODULES -->
+  <section class="cp-modules-section">
 
-  <div class="content-card fade-in">
-    <h2>Module 2: Asbab al-Nuzul</h2>
-    <p>Study the circumstances of revelation to grasp the context behind each verse.</p>
-  </div>
+    <h2 class="cp-section-title fade-in">
+      <i class="fa-solid fa-list-check"></i>
+      <span data-translate="Course Modules">Course Modules</span>
+    </h2>
 
-  <div class="content-card fade-in">
-    <h2>Module 3: Tafseer by Meaning</h2>
-    <p>Analyze selected Surahs and verses to extract guidance, morals, and practical lessons.</p>
-  </div>
+    <div class="cp-modules-grid">
 
-  <div class="content-card fade-in">
-    <h2>Module 4: Themes & Wisdom</h2>
-    <p>Discover recurring themes, wisdom, and life lessons across the Qur’an.</p>
-  </div>
+      <div class="cp-module-card fade-in">
+        <div class="cp-module-number">01</div>
+        <div class="cp-module-body">
+          <h3 data-translate="Introduction to Tafseer">Introduction to Tafseer</h3>
+          <p data-translate="Understanding Tafseer and its importance in interpreting the Qur'an correctly.">
+            Understanding Tafseer and its importance in interpreting the Qur'an correctly.
+          </p>
+        </div>
+      </div>
 
-  <div class="content-card fade-in">
-    <h2>Module 5: Application in Daily Life</h2>
-    <p>Learn how to apply Qur’anic teachings in personal, social, and spiritual life.</p>
-  </div>
+      <div class="cp-module-card fade-in">
+        <div class="cp-module-number">02</div>
+        <div class="cp-module-body">
+          <h3 data-translate="Asbab al-Nuzul">Asbab al-Nuzul</h3>
+          <p data-translate="Study the reasons and circumstances behind Qur'anic revelation.">
+            Study the reasons and circumstances behind Qur'anic revelation.
+          </p>
+        </div>
+      </div>
 
-</section>
+      <div class="cp-module-card fade-in">
+        <div class="cp-module-number">03</div>
+        <div class="cp-module-body">
+          <h3 data-translate="Tafseer by Meaning">Tafseer by Meaning</h3>
+          <p data-translate="Analyze selected verses to extract guidance, morals, and lessons.">
+            Analyze selected verses to extract guidance, morals, and lessons.
+          </p>
+        </div>
+      </div>
 
-<!-- Footer -->
+      <div class="cp-module-card fade-in">
+        <div class="cp-module-number">04</div>
+        <div class="cp-module-body">
+          <h3 data-translate="Themes & Wisdom">Themes & Wisdom</h3>
+          <p data-translate="Discover recurring themes and divine wisdom throughout the Qur'an.">
+            Discover recurring themes and divine wisdom throughout the Qur'an.
+          </p>
+        </div>
+      </div>
+
+      <div class="cp-module-card fade-in">
+        <div class="cp-module-number">05</div>
+        <div class="cp-module-body">
+          <h3 data-translate="Practical Application">Practical Application</h3>
+          <p data-translate="Apply Qur'anic teachings in personal, social, and spiritual life.">
+            Apply Qur'anic teachings in personal, social, and spiritual life.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cp-cta-strip fade-in">
+    <div class="cp-cta-content">
+      <h2 data-translate="Live by the Qur'an">Live by the Qur'an</h2>
+
+      <p data-translate="Join students worldwide learning Tafseer with clarity, depth, and qualified guidance.">
+        Join students worldwide learning Tafseer with clarity, depth, and qualified guidance.
+      </p>
+    </div>
+
+    <a href="register-courses.html" class="cta-btn pulse">
+      <span data-translate="Register Now">Register Now</span>
+      <i class="fa-solid fa-arrow-right"></i>
+    </a>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
 <footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
+  <p data-translate="Al-Bayan Arabic Institute Online">
+    Al-Bayan Arabic Institute Online
+  </p>
+
+  <p>
+    <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com |
+    <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+  </p>
+
+  <p>
+    © 2026 - <span id="year"></span>
+    <span data-translate="All rights reserved.">All rights reserved.</span>
+  </p>
+
+  <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
 </footer>
 
-<!-- WhatsApp Button -->
+<!-- WHATSAPP -->
 <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
   <img src="whatsapp-icon.png" alt="WhatsApp">
 </a>
 
-<!-- Scripts -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.getElementById('navLinks');
-  if (hamburger && navLinks) {
-    hamburger.addEventListener('click', e => {
-      e.stopPropagation();
-      navLinks.classList.toggle('show');
-    });
-    document.addEventListener('click', e => {
-      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
-        navLinks.classList.remove('show');
-      }
-    });
-  }
+document.getElementById("year").textContent = new Date().getFullYear();
 
-  const elements = document.querySelectorAll(".fade-in");
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add("show");
-    });
-  }, { threshold: 0.2 });
-  elements.forEach(el => observer.observe(el));
+function toggleMenu(){
+  document.getElementById("navLinks").classList.toggle("show");
+}
+
+document.addEventListener("click", function(e){
+  const nav = document.getElementById("navLinks");
+  const burger = document.querySelector(".hamburger");
+  if(!nav.contains(e.target) && !burger.contains(e.target)){
+    nav.classList.remove("show");
+  }
 });
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add("visible");
+  });
+},{threshold:0.2});
+
+document.querySelectorAll(".fade-in").forEach(el=>observer.observe(el));
 </script>
+
 <script src="translate.js"></script>
+
 </body>
 </html>

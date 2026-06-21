@@ -1,257 +1,575 @@
-/* ✅ GLOBAL RESET (prevents browser weirdness) */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ============================================================
+   Al-Bayan — PREMIUM ADMISSION LETTER
+   Typefaces: Playfair Display · EB Garamond · Montserrat
+============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@400;500;600;700&display=swap');
+
+/* ── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --green-deep:   #0515c4;
+  --green-mid:    #3f51b5;
+  --green-light:  #dcf0ef;
+  --gold:         #b8972a;
+  --gold-light:   #e8d48a;
+  --gold-pale:    #fdf6e0;
+  --cream:        #faf8f3;
+  --ink:          #1a1a1a;
+  --ink-soft:     #2e2e2e;
+  --muted:        #5c5c5c;
+  --rule:         #d4c89a;
+  --border:       #b0c4c8;
 }
 
-/* ✅ SCREEN VIEW */
+/* ── RESET ───────────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── SCREEN BODY ─────────────────────────────────────────── */
 body {
-  background: #f5f5f5;
-  font-family: Arial, sans-serif;
+  background: #e8e4dc;
+  font-family: 'EB Garamond', Georgia, serif;
+  color: var(--ink);
 }
 
-/* ✅ TRUE A4 DOCUMENT */
+/* ── LETTER SHELL ────────────────────────────────────────── */
 .letter {
   position: relative;
-
   width: 210mm;
   min-height: 297mm;
-
-  margin: 10mm auto;
-  background: white;
-
-  padding: 18mm;
-  border: 4px solid #0a3d62;
-  border-radius: 28px;
-
+  margin: 12mm auto;
+  background: var(--cream);
   overflow: hidden;
+
+  /* Layered border: outer gold, inner green */
+  border: 3px solid var(--green-deep);
+  outline: 1px solid var(--gold);
+  outline-offset: -6px;
+  border-radius: 4px;
+
+  box-shadow:
+    0 2px 6px rgba(0,0,0,0.08),
+    0 12px 40px rgba(0,0,0,0.18);
 }
 
-
-/* ✅ LETTERHEAD */
-.letterhead {
-  text-align: center;
-  border-bottom: 2px solid #ccc;
-  padding-bottom: 6mm;
-  margin-top: -2mm;
-  margin-bottom: 6mm;
+/* Corner ornament lines */
+.letter::before,
+.letter::after {
+  content: "";
+  position: absolute;
+  width: 28mm;
+  height: 28mm;
+  pointer-events: none;
+  z-index: 1;
+}
+.letter::before {
+  top: 5mm; left: 5mm;
+  border-top: 1.5px solid var(--gold);
+  border-left: 1.5px solid var(--gold);
+}
+.letter::after {
+  bottom: 5mm; right: 5mm;
+  border-bottom: 1.5px solid var(--gold);
+  border-right: 1.5px solid var(--gold);
 }
 
-.letterhead img {
-  width: 22mm;
-}
-
-.letterhead h1 {
-  margin-top: 2mm;
-  font-size: 20px;
-  color: #0a3d62;
-}
-
-.letterhead h2 {
-  margin-top: 1mm;
-  font-size: 14px;
-  color: #0a6219;
-}
-
-.letterhead p {
-  margin-top: 2mm;
-  font-size: 15px;
-  color: #272727d8;
-}
-
-/* ✅ WATERMARK (true paper scaling) */
+/* ── WATERMARK ───────────────────────────────────────────── */
 .watermark {
   position: absolute;
-  width: 65%;
-  opacity: 0.20;
-
-  top: 50%;
-  left: 50%;
+  width: 60%;
+  opacity: 0.100;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-
   z-index: 0;
   pointer-events: none;
 }
 
-.doc-date {
-  display: flex;
-  color: #030030;
-  justify-content: space-between;
-  margin-top: 20px;
-  margin-bottom: -25px;
-  font-weight: bold;
-  font-size: 0.6rem;
-}
-
-/* ✅ STUDENT INFO */
-.student-section {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8mm;
-  z-index: 2;
+/* ── TOP GOLD BAND ───────────────────────────────────────── */
+.header-band {
+  background: var(--green-deep);
+  padding: 5mm 14mm 4mm;
   position: relative;
-}
-
-.student-details {
-  line-height: 1.7;
-  font-size: 15px;
-}
-
-/* ✅ PASSPORT (CRITICAL FIX) */
-.passport {
-  width: 35mm;
-  height: 37mm;
-  object-fit: cover;
-  border: 1px solid #000;
-}
-
-/* ✅ BODY */
-.letter-body {
-  margin-top: 6mm;
-  line-height: 1.75;
-  text-align: justify;
-  font-size: 14.5px;
   z-index: 2;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8mm;
 }
 
-.letter-body h3 {
-  margin-bottom: 3mm;
-  font-size: 15px;
+.header-band-text {
+  color: rgba(255,255,255,0.55);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1.5;
 }
 
-.letter-body h4 {
-  margin: 4mm 0;
+.header-band-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-light), transparent);
+}
+
+/* ── LETTERHEAD ──────────────────────────────────────────── */
+.letterhead {
   text-align: center;
-  
-  font-size: 15px;
+  padding: 7mm 14mm 5mm;
+  position: relative;
+  z-index: 2;
 }
 
-/* ✅ NOTICE BOX */
-.notice {
-  margin-top: 8mm;
-  font-size: 13.5px;
-
-  border: 1px solid black;
-  border-left: 4px solid black;
-
-  padding: 5mm;
-  background: #f9f9f9;
-
-  line-height: 1.6;
+.letterhead-logo {
+  width: 22mm;
+  height: auto;
+  margin-bottom: 3mm;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.15));
 }
 
-.notice strong {
-  font-size: 14px;
-  color: #cf0000;
+.letterhead-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--green-deep);
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  margin-bottom: 1.5mm;
+}
+
+.letterhead-motto {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5mm;
+}
+
+.letterhead-sub {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
-.notice ul {
-  margin-top: 2mm;
-  padding-left: 5mm;
+/* Ornament divider */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  margin: 3mm 14mm;
+  position: relative;
+  z-index: 2;
 }
 
-/* ✅ FOOTER */
+.ornament-divider::before,
+.ornament-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold));
+}
+.ornament-divider::after {
+  background: linear-gradient(to left, transparent, var(--gold));
+}
+
+.ornament-glyph {
+  font-size: 14px;
+  color: var(--gold);
+  line-height: 1;
+  /* Islamic geometric star character */
+}
+
+/* ── DOC META ROW ────────────────────────────────────────── */
+.doc-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 3mm 14mm;
+  background: var(--gold-pale);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+  z-index: 2;
+}
+
+.doc-meta-item {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8.5px;
+  font-weight: 500;
+  color: var(--green-deep);
+  letter-spacing: 0.04em;
+}
+
+.doc-meta-item strong {
+  display: block;
+  font-weight: 700;
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 0.8mm;
+}
+
+.doc-meta-item span {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--green-deep);
+}
+
+.admission-stamp {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cream);
+  background: var(--green-mid);
+  padding: 1.5mm 4mm;
+  border-radius: 2px;
+  align-self: center;
+}
+
+/* ── STUDENT SECTION ─────────────────────────────────────── */
+.student-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 6mm;
+  padding: 5mm 14mm 4mm;
+  position: relative;
+  z-index: 2;
+}
+
+.student-details-wrap {
+  flex: 1;
+}
+
+.student-details-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2.5mm;
+  padding-bottom: 1.5mm;
+  border-bottom: 1px solid var(--rule);
+}
+
+.student-details {
+  font-family: 'EB Garamond', serif;
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--ink-soft);
+  word-break: break-word;
+}
+
+.student-details .field-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: inline-block;
+  min-width: 22mm;
+}
+
+.student-details .field-value {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* Passport */
+.passport-wrap {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5mm;
+}
+
+.passport {
+  width: 32mm;
+  height: 38mm;
+  object-fit: cover;
+  border: 2px solid var(--green-deep);
+  outline: 1px solid var(--gold);
+  outline-offset: 2px;
+  display: block;
+}
+
+.passport-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 6.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ── BODY ────────────────────────────────────────────────── */
+.letter-body {
+  padding: 0 14mm 4mm;
+  position: relative;
+  z-index: 2;
+}
+
+.letter-body h3 {
+  font-family: 'EB Garamond', serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 3mm;
+}
+
+.subject-line {
+  text-align: center;
+  margin: 3mm 0 5mm;
+}
+
+.subject-line-inner {
+  display: inline-block;
+  font-family: 'Playfair Display', serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--green-deep);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2mm 6mm;
+  border-top: 1.5px solid var(--green-deep);
+  border-bottom: 1.5px solid var(--green-deep);
+}
+
+.letter-body p {
+  font-family: 'EB Garamond', serif;
+  font-size: 14.5px;
+  line-height: 1.9;
+  text-align: justify;
+  color: var(--ink-soft);
+  margin-bottom: 3.5mm;
+}
+
+/* ── NOTICE BOX ──────────────────────────────────────────── */
+.notice {
+  margin: 4mm 14mm;
+  position: relative;
+  z-index: 2;
+  padding: 4mm 5mm 4mm 6mm;
+  background: var(--gold-pale);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--gold);
+}
+
+.notice strong {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green-deep);
+  display: block;
+  margin-bottom: 2mm;
+}
+
+.notice ul {
+  padding-left: 5mm;
+  font-family: 'EB Garamond', serif;
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.footer-divider {
+  margin: 4mm 14mm 0;
+  border: none;
+  border-top: 1px solid var(--rule);
+  position: relative;
+  z-index: 2;
+}
+
 .footer-section {
-  margin-top: 10mm;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  z-index: 2;
+  padding: 4mm 14mm;
   position: relative;
+  z-index: 2;
 }
 
 .registrar {
-  font-size: 14px;
-  line-height: 1.6;
+  font-family: 'EB Garamond', serif;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.registrar-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1mm;
+}
+
+.registrar-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--green-deep);
+  margin-top: 1mm;
 }
 
 .registrar img {
-  width: 20mm;
-  margin-left: 20px;
-  margin-top: 2mm;
+  width: 22mm;
+  margin-top: 1.5mm;
+  display: block;
+  opacity: 0.88;
+}
+
+/* QR zone */
+.qr-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5mm;
 }
 
 .qr img {
-  width: 32mm;
+  width: 28mm;
+  height: 28mm;
+  border: 1px solid var(--border);
+  padding: 1.5mm;
+  background: white;
 }
 
+.qr-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 6px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ── BOTTOM BAND ─────────────────────────────────────────── */
 .security-footer {
-  margin-top: 25px;
-  font-size: 12px;
+  background: var(--green-deep);
+  color: rgba(255,255,255,0.6);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 7px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   text-align: center;
-  color: #555;
-  border-top: 1px dashed #999;
-  padding-top: 8px;
+  padding: 3mm 14mm;
+  position: relative;
+  z-index: 2;
+  line-height: 1.8;
 }
 
-/* ✅ BUTTONS (screen only) */
+/* ── PRINT BUTTONS ───────────────────────────────────────── */
 .print-btn {
-  margin-top: 8mm;
-  text-align: center;
+  padding: 8mm 0 10mm;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
 }
 
 .print-btn button {
-  padding: 10px 22px;
-  background: #0a3d62;
-  color: white;
+  padding: 11px 26px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   border: none;
+  border-radius: 3px;
   cursor: pointer;
-  font-size: 14px;
+  transition: opacity 0.18s;
 }
 
-/* ✅ PAGE SETTINGS */
+.print-btn button:first-child {
+  background: var(--green-deep);
+  color: white;
+}
+
+.print-btn button:last-child {
+  background: var(--gold);
+  color: white;
+}
+
+.print-btn button:hover { opacity: 0.82; }
+
+/* ── PAGE SETTINGS ───────────────────────────────────────── */
 @page {
   size: A4;
-  margin: 12mm;
+  margin: 10mm;
 }
 
-/* ✅ PRINT ENGINE LOCK */
+/* ── PRINT ENGINE ────────────────────────────────────────── */
 @media print {
-
-  body {
-    background: white;
-  }
-
-  .letter {
-    width: 100%;
-    height: auto;
-
-    margin: 0;
-    padding: 18mm;
-
-    border: 4px solid #0a3d62;
-    border-radius: 28px;
-
-    page-break-after: always;
-  }
-
-  .print-btn {
-    display: none;
-  }
-}
-
-@media (max-width: 768px) {
+  body { background: white; }
 
   .letter {
     width: 100%;
     min-height: auto;
-
-    
-
-    padding: 16px;
-
-    transform: none !important;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 
-  body {
-    overflow-x: hidden;
-  }
+  .print-btn { display: none; }
 }
+
+/* ── MOBILE ──────────────────────────────────────────────── */
 @media (max-width: 768px) {
+  body { overflow-x: hidden; }
+
   .letter {
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 100%;
+    min-height: auto;
+    margin: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
   }
+
+  .header-band,
+  .letterhead,
+  .doc-meta,
+  .student-section,
+  .letter-body,
+  .notice,
+  .footer-section {
+    padding-left: 5mm;
+    padding-right: 5mm;
+  }
+
+  .ornament-divider {
+    margin-left: 5mm;
+    margin-right: 5mm;
+  }
+
+  .footer-divider { margin-left: 5mm; margin-right: 5mm; }
+
+  .student-section { flex-direction: column-reverse; align-items: center; }
+  .passport { width: 28mm; height: 34mm; }
+
+  .letterhead-name { font-size: 17px; }
+
+  .print-btn {
+    flex-direction: column;
+    align-items: center;
+    padding: 6mm 5mm 8mm;
+  }
+  .print-btn button { width: 100%; max-width: 280px; }
 }

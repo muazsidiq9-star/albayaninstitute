@@ -3,123 +3,229 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Tajweedul Qur'an - Al-Bayan</title>
+
+  <title data-translate="Tajweedul Qur'an">Tajweedul Qur'an</title>
+
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="course-pages.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
+
 <body>
 
-<!-- Navigation -->
+<!-- NAVIGATION -->
 <nav class="master-nav">
   <div class="nav-container">
     <a href="index.html" class="logo">
-      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+      <img src="logo.png" alt="Al-Bayan Logo">
+      <span>Al-Bayan</span>
     </a>
-    <div class="hamburger">☰</div>
+
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+
     <div class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="courses.html" class="active page-indicator">Courses</a>
+      <a href="index.html" data-translate="Home">Home</a>
+      <a href="about.html" data-translate="About">About</a>
+      <a href="courses.html" class="active" data-translate="Courses">Courses</a>
       <a href="register.html" data-translate="Register">Register</a>
-      <a href="students-dashboard.html">Dashboard</a>
-      <a href="payment.html">Payment</a>
-      <a href="schedule.html">Schedule</a>
-      <a href="contact.html">Contact</a>
+      <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
+      <a href="payment.html" data-translate="Payment">Payment</a>
+      <a href="contact.html" data-translate="Contact">Contact</a>
+      <a href="login.html" class="login-btn" data-translate="Log in">Log in</a>
     </div>
   </div>
 </nav>
 
-<header class="indiv-course-header" style="background-image: url('course-quran.jpg');">
-  <div class="header-overlay">
-    <h1>Tajweedul Qur'an</h1>
-    <p>Master the rules of Qur’anic recitation and improve pronunciation.</p>
-    <a href="register.html" class="register-btn">Register Now</a>
+<!-- HERO -->
+<header class="course-banner" style="background-image: url('course-quran.jpg');">
+  <div class="course-banner-overlay"></div>
+
+  <div class="course-banner-content">
+    <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
+
+    <span class="course-eyebrow">
+      <i class="fa-solid fa-microphone-lines"></i>
+      <span data-translate="Qur'anic Recitation">Qur'anic Recitation</span>
+    </span>
+
+    <h1 data-translate="Tajweedul Qur'an">Tajweedul Qur'an</h1>
+
+    <p data-translate="Master the rules of Qur'anic recitation and improve pronunciation with proper Tajweed application.">
+      Master the rules of Qur'anic recitation and improve pronunciation with proper Tajweed application.
+    </p>
+
+    <div class="course-banner-meta">
+      <span class="meta-badge">
+        <i class="fa-solid fa-signal"></i>
+        <span data-translate="Skill Development">Skill Development</span>
+      </span>
+
+      <span class="meta-badge">
+        <i class="fa-solid fa-clock"></i>
+        <span data-translate="Flexible Schedule">Flexible Schedule</span>
+      </span>
+
+      <span class="meta-badge">
+        <i class="fa-solid fa-globe"></i>
+        <span data-translate="Online">Online</span>
+      </span>
+    </div>
+
+    <a href="register-courses.html" class="course-enrol-btn">
+      <span data-translate="Enroll Now">Enroll Now</span>
+      <i class="fa-solid fa-arrow-right"></i>
+    </a>
   </div>
 </header>
 
-<section class="course-content-section">
+<!-- MAIN -->
+<main class="course-main">
 
-  <div class="content-card intro-card fade-in">
-    <p>
-      This course is designed for learners who want to perfect their Qur’anic recitation, understand Tajweed rules, and recite fluently with proper pronunciation.
-    </p>
+  <div class="cp-intro-card fade-in">
+    <div class="cp-intro-icon">
+      <i class="fa-solid fa-book-open"></i>
+    </div>
+
+    <div class="cp-intro-text">
+      <h2 data-translate="About This Course">About This Course</h2>
+
+      <p data-translate="This course trains students to recite the Qur'an correctly with Tajweed rules, focusing on clarity, fluency, and proper pronunciation.">
+        This course trains students to recite the Qur'an correctly with Tajweed rules, focusing on clarity, fluency, and proper pronunciation.
+      </p>
+    </div>
   </div>
 
-  <div class="content-card fade-in">
-    <h2>Module 1: Introduction to Tajweed</h2>
-    <p>Learn the basics of Tajweed, its importance, and how it affects Qur’anic recitation.</p>
-  </div>
+  <section class="cp-modules-section">
 
-  <div class="content-card fade-in">
-    <h2>Module 2: Makharij & Sifaat</h2>
-    <p>Understand articulation points (makharij) and characteristics (sifaat) of Arabic letters.</p>
-  </div>
+    <h2 class="cp-section-title fade-in">
+      <i class="fa-solid fa-list-check"></i>
+      <span data-translate="Course Modules">Course Modules</span>
+    </h2>
 
-  <div class="content-card fade-in">
-    <h2>Module 3: Rules of Noon & Meem</h2>
-    <p>Learn the proper application of Noon Saakinah and Meem Saakinah rules in recitation.</p>
-  </div>
+    <div class="cp-modules-grid">
 
-  <div class="content-card fade-in">
-    <h2>Module 4: Qalqalah & Madd</h2>
-    <p>Practice Qalqalah letters and various types of Madd (elongation) in the Qur’an.</p>
-  </div>
+      <div class="cp-module-card fade-in">
+        <div class="cp-module-number">01</div>
+        <div class="cp-module-body">
+          <h3 data-translate="Introduction to Tajweed">Introduction to Tajweed</h3>
+          <p data-translate="Understanding the importance of Tajweed in Qur'anic recitation.">
+            Understanding the importance of Tajweed in Qur'anic recitation.
+          </p>
+        </div>
+      </div>
 
-  <div class="content-card fade-in">
-    <h2>Module 5: Recitation Practice</h2>
-    <p>Guided recitation exercises with feedback to improve fluency and accuracy.</p>
-  </div>
+      <div class="cp-module-card fade-in">
+        <div class="cp-module-number">02</div>
+        <div class="cp-module-body">
+          <h3 data-translate="Makharij & Sifaat">Makharij & Sifaat</h3>
+          <p data-translate="Learn articulation points and characteristics of Arabic letters.">
+            Learn articulation points and characteristics of Arabic letters.
+          </p>
+        </div>
+      </div>
 
-</section>
+      <div class="cp-module-card fade-in">
+        <div class="cp-module-number">03</div>
+        <div class="cp-module-body">
+          <h3 data-translate="Rules of Noon & Meem">Rules of Noon & Meem</h3>
+          <p data-translate="Master the rules of Noon Saakinah and Meem Saakinah.">
+            Master the rules of Noon Saakinah and Meem Saakinah.
+          </p>
+        </div>
+      </div>
 
-<!-- Footer -->
+      <div class="cp-module-card fade-in">
+        <div class="cp-module-number">04</div>
+        <div class="cp-module-body">
+          <h3 data-translate="Qalqalah & Madd">Qalqalah & Madd</h3>
+          <p data-translate="Practice pronunciation rules including Qalqalah and Madd (elongation).">
+            Practice pronunciation rules including Qalqalah and Madd (elongation).
+          </p>
+        </div>
+      </div>
+
+      <div class="cp-module-card fade-in">
+        <div class="cp-module-number">05</div>
+        <div class="cp-module-body">
+          <h3 data-translate="Recitation Practice">Recitation Practice</h3>
+          <p data-translate="Guided recitation practice to improve fluency and accuracy.">
+            Guided recitation practice to improve fluency and accuracy.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="cp-cta-strip fade-in">
+    <div class="cp-cta-content">
+      <h2 data-translate="Perfect Your Qur'anic Recitation">Perfect Your Qur'anic Recitation</h2>
+
+      <p data-translate="Join students learning Tajweed with expert guidance and structured practice sessions.">
+        Join students learning Tajweed with expert guidance and structured practice sessions.
+      </p>
+    </div>
+
+    <a href="register-courses.html" class="cta-btn pulse">
+      <span data-translate="Register Now">Register Now</span>
+      <i class="fa-solid fa-arrow-right"></i>
+    </a>
+  </section>
+
+</main>
+
 <footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
+  <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+
+  <p>
+    <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com |
+    <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+  </p>
+
+  <p>
+    © 2026 - <span id="year"></span>
+    <span data-translate="All rights reserved.">All rights reserved.</span>
+  </p>
+
+  <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
 </footer>
 
-<!-- WhatsApp Button -->
 <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
   <img src="whatsapp-icon.png" alt="WhatsApp">
 </a>
 
-<!-- Scripts -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  // Hamburger toggle
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.getElementById('navLinks');
-  if (hamburger && navLinks) {
-    hamburger.addEventListener('click', e => {
-      e.stopPropagation();
-      navLinks.classList.toggle('show');
-    });
-    document.addEventListener('click', e => {
-      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
-        navLinks.classList.remove('show');
-      }
-    });
-  }
+document.getElementById("year").textContent = new Date().getFullYear();
 
-  // Fade-in effect
-  const elements = document.querySelectorAll(".fade-in");
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add("show");
-    });
-  }, { threshold: 0.2 });
-  elements.forEach(el => observer.observe(el));
+function toggleMenu(){
+  document.getElementById("navLinks").classList.toggle("show");
+}
+
+document.addEventListener("click", function(e){
+  const nav = document.getElementById("navLinks");
+  const burger = document.querySelector(".hamburger");
+  if(!nav.contains(e.target) && !burger.contains(e.target)){
+    nav.classList.remove("show");
+  }
 });
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add("visible");
+  });
+},{threshold:0.2});
+
+document.querySelectorAll(".fade-in").forEach(el=>observer.observe(el));
 </script>
+
 <script src="translate.js"></script>
+
 </body>
 </html>

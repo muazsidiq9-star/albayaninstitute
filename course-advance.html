@@ -3,133 +3,201 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Advanced Arabic - Al-Bayan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- MASTER CSS -->
+  <title>Advanced Arabic - Al-Bayan Arabic Institute Online</title>
   <link rel="stylesheet" href="master.css">
-  
-  <!-- Page-specific CSS -->
   <link rel="stylesheet" href="course-pages.css">
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
-<!-- Navigation -->
-<nav class="master-nav">
-  <div class="nav-container">
-    <a href="index.html" class="logo">
-      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
-    </a>
-    <div class="hamburger">☰</div>
-    <div class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="courses.html" class="active page-indicator">Courses</a>
-      <a href="register.html" data-translate="Register">Register</a>
-      <a href="students-dashboard.html">Dashboard</a>
-      <a href="payment.html">Payment</a>
-      <a href="schedule.html">Schedule</a>
-      <a href="contact.html">Contact</a>
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" class="active" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+        <a href="login.html" class="login-btn" data-translate="Log in">Log in</a>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<!-- Course Header -->
-<header class="indiv-course-header" style="background-image: url('course-advance.jpg');">
-  <div class="header-overlay">
-    <h1>Advanced Arabic</h1>
-    <p>Refine your Arabic skills and master advanced grammar, vocabulary, and comprehension.</p>
-    <a href="register.html" class="register-btn" data-translate="Register Now">Register Now</a>
-  </div>
-</header>
+  <!-- PAGE BANNER -->
+  <header class="course-banner" style="background-image: url('course-advance.jpg');">
+    <div class="course-banner-overlay"></div>
+    <div class="course-banner-content">
+      <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
+      <span class="course-eyebrow">
+        <i class="fa-solid fa-star"></i>
+        <span data-translate="Arabic Language">Arabic Language</span>
+      </span>
+      <h1 data-translate="Advanced Arabic">Advanced Arabic</h1>
+      <p data-translate="Refine your fluency and master advanced Arabic grammar, vocabulary, and comprehension at the highest level.">
+        Refine your fluency and master advanced Arabic grammar, vocabulary, and comprehension at the highest level.
+      </p>
+      <div class="course-banner-meta">
+        <span class="meta-badge"><i class="fa-solid fa-circle-up"></i> <span data-translate="Advanced">Advanced</span></span>
+        <span class="meta-badge"><i class="fa-solid fa-clock"></i> <span data-translate="Flexible Schedule">Flexible Schedule</span></span>
+        <span class="meta-badge"><i class="fa-solid fa-globe"></i> <span data-translate="Online">Online</span></span>
+      </div>
+      <a href="register.html" class="course-enrol-btn">
+        <span data-translate="Enrol Now">Enrol Now</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </header>
 
-<!-- Course Content Section -->
-<section class="course-content-section">
+  <!-- MAIN CONTENT -->
+  <main class="course-main">
 
-  <!-- Intro Card -->
-  <div class="content-card intro-card fade-in">
-    <p>Take your Arabic to the next level with advanced lessons, interactive exercises, and comprehensive practice. Perfect for learners who want mastery.</p>
-  </div>
+    <!-- INTRO CARD -->
+    <div class="cp-intro-card fade-in">
+      <div class="cp-intro-icon">
+        <i class="fa-solid fa-star"></i>
+      </div>
+      <div class="cp-intro-text">
+        <h2 data-translate="About This Course">About This Course</h2>
+        <p data-translate="This course is built for learners who are serious about achieving true mastery of Arabic. Through advanced lessons, rich literary exposure, and intensive practice, you will refine every dimension of your Arabic — from grammar precision to eloquent expression.">
+          This course is built for learners who are serious about achieving true mastery of Arabic. Through advanced lessons, rich literary exposure, and intensive practice, you will refine every dimension of your Arabic — from grammar precision to eloquent expression.
+        </p>
+      </div>
+    </div>
 
-  <!-- Modules -->
-  <div class="content-card fade-in">
-    <h2>Module 1: Advanced Grammar</h2>
-    <p>Deep dive into complex sentence structures, syntax, and linguistic patterns.</p>
-  </div>
+    <!-- MODULES SECTION -->
+    <section class="cp-modules-section">
 
-  <div class="content-card fade-in">
-    <h2>Module 2: Advanced Vocabulary</h2>
-    <p>Learn nuanced vocabulary, idiomatic expressions, and word usage in context.</p>
-  </div>
+      <h2 class="cp-section-title fade-in">
+        <i class="fa-solid fa-list-check"></i>
+        <span data-translate="Course Modules">Course Modules</span>
+      </h2>
 
-  <div class="content-card fade-in">
-    <h2>Module 3: Advanced Writing</h2>
-    <p>Enhance writing skills for essays, letters, and formal Arabic compositions.</p>
-  </div>
+      <div class="cp-modules-grid">
 
-  <div class="content-card fade-in">
-    <h2>Module 4: Reading & Comprehension</h2>
-    <p>Interpret complex texts, literature, and classical Arabic passages.</p>
-  </div>
+        <div class="cp-module-card fade-in">
+          <div class="cp-module-number">01</div>
+          <div class="cp-module-body">
+            <h3 data-translate="Advanced Grammar">Advanced Grammar</h3>
+            <p data-translate="Dive deep into complex Arabic sentence structures, syntax rules, and sophisticated linguistic patterns used in formal and classical Arabic.">
+              Dive deep into complex Arabic sentence structures, syntax rules, and sophisticated linguistic patterns used in formal and classical Arabic.
+            </p>
+          </div>
+          <div class="cp-module-icon"><i class="fa-solid fa-layer-group"></i></div>
+        </div>
 
-  <div class="content-card fade-in">
-    <h2>Module 5: Listening & Speaking</h2>
-    <p>Refine pronunciation, listening comprehension, and conversational fluency.</p>
-  </div>
+        <div class="cp-module-card fade-in">
+          <div class="cp-module-number">02</div>
+          <div class="cp-module-body">
+            <h3 data-translate="Advanced Vocabulary">Advanced Vocabulary</h3>
+            <p data-translate="Expand your lexical range with nuanced vocabulary, idiomatic expressions, and context-sensitive word usage across various registers.">
+              Expand your lexical range with nuanced vocabulary, idiomatic expressions, and context-sensitive word usage across various registers.
+            </p>
+          </div>
+          <div class="cp-module-icon"><i class="fa-solid fa-book-open"></i></div>
+        </div>
 
-</section>
+        <div class="cp-module-card fade-in">
+          <div class="cp-module-number">03</div>
+          <div class="cp-module-body">
+            <h3 data-translate="Advanced Writing">Advanced Writing</h3>
+            <p data-translate="Master the art of formal Arabic writing — essays, letters, reports, and eloquent compositions that reflect true linguistic command.">
+              Master the art of formal Arabic writing — essays, letters, reports, and eloquent compositions that reflect true linguistic command.
+            </p>
+          </div>
+          <div class="cp-module-icon"><i class="fa-solid fa-feather-pointed"></i></div>
+        </div>
 
-<!-- Footer -->
-<footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
+        <div class="cp-module-card fade-in">
+          <div class="cp-module-number">04</div>
+          <div class="cp-module-body">
+            <h3 data-translate="Reading & Comprehension">Reading &amp; Comprehension</h3>
+            <p data-translate="Interpret and analyse complex Arabic texts, classical literature, and formal passages to strengthen your reading precision and depth.">
+              Interpret and analyse complex Arabic texts, classical literature, and formal passages to strengthen your reading precision and depth.
+            </p>
+          </div>
+          <div class="cp-module-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+        </div>
 
-<!-- WhatsApp Button -->
-<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
+        <div class="cp-module-card fade-in">
+          <div class="cp-module-number">05</div>
+          <div class="cp-module-body">
+            <h3 data-translate="Listening & Speaking">Listening &amp; Speaking</h3>
+            <p data-translate="Refine your pronunciation, sharpen your listening comprehension, and elevate your conversational fluency to an advanced level.">
+              Refine your pronunciation, sharpen your listening comprehension, and elevate your conversational fluency to an advanced level.
+            </p>
+          </div>
+          <div class="cp-module-icon"><i class="fa-solid fa-microphone-lines"></i></div>
+        </div>
 
-<!-- Scripts -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  // Hamburger toggle
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.getElementById('navLinks');
-  if (hamburger && navLinks) {
-    hamburger.addEventListener('click', e => {
-      e.stopPropagation();
-      navLinks.classList.toggle('show');
+      </div>
+    </section>
+
+    <!-- CTA STRIP -->
+    <section class="cp-cta-strip fade-in">
+      <div class="cp-cta-content">
+        <h2 data-translate="Ready to Master Arabic?">Ready to Master Arabic?</h2>
+        <p data-translate="Push your Arabic to its peak. Enrol in our advanced programme and achieve the fluency you have always aimed for.">
+          Push your Arabic to its peak. Enrol in our advanced programme and achieve the fluency you have always aimed for.
+        </p>
+      </div>
+      <a href="register.html" class="cta-btn pulse">
+        <span data-translate="Register Now">Register Now</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
+
+  <script>
+    
+
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
+    }
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
     });
-    document.addEventListener('click', e => {
-      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
-        navLinks.classList.remove('show');
-      }
-    });
-  }
 
-  // Fade-in effect
-  const elements = document.querySelectorAll(".fade-in");
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add("show");
-    });
-  }, { threshold: 0.2 });
-  elements.forEach(el => observer.observe(el));
-});
-</script>
-<script src="translate.js"></script>
+    /* Scroll reveal */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+  <script src="translate.js"></script>
 </body>
 </html>

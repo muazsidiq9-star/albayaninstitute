@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" content="notranslate">
+  <title>Staff Dashboard | Al-Bayan Arabic Institute Online</title>
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="staff-dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="staff-dashboard.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="staff-dashboard.html" class="active" data-translate="My Dashboard">My Dashboard</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+        <button id="logoutBtn" class="logout-btn">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span data-translate="Logout">Logout</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================================================
+       HERO HEADER
+  ================================================ -->
+  <header class="admin-hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="background-all.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img src="logo.png" alt="Al-Bayan Logo" class="header-logo">
+      <h1 data-translate="Staff Dashboard">Staff Dashboard</h1>
+      <h3 id="staffGreeting" class="greeting"></h3>
+      <p data-translate="Manage your courses, students and grades">
+        Manage your courses, students and grades
+      </p>
+    </div>
+  </header>
+
+  <!-- ================================================
+       STATS
+  ================================================ -->
+  <section class="stats">
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fa-solid fa-book-open"></i></div>
+      <div class="stat-info">
+        <h3 id="totalCourses"
+        data-no-translate="true">0</h3>
+        <p data-translate="My Courses">My Courses</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon students"><i class="fa-solid fa-users"></i></div>
+      <div class="stat-info">
+        <h3 id="totalStudents"
+        data-no-translate="true">0</h3>
+        <p data-translate="My Students">My Students</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon grades"><i class="fa-solid fa-chart-bar"></i></div>
+      <div class="stat-info">
+        <h3 id="totalGrades"
+        data-no-translate="true">0</h3>
+        <p data-translate="Grades Posted">Grades Posted</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       TAB NAVIGATION
+  ================================================ -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('courses')">
+      <i class="fa-solid fa-book-open"></i>
+      <span data-translate="My Courses">My Courses</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('grades')">
+      <i class="fa-solid fa-chart-bar"></i>
+      <span data-translate="Grades">Grades</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('schedule')">
+      <i class="fa-solid fa-calendar-days"></i>
+      <span data-translate="Schedule">Schedule</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('attendance')">
+      <i class="fa-solid fa-clipboard-user"></i>
+      <span data-translate="Attendance">Attendance</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('payments')">
+      <i class="fa-solid fa-money-bill-wave"></i>
+      <span data-translate="My Payments">My Payments</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('profile')">
+      <i class="fa-solid fa-user"></i>
+      <span data-translate="My Profile">My Profile</span>
+    </button>
+  </div>
+
+  <!-- ================================================
+       TAB: MY COURSES
+  ================================================ -->
+  <div class="tab-content active" id="tab-courses">
+    <div class="section-header">
+      <h2 data-translate="My Courses & Students">My Courses &amp; Students</h2>
+      <input type="text" id="searchStudents" class="search-input"
+             placeholder="🔍 Search students..."
+             data-translate-placeholder="🔍 Search students...">
+    </div>
+    <div id="coursesList">
+      <p class="empty-state" data-translate="Loading your courses...">Loading your courses...</p>
+    </div>
+  </div>
+
+  <!-- ================================================
+       TAB: GRADES
+  ================================================ -->
+  <div class="tab-content" id="tab-grades">
+
+    <!-- POST GRADE FORM -->
+    <div class="staff-card">
+      <h2 class="section-title">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <span data-translate="Post a Grade">Post a Grade</span>
+      </h2>
+
+      <div class="grade-form">
+        <div class="grade-form-row">
+          <div class="grade-form-field">
+            <label data-translate="Student">Student</label>
+            <select id="gradeStudentSelect">
+              <option value="" data-translate="Select Student">Select Student</option>
+            </select>
+          </div>
+          <div class="grade-form-field">
+            <label data-translate="Course">Course</label>
+            <select id="gradeCourseSelect">
+              <option value="" data-translate="Select Course">Select Course</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grade-form-row">
+          <div class="grade-form-field">
+            <label data-translate="Level">Level</label>
+            <input type="text" id="gradeLevelInput"
+                   placeholder="Level"
+                   data-translate-placeholder="Level" readonly>
+          </div>
+          <div class="grade-form-field">
+            <label data-translate="Semester">Semester</label>
+            <select id="gradeSemesterSelect">
+              <option value="" data-translate="Select Semester">Select Semester</option>
+              <option value="First" data-translate="First">First</option>
+              <option value="Second" data-translate="Second">Second</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grade-form-row">
+          <div class="grade-form-field">
+            <label data-translate="Assessment Score">Assessment Score</label>
+            <input type="number" id="gradeAssessmentInput"
+                   placeholder="Assessment"
+                   data-translate-placeholder="Assessment" min="0">
+          </div>
+          <div class="grade-form-field">
+            <label data-translate="Exam Score">Exam Score</label>
+            <input type="number" id="gradeExamInput"
+                   placeholder="Exam"
+                   data-translate-placeholder="Exam" min="0">
+          </div>
+          <div class="grade-form-field">
+            <label data-translate="Total Score">Total Score</label>
+            <input type="number" id="gradeTotalInput"
+                   placeholder="Total"
+                   data-translate-placeholder="Total" readonly>
+          </div>
+        </div>
+
+        <div class="grade-form-row">
+          <div class="grade-form-field">
+            <label data-translate="Status">Status</label>
+            <select id="gradeStatusSelect">
+              <option value="completed" data-translate="Completed">Completed</option>
+              <option value="loading"   data-translate="Loading">Loading</option>
+              <option value="cancelled" data-translate="Cancelled">Cancelled</option>
+            </select>
+          </div>
+          <div class="grade-form-field">
+            <label data-translate="Remark">Remark</label>
+            <select id="gradeRemarkSelect">
+              <option value="pass"    data-translate="Pass">Pass</option>
+              <option value="average" data-translate="Average">Average</option>
+              <option value="fail"    data-translate="Fail">Fail</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn btn-save grade-submit-btn" onclick="submitGrade()">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span data-translate="Submit Grade">Submit Grade</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- GRADES TABLE -->
+    <div class="staff-card">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-list"></i>
+          <span data-translate="Posted Grades">Posted Grades</span>
+        </h2>
+        <input type="text" id="searchGrades" class="search-input"
+               placeholder="🔍 Search grades..."
+               data-translate-placeholder="🔍 Search grades...">
+      </div>
+      <div class="table-container">
+        <table class="staff-table" id="staffGradesTable">
+          <thead>
+            <tr>
+              <th data-translate="Student">Student</th>
+              <th data-translate="Matric">Matric</th>
+              <th data-translate="Course">Course</th>
+              <th data-translate="Semester">Semester</th>
+              <th data-translate="Assessment">Assessment</th>
+              <th data-translate="Exam">Exam</th>
+              <th data-translate="Total">Total</th>
+              <th data-translate="Remark">Remark</th>
+              <th data-translate="Released">Released</th>
+            </tr>
+          </thead>
+          <tbody id="staffGradesBody">
+            <tr>
+              <td colspan="9" class="empty-state" data-translate="Loading grades...">
+                Loading grades...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================
+       TAB: SCHEDULE
+  ================================================ -->
+  <div class="tab-content" id="tab-schedule">
+
+    <!-- ADD / EDIT FORM -->
+    <div class="staff-card" id="scheduleFormCard" style="display:none;">
+      <h2 class="section-title" id="scheduleFormTitle">
+        <i class="fa-solid fa-calendar-plus"></i>
+        <span data-translate="Add Class">Add Class</span>
+      </h2>
+      <input type="hidden" id="scheduleEditId">
+
+      <div class="grade-form">
+        <div class="grade-form-row">
+          <div class="grade-form-field">
+            <label data-translate="Course">Course</label>
+            <select id="schedCourseSelect">
+              <option value="" data-translate="Select Course">Select Course</option>
+            </select>
+          </div>
+          <div class="grade-form-field">
+            <label data-translate="Level">Level</label>
+            <input type="text" id="schedLevelInput"
+                   placeholder="Level"
+                   data-translate-placeholder="Level" readonly>
+          </div>
+        </div>
+
+        <div class="grade-form-row">
+          <div class="grade-form-field">
+            <label data-translate="Date">Date</label>
+            <input type="date" id="schedDateInput">
+          </div>
+          <div class="grade-form-field">
+            <label data-translate="Time">Time</label>
+            <input type="time" id="schedTimeInput">
+          </div>
+        </div>
+
+        <div class="grade-form-row">
+          <div class="grade-form-field">
+            <label data-translate="Meeting Link">Meeting Link</label>
+            <input type="url" id="schedLinkInput"
+                   placeholder="https://zoom.us/..."
+                   data-translate-placeholder="https://zoom.us/...">
+          </div>
+          <div class="grade-form-field">
+            <label data-translate="Status">Status</label>
+            <select id="schedStatusSelect">
+              <option value="scheduled" data-translate="Scheduled">Scheduled</option>
+              <option value="completed" data-translate="Completed">Completed</option>
+              <option value="cancelled" data-translate="Cancelled">Cancelled</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sched-form-actions">
+          <button class="btn btn-save" onclick="saveSchedule()">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span id="schedSaveBtnText" data-translate="Save Class">Save Class</span>
+          </button>
+          <button class="btn btn-cancel-sched" onclick="cancelScheduleForm()">
+            <i class="fa-solid fa-xmark"></i>
+            <span data-translate="Cancel">Cancel</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCHEDULE TABLE -->
+    <div class="staff-card">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fa-solid fa-calendar-days"></i>
+          <span data-translate="My Class Schedule">My Class Schedule</span>
+        </h2>
+        <button class="btn btn-save" onclick="openScheduleForm()">
+          <i class="fa-solid fa-plus"></i>
+          <span data-translate="Add Class">Add Class</span>
+        </button>
+      </div>
+      <div class="table-container">
+        <table class="staff-table" id="staffScheduleTable">
+          <thead>
+            <tr>
+              <th data-translate="Course">Course</th>
+              <th data-translate="Level">Level</th>
+              <th data-translate="Date">Date</th>
+              <th data-translate="Time">Time</th>
+              <th data-translate="Link">Link</th>
+              <th data-translate="Status">Status</th>
+              <th data-translate="Action">Action</th>
+            </tr>
+          </thead>
+          <tbody id="staffScheduleBody">
+            <tr>
+              <td colspan="7" class="empty-state" data-translate="Loading schedule...">
+                Loading schedule...
+              </td>
+           </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================
+       TAB: ATTENDANCE
+  ================================================ -->
+  <div class="tab-content" id="tab-attendance">
+
+    <!-- ADD / EDIT FORM -->
+    <div class="staff-card" id="attendanceFormCard" style="display:none;">
+      <h2 class="section-title" id="attendanceFormTitle">
+        <i class="fa-solid fa-clipboard-user"></i>
+        <span data-translate="Create Attendance Session">Create Attendance Session</span>
+      </h2>
+      <input type="hidden" id="attendanceEditId">
+
+      <div class="grade-form">
+        <div class="grade-form-row">
+          <div class="grade-form-field">
+            <label data-translate="Title">Title</label>
+            <input type="text" id="attendanceTitle"
+                   placeholder="e.g. Beginner Arabic - Lesson 5"
+                   data-translate-placeholder="e.g. Beginner Arabic - Lesson 5">
+          </div>
+          <div class="grade-form-field">
+            <label data-translate="Level">Level</label>
+            <select id="attendanceLevel">
+              <option value="" data-translate="Choose Level">-- Choose Level --</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grade-form-row">
+          <div class="grade-form-field">
+            <label data-translate="Opens At">Opens At</label>
+            <input type="datetime-local" id="attendanceOpensAt">
+          </div>
+          <div class="grade-form-field">
+            <label data-translate="Closes At">Closes At</label>
+            <input type="datetime-local" id="attendanceClosesAt">
+          </div>
+        </div>
+
+        <div class="grade-form-row">
+          <div class="grade-form-field">
+            <label data-translate="Class Link (Meet/Telegram/WhatsApp)">Class Link (Meet/Telegram/WhatsApp)</label>
+            <input type="url" id="attendancePlatformLink"
+                   placeholder="https://meet.google.com/..."
+                   data-translate-placeholder="https://meet.google.com/...">
+          </div>
+        </div>
+
+        <!-- Shown only after the session is saved -->
+        <div id="attendanceLinkBox" style="display:none;">
+          <div class="grade-form-field">
+            <label data-translate="Attendance Link (share this with students)">Attendance Link (share this with students)</label>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <input type="text" id="attendanceGeneratedLink" readonly style="flex:1;">
+              <button class="btn btn-edit" type="button" onclick="copyAttendanceLink()">
+                <i class="fa-solid fa-copy"></i> <span data-translate="Copy">Copy</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched-form-actions">
+          <button class="btn btn-save" id="addAttendanceSessionBtn" onclick="addAttendanceSession()">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span data-translate="Save Session">Save Session</span>
+          </button>
+          <button class="btn btn-cancel-sched" onclick="cancelAttendanceForm()">
+            <i class="fa-solid fa-xmark"></i>
+            <span data-translate="Cancel">Cancel</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SESSIONS LIST -->
+    <div class="staff-card">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fa-solid fa-clipboard-user"></i>
+          <span data-translate="My Attendance Sessions">My Attendance Sessions</span>
+        </h2>
+        <button class="btn btn-save" onclick="openAttendanceForm()">
+          <i class="fa-solid fa-plus"></i>
+          <span data-translate="Create Session">Create Session</span>
+        </button>
+      </div>
+      <div class="table-container">
+        <table class="staff-table" id="staffAttendanceTable">
+          <thead>
+            <tr>
+              <th data-translate="Title">Title</th>
+              <th data-translate="Level">Level</th>
+              <th data-translate="Opens">Opens</th>
+              <th data-translate="Closes">Closes</th>
+              <th data-translate="Present">Present</th>
+              <th data-translate="Active">Active</th>
+              <th data-translate="Action">Action</th>
+            </tr>
+          </thead>
+          <tbody id="staffAttendanceBody">
+            <tr>
+              <td colspan="7" class="empty-state" data-translate="Loading sessions...">
+                Loading sessions...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- RECORDS VIEW (who's present for a session) -->
+    <div class="staff-card" id="attendanceRecordsCard" style="display:none;">
+      <div class="section-header">
+        <h2 class="section-title" id="attendanceRecordsTitle">
+          <i class="fa-solid fa-list-check"></i>
+          <span data-translate="Attendance Records">Attendance Records</span>
+        </h2>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-edit" onclick="downloadAttendanceCsv()">
+            <i class="fa-solid fa-download"></i>
+            <span data-translate="Download Report">Download Report</span>
+          </button>
+          <button class="btn btn-cancel-sched" onclick="closeAttendanceRecords()">
+            <i class="fa-solid fa-xmark"></i>
+            <span data-translate="Close">Close</span>
+          </button>
+        </div>
+      </div>
+      <div class="table-container">
+        <table class="staff-table" id="staffAttendanceRecordsTable">
+          <thead>
+            <tr>
+              <th data-translate="Matric Number">Matric Number</th>
+              <th data-translate="Name">Name</th>
+              <th data-translate="Time">Time</th>
+            </tr>
+          </thead>
+          <tbody id="staffAttendanceRecordsBody">
+            <tr><td colspan="3" class="empty-state" data-translate="Loading...">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ================================================
+       TAB: MY PAYMENTS
+  ================================================ -->
+  <div class="tab-content" id="tab-payments">
+    <div class="staff-card">
+      <div class="section-header" style="margin-bottom:16px;">
+        <h2 class="section-title">
+          <i class="fa-solid fa-money-bill-wave"></i>
+          <span data-translate="My Salary Payments">My Salary Payments</span>
+        </h2>
+      </div>
+
+      <!-- Summary strip -->
+      <div class="payment-summary-strip">
+        <div class="pay-summary-card">
+          <span id="paySummaryMonthly" class="pay-summary-amount">₦0</span>
+          <span class="pay-summary-label" data-translate="Monthly Salary">Monthly Salary</span>
+        </div>
+        <div class="pay-summary-card">
+          <span id="paySummaryPaidCount" class="pay-summary-amount">0</span>
+          <span class="pay-summary-label" data-translate="Months Paid">Months Paid</span>
+        </div>
+        <div class="pay-summary-card">
+          <span id="paySummaryTotalPaid" class="pay-summary-amount">₦0</span>
+          <span class="pay-summary-label" data-translate="Total Received">Total Received</span>
+        </div>
+      </div>
+
+      <div class="table-container" style="margin-top:16px;">
+        <table class="staff-table" id="myPaymentsTable">
+          <thead>
+            <tr>
+              <th data-translate="Month">Month</th>
+              <th data-translate="Year">Year</th>
+              <th data-translate="Amount">Amount</th>
+              <th data-translate="Currency">Currency</th>
+              <th data-translate="Status">Status</th>
+              <th data-translate="Date Paid">Date Paid</th>
+              <th data-translate="Note">Note</th>
+            </tr>
+          </thead>
+          <tbody id="myPaymentsBody">
+            <tr>
+              <td colspan="7" class="empty-state" data-translate="Loading payments...">
+                Loading payments...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================
+       TAB: MY PROFILE
+  ================================================ -->
+  <div class="tab-content" id="tab-profile">
+
+    <!-- PROFILE CARD -->
+    <div class="staff-card">
+      <h2 class="section-title">
+        <i class="fa-solid fa-user-circle"></i>
+        <span data-translate="My Profile">My Profile</span>
+      </h2>
+
+      <!-- Avatar -->
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar-container">
+          <img id="profileAvatarImg"
+               src="" alt="Profile Photo"
+               class="profile-avatar-img hidden"
+               onclick="openAvatarPreview()">
+          <div id="profileAvatarInitial" class="profile-avatar">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <label for="profilePhotoInput" class="profile-avatar-edit-btn" title="Change photo">
+            <i class="fa-solid fa-camera"></i>
+          </label>
+          <input type="file" id="profilePhotoInput"
+                 accept="image/*" style="display:none"
+                 onchange="handleAvatarChange(event)">
+        </div>
+        <span id="staffRoleTag" class="badge staff-role-tag"></span>
+      </div>
+
+      <!-- Avatar preview modal -->
+      <div id="avatarPreviewModal" class="avatar-preview-modal hidden"
+           onclick="closeAvatarPreview()">
+        <img id="avatarPreviewImg" src="" alt="Preview">
+      </div>
+
+      <div class="profile-form">
+        <div class="profile-field">
+          <label data-translate="Full Name">Full Name</label>
+          <input type="text" id="profileName"
+                 placeholder="Full Name"
+                 data-translate-placeholder="Full Name">
+        </div>
+        <div class="profile-field">
+          <label data-translate="Email">Email</label>
+          <input type="email" id="profileEmail"
+                 placeholder="Email"
+                 data-translate-placeholder="Email" readonly>
+        </div>
+        <div class="profile-field">
+          <label data-translate="Phone">Phone</label>
+          <input type="text" id="profilePhone"
+                 placeholder="Phone Number"
+                 data-translate-placeholder="Phone Number">
+        </div>
+        <div class="profile-field">
+          <label data-translate="Role">Role</label>
+          <input type="text" id="profileRole"
+                 placeholder="Role"
+                 data-translate-placeholder="Role" readonly>
+        </div>
+        <div class="profile-field">
+          <label data-translate="Staff Type">Staff Type</label>
+          <input type="text" id="profileStaffType"
+                 placeholder="Staff Type"
+                 data-translate-placeholder="Staff Type" readonly>
+        </div>
+        <div class="profile-field">
+          <label data-translate="Department">Department</label>
+          <input type="text" id="profileDepartment"
+                 placeholder="Department"
+                 data-translate-placeholder="Department" readonly>
+        </div>
+        <div class="profile-field">
+          <label data-translate="Date Joined">Date Joined</label>
+          <input type="text" id="profileDateJoined"
+                 placeholder="—"
+                 data-translate-placeholder="—" readonly>
+        </div>
+      </div>
+
+      <button class="btn btn-save full-btn" onclick="saveProfile()">
+        <i class="fa-solid fa-floppy-disk"></i>
+        <span data-translate="Save Profile">Save Profile</span>
+      </button>
+    </div>
+
+    <!-- CHANGE PASSWORD CARD -->
+    <div class="staff-card">
+      <h2 class="section-title">
+        <i class="fa-solid fa-lock"></i>
+        <span data-translate="Change Password">Change Password</span>
+      </h2>
+
+      <div class="form-group1">
+        <label data-translate="New Password">New Password</label>
+        <div class="input-group">
+          <input id="newPassword" type="password"
+                 placeholder="Enter new password"
+                 data-translate-placeholder="Enter new password">
+          <button type="button" class="toggle-btn" onclick="togglePassword('newPassword')">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group1">
+        <label data-translate="Confirm Password">Confirm Password</label>
+        <div class="input-group">
+          <input id="confirmPassword" type="password"
+                 placeholder="Confirm new password"
+                 data-translate-placeholder="Confirm new password">
+          <button type="button" class="toggle-btn" onclick="togglePassword('confirmPassword')">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <button class="btn btn-save full-btn" onclick="changeMyPassword()">
+        <i class="fa-solid fa-check"></i>
+        <span data-translate="Update Password">Update Password</span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- TOAST -->
+  <div id="staff-toast" class="toast"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: admin@albayanarabicinstitute.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
+
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
+
+  <!-- SCRIPTS -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    
+
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
+    }
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+    });
+  </script>
+  <script src="translate.js"></script>
+  <script src="staff-dashboard.js"></script>
+</body>
+</html>

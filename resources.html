@@ -3,572 +3,569 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Student Dashboard - Al-Bayan</title>
+  <title>Learning Resources - Al-Bayan Arabic Institute Online</title>
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="resources.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
   <!-- NAVIGATION -->
   <nav class="master-nav">
     <div class="nav-container">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
       </a>
-      <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
       <div class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="courses.html">Courses</a>
-        <a href="register.html">Register</a>
-        <a href="students-dashboard.html" class="active page-indicator">Student Dashboard</a>
-        
-        <a href="payment.html">Payment</a>
-        <a href="schedule.html">Schedule</a>
-        <a href="contact.html">Contact</a>
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" class="active" data-translate="Dashboard">Dashboard</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="schedule.html" data-translate="Schedule">Schedule</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
       </div>
     </div>
   </nav>
-  
- <header class="courses-header" style="background-image: url('background-resources.jpg');">
-  <div class="header-overlay">
-    <img src="logo.png" alt="Al-Bayan Logo">
 
-    <h1>📚 Learning Resources</h1>
+  <!-- PAGE BANNER -->
+  <header class="res-banner" style="background-image: url('background-resources.jpg');">
+    <div class="res-banner-overlay"></div>
+    <div class="res-banner-content">
+      <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
+      <span class="res-eyebrow">
+        <i class="fa-solid fa-folder-open"></i>
+        <span data-translate="Learning Resources">Learning Resources</span>
+      </span>
+      <h1 data-translate="📚 Learning Resources">Learning Resources</h1>
+      <p data-translate="Access PDFs, videos, and other study materials for your courses">
+        Access PDFs, videos, and other study materials for your courses
+      </p>
+    </div>
+  </header>
 
-    <p>Access PDFs, videos, and other study materials for your courses</p>
-  </div>
-</header>
-<!-- learning-resources.html -->
-<main class="resources-page">
-    
-    <section class="resource-top-bar">
-  <div class="resource-actions">
-    <a href="https://drive.google.com/drive/folders/1vrXAoL0AP5Idwn9-VZUZXjWxRcJHzjSg" target="_blank" class="btn-primary">
-      📚 Open Full Library
-    </a>
-  </div>
-</section>
+  <!-- MAIN -->
+  <main class="res-main">
 
-<section class="resources-controls">
+    <!-- TOP BAR -->
+    <div class="res-top-bar">
+      <a href="https://drive.google.com/drive/folders/1vrXAoL0AP5Idwn9-VZUZXjWxRcJHzjSg"
+        target="_blank" class="res-library-btn">
+        <i class="fa-solid fa-book-open"></i>
+        <span data-translate="📚 Open Full Library">Open Full Library</span>
+      </a>
+    </div>
 
-  <input 
-    type="text" 
-    id="searchInput" 
-    placeholder="🔍 Search books (e.g. Nahw, Tafseer, Sarf...)"
-  >
+    <!-- SEARCH & FILTER -->
+    <div class="res-controls">
+      <div class="res-search-wrap">
+        <i class="fa-solid fa-magnifying-glass res-search-icon"></i>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="🔍 Search books (e.g. Nahw, Tafseer, Sarf...)"
+          data-translate-placeholder="🔍 Search books (e.g. Nahw, Tafseer, Sarf...)"
+        >
+      </div>
+      <select id="categoryFilter" class="res-filter">
+        <option value="all" data-translate="All Categories">All Categories</option>
+        <option value="madinah" data-translate="Madinah">Madinah</option>
+        <option value="tafseer" data-translate="Tafseer">Tafseer</option>
+        <option value="hadeeth" data-translate="Hadeeth">Hadeeth</option>
+        <option value="nahw" data-translate="Nahw">Nahw</option>
+        <option value="sarf" data-translate="Sarf">Sarf</option>
+        <option value="qiraah" data-translate="Qira'ah">Qira'ah</option>
+        <option value="ta'beer" data-translate="Ta'beer">Ta'beer</option>
+        <option value="writing" data-translate="Writing">Writing</option>
+        <option value="fiqh" data-translate="Fiqh">Fiqh</option>
+        <option value="tawheed" data-translate="Tawheed">Tawheed</option>
+        <option value="adab" data-translate="Adab">Adab</option>
+        <option value="balaghah" data-translate="Balaghah">Balaghah</option>
+        <option value="taareekh" data-translate="Taareekh">Taareekh</option>
+        <option value="classical" data-translate="Classical Arabic Books">Classical Arabic Books</option>
+        <option value="other" data-translate="Other">Other</option>
+      </select>
+    </div>
 
-  <select id="categoryFilter">
-  <option value="all">All Categories</option>
-  <option value="madinah">Madinah</option>
-  <option value="tafseer">Tafseer</option>
-  <option value="hadeeth">Hadeeth</option>
-  <option value="nahw">Nahw</option>
-  <option value="sarf">Sarf</option>
-  <option value="qiraah">Qira'ah</option>
-  <option value="writing">Writing</option>
-  <option value="fiqh">Fiqh</option>
-  <option value="tawheed">Tawheed</option>
-  <option value="adab">Adab</option>
-  <option value="balaghah">Balaghah</option>
-  <option value="taareekh">Taareekh</option>
-  <option value="other">Other</option>
-</select>
-
-</section>
-
+    <!-- SUBJECTS -->
 
     <div class="subject">
-  <button class="subject-toggle">📘 Madinah Arabic Reader</button>
-
-  <div class="subject-content">
-    <div class="resource-card">
-      <i class="fa-solid fa-file-pdf"></i>
-      <h3>Madinah Arabic Reader Book 1</h3>
-      <a href="https://drive.google.com/file/d/14aKnC4zkI5xLQmmNqmboOiKRBMPqoA2Y/view" class="btn-primary" target="_blank">Open PDF</a>
+      <button class="subject-toggle">
+        <span><i class="fa-solid fa-book res-subj-icon"></i> <span data-translate="📘 Madinah Arabic Reader">Madinah Arabic Reader</span></span>
+        <i class="fa-solid fa-chevron-down res-chevron"></i>
+      </button>
+      <div class="subject-content">
+        <div class="res-cards-grid">
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Madinah Arabic Reader Book 1</h3>
+            <a href="https://drive.google.com/file/d/14aKnC4zkI5xLQmmNqmboOiKRBMPqoA2Y/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Madinah Arabic Reader Book 2</h3>
+            <a href="https://drive.google.com/file/d/1sZHeLbKQGdm1NHM9OdY-0IrFuYkX953j/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Madinah Arabic Reader Book 3</h3>
+            <a href="https://drive.google.com/file/d/1GX0eSNPxse-T5eqKrVVwJ59YxQ88f7fJ/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Madinah Arabic Reader Book 4</h3>
+            <a href="https://drive.google.com/file/d/1Df98WBQxaV4NSMEJoayf5ce6kJJkNRl3/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-      <h3>Madinah Arabic Reader Book 2</h3>
-      <a href="https://drive.google.com/file/d/1sZHeLbKQGdm1NHM9OdY-0IrFuYkX953j/view" class="btn-primary" target="_blank">Open PDF</a>
+    <div class="subject">
+      <button class="subject-toggle">
+        <span><i class="fa-solid fa-book res-subj-icon"></i> <span data-translate="📘 Tafseer">Tafseer</span></span>
+        <i class="fa-solid fa-chevron-down res-chevron"></i>
+      </button>
+      <div class="subject-content">
+        <div class="res-cards-grid">
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Tafseer Book 1</h3>
+            <a href="https://drive.google.com/file/d/1LVuGBw4y8dDAmin920Ogy0unB-R-97pd/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Tafseer Book 2</h3>
+            <a href="https://drive.google.com/file/d/1VGYLtICXQpLVVQVnUNzKIhQXRdjmAaEf/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Tafseer Book 3</h3>
+            <a href="https://drive.google.com/file/d/1za145lKvDfLNBDwInLTsR0QlRy0il5DO/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Tafseer Book 4</h3>
+            <a href="https://drive.google.com/file/d/1jdreh0tRo4vVyS1Ohz-cUkLrzwoCTRCT/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-      <h3>Madinah Arabic Reader Book 3</h3>
-      <a href="https://drive.google.com/file/d/1GX0eSNPxse-T5eqKrVVwJ59YxQ88f7fJ/view" class="btn-primary" target="_blank">Open PDF</a>
+    <div class="subject">
+      <button class="subject-toggle">
+        <span><i class="fa-solid fa-book res-subj-icon"></i> <span data-translate="📘 Hadeeth">Hadeeth</span></span>
+        <i class="fa-solid fa-chevron-down res-chevron"></i>
+      </button>
+      <div class="subject-content">
+        <div class="res-cards-grid">
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Hadeeth Book 1</h3>
+            <a href="https://drive.google.com/file/d/11f3nReSLXO1KBMBT0Awfwp9JoBP5UvTl/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Hadeeth Book 2</h3>
+            <a href="https://drive.google.com/file/d/11f3nReSLXO1KBMBT0Awfwp9JoBP5UvTl/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Hadeeth Book 3</h3>
+            <a href="https://drive.google.com/file/d/1b7ENZsFdzBH7Vf_fKolCLXs-9endR5nD/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Hadeeth Book 4</h3>
+            <a href="https://drive.google.com/file/d/1070jOU0VhtAe_VRf-LUB-qIVRtMq1qqw/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-      <h3>Madinah Arabic Reader Book 4</h3>
-      <a href="https://drive.google.com/file/d/1Df98WBQxaV4NSMEJoayf5ce6kJJkNRl3/view" class="btn-primary" target="_blank">Open PDF</a>
-    </div>
-  </div>
-</div>
-
-<div class="subject">
-  <button class="subject-toggle">📘 Tafseer</button>
-
-  <div class="subject-content">
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Tafseer Book 1</h3>
-        <a href="https://drive.google.com/file/d/1LVuGBw4y8dDAmin920Ogy0unB-R-97pd/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Tafseer Book 2</h3><a href="lhttps://drive.google.com/file/d/1VGYLtICXQpLVVQVnUNzKIhQXRdjmAaEf/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Tafseer Book 3</h3><a href="https://drive.google.com/file/d/1za145lKvDfLNBDwInLTsR0QlRy0il5DO/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Tafseer Book 4</h3><a href="https://drive.google.com/file/d/1jdreh0tRo4vVyS1Ohz-cUkLrzwoCTRCT/view" class="btn-primary" target="_blank">Open PDF</a></div>
-  </div>
-</div>
-
-<div class="subject">
-  <button class="subject-toggle">📘 Hadeeth</button>
-
-  <div class="subject-content">
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-<h3>Hadeeth Book 1</h3>
-        <a href="https://drive.google.com/file/d/11f3nReSLXO1KBMBT0Awfwp9JoBP5UvTl/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Hadeeth Book 2</h3>
-        <a href="https://drive.google.com/file/d/11f3nReSLXO1KBMBT0Awfwp9JoBP5UvTl/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Hadeeth Book 3</h3>
-        <a href="https://drive.google.com/file/d/1b7ENZsFdzBH7Vf_fKolCLXs-9endR5nD/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Hadeeth Book 4</h3>
-        <a href="https://drive.google.com/file/d/1070jOU0VhtAe_VRf-LUB-qIVRtMq1qqw/view" class="btn-primary" target="_blank">Open PDF</a></div>
-  </div>
-</div>
-
-<div class="subject">
-  <button class="subject-toggle">📘 Sarf</button>
-
-  <div class="subject-content">
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Sarf Book 1</h3>
-<a href="https://drive.google.com/file/d/18khK-8P4HMi9G9werIO5u0jjdDlXOlR9/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-       <i class="fa-solid fa-file-pdf"></i>
-       <h3>Sarf Book 2</h3>
-<a href="https://drive.google.com/file/d/18khK-8P4HMi9G9werIO5u0jjdDlXOlR9/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-       <i class="fa-solid fa-file-pdf"></i>
-       <h3>Sarf Book 3</h3>
-<a href="https://drive.google.com/file/d/1fs28lXmPX3yNHjryZcgDskicgd-67cau/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-<h3>Sarf Book 4</h3><a href="https://drive.google.com/file/d/1fs28lXmPX3yNHjryZcgDskicgd-67cau/view" class="btn-primary" target="_blank">Open PDF</a></div>
-  </div>
-</div>
-
-<div class="subject">
-  <button class="subject-toggle">📘 Nahw</button>
-
-  <div class="subject-content">
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Nahw Book 1</h3>
-        <a href="https://drive.google.com/file/d/1mC-Kg6VxA1TGR5Ndlz7Yf8A4L8WxlqKb/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Nahw Book 2</h3>
-<a href="https://drive.google.com/file/d/1mC-Kg6VxA1TGR5Ndlz7Yf8A4L8WxlqKb/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Nahw Book 3</h3>
-        <a href="https://drive.google.com/file/d/1se92FTQ7bvRoY1uHBnS0kokAmXwMYmGq/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Nahw Book 4</h3>
-<a href="https://drive.google.com/file/d/1kRLNs-OtQgN4J2dvLI0UxrUMDsSgCMj_/view" class="btn-primary" target="_blank">Open PDF</a></div>
-  </div>
-</div>
-
-<div class="subject">
-  <button class="subject-toggle">📘 Qira'ah</button>
-
-  <div class="subject-content">
-  <div class="resource-card">
-      <i class="fa-solid fa-file-pdf"></i>
-      <h3>Pronunciation</h3>
-      <a href="https://drive.google.com/file/d/1sLQGIOw-YThZNDX4fYkNJxYsI_R0CylD/view" class="btn-primary" target="_blank">Open PDF</a>
-    </div>
-    
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Qira'ah Book 1</h3>
-        <a href="https://drive.google.com/file/d/1umB3s54Qsu5l-UL4Y8JFTO5UASp8R5It/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-    <i class="fa-solid fa-file-pdf"></i>
-   <h3>Qira'ah Book 2</h3>
-   <a href="https://drive.google.com/file/d/1umB3s54Qsu5l-UL4Y8JFTO5UASp8R5It/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-     <i class="fa-solid fa-file-pdf"></i>
-     <h3>Qira'ah Book 3</h3>
- <a href="https://drive.google.com/file/d/1ooHISztkZLvw1w6sGKKmobEoJvdbHvfX/view"class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-    <i class="fa-solid fa-file-pdf"></i>
-    <h3>Qira'ah Book 4</h3>
-    <a href="https://drive.google.com/file/d/1GHPBOMZ7O8NKJE7Df2deURZQveJCJ_-9/view" class="btn-primary" target="_blank">Open PDF</a></div>
-  </div>
-</div>
-
-<div class="subject">
-  <button class="subject-toggle">📘 Ta'beer</button>
-
-  <div class="subject-content">
-
-    <div class="resource-card">
-      <i class="fa-solid fa-file-pdf"></i>
-      <h3>Ta'beer Book 1</h3>
-      <a href="https://drive.google.com/file/d/12dhDNdTOPpxEJUcA5BgqUT41cFhGMc7Z/view" class="btn-primary" target="_blank">Open PDF</a>
+    <div class="subject">
+      <button class="subject-toggle">
+        <span><i class="fa-solid fa-book res-subj-icon"></i> <span data-translate="📘 Sarf">Sarf</span></span>
+        <i class="fa-solid fa-chevron-down res-chevron"></i>
+      </button>
+      <div class="subject-content">
+        <div class="res-cards-grid">
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Sarf Book 1</h3>
+            <a href="https://drive.google.com/file/d/18khK-8P4HMi9G9werIO5u0jjdDlXOlR9/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Sarf Book 2</h3>
+            <a href="https://drive.google.com/file/d/18khK-8P4HMi9G9werIO5u0jjdDlXOlR9/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Sarf Book 3</h3>
+            <a href="https://drive.google.com/file/d/1fs28lXmPX3yNHjryZcgDskicgd-67cau/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Sarf Book 4</h3>
+            <a href="https://drive.google.com/file/d/1fs28lXmPX3yNHjryZcgDskicgd-67cau/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-      <h3>Ta'beer Book 2</h3>
-      <a href="https://drive.google.com/file/d/12dhDNdTOPpxEJUcA5BgqUT41cFhGMc7Z/view" class="btn-primary" target="_blank">Open PDF</a>
+    <div class="subject">
+      <button class="subject-toggle">
+        <span><i class="fa-solid fa-book res-subj-icon"></i> <span data-translate="📘 Nahw">Nahw</span></span>
+        <i class="fa-solid fa-chevron-down res-chevron"></i>
+      </button>
+      <div class="subject-content">
+        <div class="res-cards-grid">
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Nahw Book 1</h3>
+            <a href="https://drive.google.com/file/d/1mC-Kg6VxA1TGR5Ndlz7Yf8A4L8WxlqKb/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Nahw Book 2</h3>
+            <a href="https://drive.google.com/file/d/1mC-Kg6VxA1TGR5Ndlz7Yf8A4L8WxlqKb/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Nahw Book 3</h3>
+            <a href="https://drive.google.com/file/d/1se92FTQ7bvRoY1uHBnS0kokAmXwMYmGq/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Nahw Book 4</h3>
+            <a href="https://drive.google.com/file/d/1kRLNs-OtQgN4J2dvLI0UxrUMDsSgCMj_/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-      <h3>Ta'beer Book 3</h3>
-      <a href="https://drive.google.com/file/d/170rFUcs0YZIJ_DCU-o02cqC4tytJwTPi/view" class="btn-primary" target="_blank">Open PDF</a>
+    <div class="subject">
+      <button class="subject-toggle">
+        <span><i class="fa-solid fa-book res-subj-icon"></i> <span data-translate="📘 Qira'ah">Qira'ah</span></span>
+        <i class="fa-solid fa-chevron-down res-chevron"></i>
+      </button>
+      <div class="subject-content">
+        <div class="res-cards-grid">
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Pronunciation</h3>
+            <a href="https://drive.google.com/file/d/1sLQGIOw-YThZNDX4fYkNJxYsI_R0CylD/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Qira'ah Book 1</h3>
+            <a href="https://drive.google.com/file/d/1umB3s54Qsu5l-UL4Y8JFTO5UASp8R5It/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Qira'ah Book 2</h3>
+            <a href="https://drive.google.com/file/d/1umB3s54Qsu5l-UL4Y8JFTO5UASp8R5It/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Qira'ah Book 3</h3>
+            <a href="https://drive.google.com/file/d/1ooHISztkZLvw1w6sGKKmobEoJvdbHvfX/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Qira'ah Book 4</h3>
+            <a href="https://drive.google.com/file/d/1GHPBOMZ7O8NKJE7Df2deURZQveJCJ_-9/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-      <h3>Ta'beer Book 4</h3>
-      <a href="https://drive.google.com/file/d/170rFUcs0YZIJ_DCU-o02cqC4tytJwTPi/view" class="btn-primary" target="_blank">Open PDF</a>
+    <div class="subject">
+      <button class="subject-toggle">
+        <span><i class="fa-solid fa-book res-subj-icon"></i> <span data-translate="📘 Ta'beer">Ta'beer</span></span>
+        <i class="fa-solid fa-chevron-down res-chevron"></i>
+      </button>
+      <div class="subject-content">
+        <div class="res-cards-grid">
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Ta'beer Book 1</h3>
+            <a href="https://drive.google.com/file/d/1TiHjkEFjvf2HmKJRaHdC8C7P_mcbHs4Q/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Ta'beer Book 2</h3>
+            <a href="https://drive.google.com/file/d/1TiHjkEFjvf2HmKJRaHdC8C7P_mcbHs4Q/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Ta'beer Book 3</h3>
+            <a href="https://drive.google.com/file/d/1TiHjkEFjvf2HmKJRaHdC8C7P_mcbHs4Q/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Ta'beer Book 4</h3>
+            <a href="https://drive.google.com/file/d/1TiHjkEFjvf2HmKJRaHdC8C7P_mcbHs4Q/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+        </div>
+      </div>
     </div>
 
-  </div>
-</div>
-
-<div class="subject">
-  <button class="subject-toggle">📘 Writing / Kitaabah</button>
-
-  <div class="subject-content">
-     <div class="resource-card">
-      <i class="fa-solid fa-file-pdf"></i>
-      <h3>Writing</h3>
-      <a href="https://drive.google.com/file/d/1bAh4lD2uSqbXnSjpoa7J_nc4Lum0VU8a/view" class="btn-primary" target="_blank">Open PDF</a>
-    </div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Kitaabah Book 1</h3>
- <a href="https://drive.google.com/file/d/1qYu62b_jlvaIo7xPJaXHkrQHdxfy51bk/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Kitaabah Book 2</h3>
-        <a href="https://drive.google.com/file/d/1qYu62b_jlvaIo7xPJaXHkrQHdxfy51bk/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Kitaabah Book 3</h3><a href="https://drive.google.com/file/d/1jY1nCItBRVJicjsJss1a6X4qxtrpXK7X/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Kitaabah Book 4</h3>
-        <a href="https://drive.google.com/file/d/1yrX0nIrK0icbbi_4dVY0p0ahioSdERes/view" class="btn-primary" target="_blank">Open PDF</a></div>
-  </div>
-</div>
-
-<div class="subject">
-  <button class="subject-toggle">📘 Fiqh</button>
-  <div class="subject-content">
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Fiqh Book 3</h3>
-<a href="https://drive.google.com/file/d/13AOEhRJVoCjEUi6SJK6u7kCAUcZTLKjh/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Fiqh Book 4</h3>
-        <a href="https://drive.google.com/file/d/1ECwhPFByRowYECbAF4KIkSHwGddgzjjt/view" class="btn-primary" target="_blank">Open PDF</a></div>
-  </div>
-</div>
-
-<div class="subject">
-  <button class="subject-toggle">📘 Tawheed</button>
-  <div class="subject-content">
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Tawheed Book 3</h3>
-        <a href="https://drive.google.com/file/d/1QQsdk6uUesQVy_aLmbx6PjltA6tK9NDT/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Tawheed Book 4</h3>
-        <a href="https://drive.google.com/file/d/1AmLBEDvZDRkZC9i4EZdU0RkE-3BhjcTr/view" class="btn-primary" target="_blank">Open PDF</a></div>
-  </div>
-</div>
-
-<div class="subject">
-  <button class="subject-toggle">📘 Adab</button>
-  <div class="subject-content">
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Adab Book 3</h3>
-        <a href="https://drive.google.com/file/d/1U1bhBUKWDMApczfyXaEOJP4NPuBJOkcK/view" class="btn-primary" target="_blank">Open PDF</a></div>
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Adab Book 4</h3>
-        <a href="https://drive.google.com/file/d/19kDHX1_HTFUf48eF8a26LSAOxyE4CUxO/view" class="btn-primary" target="_blank">Open PDF</a></div>
-  </div>
-</div>
-
-<div class="subject">
-  <button class="subject-toggle">📘 Balaghah</button>
-  <div class="subject-content">
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Balaaghah Book 4</h3>
-        <a href="https://drive.google.com/file/d/1g92LnAWJ2c-Y2iM6s9JImsKaik0XVK72/view" class="btn-primary" target="_blank">Open PDF</a></div>
-  </div>
-</div>
-
-<div class="subject">
-  <button class="subject-toggle">📘 Taareekh</button>
-  <div class="subject-content">
-    <div class="resource-card">
-        <i class="fa-solid fa-file-pdf"></i>
-        <h3>Taareekh Book 4</h3>
-        <a href="https://drive.google.com/file/d/1ZGju-0i9931OSGNkeazyyYh_rjLuAZje/view" class="btn-primary" target="_blank">Open PDF</a></div>
-  </div>
-</div>
-
-<div class="subject">
-  <button class="subject-toggle">📘 Classical Arabic Books</button>
-
-  <div class="subject-content">
-
-    <div class="resource-card">
-      <i class="fa-solid fa-file-pdf"></i>
-      <h3>ضياء السالك</h3>
-      <a href="https://drive.google.com/file/d/1MJFfpiNHjsH46cWq_lgPknV8upmv40lM/view" class="btn-primary" target="_blank">Open PDF</a>
+    <div class="subject">
+      <button class="subject-toggle">
+        <span><i class="fa-solid fa-book res-subj-icon"></i> <span data-translate="📘 Writing / Kitaabah">Writing / Kitaabah</span></span>
+        <i class="fa-solid fa-chevron-down res-chevron"></i>
+      </button>
+      <div class="subject-content">
+        <div class="res-cards-grid">
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Writing Book 1</h3>
+            <a href="https://drive.google.com/file/d/1TiHjkEFjvf2HmKJRaHdC8C7P_mcbHs4Q/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Writing Book 2</h3>
+            <a href="https://drive.google.com/file/d/1TiHjkEFjvf2HmKJRaHdC8C7P_mcbHs4Q/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Writing Book 3</h3>
+            <a href="https://drive.google.com/file/d/1TiHjkEFjvf2HmKJRaHdC8C7P_mcbHs4Q/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Writing Book 4</h3>
+            <a href="https://drive.google.com/file/d/1TiHjkEFjvf2HmKJRaHdC8C7P_mcbHs4Q/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="resource-card">
-      <i class="fa-solid fa-file-pdf"></i>
-      <h3>شذا العرف</h3>
-      <a href="https://drive.google.com/file/d/1NT-zlzzNUh5jOhsymTK8_lEyRhMG3YoE/view" class="btn-primary" target="_blank">Open PDF</a>
+    <div class="subject">
+      <button class="subject-toggle">
+        <span><i class="fa-solid fa-book res-subj-icon"></i> <span data-translate="📘 Fiqh">Fiqh</span></span>
+        <i class="fa-solid fa-chevron-down res-chevron"></i>
+      </button>
+      <div class="subject-content">
+        <div class="res-cards-grid">
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Fiqh Book 4</h3>
+            <a href="https://drive.google.com/file/d/1TiHjkEFjvf2HmKJRaHdC8C7P_mcbHs4Q/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+        </div>
+      </div>
     </div>
 
-  </div>
-</div>
-
-<div class="subject">
-  <button class="subject-toggle">🎥 Videos</button>
-  <div class="subject-content">
-    <div class="resource-card">
-      <i class="fa-solid fa-video"></i>
-      <h3>Conversational Arabic Video</h3>
-      <a href="videos.html" class="btn-primary">Watch</a>
+    <div class="subject">
+      <button class="subject-toggle">
+        <span><i class="fa-solid fa-book res-subj-icon"></i> <span data-translate="📘 Tawheed">Tawheed</span></span>
+        <i class="fa-solid fa-chevron-down res-chevron"></i>
+      </button>
+      <div class="subject-content">
+        <div class="res-cards-grid">
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Tawheed Book 4</h3>
+            <a href="https://drive.google.com/file/d/1TiHjkEFjvf2HmKJRaHdC8C7P_mcbHs4Q/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-    <!-- Add more resources here -->
 
-</main>
- <!-- FOOTER -->
- <footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
+    <div class="subject">
+      <button class="subject-toggle">
+        <span><i class="fa-solid fa-book res-subj-icon"></i> <span data-translate="📘 Adab">Adab</span></span>
+        <i class="fa-solid fa-chevron-down res-chevron"></i>
+      </button>
+      <div class="subject-content">
+        <div class="res-cards-grid">
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Adab Book 4</h3>
+            <a href="https://drive.google.com/file/d/1TiHjkEFjvf2HmKJRaHdC8C7P_mcbHs4Q/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <!-- FLOATING WHATSAPP -->
-  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
-<script>
-function toggleMenu() {
-    document.getElementById("navLinks").classList.toggle("show");
-  }
+    <div class="subject">
+      <button class="subject-toggle">
+        <span><i class="fa-solid fa-book res-subj-icon"></i> <span data-translate="📘 Balaghah">Balaghah</span></span>
+        <i class="fa-solid fa-chevron-down res-chevron"></i>
+      </button>
+      <div class="subject-content">
+        <div class="res-cards-grid">
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Balaaghah Book 4</h3>
+            <a href="https://drive.google.com/file/d/1g92LnAWJ2c-Y2iM6s9JImsKaik0XVK72/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  document.addEventListener("click", function(e) {
-    const menu = document.getElementById("navLinks");
-    const burger = document.querySelector(".hamburger");
+    <div class="subject">
+      <button class="subject-toggle">
+        <span><i class="fa-solid fa-book res-subj-icon"></i> <span data-translate="📘 Taareekh">Taareekh</span></span>
+        <i class="fa-solid fa-chevron-down res-chevron"></i>
+      </button>
+      <div class="subject-content">
+        <div class="res-cards-grid">
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>Taareekh Book 4</h3>
+            <a href="https://drive.google.com/file/d/1ZGju-0i9931OSGNkeazyyYh_rjLuAZje/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    if (!menu.contains(e.target) && !burger.contains(e.target)) {
-      menu.classList.remove("show");
+    <div class="subject">
+      <button class="subject-toggle">
+        <span><i class="fa-solid fa-book res-subj-icon"></i> <span data-translate="📘 Classical Arabic Books">Classical Arabic Books</span></span>
+        <i class="fa-solid fa-chevron-down res-chevron"></i>
+      </button>
+      <div class="subject-content">
+        <div class="res-cards-grid">
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>ضياء السالك</h3>
+            <a href="https://drive.google.com/file/d/1MJFfpiNHjsH46cWq_lgPknV8upmv40lM/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+          <div class="resource-card">
+            <div class="res-card-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3>شذا العرف</h3>
+            <a href="https://drive.google.com/file/d/1NT-zlzzNUh5jOhsymTK8_lEyRhMG3YoE/view" class="res-btn" target="_blank" data-translate="Open PDF">Open PDF</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subject">
+      <button class="subject-toggle">
+        <span><i class="fa-solid fa-video res-subj-icon"></i> <span data-translate="🎥 Videos">Videos</span></span>
+        <i class="fa-solid fa-chevron-down res-chevron"></i>
+      </button>
+      <div class="subject-content">
+        <div class="res-cards-grid">
+          <div class="resource-card">
+            <div class="res-card-icon res-card-icon--video"><i class="fa-solid fa-circle-play"></i></div>
+            <h3 data-translate="Conversational Arabic Video">Conversational Arabic Video</h3>
+            <a href="videos.html" class="res-btn res-btn--video" data-translate="Watch">Watch</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone">Phone</span>: +234 705 471 1066
+    </p>
+    <p>© 2025 – <span id="year"></span> Al-Bayan Arabic Institute Online.
+      <span data-translate="All rights reserved.">All rights reserved.</span>
+    </p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
     }
-  });
- </script>
- 
-<script>
-const searchInput = document.getElementById("searchInput");
-const categoryFilter = document.getElementById("categoryFilter");
-const subjects = document.querySelectorAll(".subject");
-
-/* =========================
-   SUBJECT TOGGLE
-========================= */
-subjects.forEach(subject => {
-
-  const btn = subject.querySelector(".subject-toggle");
-
-  btn.addEventListener("click", () => {
-    subject.classList.toggle("active");
-  });
-
-});
-
-/* =========================
-   AUTO CATEGORY DETECTOR
-========================= */
-function detectCategory(title) {
-
-  title = title.toLowerCase();
-
-  if (title.includes("madinah")) return "madinah";
-
-  if (
-    title.includes("tafseer") ||
-    title.includes("tefseer") ||
-    title.includes("تفسير")
-  ) {
-    return "tafseer";
-  }
-
-  if (title.includes("hadeeth") || title.includes("حديث")) {
-    return "hadeeth";
-  }
-
-  if (title.includes("sarf") || title.includes("الصرف")) {
-    return "sarf";
-  }
-
-  if (title.includes("nahw") || title.includes("النحو")) {
-    return "nahw";
-  }
-
-  if (
-    title.includes("qira") ||
-    title.includes("قراءة") ||
-    title.includes("pronunciation")
-  ) {
-    return "qiraah";
-  }
-
-  if (
-    title.includes("writing") ||
-    title.includes("kitaab") ||
-    title.includes("ta'beer") ||
-    title.includes("tabeer") ||
-    title.includes("كتابة") ||
-    title.includes("تعبير")
-  ) {
-    return "writing";
-  }
-
-  if (title.includes("fiqh") || title.includes("الفقه")) {
-    return "fiqh";
-  }
-
-  if (title.includes("tawheed") || title.includes("توحيد")) {
-    return "tawheed";
-  }
-
-  if (title.includes("adab") || title.includes("الأدب")) {
-    return "adab";
-  }
-
-  if (
-    title.includes("balaghah") ||
-    title.includes("balaaghah") ||
-    title.includes("بلاغة")
-  ) {
-    return "balaghah";
-  }
-
-  if (title.includes("taareekh") || title.includes("التاريخ")) {
-    return "taareekh";
-  }
-
-  return "other";
-}
-
-/* =========================
-   FILTER SYSTEM
-========================= */
-function filterResources() {
-
-  const searchValue = searchInput.value.toLowerCase();
-  const selectedCategory = categoryFilter.value;
-
-  subjects.forEach(subject => {
-
-    const cards = subject.querySelectorAll(".resource-card");
-
-    const subjectTitle =
-      subject.querySelector(".subject-toggle")
-      .innerText.toLowerCase();
-
-    let matchFound = false;
-
-    const subjectCategory = detectCategory(subjectTitle);
-
-    const categoryMatch =
-      selectedCategory === "all" ||
-      selectedCategory === subjectCategory;
-
-    cards.forEach(card => {
-
-      const title =
-        card.querySelector("h3")
-        .innerText.toLowerCase();
-
-      if (title.includes(searchValue)) {
-        matchFound = true;
-      }
-
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
     });
 
-    const shouldShow =
-      categoryMatch &&
-      (searchValue === "" || matchFound);
+    /* Subject toggle */
+    document.querySelectorAll('.subject-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const subject = btn.closest('.subject');
+        subject.classList.toggle('active');
+        const chevron = btn.querySelector('.res-chevron');
+        if (chevron) chevron.style.transform = subject.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+      });
+    });
 
-    subject.style.display =
-      shouldShow ? "block" : "none";
+    /* Search & filter */
+    const searchInput    = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const subjects       = document.querySelectorAll('.subject');
 
-    // Auto-open matching subjects
-    if (shouldShow && matchFound) {
-      subject.classList.add("active");
+    function detectCategory(title) {
+      title = title.toLowerCase();
+      if (title.includes('madinah'))                                          return 'madinah';
+      if (title.includes('tafseer') || title.includes('تفسير'))              return 'tafseer';
+      if (title.includes('hadeeth') || title.includes('حديث'))              return 'hadeeth';
+      if (title.includes('sarf')    || title.includes('الصرف'))              return 'sarf';
+      if (title.includes('nahw')    || title.includes('النحو'))              return 'nahw';
+      if (title.includes('qira')    || title.includes('قراءة') || title.includes('pronunciation')) return 'qiraah';
+      if (title.includes('writing') || title.includes('kitaab') || title.includes("ta'beer") || title.includes('tabeer')) return 'writing';
+      if (title.includes('fiqh')    || title.includes('الفقه'))              return 'fiqh';
+      if (title.includes('tawheed') || title.includes('توحيد'))             return 'tawheed';
+      if (title.includes('adab')    || title.includes('الأدب'))              return 'adab';
+      if (title.includes('balaghah')|| title.includes('balaaghah'))          return 'balaghah';
+      if (title.includes('taareekh')|| title.includes('التاريخ'))           return 'taareekh';
+      if (title.includes('video'))                                            return 'other';
+      return 'other';
     }
-    else if (searchValue !== "") {
-      subject.classList.remove("active");
+
+    function filterResources() {
+      const searchValue      = searchInput.value.toLowerCase();
+      const selectedCategory = categoryFilter.value;
+
+      subjects.forEach(subject => {
+        const cards         = subject.querySelectorAll('.resource-card');
+        const subjectTitle  = subject.querySelector('.subject-toggle').innerText.toLowerCase();
+        const subjectCat    = detectCategory(subjectTitle);
+        const categoryMatch = selectedCategory === 'all' || selectedCategory === subjectCat;
+        let matchFound      = false;
+
+        cards.forEach(card => {
+          const title = (card.querySelector('h3') || {}).innerText || '';
+          if (title.toLowerCase().includes(searchValue)) matchFound = true;
+        });
+
+        const shouldShow = categoryMatch && (searchValue === '' || matchFound);
+        subject.style.display = shouldShow ? 'block' : 'none';
+
+        const chevron = subject.querySelector('.res-chevron');
+        if (shouldShow && matchFound) {
+          subject.classList.add('active');
+          if (chevron) chevron.style.transform = 'rotate(180deg)';
+        } else if (searchValue !== '') {
+          subject.classList.remove('active');
+          if (chevron) chevron.style.transform = 'rotate(0deg)';
+        }
+      });
     }
 
-  });
-
-}
-
-/* =========================
-   EVENTS
-========================= */
-searchInput.addEventListener("input", filterResources);
-
-categoryFilter.addEventListener("change", filterResources);
-</script>
- <script src="translate.js"></script>
+    searchInput.addEventListener('input', filterResources);
+    categoryFilter.addEventListener('change', filterResources);
+  </script>
+  <script src="translate.js"></script>
 </body>
 </html>

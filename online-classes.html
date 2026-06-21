@@ -3,149 +3,222 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Online Classes - Al-Bayan Arabic Institute</title>
+  <title>Online Classes - Al-Bayan Arabic Institute Online</title>
   <link rel="stylesheet" href="master.css">
-  <link rel="stylesheet" href="online-classes.css"> <!-- Use your hub & general styles -->
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="online-classes.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
-<!-- Navigation -->
-<nav class="master-nav">
-   <div class="nav-container">
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
       </a>
-      <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
       <div class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="courses.html">Courses</a>
-        <a href="register.html">Register</a>
-        <a href="students-dashboard.html">Dashboard</a>
-
-        <a href="payment.html">Payment</a>
-        <a href="schedule.html">Schedule</a>
-        <a href="contact.html">Contact</a>
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="schedule.html" data-translate="Schedule">Schedule</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
       </div>
     </div>
   </nav>
 
-<!-- Page Header -->
- <header class="hub-header" style="background-image: url('online-classes.png');">
-    <div class="header-overlay">
+  <!-- ================================================
+       PAGE BANNER
+  ================================================ -->
+  <header class="page-banner" style="background-image: url('online-classes.png');">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
       <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
-    <h1>Online Classes</h1>
-    <p>Access your Zoom, Telegram, WhatsApp and other online class platforms here</p>
-  </div>
-</header>
+      <p class="banner-eyebrow">
+        <i class="fa-solid fa-signal"></i> 
+        <span data-translate="Live & Interactive">Live &amp; Interactive</span>
+      </p>
+      <h1 data-translate="Online Classes">Online Classes</h1>
+      <p data-translate="Access your Zoom, Telegram, WhatsApp and other online class platforms here.">
+        Access your Zoom, Telegram, WhatsApp and other online class platforms here.
+      </p>
+    </div>
+  </header>
 
-<!-- Online Classes Section -->
-<section class="register-hub">
-  <h1>Join Your Online Classes</h1>
-  <p>Click the links below to enter your class sessions</p>
+  <!-- ================================================
+       MAIN SECTION
+  ================================================ -->
+  <section class="register-hub">
 
-  <div class="hub-buttons">
+    <div class="hub-section-header">
+      <div class="hub-section-label" data-translate="Live Sessions">Live Sessions</div>
+      <h2 data-translate="Join Your Online Classes">Join Your Online Classes</h2>
+      <p data-translate="Click the links below to enter your class sessions. Make sure you're logged in to the respective platform before joining.">
+        Click the links below to enter your class sessions. Make sure you're logged in to the respective platform before joining.
+      </p>
+    </div>
 
-    <!-- Monday - Zoom -->
-    <a href="https://zoom.us/j/123456789" target="_blank" class="hub-card zoom">
-      <span class="icon">🖥️</span>
-      Monday - Zoom
-      <span class="arrow">➔</span>
-    </a>
+    <div class="hub-buttons">
 
-    <!-- Tuesday - Telegram -->
-    <a href="https://t.me/AlBayanClass" target="_blank" class="hub-card telegram">
-      <span class="icon">💬</span>
-      Tuesday - Telegram
-      <span class="arrow">➔</span>
-    </a>
+      <!-- Monday - Zoom -->
+      <a href="https://zoom.us/j/123456789" target="_blank" rel="noopener" class="hub-card zoom">
+        <div class="hub-card-left">
+          <div class="hub-card-icon zoom-bg">
+            <i class="fa-solid fa-video"></i>
+          </div>
+          <div class="hub-card-text">
+            <span class="hub-day" data-translate="Monday">Monday</span>
+            <span class="hub-platform">Zoom</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-arrow-right arrow"></i>
+      </a>
 
-    <!-- Wednesday - WhatsApp -->
-    <a href="https://wa.me/2347054711066" target="_blank" class="hub-card whatsapp">
-      <span class="icon">📱</span>
-      Wednesday - WhatsApp
-      <span class="arrow">➔</span>
-    </a>
+      <!-- Tuesday - Telegram -->
+      <a href="https://t.me/AlbayanInstituteClass" target="_blank" rel="noopener" class="hub-card telegram">
+        <div class="hub-card-left">
+          <div class="hub-card-icon telegram-bg">
+            <i class="fa-brands fa-telegram"></i>
+          </div>
+          <div class="hub-card-text">
+            <span class="hub-day" data-translate="Tuesday">Tuesday</span>
+            <span class="hub-platform">Telegram</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-arrow-right arrow"></i>
+      </a>
 
-    <!-- Thursday - Google Meet -->
-    <a href="https://meet.google.com/abc-defg-hij" target="_blank" class="hub-card meet">
-      <span class="icon">🌐</span>
-      Thursday - Google Meet
-      <span class="arrow">➔</span>
-    </a>
+      <!-- Wednesday - WhatsApp -->
+      <a href="https://wa.me/2347054711066" target="_blank" rel="noopener" class="hub-card whatsapp">
+        <div class="hub-card-left">
+          <div class="hub-card-icon whatsapp-bg">
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+          <div class="hub-card-text">
+            <span class="hub-day" data-translate="Wednesday">Wednesday</span>
+            <span class="hub-platform">WhatsApp</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-arrow-right arrow"></i>
+      </a>
 
-    <!-- Friday - Zoom -->
-    <a href="https://zoom.us/j/987654321" target="_blank" class="hub-card zoom">
-      <span class="icon">🖥️</span>
-      Friday - Zoom
-      <span class="arrow">➔</span>
-    </a>
+      <!-- Thursday - Google Meet -->
+      <a href="https://meet.google.com/abc-defg-hij" target="_blank" rel="noopener" class="hub-card meet">
+        <div class="hub-card-left">
+          <div class="hub-card-icon meet-bg">
+            <i class="fa-brands fa-google"></i>
+          </div>
+          <div class="hub-card-text">
+            <span class="hub-day" data-translate="Thursday">Thursday</span>
+            <span class="hub-platform">Google Meet</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-arrow-right arrow"></i>
+      </a>
 
-    <!-- Saturday - Telegram -->
-    <a href="https://t.me/AlBayanWeekend" target="_blank" class="hub-card telegram">
-      <span class="icon">💬</span>
-      Saturday - Telegram
-      <span class="arrow">➔</span>
-    </a>
+      <!-- Friday - Zoom -->
+      <a href="https://zoom.us/j/987654321" target="_blank" rel="noopener" class="hub-card zoom">
+        <div class="hub-card-left">
+          <div class="hub-card-icon zoom-bg">
+            <i class="fa-solid fa-video"></i>
+          </div>
+          <div class="hub-card-text">
+            <span class="hub-day" data-translate="Friday">Friday</span>
+            <span class="hub-platform">Zoom</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-arrow-right arrow"></i>
+      </a>
 
-    <!-- Sunday - Google Meet -->
-    <a href="https://meet.google.com/xyz-uvw-rst" target="_blank" class="hub-card meet">
-      <span class="icon">🌐</span>
-      Sunday - Google Meet
-      <span class="arrow">➔</span>
-    </a>
+      <!-- Saturday - Telegram -->
+      <a href="https://t.me/AlbayanInstituteWeekend" target="_blank" rel="noopener" class="hub-card telegram">
+        <div class="hub-card-left">
+          <div class="hub-card-icon telegram-bg">
+            <i class="fa-brands fa-telegram"></i>
+          </div>
+          <div class="hub-card-text">
+            <span class="hub-day" data-translate="Saturday">Saturday</span>
+            <span class="hub-platform">Telegram</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-arrow-right arrow"></i>
+      </a>
 
-  </div>
-</section>
+      <!-- Sunday - Google Meet -->
+      <a href="https://meet.google.com/xyz-uvw-rst" target="_blank" rel="noopener" class="hub-card meet">
+        <div class="hub-card-left">
+          <div class="hub-card-icon meet-bg">
+            <i class="fa-brands fa-google"></i>
+          </div>
+          <div class="hub-card-text">
+            <span class="hub-day" data-translate="Sunday">Sunday</span>
+            <span class="hub-platform">Google Meet</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-arrow-right arrow"></i>
+      </a>
 
-<!-- Footer -->
-<footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
+    </div>
 
-<!-- WhatsApp Float -->
-<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
+    <!-- INFO NOTE -->
+    <div class="hub-note">
+      <i class="fa-solid fa-circle-info"></i>
+      <p data-translate="If you experience any issues joining a class, please contact us via WhatsApp or the Contact page.">
+        If you experience any issues joining a class, please contact us via WhatsApp or the Contact page.
+      </p>
+    </div>
 
-<script>
-  function toggleMenu() {
-    const nav = document.getElementById('navLinks');
-    nav.classList.toggle('show');
-  }
+  </section>
 
-  document.addEventListener('click', function (e) {
-    const nav = document.getElementById('navLinks');
-    const hamburger = document.querySelector('.hamburger');
-    if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
-      nav.classList.remove('show');
+  <!-- FOOTER -->
+  <footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+ <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
+
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
+
+  <script>
+   
+
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
     }
-  });
-</script>
-<script>
-function toggleMenu() {
-    document.getElementById("navLinks").classList.toggle("show");
-  }
+    document.addEventListener('click', function (e) {
+      const nav       = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+    });
 
-  document.addEventListener("click", function(e) {
-    const menu = document.getElementById("navLinks");
-    const burger = document.querySelector(".hamburger");
-
-    if (!menu.contains(e.target) && !burger.contains(e.target)) {
-      menu.classList.remove("show");
-    }
-  });
- </script>
- <script src="translate.js"></script>
+    /* Scroll reveal */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 60);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.hub-card').forEach(el => observer.observe(el));
+  </script>
+  <script src="translate.js"></script>
 </body>
 </html>

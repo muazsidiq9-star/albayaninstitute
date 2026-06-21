@@ -3,243 +3,349 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Al-Bayan Arabic Institute - Home</title>
-  <!-- MASTER CSS -->
+  <title>Al-Bayan Arabic Institute Online - Home</title>
   <link rel="stylesheet" href="master.css">
-  <!-- HOME PAGE SPECIFIC CSS -->
   <link rel="stylesheet" href="home.css">
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="course-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
   <!-- NAVIGATION -->
   <nav class="master-nav">
     <div class="nav-container">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
       </a>
       <div class="hamburger" onclick="toggleMenu()">☰</div>
       <div class="nav-links" id="navLinks">
-        <a href="index.html" class="active">Home</a>
-        <a href="about.html">About</a>
-        <a href="courses.html">Courses</a>
-        <a href="register.html">Register</a>
-        <a href="students-dashboard.html">Dashboard</a>
-        
-        <a href="payment.html">Payment</a>
-        <a href="schedule.html">Schedule</a>
-        <a href="contact.html">Contact</a>
-        <a href="login.html" class="login-btn">Log in</a>
+        <a href="index.html" class="active" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+        <a href="login.html" class="login-btn" data-translate="Log in">Log in</a>
       </div>
     </div>
   </nav>
 
-  <!-- HEADER / HERO -->
-<header class="home-header">
+  <!-- ================================================
+       HERO SECTION
+  ================================================ -->
+  <header class="home-header">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="background-all.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
 
-  <video class="hero-video" autoplay muted loop playsinline>
-    <source src="background-all.mp4" type="video/mp4">
-  </video>
-    
-  <div class="header-overlay">
+    <div class="hero-content">
+      <img src="logo.png" alt="Al-Bayan Logo" class="header-logo">
 
-    <img src="logo.png" alt="Logo" class="header-logo">
+      <p class="hero-eyebrow" data-translate="Online • Arabic • Islamic Sciences">Online &bull; Arabic &bull; Islamic Sciences</p>
 
-    <h1>Al-Bayan Arabic Institute Online</h1>
+      <h1 data-translate="Al-Bayan Arabic Institute Online">
+        Al-Bayan Arabic Institute Online
+      </h1>
 
-    <h2>Structured online Arabic classes for beginners, intermediate and advanced learners, guided by qualified teachers.</h2>
+      <p class="hero-sub" data-translate="Structured online Arabic classes for beginners, intermediate and advanced learners, guided by qualified teachers.">
+        Structured online Arabic classes for beginners, intermediate and advanced learners, guided by qualified teachers.
+      </p>
 
-    <div class="cta-group">
-  <a href="login.html" class="cta-btn pulse">
-    Sign In
-  </a>
-
-  <a href="register.html" class="cta-btn pulse">
-    Sign Up
-  </a>
-</div>
-  </div>
-
-</header>
-
-  <!-- WHY CHOOSE US SECTION -->
-<section class="features">
-  <h2>Why Choose Al-Bayan?</h2>
-  <div class="cards-grid">
-    <div class="feature-card">
-      <div class="icon-circle green">
-      <i class="fa-solid fa-chalkboard-user"></i>
+      <div class="cta-group">
+        <a href="register.html" class="cta-btn pulse" data-translate="Get Started">Get Started</a>
+        <a href="login.html" class="cta-btn cta-outline" data-translate="Log In">Log In</a>
       </div>
-      <h3>Expert Teachers</h3>
-      <p>Learn from qualified and passionate Arabic educators.</p>
     </div>
+  </header>
 
-    <div class="feature-card">
-      <div class="icon-circle orange">
-      <i class="fa-solid fa-laptop-code"></i>
+  <!-- ================================================
+       STATS STRIP
+  ================================================ -->
+  <section class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <span class="stat-num">500+</span>
+        <span class="stat-label" data-translate="Students Enrolled">Students Enrolled</span>
       </div>
-      <h3>Flexible Online Learning</h3>
-      <p>Access courses anytime, anywhere, on your schedule.</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="icon-circle">
-      <i class="fa-solid fa-book-open"></i>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">4</span>
+        <span class="stat-label" data-translate="Levels of Study">Levels of Study</span>
       </div>
-      <h3>Comprehensive Courses</h3>
-      <p>From Qur'anic Arabic to conversational fluency, all levels covered.</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="icon-circle green">
-      <i class="fa-solid fa-users"></i>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">100%</span>
+        <span class="stat-label" data-translate="Online & Flexible">Online &amp; Flexible</span>
       </div>
-      <h3>Community Support</h3>
-      <p>Join a global community of learners and mentors.</p>
-    </div>
-
-    <!-- New feature cards -->
-    <div class="feature-card">
-      <div class="icon-circle orange">
-      <i class="fa-solid fa-globe"></i>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">10+</span>
+        <span class="stat-label" data-translate="Countries Represented">Countries Represented</span>
       </div>
-      <h3>Global Recognition</h3>
-      <p>Certificates recognized internationally for Arabic proficiency.</p>
     </div>
+  </section>
 
-    <div class="feature-card">
-      <div class="icon-circle">
-      <i class="fa-solid fa-brain"></i>
+  <!-- ================================================
+       HIGHLIGHT VIDEOS  (moved up — first impression)
+  ================================================ -->
+  <section class="home-videos">
+    <div class="section-label" data-translate="See Us in Action">See Us in Action</div>
+    <h2 data-translate="Watch Our Highlights">Watch Our Highlights</h2>
+    <p data-translate="See how Al-Bayan brings learning to life for students across the globe.">
+      See how Al-Bayan brings learning to life for students across the globe.
+    </p>
+    <div class="videos-grid">
+      <div class="video-card">
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/kziSbE1-PIo"
+                  title="Institute Tour" allowfullscreen loading="lazy"></iframe>
         </div>
-      <h3>Innovative Teaching Methods</h3>
-      <p>Interactive lessons designed to boost retention and confidence.</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="icon-circle green">
-      <i class="fa-solid fa-clock"></i>
+        <p data-translate="Institute Tour">Institute Tour</p>
       </div>
-      <h3>Self-Paced Options</h3>
-      <p>Learn at your own speed with recorded lessons and practice materials.</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="icon-circle orange">
-      <i class="fa-solid fa-award"></i>
+      <div class="video-card">
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/Vc1B5ZXfu7o"
+                  title="Class Experience" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <p data-translate="Experience Our Arabic Classes">Experience Our Arabic Classes</p>
       </div>
-      <h3>Proven Success</h3>
-      <p>Thousands of students have successfully mastered Arabic with us.</p>
+      <div class="video-card">
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/10YTX_OBBKU"
+                  title="Student Testimonials" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <p data-translate="Hear from Our Students">Hear from Our Students</p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-  <!-- TESTIMONIALS -->
-<section class="testimonials">
-  <h2>What Our Students Say</h2>
+  <!-- ================================================
+       WHY CHOOSE US
+  ================================================ -->
+  <section class="features">
+    <div class="section-label" data-translate="Our Strengths">Our Strengths</div>
+    <h2 data-translate="Why Choose Al-Bayan?">Why Choose Al-Bayan?</h2>
 
-  <div class="testimonial-grid">
+    <div class="cards-grid">
 
-    <div class="testimonial-card">
-      <p>"I improved my Arabic in just 3 months! The teachers are amazing."</p>
-      <h4>- Hafsah, Nigeria</h4>
+      <div class="feature-card">
+        <div class="icon-circle green">
+          <i class="fa-solid fa-chalkboard-user"></i>
+        </div>
+        <h3 data-translate="Expert Teachers">Expert Teachers</h3>
+        <p data-translate="Learn from qualified and passionate Arabic educators with deep Islamic knowledge.">
+          Learn from qualified and passionate Arabic educators with deep Islamic knowledge.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon-circle orange">
+          <i class="fa-solid fa-laptop-code"></i>
+        </div>
+        <h3 data-translate="Flexible Online Learning">Flexible Online Learning</h3>
+        <p data-translate="Access courses anytime, anywhere, on your own schedule.">
+          Access courses anytime, anywhere, on your own schedule.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon-circle teal">
+          <i class="fa-solid fa-book-open"></i>
+        </div>
+        <h3 data-translate="Comprehensive Curriculum">Comprehensive Curriculum</h3>
+        <p data-translate="From Qur'anic Arabic to conversational fluency — all levels covered.">
+          From Qur'anic Arabic to conversational fluency &mdash; all levels covered.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon-circle green">
+          <i class="fa-solid fa-users"></i>
+        </div>
+        <h3 data-translate="Global Community">Global Community</h3>
+        <p data-translate="Join a worldwide community of learners united by a love for Arabic and Islam.">
+          Join a worldwide community of learners united by a love for Arabic and Islam.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon-circle orange">
+          <i class="fa-solid fa-globe"></i>
+        </div>
+        <h3 data-translate="Internationally Recognised">Internationally Recognised</h3>
+        <p data-translate="Earn certificates respected across borders for Arabic and Islamic studies.">
+          Earn certificates respected across borders for Arabic and Islamic studies.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon-circle teal">
+          <i class="fa-solid fa-brain"></i>
+        </div>
+        <h3 data-translate="Modern Teaching Methods">Modern Teaching Methods</h3>
+        <p data-translate="Interactive lessons designed to boost retention, confidence and love for the language.">
+          Interactive lessons designed to boost retention, confidence and love for the language.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon-circle green">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+        <h3 data-translate="Self-Paced Options">Self-Paced Options</h3>
+        <p data-translate="Learn at your own speed with recorded lessons and practice materials.">
+          Learn at your own speed with recorded lessons and practice materials.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon-circle orange">
+          <i class="fa-solid fa-award"></i>
+        </div>
+        <h3 data-translate="Proven Results">Proven Results</h3>
+        <p data-translate="Hundreds of students have successfully mastered Arabic and Islamic sciences with us.">
+          Hundreds of students have successfully mastered Arabic and Islamic sciences with us.
+        </p>
+      </div>
+
     </div>
+  </section>
 
-    <div class="testimonial-card">
-      <p>"Flexible classes and practical lessons make learning fun and easy."</p>
-      <h4>- Omar, UAE</h4>
+  <!-- ================================================
+       TESTIMONIALS
+  ================================================ -->
+  <section class="testimonials">
+    <div class="section-label" data-translate="Student Voices">Student Voices</div>
+    <h2 data-translate="What Our Students Say">What Our Students Say</h2>
+
+    <div class="testimonial-grid">
+
+      <div class="testimonial-card">
+        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+        <p data-translate="I improved my Arabic in just 3 months! The teachers are amazing and very patient.">
+          I improved my Arabic in just 3 months! The teachers are amazing and very patient.
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">H</div>
+          <div>
+            <strong>Hafsah</strong>
+            <span data-translate="Nigeria">Nigeria</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+        <p data-translate="Flexible classes and practical lessons make learning fun and easy.">
+          Flexible classes and practical lessons make learning fun and easy.
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">O</div>
+          <div>
+            <strong>Omar</strong>
+            <span data-translate="UAE">UAE</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+        <p data-translate="The community and support kept me motivated throughout my learning journey.">
+          The community and support kept me motivated throughout my learning journey.
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">F</div>
+          <div>
+            <strong>Fatima</strong>
+            <span data-translate="Egypt">Egypt</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+        <p data-translate="The Qur'an and Arabic lessons are well-structured and easy to follow. I now feel confident understanding Islamic texts.">
+          The Qur'an and Arabic lessons are well-structured and easy to follow. I now feel confident understanding Islamic texts.
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">A</div>
+          <div>
+            <strong>Ahmad</strong>
+            <span data-translate="United Kingdom">United Kingdom</span>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </section>
 
-    <div class="testimonial-card">
-      <p>"The community and support kept me motivated to keep learning."</p>
-      <h4>- Fatima, Egypt</h4>
-    </div>
-
-    <!-- NEW TESTIMONIAL -->
-    <div class="testimonial-card">
-      <p>"The Qur'an and Arabic lessons are well-structured and easy to follow. I now feel more confident understanding Islamic texts."</p>
-      <h4>- Ahmad, United Kingdom</h4>
-    </div>
-
-  </div>
-</section>
-
-  <!-- ===== Advertising / Highlight Videos ===== -->
-<section class="home-videos">
-  <div class="container">
-    <h2 data-translate="🎬 Watch Our Highlights">🎬 Watch Our Highlights</h2>
-<p data-translate="See how Al-Bayan Arabic Institute brings learning to life!">
-  See how Al-Bayan Arabic Institute brings learning to life!
-</p>
-
-<div class="videos-grid">
-  <div class="video-card">
-    <iframe src="https://www.youtube.com/embed/90bn6gFRaqY"
-            title="Institute Tour" allowfullscreen></iframe>
-    <p data-translate="Take a tour of our institute and facilities">
-      Take a tour of our institute and facilities
-    </p>
-  </div>
-  <div class="video-card">
-    <iframe src="https://www.youtube.com/embed/Vc1B5ZXfu7o" 
-            title="Class Experience" allowfullscreen></iframe>
-    <p data-translate="Experience our interactive Arabic classes">
-      Experience our interactive Arabic classes
-    </p>
-  </div>
-  <div class="video-card">
-    <iframe src="https://www.youtube.com/embed/3ekiKUc5o0Y" 
-            title="Student Testimonials" allowfullscreen></iframe>
-    <p data-translate="Hear from our happy students">Hear from our happy students</p>
-  </div>
-</div>
-  </div>
-</section>
-
-  <!-- CALL TO ACTION -->
-  <section class="cta">
-    <h2>Ready to Start Your Arabic Journey?</h2>
-    <p>Sign up today and join our growing family of learners worldwide.</p>
-    <div class="cta-center">
-      <a href="register.html" class="cta-btn pulse">Register Now</a>
+  <!-- ================================================
+       CALL TO ACTION
+  ================================================ -->
+  <section class="cta-section">
+    <div class="cta-inner">
+      <h2 data-translate="Begin Your Arabic Journey Today">Begin Your Arabic Journey Today</h2>
+      <p data-translate="Join thousands of learners worldwide and take the first step towards understanding the Qur'an and Islamic sciences.">
+        Join thousands of learners worldwide and take the first step towards understanding the Qur'an and Islamic sciences.
+      </p>
+      <a href="register.html" class="cta-btn pulse" data-translate="Register Now — It's Free">Register Now &mdash; It's Free</a>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
 
- <!-- Floating WhatsApp Button -->
-<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
 
-  <!-- HAMBURGER & PAGE JS -->
+  <!-- SCRIPTS -->
   <script>
+    
+
     function toggleMenu() {
-      const nav = document.getElementById('navLinks');
-      nav.classList.toggle('show');
+      document.getElementById('navLinks').classList.toggle('show');
     }
 
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
       const nav = document.getElementById('navLinks');
       const hamburger = document.querySelector('.hamburger');
       if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
         nav.classList.remove('show');
       }
     });
+
+    /* Scroll-reveal for cards */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.feature-card, .testimonial-card, .stat-item, .video-card')
+      .forEach(el => observer.observe(el));
   </script>
-<script src="translate.js"></script>
+  <script src="translate.js"></script>
 </body>
 </html>

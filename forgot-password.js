@@ -5,88 +5,191 @@ const emailInput = document.getElementById("email");
 const errorMsg = document.querySelector(".error-msg");
 const successMsg = document.querySelector(".success-msg");
 
+function showError(message) {
+  errorMsg.style.display = "block";
+  successMsg.style.display = "none";
+
+  errorMsg.textContent = message;
+  successMsg.textContent = "";
+}
+
+function showSuccess(message) {
+  successMsg.style.display = "block";
+  errorMsg.style.display = "none";
+
+  successMsg.textContent = message;
+  errorMsg.textContent = "";
+}
+
+const userType =
+  new URLSearchParams(window.location.search)
+    .get("type");
+
 if (form) {
+
   form.addEventListener("submit", async (e) => {
+
     e.preventDefault();
 
     const email = emailInput.value.trim();
-    if (!email) return alert(t("Please enter your email"));
+
+    if (!email) {
+      showError(t("Please enter your email"));
+      return;
+    }
 
     try {
-      // 1️⃣ Check if student exists
-      const { data: student, error: fetchError } = await sb
-        .from("students")
-        .select("*")
-        .eq("email", email)
-        .single();
+
+      if (userType === "auth") {
+
+        const { error } =
+          await sb.auth.resetPasswordForEmail(
+            email,
+            {
+              redirectTo:
+                `${window.location.origin}/reset-password.html`
+            }
+          );
+
+        if (error) throw error;
+
+        showSuccess(
+          t("Password reset link sent. Please check your email.")
+        );
+
+        emailInput.value = "";
+
+        return;
+      }
+
+      const { data: student, error: fetchError } =
+        await sb
+          .from("students")
+          .select("*")
+          .eq("email", email)
+          .single();
 
       if (fetchError || !student) {
-        errorMsg.textContent = t("No student found with this email.");
-        errorMsg.style.color = "red";
-        successMsg.textContent = "";
+
+        showError(
+          t("No student found with this email.")
+        );
+
         return;
       }
 
-      // 2️⃣ Generate temp password
-      const tempPassword = Math.random().toString(36).slice(-8); // random 8 chars
+      const tempPassword =
+        Math.random()
+          .toString(36)
+          .slice(-8);
 
-      // 3️⃣ Update password in Supabase & mark password_changed = true
-      const { error: updateError } = await sb
-        .from("students")
-        .update({ password: tempPassword, password_changed: true })
-        .eq("email", email);
+      const { error: updateError } =
+        await sb
+          .from("students")
+          .update({
+            password: tempPassword,
+            password_changed: true
+          })
+          .eq("email", email);
 
       if (updateError) {
-        errorMsg.textContent = t("Failed to reset password. Try again later.");
-        errorMsg.style.color = "red";
-        successMsg.textContent = "";
+
+        showError(
+          t("Failed to reset password. Try again later.")
+        );
+
         return;
       }
 
-      // 4️⃣ Insert notification (for student dashboard)
-      await sb.from("notifications").insert([{
-        matric_number: student.matric_number,
-        title: "Password Reset",
-        message: `Your temporary password is: ${tempPassword}`,
-        created_at: new Date().toISOString()
-      }]);
+      await sb
+        .from("notifications")
+        .insert([
+          {
+            matric_number:
+              student.matric_number,
+            title:
+              t("Password Reset"),
+            message:
+              `${t("Your temporary password is:")} ${tempPassword}`,
+            created_at:
+              new Date().toISOString()
+          }
+        ]);
 
-      // 5️⃣ Display fancy temp password box
+      successMsg.style.display = "block";
+      errorMsg.style.display = "none";
+
       successMsg.innerHTML = `
-        Temporary password generated:
-        <div style="display:flex; align-items:center; margin-top:5px;">
-          <input type="password" id="tempPass" value="${tempPassword}" readonly style="flex:1; padding:5px; border:1px solid var(--border-color); border-radius:5px; margin-right:5px;">
-          <button type="button" id="toggleTempPass" style="margin-right:5px;">👁️</button>
-          <button type="button" id="copyTempPass">📋</button>
+        ${t("Temporary password generated:")}
+        <div style="display:flex;align-items:center;margin-top:5px;">
+          <input
+            type="password"
+            id="tempPass"
+            value="${tempPassword}"
+            readonly
+            style="
+              flex:1;
+              padding:5px;
+              border:1px solid var(--border-color);
+              border-radius:5px;
+              margin-right:5px;
+            "
+          >
+
+          <button
+            type="button"
+            id="toggleTempPass"
+            style="margin-right:5px;"
+          >
+            👁️
+          </button>
+
+          <button
+            type="button"
+            id="copyTempPass"
+          >
+            📋
+          </button>
         </div>
       `;
-      successMsg.style.color = "green";
-      errorMsg.textContent = "";
 
-      // Reset email input
       emailInput.value = "";
 
-      // 6️⃣ Show/hide temp password
-      const tempPassInput = document.getElementById("tempPass");
-      const toggleBtn = document.getElementById("toggleTempPass");
-      toggleBtn.addEventListener("click", () => {
-        tempPassInput.type = tempPassInput.type === "password" ? "text" : "password";
-      });
+      const tempPassInput =
+        document.getElementById("tempPass");
 
-      // 7️⃣ Copy temp password
-      const copyBtn = document.getElementById("copyTempPass");
-      copyBtn.addEventListener("click", () => {
-        tempPassInput.select();
-        tempPassInput.setSelectionRange(0, 99999); // mobile support
-        document.execCommand("copy");
-        alert(t("Temporary password copied to clipboard!"));
-      });
+      document
+        .getElementById("toggleTempPass")
+        .addEventListener("click", () => {
+
+          tempPassInput.type =
+            tempPassInput.type === "password"
+              ? "text"
+              : "password";
+        });
+
+      document
+        .getElementById("copyTempPass")
+        .addEventListener("click", () => {
+
+          navigator.clipboard.writeText(
+            tempPassword
+          );
+
+          showSuccess(
+            t("Temporary password copied to clipboard!")
+          );
+        });
 
     } catch (err) {
-      console.error("Forgot password error:", err);
-      errorMsg.textContent = "Something went wrong. Check console.";
-      errorMsg.style.color = "red";
-      successMsg.textContent = "";
+
+      console.error(err);
+
+      showError(
+        t("Something went wrong.")
+      );
     }
+
   });
+
 }

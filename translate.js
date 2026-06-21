@@ -2,12 +2,8 @@
 // DICTIONARY
 // ================================
 const DICT = {
-    "Home": "الرئيسية",
-    "Courses": "الدورات",
-    "Register": "التسجيل",
-    "Student Dashboard": "لوحة الطالب",
-    "Payment": "الدفع",
-    "Schedule": "الجدول",
+
+    /* ============================================================ */
 
     "Send Payment Proof": "إرسال دليل الدفع",
     "Send": "إرسال",
@@ -18,47 +14,11 @@ const DICT = {
     "Please upload your payment receipt here for confirmation.": "يرجى رفع إيصال الدفع الخاص بك هنا للتأكيد.",
     "Plan Type": "نوع الخطة",
 
-    "Test/Exam Timetable": "جدول الاخبار/المتحان",
-    "Take Test/Exam": "ادخل للاخبار/للمتحان",
+    "Test/Exam Timetable": "جدول الاخبار/الامتحان",
+    "Take Test/Exam": "ادخل للاخبار/للامتحان",
     "Admission Letter": "رسالة القبول",
     "Pay Now": "ادفع الآن",
 
-    // ===== ABOUT PAGE =====
-  "About Al-Bayan Arabic Institute": "عن معهد البيان للغة العربية والعلوم الإسلامية",
-  "Dedicated to providing quality Arabic education online for learners worldwide":
-    "نكرّس جهودنا لتقديم تعليم عربي عالي الجودة عبر الإنترنت للمتعلمين حول العالم",
-
-  "Who We Are": "من نحن",
-  "Al-Bayan Arabic Institute Online is an educational platform committed to teaching the Arabic language through structured and guided online learning. We serve students from different parts of the world who desire to understand Arabic for religious, academic, and conversational purposes.":
-    "معهد البيان للدراسات العربية عبر الإنترنت هو منصة تعليمية تهدف إلى تعليم اللغة العربية والعلوم الإسلامية بأسلوب منظم وموجّه. نخدم طلابًا من مختلف أنحاء العالم الراغبين في تعلّم العربية لأغراض دينية وأكاديمية وتواصلية.",
-
-  "Our Mission": "رسالتنا",
-  "Our mission is to empower students to understand the Arabic language clearly and confidently, especially the language of the Qur’an. We aim to remove fear and confusion from learning Arabic by using step-by-step methods guided by experienced teachers.":
-    "رسالتنا هي تمكين الطلاب من فهم اللغة العربية والعلوم الإسلامية بوضوح وثقة، وخاصة لغة القرآن الكريم. نسعى إلى إزالة الخوف والارتباك من تعتم العربية والإسلامية من خلال أساليب تدريجية يشرف عليها معلمون ذوو خبرة.",
-
-  "Our Vision": "رؤيتنا",
-  "Our vision is to become a trusted online Arabic institute that nurtures a generation of learners who can read, understand, and communicate in Arabic with clarity, confidence, and correct understanding.":
-    "رؤيتنا أن نصبح معهدًا موثوقًا للدراسات العربية والإسلامية عبر الإنترنت، يساهم في إعداد جيل قادر على القراءة والفهم والتواصل باللغة العربية والعلوم الإسلامية بوضوح وثقة وفهم سليم.",
-
-  "What Makes Us Different": "ما الذي يميزنا",
-  "Qualified and experienced Arabic instructors":
-    "مدرسون مؤهلون وذوو خبرة في تعليم اللغة العربية والعلوم الإسلامية",
-  "Well-structured curriculum from beginner to advanced level":
-    "منهج دراسي منظم من المستوى المبتدئ إلى المتقدم",
-  "Strong focus on understanding, not memorization alone":
-    "تركيز قوي على الفهم وليس الحفظ فقط",
-  "Interactive classes with real student engagement":
-    "دروس تفاعلية مع مشاركة حقيقية من الطلاب",
-  "Flexible online learning environment":
-    "بيئة تعليمية مرنة عبر الإنترنت",
-
-  "Who Can Join": "من يمكنه الانضمام",
-  "Our programs are suitable for beginners with no prior knowledge of Arabic, intermediate learners seeking improvement, and advanced students aiming to strengthen their understanding of grammar and Arabic texts.":
-    "برامجنا مناسبة للمبتدئين الذين ليست لديهم معرفة سابقة بالعربية، وللمتعلمين المتوسطين الساعين إلى التطور، وللمتقدمين الراغبين في تعزيز فهمهم للنحو والنصوص العربية.",
-
-  "Our Commitment": "التزامنا",
-  "We are committed to delivering quality education, maintaining academic integrity, supporting our students consistently, and creating a learning environment that encourages growth, discipline, and excellence.":
-    "نلتزم بتقديم تعليم عالي الجودة، والحفاظ على النزاهة الأكاديمية، ودعم طلابنا باستمرار، وخلق بيئة تعليمية تشجع على التطور والانضباط والتميز.",
 
 "Admin Dashboard": "لوحة تحكم المشرف",
 "Manage Students, Payments, Grades & Schedule":
@@ -69,6 +29,11 @@ const DICT = {
 "Grades": "الدرجات",
 "Payments": "المدفوعات",
 "Logout": "تسجيل الخروج",
+
+"My Courses": "دوراتي",
+"All courses you are enrolled in, with quick links to schedules": "جميع الدورات التي أنت مسجل فيها مع روابط سريعة للجدول",
+"Your Enrolled Courses": "دوراتك المسجلة",
+"No courses enrolled yet": "لا توجد دورات مسجلة بعد",
 
 "Students": "الطلاب",
 "Amount Paid": "المبلغ المدفوع",
@@ -103,7 +68,7 @@ const DICT = {
 "Method": "طريقة الدفع",
 "Date": "التاريخ",
 "Mark": "تحديد",
-"No payments yet": "لا توجد مدفوعات بعد",
+"No payments found.": "لا توجد مدفوعات",
 
 "Course": "المقرر",
 "Assessment": "التقييم",
@@ -130,7 +95,6 @@ const DICT = {
 "Passport Photo": "الصورة الشخصية",
 
 "-- Choose Level --": "-- اختر المستوى --",
-"Can read the Qur'an only": "يستطيع قراءة القرآن فقط",
 "Beginner": "مبتدئ",
 "Intermediate": "متوسط",
 "Advanced": "متقدم",
@@ -204,6 +168,12 @@ const DICT = {
 "Password Updated": "تم تحديث كلمة المرور",
 "Your account password has been updated by the admin. Please log in with your new password.": "تم تحديث كلمة مرور حسابك من قبل الإدارة. يرجى تسجيل الدخول باستخدام كلمة المرور الجديدة.",
 
+"Password Reset": "إعادة تعيين كلمة المرور",
+"Password reset link sent. Please check your email.": "تم إرسال رابط إعادة تعيين كاملة المرور. انظر في بريدك الالكتروني",
+"Your temporary password is:": "كلمة مرورك المؤقتة هي:",
+"Temporary password generated:": "تم إنشاء كلمة مرور مؤقتة:",
+"Something went wrong. Check console.": "حدث خطأ ما. راجع وحدة التحكم.",
+
 "Pass": "ناجح",
 "Average": "متوسط",
 "Fail": "راسب",
@@ -219,8 +189,7 @@ const DICT = {
 "Semester Work": "أعمال الفصل",
 "Emails": "الرسائل",
 
-"Al-Bayan Arabic Institute Online":
-"معهد البيان للدراسات العربية عبر الإنترنت",
+
 
 "Admin access only": "الدخول مخصص للمشرف فقط",
 
@@ -266,50 +235,9 @@ const DICT = {
 "at": "في",
 "Join": "انضم",
 
-/* ===== CONTACT PAGE ===== */
+// ===== CONTACT PAGE ===== 
 
-"Contact Us": "تواصل معنا",
-"Reach out to our team for any inquiries or support":
-"تواصل مع فريقنا لأي استفسارات أو طلب دعم",
 
-"Send a Message": "أرسل رسالة",
-"Fill out the form below and we will get back to you as soon as possible.":
-"املأ النموذج أدناه وسنقوم بالرد عليك في أقرب وقت ممكن.",
-
-"Full Name": "الاسم الكامل",
-"Your full name": "اسمك الكامل",
-
-"Email Address": "البريد الإلكتروني",
-"your@email.com": "بريدك الإلكتروني",
-
-"Subject": "الموضوع",
-
-"Message": "الرسالة",
-"Write your message here...": "اكتب رسالتك هنا...",
-
-"Send Message": "إرسال الرسالة",
-
-"Other Ways to Reach Us": "طرق أخرى للتواصل معنا",
-
-"Director: +2347054711066": "المدير: +2347054711066",
-"Registrar: +2348012345678": "المسجل: +2348012345678",
-
-"WhatsApp: +2347054711066": "واتساب: +2347054711066",
-"Email: albayaninstitute068@gmail.com":
-"البريد الإلكتروني: albayaninstitute068@gmail.com",
-
-"Al-Bayan Arabic Institute Online":
-"معهد البيان للدراسات العربية عبر الإنترنت",
-
-"© 2022 Al-Bayan Arabic Institute Online. All rights reserved.":
-"© 2022 معهد البيان للدراسات العربية عبر الإنترنت. جميع الحقوق محفوظة.",
-
-// Add to your DICT object
-"Forgot Your Password?": "هل نسيت كلمة المرور؟",
-"Enter your email to receive a reset link to reset your password": "أدخل بريدك الإلكتروني لتلقي رابط لإعادة تعيين كلمة المرور",
-"Forgot Password": "نسيت كلمة المرور",
-"Enter your Email": "أدخل بريدك الإلكتروني",
-"Send Reset Link": "إرسال رابط إعادة التعيين",
 
   // existing entries...
   "Please enter your email": "يرجى إدخال بريدك الإلكتروني",
@@ -317,8 +245,7 @@ const DICT = {
   "Failed to reset password. Try again later.": "فشل إعادة تعيين كلمة المرور. حاول لاحقًا.",
   "Temporary password copied to clipboard!": "تم نسخ كلمة المرور المؤقتة إلى الحافظة!",
 
-  // existing entries...
-  "Welcome to Al-Bayan Arabic Institute": "مرحبا بكم في معهد البيان",
+  // existing entries...,
   "Please login to continue to your account": "الرجاء تسجيل الدخول للمتابعة إلى حسابك",
   "LOGIN": "تسجيل الدخول",
   "Select User": "اختر المستخدم",
@@ -326,11 +253,12 @@ const DICT = {
   "Student": "طالب",
   "Email": "البريد الإلكتروني",
   "Password": "كلمة المرور",
-  "Forgot password?": "نسيت كلمة المرور؟",
+  "Forgot Password?": "نسيت كلمة المرور؟",
   "Login": "تسجيل الدخول",
   
   "Sign Up": "إنشاء حساب جديد",
-  "Sign In": "الدخول إلى الحساب",
+  "Log In": "الدخول إلى الحساب",
+  "Log in": "الدخول إلى الحساب",
 
 // Alerts / JS messages
 "Please fill all fields": "يرجى ملء جميع الحقول",
@@ -344,13 +272,47 @@ const DICT = {
 "Login failed. Check console for details.": "فشل تسجيل الدخول. تحقق من وحدة التحكم لمزيد من التفاصيل.",
 "Welcome back, {username}!": "مرحبًا بعودتك، {username}!",
 "Welcome back, Admin {username}!": "مرحبًا بعودتك، المسؤول {username}!",
+"Please fill all fields": "يرجى ملء جميع الحقول",
+"Processing... ⏳": "جارٍ المعالجة... ⏳",
+"Login": "تسجيل الدخول",
+"Invalid login credentials": "بيانات تسجيل الدخول غير صحيحة",
+"Invalid login": "تسجيل دخول غير صحيح",
+"Profile not found. Contact administrator.": "لم يتم العثور على الملف الشخصي. يرجى التواصل مع الإدارة.",
+"Unauthorized role": "دور غير مصرح به",
+"Login failed. Check console for details.": "فشل تسجيل الدخول. راجع وحدة التحكم للتفاصيل",
+"Access denied. You selected a wrong account type.": "تم رفض الوصول. لقد اخترت نوع حساب غير صحيح",
+
+"Please enter your email": "يرجى إدخال بريدك الإلكتروني",
+"No student found with this email.": "لم يتم العثور على طالب بهذا البريد الإلكتروني",
+"Failed to reset password. Try again later.": "فشل إعادة تعيين كلمة المرور. حاول مرة أخرى لاحقاً",
+"Password Reset": "إعادة تعيين كلمة المرور",
+"Your temporary password is:": "كلمة المرور المؤقتة الخاصة بك هي:",
+"Temporary password copied to clipboard!": "تم نسخ كلمة المرور المؤقتة إلى الحافظة!",
+
+"Something went wrong. Check console.": "حدث خطأ ما. تحقق من وحدة التحكم",
+"Contact administrator": "تواصل مع المسؤول",
+"Invalid request": "طلب غير صالح",
+
+"Edit Class":        "تعديل الدرس",
+"Add Class":         "إضافة درس",
+"Save Class":        "حفظ الدرس",
+"Update Class":      "تحديث الدرس",
+"Schedule updated ✅": "تم تحديث الجدول ✅",
+"Class added ✅":     "تمت إضافة الدرس ✅",
+"Failed to save schedule.": "فشل حفظ الجدول.",
+"Select Course":     "اختر المادة",
+"Edit":              "تعديل",
+"Cancel":            "إلغاء",
 
 "Welcome": "مرحبًا",
 
 "Mudeer": "المدير",
 "Assistant Mudeer": "نائب المدير",
+"Head of Dept.": "رئيس القسم",
 "Registrar": "المسجل",
 "Bursar": "المحاسب",
+"Head_of_dept": "رئيس القسم",
+"h_o_d": "رئيس القسم",
 
 "${welcome}, ${translatedRole} – ${name} 👋": "مرحبًا، ${translatedRole} – ${name} 👋",
 "${welcome}, ${translatedRole} 👋": "مرحبًا، ${translatedRole} 👋",
@@ -374,47 +336,6 @@ const DICT = {
 // Hub card arrow (optional, if you want to translate symbols/labels)
 "➔": "➔", // Keep symbol, no change needed
 
-// ======= PAYMENT PAGE =======
-"Make a Payment": "إجراء الدفع",
-"Securely pay for your courses and track your payment history": "ادفع مقابل دوراتك بأمان وتابع سجل المدفوعات الخاص بك",
-"Copied to clipboard": "تم النسخ إلى الحافظة",
-
-"Make your payment and ensure to fill the form bellow with payment details.": "قم بالدفع وتأكد من ملء النموذج أدناه بتفاصيل الدفع.",
-
-"Sterling Bank Transfer": "تحويل بنك ستيرلينغ",
-"GTBank Transfer": "تحويل بنك جي تي",
-"Opay Bank Transfer": "تحويل بنك أوباي",
-"Grey EUR Account (Clear Junction Limited Bank) Transfer": "تحويل حساب اليورو من جراي (كلير جنكشن المحدود)",
-"Grey USD Account (nbkc bank) Transfer": "تحويل الحساب بالدولار من جراي (بنك NBKC)",
-"Pay Online via Selar": "الدفع عبر الإنترنت عبر Selar",
-
-"Account Name": "اسم الحساب",
-"Account Number": "رقم الحساب",
-"Bank": "البنك",
-"Use your full name as payment narration.": "استخدم اسمك الكامل في تفاصيل الدفع.",
-"After payment, keep your receipt for confirmation.": "بعد الدفع، احتفظ بالإيصال للتأكيد.",
-"For international (foreign currency) payments only.": "للدفعات الدولية (بالعملات الأجنبية) فقط",
-"Secure Online Payment": "دفع آمن عبر الإنترنت",
-"Click the button below to pay": "انقر على الزر أدناه للدفع",
-"Pay with Selar": "الدفع عبر Selar",
-
-"Level Payment Form": "نموذج دفع المستوى",
-"Full Name": "الاسم الكامل",
-"Email": "البريد الإلكتروني",
-"Select Level": "اختر المستوى",
-"-- Choose Level --": "-- اختر المستوى --",
-"Can read the Qur'an only": "يمكنه قراءة القرآن فقط",
-"Beginner": "مبتدئ",
-"Intermediate": "متوسط",
-"Advanced": "متقدم",
-"Payment Method (Bank Sent to)": "طريقة الدفع (البنك المُرسل إليه)",
-"Amount (₦)": "المبلغ (₦)",
-"Date": "التاريخ",
-"Select Month": "اختر الشهر",
-"Pay Now": "ادفع الآن",
-"Payment submitted successfully!": "تم تقديم الدفع بنجاح!",
-"Please fill all fields correctly.": "يرجى ملء جميع الحقول بشكل صحيح.",
-"➔": "➔", // arrow symbol
 
 // ======= PAYMENT.JS STRINGS =======
 "Processing... ⏳": "جاري المعالجة... ⏳",
@@ -423,50 +344,6 @@ const DICT = {
 "Something went wrong. Please try again.": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
 "Copied to clipboard": "تم النسخ إلى الحافظة",
 
-// ======= REGISTER.HTML STRINGS =======
-"Online Registration": "التسجيل عبر الإنترنت",
-"Join Al-Bayan Arabic Institute Online Classes": "انضم إلى معهد البيان العربي عبر الإنترنت",
-"Kindly fill in your details correctly": "يرجى ملء بياناتك بشكل صحيح",
-"KINDLY FILL IN ALL REQUIRED INFORMATIONS CORRECTLY.": "يرجى ملء جميع المعلومات المطلوبة بشكل صحيح",
-"Full Name *": "الاسم الكامل *",
-"Email Address *": "البريد الإلكتروني *",
-"Gender *": "الجنس *",
-"Select": "اختر",
-"Male": "ذكر",
-"Female": "أنثى",
-"Age *": "العمر *",
-"Nationality *": "الجنسية *",
-"Country of Residence *": "بلد الإقامة *",
-"WhatsApp Phone Number *": "رقم واتساب *",
-"Current Level of Arabic *": "المستوى الحالي للغة العربية والعلوم الإسلامية *",
-"Can read the Qur'an only": "يمكنه قراءة القرآن فقط",
-"Beginner": "مبتدئ",
-"Intermediate": "متوسط",
-"Advanced": "متقدم",
-"Can you read the Qur'an with Tajweed? *": "هل تستطيع قراءة القرآن بالتجويد؟ *",
-"Yes": "نعم",
-"No": "لا",
-"A little": "قليل",
-"Can you attend online classes consistently? *": "هل تستطيع حضور الدروس عبر الإنترنت باستمرار؟ *",
-"How did you hear about us?": "كيف سمعت عنا؟",
-"Social Media": "وسائل التواصل الاجتماعي",
-"A Friend / Relative": "صديق / قريب",
-"Personal search": "بحث شخصي",
-"Preferred Class Time": "الوقت المفضل للحصة",
-"Include time zone": "قم بتضمين المنطقة الزمنية",
-"Why do you want to learn Arabic?": "لماذا تريد تعلم اللغة العربية والعلوم الإسلامية؟",
-"Understanding the Qur'an": "لفهم القرآن",
-"Speaking Arabic": "لتحدث العربية",
-"Islamic studies": "الدراسات الإسلامية",
-"Personal interest": "اهتمام شخصي",
-"Other": "أخرى",
-"All of the above": "جميع ما سبق",
-"Additional information": "معلومات إضافية",
-"Upload Passport (Max 2MB):": "تحميل جواز السفر (الحد الأقصى 2 ميغابايت):",
-"Niqāb-wearing females may upload photos with their faces covered.": "يمكن للإناث اللاتي يرتدين النقاب تحميل صور ووجوههن مغطاة",
-"Passport must not exceed 2MB": "يجب ألا يتجاوز حجم جواز السفر 2 ميغابايت",
-"Submit Registration": "إرسال التسجيل",
-"⚠️ Don't submit two forms. Click submit button once!.": "⚠️ لا ترسل النموذج مرتين. اضغط على زر الإرسال مرة واحدة فقط!",
 
 // ======= REGISTER.JS STRINGS =======
 "Supabase client not found": "لم يتم العثور على عميل Supabase",
@@ -478,54 +355,10 @@ const DICT = {
 "Registration failed. Check console for details.": "فشل التسجيل. تحقق من وحدة التحكم للحصول على التفاصيل.",
 "Registration successful 🎉\n\nYour Matric Number (Default Password). Save for first login.:": "تم التسجيل بنجاح 🎉\n\nرقم التسجيل الخاص بك (كلمة المرور الافتراضية). احفظها لتسجيل الدخول الأول.:",
 "Unexpected error occurred. Check console.": "حدث خطأ غير متوقع. تحقق من وحدة التحكم.",
+"Unexpected error occurred. Check console.": "حدث خطأ غير متوقع. تحقق من وحدة التحكم.",
 "Register": "تسجيل",
 
-// ======= STUDENT DASHBOARD / RESOURCES PAGE =======
-
-  "📚 Learning Resources": "📚 الموارد التعليمية",
-  "Access PDFs, videos, and other study materials for your courses":
-    "الوصول إلى ملفات PDF والفيديوهات والمواد الدراسية الخاصة بك",
-
-    "📚 Open Full Library": "📚 فتح المكتبة الكاملة",
-
-  "All Categories": "كل التصنيفات",
-  "Madinah": "المدينة",
-  "Tafseer": "التفسير",
-  "Hadeeth": "الحديث",
-  "Nahw": "النحو",
-  "Sarf": "الصرف",
-  "Qira'ah": "القراءة",
-  "Writing": "الكتابة",
-  "Fiqh": "الفقه",
-  "Tawheed": "التوحيد",
-  "Adab": "الأدب",
-  "Balaghah": "البلاغة",
-  "Taareekh": "التاريخ",
-  "Other": "أخرى",
-
-  "📘 Madinah Arabic Reader": "📘 سلسلة المدينة",
-  "📘 Tafseer": "📘 التفسير",
-  "📘 Hadeeth": "📘 الحديث",
-  "📘 Sarf": "📘 الصرف",
-  "📘 Nahw": "📘 النحو",
-  "📘 Qira'ah": "📘 القراءة",
-  "📘 Ta'beer": "📘 التعبير",
-  "📘 Writing / Kitaabah": "📘 الكتابة",
-  "📘 Fiqh": "📘 الفقه",
-  "📘 Tawheed": "📘 التوحيد",
-  "📘 Adab": "📘 الأدب",
-  "📘 Balaghah": "📘 البلاغة",
-  "📘 Taareekh": "📘 التاريخ",
-  "📘 Classical Arabic Books": "📘 كتب العربية الكلاسيكية",
-  "🎥 Videos": "🎥 الفيديوهات",
-
-  "Open PDF": "فتح الملف",
-  "Watch": "مشاهدة",
-
-  "🔍 Search books (e.g. Nahw, Tafseer, Sarf...)":
-    "🔍 ابحث عن الكتب (مثل: النحو، التفسير، الصرف...)",
-
-  "Conversational Arabic Video": "فيديو المحادثة العربية",
+ "📘 Classical Arabic Books": "📘 كتب العربية الكلاسيكية",
 
 // ======= SCHEDULE PAGE =======
 "Class Schedule": "جدول الحصص",
@@ -538,9 +371,7 @@ const DICT = {
 "Time": "الوقت",
 "Link": "الرابط",
 "Status": "الحالة",
-"Email: albayaninstitute068@gmail.com | Phone: +2347054711066": "البريد الإلكتروني: albayaninstitute068@gmail.com | الهاتف: ٠٨٠٥٤٧١١٠٦٦",
-"© 2022 Al-Bayan Arabic Institute Online. All rights reserved.": "© 2022 معهد البيان للدراسات العربية والإسلامية عبر الإنترنت. جميع الحقوق محفوظة.",
-"View your Upcoming Test/Exam Schedule": "عرض توقيت الاختبارات / المتحانات القادمة",
+"View your Upcoming Test/Exam Schedule": "عرض توقيت الاختبارات / الامتحانات القادمة",
 
 
 // ======= SCHEDULE PAGE =======
@@ -578,9 +409,6 @@ const DICT = {
 
 "Download My Grades (PDF)": "تحميل الدرجات (PDF)",
 
-"Email: albayaninstitute068@gmail.com | Phone: +2347054711066":
-"البريد الإلكتروني: albayaninstitute068@gmail.com | الهاتف: ٠٨٠٥٤٧١١٠٦٦",
-
 // ======= STUDENT GRADES (JS) =======
 
 "Student login required": "تسجيل دخول الطالب مطلوب",
@@ -589,7 +417,7 @@ const DICT = {
 
 "No grades to download.": "لا توجد درجات للتحميل",
 
-"Al-Bayan Arabic Institute": "معهد البيان للدراسات العربية والإسلامية",
+"Al-Bayan Arabic Institute Online": "معهد البيان للدراسات العربية عبر الانترنت",
 "My Grades Report": "تقرير الدرجات",
 
 "Student Name:": "اسم الطالب:",
@@ -704,6 +532,18 @@ const DICT = {
 
 "Logout": "تسجيل الخروج",
 
+"Register Courses": "تسجيل الدورات",
+"Select courses you want to enroll in.": "اختر الدورات التي تريد التسجيل فيها",
+"Ensure to select all the courses of your level completely first.": "تأكد من اختيار جميع دورات مستواك بالكامل أولاً",
+
+"register": "تسجيل",
+"registered": "مسجل",
+"level": "المستوى",
+"instructor": "المعلم",
+"Register": "سجل",
+
+"Error registering": "حدث خطأ أثناء التسجيل",
+
 // ===== STUDENT DASHBOARD (JS STRINGS) =====
 
 "Student login required": "تسجيل دخول الطالب مطلوب",
@@ -719,6 +559,8 @@ const DICT = {
 
 "No notifications yet.": "لا توجد إشعارات بعد",
 "No notifications": "لا توجد إشعارات",
+"No notifications available.": "لا توجد إشعارات متاحة",
+"Your latest updates and alerts will appear here.": "ستظهر آخر التحديثات والتنبيهات هنا.",
 
 "Failed to load notifications": "فشل في تحميل الإشعارات",
 "Failed to load": "فشل التحميل",
@@ -737,399 +579,7 @@ const DICT = {
 "Locked": "مغلق",
 
 
-  // HEADER / HERO
-  "Al-Bayan Arabic Institute Online": "معهد البيان للدراسات العربية والإسلامية عبر الإنترنت",
-  "Learn Arabic with Confidence Online": "تعتم العربية والإسلامية بثقة عبر الإنترنت",
-  "Structured online Arabic classes for beginners, intermediate and advanced learners, guided by qualified teachers.": "دروس عربية منظمة عبر الإنترنت للمبتدئين والمتوسطين والمتقدمين، بإشراف معلمين مؤهلين.",
-  "Get Ready": "ابدأ الآن",
 
-  // WHY CHOOSE US SECTION
-  "Why Choose Al-Bayan?": "لماذا تختار البيان؟",
-  "Expert Teachers": "معلمون خبراء",
-  "Learn from qualified and passionate Arabic educators.": "تعلم على يد معلمين عرب مؤهلين وشغوفين.",
-  "Flexible Online Learning": "تعلم مرن عبر الإنترنت",
-  "Access courses anytime, anywhere, on your schedule.": "احصل على الدروس في أي وقت وأي مكان حسب جدولك.",
-  "Comprehensive Courses": "دورات شاملة",
-  "From Qur'anic Arabic to conversational fluency, all levels covered.": "من العربية القرآنية إلى الطلاقة في المحادثة، جميع المستويات مشمولة.",
-  "Community Support": "دعم المجتمع",
-  "Join a global community of learners and mentors.": "انضم إلى مجتمع عالمي من المتعلمين والمرشدين.",
-
-  // ===== DICT entries for "Why Choose Al-Bayan?" features =====
-"Expert Teachers": "مدرسون خبراء",
-
-"Global Recognition": "اعتراف عالمي",
-"Certificates recognized internationally for Arabic proficiency.": "شهادات معترف بها دولياً لإتقان اللغة العربية والعلوم الإسلامية.",
-
-"Innovative Teaching Methods": "طرق تعليم مبتكرة",
-"Interactive lessons designed to boost retention and confidence.": "دروس تفاعلية مصممة لتعزيز الفهم والثقة.",
-
-"Self-Paced Options": "خيارات تعلم حسب الوتيرة",
-"Learn at your own speed with recorded lessons and practice materials.": "تعلم بالسرعة التي تناسبك مع دروس مسجلة ومواد تدريبية.",
-
-"Proven Success": "نجاح مثبت",
-"Thousands of students have successfully mastered Arabic with us.": "آلاف الطلاب أتقنوا اللغة العربية والعلوم الإسلامية معنا بنجاح.",
-
-  // TESTIMONIALS
-  "What Our Students Say": "ماذا يقول طلابنا",
-  "\"I improved my Arabic in just 3 months! The teachers are amazing.\"": "«حسّنت لغتي العربية في 3 أشهر فقط! المعلمون رائعون.»",
-  "- Hafsah, Nigeria": "- حفصة، نيجيريا",
-  "\"Flexible classes and practical lessons make learning fun and easy.\"": "«الدروس المرنة والعملية تجعل التعلم ممتع وسهل.»",
-  "- Omar, UAE": "- عمر، الإمارات",
-  "\"The community and support kept me motivated to keep learning.\"": "«المجتمع والدعم أبقاني متحمسًا للاستمرار في التعلم.»",
-  "- Fatima, Egypt": "- فاطمة، مصر",
-  // NEW TESTIMONIAL
-"\"The Qur'an and Arabic lessons are well-structured and easy to follow. I now feel more confident understanding Islamic texts.\"":
-"«دروس القرآن واللغة العربية منظمة وسهلة المتابعة. أشعر الآن بثقة أكبر في فهم النصوص الإسلامية.»",
-
-"- Ahmad, United Kingdom":
-"- أحمد، المملكة المتحدة",
-
-  // CALL TO ACTION
-  "Ready to Start Your Arabic Journey?": "هل أنت مستعد لبدء رحلتك في تعتم العربية والإسلامية؟",
-  "Sign up today and join our growing family of learners worldwide.": "سجّل اليوم وانضم إلى عائلتنا المتنامية من المتعلمين حول العالم.",
-  "Register Now": "سجل الآن",
-
-  // VIDEOS SECTION
-  "🎬 Watch Our Highlights": "🎬 شاهد أبرز لحظاتنا",
-  "See how Al-Bayan Arabic Institute brings learning to life!": "شاهد كيف يجعل معهد البيان لتعليم العربية التعلم حيًا وشيقًا!",
-  "Institute Tour": "جولة في المعهد",
-  "Take a tour of our institute and facilities": "قم بجولة في معهدنا ومرافقه",
-  "Class Experience": "تجربة الدروس",
-  "Experience our interactive Arabic classes": "اختبر دروسنا العربية التفاعلية",
-  "Student Testimonials": "تجارب الطلاب",
-  "Hear from our happy students": "استمع لتجارب طلابنا السعداء",
-
-
-  "Our Courses": "دوراتنا",
-  "Choose your path in learning Arabic online. Click \"Explore\" to see course details.": "اختر مسارك في تعلم اللغة العربية والعلوم الإسلامية عبر الإنترنت. اضغط على \"استكشف\" لرؤية تفاصيل الدورة.",
-  
-  // Core Courses
-  "Read & Write Arabic": "اقرأ واكتب بالعربية",
-  "Learn the Arabic alphabet, pronunciation, and basic writing skills from scratch.": "تعلم الأبجدية العربية والنطق ومهارات الكتابة الأساسية من البداية.",
-  "Explore": "استكشف",
-  "Register": "سجل",
-  // ===== Courses Buttons =====
-  "Explore": "استكشف",                 // Arabic for "Explore"
-  "Course Not Available": "الدورة غير متاحة", // Arabic for "Course Not Available"
-
-  "Arabic for Beginners": "العربية للمبتدئين",
-  "Start speaking, reading, and understanding Arabic with easy-to-follow lessons.": "ابدأ التحدث والقراءة وفهم العربية من خلال دروس سهلة المتابعة.",
-
-  "Intermediate Arabic": "العربية المتوسطة",
-  "Enhance your Arabic vocabulary, grammar, and conversational skills.": "عزز مفرداتك العربية وقواعد اللغة ومهارات المحادثة.",
-
-  "Advanced Arabic": "العربية المتقدمة",
-  "Refine your fluency of complex Arabic texts and conversations.": "قم بتحسين طلاقتك وفهمك للنصوص العربية والمحادثات المعقدة.",
-
-  "Tajweedul Qur'an": "تجويد القرآن",
-  "Master the rules of Qur’anic recitation and improve pronunciation.": "اتقن قواعد تلاوة القرآن وحسّن النطق.",
-
-  // Coming Soon Courses
-  "Conversational Arabic": "العربية المحادثة",
-  "Coming soon! Focus on real-life speaking skills and practical communication.": "قريباً! ركز على مهارات التحدث الواقعية والاتصال العملي.",
-
-  "Nahw (Grammar)": "النحو",
-  "Coming soon! Learn Arabic sentence structure and grammar rules.": "قريباً! تعلم تركيب الجملة العربية وقواعد اللغة.",
-
-  "Sarf (Morphology)": "الصرف",
-  "Coming soon! Understand how words are derived and structured.": "قريباً! افهم كيفية اشتقاق الكلمات وبنيتها.",
-
-  "Arabic Literature": "الأدب العربي",
-  "Coming soon! Explore classical and modern Arabic literature.": "قريباً! استكشف الأدب العربي الكلاسيكي والحديث.",
-
-  "Arabic Poetry": "الشعر العربي",
-  "Coming soon! Learn the beauty of Arabic poetry and expression.": "قريباً! تعلم جمال الشعر العربي والتعبير.",
-
-  "Tafseerul Qur'an": "تفسير القرآن",
-  "Coming soon! Understand the meaning and interpretation of the Qur’an.": "قريباً! افهم معنى القرآن وتفسيره.",
-
-  "Al-Fiqh": "الفقه",
-  "Coming soon! Study Islamic jurisprudence and practical rulings.": "قريباً! ادرس الفقه الإسلامي والأحكام العملية.",
-
-  "At-Tawheed": "التوحيد",
-  "Coming soon! Learn the fundamentals of Islamic monotheism.": "قريباً! تعلم أساسيات التوحيد الإسلامي.",
-
-  "Al-Hadeeth": "الحديث",
-  "Coming soon! Study the sayings and teachings of the Prophet ﷺ.": "قريباً! ادرس أقوال وتعاليم النبي ﷺ.",
-
-  "Al-Fiqh": "الفقه",
-  "Coming soon! Study Islamic jurisprudence and practical rulings.": "قريباً! ادرس الفقه الإسلامي والأحكام العملية.",
-
-  "Seerah/Taareekh": "السيرة/التاريخ",
-  "Coming soon! Study Islamic stories and histories from the life of the Prophet ﷺ.": "قريباً! ادرس القصص الإسلامية والتواريخ من حياة النبي ﷺ.",
-
-
-  /* ===== Advanced Arabic Course ===== */
-
-  "Advanced Arabic": "اللغة العربية والعلوم الإسلامية المتقدمة",
-
-  "Refine your Arabic skills and master advanced grammar, vocabulary, and comprehension.":
-  "طوّر مهاراتك في اللغة العربية والعلوم الإسلامية وأتقن القواعد المتقدمة والمفردات والفهم العميق.",
-
-  "Take your Arabic to the next level with advanced lessons, interactive exercises, and comprehensive practice. Perfect for learners who want mastery.":
-  "ارتقِ بمستواك في اللغة العربية والعلوم الإسلامية من خلال دروس متقدمة، وتمارين تفاعلية، وتطبيقات شاملة. هذا المستوى مناسب لمن يسعون إلى الإتقان.",
-
-
-  /* ===== Modules ===== */
-
-  "Module 1: Advanced Grammar":
-  "الوحدة الأولى: القواعد المتقدمة",
-
-  "Deep dive into complex sentence structures, syntax, and linguistic patterns.":
-  "دراسة معمّقة لتراكيب الجمل المعقّدة، وبنية الجملة، والأنماط اللغوية.",
-
-
-  "Module 2: Advanced Vocabulary":
-  "الوحدة الثانية: المفردات المتقدمة",
-
-  "Learn nuanced vocabulary, idiomatic expressions, and word usage in context.":
-  "تعلّم المفردات الدقيقة، والتعابير الاصطلاحية، واستخدام الكلمات في سياقها الصحيح.",
-
-
-  "Module 3: Advanced Writing":
-  "الوحدة الثالثة: الكتابة المتقدمة",
-
-  "Enhance writing skills for essays, letters, and formal Arabic compositions.":
-  "تطوير مهارات الكتابة في المقالات، والرسائل، والإنشاء العربي الرسمي.",
-
-
-  "Module 4: Reading & Comprehension":
-  "الوحدة الرابعة: القراءة والفهم",
-
-  "Interpret complex texts, literature, and classical Arabic passages.":
-  "تحليل النصوص المعقّدة، والأدب العربي، والنصوص العربية الكلاسيكية.",
-
-
-  "Module 5: Listening & Speaking":
-  "الوحدة الخامسة: الاستماع والمحادثة",
-
-  "Refine pronunciation, listening comprehension, and conversational fluency.":
-  "تحسين النطق، وتنمية مهارة الاستماع، والطلاقة في المحادثة.",
-
-
-  "Al-Bayan": "البيان",
-  "Learn how to read and write Arabic letters confidently from scratch.": "تعلم قراءة وكتابة حروف اللغة العربية والعلوم الإسلامية بثقة من البداية.",
-  "Register Now": "سجل الآن",
-  "This course is designed for absolute beginners who want to learn Arabic reading and writing step by step, with clarity and ease.": "تم تصميم هذه الدورة للمبتدئين تمامًا الذين يرغبون في تعلم القراءة والكتابة العربية خطوة بخطوة بوضوح وسهولة.",
-  "Module 1: Arabic Alphabet": "الوحدة 1: الحروف العربية",
-  "Introduction to Arabic letters, shapes, and proper pronunciation.": "مقدمة للحروف العربية وأشكالها والنطق الصحيح.",
-  "Module 2: Letter Forms": "الوحدة 2: أشكال الحروف",
-  "Learn how letters change shape at the beginning, middle, and end of words.": "تعلم كيف تتغير أشكال الحروف في بداية ووسط ونهاية الكلمات.",
-  "Module 3: Vowels & Harakāt": "الوحدة 3: الحركات والحروف الصوتية",
-  "Understanding short vowels, sukūn, tanwīn, and long vowels.": "فهم الحركات القصيرة والسكون والتنوين والحركات الطويلة.",
-  "Module 4: Reading Practice": "الوحدة 4: تدريب القراءة",
-  "Guided practice on reading words and simple sentences.": "تمارين موجهة على قراءة الكلمات والجمل البسيطة.",
-  "Module 5: Writing Practice": "الوحدة 5: تدريب الكتابة",
-  "Step-by-step writing exercises to build confidence and accuracy.": "تمارين كتابة خطوة بخطوة لبناء الثقة والدقة.",
-
-  // Header
-  "Arabic for Beginners": "العربية للمبتدئين",
-  "Start speaking, reading, and understanding Arabic with easy-to-follow lessons.": "ابدأ التحدث والقراءة وفهم اللغة العربية والعلوم الإسلامية من خلال دروس سهلة المتابعة.",
-  "Register Now": "سجل الآن",
-
-  // Intro section
-  "This course is perfect for absolute beginners aiming to speak, read, and understand Arabic in practical, everyday situations.": 
-  "هذه الدورة مثالية للمبتدئين تمامًا الذين يهدفون إلى التحدث والقراءة وفهم اللغة العربية والعلوم الإسلامية في المواقف اليومية العملية.",
-
-  // Modules
-  "Module 1: Greetings & Introductions": "الوحدة 1: التحيات والتعريف بالنفس",
-  "Learn basic greetings, introducing yourself, and polite expressions.": "تعلم التحيات الأساسية، تقديم نفسك، والتعبيرات المهذبة.",
-
-  "Module 2: Numbers & Time": "الوحدة 2: الأرقام والوقت",
-  "Understand Arabic numbers, telling the time, and simple date expressions.": "فهم الأرقام العربية، قراءة الوقت، والتعبيرات البسيطة للتواريخ.",
-
-  "Module 3: Daily Conversations": "الوحدة 3: المحادثات اليومية",
-  "Practice simple dialogues for shopping, dining, and travel scenarios.": "تمرن على حوارات بسيطة للتسوق وتناول الطعام والسفر.",
-
-  "Module 4: Basic Grammar": "الوحدة 4: القواعد الأساسية",
-  "Learn pronouns, simple verb conjugations, and sentence structure.": "تعلم الضمائر وتصريف الأفعال البسيطة وتركيب الجملة.",
-
-  "Module 5: Reading Short Texts": "الوحدة 5: قراءة النصوص القصيرة",
-  "Read and understand simple Arabic sentences and short paragraphs.": "اقرأ وفهم جمل عربية قصيرة وفقرة بسيطة.",
-
-
-  // Header
-  "Intermediate Arabic": "العربية المتوسطة",
-  "Enhance your Arabic vocabulary, grammar, and conversational skills.": "عزز مفرداتك العربية وقواعدك ومهاراتك في المحادثة.",
-
-  // Intro section
-  "This course is ideal for learners who have basic knowledge of Arabic and want to improve their fluency, understanding, and communication skills.": 
-  "هذه الدورة مثالية للمتعلمين الذين لديهم معرفة أساسية باللغة العربية والعلوم الإسلامية ويرغبون في تحسين طلاقتهم وفهمهم ومهارات التواصل لديهم.",
-
-  // Modules
-  "Module 1: Vocabulary Expansion": "الوحدة 1: توسيع المفردات",
-  "Learn thematic vocabulary related to everyday topics and social situations.": "تعلم مفردات موضوعية تتعلق بالمواضيع اليومية والمواقف الاجتماعية.",
-
-  "Module 2: Grammar Review & Application": "الوحدة 2: مراجعة القواعد وتطبيقها",
-  "Review essential grammar points and practice applying them in sentences.": "مراجعة قواعد أساسية وممارسة تطبيقها في الجمل.",
-
-  "Module 3: Listening Comprehension": "الوحدة 3: فهم المقروء والمسموع",
-  "Develop listening skills through short dialogues and audio exercises.": "طور مهارات الاستماع من خلال حوارات قصيرة وتمارين صوتية.",
-
-  "Module 4: Speaking Practice": "الوحدة 4: ممارسة المحادثة",
-  "Engage in guided conversations and role-play exercises to improve fluency.": "شارك في محادثات موجهة وتمارين لعب الأدوار لتحسين الطلاقة.",
-
-  "Module 5: Reading & Writing": "الوحدة 5: القراءة والكتابة",
-  "Read moderately complex texts and practice writing short paragraphs.": "اقرأ نصوصًا متوسطة التعقيد ومارس كتابة فقرات قصيرة.",
-
-  // ===== Tajweedul Qur'an Page =====
-"Tajweedul Qur'an": "تجويد القرآن",
-"Master the rules of Qur’anic recitation and improve pronunciation.": "أتقن قواعد تلاوة القرآن وحسّن النطق.",
-"Register Now": "سجّل الآن",
-"This course is designed for learners who want to perfect their Qur’anic recitation, understand Tajweed rules, and recite fluently with proper pronunciation.": "تم تصميم هذا الدورة للمتعلمين الذين يرغبون في إتقان تلاوة القرآن، وفهم قواعد التجويد، والتجويد بطلاقة مع النطق الصحيح.",
-"Module 1: Introduction to Tajweed": "الوحدة 1: مقدمة في التجويد",
-"Learn the basics of Tajweed, its importance, and how it affects Qur’anic recitation.": "تعلّم أساسيات التجويد، أهميته، وكيف يؤثر على تلاوة القرآن.",
-"Module 2: Makharij & Sifaat": "الوحدة 2: مخارج الحروف وصفاتها",
-"Understand articulation points (makharij) and characteristics (sifaat) of Arabic letters.": "فهم مخارج الحروف وصفات الحروف العربية.",
-"Module 3: Rules of Noon & Meem": "الوحدة 3: قواعد النون والميم",
-"Learn the proper application of Noon Saakinah and Meem Saakinah rules in recitation.": "تعلّم التطبيق الصحيح لقواعد النون الساكنة والميم الساكنة في التلاوة.",
-"Module 4: Qalqalah & Madd": "الوحدة 4: القلقلة والمد",
-"Practice Qalqalah letters and various types of Madd (elongation) in the Qur’an.": "تدرب على حروف القلقلة وأنواع المد المختلفة في القرآن.",
-"Module 5: Recitation Practice": "الوحدة 5: تمرين التلاوة",
-"Guided recitation exercises with feedback to improve fluency and accuracy.": "تمارين تلاوة موجهة مع ملاحظات لتحسين الطلاقة والدقة.",
-
-
-"Conversational Arabic": "محادثة عربية",
-"Focus on real-life speaking skills and everyday conversations in Arabic.": "التركيز على مهارات التحدث الواقعية والمحادثات اليومية باللغة العربية والعلوم الإسلامية.",
-"This course helps learners build confidence in speaking Arabic for daily situations, greetings, shopping, and travel conversations.": "يساعد هذا الدورة المتعلمين على بناء الثقة في التحدث باللغة العربية والعلوم الإسلامية في المواقف اليومية، التحيات، التسوق، والسفر.",
-"Module 1: Greetings & Introductions": "الوحدة 1: التحيات والتعارف",
-"Learn how to greet people, introduce yourself, and ask basic questions in Arabic.": "تعلم كيفية تحية الناس، تقديم نفسك، وطرح الأسئلة الأساسية باللغة العربية والعلوم الإسلامية.",
-"Module 2: Everyday Conversations": "الوحدة 2: المحادثات اليومية",
-"Practice talking about family, hobbies, and daily routines in Arabic.": "تدرب على الحديث عن العائلة، الهوايات، والروتين اليومي باللغة العربية والعلوم الإسلامية.",
-"Module 3: Shopping & Food": "الوحدة 3: التسوق والطعام",
-"Learn how to ask prices, order food, and communicate in markets or restaurants.": "تعلم كيفية السؤال عن الأسعار، طلب الطعام، والتواصل في الأسواق أو المطاعم.",
-"Module 4: Travel & Directions": "الوحدة 4: السفر والاتجاهات",
-"Handle transportation, ask for directions, and navigate travel situations confidently.": "التعامل مع وسائل النقل، السؤال عن الاتجاهات، والتنقل بثقة أثناء السفر.",
-"Module 5: Social Expressions": "الوحدة 5: التعبيرات الاجتماعية",
-"Understand common expressions, polite phrases, and cultural etiquette in conversations.": "فهم التعبيرات الشائعة، العبارات المهذبة، وآداب الحوار في المحادثات.",
-
-
-"Nahw (Grammar)": "النحو (القواعد)",
-"Deep dive into Arabic syntax and sentence structure for advanced understanding.": "غوص عميق في تركيب الجملة والنحو العربي للفهم المتقدم.",
-"This course focuses exclusively on Nahw (Arabic grammar), helping learners master rules, sentence structures, and advanced syntax with clarity.": "تركز هذه الدورة حصريًا على النحو، لمساعدة المتعلمين على إتقان القواعد وبناء الجمل والتركيب المتقدم بوضوح.",
-"Module 1: Nominal Sentences": "الوحدة 1: الجمل الاسمية",
-"Understanding structure, subject-predicate agreement, and usage of الخبر (predicate).": "فهم التركيب، توافق المبتدأ والخبر، واستخدام الخبر.",
-"Module 2: Verbal Sentences": "الوحدة 2: الجمل الفعلية",
-"Explore الفعل (verbs), فاعل (subject), and the proper order and conjugation rules.": "استكشاف الفعل، الفاعل، والترتيب الصحيح وقواعد التصريف.",
-"Module 3: Cases & Endings": "الوحدة 3: الإعراب والنهايات",
-"Master إعراب (i‘rāb) of nouns, verbs, and adjectives in different sentence positions.": "إتقان إعراب الأسماء والأفعال والصفات في مواقع الجملة المختلفة.",
-"Module 4: Particles & Connectors": "الوحدة 4: الحروف وأدوات الربط",
-"Learn about حروف الجر (prepositions), أدوات الربط (connectors), and conditional phrases.": "تعلم حروف الجر، أدوات الربط، والعبارات الشرطية.",
-"Module 5: Complex Sentences": "الوحدة 5: الجمل المعقدة",
-"Combine nominal and verbal sentences, subordinate clauses, and advanced syntactic structures.": "دمج الجمل الاسمية والفعلية، الجمل الفرعية، والتركيبات النحوية المتقدمة.",
-
-
-"Sarf (Morphology)": "الصرف (المورفولوجيا)",
-"Understand how Arabic words are derived, structured, and transformed.": "فهم كيفية اشتقاق الكلمات العربية وبنيتها وتحولها.",
-"This course focuses on Sarf (Arabic morphology), teaching students how to derive words, form verb patterns, and understand morphological structures.": "تركز هذه الدورة على الصرف، لتعليم الطلاب كيفية اشتقاق الكلمات، تشكيل أوزان الأفعال، وفهم البنى الصرفية.",
-"Module 1: Roots & Patterns": "الوحدة 1: الجذور والأوزان",
-"Learn how triliteral and quadriliteral roots form the basis of words and their patterns (أوزان).": "تعلم كيف تشكل الجذور الثلاثية والرباعية أساس الكلمات وأوزانها.",
-"Module 2: Verb Forms": "الوحدة 2: أوزان الأفعال",
-"Explore verb forms I-X, their meanings, conjugations, and derivatives.": "استكشاف أوزان الأفعال من I إلى X، مع معانيها وتصريفاتها ومشتقاتها.",
-"Module 3: Noun Derivation": "الوحدة 3: اشتقاق الأسماء",
-"Understand the formation of nouns from roots, participles, and verbal nouns (مصادر).": "فهم تكوين الأسماء من الجذور، والصفات، والمصادر.",
-"Module 4: Active & Passive Patterns": "الوحدة 4: الأشكال الفعلية النشطة والجامدة",
-"Learn active vs passive forms, and how meaning changes in different verb patterns.": "تعلم الأشكال النشطة مقابل المبنية للمجهول، وكيف يتغير المعنى في الأوزان المختلفة.",
-"Module 5: Morphological Analysis": "الوحدة 5: التحليل الصرفي",
-"Apply Sarf rules to analyze words in texts and understand their structure and meaning.": "تطبيق قواعد الصرف لتحليل الكلمات في النصوص وفهم بنيتها ومعناها.",
-
-"Arabic Literature": "الأدب العربي",
-"Explore classical and modern Arabic literature, its beauty, and depth.": "استكشاف الأدب العربي الكلاسيكي والحديث، جماله وعمقه.",
-"This course introduces students to the rich world of Arabic literature, from classical poetry and prose to modern works, enhancing reading, comprehension, and literary appreciation.": "تقدم هذه الدورة للطلاب عالم الأدب العربي الغني، من الشعر والنثر الكلاسيكي إلى الأعمال الحديثة، لتعزيز القراءة والفهم والتقدير الأدبي.",
-"Module 1: Classical Poetry": "الوحدة 1: الشعر الكلاسيكي",
-"Study pre-Islamic and classical Arabic poetry, understanding meters, rhymes, and themes.": "دراسة الشعر الجاهلي والكلاسيكي، مع فهم الأوزان والقوافي والموضوعات.",
-"Module 2: Classical Prose": "الوحدة 2: النثر الكلاسيكي",
-"Explore historical Arabic prose works, speeches, and writings from influential scholars and writers.": "استكشاف أعمال النثر العربي التاريخية والخطابات والكتابات من العلماء والكتّاب المؤثرين.",
-"Module 3: Modern Literature": "الوحدة 3: الأدب الحديث",
-"Learn about modern Arabic novels, short stories, and contemporary literary trends.": "التعرف على الروايات العربية الحديثة، القصص القصيرة، والاتجاهات الأدبية المعاصرة.",
-"Module 4: Literary Analysis": "الوحدة 4: التحليل الأدبي",
-"Apply analysis techniques to poetry and prose to understand style, themes, and rhetorical devices.": "تطبيق تقنيات التحليل على الشعر والنثر لفهم الأسلوب والموضوعات والأساليب البلاغية.",
-"Module 5: Writing & Expression": "الوحدة 5: الكتابة والتعبير",
-"Practice composing short literary pieces, inspired by classical and modern Arabic literature.": "ممارسة تأليف نصوص أدبية قصيرة مستوحاة من الأدب العربي الكلاسيكي والحديث.",
-
-"Arabic Poetry": "الشعر العربي",
-"Learn the beauty of Arabic poetry, its rhythm, meaning, and expression.": "تعلم جمال الشعر العربي، إيقاعه ومعناه وتعبيره.",
-"This course explores Arabic poetry from classical to modern times, teaching students to read, interpret, and appreciate poetic forms and expressions.": "تستكشف هذه الدورة الشعر العربي من الكلاسيكي إلى الحديث، وتعلم الطلاب كيفية القراءة والتفسير وتقدير الأشكال الشعرية والتعبيرات.",
-"Module 1: Classical Arabic Poetry": "الوحدة 1: الشعر العربي الكلاسيكي",
-"Study pre-Islamic and classical Arabic poetry, meters, rhyme schemes, and themes.": "دراسة الشعر الجاهلي والكلاسيكي، الأوزان، القوافي والموضوعات.",
-"Module 2: Modern Arabic Poetry": "الوحدة 2: الشعر العربي الحديث",
-"Explore contemporary Arabic poetry and its evolution in style and themes.": "استكشاف الشعر العربي المعاصر وتطوره في الأسلوب والموضوعات.",
-"Module 3: Poetic Devices": "الوحدة 3: الأدوات الشعرية",
-"Learn about metaphors, similes, symbolism, and other literary devices in Arabic poetry.": "تعلم عن الاستعارات، التشبيهات، الرمزية، وغيرها من الأدوات الأدبية في الشعر العربي.",
-"Module 4: Interpretation & Analysis": "الوحدة 4: التفسير والتحليل",
-"Practice interpreting poetry to understand meaning, context, and emotion.": "ممارسة تفسير الشعر لفهم المعنى والسياق والعاطفة.",
-"Module 5: Composition & Recitation": "الوحدة 5: التأليف والتلاوة",
-"Develop skills to compose short poems and recite with proper rhythm and expression.": "تطوير مهارات تأليف قصائد قصيرة والتلاوة بإيقاع وتعبير صحيح.",
-
-"Tafseerul Qur'an": "تفسير القرآن",
-"Understand the meanings, wisdom, and lessons of the Qur’an in depth.": "افهم معاني القرآن وحكمته ودروسه بعمق.",
-"This course takes students on a journey through the Qur’an, exploring the meanings of its verses, context of revelation, and timeless guidance for life.": "تأخذ هذه الدورة الطلاب في رحلة عبر القرآن، مستكشفة معاني آياته، وسياق الوحي، والهداية الخالدة للحياة.",
-"Module 1: Introduction to Tafseer": "الوحدة 1: مقدمة في التفسير",
-"Learn what Tafseer is, its importance, and the key principles for understanding the Qur’an correctly.": "تعلم ما هو التفسير وأهميته والمبادئ الأساسية لفهم القرآن بشكل صحيح.",
-"Module 2: Asbab al-Nuzul": "الوحدة 2: أسباب النزول",
-"Study the circumstances of revelation to grasp the context behind each verse.": "دراسة ظروف النزول لفهم سياق كل آية.",
-"Module 3: Tafseer by Meaning": "الوحدة 3: تفسير المعنى",
-"Analyze selected Surahs and verses to extract guidance, morals, and practical lessons.": "تحليل سور وآيات مختارة لاستخلاص الإرشادات والأخلاق والدروس العملية.",
-"Module 4: Themes & Wisdom": "الوحدة 4: الموضوعات والحكمة",
-"Discover recurring themes, wisdom, and life lessons across the Qur’an.": "اكتشاف الموضوعات المتكررة والحكمة والدروس الحياتية عبر القرآن.",
-"Module 5: Application in Daily Life": "الوحدة 5: التطبيق في الحياة اليومية",
-"Learn how to apply Qur’anic teachings in personal, social, and spiritual life.": "تعلم كيفية تطبيق تعاليم القرآن في الحياة الشخصية والاجتماعية والروحية.",
-
-"Al-Fiqh": "الفقه",
-"Learn Islamic jurisprudence from the basics to practical rulings for daily life.": "تعلم الفقه الإسلامي من الأساسيات إلى الأحكام العملية للحياة اليومية.",
-"This course guides students through the foundational principles of Islamic law, gradually moving to advanced fiqh rulings for personal, social, and spiritual life.": "توجه هذه الدورة الطلاب عبر المبادئ الأساسية للشريعة الإسلامية، مع الانتقال تدريجيًا إلى أحكام فقهية متقدمة للحياة الشخصية والاجتماعية والروحية.",
-"Module 1: Introduction to Fiqh": "الوحدة 1: مقدمة في الفقه",
-"Understanding what fiqh is, its sources, and its significance in guiding a Muslim’s life.": "فهم ما هو الفقه ومصادره وأهميته في توجيه حياة المسلم.",
-"Module 2: Basic Worship Rulings": "الوحدة 2: أحكام العبادات الأساسية",
-"Learn the fiqh of prayer, fasting, zakat, and other core ibadah practices.": "تعلم فقه الصلاة والصوم والزكاة وغيرها من العبادات الأساسية.",
-"Module 3: Transactions & Ethics": "الوحدة 3: المعاملات والأخلاق",
-"Study halal/haram transactions, business ethics, and everyday dealings.": "دراسة المعاملات الحلال والحرام، وأخلاقيات العمل، والتعاملات اليومية.",
-"Module 4: Personal Status Laws": "الوحدة 4: أحكام الأحوال الشخصية",
-"Explore marriage, divorce, inheritance, and family-related rulings.": "استكشاف أحكام الزواج والطلاق والميراث والأحكام المتعلقة بالأسرة.",
-"Module 5: Contemporary Issues": "الوحدة 5: القضايا المعاصرة",
-"Discuss modern-day challenges and how classical fiqh principles are applied today.": "مناقشة التحديات المعاصرة وكيفية تطبيق مبادئ الفقه الكلاسيكي اليوم.",
-
-"At-Tawheed": "التوحيد",
-"Learn the fundamentals of Islamic monotheism and strengthen your belief in Allah’s oneness.": "تعلم أساسيات التوحيد الإسلامي وقوِ إيمانك بوحدانية الله.",
-"This course is designed to provide a complete understanding of Tawheed, exploring its types, pillars, and practical implementation in daily life.": "تم تصميم هذه الدورة لتقديم فهم كامل للتوحيد، مع استكشاف أنواعه وأركانه وتطبيقه العملي في الحياة اليومية.",
-"Module 1: Introduction to Tawheed": "الوحدة 1: مقدمة في التوحيد",
-"Understand the concept of monotheism and its importance in Islam.": "فهم مفهوم التوحيد وأهميته في الإسلام.",
-"Module 2: Tawheed al-Rububiyyah": "الوحدة 2: توحيد الربوبية",
-"Learn about Allah’s Lordship, His creation, sustenance, and governance of the universe.": "تعلم عن ربوبية الله، خلقه، رزقه، وتدبيره للكون.",
-"Module 3: Tawheed al-Uluhiyyah": "الوحدة 3: توحيد الألوهية",
-"Focus on worshipping Allah alone, avoiding shirk, and understanding proper devotion.": "التركيز على عبادة الله وحده، وتجنب الشرك، وفهم العبودية الصحيحة.",
-"Module 4: Tawheed al-Asma wa-Sifat": "الوحدة 4: توحيد الأسماء والصفات",
-"Explore Allah’s names and attributes and how to affirm them correctly without distortion.": "استكشاف أسماء الله وصفاته وكيفية إثباتها بشكل صحيح دون تحريف.",
-"Module 5: Practical Tawheed": "الوحدة 5: التوحيد العملي",
-"Implement Tawheed in everyday life, avoiding innovation, and strengthening faith.": "تطبيق التوحيد في الحياة اليومية، وتجنب البدع، وتعزيز الإيمان.",
-
-"Al-Hadeeth": "الحديث",
-"Study the sayings and teachings of the Prophet ﷺ to gain guidance in belief and practice.": "ادرس أقوال وتعاليم النبي ﷺ للحصول على الهداية في العقيدة والعمل.",
-"This course introduces students to the science of Hadeeth, covering major collections, classification, and methodology for authentic narration.": "تقدم هذه الدورة للطلاب علم الحديث، مع تغطية المجموعات الرئيسية والتصنيف والمنهجية للتحقق من صحة الأحاديث.",
-"Module 1: Introduction to Hadeeth": "الوحدة 1: مقدمة في الحديث",
-"Learn what Hadeeth is and its role in Islam alongside the Qur’an.": "تعلم ما هو الحديث ودوره في الإسلام جنبًا إلى جنب مع القرآن.",
-"Module 2: Types of Hadeeth": "الوحدة 2: أنواع الحديث",
-"Explore the different categories such as Sahih, Hasan, Da’if, and others.": "استكشف الفئات المختلفة مثل الصحيح والحسن والضعيف وغيرها.",
-"Module 3: Major Collections": "الوحدة 3: المجموعات الرئيسية",
-"Study key Hadeeth collections including Sahih Bukhari, Sahih Muslim, Sunan Abu Dawood, and others.": "ادرس مجموعات الحديث الرئيسية بما في ذلك صحيح البخاري، وصحيح مسلم، وسنن أبي داود وغيرها.",
-"Module 4: Hadeeth Authentication": "الوحدة 4: توثيق الحديث",
-"Learn how scholars assess the chain of narrators (Isnad) and text (Matn) to determine authenticity.": "تعلم كيف يقيم العلماء سلسلة الرواة (الإسناد) والنص (المتن) لتحديد صحة الحديث.",
-"Module 5: Practical Application": "الوحدة 5: التطبيق العملي",
-"Understand how to implement the Prophet’s teachings in daily life, worship, and ethics.": "فهم كيفية تطبيق تعاليم النبي في الحياة اليومية والعبادة والأخلاق.",
-
-"Seerah/Taareekh": "السيرة/التاريخ",
-"Explore the life of the Prophet ﷺ and key events in Islamic history.": "استكشف حياة النبي ﷺ والأحداث الرئيسية في التاريخ الإسلامي.",
-"This course takes students through the biography of the Prophet ﷺ and major historical milestones in Islam, from early revelations to the spread of the faith.": "تأخذ هذه الدورة الطلاب في سيرة النبي ﷺ والمعالم التاريخية الرئيسية في الإسلام، من الوحي الأول إلى انتشار الدين.",
-"Module 1: Life of the Prophet ﷺ": "الوحدة 1: حياة النبي ﷺ",
-"Birth, early life, prophethood, and key events in Makkah and Madinah.": "الميلاد، الحياة المبكرة، النبوة، والأحداث الرئيسية في مكة والمدينة.",
-"Module 2: Companions of the Prophet": "الوحدة 2: صحابة النبي",
-"Learn about the Sahabah and their role in supporting Islam.": "تعلم عن الصحابة ودورهم في دعم الإسلام.",
-"Module 3: Major Battles & Events": "الوحدة 3: المعارك والأحداث الرئيسية",
-"Study the important battles, treaties, and pivotal moments in Islamic history.": "ادرس المعارك والمعاهدات والأحداث الحاسمة في التاريخ الإسلامي.",
-"Module 4: Expansion of Islam": "الوحدة 4: توسع الإسلام",
-"Understand how Islam spread after the Prophet’s ﷺ passing and the role of early Caliphs.": "فهم كيف انتشر الإسلام بعد وفاة النبي ﷺ ودور الخلفاء الراشدين.",
-"Module 5: Lessons from History": "الوحدة 5: الدروس من التاريخ",
-"Analyze historical lessons and apply them to contemporary life and ethical decision-making.": "حلل الدروس التاريخية وطبقها في الحياة المعاصرة واتخاذ القرارات الأخلاقية.",
 "Add Course": "إضافة مقرر",
 "All Courses": "جميع المقررات",
 "Assessments": "التقييمات",
@@ -1183,7 +633,7 @@ const DICT = {
 "Latest Grade": "أحدث نتيجة",
 "Outstanding Payment": "دفعة مستحقة",
 "Please complete your payment of": "يرجى إكمال الدفع بقيمة",
-"Failed to load stats": "فشل تحميل البيانات",
+"Failed to load stats": "فشل تحميل دار الأبرارات",
 "Failed to load notifications": "فشل تحميل الإشعارات",
 "No notifications yet.": "لا توجد إشعارات بعد",
 "Payment Reminder": "تذكير بالدفع",
@@ -1205,6 +655,16 @@ const DICT = {
 "All courses you are enrolled in, with quick links to schedules": "جميع المواد التي سجلت فيها، مع روابط سريعة للجداول",
 
 "Matric Number copied to clipboard ✅": "تم نسخ الرقم الجامعي إلى الحافظة ✅",
+
+
+
+"has successfully completed the course": "أتمّ بنجاح المادة",
+"This is to certify that": "نشهد بأن",
+"Date of Issue:": "تاريخ الإصدار:",
+"Matric No:": "الرقم الجامعي:",
+"Mudeer": "المدير",
+"Bursar, Al-Bayan Arabic Institute Online": "المحاسب، البيان للدراسات العربية",
+"My Certificates": "شهاداتي",
 
 "Submit Registration": "إرسال التسجيل",
 "Please login to view your exam timetable": "يرجى تسجيل الدخول لعرض جدول الاختبارات",
@@ -1229,6 +689,9 @@ const DICT = {
 "Status:": "الحالة:",
 "Start Time:": "وقت البداية:",
 "End Time:": "وقت النهاية:",
+
+"Start": "البداية",
+"End": "النهاية",
 
 "No Test / Exam": "لا يوجد اختبار / امتحان",
 "There is no scheduled test or exam at the moment.": "لا يوجد اختبار أو امتحان مجدول حاليًا.",
@@ -1271,10 +734,12 @@ const DICT = {
 
 "Student login required": "يجب تسجيل دخول الطالب",
 
-"Al-Bayan Arabic Institute Online": "معهد البيان العربي والإسلامي عبر الإنترنت",
+"Al-Bayan Arabic Isntitute Online": "معهد البيان للدراسات العربية عبر الانترنت",
 
 "All rights reserved.": "جميع الحقوق محفوظة.",
+"© 2025 - {year} Al-Bayan Arabic Isntitute Online. All rights reserved.": "© 2025 - {year} معهد البيان للدراسات العربية عبر الانترنت. جميع الحقوق محفوظة.",
 
+"© 2025 - {year} Al-Bayan Arabic Isntitute Online.": "© 2025 - {year} معهد البيان للدراسات العربية عبر الانترنت.",
 "Loading assessment...": "جاري تحميل الاختبار...",
 "Assessment ongoing": "الاختبار جارٍ",
 "Assessment closed": "تم إغلاق الاختبار",
@@ -1307,9 +772,6 @@ const DICT = {
 "Go to Dashboard": "الذهاب إلى اللوحة",
 "Logout": "تسجيل الخروج",
 
-"Al-Bayan Arabic Institute Online": "البيان العربية والإسلامية عبر الإنترنت",
-
-"All rights reserved.": "جميع الحقوق محفوظة.",
 
 "Loading...": "جارٍ التحميل...",
 "Access Denied": "تم رفض الوصول",
@@ -1336,6 +798,8 @@ const DICT = {
 "Loading Test...": "جارٍ تحميل الاختبار...",
 "Review Modal": "نافذة المراجعة",
 
+"Remember Me": "تذكرني",
+
 "Close": "إغلاق",
 "Submit anyway": "إرسال على أي حال",
 "Continue reviewing": "متابعة المراجعة",
@@ -1346,10 +810,2342 @@ const DICT = {
 "Load assessment error:": "خطأ في تحميل الاختبار:",
 "Check submission error:": "خطأ في التحقق من الإرسال:",
 
-"© {year} Al-Bayan Arabic Institute Online. All rights reserved.":
-"© {year} البيان لتعليم العربية والدراسات الإسلامية أونلاين. جميع الحقوق محفوظة.",
 
-  /* ===== DYNAMIC TEMPLATES ===== */
+// ======= LOGIN PAGE =======
+"Staff": "موظف",
+"Invalid staff login": "تسجيل دخول الموظف غير صالح",
+"No profile found. Contact administrator.": "لم يتم العثور على ملف. تواصل مع المسؤول.",
+"Access denied. This login is for teachers only.": "الوصول مرفوض. هذا الدخول للمعلمين فقط.",
+"Invalid admin login": "تسجيل دخول المسؤول غير صالح",
+"No role assigned. Contact developer.": "لم يتم تعيين دور. تواصل مع المطور.",
+
+// ======= STAFF DASHBOARD — HTML STRINGS =======
+"My Dashboard": "لوحتي",
+"Manage your courses, students and grades": "إدارة موادك وطلابك ودرجاتك",
+"My Courses": "موادي",
+"Grades": "الدرجات",
+"Schedule": "الجدول",
+"My Profile": "ملفي الشخصي",
+"My Courses & Students": "موادي وطلابي",
+"🔍 Search students...": "🔍 البحث عن الطلاب...",
+"Loading your courses...": "جاري تحميل موادك...",
+"📝 Post a Grade": "📝 تسجيل درجة",
+
+"Course": "المادة",
+"Level": "المستوى",
+"Semester": "الفصل الدراسي",
+"Assessment Score": "درجة التقييم",
+"Exam Score": "درجة الامتحان",
+"Total Score": "المجموع الكلي",
+"Status": "الحالة",
+"Remark": "الملاحظة",
+"Select Student": "اختر الطالب",
+"Select Course": "اختر المادة",
+"Select Semester": "اختر الفصل الدراسي",
+"First": "الأول",
+"Second": "الثاني",
+"Completed": "مكتمل",
+"Loading": "جارٍ التحميل",
+"Cancelled": "ملغى",
+"Pass": "ناجح",
+"Average": "متوسط",
+"Fail": "راسب",
+"Submit Grade": "إرسال الدرجة",
+"Submitting...": "جارٍ الإرسال...",
+"📊 Posted Grades": "📊 الدرجات المسجلة",
+"🔍 Search grades...": "🔍 البحث في الدرجات...",
+"Matric": "الرقم الجامعي",
+"Assessment": "التقييم",
+"Exam": "الامتحان",
+"Total": "المجموع",
+"Released": "تم النشر",
+"Pending": "قيد الانتظار",
+"Loading grades...": "جاري تحميل الدرجات...",
+"📅 My Class Schedule": "📅 جدول حصصي",
+"Loading schedule...": "جاري تحميل الجدول...",
+"Date": "التاريخ",
+"Time": "الوقت",
+"Link": "الرابط",
+
+// ======= STAFF DASHBOARD — PROFILE TAB =======
+"👤 My Profile": "👤 ملفي الشخصي",
+"Full Name": "الاسم الكامل",
+"Email": "البريد الإلكتروني",
+"Role": "الدور",
+"Save Profile": "حفظ الملف",
+"Saving...": "جارٍ الحفظ...",
+"Profile saved ✅": "تم حفظ الملف ✅",
+"Name cannot be empty.": "لا يمكن أن يكون الاسم فارغًا.",
+"Failed to save profile.": "فشل حفظ الملف.",
+"Only image files are allowed.": "يُسمح بملفات الصور فقط.",
+"Photo must not exceed 2MB.": "يجب ألا تتجاوز الصورة 2 ميجابايت.",
+"Change photo": "تغيير الصورة",
+
+// ======= STAFF DASHBOARD — PASSWORD TAB =======
+"🔐 Change Password": "🔐 تغيير كلمة المرور",
+"New Password": "كلمة المرور الجديدة",
+"Confirm Password": "تأكيد كلمة المرور",
+"Enter new password": "أدخل كلمة المرور الجديدة",
+"Confirm new password": "أكد كلمة المرور الجديدة",
+"Update Password": "تحديث كلمة المرور",
+"Updating...": "جارٍ التحديث...",
+"Password must be at least 6 characters.": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.",
+"Passwords do not match.": "كلمتا المرور غير متطابقتين.",
+"Password updated successfully 🔐": "تم تحديث كلمة المرور بنجاح 🔐",
+"Failed to update password.": "فشل تحديث كلمة المرور.",
+
+// ======= STAFF DASHBOARD — JS TOASTS & ALERTS =======
+"Grade submitted ✅": "تم إرسال الدرجة ✅",
+"Failed to submit grade.": "فشل إرسال الدرجة.",
+"Please fill all required fields.": "يرجى ملء جميع الحقول المطلوبة.",
+"No courses assigned to you yet.": "لم يتم تعيين أي مواد لك بعد.",
+"No students enrolled yet": "لا يوجد طلاب مسجلون بعد",
+"Failed to load courses.": "فشل تحميل المواد.",
+"No students assigned yet.": "لم يتم تعيين أي طلاب بعد.",
+"No grades posted yet.": "لم يتم تسجيل أي درجات بعد.",
+"Failed to load grades.": "فشل تحميل الدرجات.",
+"No courses assigned yet.": "لم يتم تعيين أي مواد بعد.",
+"No classes scheduled yet.": "لم يتم جدولة أي حصص بعد.",
+"Failed to load schedule.": "فشل تحميل الجدول.",
+"Access denied. Teachers only.": "الوصول مرفوض. للمعلمين فقط.",
+
+// ======= MY CERTIFICATE PAGE =======
+"My Certificates": "شهاداتي",
+"Download your certificates of completion": "تحميل شهادات الإتمام الخاصة بك",
+"Loading your certificates...": "جاري تحميل شهاداتك...",
+"No Certificates Yet": "لا توجد شهادات بعد",
+"You haven't been issued any certificates yet.": "لم يتم إصدار أي شهادة لك بعد.",
+"Complete your courses to earn a certificate.": "أكمل موادك للحصول على شهادة.",
+"Student:": "الطالب:",
+"Issued by:": "صادرة من:",
+"✅ Certificate of Completion": "✅ شهادة إتمام",
+"Download PDF": "تحميل PDF",
+"Failed to load certificates.": "فشل تحميل الشهادات.",
+"Student login required": "تسجيل دخول الطالب مطلوب",
+"Certificate": "الشهادة",
+
+// ======= ADMIN DASHBOARD — CERTIFICATE MODAL =======
+"Issue Certificate": "إصدار شهادة",
+"Grade Note (optional)": "ملاحظة الدرجة (اختياري)",
+"e.g. with a total score of 85%": "مثال: بمجموع درجات 85%",
+"Please select a course before issuing.": "يرجى اختيار المادة قبل الإصدار.",
+"Failed to issue certificate. See console.": "فشل إصدار الشهادة. راجع وحدة التحكم.",
+"Certificate issued to": "تم إصدار شهادة لـ",
+"Issued Certificates": "الشهادات الصادرة",
+"Grade Note": "ملاحظة الدرجة",
+"Active": "نشطة",
+"Revoked": "ملغاة",
+"Edit": "تعديل",
+"Revoke": "إلغاء",
+"Restore": "استعادة",
+"🗑 Delete": "🗑 حذف",
+"Save Changes": "حفظ التغييرات",
+"Cancel": "إلغاء",
+"Edit Certificate": "تعديل الشهادة",
+"Course Name": "اسم المادة",
+"Failed to update certificate.": "فشل تحديث الشهادة.",
+"Certificate updated ✅": "تم تحديث الشهادة ✅",
+"Revoke this certificate? The student will no longer see it.": "إلغاء هذه الشهادة؟ لن يتمكن الطالب من رؤيتها بعد الآن.",
+"Failed to revoke certificate.": "فشل إلغاء الشهادة.",
+"Certificate revoked.": "تم إلغاء الشهادة.",
+"Restore this certificate? The student will see it again.": "استعادة هذه الشهادة؟ سيتمكن الطالب من رؤيتها مرة أخرى.",
+"Failed to restore certificate.": "فشل استعادة الشهادة.",
+"Certificate restored ✅": "تمت استعادة الشهادة ✅",
+"Permanently delete this certificate?\n\nThis cannot be undone.": "حذف هذه الشهادة نهائيًا؟\n\nلا يمكن التراجع عن هذا الإجراء.",
+"Failed to delete certificate.": "فشل حذف الشهادة.",
+"Certificate permanently deleted 🗑": "تم حذف الشهادة نهائيًا 🗑",
+"Nothing was updated — check RLS policies in Supabase.": "لم يتم تحديث أي شيء — تحقق من سياسات RLS في Supabase.",
+
+// ======= ADMIN DASHBOARD — COURSES SECTION =======
+"Add Course": "إضافة مادة",
+"Course Name": "اسم المادة",
+"Instructor": "المدرس",
+"All Courses": "جميع المواد",
+"No courses yet": "لا توجد مواد بعد",
+"Course name is required": "اسم المادة مطلوب",
+"Error updating course": "خطأ في تحديث المادة",
+"Course updated ✅": "تم تحديث المادة ✅",
+"Error adding course": "خطأ في إضافة المادة",
+"Course added ✅": "تمت إضافة المادة ✅",
+"Update Course": "تحديث المادة",
+"Delete this course? This cannot be undone.": "حذف هذه المادة؟ لا يمكن التراجع عن هذا الإجراء.",
+"Course deleted ✅": "تم حذف المادة ✅",
+"Level:": "المستوى:",
+"Instructor:": "المدرس:",
+
+// ======= ADMIN DASHBOARD — GENERAL =======
+"Grades Posted": "الدرجات المسجلة",
+"My Students": "طلابي",
+"My Courses": "موادي",
+"Grade released": "تم نشر الدرجة",
+"Grade hidden": "تم إخفاء الدرجة",
+"Nothing to undo": "لا يوجد شيء للتراجع عنه",
+"Undo successful": "تم التراجع بنجاح",
+"No role assigned": "لم يتم تعيين دور",
+"Manage Your Office": "أدر مكتبك",
+"Password must be at least 6 characters": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
+"Password updated successfully 🔐": "تم تحديث كلمة المرور بنجاح 🔐",
+"No pending welcome emails 🙂": "لا توجد رسائل ترحيب معلقة 🙂",
+"Failed to fetch students": "فشل في جلب بيانات الطلاب",
+"All welcome emails sent successfully 🎉": "تم إرسال جميع رسائل الترحيب بنجاح 🎉",
+"All emails failed to send 😢": "فشل إرسال جميع الرسائل 😢",
+"Sending... ⏳": "جارٍ الإرسال... ⏳",
+"Email Progress": "تقدم الإرسال",
+"Student admission approved!": "تمت الموافقة على قبول الطالب!",
+"Error approving student:": "خطأ في الموافقة على الطالب:",
+"Delete this": "حذف هذا",
+"You can undo this.": "يمكنك التراجع عن هذا.",
+"deleted. Undo?": "تم الحذف. تراجع؟",
+"No records found": "لا توجد سجلات",
+"Error saving": "خطأ في الحفظ",
+"Delete this record?": "حذف هذا السجل؟",
+"Toggle": "تبديل",
+"No role assigned": "لم يتم تعيين دور",
+"Failed to save student. See console.": "فشل حفظ الطالب. راجع وحدة التحكم.",
+"Failed to save payment. See console.": "فشل حفظ الدفع. راجع وحدة التحكم.",
+"Failed to save grade. See console.": "فشل حفظ الدرجة. راجع وحدة التحكم.",
+"Failed to save schedule. See console.": "فشل حفظ الجدول. راجع وحدة التحكم.",
+"Failed to save assessment": "فشل حفظ التقييم",
+"Invalid start date": "تاريخ البداية غير صالح",
+"Invalid end date": "تاريخ النهاية غير صالح",
+"Assessment updated": "تم تحديث التقييم",
+"Assessment added": "تمت إضافة التقييم",
+"Failed to update assessment": "فشل تحديث التقييم",
+"Unexpected error occurred": "حدث خطأ غير متوقع",
+"No pending welcome emails 🙂": "لا توجد رسائل ترحيب معلقة",
+
+"Privacy Policy": "سياسة الخصوصية",
+
+
+/* ============================================================
+NEW FILES START HERE
+
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Home Page — Al-Bayan
+============================================================ */
+"Al-Bayan": "البيان",
+// NAV
+"Home":                                         "الرئيسية",
+"About":                                        "من نحن",
+"Courses":                                      "الدورات",
+"Register":                                     "التسجيل",
+"Dashboard":                                    "لوحة التحكم",
+"Payment":                                      "الدفع",
+"Contact":                                      "اتصل بنا",
+"Log in":                                       "تسجيل الدخول",
+
+// HERO
+"Online • Arabic • Islamic Sciences":           "أونلاين • عربية • علوم إسلامية",
+
+"Structured online Arabic classes for beginners, intermediate and advanced learners, guided by qualified teachers.":
+  "دروس عربية منظمة عبر الإنترنت للمبتدئين والمتوسطين والمتقدمين، بإشراف مدرسين مؤهلين.",
+"Get Started":                                  "ابدأ الآن",
+"Log In":                                       "تسجيل الدخول",
+
+// STATS
+"Students Enrolled":                            "طالب مسجّل",
+"Levels of Study":                              "مستويات دراسية",
+"Online & Flexible":                            "عبر الإنترنت ومرن",
+"Countries Represented":                        "دولة ممثَّلة",
+
+// VIDEOS
+"See Us in Action":                             "شاهدنا في العمل",
+"Watch Our Highlights":                         "شاهد أبرز لحظاتنا",
+"See how Al-Bayan brings learning to life for students across the globe.":
+  "اكتشف كيف تُحيي البيان تجربة التعلم لطلاب من حول العالم.",
+"Institute Tour":                               "جولة في المعهد",
+"Experience Our Arabic Classes":                "اختبر دروسنا العربية",
+"Hear from Our Students":                       "اسمع من طلابنا",
+
+// FEATURES
+"Our Strengths":                                "نقاط قوتنا",
+"Why Choose Al-Bayan?":                      "لماذا تختار البيان؟",
+"Expert Teachers":                              "مدرسون متخصصون",
+"Learn from qualified and passionate Arabic educators with deep Islamic knowledge.":
+  "تعلّم على يد مدرسين مؤهلين ومتحمسين ذوي معرفة إسلامية عميقة.",
+"Flexible Online Learning":                     "تعلم مرن عبر الإنترنت",
+"Access courses anytime, anywhere, on your own schedule.":
+  "الوصول إلى الدورات في أي وقت ومن أي مكان وفق جدولك الخاص.",
+"Comprehensive Curriculum":                     "منهج شامل",
+"From Qur'anic Arabic to conversational fluency — all levels covered.":
+  "من العربية القرآنية إلى الطلاقة في المحادثة — جميع المستويات متاحة.",
+"Global Community":                             "مجتمع عالمي",
+"Join a worldwide community of learners united by a love for Arabic and Islam.":
+  "انضم إلى مجتمع عالمي من المتعلمين يجمعهم حب اللغة العربية والإسلام.",
+"Internationally Recognised":                   "معترف به دوليًا",
+"Earn certificates respected across borders for Arabic and Islamic studies.":
+  "احصل على شهادات موثوقة عبر الحدود في اللغة العربية والدراسات الإسلامية.",
+"Modern Teaching Methods":                      "أساليب تدريس حديثة",
+"Interactive lessons designed to boost retention, confidence and love for the language.":
+  "دروس تفاعلية مصممة لتعزيز الاستيعاب والثقة والحب للغة.",
+"Self-Paced Options":                           "خيارات وفق وتيرتك",
+"Learn at your own speed with recorded lessons and practice materials.":
+  "تعلّم بسرعتك الخاصة مع الدروس المسجلة ومواد التدريب.",
+"Proven Results":                               "نتائج مثبتة",
+"Hundreds of students have successfully mastered Arabic and Islamic sciences with us.":
+  "أتقن مئات الطلاب اللغة العربية والعلوم الإسلامية معنا بنجاح.",
+
+// TESTIMONIALS
+"Student Voices":                               "أصوات الطلاب",
+"What Our Students Say":                        "ماذا يقول طلابنا",
+"I improved my Arabic in just 3 months! The teachers are amazing and very patient.":
+  "لقد تحسّنت في العربية في 3 أشهر فقط! المدرسون رائعون وصبورون جدًا.",
+"Flexible classes and practical lessons make learning fun and easy.":
+  "الحصص المرنة والدروس العملية تجعل التعلم ممتعًا وسهلًا.",
+"The community and support kept me motivated throughout my learning journey.":
+  "المجتمع والدعم أبقاني متحمسًا طوال رحلتي التعليمية.",
+"The Qur'an and Arabic lessons are well-structured and easy to follow. I now feel confident understanding Islamic texts.":
+  "دروس القرآن والعربية منظمة جيدًا وسهلة المتابعة. أشعر الآن بثقة في فهم النصوص الإسلامية.",
+"Nigeria":                                      "نيجيريا",
+"UAE":                                          "الإمارات العربية المتحدة",
+"Egypt":                                        "مصر",
+"United Kingdom":                               "المملكة المتحدة",
+
+"Hafsah":                                         "حفصة",
+"Omar":                                        "عمر",
+"Fatima":                                      "فاطمة",
+"Ahmad":                                     "أحمد",
+
+"H":                                         "ح",
+"O":                                        "ع",
+"F":                                      "ف",
+"A":                                     "أ",
+
+// CTA SECTION
+"Begin Your Arabic Journey Today":              "ابدأ رحلتك العربية اليوم",
+"Join thousands of learners worldwide and take the first step towards understanding the Qur'an and Islamic sciences.":
+  "انضم إلى آلاف المتعلمين حول العالم وخطو أول خطواتك نحو فهم القرآن والعلوم الإسلامية.",
+"Register Now — It's Free":                     "سجّل الآن — مجانًا",
+
+// FOOTER
+"Email":                                        "البريد الإلكتروني",
+"Phone: +234 705 471 1066": "الهاتف: ٠٧٠٥٤٧١١٠٦٦",   
+"Phone: +234 812 521 9561": "الهاتف: ٠٨١٢٥٢١٩٥٦١",                   
+"All rights reserved.":                         "جميع الحقوق محفوظة.",
+"Privacy Policy":                               "سياسة الخصوصية",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   About Page — Al-Bayan
+============================================================ */
+
+// BANNER
+"Our Story":                                        "قصتنا",
+"About Al-Bayan Arabic Institute Online": "عن معهد البيان للدراسات العربية عبر الانترنت",
+"Dedicated to providing quality Arabic and Islamic education for learners worldwide.":
+  "ملتزمون بتقديم تعليم عربي وإسلامي عالي الجودة للمتعلمين في جميع أنحاء العالم.",
+
+// INTRO STRIP
+"100% Online":                  "100% عبر الإنترنت",
+"Students from 10+ Countries":  "طلاب من أكثر من 10 دول",
+"Beginner to Advanced":         "من المبتدئ إلى المتقدم",
+"Arabic & Islamic Sciences":    "العربية والعلوم الإسلامية",
+
+"Your Tools":                   "أدواتك",
+"Class Schedule":               "جدول الحصص",
+"Make Payment":                  "إجراء الدفع",
+"My Grades": "درجاتي",
+
+// WHO WE ARE
+"Who We Are": "من نحن",
+"Al-Bayan Arabic Institute Online is an educational platform committed to teaching the Arabic language through structured and guided online learning. We serve students from different parts of the world who desire to understand Arabic for religious, academic, and conversational purposes.":
+  "البيان للدراسات العربية عبر الانترنتت منصة تعليمية ملتزمة بتدريس اللغة العربية من خلال تعلم إلكتروني منظم وموجَّه. نخدم طلابًا من مختلف أنحاء العالم يرغبون في فهم العربية لأغراض دينية وأكاديمية وتواصلية.",
+
+// MISSION
+"Our Mission": "مهمتنا",
+"Our mission is to empower students to understand the Arabic language clearly and confidently, especially the language of the Qur'an. We aim to remove fear and confusion from learning Arabic by using step-by-step methods guided by experienced teachers.":
+  "مهمتنا هي تمكين الطلاب من فهم اللغة العربية بوضوح وثقة، ولا سيما لغة القرآن الكريم. نسعى إلى إزالة الخوف والارتباك من تعلم العربية عبر مناهج تدريجية بإشراف معلمين ذوي خبرة.",
+
+// VISION
+"Our Vision": "رؤيتنا",
+"Our vision is to become a trusted online Arabic institute that nurtures a generation of learners who can read, understand, and communicate in Arabic with clarity, confidence, and correct understanding.":
+  "رؤيتنا أن نصبح معهدًا إلكترونيًا موثوقًا لتعليم العربية، يُنشئ جيلًا من المتعلمين القادرين على القراءة والفهم والتواصل باللغة العربية بوضوح وثقة وفهم صحيح.",
+
+// WHAT MAKES US DIFFERENT
+"What Makes Us Different":                                          "ما الذي يميّزنا؟",
+"Qualified and experienced Arabic instructors":                     "مدرسون عرب مؤهلون وذوو خبرة",
+"Well-structured curriculum from beginner to advanced level":       "منهج منظم من المستوى المبتدئ إلى المتقدم",
+"Strong focus on understanding, not memorisation alone":            "تركيز قوي على الفهم لا الحفظ وحده",
+"Interactive classes with real student engagement":                 "فصول تفاعلية بمشاركة حقيقية من الطلاب",
+"Flexible online learning environment":                             "بيئة تعلم إلكتروني مرنة",
+"Internationally recognised certificates":                          "شهادات معترف بها دوليًا",
+
+// WHO CAN JOIN
+"Who Can Join": "من يمكنه الانضمام؟",
+"Our programs are suitable for beginners with no prior knowledge of Arabic, intermediate learners seeking improvement, and advanced students aiming to strengthen their understanding of grammar and Arabic texts.":
+  "برامجنا مناسبة للمبتدئين الذين ليس لديهم معرفة سابقة بالعربية، والمتوسطين الساعين إلى التحسين، والمتقدمين الراغبين في تعميق فهمهم للنحو والنصوص العربية.",
+"Beginner":     "مبتدئ",
+"Intermediate": "متوسط",
+"Advanced":     "متقدم",
+
+// OUR COMMITMENT
+"Our Commitment": "التزامنا",
+"We are committed to delivering quality education, maintaining academic integrity, supporting our students consistently, and creating a learning environment that encourages growth, discipline, and excellence.":
+  "نلتزم بتقديم تعليم عالي الجودة، والحفاظ على النزاهة الأكاديمية، ودعم طلابنا باستمرار، وخلق بيئة تعليمية تشجع على النمو والانضباط والتميز.",
+
+// CTA
+"Ready to Be Part of Our Story?": "هل أنت مستعد لتكون جزءًا من قصتنا؟",
+"Join Al-Bayan today and begin your journey towards understanding Arabic and the Qur'an.":
+  "انضم إلى البيان اليوم وابدأ رحلتك نحو فهم اللغة العربية والقرآن الكريم.",
+"Register Now": "سجّل الآن",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Contact Page — Al-Bayan
+============================================================ */
+
+// BANNER
+"We'd love to hear from you":                               "يسعدنا التواصل معك",
+"Contact Us":                                               "اتصل بنا",
+"Reach out to our team for any inquiries or support — we're always happy to help.":
+  "تواصل مع فريقنا لأي استفسار أو دعم — يسعدنا دائمًا مساعدتك.",
+
+// STRIP
+"Chat on WhatsApp":                                         "تواصل عبر واتساب",
+
+// FORM
+"Send Us a Message":                                        "أرسل لنا رسالة",
+"Fill out the form below and we'll get back to you as soon as possible.":
+  "املأ النموذج أدناه وسنرد عليك في أقرب وقت ممكن.",
+"Full Name":                                                "الاسم الكامل",
+"Your full name":                                           "اسمك الكامل",
+"Email Address":                                            "البريد الإلكتروني",
+"Subject":                                                  "الموضوع",
+"What is this about?":                                      "ما الذي يتعلق به الأمر؟",
+"Message":                                                  "الرسالة",
+"Write your message here...":                               "اكتب رسالتك هنا...",
+"Send Message":                                             "إرسال الرسالة",
+
+// CONTACT CARDS
+"Other Ways to Reach Us":                                   "طرق أخرى للتواصل معنا",
+"Director":                                                 "المدير",
+"Registrar":                                                 "المسجل",
+"WhatsApp":                                                 "واتساب",
+
+"+234 705 471 1066":                                                 "٠٧٠٥٤٧١١٠٦٦",
+"+234 812 521 9561":                                                 "٠٨١٢٥٢١٩٥٦١",
+
+// NOTE
+"We typically respond within 24 hours on business days. For urgent matters, please reach us via WhatsApp.":
+  "نرد عادةً خلال 24 ساعة في أيام العمل. للأمور العاجلة، يُرجى التواصل معنا عبر واتساب.",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Courses Page — Al-Bayan
+============================================================ */
+
+// BANNER
+"Learn at your own pace":                                           "تعلّم بوتيرتك الخاصة",
+"Our Courses":                                                      "دوراتنا",
+"Choose your path in learning Arabic and Islamic sciences online.": "اختر مسارك في تعلم العربية والعلوم الإسلامية عبر الإنترنت.",
+
+// FILTER TABS
+"All Courses":       "جميع الدورات",
+"Arabic Language":   "اللغة العربية",
+"Qur'an & Tafseer": "القرآن والتفسير",
+"Islamic Sciences":  "العلوم الإسلامية",
+"Coming Soon":       "قريبًا",
+
+// LEVEL BADGES
+"Beginner":     "مبتدئ",
+"Intermediate": "متوسط",
+"Advanced":     "متقدم",
+"All Levels":   "جميع المستويات",
+"active":        "نشط",
+"inactive":      "غير نشط",
+"Approve":       "وافق عليه",
+"Send Email":     "إرسال بريد إلكتروني",
+"Issue":         "إصدار",
+// CARD ACTIONS
+"Explore":           "استكشف",
+"Enrol":             "سجّل",
+"Not Available Yet": "غير متاح بعد",
+
+// ARABIC LANGUAGE COURSES
+"Preliminary":
+  "تمهيدي",
+"Learn the Arabic alphabet, pronunciation, and basic writing skills from scratch.":
+  "تعلّم الحروف العربية والنطق ومهارات الكتابة الأساسية من الصفر.",
+
+"Arabic for Beginners":
+  "العربية للمبتدئين",
+"Start speaking, reading, and understanding Arabic with easy-to-follow lessons.":
+  "ابدأ التحدث والقراءة وفهم العربية من خلال دروس سهلة المتابعة.",
+
+"Intermediate Arabic":
+  "العربية للمتوسطين",
+"Enhance your Arabic vocabulary, grammar, and conversational skills.":
+  "طوّر مفرداتك العربية وقواعدك ومهارات محادثتك.",
+
+"Advanced Arabic":
+  "العربية المتقدمة",
+"Refine your fluency with complex Arabic texts and conversations.":
+  "صقّل طلاقتك مع النصوص والمحادثات العربية المعقدة.",
+
+"Nahw (Grammar)":
+  "النحو",
+"Learn Arabic sentence structure and grammar rules in depth.":
+  "تعلّم تركيب الجملة العربية وقواعد النحو بعمق.",
+
+"Sarf (Morphology)":
+  "الصرف",
+"Understand how Arabic words are derived and structured.":
+  "افهم كيفية اشتقاق الكلمات العربية وبنيتها.",
+
+"Conversational Arabic":
+  "العربية التحادثية",
+"Focus on real-life speaking skills and practical everyday communication.":
+  "التركيز على مهارات التحدث في الحياة الواقعية والتواصل اليومي العملي.",
+
+"Arabic Poetry":
+  "الشعر العربي",
+"Discover the beauty of Arabic poetry and its unique expression.":
+  "اكتشف جمال الشعر العربي وتعبيره الفريد.",
+
+"Arabic Literature":
+  "الأدب العربي",
+"Explore classical and modern Arabic literary works.":
+  "استكشف الأعمال الأدبية العربية الكلاسيكية والحديثة.",
+
+// QUR'AN & TAFSEER
+"Tajweedul Qur'an":
+  "تجويد القرآن",
+"Master the rules of Qur'anic recitation and improve your pronunciation.":
+  "أتقن أحكام تلاوة القرآن الكريم وحسّن نطقك.",
+
+"Tafseerul Qur'an":
+  "تفسير القرآن",
+"Understand the meaning and interpretation of the Qur'an.":
+  "افهم معنى القرآن الكريم وتفسيره.",
+
+// ISLAMIC SCIENCES
+"Al-Fiqh":
+  "الفقه",
+"Study Islamic jurisprudence and practical rulings.":
+  "ادرس الفقه الإسلامي والأحكام العملية.",
+
+"At-Tawheed":
+  "التوحيد",
+"Learn the fundamentals of Islamic monotheism and Aqeedah.":
+  "تعلّم أسس التوحيد الإسلامي والعقيدة.",
+
+"Al-Hadeeth":
+  "الحديث",
+"Study the sayings and teachings of the Prophet ﷺ.":
+  "ادرس أقوال وتعاليم النبي ﷺ.",
+
+"Seerah / Taareekh":
+  "السيرة / التاريخ",
+"Study Islamic history and the life of the Prophet ﷺ.":
+  "ادرس التاريخ الإسلامي وسيرة النبي ﷺ.",
+
+// CTA
+"Ready to Start Learning?":
+  "هل أنت مستعد للبدء في التعلم؟",
+"Register today and join our growing community of Arabic and Islamic studies learners.":
+  "سجّل اليوم وانضم إلى مجتمعنا المتنامي من متعلمي العربية والدراسات الإسلامية.",
+"Register Now":
+  "سجّل الآن",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Login Page — Al-Bayan
+============================================================ */
+
+// LEFT PANEL
+"Your gateway to structured Arabic and Islamic education.":
+  "بوابتك نحو تعليم عربي وإسلامي منظم.",
+"Qualified Teachers": "مدرسون مؤهلون",
+"Flexible Schedule":  "جدول مرن",
+"Certified Courses":  "دورات معتمدة",
+
+// FORM HEADER
+"Welcome Back":                    "أهلاً بعودتك",
+"Sign in to access your account":  "سجّل الدخول للوصول إلى حسابك",
+
+// FIELDS
+"Login As":         "تسجيل الدخول كـ",
+"Select user type": "اختر نوع المستخدم",
+"Admin":            "المسؤول",
+"Staff":            "موظف",
+"Student":          "طالب",
+"Email Address":    "البريد الإلكتروني",
+"Password":         "كلمة المرور",
+"Enter your password": "أدخل كلمة المرور",
+
+// OPTIONS
+"Remember Me":     "تذكّرني",
+"Forgot Password?": "نسيت كلمة المرور؟",
+
+// BUTTON
+"Sign In": "تسجيل الدخول",
+
+// REGISTER LINK
+"Don't have an account?": "ليس لديك حساب؟",
+"Register here":          "سجّل هنا",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Arabic for Beginners — course-beginner.html
+============================================================ */
+
+// BANNER
+"Arabic for Beginners":
+  "العربية للمبتدئين",
+"Start speaking, reading, and understanding Arabic with easy-to-follow lessons.":
+  "ابدأ التحدث والقراءة وفهم العربية من خلال دروس سهلة المتابعة.",
+
+// META BADGES
+"Beginner":          "مبتدئ",
+"Flexible Schedule": "جدول مرن",
+"Online":            "عبر الإنترنت",
+
+// ENROL BUTTON
+"Enrol Now": "سجّل الآن",
+
+// INTRO CARD
+"About This Course": "عن هذه الدورة",
+"This course is designed for absolute beginners who want to speak, read, and understand Arabic in practical, everyday situations. Through simple and structured lessons, you will build a strong Arabic foundation from the ground up.":
+  "صُمِّمت هذه الدورة للمبتدئين تمامًا الذين يرغبون في التحدث والقراءة وفهم العربية في المواقف اليومية العملية. من خلال دروس بسيطة ومنظمة، ستبني أساسًا عربيًا متينًا من الصفر.",
+
+// MODULES SECTION
+"Course Modules": "وحدات الدورة",
+
+"Greetings & Introductions":
+  "التحيات والتعريف بالنفس",
+"Learn basic greetings, how to introduce yourself, and common polite expressions used in everyday Arabic.":
+  "تعلّم التحيات الأساسية وكيفية تعريف نفسك والتعابير المهذبة الشائعة في العربية اليومية.",
+
+"Numbers & Time":
+  "الأرقام والوقت",
+"Understand Arabic numbers, how to tell the time, and express simple dates and durations.":
+  "افهم الأرقام العربية وكيفية قراءة الوقت والتعبير عن التواريخ والمدد البسيطة.",
+
+"Daily Conversations":
+  "المحادثات اليومية",
+"Practice simple dialogues for real-life situations including shopping, dining, and travel.":
+  "تدرّب على حوارات بسيطة في مواقف الحياة الواقعية كالتسوق والمطاعم والسفر.",
+
+"Basic Grammar":
+  "القواعد الأساسية",
+"Learn Arabic pronouns, simple verb conjugations, and essential sentence structure rules.":
+  "تعلّم الضمائر العربية وتصريف الأفعال البسيطة وقواعد تركيب الجملة الأساسية.",
+
+"Reading Short Texts":
+  "قراءة نصوص قصيرة",
+"Read and understand simple Arabic sentences and short paragraphs to build your reading confidence.":
+  "اقرأ وافهم جملًا عربية بسيطة وفقرات قصيرة لبناء ثقتك في القراءة.",
+
+// CTA STRIP
+"Ready to Begin Your Arabic Journey?":
+  "هل أنت مستعد لبدء رحلتك العربية؟",
+"Join students from around the world learning Arabic online with qualified teachers.":
+  "انضم إلى طلاب من حول العالم يتعلمون العربية عبر الإنترنت مع مدرسين مؤهلين.",
+"Register Now":
+  "سجّل الآن",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Intermediate Arabic — course-intermediate.html
+============================================================ */
+
+// BANNER
+"Intermediate Arabic":
+  "العربية للمتوسطين",
+"Enhance your Arabic vocabulary, grammar, and conversational skills with structured intermediate lessons.":
+  "طوّر مفرداتك العربية وقواعدك ومهارات محادثتك من خلال دروس متوسطة منظمة.",
+
+// META BADGE
+"Intermediate": "متوسط",
+
+// INTRO CARD
+"About This Course": "عن هذه الدورة",
+"This course is ideal for learners who already have a basic knowledge of Arabic and are ready to take the next step. You will deepen your fluency, sharpen your grammar, and gain the confidence to communicate more naturally in Arabic.":
+  "هذه الدورة مثالية للمتعلمين الذين لديهم معرفة أساسية بالعربية وهم مستعدون للخطوة التالية. ستعمّق طلاقتك وتصقل قواعدك وتكتسب الثقة للتواصل بشكل أكثر طبيعية بالعربية.",
+
+// MODULES
+"Course Modules": "وحدات الدورة",
+
+"Vocabulary Expansion":
+  "توسيع المفردات",
+"Build a richer Arabic vocabulary through thematic topics covering everyday life, work, and social situations.":
+  "بنِ مفردات عربية أغنى من خلال موضوعات تشمل الحياة اليومية والعمل والمواقف الاجتماعية.",
+
+"Grammar Review & Application":
+  "مراجعة القواعد وتطبيقها",
+"Revisit essential Arabic grammar rules and practise applying them accurately in real sentences and writing tasks.":
+  "راجع قواعد النحو العربي الأساسية وتدرّب على تطبيقها بدقة في الجمل الحقيقية والتدريبات الكتابية.",
+
+"Listening Comprehension":
+  "الاستماع والفهم",
+"Train your ear with short dialogues and audio exercises that reflect real conversational Arabic.":
+  "درّب أذنك بحوارات قصيرة وتمارين صوتية تعكس العربية المحادثاتية الحقيقية.",
+
+"Speaking Practice":
+  "التدريب على الكلام",
+"Engage in guided conversations and role-play scenarios designed to improve your fluency and spoken confidence.":
+  "شارك في محادثات موجّهة وسيناريوهات لعب الأدوار المصمّمة لتحسين طلاقتك وثقتك في الكلام.",
+
+"Reading & Writing":
+  "القراءة والكتابة",
+"Read moderately complex Arabic texts and practise writing structured short paragraphs and responses.":
+  "اقرأ نصوصًا عربية متوسطة التعقيد وتدرّب على كتابة فقرات قصيرة وردود منظمة.",
+
+// CTA STRIP
+"Ready to Level Up Your Arabic?":
+  "هل أنت مستعد للارتقاء بعربيتك؟",
+"Take the next step in your Arabic learning journey and join our intermediate programme today.":
+  "اخطُ الخطوة التالية في رحلة تعلّم العربية وانضم إلى برنامجنا المتوسط اليوم.",
+"Register Now":
+  "سجّل الآن",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Advanced Arabic — course-advance.html
+============================================================ */
+
+// BANNER
+"Advanced Arabic":
+  "العربية المتقدمة",
+"Refine your fluency and master advanced Arabic grammar, vocabulary, and comprehension at the highest level.":
+  "صقّل طلاقتك وأتقن قواعد العربية المتقدمة والمفردات والفهم في أعلى المستويات.",
+
+// META BADGE
+"Advanced": "متقدم",
+
+// INTRO CARD
+"About This Course": "عن هذه الدورة",
+"This course is built for learners who are serious about achieving true mastery of Arabic. Through advanced lessons, rich literary exposure, and intensive practice, you will refine every dimension of your Arabic — from grammar precision to eloquent expression.":
+  "صُمِّمت هذه الدورة للمتعلمين الجادين في تحقيق إتقان حقيقي للعربية. من خلال دروس متقدمة وتعرّض أدبي غني وممارسة مكثفة، ستصقل كل جوانب عربيتك — من دقة القواعد إلى البلاغة والتعبير.",
+
+// MODULES
+"Course Modules": "وحدات الدورة",
+
+"Advanced Grammar":
+  "القواعد المتقدمة",
+"Dive deep into complex Arabic sentence structures, syntax rules, and sophisticated linguistic patterns used in formal and classical Arabic.":
+  "تعمّق في تراكيب الجمل العربية المعقدة وقواعد النحو والأنماط اللغوية الرفيعة المستخدمة في العربية الرسمية والكلاسيكية.",
+
+"Advanced Vocabulary":
+  "المفردات المتقدمة",
+"Expand your lexical range with nuanced vocabulary, idiomatic expressions, and context-sensitive word usage across various registers.":
+  "وسّع نطاقك المعجمي بمفردات دقيقة وتعابير اصطلاحية واستخدام الكلمات المناسب للسياق عبر مستويات لغوية متنوعة.",
+
+"Advanced Writing":
+  "الكتابة المتقدمة",
+"Master the art of formal Arabic writing — essays, letters, reports, and eloquent compositions that reflect true linguistic command.":
+  "أتقن فن الكتابة العربية الرسمية — المقالات والرسائل والتقارير والتعبيرات البليغة التي تعكس تمكّنًا لغويًا حقيقيًا.",
+
+"Reading & Comprehension":
+  "القراءة والفهم",
+"Interpret and analyse complex Arabic texts, classical literature, and formal passages to strengthen your reading precision and depth.":
+  "فسّر وحلّل النصوص العربية المعقدة والأدب الكلاسيكي والمقاطع الرسمية لتعزيز دقة قراءتك وعمقها.",
+
+"Listening & Speaking":
+  "الاستماع والتحدث",
+"Refine your pronunciation, sharpen your listening comprehension, and elevate your conversational fluency to an advanced level.":
+  "صقّل نطقك واحدد فهمك الاستماعي وارفع طلاقتك في المحادثة إلى مستوى متقدم.",
+
+// CTA STRIP
+"Ready to Master Arabic?":
+  "هل أنت مستعد لإتقان العربية؟",
+"Push your Arabic to its peak. Enrol in our advanced programme and achieve the fluency you have always aimed for.":
+  "ادفع عربيتك إلى أعلى مستوياتها. سجّل في برنامجنا المتقدم وحقّق الطلاقة التي طالما سعيت إليها.",
+"Register Now":
+  "سجّل الآن",
+
+"Al-Fiqh": "الفقه",
+"Islamic Studies": "الدراسات الإسلامية",
+
+"Learn Islamic jurisprudence step by step from foundational principles to real-life rulings in worship, transactions, and family matters.":
+"تعلّم الفقه الإسلامي خطوة بخطوة من المبادئ الأساسية إلى الأحكام العملية في العبادات والمعاملات وأحكام الأسرة.",
+
+"Structured Levels": "مستويات منظمة",
+"Flexible Schedule": "جدول مرن",
+"Online": "عن بُعد",
+
+"Enroll Now": "سجّل الآن",
+
+"About This Course": "عن هذه الدورة",
+
+"This course builds a strong understanding of Islamic jurisprudence, guiding students from basic principles to practical applications in worship, daily life, family matters, and modern challenges.":
+"تبني هذه الدورة فهماً عميقاً للفقه الإسلامي، وتُرشد الطلاب من المبادئ الأساسية إلى التطبيقات العملية في العبادات والحياة اليومية والأسرة والقضايا المعاصرة.",
+
+"Course Modules": "وحدات الدورة",
+
+"Introduction to Fiqh": "مقدمة في الفقه",
+"Meaning of fiqh, its sources, and its role in guiding a Muslim’s life.":
+"معنى الفقه ومصادره ودوره في توجيه حياة المسلم.",
+
+"Acts of Worship": "العبادات",
+"Rules of prayer, fasting, zakat, and other essential acts of worship in Islam.":
+"أحكام الصلاة والصيام والزكاة وغيرها من العبادات الأساسية في الإسلام.",
+
+"Transactions & Ethics": "المعاملات والأخلاق",
+"Islamic rulings on trade, finance, and ethical dealings in daily life.":
+"الأحكام الإسلامية في التجارة والتمويل والتعاملات الأخلاقية في الحياة اليومية.",
+
+"Family Law": "أحكام الأسرة",
+"Marriage, divorce, inheritance, and responsibilities within the family system.":
+"الزواج والطلاق والميراث والمسؤوليات داخل نظام الأسرة.",
+
+"Contemporary Issues": "القضايا المعاصرة",
+"Applying classical fiqh principles to modern-day situations and challenges.":
+"تطبيق القواعد الفقهية الكلاسيكية على المواقف والتحديات المعاصرة.",
+
+"Ready to Master Islamic Jurisprudence?": "هل أنت مستعد لإتقان الفقه الإسلامي؟",
+"Join students worldwide learning authentic Islamic knowledge with structured guidance.":
+"انضم إلى طلاب من جميع أنحاء العالم لتعلّم العلم الشرعي بأسلوب منظم وموثوق.",
+
+"Register Now": "سجّل الآن",
+
+"Al-Hadeeth": "الحديث",
+"Al-Hadeeth - Prophetic Traditions": "الحديث - السنة النبوية",
+
+"Islamic Studies": "الدراسات الإسلامية",
+"Structured Learning": "تعلم منظم",
+"Flexible Schedule": "جدول مرن",
+"Online": "عن بُعد",
+
+"Enroll Now": "سجّل الآن",
+"Register Now": "سجّل الآن",
+
+"Study the sayings, actions, and approvals of the Prophet Muhammad ﷺ as a foundation for Islamic belief and practice.":
+"دراسة أقوال وأفعال وتقريرات النبي محمد ﷺ كأساس للعقيدة والممارسة الإسلامية.",
+
+"This course introduces students to the science of Hadith, including classification, major collections, and methods used by scholars to verify authenticity.":
+"تقدّم هذه الدورة علم الحديث، بما في ذلك التصنيف والمجموعات الرئيسية ومنهجية العلماء في التحقق من صحة الروايات.",
+
+"Course Modules": "وحدات الدورة",
+
+"Introduction to Hadith": "مقدمة في الحديث",
+"Understanding Hadith and its importance alongside the Qur’an in Islamic guidance.":
+"فهم الحديث وأهميته إلى جانب القرآن في الهداية الإسلامية.",
+
+"Types of Hadith": "أنواع الحديث",
+"Study classifications such as Sahih, Hasan, Da‘if, and other categories.":
+"دراسة التصنيفات مثل الصحيح والحسن والضعيف وغيرها.",
+
+"Major Hadith Collections": "المصنفات الحديثية الكبرى",
+"Explore major books like Sahih al-Bukhari, Sahih Muslim, and Sunan Abu Dawood.":
+"دراسة أهم الكتب مثل صحيح البخاري وصحيح مسلم وسنن أبي داود.",
+
+"Hadith Authentication": "توثيق الحديث",
+"Learn how scholars evaluate chains of narration (Isnad) and text (Matn).":
+"تعلم كيفية تقييم العلماء لسند الحديث ومتن الحديث.",
+
+"Practical Application": "التطبيق العملي",
+"Applying the teachings of the Prophet ﷺ in worship, character, and daily life.":
+"تطبيق تعاليم النبي ﷺ في العبادة والأخلاق والحياة اليومية.",
+
+"Ready to Study the Sunnah?": "هل أنت مستعد لدراسة السنة؟",
+"Join students worldwide learning authentic Prophetic traditions from qualified teachers.":
+"انضم إلى طلاب من جميع أنحاء العالم لتعلّم السنة النبوية الصحيحة مع معلمين مؤهلين.",
+
+"At-Tawheed": "التوحيد",
+"At-Tawheed - Islamic Monotheism": "التوحيد - التوحيد الإسلامي",
+
+"Islamic Studies": "الدراسات الإسلامية",
+"Foundational Creed": "العقيدة الأساسية",
+"Flexible Schedule": "جدول مرن",
+"Online": "عن بُعد",
+
+"Enroll Now": "سجّل الآن",
+"Register Now": "سجّل الآن",
+
+"Study the oneness of Allah and strengthen your belief through understanding the foundations of Islamic monotheism.":
+"دراسة توحيد الله وتعزيز الإيمان من خلال فهم أساسيات التوحيد الإسلامي.",
+
+"This course provides a complete understanding of Tawheed, its categories, and its importance in strengthening a Muslim’s faith and practice.":
+"تقدّم هذه الدورة فهماً شاملاً للتوحيد وأنواعه وأهميته في تقوية إيمان المسلم وممارساته.",
+
+"Course Modules": "وحدات الدورة",
+
+"Introduction to Tawheed": "مقدمة في التوحيد",
+"Understanding the concept of monotheism and its central role in Islam.":
+"فهم مفهوم التوحيد ودوره الأساسي في الإسلام.",
+
+"Tawheed al-Rububiyyah": "توحيد الربوبية",
+"Belief in Allah as the sole Creator, Sustainer, and Controller of the universe.":
+"الإيمان بأن الله هو الخالق والرازق والمدبر الوحيد للكون.",
+
+"Tawheed al-Uluhiyyah": "توحيد الألوهية",
+"Directing all acts of worship to Allah alone and avoiding all forms of shirk.":
+"إفراد الله بالعبادة وحده واجتناب جميع أنواع الشرك.",
+
+"Tawheed al-Asma wa-Sifat": "توحيد الأسماء والصفات",
+"Understanding and affirming Allah’s names and attributes without distortion or denial.":
+"فهم أسماء الله وصفاته وإثباتها دون تحريف أو تعطيل.",
+
+"Practical Tawheed": "التوحيد العملي",
+"Applying Tawheed in daily life by strengthening faith and avoiding innovations and shirk.":
+"تطبيق التوحيد في الحياة اليومية بتقوية الإيمان واجتناب البدع والشرك.",
+
+"Strengthen Your Belief in Allah": "قوِّ إيمانك بالله",
+"Join students worldwide building a correct understanding of Islamic monotheism with qualified guidance.":
+"انضم إلى طلاب من جميع أنحاء العالم لبناء فهم صحيح للتوحيد بإشراف معلمين مؤهلين.",
+
+"Seerah & Taareekh": "السيرة والتاريخ",
+"Seerah & Islamic History": "السيرة والتاريخ الإسلامي",
+
+"Islamic Studies": "الدراسات الإسلامية",
+"Historical Studies": "الدراسات التاريخية",
+"Flexible Schedule": "جدول مرن",
+"Online": "عن بُعد",
+
+"Enroll Now": "سجّل الآن",
+"Register Now": "سجّل الآن",
+
+"Study the life of the Prophet Muhammad ﷺ and key moments in Islamic history to gain moral and spiritual lessons.":
+"دراسة حياة النبي محمد ﷺ وأهم محطات التاريخ الإسلامي لاستخلاص الدروس الأخلاقية والروحية.",
+
+"This course explores the biography of the Prophet ﷺ and major events in Islamic history, helping students understand faith through historical context.":
+"تستعرض هذه الدورة سيرة النبي ﷺ وأهم أحداث التاريخ الإسلامي لفهم الدين من خلال السياق التاريخي.",
+
+"Course Modules": "وحدات الدورة",
+
+"Life of the Prophet ﷺ": "حياة النبي ﷺ",
+"Study the birth, prophethood, and major events in Makkah and Madinah.":
+"دراسة الميلاد والبعثة وأهم أحداث مكة والمدينة.",
+
+"The Companions (Sahabah)": "الصحابة",
+"Learn about the noble companions and their sacrifices in supporting Islam.":
+"التعرّف على الصحابة الكرام وتضحياتهم في نصرة الإسلام.",
+
+"Battles & Key Events": "الغزوات والأحداث المهمة",
+"Explore major battles, treaties, and turning points in Islamic history.":
+"دراسة أهم الغزوات والمعاهدات والمفاصل التاريخية في الإسلام.",
+
+"Expansion of Islam": "انتشار الإسلام",
+"Understand how Islam spread during and after the time of the Caliphs.":
+"فهم كيفية انتشار الإسلام في عهد الخلفاء الراشدين وما بعده.",
+
+"Lessons from History": "دروس من التاريخ",
+"Extract moral and spiritual lessons from Islamic historical events.":
+"استخلاص الدروس الأخلاقية والروحية من الأحداث التاريخية الإسلامية.",
+
+"Learn From the Best of Stories": "تعلم من أحسن القصص",
+"Join students worldwide studying the life of the Prophet ﷺ and Islamic history with qualified teachers.":
+"انضم إلى طلاب من جميع أنحاء العالم لدراسة سيرة النبي ﷺ والتاريخ الإسلامي مع معلمين مؤهلين.",
+
+"Tafseerul Qur'an": "تفسير القرآن",
+"Qur'anic Studies": "الدراسات القرآنية",
+"Deep Learning": "تعلم متعمق",
+
+"Study the meanings, wisdom, and guidance of the Qur'an through structured explanation and reflection.":
+"دراسة معاني القرآن وحكمته وهدايته من خلال شرح منظم وتأمل عميق.",
+
+"This course guides students through Tafseer, explaining Qur'anic verses, their context, and practical lessons for daily life.":
+"توجّه هذه الدورة الطلاب إلى علم التفسير، بشرح آيات القرآن وسياقها والدروس العملية للحياة اليومية.",
+
+"Course Modules": "وحدات الدورة",
+
+"Introduction to Tafseer": "مقدمة في التفسير",
+"Understanding Tafseer and its importance in interpreting the Qur'an correctly.":
+"فهم علم التفسير وأهميته في تفسير القرآن الكريم بشكل صحيح.",
+
+"Asbab al-Nuzul": "أسباب النزول",
+"Study the reasons and circumstances behind Qur'anic revelation.":
+"دراسة أسباب وظروف نزول الآيات القرآنية.",
+
+"Tafseer by Meaning": "التفسير بالمعنى",
+"Analyze selected verses to extract guidance, morals, and lessons.":
+"تحليل آيات مختارة لاستخراج الهداية والدروس والعبر.",
+
+"Themes & Wisdom": "الموضوعات والحِكم",
+"Discover recurring themes and divine wisdom throughout the Qur'an.":
+"اكتشاف الموضوعات المتكررة والحِكم الإلهية في القرآن الكريم.",
+
+"Practical Application": "التطبيق العملي",
+"Apply Qur'anic teachings in personal, social, and spiritual life.":
+"تطبيق تعاليم القرآن في الحياة الشخصية والاجتماعية والروحية.",
+
+"Live by the Qur'an": "العيش بالقرآن",
+"Join students worldwide learning Tafseer with clarity, depth, and qualified guidance.":
+"انضم إلى طلاب من مختلف أنحاء العالم لتعلّم التفسير بوضوح وعمق وإشراف معلمين مؤهلين.",
+
+"Tajweedul Qur'an": "تجويد القرآن",
+"Qur'anic Recitation": "تلاوة القرآن",
+"Skill Development": "تنمية المهارة",
+
+"Master the rules of Qur'anic recitation and improve pronunciation with proper Tajweed application.":
+"إتقان قواعد تلاوة القرآن وتحسين النطق من خلال تطبيق أحكام التجويد بشكل صحيح.",
+
+"This course trains students to recite the Qur'an correctly with Tajweed rules, focusing on clarity, fluency, and proper pronunciation.":
+"تعمل هذه الدورة على تدريب الطلاب على تلاوة القرآن الكريم بشكل صحيح وفق قواعد التجويد، مع التركيز على الوضوح والطلاقة وحسن النطق.",
+
+"Course Modules": "وحدات الدورة",
+
+"Introduction to Tajweed": "مقدمة في التجويد",
+"Understanding the importance of Tajweed in Qur'anic recitation.":
+"فهم أهمية علم التجويد في تلاوة القرآن الكريم.",
+
+"Makharij & Sifaat": "المخارج والصفات",
+"Learn articulation points and characteristics of Arabic letters.":
+"تعلم مخارج الحروف وصفاتها في اللغة العربية.",
+
+"Rules of Noon & Meem": "أحكام النون والميم",
+"Master the rules of Noon Saakinah and Meem Saakinah.":
+"إتقان أحكام النون الساكنة والميم الساكنة.",
+
+"Qalqalah & Madd": "القلقلة والمد",
+"Practice pronunciation rules including Qalqalah and Madd (elongation).":
+"تدريب على أحكام القلقلة والمد في التلاوة.",
+
+"Recitation Practice": "التطبيق العملي للتلاوة",
+"Guided recitation practice to improve fluency and accuracy.":
+"تدريب عملي موجه لتحسين الطلاقة والدقة في التلاوة.",
+
+"Perfect Your Qur'anic Recitation": "أتقن تلاوة القرآن",
+"Join students learning Tajweed with expert guidance and structured practice sessions.":
+"انضم إلى طلاب يتعلمون التجويد بإشراف متخصصين وجلسات تدريب منظمة.",
+
+"Nahw (Grammar)": "النحو (القواعد)",
+"Arabic Grammar": "القواعد العربية",
+"Advanced Level": "مستوى متقدم",
+
+"Master Arabic syntax, sentence structure, and grammatical rules for deeper language understanding.":
+"إتقان تركيب الجمل العربية وقواعد النحو لفهم أعمق للغة.",
+
+"This course focuses on Arabic grammar (Nahw), helping students understand sentence structure, syntax rules, and proper linguistic construction.":
+"تركز هذه الدورة على علم النحو، لمساعدة الطلاب على فهم تركيب الجمل والقواعد اللغوية بشكل صحيح.",
+
+"Course Modules": "وحدات الدورة",
+
+"Nominal Sentences": "الجمل الاسمية",
+"Learn subject-predicate structure and usage of Arabic nominal sentences.":
+"تعلم تركيب المبتدأ والخبر واستخدام الجمل الاسمية.",
+
+"Verbal Sentences": "الجمل الفعلية",
+"Study verb structures, subjects, and sentence order in Arabic.":
+"دراسة تركيب الفعل والفاعل وترتيب الجملة في اللغة العربية.",
+
+"Grammatical Cases": "الإعراب",
+"Master i‘rāb (case endings) of nouns, verbs, and adjectives.":
+"إتقان الإعراب (حركات الإعراب) للأسماء والأفعال والصفات.",
+
+"Particles & Connectors": "الحروف وأدوات الربط",
+"Learn prepositions, connectors, and conditional structures.":
+"تعلم حروف الجر وأدوات الربط والجمل الشرطية.",
+
+"Complex Structures": "التراكيب المعقدة",
+"Combine sentence types and understand advanced Arabic syntax.":
+"دمج أنواع الجمل وفهم التراكيب النحوية المتقدمة.",
+
+"Master Arabic Grammar": "إتقان النحو العربي",
+"Join advanced students mastering Nahw with structured learning and clear explanations.":
+"انضم إلى الطلاب المتقدمين في إتقان النحو من خلال شرح منظم وواضح.",
+
+"Sarf (Morphology)": "الصرف (علم الصرف)",
+"Arabic Morphology": "علم الصرف العربي",
+"Advanced Study": "دراسة متقدمة",
+
+"Learn how Arabic words are formed, derived, and transformed through morphological rules.":
+"تعلم كيفية تكوين الكلمات العربية واشتقاقها وتغييرها وفق قواعد الصرف.",
+
+"This course teaches Arabic morphology (Sarf), focusing on word formation, verb patterns, and structural transformation of words.":
+"تعلّم هذه الدورة علم الصرف، مع التركيز على تكوين الكلمات وأوزان الأفعال والتحولات الصرفية.",
+
+"Course Modules": "وحدات الدورة",
+
+"Roots & Patterns": "الجذور والأوزان",
+"Understand how Arabic roots and patterns form word structures.":
+"فهم كيفية تشكيل الجذور والأوزان لبنية الكلمات في اللغة العربية.",
+
+"Verb Forms": "أوزان الأفعال",
+"Study verb forms I–X and their meanings and usage.":
+"دراسة أوزان الأفعال من الأول إلى العاشر ومعانيها واستخداماتها.",
+
+"Noun Derivation": "اشتقاق الأسماء",
+"Learn how nouns and verbal nouns are derived from roots.":
+"تعلم كيفية اشتقاق الأسماء والمصادر من الجذور.",
+
+"Active & Passive Forms": "المبني للمعلوم والمجهول",
+"Understand how meaning changes between active and passive structures.":
+"فهم كيفية تغير المعنى بين المبني للمعلوم والمبني للمجهول.",
+
+"Morphological Analysis": "التحليل الصرفي",
+"Apply Sarf rules to analyze Arabic words in real texts.":
+"تطبيق قواعد الصرف لتحليل الكلمات في النصوص الواقعية.",
+
+"Master Arabic Word Formation": "إتقان تكوين الكلمات العربية",
+"Join students mastering Sarf with structured explanations and practical analysis.":
+"انضم إلى الطلاب الذين يتقنون علم الصرف بشرح منظم وتحليل عملي.",
+
+
+  "Arabic Language": "اللغة العربية",
+  "Arabic Literature": "الأدب العربي",
+  "Explore classical and modern Arabic literature, its beauty, and depth.": "استكشف الأدب العربي القديم والحديث، وجماله وعمقه.",
+  "Advanced": "متقدم",
+  "Flexible Schedule": "جدول مرن",
+  "Online": "عبر الإنترنت",
+  "Enrol Now": "سجل الآن",
+
+  "About This Course": "عن هذه الدورة",
+  "This course introduces students to Arabic literature from classical poetry to modern writings, building deep reading and analytical skills.": "تقدم هذه الدورة للطلاب الأدب العربي من الشعر الكلاسيكي إلى الكتابات الحديثة، مع تطوير مهارات القراءة والتحليل العميق.",
+
+  "Course Modules": "وحدات الدورة",
+
+  "Classical Poetry": "الشعر الكلاسيكي",
+  "Study pre-Islamic and classical Arabic poetry, its rhythm, themes, and literary beauty.": "دراسة الشعر العربي قبل الإسلام والشعر الكلاسيكي من حيث الوزن والموضوعات والجمال الأدبي.",
+
+  "Classical Prose": "النثر الكلاسيكي",
+  "Explore speeches, writings, and texts from early Arabic scholars and historians.": "استكشاف الخطب والكتابات والنصوص من العلماء والمؤرخين العرب الأوائل.",
+
+  "Modern Literature": "الأدب الحديث",
+  "Study modern Arabic novels, short stories, and contemporary literary movements.": "دراسة الروايات والقصص القصيرة العربية الحديثة والحركات الأدبية المعاصرة.",
+
+  "Literary Analysis": "التحليل الأدبي",
+  "Learn to analyze poetry and prose using themes, style, and rhetorical techniques.": "تعلم تحليل الشعر والنثر باستخدام الموضوعات والأسلوب والأساليب البلاغية.",
+
+  "Creative Writing": "الكتابة الإبداعية",
+  "Practice writing expressive Arabic texts inspired by classical and modern styles.": "التدرب على كتابة نصوص عربية تعبيرية مستوحاة من الأساليب الكلاسيكية والحديثة.",
+
+  "Email": "البريد الإلكتروني",
+  "Phone": "الهاتف",
+  "All rights reserved.": "جميع الحقوق محفوظة.",
+
+
+  "Arabic Poetry": "الشعر العربي",
+  "Learn the beauty of Arabic poetry, its rhythm, meaning, and expression.": "تعلم جمال الشعر العربي وإيقاعه ومعناه وتعبيره.",
+
+  "Advanced": "متقدم",
+  "Flexible Schedule": "جدول مرن",
+  "Online": "عبر الإنترنت",
+  "Enrol Now": "سجل الآن",
+
+  "About This Course": "عن هذه الدورة",
+  "This course explores Arabic poetry from classical to modern forms, helping students understand meaning, rhythm, and expression.": "تستكشف هذه الدورة الشعر العربي من الكلاسيكي إلى الحديث، لمساعدة الطلاب على فهم المعنى والإيقاع والتعبير.",
+
+  "Course Modules": "وحدات الدورة",
+
+  "Classical Arabic Poetry": "الشعر العربي الكلاسيكي",
+  "Study pre-Islamic and classical poetry including meters, rhyme, and themes.": "دراسة الشعر الجاهلي والكلاسيكي بما في ذلك الأوزان والقوافي والموضوعات.",
+
+  "Modern Poetry": "الشعر الحديث",
+  "Explore modern Arabic poetry and its development in style and expression.": "استكشاف الشعر العربي الحديث وتطوره في الأسلوب والتعبير.",
+
+  "Poetic Devices": "الأدوات الشعرية",
+  "Learn metaphors, similes, symbolism, and other literary tools used in poetry.": "تعلم الاستعارات والتشبيهات والرموز وغيرها من الأدوات الأدبية المستخدمة في الشعر.",
+
+  "Poetry Analysis": "تحليل الشعر",
+  "Analyze poems to understand meaning, emotion, and literary structure.": "تحليل القصائد لفهم المعنى والعاطفة والبنية الأدبية.",
+
+  "Recitation & Composition": "الإلقاء والتأليف",
+  "Practice composing and reciting Arabic poetry with proper rhythm and expression.": "التدرب على تأليف وإلقاء الشعر العربي بإيقاع وتعبير صحيح.",
+
+  "Arabic for Preliminary": "العربية للتمهيدين",
+  "Learn how to read and write Arabic letters confidently from scratch.": "تعلم كيفية قراءة وكتابة الحروف العربية بثقة من الصفر.",
+  "This course is designed for absolute beginners who want to learn Arabic reading and writing step by step with clarity and ease.": "تم تصميم هذه الدورة للمبتدئين تمامًا الذين يرغبون في تعلم القراءة والكتابة العربية خطوة بخطوة بكل وضوح وسهولة.",
+  
+  "Module 1: Arabic Alphabet": "الوحدة 1: الحروف الهجائية العربية",
+  "Introduction to Arabic letters, pronunciation, and writing foundations.": "مقدمة في الحروف العربية، والنطق، وأسس الكتابة.",
+  
+  "Module 2: Letter Forms": "الوحدة 2: أشكال الحروف",
+  "Learn how Arabic letters change shape depending on their position in a word.": "تعلم كيف يتغير شكل الحروف العربية حسب موقعها في الكلمة.",
+  
+  "Module 3: Vowels & Harakāt": "الوحدة 3: الحركات والمدود",
+  "Learn short vowels, sukoon, tanween, and long vowel sounds.": "تعلم الحركات القصيرة، السكون، التنوين، وأصوات المد الطويلة.",
+  
+  "Module 4: Reading Practice": "الوحدة 4: ممارسة القراءة",
+  "Practice reading simple words and short sentences with guidance.": "التدرب على قراءة كلمات بسيطة وجمل قصيرة تحت التوجيه.",
+  
+  "Module 5: Writing Practice": "الوحدة 5: ممارسة الكتابة",
+  "Develop handwriting skills through structured writing exercises.": "تطوير مهارات الكتابة اليدوية من خلال تمارين كتابية منظمة.",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Register Page — Al-Bayan
+============================================================ */
+
+// BANNER
+"Join Our Community":   "انضم إلى مجتمعنا",
+"Online Registration":  "التسجيل الإلكتروني",
+"Join Al-Bayan Arabic Isntitute Online — fill in your details carefully.":
+  "انضم إلى معهد البيان للدراسات العربية عبر الانترنت — أدخل بياناتك بعناية.",
+
+// PROGRESS STEPS
+"Personal Info":      "معلومات شخصية",
+"Academic Info":      "معلومات أكاديمية",
+"Upload & Submit":    "رفع وإرسال",
+
+// NOTE
+"Please fill in all required fields (*) correctly. Do not submit the form more than once.":
+  "يرجى ملء جميع الحقول المطلوبة (*) بشكل صحيح. لا ترسل النموذج أكثر من مرة.",
+
+// STEP 1 — PERSONAL INFO
+"Personal Information":   "المعلومات الشخصية",
+"Full Name":              "الاسم الكامل",
+"Enter your full name":   "أدخل اسمك الكامل",
+"Email Address":          "البريد الإلكتروني",
+"Gender":                 "الجنس",
+"Select":                 "اختر",
+"Male":                   "ذكر",
+"Female":                 "أنثى",
+"Age":                    "العمر",
+"Your age":               "عمرك",
+"Nationality":            "الجنسية",
+"e.g. Nigerian":          "مثال: نيجيري",
+"Country of Residence":   "بلد الإقامة",
+"e.g. Nigeria":           "مثال: نيجيريا",
+"WhatsApp Number":        "رقم واتساب",
+"Next":                   "التالي",
+
+// STEP 2 — ACADEMIC INFO
+"Academic Information":                       "المعلومات الأكاديمية",
+"Current Level of Arabic":                    "مستواك الحالي في اللغة العربية",
+"Read & Write Arabic":                        "القراءة والكتابة بالعربية",
+"Beginner":                                   "مبتدئ",
+"Intermediate":                               "متوسط",
+"Advanced":                                   "متقدم",
+"Can you read the Qur'an with Tajweed?":      "هل تستطيع قراءة القرآن بالتجويد؟",
+"Yes":                                        "نعم",
+"No":                                         "لا",
+"A little":                                   "قليلاً",
+"Can you attend online classes consistently?": "هل يمكنك حضور الدروس الإلكترونية بانتظام؟",
+"How did you hear about us?":                 "كيف سمعت عنّا؟",
+"Social Media":                               "وسائل التواصل الاجتماعي",
+"A Friend / Relative":                        "صديق / قريب",
+"Personal search":                            "بحث شخصي",
+"Preferred Class Time":                       "وقت الحصة المفضّل",
+"Include your time zone":                     "أدرج منطقتك الزمنية",
+"Why do you want to learn Arabic?":           "لماذا تريد تعلم اللغة العربية؟",
+"Understanding the Qur'an":                   "فهم القرآن الكريم",
+"Speaking Arabic":                            "التحدث بالعربية",
+"Islamic studies":                            "الدراسات الإسلامية",
+"Personal interest":                          "اهتمام شخصي",
+"Other":                                      "أخرى",
+"All of the above":                           "كل ما سبق",
+"Additional Information":                     "معلومات إضافية",
+"Anything else you'd like us to know...":     "أي شيء آخر تريد إعلامنا به...",
+"Back":                                       "رجوع",
+
+// STEP 3 — UPLOAD & SUBMIT
+"Passport Photo & Submit":   "الصورة الشخصية والإرسال",
+"Choose Photo":              "اختر صورة",
+"Max file size: 2MB. Niqāb-wearing sisters may upload with face covered.":
+  "الحجم الأقصى للملف: 2 ميجابايت. يمكن للأخوات المنتقبات تحميل الصورة مع تغطية الوجه.",
+"Passport photo must not exceed 2MB.":
+  "يجب ألا تتجاوز الصورة الشخصية 2 ميجابايت.",
+"Do not submit this form more than once. Click the button only once and wait for confirmation.":
+  "لا ترسل هذا النموذج أكثر من مرة. انقر الزر مرة واحدة فقط وانتظر التأكيد.",
+"Submit Registration":  "إرسال التسجيل",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Forgot Password & Reset Password Pages — Al-Bayan
+   (Most strings already exist in dict-login.js)
+============================================================ */
+
+// FORGOT PASSWORD
+"Forgot Password?":   "نسيت كلمة المرور؟",
+"Enter your email address and we'll send you a link to reset your password.":
+  "أدخل بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور.",
+"Send Reset Link":    "إرسال رابط الاسترداد",
+"Back to Login":      "العودة لتسجيل الدخول",
+
+// RESET PASSWORD
+"Reset Password":     "إعادة تعيين كلمة المرور",
+"Choose a strong new password for your account.":
+  "اختر كلمة مرور جديدة قوية لحسابك.",
+"New Password":           "كلمة المرور الجديدة",
+"Enter new password":     "أدخل كلمة المرور الجديدة",
+"Confirm Password":       "تأكيد كلمة المرور",
+"Repeat new password":    "أعد إدخال كلمة المرور الجديدة",
+"Update Password":        "تحديث كلمة المرور",
+
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Payment Page — Al-Bayan
+============================================================ */
+
+// BANNER
+"Secure & Easy":  "آمن وسهل",
+"Make a Payment": "أجرِ دفعة",
+"Pay for your courses securely and upload your receipt for confirmation.":
+  "ادفع مقابل دوراتك بأمان وارفع إيصالك للتأكيد.",
+
+// HOW TO PAY STRIP
+"Choose a payment method below":                    "اختر طريقة الدفع أدناه",
+"Send payment using your name as narration":        "أرسل الدفعة مع ذكر اسمك في بيان التحويل",
+"Fill the form below and upload your receipt":      "املأ النموذج أدناه وارفع إيصال الدفع",
+
+// CARD LABELS
+"Bank Transfer":        "تحويل بنكي",
+"Account Name":         "اسم الحساب",
+"Account Number":       "رقم الحساب",
+"Bank":                 "البنك",
+"Use your full name as payment narration.":         "استخدم اسمك الكامل كبيان للتحويل.",
+"After payment, keep your receipt for confirmation.": "بعد الدفع، احتفظ بإيصالك للتأكيد.",
+"For international (foreign currency) payments only.": "للمدفوعات الدولية (بالعملة الأجنبية) فقط.",
+"Pay Online":           "الدفع الإلكتروني",
+"Click below to pay securely via Selar's online payment platform.":
+  "انقر أدناه للدفع بأمان عبر منصة Selar للدفع الإلكتروني.",
+"Pay with Selar":       "الدفع عبر Selar",
+"Copied to clipboard":  "تم النسخ",
+
+// FORM HEADER
+"Upload Payment Receipt":                           "رفع إيصال الدفع",
+"Fill in your details and attach your payment receipt below.":
+  "أدخل بياناتك وأرفق إيصال الدفع أدناه.",
+
+// FORM FIELDS
+"Full Name":            "الاسم الكامل",
+"Your full name":       "اسمك الكامل",
+"Email Address":        "البريد الإلكتروني",
+"Country":              "البلد",
+"Your country":         "بلدك",
+"Plan Type":            "نوع الخطة",
+"Select Plan":          "اختر خطة",
+"General":              "عام",
+"Premium":              "مميز",
+"Level":                "المستوى",
+"Choose Level":         "اختر المستوى",
+"Beginner":             "مبتدئ",
+"Intermediate":         "متوسط",
+"Advanced":             "متقدم",
+"Payment Method (Bank)": "طريقة الدفع (البنك)",
+"e.g. GTBank":          "مثال: GTBank",
+"Amount Paid":          "المبلغ المدفوع",
+"Currency":             "العملة",
+"Payment Date":         "تاريخ الدفع",
+"Payment Month":        "شهر الدفع",
+"Select Month":         "اختر الشهر",
+"January":   "يناير",
+"February":  "فبراير",
+"March":     "مارس",
+"April":     "أبريل",
+"May":       "مايو",
+"June":      "يونيو",
+"July":      "يوليو",
+"August":    "أغسطس",
+"September": "سبتمبر",
+"October":   "أكتوبر",
+"November":  "نوفمبر",
+"December":  "ديسمبر",
+"Upload Receipt":                   "رفع الإيصال",
+"Click to choose receipt image":    "انقر لاختيار صورة الإيصال",
+"Submit Payment":                   "إرسال الدفعة",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Conversational Arabic — course-conversational.html
+============================================================ */
+
+// BANNER
+"Conversational Arabic":
+  "العربية التحادثية",
+"Build real speaking confidence through practical, everyday Arabic conversations and real-life scenarios.":
+  "ابنِ ثقة حقيقية في الكلام من خلال محادثات عربية يومية عملية وسيناريوهات الحياة الواقعية.",
+
+// META BADGE
+"All Levels": "جميع المستويات",
+
+// INTRO CARD
+"About This Course": "عن هذه الدورة",
+"This course is focused entirely on spoken Arabic. Whether you are a beginner or have some background, you will gain the confidence and vocabulary to handle real-life situations — from greetings and shopping to travel and social conversations.":
+  "تركّز هذه الدورة كليًا على العربية المنطوقة. سواء كنت مبتدئًا أو لديك بعض الخلفية، ستكتسب الثقة والمفردات للتعامل مع مواقف الحياة الواقعية — من التحيات والتسوق إلى السفر والمحادثات الاجتماعية.",
+
+// MODULES
+"Course Modules": "وحدات الدورة",
+
+"Greetings & Introductions":
+  "التحيات والتعريف بالنفس",
+"Learn how to greet people warmly, introduce yourself, and ask and answer basic questions in natural spoken Arabic.":
+  "تعلّم كيفية تحية الناس بدفء وتعريف نفسك وطرح الأسئلة الأساسية والإجابة عنها بالعربية المنطوقة الطبيعية.",
+
+"Everyday Conversations":
+  "المحادثات اليومية",
+"Practise talking about family, hobbies, work, and daily routines through guided dialogue exercises.":
+  "تدرّب على الحديث عن العائلة والهوايات والعمل والروتين اليومي من خلال تمارين الحوار الموجّه.",
+
+"Shopping & Food":
+  "التسوق والطعام",
+"Learn how to ask about prices, order food, and communicate effectively in markets, shops, and restaurants.":
+  "تعلّم كيفية السؤال عن الأسعار وطلب الطعام والتواصل بفعالية في الأسواق والمحلات والمطاعم.",
+
+"Travel & Directions":
+  "السفر والاتجاهات",
+"Handle transportation conversations, ask for and follow directions, and navigate travel situations with confidence.":
+  "أدِر محادثات المواصلات واسأل عن الاتجاهات واتبعها وتعامل مع مواقف السفر بثقة.",
+
+"Social Expressions":
+  "التعبيرات الاجتماعية",
+"Master common expressions, polite phrases, and cultural etiquette to communicate naturally and respectfully in Arabic social settings.":
+  "أتقن التعبيرات الشائعة والعبارات المهذبة وآداب السلوك الثقافي للتواصل بشكل طبيعي ومحترم في البيئات الاجتماعية العربية.",
+
+// CTA STRIP
+"Ready to Start Speaking Arabic?":
+  "هل أنت مستعد لبدء التحدث بالعربية؟",
+"Gain the speaking confidence you need for real life. Enrol today and start having real Arabic conversations.":
+  "اكتسب الثقة في الكلام التي تحتاجها في الحياة الواقعية. سجّل اليوم وابدأ في إجراء محادثات عربية حقيقية.",
+"Register Now":
+  "سجّل الآن",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Videos Page — Al-Bayan
+============================================================ */
+
+// BANNER
+"Members Only":       "للأعضاء فقط",
+"Learning Videos":    "مقاطع الفيديو التعليمية",
+"Access course videos based on your active subscription.":
+  "الوصول إلى مقاطع الفيديو بناءً على اشتراكك النشط.",
+
+// STATES
+"Loading your videos...":   "جارٍ تحميل مقاطع الفيديو...",
+"No Videos Available":      "لا توجد مقاطع فيديو",
+"No videos have been uploaded yet for your level. Please check back later.":
+  "لم يتم رفع أي مقاطع فيديو لمستواك حتى الآن. يرجى التحقق لاحقًا.",
+
+// MODAL
+"Watch on Telegram":  "شاهد على تيليغرام",
+
+// NAV (new items not in previous pages)
+"Videos":    "الفيديوهات",
+"Schedule":  "الجدول",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Admin Dashboard — Al-Bayan (FULL)
+============================================================ */
+
+// NAV
+"Home":                "الرئيسية",
+"About":               "من نحن",
+"Courses":             "الدورات",
+"Register":            "التسجيل",
+"Student Dashboard":   "لوحة الطالب",
+"Admin Dashboard":     "لوحة الإدارة",
+"Emails":              "الرسائل",
+"Semester Work":       "العمل الفصلي",
+"Payments":            "المدفوعات",
+"Schedule":            "الجدول",
+"Contact":             "اتصل بنا",
+"Logout":              "تسجيل الخروج",
+
+// HERO
+"Admin Dashboard":     "لوحة الإدارة",
+"Manage Students, Payments, Grades & Schedule":
+  "إدارة الطلاب والمدفوعات والدرجات والجدول",
+
+// STATS
+"Students":   "الطلاب",
+"Payments":   "المدفوعات",
+"Amount Paid":"المبلغ المدفوع",
+
+// SECTION HEADERS
+"Add Student":    "إضافة طالب",
+"Add Payment":    "إضافة دفعة",
+"Add Grade":      "إضافة درجة",
+"Add Class":      "إضافة حصة",
+"Add Assessment": "إضافة اختبار",
+"Add Course":     "إضافة دورة",
+"All Courses":    "جميع الدورات",
+"Manage Student Fees": "إدارة رسوم الطلاب",
+
+// SEARCH PLACEHOLDERS
+"🔍 Search Students...":   "🔍 بحث عن الطلاب...",
+"🔍 Search Payments...":   "🔍 بحث عن المدفوعات...",
+"🔍 Search Grades...":     "🔍 بحث عن الدرجات...",
+"🔍 Search Schedule...":   "🔍 بحث في الجدول...",
+"🔍 Search Assessments...":"🔍 بحث عن الاختبارات...",
+"🔍 Search by matric...":  "🔍 البحث بالرقم الجامعي...",
+
+// TABLE HEADERS — STUDENTS
+"Photo":        "الصورة",
+"Matric No.":   "الرقم الجامعي",
+"Name":         "الاسم",
+"Email":        "البريد الإلكتروني",
+"WhatsApp":     "واتساب",
+"Country":      "البلد",
+"Gender":       "الجنس",
+"Age":          "العمر",
+"Level":        "المستوى",
+"Status":       "الحالة",
+"Admission":    "القبول",
+"Actions":      "الإجراءات",
+"Welcome Email":"البريد الترحيبي",
+"Edit":         "تعديل",
+"Delete":       "حذف",
+"Certificate":  "الشهادة",
+
+// TABLE HEADERS — PAYMENTS
+"Receipt":       "الإيصال",
+"Student Name":  "اسم الطالب",
+"Amount":        "المبلغ",
+"Month":         "الشهر",
+"Method":        "طريقة الدفع",
+"Date":          "التاريخ",
+"Mark":          "تحديد",
+
+// TABLE HEADERS — GRADES
+
+"Course":        "الدورة",
+"Semester":      "الفصل",
+"Assessment":    "التقييم",
+"Exam":          "الامتحان",
+"Total":         "المجموع",
+"Remark":        "الملاحظة",
+"Released":      "نُشر",
+
+// TABLE HEADERS — SCHEDULE
+"Instructor":    "المدرس",
+"Time":          "الوقت",
+"Link":          "الرابط",
+
+// TABLE HEADERS — ASSESSMENTS
+"Description":       "الوصف",
+"Title":             "العنوان",
+"Type":              "النوع",
+"Max Score":         "أعلى درجة",
+"Duration":          "المدة",
+"Start Time":        "وقت البداية",
+"End Time":          "وقت النهاية",
+"Active":            "نشط",
+
+// EMPTY ROWS
+"No students yet":    "لا يوجد طلاب بعد",
+"No payments yet":    "لا توجد مدفوعات بعد",
+"No grades yet":      "لا توجد درجات بعد",
+"No classes yet":     "لا توجد حصص بعد",
+"No assessments yet": "لا توجد اختبارات بعد",
+
+// FEE FORM
+"Select Student": "اختر طالبًا",
+"Select Month":   "اختر الشهر",
+"Save":           "حفظ",
+
+// MODAL — ADD STUDENT
+"Add Student":          "إضافة طالب",
+"Full Name":            "الاسم الكامل",
+"Email Address":        "البريد الإلكتروني",
+"Choose Level":         "-- اختر المستوى --",
+"Read and Write Arabic":"القراءة والكتابة بالعربية",
+"Beginner":             "مبتدئ",
+"Intermediate":         "متوسط",
+"Advanced":             "متقدم",
+"Active":               "نشط",
+"Inactive":             "غير نشط",
+"Approved":             "✅ مقبول",
+"Not Approved":         "❌ غير مقبول",
+"Passport Photo":       "الصورة الشخصية",
+"Cancel":               "إلغاء",
+
+// MODAL — ADD PAYMENT
+"Select a student":  "اختر طالبًا",
+"Select Level":      "-- اختر المستوى --",
+"Amount Paid":       "المبلغ المدفوع",
+"Currency":          "العملة",
+"Paid":              "مدفوع",
+"Pending":           "قيد الانتظار",
+"e.g. GTBank":       "مثال: GTBank",
+
+// MODAL — ADD GRADE
+"Assessment Score":  "درجة التقييم",
+"Exam Score":        "درجة الامتحان",
+"Total Score":       "المجموع",
+"Select Semester":   "-- اختر الفصل --",
+"First":             "الأول",
+"Second":            "الثاني",
+"Complete":          "مكتمل",
+"Loading":           "جارٍ التحميل",
+"Cancelled":         "ملغى",
+"Pass":              "ناجح",
+"Average":           "متوسط",
+"Fail":              "راسب",
+"Course Name":       "اسم الدورة",
+
+// MODAL — ADD CLASS
+"Meeting Link":  "رابط الاجتماع",
+"Scheduled":     "مجدول",
+"Completed":     "مكتمل",
+
+// MODAL — ASSESSMENT
+"Select Type":           "-- اختر النوع --",
+"Test":                  "اختبار",
+"Exam":                  "امتحان",
+"Select Status":         "-- اختر الحالة --",
+"Duration (minutes)":    "المدة (بالدقائق)",
+"Save Assessment":       "حفظ الاختبار",
+
+// MODAL — CERTIFICATE
+"Issue Certificate":     "إصدار شهادة",
+"Student Name":          "اسم الطالب",
+"Matric Number":         "الرقم الجامعي",
+"Grade Note (optional)": "ملاحظة الدرجة (اختياري)",
+"e.g. with a total score of 85%": "مثال: بمجموع 85%",
+"Select Course":         "اختر الدورة",
+
+// COURSES
+"Instructor Name":   "اسم المدرس",
+
+// PASSWORD SECTION
+"Change My Password":      "تغيير كلمة المرور",
+"Reset Student Password":  "إعادة تعيين كلمة الطالب",
+"Current Password":        "كلمة المرور الحالية",
+"New Password":            "كلمة المرور الجديدة",
+"Update Password":         "تحديث كلمة المرور",
+"Enter current password":  "أدخل كلمة المرور الحالية",
+"Enter new password":      "أدخل كلمة المرور الجديدة",
+
+// FOOTER
+
+"Privacy Policy":       "سياسة الخصوصية",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Admin Inbox — Al-Bayan
+============================================================ */
+
+"Admin Inbox":    "صندوق وارد المشرف",
+"Manage contact messages from students and visitors.":
+  "إدارة رسائل التواصل من الطلاب والزوار.",
+
+// FILTER PILLS
+"All":    "الكل",
+"Unread": "غير مقروء",
+"Read":   "مقروء",
+
+// MODAL ACTIONS
+"Mark as Read":   "تحديد كمقروء",
+"Mark as Unread": "تحديد كغير مقروء",
+"Delete":         "حذف",
+
+// ── semester-admin.html — translate.js DICT entries ──
+
+"Semester Management": "إدارة الفصل الدراسي",
+"Manage Activities & Course Outlines": "إدارة الأنشطة وخطط المواد",
+"Add Entry": "إضافة سجل",
+"Semester": "الفصل الدراسي",
+"e.g., Spring 2025": "مثال: ربيع 2025",
+"Type": "النوع",
+"Activity": "نشاط",
+"Course Outline": "خطة المادة",
+"Title": "العنوان",
+"Entry Title": "عنوان السجل",
+"Description": "الوصف",
+"Enter description...": "أدخل الوصف...",
+"Start Date": "تاريخ البدء",
+"End Date": "تاريخ الانتهاء",
+"Save Entry": "حفظ السجل",
+"Cancel Edit": "إلغاء التعديل",
+"All Entries": "جميع السجلات",
+"🔍 Search title...": "🔍 ابحث عن العنوان...",
+"All Semesters": "جميع الفصول",
+"Harmattan": "الهرمتان",
+"Spring": "الربيع",
+"All Types": "جميع الأنواع",
+"Entry deleted.": "تم حذف السجل.",
+"Undo": "تراجع",
+"Semester Work": "أعمال الفصل",
+"Al-Bayan Arabic Isntitute Online.": "معهد البيان للدراسات العربية عبر الانترنت",
+"Email": "البريد الإلكتروني",
+"Phone": "الهاتف",
+"All rights reserved.": "جميع الحقوق محفوظة.",
+"Privacy Policy": "سياسة الخصوصية",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Student Dashboard — students-dashboard.html
+============================================================ */
+
+// HERO BANNER
+"Student Dashboard":
+  "لوحة تحكم الطالب",
+"Welcome back! Manage your registration, payments, courses, resources, and online classes from one place.":
+  "مرحبًا بعودتك! يمكنك إدارة التسجيل، المدفوعات، الدورات، الموارد، والفصول الدراسية عبر الإنترنت من مكان واحد.",
+
+// HUB SECTION
+"Quick Access Tools":
+  "أدوات الوصول السريع",
+"Click any card below to manage your student activities.":
+  "انقر على أي بطاقة أدناه لإدارة أنشطتك الدراسية.",
+
+// HUB CARDS
+"My Profile":         "ملفي الشخصي",
+"Make Payment":       "إجراء الدفع",
+"Payment History":    "سجل المدفوعات",
+"All Courses":        "جميع الدورات",
+"Register Courses":   "تسجيل المواد",
+"My Courses":         "موادي",
+"Semester Activities": "أنشطة الفصل الدراسي",
+"Admission Letter":   "رسالة القبول",
+"My Certificates":    "شهاداتي",
+"Class Schedule":     "جدول الحصص",
+"Test/Exam Timetable": "جدول الاختبارات",
+"My Grades":          "درجاتي",
+"Learning Resources": "الموارد التعليمية",
+"Join Online Class":  "الانضمام إلى الفصل الإلكتروني",
+"Take Test/Exam":     "أداء الاختبار",
+"Contact / Support":  "التواصل / الدعم",
+
+// REMINDER MODAL
+"⚠️ Payment Reminder": "⚠️ تذكير بالدفع",
+"Pay Now":             "ادفع الآن",
+"Remind Me Later":     "ذكّرني لاحقًا",
+
+// NOTIFICATIONS
+"Notifications":       "الإشعارات",
+"🔔 Notifications":    "🔔 الإشعارات",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Staff Dashboard — Al-Bayan (FULL)
+============================================================ */
+
+// NAV
+"My Dashboard":  "لوحتي",
+"Contact":       "اتصل بنا",
+"Logout":        "تسجيل الخروج",
+
+// HERO
+"Staff Dashboard":                          "لوحة الموظف",
+"Manage your courses, students and grades": "إدارة دوراتك وطلابك ودرجاتهم",
+
+// STATS
+"My Courses":    "دوراتي",
+"My Students":   "طلابي",
+"Grades Posted": "الدرجات المنشورة",
+
+// TAB BUTTONS
+"My Courses":   "دوراتي",
+"Grades":       "الدرجات",
+"Schedule":     "الجدول",
+"My Profile":   "ملفي الشخصي",
+
+// TAB — COURSES
+"My Courses & Students":    "دوراتي وطلابي",
+"🔍 Search students...":    "🔍 البحث عن طلاب...",
+"Loading your courses...":  "جارٍ تحميل دوراتك...",
+
+// TAB — GRADES
+"Post a Grade":         "نشر درجة",
+
+"Select Student":       "اختر طالبًا",
+"Course":               "الدورة",
+"Select Course":        "اختر الدورة",
+"Level":                "المستوى",
+"Semester":             "الفصل",
+"Select Semester":      "اختر الفصل",
+"First":                "الأول",
+"Second":               "الثاني",
+"Assessment Score":     "درجة التقييم",
+"Assessment":           "التقييم",
+"Exam Score":           "درجة الامتحان",
+"Exam":                 "الامتحان",
+"Total Score":          "المجموع",
+"Total":                "المجموع",
+"Status":               "الحالة",
+"Completed":            "مكتمل",
+"Loading":              "جارٍ التحميل",
+"Cancelled":            "ملغى",
+"Remark":               "الملاحظة",
+"Pass":                 "ناجح",
+"Average":              "متوسط",
+"Fail":                 "راسب",
+"Submit Grade":         "إرسال الدرجة",
+"Posted Grades":        "الدرجات المنشورة",
+"🔍 Search grades...":  "🔍 البحث عن درجات...",
+"Matric":               "الرقم الجامعي",
+"Released":             "نُشر",
+"Loading grades...":    "جارٍ تحميل الدرجات...",
+
+// TAB — SCHEDULE
+"Add Class":            "إضافة حصة",
+"My Class Schedule":    "جدول حصصي",
+"Date":                 "التاريخ",
+"Time":                 "الوقت",
+"Meeting Link":         "رابط الاجتماع",
+"Scheduled":            "مجدول",
+"Save Class":           "حفظ الحصة",
+"Cancel":               "إلغاء",
+"Link":                 "الرابط",
+"Action":               "الإجراء",
+"Loading schedule...":  "جارٍ تحميل الجدول...",
+
+// TAB — PROFILE
+"My Profile":              "ملفي الشخصي",
+"Full Name":               "الاسم الكامل",
+"Email":                   "البريد الإلكتروني",
+"Role":                    "الدور",
+"Save Profile":            "حفظ الملف",
+"Change Password":         "تغيير كلمة المرور",
+"New Password":            "كلمة المرور الجديدة",
+"Enter new password":      "أدخل كلمة المرور الجديدة",
+"Confirm Password":        "تأكيد كلمة المرور",
+"Confirm new password":    "أعد إدخال كلمة المرور الجديدة",
+"Update Password":         "تحديث كلمة المرور",
+
+// FOOTER
+"Al-Bayan Arabic Isntitute Online.":
+  "معهد البيان للدراسات العربية عبر الانترنت",
+"All rights reserved.":    "جميع الحقوق محفوظة.",
+"Privacy Policy":          "سياسة الخصوصية",
+
+"Your Tools": "أدواتك",
+"Class Schedule": "جدول الحصص",
+"Make Payment": "إجراء الدفع",
+"My Grades": "درجاتي",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Student Profile — student-profile.html
+   (Most keys already exist — only NEW ones listed here)
+============================================================ */
+
+// BANNER (new wording)
+"View and manage your personal information, registered courses, and progress": "عرض وإدارة معلوماتك الشخصية والدورات المسجلة ومستوى تقدمك",
+
+// INFO ROW LABELS (already in dict but listed for completeness)
+"Email Address:": "البريد الإلكتروني:",
+"WhatsApp:":      "واتساب:",
+"Student ID:":    "رقم الطالب:",
+"Level:":         "المستوى:",
+
+// BUTTONS
+"Edit Profile":   "تعديل الملف الشخصي",
+"Update Password": "تحديث كلمة المرور",
+"Save Changes":   "حفظ التغييرات",
+
+// PASSWORD LABELS
+"Current Password": "كلمة المرور الحالية",
+"New Password":     "كلمة المرور الجديدة",
+"Confirm Password": "تأكيد كلمة المرور",
+
+// MODAL
+"Change Passport (optional)": "تغيير الصورة الشخصية (اختياري)",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Test Welcome Page — New additions only (Al-Bayan)
+============================================================ */
+
+// NAV
+"Student Dashboard":  "لوحة الطالب",
+
+// RULES CARD
+"Before You Begin":
+  "قبل أن تبدأ",
+"Ensure you have a stable internet connection before starting.":
+  "تأكد من أن لديك اتصالًا مستقرًا بالإنترنت قبل البدء.",
+"Do not refresh or close the page during the exam.":
+  "لا تقم بتحديث الصفحة أو إغلاقها أثناء الاختبار.",
+"Answer all questions before the timer runs out.":
+  "أجب على جميع الأسئلة قبل انتهاء الوقت.",
+"Each question can only be answered once. Review before submitting.":
+  "يمكن الإجابة على كل سؤال مرة واحدة فقط. راجع إجاباتك قبل الإرسال.",
+
+// INFO CARD LABELS (injected by JS via t())
+"Level:":      "المستوى:",
+"Semester:":   "الفصل:",
+"Course:":     "الدورة:",
+"Type:":       "النوع:",
+"Duration:":   "المدة:",
+"minutes":     "دقيقة",
+"Status:":     "الحالة:",
+"Start Time:": "وقت البداية:",
+"End Time:":   "وقت النهاية:",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Test Hall Page — Al-Bayan
+============================================================ */
+
+// HEADER
+"Time Left":  "الوقت المتبقي",
+"Time":       "الوقت",
+"Progress":   "التقدم",
+"⚠️ Only 2 minutes remaining. Please finalize your answers":
+  "⚠️ دقيقتان فقط متبقيتان. يرجى إنهاء إجاباتك",
+
+// NAV BUTTONS
+"Previous": "السابق",
+"Review":   "مراجعة",
+"Next":     "التالي",
+
+// REVIEW MODAL
+"Review Your Answers":            "مراجعة إجاباتك",
+"Check your answers before final submission.":
+  "تحقق من إجاباتك قبل الإرسال النهائي.",
+"Back to Exam":                   "العودة إلى الاختبار",
+"Submit All Answers":             "إرسال جميع الإجابات",
+
+// COMPLETION MODAL
+"Test/Exam Submitted":            "تم تسليم الاختبار",
+"Thank you. Your test/exam has been successfully submitted. Results will be released later.":
+  "شكرًا لك. تم تسليم اختبارك بنجاح. سيتم الإعلان عن النتائج لاحقًا.",
+"Go to Dashboard":                "الذهاب إلى لوحة التحكم",
+"Logout":                         "تسجيل الخروج",
+
+"Restore Hidden Notifications": "استعادة الإشعارات المخفية",
+"🔍 Search notifications...": "🔍 بحث في الإشعارات...",
+
+/* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Online Classes Page — Al-Bayan
+============================================================ */
+
+// BANNER
+"Live & Interactive":   "مباشر وتفاعلي",
+"Online Classes":       "الدروس الإلكترونية",
+"Access your Zoom, Telegram, WhatsApp and other online class platforms here.":
+  "ادخل إلى منصات دروسك الإلكترونية عبر زوم وتيليغرام وواتساب وغيرها من هنا.",
+
+// SECTION HEADER
+"Live Sessions":            "الجلسات المباشرة",
+"Join Your Online Classes": "انضم إلى دروسك الإلكترونية",
+"Click the links below to enter your class sessions. Make sure you're logged in to the respective platform before joining.":
+  "انقر على الروابط أدناه للدخول إلى جلسات دروسك. تأكد من تسجيل دخولك إلى المنصة المعنية قبل الانضمام.",
+
+// DAYS
+"Monday":    "الاثنين",
+"Tuesday":   "الثلاثاء",
+"Wednesday": "الأربعاء",
+"Thursday":  "الخميس",
+"Friday":    "الجمعة",
+"Saturday":  "السبت",
+"Sunday":    "الأحد",
+"Telegram": "تيليغرام",
+"WhatsApp": "واتساب",
+"Zoom": "زوم",
+"Google Meet": "جوجل ميت",
+"Microsoft Teams": "مايكروسوفت تيمز",
+"YouTube": "يوتيوب",
+"Facebook": "فيسبوك",
+"Other Platform": "منصة أخرى",
+"No classes scheduled for this day.": "لا توجد حصص مجدولة لهذا اليوم.",
+
+// INFO NOTE
+"If you experience any issues joining a class, please contact us via WhatsApp or the Contact page.":
+  "إذا واجهت أي مشكلة في الدخول إلى درس، يرجى التواصل معنا عبر واتساب أو صفحة الاتصال.",
+
+  /* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Semester Activities Page — Al-Bayan
+============================================================ */
+
+// BANNER
+"Academic Calendar":    "التقويم الأكاديمي",
+"Semester Activities":  "الأنشطة الفصلية",
+"View your semester timeline, course outlines and key academic dates.":
+  "اطّلع على جدول فصلك الدراسي والمناهج الدراسية والتواريخ الأكاديمية المهمة.",
+
+// LOADING / EMPTY
+"Loading semester data...":  "جارٍ تحميل بيانات الفصل...",
+"No semester data available.":
+  "لا توجد بيانات فصلية متاحة.",
+"Please check back later when semester activities have been published.":
+  "يرجى التحقق لاحقًا عند نشر الأنشطة الفصلية.",
+
+// Staff Management Page
+"Staff Management": "إدارة الموظفين",
+"Manage Staff Records, Roles & Monthly Payments": "إدارة سجلات الموظفين والأدوار والرواتب الشهرية",
+"Total Staff": "إجمالي الموظفين",
+"Active Staff": "الموظفون النشطون",
+"Monthly Payroll": "الرواتب الشهرية",
+"Staff": "موظف",
+"All Roles": "جميع الأدوار",
+"All Status": "جميع الحالات",
+"Add Staff": "إضافة موظف",
+"Photo": "الصورة",
+"Name": "الاسم",
+"Role": "الدور",
+"Type": "النوع",
+"Department": "القسم",
+"Phone": "الهاتف",
+"Joined": "تاريخ الانضمام",
+"Salary": "الراتب",
+"View / Edit": "عرض / تعديل",
+"Pay": "دفع",
+"View": "عرض",
+"Note": "ملاحظة",
+"Any remarks...": "أي ملاحظات...",
+
+"No payments yet": "لا توجد مدفوعات بعد",
+
+"Search Staff...": "البحث في الموظفين...",
+"All Roles": "كل الأدوار",
+"Director": "المدير",
+"Asst. Director": "نائب المدير",
+"Bursar": "أمين الصندوق",
+"Registrar": "المسجل",
+"Teacher": "المعلم",
+
+"All Status": "كل الحالات",
+"On Leave": "في إجازة",
+"Add Staff": "إضافة موظف",
+
+// Add Staff Modal
+"Add Staff Record": "إضافة سجل موظف",
+"Full Name": "الاسم الكامل",
+"Email Address": "عنوان البريد الإلكتروني",
+"Phone Number": "رقم الهاتف",
+
+"-- Select Role --": "-- اختر الدور --",
+"Director (Mudeer)": "المدير (مدير)",
+"Staff Type": "نوع الموظف",
+"-- Select Type --": "-- اختر النوع --",
+"Full-time": "دوام كامل",
+"Part-time": "دوام جزئي",
+"Contract": "عقد",
+"Volunteer": "متطوع",
+
+"-- Select Department --": "-- اختر القسم --",
+"Teaching": "التدريس",
+"Admin": "الإدارة",
+"Finance": "المالية",
+"IT": "تقنية المعلومات",
+
+"Date Joined": "تاريخ الانضمام",
+"Monthly Salary": "الراتب الشهري",
+"Monthly Salary (₦)": "الراتب الشهري (₦)",
+"0.00": "0.00",
+
+"Passport Photo": "صورة الجواز",
+"Save Staff": "حفظ الموظف",
+
+"Note: This creates a pending invite. Click the Invite button next to their name in the table to send them a registration email.": "ملاحظة: هذا ينشئ دعوة معلقة. اضغط زر الدعوة بجانب اسمهم في الجدول لإرسال بريد التسجيل.",
+
+// View/Edit Staff Modal
+"Details": "التفاصيل",
+"Payment History": "سجل المدفوعات",
+"Save Changes": "حفظ التغييرات",
+
+// Payment Modal
+"Record Payment": "تسجيل دفعة",
+"Edit Payment": "تعديل الدفعة",
+"Month": "الشهر",
+"Year": "السنة",
+"Amount Paid": "المبلغ المدفوع",
+"Currency": "العملة",
+"Date Paid": "تاريخ الدفع",
+"Note (optional)": "ملاحظة (اختياري)",
+"Save Payment": "حفظ الدفعة",
+"Paid": "مدفوع",
+"Partial": "جزئي",
+"Unpaid": "غير مدفوع",
+"Add Payment": "إضافة دفعة",
+
+// Status values
+"active": "نشط",
+"inactive": "غير نشط",
+"on_leave": "في إجازة",
+"On Leave": "في إجازة",
+"Active": "نشط",
+"Inactive": "غير نشط",
+
+// Month names
+"January": "يناير",
+"February": "فبراير",
+"March": "مارس",
+"April": "أبريل",
+"May": "مايو",
+"June": "يونيو",
+"July": "يوليو",
+"August": "أغسطس",
+"September": "سبتمبر",
+"October": "أكتوبر",
+"November": "نوفمبر",
+"December": "ديسمبر",
+
+// Toast / alerts
+"Staff record created successfully": "تم إنشاء سجل الموظف بنجاح",
+"Staff updated successfully": "تم تحديث بيانات الموظف بنجاح",
+"Staff record deleted": "تم حذف سجل الموظف",
+"Failed to save staff record. See console.": "فشل حفظ سجل الموظف. راجع وحدة التحكم.",
+"Failed to update staff. See console.": "فشل تحديث الموظف. راجع وحدة التحكم.",
+"Failed to delete staff. See console.": "فشل حذف الموظف. راجع وحدة التحكم.",
+"Payment recorded": "تم تسجيل الدفعة",
+"Payment updated": "تم تحديث الدفعة",
+"Payment deleted": "تم حذف الدفعة",
+"Failed to save payment. See console.": "فشل حفظ الدفعة. راجع وحدة التحكم.",
+"Failed to load staff": "فشل تحميل الموظفين",
+"Failed to load payments": "فشل تحميل المدفوعات",
+"Could not load staff record": "تعذّر تحميل سجل الموظف",
+"No staff yet": "لا يوجد موظفون بعد",
+"No payments yet": "لا توجد مدفوعات بعد",
+"Loading...": "جارٍ التحميل...",
+"Full name, email and role are required": "الاسم الكامل والبريد الإلكتروني والدور مطلوبة",
+"Full name and role are required": "الاسم الكامل والدور مطلوبان",
+"Month and year are required": "الشهر والسنة مطلوبان",
+"Are you sure you want to delete this staff record? This cannot be undone.": "هل أنت متأكد من حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء.",
+"Delete this payment record?": "هل تريد حذف هذه الدفعة؟",
+"Access Denied": "تم رفض الوصول",
+"Only image files are allowed": "يُسمح بملفات الصور فقط",
+"Passport must not exceed 2MB": "يجب ألا يتجاوز حجم الصورة 2 ميغابايت",
+
+// Role tags
+"#Director": "#المدير",
+"#Asst. Director": "#نائب المدير",
+"#Head of Dept.": "#رئيس القسم",
+"#Bursar": "#أمين_الصندوق",
+"#Registrar": "#المسجل",
+"#Teacher": "#المعلم",
+"#Staff": "#موظف",
+"Director": "المدير",
+"Asst. Director": "نائب المدير",
+"Head of Dept.": "رئيس القسم",
+"Bursar": "أمين الصندوق",
+"Registrar": "المسجل",
+"Teacher": "المعلم",
+"Staff": "الموظف",
+
+// Department / type display
+"Full-time": "دوام كامل",
+"Part-time": "دوام جزئي",
+"🔍 Search Staff...": "🔍 البحث عن موظف...",
+
+// ─── Admin Dashboard (new tab system) ───────────────────
+"My Profile":        "ملفي الشخصي",
+"Students":          "الطلاب",
+"Payments":          "المدفوعات",
+"Fees":              "الرسوم",
+"Grades":            "الدرجات",
+"Schedule":          "الجدول",
+"Assessments":       "التقييمات",
+"Courses":           "المقررات",
+"Certificates":      "الشهادات",
+"Passwords":         "كلمات المرور",
+"Deleted":           "المحذوفون",
+"🗑️ Deleted Students": "🗑️ الطلاب المحذوفون",
+
+"Edit My Profile":      "تعديل ملفي الشخصي",
+"Change My Password":   "تغيير كلمتي المرور",
+"Current Password":     "كلمة المرور الحالية",
+"New Password":         "كلمة المرور الجديدة",
+"Update Password":      "تحديث كلمة المرور",
+"Save Profile":         "حفظ الملف الشخصي",
+"Profile updated successfully": "تم تحديث الملف الشخصي بنجاح",
+"Failed to save profile. See console.": "فشل حفظ الملف الشخصي. راجع وحدة التحكم.",
+"Full name is required": "الاسم الكامل مطلوب",
+"Enter current password": "أدخل كلمة المرور الحالية",
+"Enter new password":     "أدخل كلمة المرور الجديدة",
+
+"Open a student record and click Issue Certificate to generate.":
+  "افتح سجل الطالب واضغط على إصدار الشهادة للإنشاء.",
+
+// ─── Staff Dashboard (new additions) ────────────────────
+"My Payments":       "مدفوعاتي",
+"My Salary Payments": "مدفوعات راتبي",
+"Monthly Salary":    "الراتب الشهري",
+"Months Paid":       "الأشهر المدفوعة",
+"Total Received":    "إجمالي المستلم",
+"Loading payments...": "جارٍ تحميل المدفوعات...",
+"No payment records yet.": "لا توجد سجلات دفع بعد.",
+"Failed to load payments.": "فشل تحميل المدفوعات.",
+"Date Paid":         "تاريخ الدفع",
+"Amount":            "المبلغ",
+"Currency":          "العملة",
+"Note":              "ملاحظة",
+
+"Staff Type":        "نوع الموظف",
+"Date Joined":       "تاريخ الانضمام",
+"Phone Number":      "رقم الهاتف",
+"Full-time":         "دوام كامل",
+"Part-time":         "دوام جزئي",
+"Contract":          "عقد",
+"Volunteer":         "متطوع",
+"Teaching":          "التدريس",
+"Admin":             "الإدارة",
+"Finance":           "المالية",
+"IT":                "تقنية المعلومات",
+
+"paid":    "مدفوع",
+"partial": "جزئي",
+"unpaid":  "غير مدفوع",
+
+"My Salary Payments":    "مدفوعات راتبي",
+"Monthly Salary":        "الراتب الشهري",
+"Months Paid":           "الأشهر المدفوعة",
+"Total Received":        "إجمالي المستلم",
+"No payment records yet.": "لا توجد سجلات دفع بعد.",
+"Loading payments...":   "جارٍ تحميل المدفوعات...",
+"Failed to load payments.": "فشل تحميل المدفوعات.",
+"Trash bin is empty.": "سلة المحذوفات فارغة.",
+"Loading history logs...": "جاري تحميل سجلّات الأرشيف...",
+"Date Issued": "تاريخ الإصدار",
+"🔍 Search certificates history...": "🔍 ابحث في سجل الشهادات...",
+"🔍 Search in Trash Bin...": "🔍 ابحث في سلة المحذوفات...",
+"Issued Certificates History": "سجل الشهادات الصادرة",
+
+"Loading sessions...": "جاري تحميل الجلسات...",
+"No attendance sessions yet": "لا توجد جلسات حضور بعد",
+
+"Loading...": "جاري التحميل...",
+
+"Attendance Records": "سجلات الحضور",
+
+"No one has marked attendance yet.": "لم يقم أحد بتسجيل الحضور بعد.",
+
+"Failed to load attendance sessions.": "فشل في تحميل جلسات الحضور.",
+"Failed to load records.": "فشل في تحميل السجلات.",
+
+"Fill all required fields": "املأ جميع الحقول المطلوبة",
+"Invalid date": "تاريخ غير صالح",
+"Closing time must be after opening time": "يجب أن يكون وقت الإغلاق بعد وقت الفتح",
+
+"Session updated": "تم تحديث الجلسة",
+"Session created": "تم إنشاء الجلسة",
+
+"Failed to save attendance session": "فشل في حفظ جلسة الحضور",
+
+"Edit Attendance Session": "تعديل جلسة الحضور",
+
+"Session activated": "تم تفعيل الجلسة",
+"Session deactivated": "تم إلغاء تفعيل الجلسة",
+
+"Failed to update session": "فشل في تحديث الجلسة",
+
+"Link copied": "تم نسخ الرابط",
+
+"Copy attendance link": "نسخ رابط الحضور",
+
+"Edit": "تعديل",
+
+    "Checking session...": "جاري التحقق من الجلسة...",
+    "Please wait a moment.": "يرجى الانتظار لحظة.",
+    "Please Log In": "يرجى تسجيل الدخول",
+    "You need to log in as a student before you can mark attendance.": "يجب تسجيل الدخول كطالب قبل تسجيل الحضور.",
+    "Go to Login": "الذهاب لتسجيل الدخول",
+    "Invalid Attendance Link": "رابط حضور غير صالح",
+    "This attendance link is missing or invalid. Please check the link your teacher shared.": "رابط الحضور مفقود أو غير صالح. يرجى التحقق من الرابط الذي شاركه معلمك.",
+    "Mark Me Present": "تسجيل حضوري",
+    "✅ Mark Me Present": "✅ تسجيل حضوري",
+    "Marking...": "جاري التسجيل...",
+    "Marking attendance as:": "تسجيل الحضور باسم:",
+    "Attendance Marked!": "تم تسجيل الحضور!",
+    "Join Class": "الانضمام إلى الحصة",
+    "Already Marked": "تم التسجيل مسبقًا",
+    "Session Inactive": "الجلسة غير مفعّلة",
+    "This attendance session has been deactivated by the admin.": "تم تعطيل جلسة الحضور هذه من قبل الإدارة.",
+    "Not Open Yet": "لم يبدأ التسجيل بعد",
+    "This session opens at": "تبدأ هذه الجلسة في",
+    "Attendance Window Closed": "انتهت فترة تسجيل الحضور",
+    "This session closed at": "أُغلقت هذه الجلسة في",
+    "Something went wrong. Please try again.": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+    "Could not mark attendance. Please try again.": "تعذّر تسجيل الحضور. يرجى المحاولة مرة أخرى.",
+    "You were already marked present for": "تم تسجيل حضورك مسبقًا في",
+    "You've been marked present for": "تم تسجيل حضورك في",
+    "Attendance": "الحضور",
+    "Create Session": "إنشاء جلسة",
+    "🔍 Search Sessions...": "🔍 البحث في الجلسات...",
+    "Opens": "تبدأ",
+    "Closes": "تنتهي",
+    "Present": "الحاضرون",
+    "No attendance sessions yet": "لا توجد جلسات حضور حتى الآن",
+    "Loading sessions...": "جاري تحميل الجلسات...",
+    "Failed to load attendance sessions.": "فشل تحميل جلسات الحضور.",
+    "Create Attendance Session": "إنشاء جلسة حضور",
+    "Edit Attendance Session": "تعديل جلسة الحضور",
+    "Class Link (Meet/Telegram/WhatsApp)": "رابط الحصة (ميت / تيليجرام / واتساب)",
+    "Attendance Link (share this with students)": "رابط الحضور (شاركه مع الطلاب)",
+    "Save Session": "حفظ الجلسة",
+    "Attendance Records": "سجلات الحضور",
+    "Matric Number": "الرقم الجامعي",
+    "Copy attendance link": "نسخ رابط الحضور",
+    "Link copied": "تم نسخ الرابط",
+    "Session updated": "تم تحديث الجلسة",
+    "Session created": "تم إنشاء الجلسة",
+    "Failed to save attendance session": "فشل حفظ جلسة الحضور",
+    "Failed to update session": "فشل تحديث الجلسة",
+    "Session activated": "تم تفعيل الجلسة",
+    "Session deactivated": "تم تعطيل الجلسة",
+    "Closing time must be after opening time": "يجب أن يكون وقت الإغلاق بعد وقت الفتح",
+    "No one has marked attendance yet.": "لم يسجل أحد حضوره حتى الآن.",
+    "Failed to load records.": "فشل تحميل السجلات.",
+
+    /* ============================================================
+   ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
+   Learning Resources — resources.html
+============================================================ */
+
+// BANNER
+"📚 Learning Resources":
+  "📚 الموارد التعليمية",
+"Access PDFs, videos, and other study materials for your courses":
+  "الوصول إلى ملفات PDF والفيديوهات والمواد الدراسية الخاصة بك",
+
+// TOP BAR
+"📚 Open Full Library": "📚 فتح المكتبة الكاملة",
+
+// SEARCH & FILTER
+"🔍 Search books (e.g. Nahw, Tafseer, Sarf...)":
+  "🔍 ابحث عن الكتب (مثل: النحو، التفسير، الصرف...)",
+"All Categories": "كل التصنيفات",
+"Madinah":  "المدينة",
+"Tafseer":  "التفسير",
+"Hadeeth":  "الحديث",
+"Nahw":     "النحو",
+"Sarf":     "الصرف",
+"Qira'ah":  "القراءة",
+"Ta'beer":    "التعبير",
+"Writing / Kitaabah":  "الكتابة / الكتابة",
+"Writing":  "الكتابة",
+"Fiqh":     "الفقه",
+"Tawheed":  "التوحيد",
+"Adab":     "الأدب",
+"Balaghah": "البلاغة",
+"Taareekh": "التاريخ",
+"Classical Arabic Books":  "كتب العربية الكلاسيكية",
+"Other":    "أخرى",
+
+// SUBJECT TITLES (accordion headers)
+"📘 Madinah Arabic Reader":   "📘 سلسلة المدينة",
+"📘 Tafseer":                 "📘 التفسير",
+"📘 Hadeeth":                 "📘 الحديث",
+"📘 Sarf":                    "📘 الصرف",
+"📘 Nahw":                    "📘 النحو",
+"📘 Qira'ah":                 "📘 القراءة",
+"📘 Ta'beer":                 "📘 التعبير",
+"📘 Writing / Kitaabah":      "📘 الكتابة",
+"📘 Fiqh":                    "📘 الفقه",
+"📘 Tawheed":                 "📘 التوحيد",
+"📘 Adab":                    "📘 الأدب",
+"📘 Balaghah":                "📘 البلاغة",
+"📘 Taareekh":                "📘 التاريخ",
+"📘 Classical Arabic Books":  "📘 كتب العربية الكلاسيكية",
+"🎥 Videos":                  "🎥 الفيديوهات",
+
+// CARD ACTIONS
+"Open PDF": "فتح الملف",
+"Watch":    "مشاهدة",
+"Conversational Arabic Video": "فيديو المحادثة العربية",
+
+    "My Attendance Sessions": "جلسات الحضور الخاصة بي",
+    "Download Report": "تحميل التقرير",
+    "Close": "إغلاق",
+    "Please wait...": "يرجى الانتظار...",
+    "Choose Level": "اختر المستوى",
+    "Failed to load session": "فشل تحميل الجلسة",
+    
+    "assessment": "تقييم",
+"attendance session": "جلسة حضور",
+"class": "حصة",
+"course": "مقرر",
+"fee record": "سجل رسوم",
+"permanently deleted": "تم حذفه نهائيًا",
+"Permanently delete this": "حذف نهائي لـ",
+"This cannot be undone.": "لا يمكن التراجع عن هذا الإجراء.",
+"Permanently Delete": "حذف نهائي",
+"Move to Trash": "نقل إلى سلة المهملات",
+"Item restored ✅": "تمت استعادة العنصر ✅",
+"Restore this item?": "استعادة هذا العنصر؟",
+"Failed to delete. See console.": "فشل الحذف. راجع وحدة التحكم (Console).",
+"Failed to permanently delete. See console.": "فشل الحذف النهائي. راجع وحدة التحكم (Console).",
+"Failed to restore. See console.": "فشلت الاستعادة. راجع وحدة التحكم (Console).",
+"Failed to permanently delete certificate.": "فشل الحذف النهائي للشهادة.",
+"Certificate moved to trash 🗑": "تم نقل الشهادة إلى سلة المهملات 🗑",
+"Move this certificate to Trash?\n\nIt will be hidden from the student and this list. Use the permanent delete (🗑️) option to remove it from Supabase for good.": "نقل هذه الشهادة إلى سلة المهملات؟\n\nستُخفى عن الطالب وعن هذه القائمة. استخدم خيار الحذف النهائي (🗑️) لإزالتها من Supabase نهائيًا.",
+"🗑️ Trash Bin": "🗑️ سلة المهملات",
+"Nothing was deleted — check your Supabase RLS DELETE policy for this table.": "لم يُحذف شيء — تحقق من سياسة RLS الخاصة بالحذف (DELETE) لهذا الجدول في Supabase.",
+"Nothing was deleted — check your Supabase RLS UPDATE policy for this table.": "لم يُحذف شيء — تحقق من سياسة RLS الخاصة بالتحديث (UPDATE) لهذا الجدول في Supabase.",
+"Nothing was restored — check your Supabase RLS UPDATE policy for this table.": "لم تتم الاستعادة — تحقق من سياسة RLS الخاصة بالتحديث (UPDATE) لهذا الجدول في Supabase.",
+"Failed to undo. See console.": "فشل التراجع. راجع وحدة التحكم (Console).",
+
+  // ===== DYNAMIC TEMPLATES ===== 
 
 en: {
 
@@ -1394,7 +3190,7 @@ en: {
   theme_dark: "Dark",
   theme_system: "System",
 
-  remember_me: "Remember me",
+  remember_me: "Remember Me",
 
   login_required_exam: "Please login to view your exam timetable",
 
@@ -1459,6 +3255,26 @@ en: {
   "Payment Confirmed": "Payment Confirmed",
   "New Grade Posted": "New Grade Posted",
   "New Class Scheduled": "New Class Scheduled",
+  
+  "All Entries": "All Entries",
+"🔍 Search title...": "🔍 Search title...",
+"All Semesters": "All Semesters",
+"Harmattan": "Harmattan",
+"Spring": "Spring",
+"All Types": "All Types",
+  
+  
+  "CERTIFICATE_ISSUED": "Your certificate for {course} has been issued",
+"certificate_issued_title": "Certificate Issued 🎓",
+// Staff dashboard templates
+"GRADE_SUBMITTED": "Grade submitted for {course}",
+"PROFILE_SAVED": "Profile saved successfully",
+"NO_COURSES_ASSIGNED": "No courses assigned to you yet",
+"NO_STUDENTS_ENROLLED": "No students enrolled in this course",
+
+"already_registered": "Already registered",
+"register_success": "Course registered successfully",
+"unregister_success": "Course removed successfully"
 },
 
 ar: {
@@ -1582,7 +3398,31 @@ ar: {
   "Payment Confirmed": "تم تأكيد الدفع",
   "New Grade Posted": "تم نشر نتيجة جديدة",
   "New Class Scheduled": "تم تحديد حصة جديدة",
+  
+    "All Entries": "جميع السجلات",
+"🔍 Search title...": "🔍 ابحث عن العنوان...",
+"All Semesters": "جميع الفصول",
+"Harmattan": "الهرمتان",
+"Spring": "الربيع",
+"All Types": "جميع الأنواع",
+
+"Your Tools": "أدواتك",
+"Class Schedule": "جدول الحصص",
+"Make Payment": "إجراء الدفع",
+"My Grades": "درجاتي",
+  
+  "CERTIFICATE_ISSUED": "تم إصدار شهادتك لمادة {course}",
+"certificate_issued_title": "تم إصدار الشهادة 🎓",
+"GRADE_SUBMITTED": "تم إرسال الدرجة لمادة {course}",
+"PROFILE_SAVED": "تم حفظ الملف الشخصي بنجاح",
+"NO_COURSES_ASSIGNED": "لم يتم تعيين أي مواد لك بعد",
+"NO_STUDENTS_ENROLLED": "لا يوجد طلاب مسجلون في هذه المادة",
+"already_registered": "مسجل بالفعل",
+"register_success": "تم تسجيل المقرر بنجاح",
+"unregister_success": "تم حذف المقرر بنجاح",
+
 },
+
 };
 // ================================
 // STATE (MOVE THIS UP)
@@ -1622,6 +3462,8 @@ window.tmpl = function (key, vars = {}) {
 function setLanguage(lang) {
   localStorage.setItem("lang", lang);
   location.reload();
+  
+  updateYear();
 }
 
 // ================================
@@ -1671,14 +3513,15 @@ function translate(lang) {
   // TEXT ELEMENTS
   // =========================
   document.querySelectorAll(
-    "[data-i18n], p, h1, h2, h3, span, a, button, label"
+    "[data-i18n], p, i, h1, h2, h3, h4, span, strong, a, li, button, label, data-i18n, small, em, div, td, th, caption, option, data-translate, data-i18n-title, data-i18n-placeholder, data-i18n-value, data-i18n-textarea"
   ).forEach(el => {
 if (el.dataset.noTranslate === "true") return;
 if (el.dataset.i18n) {
   const key = el.dataset.i18n;
+  if (!el.dataset.original) el.dataset.original = el.textContent.trim();
   el.textContent = (lang === "ar")
-    ? (DICT[key] || key)
-    : key;
+    ? (DICT.ar?.[key] || DICT[key] || el.dataset.original)
+    : el.dataset.original;
   return;
 }
     if (
@@ -1709,6 +3552,21 @@ if (el.dataset.i18n) {
       ? (DICT[base] || base)
       : base;
   });
+  
+  // ── After translation runs, fix LTR direction for elements containing numbers ──
+  // IMPORTANT: We only set direction:ltr — never display:inline-block.
+  // Setting inline-block on flex/grid children breaks the entire layout.
+  // direction:ltr alone is sufficient to render phone numbers and amounts correctly.
+  document.querySelectorAll("*:not(script):not(style)").forEach(el => {
+    if (el.children.length > 0) return; // only leaf nodes
+    const text = el.textContent.trim();
+    if (!text) return;
+    if (/[\d٠-٩][\s\-\+\(\)]*[\d٠-٩]/.test(text)) {
+      el.style.direction = "ltr";
+      el.style.unicodeBidi = "embed";
+      // DO NOT set display:inline-block here — it corrupts flex/grid layouts
+    }
+  });
 
   // =========================
   // SELECT OPTIONS
@@ -1732,6 +3590,7 @@ if (el.dataset.i18n) {
   if (btn) btn.textContent = lang === "en" ? "AR" : "EN";
 }
 
+
 function updateYear() {
   const footer = document.getElementById("footerCopyright");
 
@@ -1743,10 +3602,10 @@ function updateYear() {
 
   if (lang === "ar") {
     footer.textContent =
-      `© ${year} البيان لتعليم العربية والدراسات الإسلامية أونلاين. جميع الحقوق محفوظة.`;
+      `© 2025 - ${year} معهد البيان للدراسات العربية عبر الانترنت. جميع الحقوق محفوظة.`;
   } else {
     footer.textContent =
-      `© ${year} Al-Bayan Arabic Institute Online. All rights reserved.`;
+      `© 2025 - ${year} Al-Bayan Arabic Isntitute Online. All rights reserved.`;
   }
 }
 
@@ -1890,7 +3749,7 @@ document.addEventListener("DOMContentLoaded", () => {
     right: 20px;
     width: 52px;
     height: 52px;
-    background: #1a237e;
+    background: #040f91;
     color: #fff;
     border-radius: 50%;
     display: flex;
@@ -1932,6 +3791,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   themeSelect.style.cssText = `
     margin-left: 6px;
+    width: 95%;
     padding: 6px 10px;
     border-radius: 6px;
     border: 1px solid var(--border-color);

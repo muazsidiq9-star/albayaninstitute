@@ -3,254 +3,329 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>My Profile - Al-Bayan</title>
+  <title>My Profile - Al-Bayan Arabic Institute Online</title>
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="student-profile.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
-<!-- NAVIGATION -->
-<nav class="master-nav">
-  <div class="nav-container">
-    <a href="index.html" class="logo">
-      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
-    </a>
-    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
-    <div class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="courses.html">Courses</a>
-      <a href="register.html">Register</a>
-      <a href="students-dashboard.html">Student Dashboard</a>
-      <a href="payment.html">Payment</a>
-      <a href="schedule.html">Schedule</a>
-      <a href="contact.html">Contact</a>
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="schedule.html" data-translate="Schedule">Schedule</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE BANNER -->
+  <header class="sp-banner" style="background-image: url('background-admin-dashboard.jpg');">
+    <div class="sp-banner-overlay"></div>
+    <div class="sp-banner-content">
+      <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
+      <span class="sp-eyebrow">
+        <i class="fa-solid fa-circle-user"></i>
+        <span data-translate="My Profile">My Profile</span>
+      </span>
+      <h1 data-translate="My Profile">My Profile</h1>
+      <p data-translate="View and manage your personal information, registered courses, and progress">
+        View and manage your personal information, registered courses, and progress
+      </p>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="sp-main">
+
+    <!-- PROFILE CARD -->
+    <div class="sp-profile-card">
+
+      <!-- Avatar -->
+      <div class="sp-avatar-wrap">
+        <img
+          src="passport-placeholder.png"
+          alt="Profile Picture"
+          class="sp-avatar passport-clickable"
+          id="profilePic"
+          onclick="openPassportViewer(this.src)"
+          title="Click to view"
+        >
+        <span class="sp-avatar-hint">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </span>
+      </div>
+
+      <!-- Name -->
+      <h2 class="fullname sp-fullname">Student Name</h2>
+
+      <!-- Info rows -->
+      <div class="sp-info-grid">
+
+        <div class="sp-info-row">
+          <div class="sp-info-icon" style="background:#dcfce7; color:#15803d;">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <div class="sp-info-body">
+            <span class="sp-info-label" data-translate="Email Address:">Email Address:</span>
+            <span class="sp-info-value value email"></span>
+          </div>
+        </div>
+
+        <div class="sp-info-row">
+          <div class="sp-info-icon" style="background:#dcfce7; color:#25d366;">
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+          <div class="sp-info-body">
+            <span class="sp-info-label" data-translate="WhatsApp:">WhatsApp:</span>
+            <span class="sp-info-value value phone"></span>
+          </div>
+        </div>
+
+        <div class="sp-info-row">
+          <div class="sp-info-icon" style="background:#dbeafe; color:#1d4ed8;">
+            <i class="fa-solid fa-id-card"></i>
+          </div>
+          <div class="sp-info-body">
+            <span class="sp-info-label" data-translate="Student ID:">Student ID:</span>
+            <span class="sp-info-value value matric"></span>
+          </div>
+        </div>
+
+        <div class="sp-info-row">
+          <div class="sp-info-icon" style="background:#fef9c3; color:#854d0e;">
+            <i class="fa-solid fa-signal"></i>
+          </div>
+          <div class="sp-info-body">
+            <span class="sp-info-label" data-translate="Level:">Level:</span>
+            <span class="sp-info-value value level"></span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Edit button -->
+      <button class="sp-edit-btn" onclick="openEditProfileModal()">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <span data-translate="Edit Profile">Edit Profile</span>
+      </button>
+
+    </div>
+
+    <!-- CHANGE PASSWORD CARD -->
+    <div class="sp-password-card">
+      <div class="sp-card-header">
+        <div class="sp-card-icon">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <h2 data-translate="Change Password">Change Password</h2>
+      </div>
+
+      <div class="sp-password-form">
+
+        <div class="sp-password-field">
+          <label data-translate="Current Password">Current Password</label>
+          <div class="sp-input-wrap">
+            <input type="password" id="currentPassword"
+              placeholder="Enter your current password"
+              data-translate-placeholder="Enter your current password">
+            <i class="fa-solid fa-eye sp-eye" onclick="togglePassword('currentPassword', this)"></i>
+          </div>
+        </div>
+
+        <div class="sp-password-field">
+          <label data-translate="New Password">New Password</label>
+          <div class="sp-input-wrap">
+            <input type="password" id="newPassword"
+              placeholder="Enter your new password"
+              data-translate-placeholder="Enter your new password">
+            <i class="fa-solid fa-eye sp-eye" onclick="togglePassword('newPassword', this)"></i>
+          </div>
+        </div>
+
+        <div class="sp-password-field">
+          <label data-translate="Confirm Password">Confirm Password</label>
+          <div class="sp-input-wrap">
+            <input type="password" id="confirmPassword"
+              placeholder="Re-enter your new password"
+              data-translate-placeholder="Re-enter your new password">
+            <i class="fa-solid fa-eye sp-eye" onclick="togglePassword('confirmPassword', this)"></i>
+          </div>
+        </div>
+
+        <button id="changePasswordBtn" class="sp-update-btn">
+          <i class="fa-solid fa-key"></i>
+          <span data-translate="Update Password">Update Password</span>
+        </button>
+
+        <p id="passwordMessage" class="sp-password-msg"></p>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- EDIT PROFILE MODAL -->
+  <div id="editProfileModal" class="sp-modal">
+    <div class="sp-modal-box">
+      <button class="sp-modal-close" onclick="closeEditProfileModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="sp-modal-header">
+        <i class="fa-solid fa-user-pen"></i>
+        <h2 data-translate="Edit Profile">Edit Profile</h2>
+      </div>
+
+      <div class="sp-modal-form">
+        <label data-translate="Full Name">Full Name</label>
+        <input type="text" id="editFullname">
+
+        <label data-translate="Email Address">Email Address</label>
+        <input type="email" id="editEmail">
+
+        <label data-translate="WhatsApp">WhatsApp</label>
+        <input type="text" id="editWhatsapp">
+
+        <label data-translate="Level">Level</label>
+        <input type="text" id="editLevel" disabled>
+
+        <label data-translate="Change Passport (optional)">Change Passport (optional)</label>
+        <input type="file" id="editPassport" accept="image/*">
+        <img id="passportEditPreview" class="sp-passport-preview">
+
+        <button onclick="saveProfileChanges()" class="sp-save-btn">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span data-translate="Save Changes">Save Changes</span>
+        </button>
+      </div>
     </div>
   </div>
-</nav>
 
-<!-- HEADER -->
-<header class="profile-header" style="background-image: url('background-admin-dashboard.jpg');">
-  <div class="header-overlay">
-    <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
-    <h1>My Profile</h1>
-    <p>View and manage your personal information, registered courses, and progress</p>
-  </div>
-</header>
-
-<!-- Profile Section -->
-<section class="profile-info">
-  <img 
-  src="passport-placeholder.png" 
-  alt="Profile Picture" 
-  class="profile-pic passport-clickable" 
-  id="profilePic"
-  onclick="openPassportViewer(this.src)"
->
-  <h2 class="fullname">Student Name</h2>
-
-  <div class="profile-data">
-    <span class="label">Email Address:</span>
-    <span class="value email"></span>
+  <!-- PASSPORT VIEWER MODAL -->
+  <div id="passportViewerModal" class="sp-viewer-modal">
+    <div class="sp-viewer-content">
+      <span class="close-passport-viewer sp-viewer-close">
+        <i class="fa-solid fa-xmark"></i>
+      </span>
+      <img id="passportViewerImg" src="" alt="Passport Preview">
+    </div>
   </div>
 
-  <div class="profile-data">
-    <span class="label">WhatsApp:</span>
-    <span class="value phone"></span>
-  </div>
+  <!-- FOOTER -->
+  <footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
 
-  <div class="profile-data">
-    <span class="label">Student ID:</span>
-    <span class="value matric"></span>
-  </div>
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
 
-  <div class="profile-data">
-    <span class="label">Level:</span>
-    <span class="value level"></span>
-  </div>
-
-  <button class="view-profile-btn" onclick="openEditProfileModal()">
-  Edit Profile <i class="fa-solid fa-pen-to-square"></i>
-</button>
-</section>
-
-<!-- Change Password -->
-<section class="change-password-section">
-  <h2>Change Password</h2>
-
-  <div class="password-field">
-  <input type="password" id="currentPassword" placeholder="Enter your current password" required>
-  <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('currentPassword', this)"></i>
-</div>
-
-  <div class="password-field">
-  <input type="password" id="newPassword" placeholder="Enter your new password" required>
-  <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('newPassword', this)"></i>
-</div>
-
-  <div class="password-field">
-  <input type="password" id="confirmPassword" placeholder="Re-enter your new password" required>
-  <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('confirmPassword', this)"></i>
-</div>
-
-  <button id="changePasswordBtn">Update Password</button>
-  <p id="passwordMessage"></p>
-</section>
-
-<!-- EDIT PROFILE MODAL -->
-<div id="editProfileModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeEditProfileModal()">&times;</span>
-    <h2>Edit Profile</h2>
-
-    <label>Full Name</label>
-    <input type="text" id="editFullname">
-
-    <label>Email Address</label>
-    <input type="email" id="editEmail">
-
-    <label>WhatsApp</label>
-    <input type="text" id="editWhatsapp">
-
-    <label>Level</label>
-    <input type="text" id="editLevel" disabled>
-
-    <label>Change Passport (optional)</label>
-    <input type="file" id="editPassport">
-    <img id="passportEditPreview" class="passport-thumb-preview">
-
-    <button onclick="saveProfileChanges()">Save Changes</button>
-  </div>
-</div>
-
-<div id="passportViewerModal" class="receipt-modal">
-  <div class="receipt-modal-content">
-    <span class="close-passport-viewer">&times;</span>
-    <img id="passportViewerImg" src="" alt="Passport Preview">
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
-
-<!-- Floating WhatsApp Button -->
-<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
-
-<!-- Hamburger Menu Script -->
- <script src="translate.js"></script>
-<script>
-  function toggleMenu() {
-    const nav = document.getElementById('navLinks');
-    nav.classList.toggle('show');
-  }
-  document.addEventListener('click', function(e) {
-    const nav = document.getElementById('navLinks');
-    const hamburger = document.querySelector('.hamburger');
-    if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
-      nav.classList.remove('show');
-    }
-  });
-</script>
-
-<!-- Supabase -->
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script>
-  const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
-  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-  // ===== Student Guard =====
-  const DEV_BYPASS = false;
-  (function() {
-    if (DEV_BYPASS) return;
-const role = sessionStorage.getItem("role");
-    const matric = sessionStorage.getItem("matric");
-
-    if (role !== "student" || !matric) {
-      alert(t("Student login required"));
-      window.location.href = "login.html";
-    }
-  })();
-
-  // ===== Load Profile =====
-  async function loadStudentProfile() {
-    const matricNumber = sessionStorage.getItem("matric");
-    if (!matricNumber) return;
-
-    try {
-      const { data, error } = await sb
-        .from("students")
-        .select("fullname, email, whatsapp, matric_number, level_arabic, passport_url")
-        .eq("matric_number", matricNumber)
-        .single();
-
-      if (error) throw error;
-      if (!data) return;
-
-      document.querySelector('.fullname').textContent = data.fullname || 'Student Name';
-      document.querySelector('.profile-info .email').textContent = data.email || '';
-      document.querySelector('.profile-info .phone').textContent = data.whatsapp || '';
-      document.querySelector('.profile-info .matric').textContent = data.matric_number || '';
-      document.querySelector('.profile-info .level').textContent = data.level_arabic || 'N/A';
-
-      // Profile picture
-    const profilePic = document.getElementById('profilePic');
-    if (data.passport_url && data.passport_url.trim() !== "") {
-      profilePic.src = data.passport_url;
-    } else {
-      profilePic.src = "passport-placeholder.png"; // fallback
-    }
+  <script src="translate.js"></script>
+  <script>
     
-    } catch (err) {
-      console.error(t("Profile load error:", err));
+
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
     }
-  }
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+    });
+  </script>
 
-  document.addEventListener("DOMContentLoaded", loadStudentProfile);
+  <!-- Supabase -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  // ===========================
-// EDIT PROFILE MODAL
-// ===========================
-function openEditProfileModal() {
-  document.getElementById("editProfileModal").style.display = "flex";
+    // ===== Student Guard =====
+    const DEV_BYPASS = false;
+    (function () {
+      if (DEV_BYPASS) return;
+      const role = sessionStorage.getItem("role");
+      const matric = sessionStorage.getItem("matric");
+      if (role !== "student" || !matric) {
+        alert(t("Student login required"));
+        window.location.href = "login.html";
+      }
+    })();
 
-  document.getElementById("editFullname").value =
-    document.querySelector(".fullname").textContent;
+    // ===== Load Profile =====
+    async function loadStudentProfile() {
+      const matricNumber = sessionStorage.getItem("matric");
+      if (!matricNumber) return;
+      try {
+        const { data, error } = await sb
+          .from("students")
+          .select("fullname, email, whatsapp, matric_number, level_arabic, passport_url")
+          .eq("matric_number", matricNumber)
+          .single();
+        if (error) throw error;
+        if (!data) return;
+        document.querySelector('.fullname').textContent = data.fullname || 'Student Name';
+        document.querySelector('.value.email').textContent = data.email || '';
+        
+const phoneEl = document.querySelector('.value.phone');
+phoneEl.textContent = data.whatsapp || '';
+phoneEl.setAttribute('dir', 'ltr');
 
-  document.getElementById("editEmail").value =
-    document.querySelector(".profile-info .email").textContent;
+const matricEl = document.querySelector('.value.matric');
+matricEl.textContent = data.matric_number || '';
+matricEl.setAttribute('dir', 'ltr');
+        document.querySelector('.value.level').textContent = data.level_arabic || 'N/A';
+        const profilePic = document.getElementById('profilePic');
+        profilePic.src = (data.passport_url && data.passport_url.trim() !== "")
+          ? data.passport_url : "passport-placeholder.png";
+      } catch (err) {
+        console.error("Profile load error:", err);
+      }
+    }
 
-  document.getElementById("editWhatsapp").value =
-    document.querySelector(".profile-info .phone").textContent;
+    document.addEventListener("DOMContentLoaded", loadStudentProfile);        
 
-  document.getElementById("editLevel").value =
-    document.querySelector(".profile-info .level").textContent;
+    // ===== Edit Profile Modal =====
+    function openEditProfileModal() {
+      document.getElementById("editProfileModal").style.display = "flex";
+      document.getElementById("editFullname").value = document.querySelector(".fullname").textContent;
+      document.getElementById("editEmail").value = document.querySelector(".value.email").textContent;
+      document.getElementById("editWhatsapp").value = document.querySelector(".value.phone").textContent;
+      document.getElementById("editLevel").value = document.querySelector(".value.level").textContent;
+      document.getElementById("passportEditPreview").src = document.getElementById("profilePic").src;
+    }
 
-  // ✅ THIS FIX
-  document.getElementById("passportEditPreview").src =
-    document.getElementById("profilePic").src;
-}
+    function closeEditProfileModal() {
+      document.getElementById("editProfileModal").style.display = "none";
+    }
 
-function closeEditProfileModal() {
-  document.getElementById("editProfileModal").style.display = "none";
-}
-
-async function saveProfileChanges() {
+    async function saveProfileChanges() {
   const matric = sessionStorage.getItem("matric");
 
   const fullname = document.getElementById("editFullname").value.trim();
@@ -262,161 +337,176 @@ async function saveProfileChanges() {
     return alert(t("Please fill all required fields"));
   }
 
-  let passport_url = null;
+  try {
+    let passport_url = null;
 
-  if (passportFile) {
-    const fileExt = passportFile.name.split(".").pop();
-    const fileName = `${Date.now()}_${Math.random()
-      .toString(36)
-      .slice(2)}.${fileExt}`;
+    // ===========================
+    // 1. GET CURRENT PASSPORT FIRST
+    // ===========================
+    const { data: current } = await sb
+      .from("students")
+      .select("passport_url")
+      .eq("matric_number", matric)
+      .single();
 
-    const { error: uploadError } = await sb.storage
-      .from("passports")
-      .upload(fileName, passportFile, { upsert: true });
+    const oldPassport = current?.passport_url;
 
-    if (uploadError) return alert(t("Passport upload failed"));
-
-    passport_url = sb.storage
-      .from("passports")
-      .getPublicUrl(fileName).data.publicUrl;
-  }
-
-  const updateData = { fullname, email, whatsapp };
-  if (passport_url) updateData.passport_url = passport_url;
-
-  const { error } = await sb
-    .from("students")
-    .update(updateData)
-    .eq("matric_number", matric);
-
-  if (error) return alert(t("Profile update failed"));
-
-  closeEditProfileModal();
-  loadStudentProfile();
-  alert(t("Profile updated successfully"));
-}
-
-  // ===== Change Password =====
-  const changeBtn = document.getElementById('changePasswordBtn');
-  const passwordMessage = document.getElementById('passwordMessage');
-
-  if(changeBtn){
-    changeBtn.addEventListener('click', async () => {
-      const current = document.getElementById('currentPassword').value.trim();
-      const newPass = document.getElementById('newPassword').value.trim();
-      const confirmPass = document.getElementById('confirmPassword').value.trim();
-      const matric = sessionStorage.getItem('matric');
-      
-      if (!current || !newPass || !confirmPass) return alert(t("All fields required."));
-      if (newPass !== confirmPass) return alert(t("New passwords do not match."));
-
+    // ===========================
+    // 2. DELETE OLD PASSPORT IF NEW ONE IS UPLOADED
+    // ===========================
+    if (passportFile && oldPassport) {
       try {
-        const { data: studentData, error: fetchError } = await sb
-          .from('students')
-          .select('password')
-          .eq('matric_number', matric)
-          .single();
+        const oldPath = oldPassport.split("/passports/")[1];
 
-        if (fetchError || !studentData) return alert(t("Error fetching data."));
-        // Optional: Just check length instead
-if (newPass.length < 6) {
-  alert(t("Password must be at least 6 characters"));
-  return;
-}
+        if (oldPath) {
+          const { error: deleteError } = await sb.storage
+            .from("passports")
+            .remove([oldPath]);
 
-        const { error: updateError } = await sb
-          .from('students')
-          .update({ password: newPass,
-        password_changed: true })
-          .eq('matric_number', matric);
-
-        if (updateError) {
-          passwordMessage.textContent = t("Error updating password.");
-          passwordMessage.style.color = "red";
-        } else {
-          passwordMessage.textContent = t("Password changed successfully!");
-          passwordMessage.style.color = "green";
-          document.getElementById('currentPassword').value = '';
-          document.getElementById('newPassword').value = '';
-          document.getElementById('confirmPassword').value = '';
+          if (deleteError) {
+            console.warn("Old passport delete failed:", deleteError.message);
+          }
         }
-      } catch (err) {
-        console.error("Password change error:", err);
-        passwordMessage.textContent = t("Something went wrong.");
-        passwordMessage.style.color = "red";
+      } catch (e) {
+        console.warn("Passport cleanup error:", e);
       }
-    });
-  }
-
-  function togglePassword(inputId, icon) {
-  const input = document.getElementById(inputId);
-
-  if (input.type === "password") {
-    input.type = "text";
-    icon.classList.remove("fa-eye");
-    icon.classList.add("fa-eye-slash");
-  } else {
-    input.type = "password";
-    icon.classList.remove("fa-eye-slash");
-    icon.classList.add("fa-eye");
-  }
-}
-
-const profilePicEl = document.getElementById("profilePic");
-const previewEl = document.getElementById("passportEditPreview");
-
-if (profilePicEl && previewEl) {
-  previewEl.src = profilePicEl.src;
-}
-
-function openPassportViewer(url) {
-  const modal = document.getElementById("passportViewerModal");
-  const img = document.getElementById("passportViewerImg");
-
-  if (!modal || !img) return;
-
-  img.src = url;
-  modal.classList.add("show");
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-  const passportViewerModal = document.getElementById("passportViewerModal");
-  const passportViewerImg = document.getElementById("passportViewerImg");
-  const closePassportViewer = document.querySelector(".close-passport-viewer");
-
-  if (closePassportViewer) {
-    closePassportViewer.addEventListener("click", () => {
-      passportViewerModal.classList.remove("show");
-      passportViewerImg.src = "";
-    });
-  }
-
-  window.addEventListener("click", (e) => {
-    if (e.target === passportViewerModal) {
-      passportViewerModal.classList.remove("show");
-      passportViewerImg.src = "";
     }
-  });
-});
 
-const editPassportInput = document.getElementById("editPassport");
-const previewImg = document.getElementById("passportEditPreview");
+    // ===========================
+    // 3. UPLOAD NEW PASSPORT
+    // ===========================
+    if (passportFile) {
+      const fileExt = passportFile.name.split(".").pop();
+      const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}.${fileExt}`;
 
-if (editPassportInput && previewImg) {
-  editPassportInput.addEventListener("change", function (e) {
-    const file = e.target.files[0];
-    if (!file) return;
+      const { error: uploadError } = await sb.storage
+        .from("passports")
+        .upload(fileName, passportFile, {
+          upsert: false
+        });
 
-    const reader = new FileReader();
+      if (uploadError) {
+        console.error(uploadError);
+        return alert(t("Passport upload failed"));
+      }
 
-    reader.onload = function (event) {
-      previewImg.src = event.target.result;
+      passport_url = sb.storage
+        .from("passports")
+        .getPublicUrl(fileName).data.publicUrl;
+    }
+
+    // ===========================
+    // 4. UPDATE STUDENT RECORD
+    // ===========================
+    const updateData = {
+      fullname,
+      email,
+      whatsapp
     };
 
-    reader.readAsDataURL(file);
-  });
+    if (passport_url) {
+      updateData.passport_url = passport_url;
+    }
+
+    const { error } = await sb
+      .from("students")
+      .update(updateData)
+      .eq("matric_number", matric);
+
+    if (error) {
+      console.error(error);
+      return alert(t("Profile update failed"));
+    }
+
+    closeEditProfileModal();
+    loadStudentProfile();
+
+    alert(t("Profile updated successfully"));
+
+  } catch (err) {
+    console.error("Profile update error:", err);
+    alert(t("Something went wrong"));
+  }
 }
-  
-</script>
+
+    // ===== Change Password =====
+    const changeBtn = document.getElementById('changePasswordBtn');
+    const passwordMessage = document.getElementById('passwordMessage');
+    if (changeBtn) {
+      changeBtn.addEventListener('click', async () => {
+        const current = document.getElementById('currentPassword').value.trim();
+        const newPass = document.getElementById('newPassword').value.trim();
+        const confirmPass = document.getElementById('confirmPassword').value.trim();
+        const matric = sessionStorage.getItem('matric');
+        if (!current || !newPass || !confirmPass) return alert(t("All fields required."));
+        if (newPass !== confirmPass) return alert(t("New passwords do not match."));
+        if (newPass.length < 6) return alert(t("Password must be at least 6 characters"));
+        try {
+          const { data: studentData, error: fetchError } = await sb.from('students').select('password').eq('matric_number', matric).single();
+          if (fetchError || !studentData) return alert(t("Error fetching data."));
+          const { error: updateError } = await sb.from('students').update({ password: newPass, password_changed: true }).eq('matric_number', matric);
+          if (updateError) {
+            passwordMessage.textContent = t("Error updating password.");
+            passwordMessage.style.color = "red";
+          } else {
+            passwordMessage.textContent = t("Password changed successfully!");
+            passwordMessage.style.color = "green";
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+          }
+        } catch (err) {
+          passwordMessage.textContent = t("Something went wrong.");
+          passwordMessage.style.color = "red";
+        }
+      });
+    }
+
+    // ===== Toggle Password Visibility =====
+    function togglePassword(inputId, icon) {
+      const input = document.getElementById(inputId);
+      if (input.type === "password") {
+        input.type = "text";
+        icon.classList.replace("fa-eye", "fa-eye-slash");
+      } else {
+        input.type = "password";
+        icon.classList.replace("fa-eye-slash", "fa-eye");
+      }
+    }
+
+    // ===== Passport Viewer =====
+    function openPassportViewer(url) {
+      const modal = document.getElementById("passportViewerModal");
+      const img = document.getElementById("passportViewerImg");
+      if (!modal || !img) return;
+      img.src = url;
+      modal.classList.add("show");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const viewerModal = document.getElementById("passportViewerModal");
+      const viewerImg = document.getElementById("passportViewerImg");
+      const closeBtn = document.querySelector(".close-passport-viewer");
+      if (closeBtn) {
+        closeBtn.addEventListener("click", () => { viewerModal.classList.remove("show"); viewerImg.src = ""; });
+      }
+      window.addEventListener("click", (e) => {
+        if (e.target === viewerModal) { viewerModal.classList.remove("show"); viewerImg.src = ""; }
+      });
+
+      // Passport preview on file change
+      const editPassportInput = document.getElementById("editPassport");
+      const previewImg = document.getElementById("passportEditPreview");
+      if (editPassportInput && previewImg) {
+        editPassportInput.addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = (event) => { previewImg.src = event.target.result; };
+          reader.readAsDataURL(file);
+        });
+      }
+    });
+  </script>
 </body>
 </html>

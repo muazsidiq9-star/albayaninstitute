@@ -3,123 +3,196 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Read & Write Arabic - Al-Bayan</title>
+  <title>Preliminary - Al-Bayan Arabic Institute Online</title>
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="course-pages.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
-<!-- Navigation -->
-<nav class="master-nav">
-  <div class="nav-container">
-    <a href="index.html" class="logo">
-      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
-    </a>
-    <div class="hamburger">☰</div>
-    <div class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="courses.html" class="active page-indicator">Courses</a>
-      <a href="register.html" data-translate="Register">Register</a>
-      <a href="students-dashboard.html">Dashboard</a>
-      <a href="payment.html">Payment</a>
-      <a href="schedule.html">Schedule</a>
-      <a href="contact.html">Contact</a>
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" class="active" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+        <a href="login.html" class="login-btn" data-translate="Log in">Log in</a>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<header class="indiv-course-header" style="background-image: url('course-beginner.jpg');">
-  <div class="header-overlay">
-    <h1>Read & Write Arabic</h1>
-    <p>Learn how to read and write Arabic letters confidently from scratch.</p>
-    <a href="register.html" class="register-btn">Register Now</a>
-  </div>
-</header>
+  <header class="course-banner" style="background-image: url('course-beginner.jpeg');">
+    <div class="course-banner-overlay"></div>
+    <div class="course-banner-content">
+      <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
+      <span class="course-eyebrow">
+        <i class="fa-solid fa-book-open-reader"></i>
+        <span data-translate="Arabic Language">Arabic Language</span>
+      </span>
+      <h1 data-translate="Preliminary">Preliminary</h1>
+      <p data-translate="Learn how to read and write Arabic letters confidently from scratch.">
+        Learn how to read and write Arabic letters confidently from scratch.
+      </p>
+      <div class="course-banner-meta">
+        <span class="meta-badge"><i class="fa-solid fa-signal"></i> <span data-translate="Beginner">Beginner</span></span>
+        <span class="meta-badge"><i class="fa-solid fa-clock"></i> <span data-translate="Flexible Schedule">Flexible Schedule</span></span>
+        <span class="meta-badge"><i class="fa-solid fa-globe"></i> <span data-translate="Online">Online</span></span>
+      </div>
+      <a href="register.html" class="course-enrol-btn">
+        <span data-translate="Enrol Now">Enrol Now</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </header>
 
-<section class="course-content-section">
+  <main class="course-main">
 
-  <div class="content-card intro-card fade-in">
+    <div class="cp-intro-card fade-in">
+      <div class="cp-intro-icon">
+        <i class="fa-solid fa-book-open-reader"></i>
+      </div>
+      <div class="cp-intro-text">
+        <h2 data-translate="About This Course">About This Course</h2>
+        <p data-translate="This course is designed for absolute beginners who want to learn Arabic reading and writing step by step with clarity and ease.">
+          This course is designed for absolute beginners who want to learn Arabic reading and writing step by step with clarity and ease.
+        </p>
+      </div>
+    </div>
+
+    <section class="cp-modules-section">
+
+      <h2 class="cp-section-title fade-in">
+        <i class="fa-solid fa-list-check"></i>
+        <span data-translate="Course Modules">Course Modules</span>
+      </h2>
+
+      <div class="cp-modules-grid">
+
+        <div class="cp-module-card fade-in">
+          <div class="cp-module-number">01</div>
+          <div class="cp-module-body">
+            <h3 data-translate="Module 1: Arabic Alphabet">Module 1: Arabic Alphabet</h3>
+            <p data-translate="Introduction to Arabic letters, pronunciation, and writing foundations.">
+              Introduction to Arabic letters, pronunciation, and writing foundations.
+            </p>
+          </div>
+          <div class="cp-module-icon"><i class="fa-solid fa-pen-nib"></i></div>
+        </div>
+
+        <div class="cp-module-card fade-in">
+          <div class="cp-module-number">02</div>
+          <div class="cp-module-body">
+            <h3 data-translate="Module 2: Letter Forms">Module 2: Letter Forms</h3>
+            <p data-translate="Learn how Arabic letters change shape depending on their position in a word.">
+              Learn how Arabic letters change shape depending on their position in a word.
+            </p>
+          </div>
+          <div class="cp-module-icon"><i class="fa-solid fa-shapes"></i></div>
+        </div>
+
+        <div class="cp-module-card fade-in">
+          <div class="cp-module-number">03</div>
+          <div class="cp-module-body">
+            <h3 data-translate="Module 3: Vowels & Harakāt">Module 3: Vowels & Harakāt</h3>
+            <p data-translate="Learn short vowels, sukoon, tanween, and long vowel sounds.">
+              Learn short vowels, sukoon, tanween, and long vowel sounds.
+            </p>
+          </div>
+          <div class="cp-module-icon"><i class="fa-solid fa-language"></i></div>
+        </div>
+
+        <div class="cp-module-card fade-in">
+          <div class="cp-module-number">04</div>
+          <div class="cp-module-body">
+            <h3 data-translate="Module 4: Reading Practice">Module 4: Reading Practice</h3>
+            <p data-translate="Practice reading simple words and short sentences with guidance.">
+              Practice reading simple words and short sentences with guidance.
+            </p>
+          </div>
+          <div class="cp-module-icon"><i class="fa-solid fa-book-open"></i></div>
+        </div>
+
+        <div class="cp-module-card fade-in">
+          <div class="cp-module-number">05</div>
+          <div class="cp-module-body">
+            <h3 data-translate="Module 5: Writing Practice">Module 5: Writing Practice</h3>
+            <p data-translate="Develop handwriting skills through structured writing exercises.">
+              Develop handwriting skills through structured writing exercises.
+            </p>
+          </div>
+          <div class="cp-module-icon"><i class="fa-solid fa-pen-line"></i></div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="cp-cta-strip fade-in">
+      <div class="cp-cta-content">
+        <h2 data-translate="Ready to Begin Your Arabic Journey?">Ready to Begin Your Arabic Journey?</h2>
+        <p data-translate="Join students from around the world learning Arabic online with qualified teachers.">
+          Join students from around the world learning Arabic online with qualified teachers.
+        </p>
+      </div>
+      <a href="register.html" class="cta-btn pulse">
+        <span data-translate="Register Now">Register Now</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </section>
+
+  </main>
+
+  <footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
     <p>
-      This course is designed for absolute beginners who want to learn Arabic reading and writing step by step, with clarity and ease.
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
     </p>
-  </div>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
 
-  <div class="content-card fade-in">
-    <h2>Module 1: Arabic Alphabet</h2>
-    <p>Introduction to Arabic letters, shapes, and proper pronunciation.</p>
-  </div>
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
 
-  <div class="content-card fade-in">
-    <h2>Module 2: Letter Forms</h2>
-    <p>Learn how letters change shape at the beginning, middle, and end of words.</p>
-  </div>
+  <script>
+    
 
-  <div class="content-card fade-in">
-    <h2>Module 3: Vowels & Harakāt</h2>
-    <p>Understanding short vowels, sukūn, tanwīn, and long vowels.</p>
-  </div>
-
-  <div class="content-card fade-in">
-    <h2>Module 4: Reading Practice</h2>
-    <p>Guided practice on reading words and simple sentences.</p>
-  </div>
-
-  <div class="content-card fade-in">
-    <h2>Module 5: Writing Practice</h2>
-    <p>Step-by-step writing exercises to build confidence and accuracy.</p>
-  </div>
-
-</section>
-
-<!-- Footer -->
-<footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
-
-<!-- WhatsApp Button -->
-<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
-
-<!-- Scripts -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  // Hamburger toggle
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.getElementById('navLinks');
-  if (hamburger && navLinks) {
-    hamburger.addEventListener('click', e => {
-      e.stopPropagation();
-      navLinks.classList.toggle('show');
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
+    }
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
     });
-    document.addEventListener('click', e => {
-      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
-        navLinks.classList.remove('show');
-      }
-    });
-  }
 
-  // Fade-in effect
-  const elements = document.querySelectorAll(".fade-in");
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add("show");
-    });
-  }, { threshold: 0.2 });
-  elements.forEach(el => observer.observe(el));
-});
-</script>
-<script src="translate.js"></script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+  <script src="translate.js"></script>
 </body>
 </html>

@@ -1,225 +1,395 @@
-/* ================= GLOBAL ================= */
-* {
-  box-sizing: border-box;
-}
+/* ============================================================
+   Al-Bayan — INDIVIDUAL COURSE PAGES (course-pages.css)
+   Reusable across all course detail pages
+============================================================ */
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  line-height: 1.6;
-  overflow-x: hidden;
-}
+html, body { overflow-x: hidden; }
 
-img {
-  max-width: 100%;
-  display: block;
-}
 
-nav .logo {
+/* ============================================================
+   COURSE BANNER
+============================================================ */
+.course-banner {
+  position: relative;
+  min-height: 56vh;
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-weight: bold;
-  color: #fff;
-  font-size: 20px;
-  text-decoration: none;
-}
-
-/* ================= HEADER ================= */
-.indiv-course-header {
-  position: relative;
-  text-align: center;
-  color: white;
-  padding: 120px 20px 100px;
+  justify-content: center;
   background-size: cover;
   background-position: center;
+  overflow: hidden;
 }
 
-.header-overlay {
-  background: rgba(0,0,0,0.55);
-  padding: 30px 20px;
-  border-radius: 14px;
-  max-width: 750px;
-  margin: auto;
+.course-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.48) 0%, rgba(0,60,20,0.68) 100%);
+  z-index: 1;
 }
 
-.header-overlay h1 {
-  font-size: 38px;
-  font-weight: 800;
-  margin-bottom: 15px;
-  line-height: 1.3;
-}
-
-.header-overlay p {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-.register-btn {
-  display: inline-block;
-  padding: 12px 28px;
-  background-color: #1a73e8;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 8px;
-  transition: 0.3s ease;
-}
-
-.register-btn:hover {
-  background-color: #1558b0;
-}
-
-/* ================= COURSE CONTENT ================= */
-.course-content-section {
-  padding: 40px 20px 70px;
+.course-banner-content {
   position: relative;
   z-index: 2;
-}
-
-.intro-card,
-.content-card,
-.module-card {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto 25px;
-  background: var(--card-color);
-  padding: 28px;
-  border-radius: 14px;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.12);
-}
-
-.intro-card {
-  margin-top: -60px;
-  position: relative;
-  z-index: 5;
-}
-
-.intro-card::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 6px;
-  height: 100%;
-  background: #1a73e8;
-  border-top-left-radius: 14px;
-  border-bottom-left-radius: 14px;
-}
-
-/* ================= TITLES ================= */
-.content-card h2,
-.module-card h2 {
   text-align: center;
-  color: #1a73e8;
+  color: #fff;
+  padding: 48px 20px 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 760px;
+  width: 100%;
+}
+
+.course-banner-content .header-logo {
+  width: 72px;
+  height: auto;
+  margin-bottom: 14px;
+  animation: gentlePulse 3s ease-in-out infinite;
+}
+
+@keyframes gentlePulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.05); }
+}
+
+.course-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #bbf7d0;
   margin-bottom: 12px;
-  font-size: 26px;
 }
 
-/* ================= TEXT ================= */
-.intro-card p,
-.content-card p,
-.module-card p {
-  font-size: 16px;
-  line-height: 1.8;
+.course-banner-content h1 {
+  font-size: clamp(1.7rem, 4.5vw, 2.7rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+.course-banner-content > p {
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  color: #dff5e8;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  max-width: 600px;
+}
+
+/* Meta badges row */
+.course-banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.meta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+}
+
+.meta-badge i {
+  font-size: 0.75rem;
+  color: #bbf7d0;
+}
+
+/* Enrol button */
+.course-enrol-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 30px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: background 0.22s, transform 0.18s;
+}
+
+.course-enrol-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.course-enrol-btn i {
+  font-size: 0.82rem;
+  transition: transform 0.2s;
+}
+
+.course-enrol-btn:hover i {
+  transform: translateX(3px);
+}
+
+
+/* ============================================================
+   COURSE MAIN  — key fix: padding-top so intro card sits right
+============================================================ */
+.course-main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+
+/* ============================================================
+   INTRO CARD
+============================================================ */
+.cp-intro-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background: var(--card-color);
+  border: 1px solid var(--border-light);
+  border-left: 5px solid var(--primary);
+  border-radius: 12px;
+  padding: 28px 26px;
+  margin-top: -44px;          /* pulls card up over banner bottom */
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.10);
+}
+
+.cp-intro-icon {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--primary-xlight);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+.cp-intro-text h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+
+.cp-intro-text p {
+  font-size: 0.93rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin: 0;
+}
+
+
+/* ============================================================
+   MODULES SECTION
+============================================================ */
+.cp-modules-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cp-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.15rem;
+  font-weight: 700;
   color: var(--text-color);
-  text-align: left;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border-light);
+  margin: 0;
 }
 
-/* ================= ANIMATIONS ================= */
+.cp-section-title i {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.cp-modules-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Module card */
+.cp-module-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  background: var(--card-color);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 20px 18px;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.cp-module-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+}
+
+.cp-module-number {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  background: var(--primary-xlight);
+  color: var(--primary-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.03em;
+}
+
+.cp-module-body {
+  flex: 1;
+}
+
+.cp-module-body h3 {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 5px;
+}
+
+.cp-module-body p {
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.cp-module-icon {
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  color: var(--primary);
+  opacity: 0.65;
+  margin-top: 2px;
+}
+
+
+/* ============================================================
+   CTA STRIP
+============================================================ */
+.cp-cta-strip {
+  background: var(--primary-dark);
+  border-radius: 14px;
+  padding: 36px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.cp-cta-content h2 {
+  color: #fff;
+  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.cp-cta-content p {
+  color: #bbf7d0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  max-width: 460px;
+  margin: 0;
+}
+
+.cp-cta-strip .cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--primary-dark);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  transition: background 0.22s, transform 0.18s;
+  flex-shrink: 0;
+}
+
+.cp-cta-strip .cta-btn:hover {
+  background: #f0fdf4;
+  transform: translateY(-2px);
+}
+
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+  70%  { box-shadow: 0 0 0 14px rgba(255,255,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+}
+.pulse { animation: pulse 2.2s infinite; }
+
+
+/* ============================================================
+   SCROLL REVEAL  — threshold 0 so it fires immediately on load
+============================================================ */
 .fade-in {
   opacity: 0;
-  transform: translateY(25px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
 }
 
-.fade-in.show {
+.fade-in.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* ================= FOOTER ================= */
-footer {
-  background-color: #1a73e8;
-  color: white;
-  text-align: center;
-  padding: 25px 20px;
-  font-size: 14px;
-}
 
-/* ================= WHATSAPP FLOAT ================= */
-.whatsapp-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-
-  width: 55px;
-  height: 55px;
-  background-color: #25D366;
-  border-radius: 50%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-  z-index: 9999;
-
-  cursor: grab;
-}
-
-.whatsapp-float img {
-  width: 28px;
-  height: 28px;
-}
-
-/* ================= MOBILE RESPONSIVE ================= */
+/* ============================================================
+   RESPONSIVE
+============================================================ */
 @media (max-width: 768px) {
+  .course-banner { min-height: 46vh; }
+  .course-banner-content .header-logo { width: 58px; }
+  .course-banner-content h1 { font-size: 1.45rem; }
 
-  .indiv-course-header {
-    padding: 90px 15px 80px;
+  .cp-intro-card {
+    flex-direction: column;
+    gap: 14px;
+    margin-top: -28px;
+    padding: 20px 16px;
   }
 
-  .header-overlay {
-    padding: 25px 16px;
+  .cp-module-card { gap: 12px; padding: 16px 14px; }
+  .cp-module-icon { display: none; }
+
+  .cp-cta-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 26px 20px;
   }
 
-  .header-overlay h1 {
-    font-size: 28px;
-  }
+  .cp-cta-strip .cta-btn { width: 100%; justify-content: center; }
+}
 
-  .header-overlay p {
-    font-size: 15px;
-  }
-
-  .register-btn {
-    width: 50%;
-    text-align: center;
-    padding: 14px;
-  }
-
-  .intro-card,
-  .content-card,
-  .module-card {
-    padding: 22px 18px;
-    border-radius: 12px;
-  }
-
-  .content-card h2,
-  .module-card h2 {
-    font-size: 22px;
-  }
-
-  .intro-card p,
-  .content-card p,
-  .module-card p {
-    font-size: 15px;
-    line-height: 1.7;
-  }
-
-  .intro-card {
-    margin-top: -40px;
-  }
+@media (max-width: 480px) {
+  .course-main { padding: 0 12px 48px; gap: 28px; }
+  .meta-badge { font-size: 0.74rem; padding: 4px 11px; }
+  .course-enrol-btn { width: 100%; justify-content: center; }
 }

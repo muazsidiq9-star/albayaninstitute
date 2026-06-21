@@ -3,244 +3,503 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Admin Inbox</title>
+  <title>Admin Inbox | Al-Bayan Arabic Isntitute Online</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
   <style>
-    body { background: var(--bg-color); color: var(--text-color); }
-    .inbox-container { max-width: 1100px; margin: auto; padding: 2rem; }
+    html, body { overflow-x: hidden; }
+    
+    html,
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.inbox-container {
+  flex: 1;
+}
+
+    /* ── PAGE HEADER ── */
+    .inbox-header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, #064e20 100%);
+      padding: 28px 24px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .inbox-header-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; color: #bbf7d0; flex-shrink: 0;
+    }
+    .inbox-header h1 {
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      font-weight: 800; color: #fff; margin: 0 0 4px;
+    }
+    .inbox-header p { font-size: 0.85rem; color: #bbf7d0; margin: 0; }
+
+    /* ── CONTAINER ── */
+    .inbox-container {
+      max-width: 860px;
+      margin: 32px auto 60px;
+      padding: 0 20px;
+    }
+
+    /* ── FILTER BAR ── */
+    .inbox-filter {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .filter-pill {
+      padding: 6px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: transparent;
+      color: var(--text-color);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-pill.active, .filter-pill:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    /* ── MESSAGE CARD ── */
     .message-card {
       background: var(--card-color);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 1rem;
-      margin-bottom: 1rem;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
       cursor: pointer;
-      transition: 0.2s, box-shadow 0.2s;
+      transition: transform 0.22s, box-shadow 0.22s;
       position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
     }
-    .message-card:hover { 
-      transform: translateY(-2px); 
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    .message-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.09);
     }
-    .unread { border-left: 4px solid var(--primary-color); }
-
-    .unread::after {
+    .message-card.unread {
+      border-left: 4px solid var(--primary);
+    }
+    /* unread dot */
+    .message-card.unread::after {
       content: '';
-      width: 10px;
-      height: 10px;
-      background: var(--primary-color);
+      width: 9px; height: 9px;
+      background: var(--primary);
       border-radius: 50%;
       position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
+      top: 14px; right: 14px;
     }
-    .meta { font-size: 0.85rem; opacity: 0.7; }
+
+    /* Sender avatar */
+    .msg-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: var(--primary-xlight);
+      color: var(--primary-dark);
+      font-weight: 800;
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .msg-body { flex: 1; min-width: 0; }
+    .msg-subject {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-color);
+      margin-bottom: 3px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .msg-sender {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .msg-date {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Empty state */
+    .inbox-empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+    .inbox-empty i { font-size: 3rem; color: var(--border-light); margin-bottom: 14px; }
+    .inbox-empty h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; color: var(--text-color); }
+    .inbox-empty p { font-size: 0.88rem; }
+
+    /* ── MODAL ── */
     .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(3px);
       display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-    .modal-content {
-      background: var(--card-color);
-      padding: 2rem;
-      border-radius: 12px;
-      max-width: 600px;
-      width: 90%;
-      position: relative;
+      align-items: center; justify-content: center;
+      z-index: 9999; padding: 20px;
     }
     .modal.show { display: flex; }
-    .btn { padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; border: none; margin-right: 0.5rem; }
-    .btn-primary { background: var(--primary-color); color: white; }
-    .btn-danger { background: crimson; color: white; }
-    .logout-btn {
-      background: #b30000;
-      color: #fff;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 1000;
-      width: 100%;
+
+    .modal-content {
+      background: var(--card-color);
+      border-radius: 14px;
+      padding: 28px 24px;
+      max-width: 620px; width: 100%;
+      position: relative;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.18);
+      animation: fadeUp 0.3s ease;
     }
-    .logout-btn:hover { background: #8a0000; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute; top: 12px; right: 14px;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: #fee2e2; color: #dc2626;
+      border: none; font-size: 1rem;
+      cursor: pointer; display: flex;
+      align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: #dc2626; color: #fff; }
+
+    #modalTitle {
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--text-color); margin: 0 40px 8px 0;
+    }
+    .meta {
+      font-size: 0.82rem; color: var(--text-muted);
+      margin-bottom: 16px; display: flex; align-items: center; gap: 6px;
+    }
+    .meta i { color: var(--primary); }
+
+    .modal-message-body {
+      background: var(--surface-color);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: var(--text-color);
+      min-height: 80px;
+      margin-bottom: 20px;
+      white-space: pre-wrap;
+    }
+
+    .modal-footer {
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 18px; border-radius: 7px;
+      cursor: pointer; border: none;
+      font-size: 0.85rem; font-weight: 700;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-danger  { background: #dc2626; color: #fff; }
+    .btn-danger:hover { background: #b91c1c; }
+
+    .logout-btn {
+      display: flex; align-items: center; gap: 7px;
+      background: #b91c1c; color: #fff;
+      border: none; padding: 9px 14px;
+      border-radius: 6px; cursor: pointer;
+      font-weight: 700; font-size: 0.88rem;
+      width: 100%; transition: background 0.2s;
+    }
+    .logout-btn:hover { background: #991b1b; }
+
+    .unread-badge {
+      background: #dc2626; color: #fff;
+      font-size: 0.7rem; border-radius: 50%;
+      padding: 1px 5px; margin-left: 4px;
+      vertical-align: middle;
+    }
   </style>
+</head>
+<body>
 
   <!-- NAVIGATION -->
   <nav class="master-nav">
     <div class="nav-container">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Logo"> Al-Bayan
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
       </a>
-      <div class="hamburger">☰</div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
       <div class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="courses.html">Courses</a>
-        <a href="register.html">Register</a>
-        <a href="students-dashboard.html">Student Dashboard</a>
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Student Dashboard">Student Dashboard</a>
+        <a href="admin-dashboard.html" data-translate="Admin Dashboard">Admin Dashboard</a>
         <a href="admin-inbox.html" class="active">
-  Emails <span id="unreadCounter" style="background: red; color: white; font-size: 0.75rem; border-radius: 50%; padding: 2px 6px; margin-left: 4px;">0</span>
+  <span data-translate="Emails">Emails</span>
+  <span id="unreadCounter" class="unread-badge">0</span>
 </a>
-        <a href="payment.html">Payments</a>
-        <a href="schedule.html">Schedule</a>
-        <a href="contact.html">Contact</a>
-        <button id="logoutBtn" class="logout-btn">Logout</button>
+        <a href="payment.html" data-translate="Payments">Payments</a>
+        <a href="schedule.html" data-translate="Schedule">Schedule</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+        <button id="logoutBtn" class="logout-btn">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span data-translate="Logout">Logout</span>
+        </button>
       </div>
     </div>
   </nav>
 
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<body>
-<div class="inbox-container">
-  <h1>📥 Admin Inbox</h1>
-  <div id="messages"></div>
-</div>
-
-<!-- MODAL -->
-<div class="modal" id="messageModal">
-  <div class="modal-content">
-    <h2 id="modalTitle"></h2>
-    <p class="meta" id="modalMeta"></p>
-    <p id="modalBody"></p>
-    <br>
-    <!-- Toggle Read/Unread -->
-    <button class="btn btn-primary" id="markReadBtn">Mark as Read</button>
-    <button class="btn btn-danger" id="deleteBtn">Delete</button>
+  <!-- PAGE HEADER -->
+  <div class="inbox-header">
+    <div class="inbox-header-icon">
+      <i class="fa-solid fa-inbox"></i>
+    </div>
+    <div>
+      <h1 data-translate="Admin Inbox">Admin Inbox</h1>
+      <p data-translate="Manage contact messages from students and visitors.">
+        Manage contact messages from students and visitors.
+      </p>
+    </div>
   </div>
-</div>
 
-<script>
-  // Hamburger menu
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.getElementById('navLinks');
-  hamburger.addEventListener('click', () => navLinks.classList.toggle('show'));
-  document.addEventListener('click', e => {
-    if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
-      navLinks.classList.remove('show');
+  <!-- MAIN CONTENT -->
+  <div class="inbox-container">
+
+    <!-- FILTER PILLS -->
+    <div class="inbox-filter">
+      <button class="filter-pill active" data-filter="all" data-translate="All">All</button>
+      <button class="filter-pill" data-filter="unread" data-translate="Unread">Unread</button>
+      <button class="filter-pill" data-filter="read" data-translate="Read">Read</button>
+    </div>
+
+    <!-- MESSAGES LIST -->
+    <div id="messages"></div>
+
+  </div>
+
+  <!-- MESSAGE MODAL -->
+  <div class="modal" id="messageModal">
+    <div class="modal-content">
+      <button class="modal-close" id="modalCloseBtn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 id="modalTitle"></h2>
+      <p class="meta" id="modalMeta"></p>
+      <div class="modal-message-body" id="modalBody"></div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="markReadBtn">
+          <i class="fa-solid fa-envelope-open"></i>
+          <span data-translate="Mark as Read">Mark as Read</span>
+        </button>
+        <button class="btn btn-danger" id="deleteBtn">
+          <i class="fa-solid fa-trash"></i>
+          <span data-translate="Delete">Delete</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p data-translate="Al-Bayan Arabic Isntitute Online">Al-Bayan Arabic Isntitute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
+
+  <script>
+    
+
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
     }
-  });
-</script>
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+    });
+  </script>
 
-<script>
-const supabaseUrl = "https://cjrpjekmqrckozrbtwps.supabase.co";
-const supabaseKey = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+  <script>
+    const supabaseUrl = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const supabaseKey = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+    const db = window.supabaseClient;
 
-window.supabaseClient = supabase.createClient(
-  supabaseUrl,
-  supabaseKey
-);
+    let selectedMessage = null;
+    let allMessages    = [];
+    let currentFilter  = 'all';
 
-const db = window.supabaseClient;
+    /* ── LOAD MESSAGES ── */
+    async function loadMessages() {
+      const { data, error } = await db
+        .from("contact_messages")
+        .select("*")
+        .or("deleted.is.null,deleted.eq.false")
+        .order("created_at", { ascending: false });
 
-let selectedMessage = null;
+      if (error) return console.error(error);
+      allMessages = data;
+      renderMessages(currentFilter);
+      updateUnreadCounter();
+    }
 
-// ====================
-// LOAD MESSAGES
-// ====================
-async function loadMessages() {
-  const { data, error } = await db
-    .from("contact_messages")
-    .select("*")
-    .or("deleted.is.null,deleted.eq.false")
-    .order("created_at", { ascending: false });
+    /* ── RENDER ── */
+    function renderMessages(filter) {
+      currentFilter = filter;
+      const container = document.getElementById("messages");
+      container.innerHTML = "";
 
-  if (error) return console.error(error);
+      let filtered = allMessages;
+      if (filter === 'unread') filtered = allMessages.filter(m => !m.is_read);
+      if (filter === 'read')   filtered = allMessages.filter(m => m.is_read);
 
-  const container = document.getElementById("messages");
-  container.innerHTML = "";
+      if (!filtered.length) {
+        container.innerHTML = `
+          <div class="inbox-empty">
+            <i class="fa-solid fa-inbox"></i>
+            <h3>No messages</h3>
+            <p>No messages match this filter.</p>
+          </div>`;
+        return;
+      }
 
-  if (!data.length) {
-    container.innerHTML = "<p>No messages yet.</p>";
-    return;
-  }
+      filtered.forEach(msg => {
+        const initial = (msg.name || '?')[0].toUpperCase();
+        const date    = msg.created_at ? msg.created_at.split('T')[0] : '';
+        const div = document.createElement("div");
+        div.className = `message-card ${msg.is_read ? '' : 'unread'}`;
+        div.innerHTML = `
+          <div class="msg-avatar">${initial}</div>
+          <div class="msg-body">
+            <div class="msg-subject">${msg.subject || '(No subject)'}</div>
+            <div class="msg-sender">
+              <i class="fa-solid fa-user" style="font-size:0.7rem;color:var(--primary)"></i>
+              ${msg.name} &nbsp;•&nbsp; ${msg.email}
+            </div>
+            <div class="msg-date">
+              <i class="fa-solid fa-clock" style="font-size:0.7rem;"></i> ${date}
+            </div>
+          </div>`;
+        div.onclick = () => openMessage(msg);
+        container.appendChild(div);
+      });
+    }
 
-  data.forEach(msg => {
-    const div = document.createElement("div");
-    div.className = `message-card ${msg.is_read ? '' : 'unread'}`;
-    div.innerHTML = `
-      <strong>${msg.subject}</strong>
-      <div>${msg.name}</div>
-      <div class="meta">${msg.email} • ${msg.created_at.split('T')[0]}</div>
-    `;
-    div.onclick = () => openMessage(msg);
-    container.appendChild(div);
-  });
-}
+    /* ── FILTER PILLS ── */
+    document.querySelectorAll('.filter-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderMessages(btn.dataset.filter);
+      });
+    });
 
-// ====================
-// OPEN MODAL
-// ====================
-function openMessage(msg) {
-  selectedMessage = msg;
+    /* ── OPEN MODAL ── */
+    function openMessage(msg) {
+      selectedMessage = msg;
 
-  document.getElementById("modalTitle").textContent = msg.subject;
-  document.getElementById("modalMeta").textContent = `${msg.name} • ${msg.email}`;
-  document.getElementById("modalBody").textContent = msg.message;
+      document.getElementById("modalTitle").textContent = msg.subject || '(No subject)';
+      document.getElementById("modalMeta").innerHTML = `
+        <i class="fa-solid fa-user"></i> ${msg.name} &nbsp;•&nbsp;
+        <i class="fa-solid fa-envelope"></i> ${msg.email} &nbsp;•&nbsp;
+        <i class="fa-solid fa-clock"></i> ${msg.created_at ? msg.created_at.split('T')[0] : ''}`;
+      document.getElementById("modalBody").textContent = msg.message;
 
-  // Update Read/Unread button text
-  const markBtn = document.getElementById("markReadBtn");
-  markBtn.textContent = msg.is_read ? "Mark as Unread" : "Mark as Read";
+      const markBtn  = document.getElementById("markReadBtn");
+      const markSpan = markBtn.querySelector('span');
+      const markIcon = markBtn.querySelector('i');
+      if (msg.is_read) {
+        markSpan.textContent = "Mark as Unread";
+        markIcon.className   = "fa-solid fa-envelope";
+      } else {
+        markSpan.textContent = "Mark as Read";
+        markIcon.className   = "fa-solid fa-envelope-open";
+      }
 
-  document.getElementById("messageModal").classList.add("show");
-}
+      document.getElementById("messageModal").classList.add("show");
+    }
 
-// Close modal on background click
-const messageModal = document.getElementById("messageModal");
-messageModal.onclick = e => {
-  if (e.target.id === "messageModal") {
-    messageModal.classList.remove("show");
-  }
-};
+    /* ── CLOSE MODAL ── */
+    document.getElementById("modalCloseBtn").addEventListener('click', () => {
+      document.getElementById("messageModal").classList.remove("show");
+    });
+    document.getElementById("messageModal").addEventListener('click', function (e) {
+      if (e.target === this) this.classList.remove("show");
+    });
 
-// ====================
-// MARK READ / UNREAD
-// ====================
-// Initial load
-loadMessages();
+    /* ── MARK READ / UNREAD ── */
+    document.getElementById("markReadBtn").addEventListener('click', async () => {
+      if (!selectedMessage) return;
+      const newState = !selectedMessage.is_read;
+      const { error } = await db
+        .from("contact_messages")
+        .update({ is_read: newState })
+        .eq("id", selectedMessage.id);
+      if (error) return console.error(error);
+      selectedMessage.is_read = newState;
+      document.getElementById("messageModal").classList.remove("show");
+      loadMessages();
+    });
 
-// After marking read/unread
-markReadBtn.onclick = async () => {
-  if (!selectedMessage) return;
-  const newState = !selectedMessage.is_read;
-  const { error } = await db
-    .from("contact_messages")
-    .update({ is_read: newState })
-    .eq("id", selectedMessage.id);
+    /* ── DELETE ── */
+    document.getElementById("deleteBtn").addEventListener('click', async () => {
+      if (!selectedMessage) return;
+      const { error } = await db
+        .from("contact_messages")
+        .update({ deleted: true })
+        .eq("id", selectedMessage.id);
+      if (error) return console.error(error);
+      document.getElementById("messageModal").classList.remove("show");
+      loadMessages();
+    });
 
-  if (error) return console.error(error);
+    /* ── UNREAD COUNTER ── */
+    function updateUnreadCounter() {
+      const count = allMessages.filter(m => !m.is_read).length;
+      const badge = document.getElementById("unreadCounter");
+      if (badge) badge.textContent = count;
+    }
 
-  selectedMessage.is_read = newState;
-  document.getElementById("messageModal").classList.remove("show");
-  loadMessages();
-  updateUnreadCounter(); // <- update badge
-};
-
-// After deleting
-deleteBtn.onclick = async () => {
-  if (!selectedMessage) return;
-  const { error } = await db
-    .from("contact_messages")
-    .update({ deleted: true })
-    .eq("id", selectedMessage.id);
-
-  if (error) return console.error(error);
-
-  document.getElementById("messageModal").classList.remove("show");
-  loadMessages();
-  updateUnreadCounter(); // <- update badge
-};
-</script>
-
-<script src="translate.js"></script>
+    /* ── INIT ── */
+    loadMessages();
+  </script>
+  <script src="translate.js"></script>
 </body>
 </html>

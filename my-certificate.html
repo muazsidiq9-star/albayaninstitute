@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" content="notranslate">
+  <title>My Certificates | Al-Bayan</title>
+
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@400;500;600;700&display=swap');
+
+    /* ── TOKENS ─────────────────────────────────── */
+    :root {
+      --cert-green:      #0515c4;
+      --cert-green-mid:  #3f51b5;
+      --cert-green-xlt:  #e8f5e9;
+      --cert-gold:       #b8972a;
+      --cert-gold-pale:  #fdf6e0;
+      --cert-rule:       #d4c89a;
+    }
+
+    /* ── BODY ────────────────────────────────────── */
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ──────────────────────────────────── */
+    .page-header.cert-header {
+      position: relative;
+      background: url("result-check.jpg") center/cover no-repeat;
+      height: 210px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page-header.cert-header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(0,30,10,0.72) 0%,
+        rgba(0,50,18,0.60) 100%);
+    }
+
+    .cert-header-overlay {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .cert-header-logo {
+      width: 52px;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+    }
+
+    .cert-header-overlay h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 4px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .cert-header-overlay p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+    }
+
+    /* Gold rule under header */
+    .cert-header-rule {
+      height: 3px;
+      background: linear-gradient(to right, transparent, var(--cert-gold), transparent);
+    }
+
+    /* ── MAIN AREA ───────────────────────────────── */
+    main {
+      flex: 1;
+      padding: 0 20px 40px;
+    }
+
+    .cert-page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding-top: 36px;
+    }
+
+    /* Count strip */
+    .cert-count-strip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .cert-count-strip-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border-color, #ddd);
+    }
+
+    .cert-count-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted, #888);
+      white-space: nowrap;
+    }
+
+    /* ── CERTIFICATE CARD ────────────────────────── */
+    .cert-card {
+      position: relative;
+      background: var(--card-color, #fff);
+      border: 1px solid var(--border-color, #e5e7eb);
+      border-radius: 14px;
+      padding: 0;
+      margin-bottom: 22px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+
+    .cert-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+    }
+
+    /* Left accent bar */
+    .cert-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--cert-green), var(--cert-green-mid));
+      border-radius: 14px 0 0 14px;
+    }
+
+    .cert-card-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 24px 26px 24px 30px;
+    }
+
+    /* Icon */
+    .cert-icon-wrap {
+      flex-shrink: 0;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cert-green), var(--cert-green-mid));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,66,17,0.25);
+      font-size: 1.8rem;
+    }
+
+    .cert-info {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Details */
+    .cert-details {
+      min-width: 0;
+    }
+
+    .cert-course-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-color, #111);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .cert-meta-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 10px;
+      row-gap: 2px;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .cert-meta-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted, #888);
+      white-space: nowrap;
+      padding-top: 1px;
+    }
+
+    .cert-meta-value {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.95rem;
+      color: var(--text-color, #333);
+      word-break: break-word;
+    }
+
+    /* Grade note pill */
+    .cert-grade-note {
+      display: inline-block;
+      margin-top: 8px;
+      background: var(--cert-gold-pale);
+      border: 1px solid var(--cert-rule);
+      color: #7a6010;
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 0.88rem;
+      padding: 3px 12px;
+      border-radius: 20px;
+    }
+
+    /* Status badge */
+    .cert-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 8px;
+      background: var(--cert-green-xlt);
+      color: var(--cert-green);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid #b2dfba;
+    }
+
+    [data-theme="dark"] .cert-status-badge {
+      background: #1b2e3a;
+      color: #81c784;
+      border-color: #2e536b;
+    }
+
+    [data-theme="dark"] .cert-grade-note {
+      background: #2a2210;
+      color: #e8c97a;
+      border-color: #5a4a1a;
+    }
+
+    /* Actions */
+    .cert-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn-download {
+      background: var(--cert-green);
+      color: #fff;
+      border: none;
+      padding: 11px 22px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      white-space: nowrap;
+      min-width: 150px;
+      box-shadow: 0 3px 10px rgba(0,66,17,0.2);
+    }
+
+    .btn-download:hover {
+      background: var(--cert-green-mid);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,66,17,0.28);
+    }
+
+    .btn-download:active {
+      transform: translateY(0);
+    }
+
+    /* Cert number strip at bottom of card */
+    .cert-card-footer {
+      background: var(--cert-green-xlt, #e8f5e9);
+      border-top: 1px solid #c8e6c9;
+      padding: 6px 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    [data-theme="dark"] .cert-card-footer {
+      background: #0f2414;
+      border-top-color: #1e3a47;
+    }
+
+    .cert-card-footer span {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cert-green);
+      font-weight: 600;
+    }
+
+    [data-theme="dark"] .cert-card-footer span {
+      color: #81b7c7;
+    }
+
+    .cert-card-footer code {
+      font-size: 0.72rem;
+      color: var(--text-muted, #666);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── EMPTY STATE ─────────────────────────────── */
+    .no-cert {
+      text-align: center;
+      padding: 70px 20px;
+    }
+
+    .no-cert-icon-wrap {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: var(--cert-green-xlt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      border: 2px dashed #b2dcdf;
+    }
+
+    .no-cert-icon-wrap i {
+      font-size: 2.4rem;
+      color: var(--cert-green);
+    }
+
+    .no-cert h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--text-color, #222);
+      margin-bottom: 8px;
+    }
+
+    .no-cert p {
+      font-family: 'EB Garamond', serif;
+      font-size: 1rem;
+      color: var(--text-muted, #888);
+      line-height: 1.7;
+    }
+
+    /* ── LOADING STATE ───────────────────────────── */
+    .cert-loading {
+      text-align: center;
+      padding: 70px 20px;
+      color: var(--text-muted, #888);
+    }
+
+    .cert-loading i {
+      font-size: 2rem;
+      color: var(--cert-green);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .cert-loading p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── MOBILE ──────────────────────────────────── */
+    @media (max-width: 640px) {
+      .cert-card-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px 18px 20px 22px;
+      }
+
+      .cert-actions { width: 100%; }
+
+      .btn-download { width: 100%; min-width: unset; }
+
+      .cert-header-overlay h1 { font-size: 1.5rem; }
+
+      .cert-meta-grid {
+        grid-template-columns: 1fr;
+        row-gap: 0;
+      }
+
+      .cert-meta-label { margin-top: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
+      </a>
+      <div class="hamburger">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="register.html">Register</a>
+        <a href="students-dashboard.html">Student Dashboard</a>
+        <a href="my-certificate.html" class="active page-indicator">Certificate</a>
+        <a href="payment.html">Payment</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="page-header cert-header">
+    <div class="cert-header-overlay">
+      <img src="logo.png" class="cert-header-logo" alt="Al-Bayan Logo">
+      <h1>My Certificates</h1>
+      <p>Certificates of Completion</p>
+    </div>
+  </header>
+  <div class="cert-header-rule"></div>
+
+  <!-- MAIN -->
+  <main>
+    <div class="cert-page">
+      <div id="certContainer">
+        <div class="cert-loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          <p>Loading your certificates...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
+
+  <!-- WHATSAPP -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
+
+  <!-- SCRIPTS -->
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('show'));
+    document.addEventListener('click', e => {
+      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+        navLinks.classList.remove('show');
+      }
+    });
+    const yrEl = document.getElementById("year");
+    if (yrEl) yrEl.textContent = new Date().getFullYear();
+  </script>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  </script>
+
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="translate.js"></script>
+
+  <script>
+    /* ── GUARD ── */
+    (function () {
+      const role   = sessionStorage.getItem("role");
+      const matric = sessionStorage.getItem("matric");
+      if (role !== "student" || !matric) {
+        alert(t("Student login required"));
+        window.location.href = "login.html";
+      }
+    })();
+
+    const matric = sessionStorage.getItem("matric");
+
+    /* ── LOAD CERTIFICATES ── */
+    document.addEventListener("DOMContentLoaded", async () => {
+      const container = document.getElementById("certContainer");
+
+      try {
+        const { data: student, error: studentError } = await sb
+          .from("students")
+          .select("fullname, matric_number, level_arabic")
+          .eq("matric_number", matric)
+          .single();
+
+        if (studentError || !student) throw new Error("Student not found");
+
+        const { data: certs, error: certError } = await sb
+          .from("certificates")
+          .select("*")
+          .eq("matric_number", matric)
+          .eq("revoked", false)
+          .eq("deleted", false)
+          .order("issued_at", { ascending: false });
+
+        if (certError) throw certError;
+
+        if (!certs || certs.length === 0) {
+          container.innerHTML = `
+            <div class="no-cert">
+              <div class="no-cert-icon-wrap">
+                <i class="fas fa-certificate"></i>
+              </div>
+              <h3>${t("No Certificates Yet")}</h3>
+              <p>
+                ${t("You haven't been issued any certificates yet.")}<br>
+                ${t("Complete your courses to earn a certificate.")}
+              </p>
+            </div>
+          `;
+          return;
+        }
+
+        /* Count strip */
+        const countStrip = `
+          <div class="cert-count-strip">
+            <span class="cert-count-line" style="flex:1;height:1px;background:var(--border-color,#ddd);"></span>
+            <span class="cert-count-label">${certs.length} Certificate${certs.length !== 1 ? "s" : ""} Awarded</span>
+            <span class="cert-count-line" style="flex:1;height:1px;background:var(--border-color,#ddd);"></span>
+          </div>
+        `;
+
+        const cards = certs.map(cert => {
+          const formattedDate = new Date(cert.issued_at).toLocaleDateString("en-GB", {
+            day: "numeric", month: "long", year: "numeric"
+          });
+
+          const gradeHtml = cert.grade_note
+            ? `<span class="cert-grade-note">
+                ${cert.grade_note.toLowerCase().startsWith("with")
+                  ? cert.grade_note
+                  : "with a total score of " + cert.grade_note}
+               </span>`
+            : "";
+
+          return `
+            <div class="cert-card">
+              <div class="cert-card-inner">
+                <div class="cert-info">
+                  <div class="cert-icon-wrap">🎓</div>
+                  <div class="cert-details">
+                    <div class="cert-course-name">${cert.course_name}</div>
+                    <div class="cert-meta-grid">
+                      <span class="cert-meta-label">Student</span>
+                      <span class="cert-meta-value">${student.fullname}</span>
+                      <span class="cert-meta-label">Level</span>
+                      <span class="cert-meta-value">${cert.level}</span>
+                      <span class="cert-meta-label">Issued by</span>
+                      <span class="cert-meta-value">${cert.issued_by}</span>
+                      <span class="cert-meta-label">Date</span>
+                      <span class="cert-meta-value">${formattedDate}</span>
+                    </div>
+                    ${gradeHtml}
+                    <br>
+                    <span class="cert-status-badge">
+                      <i class="fas fa-check-circle" style="font-size:0.7rem;"></i>
+                      Certificate of Completion
+                    </span>
+                  </div>
+                </div>
+                <div class="cert-actions">
+                  <button class="btn-download" onclick="downloadCertificate(
+                    '${cert.id}',
+                    '${student.fullname.replace(/'/g, "\\'")}',
+                    '${student.matric_number}',
+                    '${cert.course_name.replace(/'/g, "\\'")}',
+                    '${cert.level}',
+                    '${cert.issued_at}',
+                    '${(cert.grade_note || "").replace(/'/g, "\\'")}'
+                  )">
+                    <i class="fas fa-download"></i> Download PDF
+                  </button>
+                </div>
+              </div>
+              <div class="cert-card-footer">
+                <span>Certificate ID</span>
+                <code>${cert.id}</code>
+              </div>
+            </div>
+          `;
+        }).join("");
+
+        container.innerHTML = countStrip + cards;
+
+      } catch (err) {
+        console.error("Certificate load error:", err);
+        container.innerHTML = `
+          <div class="no-cert">
+            <div class="no-cert-icon-wrap" style="border-color:#fecaca; background:#fee2e2;">
+              <i class="fas fa-exclamation-triangle" style="color:#b91c1c;"></i>
+            </div>
+            <h3 style="color:#b91c1c;">Failed to Load</h3>
+            <p>${t("Failed to load certificates.")} Please refresh and try again.</p>
+          </div>
+        `;
+      }
+    });
+
+
+    /* ===========================
+       GENERATE CERTIFICATE PDF
+       !! DO NOT MODIFY — fitted to cert-bg.png template !!
+    =========================== */
+    async function downloadCertificate(certId, fullname, matricNumber, courseName, level, issuedAt, gradeNote) {
+      const { jsPDF } = window.jspdf;
+
+      const doc = new jsPDF({
+        orientation: "landscape",
+        unit: "pt",
+        format: "a4"
+      });
+
+      const pageWidth  = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+
+      // BACKGROUND IMAGE
+      const bg = new Image();
+      bg.src = "cert-bg.png";
+      await new Promise(resolve => {
+        bg.onload  = () => { doc.addImage(bg, "PNG", 0, 0, pageWidth, pageHeight); resolve(); };
+        bg.onerror = resolve;
+      });
+
+      // "This Certificate Is Presented To"
+      doc.setTextColor(50, 50, 50);
+      doc.setFontSize(16);
+      doc.setFont("helvetica", "bold");
+      doc.text("This Certificate Is Presented To", pageWidth / 2, 295, { align: "center" });
+
+      // STUDENT NAME
+      doc.setTextColor(26, 35, 126);
+      doc.setFontSize(42);
+      doc.setFont("helvetica", "bold");
+      doc.text(fullname, pageWidth / 2, 348, { align: "center" });
+
+      // Name underline
+      doc.setDrawColor(26, 35, 126);
+      doc.setLineWidth(1.8);
+      const nameW = doc.getTextWidth(fullname);
+      doc.line(pageWidth / 2 - nameW / 2 - 15, 355, pageWidth / 2 + nameW / 2 + 15, 355);
+
+      // COMPLETION TEXT
+      doc.setTextColor(26, 35, 126);
+      doc.setFontSize(17);
+      doc.setFont("helvetica", "bold");
+      doc.text(`for the Successful Completion of ${level}`, pageWidth / 2, 390, { align: "center" });
+      doc.setFontSize(18);
+      doc.text(`"${courseName}" Course`, pageWidth / 2, 415, { align: "center" });
+
+      // MATRIC NUMBER
+      doc.setTextColor(20, 20, 20);
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text(`Matric No: ${matricNumber}`, pageWidth / 2, 478, { align: "center" });
+
+      // GRADE NOTE
+      const rawGrade = gradeNote && gradeNote.trim() !== "" ? gradeNote.trim() : null;
+      if (rawGrade) {
+        const hasPrefix    = rawGrade.toLowerCase().startsWith("with");
+        const displayGrade = hasPrefix ? rawGrade : `with a total score of ${rawGrade}`;
+        doc.setTextColor(25, 25, 25);
+        doc.setFontSize(16);
+        doc.setFont("helvetica", "bolditalic");
+        doc.text(displayGrade, pageWidth / 2, 455, { align: "center" });
+      }
+
+      // DATE
+      const formattedDate = new Date(issuedAt).toLocaleDateString("en-GB", {
+        day: "numeric", month: "long", year: "numeric"
+      });
+      doc.setTextColor(10, 10, 10);
+      doc.setFontSize(18);
+      doc.setFont("helvetica", "bold");
+      doc.text(formattedDate, 155, 540, { align: "center" });
+      doc.setDrawColor(10, 10, 10);
+      doc.setLineWidth(1);
+      doc.line(60, 548, 250, 548);
+      doc.setTextColor(60, 60, 60);
+      doc.setFontSize(13);
+      doc.setTextColor(40, 40, 40);
+      doc.text("Date", 155, 566, { align: "center" });
+
+      // CERTIFICATE ID
+      doc.setFontSize(11);
+      doc.setTextColor(40, 40, 40);
+      doc.setFont("helvetica", "bold");
+      doc.text(`Certificate Id: ${certId}`, pageWidth / 2, pageHeight - 50, { align: "center" });
+
+      // SAVE
+      doc.save(`Certificate_${matricNumber}_${courseName}.pdf`);
+    }
+  </script>
+
+</body>
+</html>

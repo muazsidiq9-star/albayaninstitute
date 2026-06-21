@@ -3,109 +3,144 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Learning Videos - Al-Bayan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <title>Learning Videos - Al-Bayan Arabic Institute Online</title>
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="videos.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
-<!-- ================= NAV ================= -->
-<nav class="master-nav">
-  <div class="nav-container">
-    <a href="index.html" class="logo">
-      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
-    </a>
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-    <div class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="courses.html">Courses</a>
-      <a href="register.html">Register</a>
-      <a href="students-dashboard.html">Student Dashboard</a>
-      <a href="videos.html" class="active">Videos</a>
-      <a href="payment.html">Payment</a>
-      <a href="schedule.html">Schedule</a>
-      <a href="contact.html">Contact</a>
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
+        <a href="videos.html" class="active" data-translate="Videos">Videos</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="schedule.html" data-translate="Schedule">Schedule</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================================================
+       PAGE BANNER
+  ================================================ -->
+  <header class="page-banner" style="background-image: url('background-resources.jpg');">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+      <img src="logo.png" alt="Al-Bayan Logo" class="header-logo">
+      <p class="banner-eyebrow" data-translate="Members Only">Members Only</p>
+      <h1 data-translate="Learning Videos">Learning Videos</h1>
+      <p data-translate="Access course videos based on your active subscription.">
+        Access course videos based on your active subscription.
+      </p>
+    </div>
+  </header>
+
+  <!-- ================================================
+       VIDEOS MAIN
+  ================================================ -->
+  <main class="videos-page">
+
+    <!-- Loading state -->
+    <div class="videos-loading" id="videosLoading">
+      <div class="loading-spinner"></div>
+      <p data-translate="Loading your videos...">Loading your videos...</p>
+    </div>
+
+    <!-- Videos grid — JS injects cards here -->
+    <section class="videos-grid" id="videosGrid" style="display:none;">
+    </section>
+
+    <!-- Empty state -->
+    <div class="videos-empty" id="videosEmpty" style="display:none;">
+      <i class="fa-solid fa-film"></i>
+      <h3 data-translate="No Videos Available">No Videos Available</h3>
+      <p data-translate="No videos have been uploaded yet for your level. Please check back later.">
+        No videos have been uploaded yet for your level. Please check back later.
+      </p>
+    </div>
+
+  </main>
+
+  <!-- ================================================
+       VIDEO MODAL
+  ================================================ -->
+  <div id="videoModal" class="video-modal">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="modal-video-wrap">
+        <iframe id="youtubeFrame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
+      <div class="modal-actions">
+        <a id="telegramLink" href="#" target="_blank" rel="noopener" class="telegram-btn">
+          <i class="fa-brands fa-telegram"></i>
+          <span data-translate="Watch on Telegram">Watch on Telegram</span>
+        </a>
+      </div>
     </div>
   </div>
-</nav>
 
-<!-- ================= HEADER ================= -->
-<header class="courses-header">
-  <div class="header-overlay">
-    <img src="logo.png" alt="Al-Bayan Logo">
-    <h1>🎬 Learning Videos</h1>
-    <p>Access videos based on your active subscription</p>
-  </div>
-</header>
+  <!-- FOOTER -->
+  <footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
 
-<!-- ================= MAIN ================= -->
-<main class="videos-page">
-  <section class="videos-grid">
-    <!-- JS injects video cards here -->
-  </section>
-</main>
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
 
-<!-- ================= VIDEO MODAL ================= -->
-<div id="videoModal" class="video-modal">
-  <div class="modal-content">
-    <span class="close-btn">&times;</span>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    
 
-    <iframe
-      id="youtubeFrame"
-      src=""
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
-
-    <a id="telegramLink"
-       href="#"
-       target="_blank"
-       class="telegram-btn">
-      Watch on Telegram
-    </a>
-  </div>
-</div>
-
-<!-- ================= FOOTER ================= -->
-<footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
-
-<!-- ================= WHATSAPP FLOAT ================= -->
-<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
-
-<!-- ================= SCRIPTS ================= -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-<script src="videos.js"></script>
-<script src="translate.js"></script>
-<script>
-  function toggleMenu() {
-    document.getElementById("navLinks").classList.toggle("show");
-  }
-
-  document.addEventListener("click", function (e) {
-    const menu = document.getElementById("navLinks");
-    const burger = document.querySelector(".hamburger");
-    if (!menu.contains(e.target) && !burger.contains(e.target)) {
-      menu.classList.remove("show");
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
     }
-  });
-</script>
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+    });
 
+    /* Modal close */
+    document.getElementById('modalClose').addEventListener('click', () => {
+      document.getElementById('videoModal').style.display = 'none';
+      document.getElementById('youtubeFrame').src = '';
+    });
+
+    document.getElementById('videoModal').addEventListener('click', function (e) {
+      if (e.target === this) {
+        this.style.display = 'none';
+        document.getElementById('youtubeFrame').src = '';
+      }
+    });
+  </script>
+  <script src="videos.js"></script>
+  <script src="translate.js"></script>
 </body>
 </html>

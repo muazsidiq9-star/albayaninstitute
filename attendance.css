@@ -1,0 +1,57 @@
+/* ============================================================
+   ATTENDANCE PAGE — additions on top of login.css
+   (reuses .login-card, .submit-btn, .form-feedback, etc.)
+============================================================ */
+
+/* Single centered card instead of split panel layout */
+.attendance-page {
+  grid-template-columns: 1fr;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.attendance-form-side {
+  width: 100%;
+}
+
+.attendance-card {
+  text-align: center;
+}
+
+/* Error-state icon variant (login-icon is green by default) */
+.icon-error {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.18);
+  color: #dc2626;
+}
+
+.icon-success {
+  background: rgba(34, 145, 197, 0.1);
+  border-color: rgba(34, 137, 197, 0.18);
+  color: #1647a3;
+}
+
+#sessionTitle {
+  margin-bottom: 4px;
+}
+
+#sessionLevel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+#studentNameLine {
+  font-size: 0.85rem;
+  margin-top: 14px;
+}
+
+/* Disabled state for the mark-attendance button while submitting */
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+}

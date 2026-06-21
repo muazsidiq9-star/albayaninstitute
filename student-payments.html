@@ -3,452 +3,612 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>My Payments - Al-Bayan</title>
-
+  <title>My Payments — Al-Bayan Arabic Institute Online</title>
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="student-payments.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
-<!-- NAVIGATION -->
-<nav class="master-nav">
-  <div class="nav-container">
-    <a href="index.html" class="logo">
-      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
-    </a>
-    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
-    <div class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="courses.html">Courses</a>
-      <a href="register.html">Register</a>
-      <a href="students-dashboard.html">Student Dashboard</a>
-      <a href="student-payment.html" class="active">Payment</a>
-      <a href="schedule.html">Schedule</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </div>
-</nav>
-
-<!-- HEADER -->
-<header class="profile-header" style="background-image: url('background-payment.jpg');">
-  <div class="header-overlay">
-    <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
-    <h1>My Payments</h1>
-    <p>View your payment history, total paid, and pending payments</p>
-  </div>
-</header>
-
-<!-- PAYMENT SUMMARY -->
-<section class="profile-info">
-  <h2>Payment Summary</h2>
-</section>
-
-<div id="overdueAlertContainer"></div>
-
-<section class="stats-section">
-  <div class="stats-cards">
-
-    <div class="card">
-  <div class="icon">💳</div>
-  <div class="details">
-    <h3 id="paymentStatus">--</h3>
-    <p id="paymentMonth">Current Month</p>
-  </div>
-</div>
-
-<div class="card">
-  <div class="icon">💰</div>
-  <div class="details">
-    <h3 id="monthlyAmount">₦0</h3>
-    <p id="amountMonth">Month Amount</p>
-  </div>
-</div>
-
-  </div>
-</section>
-
-<section class="profile-info">
-  <h2>Payment History</h2>
-
-  <div class="notifications-wrapper">
-    <div id="paymentHistory" class="notifications-list"></div>
-  </div>
-</section>
-<section class="action-buttons">
-  <button id="downloadReceiptBtn" class="download-btn">
-    <i class="fa-solid fa-download"></i> Download Latest Receipt (PDF)
-  </button>
-
-  <button id="downloadAllReceiptsBtn" class="download-btn">
-    <i class="fa-solid fa-download"></i> Download All Receipts (PDF)
-  </button>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
-
-<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
-
-<!-- MENU SCRIPT -->
- <script src="translate.js"></script>
-<script>
-function toggleMenu() {
-  document.getElementById("navLinks").classList.toggle("show");
-}
-document.addEventListener("click", e => {
-  const nav = document.getElementById("navLinks");
-  const burger = document.querySelector(".hamburger");
-  if (!nav.contains(e.target) && !burger.contains(e.target)) {
-    nav.classList.remove("show");
-  }
-});
-</script>
-
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-<script>
-
-const sb = supabase.createClient(
-  "https://cjrpjekmqrckozrbtwps.supabase.co",
-  "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b"
-);
-
-/* ===== STUDENT GUARD ===== */
-(function () {
-  const role = sessionStorage.getItem("role");
-  const matric = sessionStorage.getItem("matric");
-  if (role !== "student" || !matric) {
-    alert(t("Student login required"));
-    window.location.href = "login.html";
-  }
-})();
-
-/* ===== LOAD PAYMENTS ===== */
-async function loadPayments() {
-  const matric = sessionStorage.getItem("matric");
-  if (!matric) return;
-
-  try {
-    // ===========================
-    // Fetch payment records
-    // ===========================
-    const { data: payments, error } = await sb
-      .from("payments")
-      .select("amount, month, status, created_at, id")
-      .eq("matric_number", matric)
-      .order("created_at", { ascending: false });
-
-    if (error) throw error;
-
-    // ===========================
-    // FETCH OUTSTANDING FEES
-    // ===========================
-    const { data: outstanding } = await sb
-      .from("student_fee_status")
-      .select("month, amount_due")
-      .eq("matric_number", matric)
-      .eq("status", "unpaid");
-
-    // Remove duplicates (safety)
-    const uniqueMonths = [...new Set((outstanding || []).map(o => o.month))];
-
-    // Total outstanding amount
-    const totalOutstanding = (outstanding || []).reduce(
-      (sum, item) => sum + Number(item.amount_due),
-      0
-    );
-
-    // Format months
-    const outstandingMonths = uniqueMonths.length > 2
-      ? `${uniqueMonths.slice(0, 2).join(", ")} +${uniqueMonths.length - 2} more`
-      : uniqueMonths.join(",");
-
-   // ===========================
-// Render Overdue Alert
-// ===========================
-const alertContainer = document.getElementById("overdueAlertContainer");
-
-if (totalOutstanding > 0) {
-  alertContainer.innerHTML = `
-    <div class="fee-alert">
-      <div class="fee-alert-icon">⚠️</div>
-
-      <div>
-        <strong>${tmpl("outstanding_payment")}</strong><br>
-
-        ${tmpl("outstanding_message", {
-          amount: `<span class="amount-red">₦${totalOutstanding.toLocaleString()}</span>`,
-          months: `<b>${outstandingMonths}</b>`
-        })}
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
+        <a href="payment.html" class="active" data-translate="Payment">Payment</a>
+        <a href="schedule.html" data-translate="Schedule">Schedule</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
       </div>
-
-      <button class="pay-btn" onclick="goToPayments()">
-        ${tmpl("pay_now")}
-      </button>
     </div>
-  `;
-    } else {
-      alertContainer.innerHTML = "";
-    }
+  </nav>
 
-    // ===========================
-// Current Month Stats
-// ===========================
-const now = new Date();
-const monthName = now.toLocaleString("default", { month: "long" });
+  <!-- BANNER -->
+  <header class="spm-banner" style="background-image: url('background-payment.jpg');">
+    <div class="spm-banner-overlay"></div>
+    <div class="spm-banner-content">
+      <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
+      <span class="spm-eyebrow">
+        <i class="fa-solid fa-wallet"></i>
+        <span data-translate="My Payments">My Payments</span>
+      </span>
+      <h1 data-translate="My Payments">My Payments</h1>
+      <p data-translate="View your payment history, total paid, and pending payments">
+        View your payment history, total paid, and pending payments
+      </p>
+    </div>
+  </header>
+  <!-- Gold rule under banner -->
+  <div class="spm-banner-rule"></div>
 
-const monthlyPayments = payments?.filter(p =>
-  p.status === "paid" && p.month === monthName
-) || [];
+  <!-- MAIN -->
+  <main class="spm-main">
 
-const monthlyTotal = monthlyPayments.reduce(
-  (sum, p) => sum + Number(p.amount),
-  0
-);
+    <!-- OVERDUE ALERT -->
+    <div id="overdueAlertContainer"></div>
 
-const lastPayment = payments?.find(p => p.status === "paid");
-const lastPaidMonth = lastPayment?.month || null;
-
-let paymentStatus = "";
-let subText = "";
-
-if (monthlyTotal > 0) {
-  paymentStatus = tmpl("paid");
-  subText = tmpl("payment_month", { month: monthName });
-
-} else if (lastPaidMonth) {
-  paymentStatus = tmpl("unpaid");
-  subText = tmpl("last_paid", { month: lastPaidMonth });
-
-} else {
-  paymentStatus = tmpl("unpaid");
-  subText = tmpl("no_payment_yet");
-}
-
-    document.getElementById("paymentStatus").textContent = paymentStatus;
-    document.getElementById("paymentMonth").textContent = subText;
-    document.getElementById("monthlyAmount").textContent = "₦" + monthlyTotal.toLocaleString();
-    document.getElementById("amountMonth").textContent = tmpl("month_amount", { month: monthName });
-
-  
-    // ===========================
-    // Populate payment history
-    // ===========================
-    const history = document.getElementById("paymentHistory");
-    if (!payments || payments.length === 0) {
-      history.innerHTML = `<p>${t("No payments found.")}</p>`;
-    } else {
-      history.innerHTML = payments.map(p => `
-        <div class="notifications-card ${p.status}">
-          <p>
-            ${t("Amount")}: ₦${Number(p.amount).toLocaleString()}<br>
-            ${t("Month")}: <strong>${p.month.toUpperCase()}</strong><br>
-            ${t("Status")}: <strong>${t(p.status)}</strong>
-          </p>
-          <span class="time">${new Date(p.created_at).toLocaleString()}</span>
+    <!-- PAYMENT SUMMARY -->
+    <section class="spm-section">
+      <div class="spm-section-header">
+        <div class="spm-section-icon">
+          <i class="fa-solid fa-chart-pie"></i>
         </div>
-      `).join("");
+        <h2 data-translate="Payment Summary">Payment Summary</h2>
+      </div>
+      <div class="spm-section-body">
+        <div class="spm-stats-grid">
+
+          <div class="stat-card">
+            <div class="stat-icon payments">
+              <i class="fa-solid fa-credit-card"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="paymentStatus">--</h3>
+              <p id="paymentMonth" data-translate="Current Month">Current Month</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fa-solid fa-money-bill-wave"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="monthlyAmount" data-no-translate="true">₦0</h3>
+              <p id="amountMonth" data-translate="Month Amount">Month Amount</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- PAYMENT HISTORY -->
+    <section class="spm-section">
+      <div class="spm-section-header">
+        <div class="spm-section-icon">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+        </div>
+        <h2 data-translate="Payment History">Payment History</h2>
+      </div>
+      <div class="spm-section-body">
+        <div class="spm-history-list" id="paymentHistory">
+          <!-- JS injects payment cards here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- DOWNLOAD BUTTONS -->
+    <section class="spm-download-strip">
+      <button id="downloadReceiptBtn" class="spm-download-btn">
+        <i class="fa-solid fa-file-arrow-down"></i>
+        <span data-translate="Download Latest Receipt (PDF)">Download Latest Receipt (PDF)</span>
+      </button>
+      <button id="downloadAllReceiptsBtn" class="spm-download-btn spm-download-btn--outline">
+        <i class="fa-solid fa-files"></i>
+        <span data-translate="Download All Receipts (PDF)">Download All Receipts (PDF)</span>
+      </button>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
+
+  <script src="translate.js"></script>
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
     }
-
-  } catch (err) {
-    console.error("Failed to load payments:", err);
-    document.getElementById("paymentHistory").innerHTML =
-      `<p style="color:red">${t("Failed to load payments")}</p>`;
-  }
-}
-
-/* ===== GLOBAL FUNCTIONS ===== */
-function goToPayments() {
-  window.location.href = "payment.html";
-}
-
-
-/* ===== DOM READY ===== */
-document.addEventListener("DOMContentLoaded", () => {
-  loadPayments();
-
-  const toggle = document.getElementById("paymentToggle");
-  const dropdown = document.getElementById("paymentDropdown");
-
-  if (toggle && dropdown) {
-    toggle.addEventListener("click", () => {
-      dropdown.classList.toggle("hidden");
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
     });
-  }
-});
+  </script>
 
-/* ===== HELPER: Generate Watermark ===== */
-function addWatermark(doc, text) {
-  doc.setTextColor(220, 220, 220);
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "bold");
-  for (let y = 50; y < 800; y += 40) {
-    for (let x = 40; x < doc.internal.pageSize.getWidth(); x += 100) {
-      doc.text(text, x, y, { angle: 45 });
-    }
-  }
-  doc.setTextColor(0, 0, 0); // reset color
-}
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
-/* ===== DOWNLOAD SINGLE OR MULTIPLE RECEIPTS ===== */
-async function generateReceiptPDF(payments, student, options = { all: false }) {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
-  const pageWidth = doc.internal.pageSize.getWidth();
-
-  // Signature image URL
-  const signURL = "sign.png"; // put your signature here
-
-  for (let i = 0; i < payments.length; i++) {
-    if (!options.all && i > 0) break; // single receipt only
-
-    const payment = payments[i];
-
-    // ===== Watermark =====
-    addWatermark(doc, "Al-Bayan Arabic Institute Online");
-
-    // ===== Logo =====
-    const logo = new Image();
-    logo.src = "logo.png";
-    await new Promise(resolve => {
-      logo.onload = () => {
-        const logoWidth = 80;
-        const logoHeight = (logo.height / logo.width) * logoWidth;
-        doc.addImage(logo, "PNG", pageWidth / 2 - logoWidth / 2, 20, logoWidth, logoHeight);
-        resolve();
-      };
-      logo.onerror = resolve;
-    });
-
-    // ===== Header =====
-    doc.setFontSize(18);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor("#1A237E"); // dark blue header
-    doc.text("Al-Bayan Arabic Institute Online", pageWidth / 2, 120, { align: "center" });
-
-    doc.setFontSize(14);
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor("#000000");
-    doc.text("Payment Receipt", pageWidth / 2, 140, { align: "center" });
-
-    // ===== Student Info =====
-    let startY = 170;
-    doc.setFontSize(12);
-    doc.text(`Name: ${student.fullname}`, 40, startY);
-    doc.text(`Student ID: ${student.matric_number}`, 300, startY);
-    startY += 20;
-    doc.text(`Level: ${student.level_arabic}`, 40, startY);
-    doc.text(`Email: ${student.email}`, 300, startY);
-
-    // ===== Payment Info =====
-    startY += 30;
-    doc.setFontSize(14);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor("#2E7D32"); // green for amount
-    doc.text(`Amount Paid: ₦${Number(payment.amount).toLocaleString()}`, 40, startY);
-    doc.text(`Month Paid: ${(payment.month).toLocaleString()}`, 43, startY + 20);
-
-    startY += 25;
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor("#424298");
-    doc.text(`Payment Date: ${new Date(payment.created_at).toLocaleDateString()}`, 40, startY + 22);
-    doc.text(`Status: ${payment.status.toUpperCase()}`, 300, startY + 22);
-
-    // ===== Friendly Message =====
-    startY += 40;
-    doc.setFontSize(12);
-    doc.setTextColor("#000000");
-    doc.text(
-      "Thank you for your payment! Your support helps us continue providing quality Arabic education.\n\n" +
-  "We appreciate your commitment to learning the Arabic language and the Qur’an. May Allah place barakah in your knowledge, grant you understanding, and reward you abundantly.",
-      40,
-      startY + 5,
-      { maxWidth: pageWidth - 40 }
+  <script>
+    const sb = supabase.createClient(
+      "https://cjrpjekmqrckozrbtwps.supabase.co",
+      "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b"
     );
 
-    // ===== QR Code =====
-    startY += 70;
-    const qrCanvas = document.createElement("canvas");
-    await QRCode.toCanvas(qrCanvas, `${student.matric_number}|${payment.id}|${payment.amount}|${student.fullname}`, { width: 80 });
-    const qrData = qrCanvas.toDataURL("image/png");
-    doc.addImage(qrData, "PNG", pageWidth - 120, startY - 2, 80, 80);
+    /* ===== STUDENT GUARD ===== */
+    (function () {
+      const role   = sessionStorage.getItem("role");
+      const matric = sessionStorage.getItem("matric");
+      if (role !== "student" || !matric) {
+        alert(t("Student login required"));
+        window.location.href = "login.html";
+      }
+    })();
 
-    // ===== Signature =====
-    startY -= 45;
-    const sign = new Image();
-    sign.src = signURL;
-    await new Promise(resolve => {
-      sign.onload = () => {
-        doc.addImage(sign, "PNG", 40, startY + 30, 160, 70);
-        resolve();
-      };
-      sign.onerror = resolve;
-    });
+    /* ===== LOAD PAYMENTS ===== */
+    async function loadPayments() {
+      const matric = sessionStorage.getItem("matric");
+      if (!matric) return;
 
-    // Bursar's Name below signature
-doc.setFontSize(12);
-doc.setFont("helvetica", "bold");
-doc.text("Ustaz Musa Abdullah Labeeb", 40, startY + 98);
-doc.setFont("helvetica", "normal");
-doc.text("Bursar, Al-Bayan Arabic Institute", 40, startY + 115);
+      try {
+        const { data: payments, error } = await sb
+          .from("payments")
+          .select("amount, month, status, created_at, id")
+          .eq("matric_number", matric)
+          .order("created_at", { ascending: false });
+        if (error) throw error;
 
-    // ===== Footer =====
-    doc.setFontSize(10);
-    doc.setFont("helvetica", "italic");
-    doc.text("This is a computer-generated receipt.", pageWidth / 2, 780, { align: "center" });
+        const { data: outstanding } = await sb
+          .from("student_fee_status")
+          .select("month, amount_due")
+          .eq("matric_number", matric)
+          .eq("status", "unpaid");
 
-    if (options.all && i < payments.length - 1) doc.addPage();
-  }
+        const uniqueMonths     = [...new Set((outstanding || []).map(o => o.month))];
+        const totalOutstanding = (outstanding || []).reduce((sum, item) => sum + Number(item.amount_due), 0);
+        const outstandingMonths = uniqueMonths.length > 2
+          ? `${uniqueMonths.slice(0, 2).join(", ")} +${uniqueMonths.length - 2} more`
+          : uniqueMonths.join(", ");
 
-  // Save PDF
-  const filename = options.all ? `Receipts_${student.matric_number}.pdf` : `Receipt_${student.matric_number}_${payments[0].id}.pdf`;
-  doc.save(filename);
-}
+        /* Overdue alert */
+        const alertContainer = document.getElementById("overdueAlertContainer");
+        if (totalOutstanding > 0) {
+          alertContainer.innerHTML = `
+            <div class="spm-fee-alert">
+              <div class="spm-fee-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+              <div class="spm-fee-text">
+                <strong>${tmpl("outstanding_payment")}</strong>
+                <span>${tmpl("outstanding_message", {
+                  amount: `<span class="amount-red">₦${totalOutstanding.toLocaleString()}</span>`,
+                  months: `<b>${outstandingMonths}</b>`
+                })}</span>
+              </div>
+              <button class="spm-pay-btn" onclick="goToPayments()">
+                <i class="fa-solid fa-credit-card"></i>
+                ${tmpl("pay_now")}
+              </button>
+            </div>`;
+        } else {
+          alertContainer.innerHTML = "";
+        }
 
-/* ===== BUTTONS ===== */
-async function downloadReceipt(single = true) {
-  const matric = sessionStorage.getItem("matric");
-  if (!matric) return alert("Student info missing");
+        /* Stats */
+        const now          = new Date();
+        const monthName    = now.toLocaleString("default", { month: "long" });
+        const monthlyPayments = payments?.filter(p => p.status === "paid" && p.month === monthName) || [];
+        const monthlyTotal = monthlyPayments.reduce((sum, p) => sum + Number(p.amount), 0);
+        const lastPayment  = payments?.find(p => p.status === "paid");
+        const lastPaidMonth = lastPayment?.month || null;
 
-  const { data: student, error: studentError } = await sb
-    .from("students")
-    .select("fullname, matric_number, level_arabic, email")
-    .eq("matric_number", matric)
-    .single();
-  if (studentError) return alert("Failed to fetch student info");
+        let paymentStatus, subText;
+        if (monthlyTotal > 0) {
+          paymentStatus = tmpl("paid");
+          subText       = tmpl("payment_month", { month: monthName });
+        } else if (lastPaidMonth) {
+          paymentStatus = tmpl("unpaid");
+          subText       = tmpl("last_paid", { month: lastPaidMonth });
+        } else {
+          paymentStatus = tmpl("unpaid");
+          subText       = tmpl("no_payment_yet");
+        }
 
-  const { data: payments, error: paymentError } = await sb
-    .from("payments")
-    .select("*")
-    .eq("matric_number", matric)
-    .order("created_at", { ascending: true });
-  if (paymentError || !payments) return alert("Failed to fetch payments");
+        document.getElementById("paymentStatus").textContent  = paymentStatus;
+        document.getElementById("paymentMonth").textContent   = subText;
+        document.getElementById("monthlyAmount").textContent  = "₦" + monthlyTotal.toLocaleString();
+        document.getElementById("amountMonth").textContent    = tmpl("month_amount", { month: monthName });
 
-  await generateReceiptPDF(payments, student, { all: !single });
-}
+        /* History */
+        const history = document.getElementById("paymentHistory");
+        if (!payments || payments.length === 0) {
+          history.innerHTML = `<p class="spm-empty">${t("No payments found.")}</p>`;
+        } else {
+          history.innerHTML = payments.map(p => `
+            <div class="spm-history-card ${p.status}">
+              <div class="spm-history-icon ${p.status === 'paid' ? 'paid' : p.status === 'pending' ? 'pending' : 'failed'}">
+                <i class="fa-solid fa-${p.status === 'paid' ? 'circle-check' : p.status === 'pending' ? 'clock' : 'circle-xmark'}"></i>
+              </div>
+              <div class="spm-history-body">
+                <div class="spm-history-top">
+                  <span class="spm-history-month">${p.month.toUpperCase()}</span>
+                  <span class="spm-history-badge ${p.status}">${t(p.status)}</span>
+                </div>
+                <div class="spm-history-amount">₦${Number(p.amount).toLocaleString()}</div>
+                <div class="spm-history-date">${new Date(p.created_at).toLocaleString()}</div>
+              </div>
+            </div>
+          `).join("");
+        }
 
-/* ===== EVENT LISTENERS ===== */
-document.getElementById("downloadReceiptBtn").addEventListener("click", () => downloadReceipt(true)); // Single receipt
-document.getElementById("downloadAllReceiptsBtn")?.addEventListener("click", () => downloadReceipt(false)); // All payments
+      } catch (err) {
+        console.error("Failed to load payments:", err);
+        document.getElementById("paymentHistory").innerHTML =
+          `<p class="spm-empty" style="color:#dc2626">${t("Failed to load payments")}</p>`;
+      }
+    }
 
-</script>
+    function goToPayments() { window.location.href = "payment.html"; }
+
+    document.addEventListener("DOMContentLoaded", loadPayments);
+
+
+    /* ============================================================
+       GENERATE RECEIPT PDF
+       Premium redesign — matches admission letter visual system
+       All logic & data flow preserved exactly
+    ============================================================ */
+
+    /* ── Helpers ── */
+    function pdfDrawHRule(doc, y, leftX, rightX, color = [180, 151, 42]) {
+      doc.setDrawColor(...color);
+      doc.setLineWidth(0.8);
+      doc.line(leftX, y, rightX, y);
+    }
+
+    function pdfDrawDoubleRule(doc, y, leftX, rightX) {
+      doc.setDrawColor(180, 151, 42);
+      doc.setLineWidth(1.2);
+      doc.line(leftX, y, rightX, y);
+      doc.setLineWidth(0.4);
+      doc.line(leftX, y + 4, rightX, y + 4);
+    }
+
+    function pdfLabel(doc, text, x, y) {
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(7.5);
+      doc.setTextColor(120, 120, 120);
+      doc.text(text.toUpperCase(), x, y);
+    }
+
+    function pdfValue(doc, text, x, y, maxWidth) {
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(11);
+      doc.setTextColor(30, 30, 30);
+      if (maxWidth) {
+        doc.text(text, x, y, { maxWidth });
+      } else {
+        doc.text(text, x, y);
+      }
+    }
+
+    async function generateReceiptPDF(payments, student, options = { all: false }) {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
+      const pw = doc.internal.pageSize.getWidth();   /* 595 */
+      const ph = doc.internal.pageSize.getHeight();  /* 842 */
+      const ML = 48;   /* margin left  */
+      const MR = pw - 48; /* margin right */
+
+      for (let i = 0; i < payments.length; i++) {
+        if (!options.all && i > 0) break;
+        const payment = payments[i];
+
+        /* ── BORDER: outer green, inner gold ── */
+        doc.setDrawColor(63, 81, 181);
+        doc.setLineWidth(2.5);
+        doc.roundedRect(16, 16, pw - 32, ph - 32, 4, 4, "S");
+
+        doc.setDrawColor(180, 151, 42);
+        doc.setLineWidth(0.7);
+        doc.roundedRect(22, 22, pw - 44, ph - 44, 3, 3, "S");
+
+        /* ── CORNER ORNAMENTS ── */
+        const co = 18; /* corner ornament size */
+        [[34, 34], [pw - 34 - co, 34], [34, ph - 34 - co], [pw - 34 - co, ph - 34 - co]].forEach(([cx, cy]) => {
+          doc.setDrawColor(180, 151, 42);
+          doc.setLineWidth(0.6);
+          /* top-left of each corner */
+          doc.line(cx, cy, cx + co, cy);
+          doc.line(cx, cy, cx, cy + co);
+        });
+
+        /* ── WATERMARK DIAGONAL TEXT ── */
+        doc.setTextColor(230, 230, 230);
+        doc.setFontSize(9);
+        doc.setFont("helvetica", "bold");
+        for (let wy = 60; wy < ph - 30; wy += 44) {
+          for (let wx = 40; wx < pw; wx += 110) {
+            doc.text("Al-Bayan", wx, wy, { angle: 45 });
+          }
+        }
+
+        /* ── TOP GREEN BAND ── */
+        doc.setFillColor(63, 81, 181);
+        doc.rect(28, 28, pw - 56, 32, "F");
+
+        /* Band label — left */
+        doc.setTextColor(255, 255, 255);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(7);
+        doc.text("OFFICE OF THE BURSAR", ML, 48);
+
+        /* Band label — right */
+        doc.text("OFFICIAL PAYMENT RECEIPT", MR, 48, { align: "right" });
+
+        /* Gold rule under band */
+        pdfDrawHRule(doc, 62, ML, MR);
+
+        /* ── LOGO ── */
+        let logoBottomY = 100;
+        const logo = new Image();
+        logo.src = "logo.png";
+        await new Promise(resolve => {
+          logo.onload = () => {
+            const lw = 54;
+            const lh = (logo.height / logo.width) * lw;
+            doc.addImage(logo, "PNG", pw / 2 - lw / 2, 68, lw, lh);
+            logoBottomY = 68 + lh + 6;
+            resolve();
+          };
+          logo.onerror = resolve;
+        });
+
+        /* ── INSTITUTION NAME ── */
+        /* Institution name — sized to always fit A4 width */
+        doc.setTextColor(63, 81, 181);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(13);
+        const instName = "Al-Bayan Arabic Institute Online";
+        const instW = doc.getTextWidth(instName);
+        /* Scale down if it would overflow */
+        const maxInstW = MR - ML;
+        if (instW > maxInstW) {
+          doc.setFontSize(13 * (maxInstW / instW));
+        }
+        doc.text(instName, pw / 2, logoBottomY + 14, { align: "center" });
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(8);
+        doc.setTextColor(26, 35, 126);
+        doc.text("Office of the Bursar  -  Admissions & Finance Division", pw / 2, logoBottomY + 28, { align: "center" });
+
+        /* ── ORNAMENT DOUBLE RULE ── */
+        const ornY = logoBottomY + 40;
+        pdfDrawDoubleRule(doc, ornY, ML, MR);
+
+        /* ── RECEIPT TITLE ── */
+        doc.setTextColor(63, 81, 181);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(18);
+        doc.text("PAYMENT RECEIPT", pw / 2, ornY + 22, { align: "center" });
+
+        /* ── DOC META BAND ── */
+        const metaY = ornY + 34;
+        doc.setFillColor(253, 246, 224); /* gold-pale */
+        doc.rect(ML, metaY, MR - ML, 28, "F");
+        doc.setDrawColor(212, 200, 154);
+        doc.setLineWidth(0.5);
+        doc.rect(ML, metaY, MR - ML, 28, "S");
+
+        /* Receipt ID */
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(7);
+        doc.setTextColor(100, 80, 20);
+        doc.text("RECEIPT ID", ML + 8, metaY + 10);
+        doc.setFontSize(9.5);
+        doc.setTextColor(30, 30, 30);
+        doc.text(payment.id, ML + 8, metaY + 22);
+
+        /* Date */
+        const receiptDate = new Date(payment.created_at).toLocaleDateString("en-GB", {
+          day: "numeric", month: "long", year: "numeric"
+        });
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(7);
+        doc.setTextColor(100, 80, 20);
+        doc.text("DATE ISSUED", MR - 8, metaY + 10, { align: "right" });
+        doc.setFontSize(9.5);
+        doc.setTextColor(30, 30, 30);
+        doc.text(receiptDate, MR - 8, metaY + 22, { align: "right" });
+
+        /* ── STUDENT PARTICULARS ── */
+        const spY = metaY + 46;
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(7);
+        doc.setTextColor(180, 151, 42);
+        doc.text("STUDENT PARTICULARS", ML, spY);
+        pdfDrawHRule(doc, spY + 5, ML, MR, [212, 200, 154]);
+
+        /* Two-column grid */
+        const col1X = ML;
+        const col2X = pw / 2 + 10;
+        let gy = spY + 20;
+        const rowH = 30;
+
+        const fields = [
+          ["Full Name",   student.fullname,       "Matric Number", student.matric_number],
+          ["Email",       student.email,           "Level",         student.level_arabic],
+        ];
+
+        fields.forEach(([l1, v1, l2, v2]) => {
+          pdfLabel(doc, l1, col1X, gy);
+          pdfValue(doc, v1, col1X, gy + 12, pw / 2 - ML - 20);
+          pdfLabel(doc, l2, col2X, gy);
+          pdfValue(doc, v2, col2X, gy + 12, pw / 2 - 30);
+          gy += rowH;
+        });
+
+        /* ── PAYMENT DETAILS ── */
+        const pdY = gy + 14;
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(7);
+        doc.setTextColor(180, 151, 42);
+        doc.text("PAYMENT DETAILS", ML, pdY);
+        pdfDrawHRule(doc, pdY + 5, ML, MR, [212, 200, 154]);
+
+        /* Amount — prominent */
+        const amtY = pdY + 30;
+        doc.setFillColor(232, 234, 246);
+        doc.roundedRect(ML, amtY - 16, MR - ML, 38, 3, 3, "F");
+        doc.setDrawColor(197, 202, 233);
+        doc.setLineWidth(0.5);
+        doc.roundedRect(ML, amtY - 16, MR - ML, 38, 3, 3, "S");
+
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(8);
+        doc.setTextColor(5, 21, 196);
+        doc.text("AMOUNT PAID", ML + 12, amtY - 4);
+
+        doc.setFontSize(22);
+        doc.setTextColor(5, 21, 196);
+        doc.text(`₦${Number(payment.amount).toLocaleString()}`, ML + 12, amtY + 16);
+
+        /* Status badge — right side of amount row */
+        const statusColor = payment.status === "paid"
+          ? [63, 81, 181] : payment.status === "pending"
+          ? [146, 64, 14] : [185, 28, 28];
+        doc.setFillColor(...statusColor);
+        doc.roundedRect(MR - 68, amtY - 10, 60, 20, 3, 3, "F");
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(8);
+        doc.setTextColor(255, 255, 255);
+        doc.text(payment.status.toUpperCase(), MR - 38, amtY + 4, { align: "center" });
+
+        /* Month & date row */
+        let detY = amtY + 42;
+        pdfLabel(doc, "Month Paid", ML, detY);
+        pdfValue(doc, payment.month, ML, detY + 12);
+
+        pdfLabel(doc, "Payment Date", pw / 2 + 10, detY);
+        pdfValue(doc, receiptDate, pw / 2 + 10, detY + 12);
+
+        detY += 34;
+        pdfLabel(doc, "Payment ID", ML, detY);
+        pdfValue(doc, payment.id, ML, detY + 12, MR - ML);
+
+        /* ── CLOSING MESSAGE ── */
+        const msgY = detY + 46;
+        pdfDrawHRule(doc, msgY, ML, MR, [212, 200, 154]);
+
+        doc.setFont("helvetica", "italic");
+        doc.setFontSize(10.5);
+        doc.setTextColor(40, 40, 40);
+        doc.text(
+          "Thank you for your payment! Your support helps us continue providing quality Arabic education.\n" +
+          "May Allah place barakah in your knowledge, grant you understanding, and reward you abundantly.",
+          pw / 2, msgY + 18,
+          { align: "center", maxWidth: MR - ML }
+        );
+
+        /* ── SIGNATURE + QR ── */
+        const sigY = msgY + 70;
+
+        /* Signature */
+        const sign = new Image(); sign.src = "sign.png";
+        await new Promise(resolve => {
+          sign.onload  = () => { doc.addImage(sign, "PNG", ML, sigY, 150, 56); resolve(); };
+          sign.onerror = resolve;
+        });
+
+        pdfDrawHRule(doc, sigY + 62, ML, ML + 160, [100, 100, 100]);
+
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(10);
+        doc.setTextColor(63, 81, 181);
+        doc.text("Ustadh Muaz Abubakar Sidiq", ML, sigY + 76);
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(8.5);
+        doc.setTextColor(80, 80, 80);
+        doc.text("Bursar, Al-Bayan Arabic Institute", ML, sigY + 90);
+
+        /* QR code */
+        const qrCanvas = document.createElement("canvas");
+        await QRCode.toCanvas(qrCanvas, `${student.matric_number}|${payment.id}|${payment.amount}|${student.fullname}`, { width: 80 });
+        doc.addImage(qrCanvas.toDataURL("image/png"), "PNG", MR - 84, sigY, 72, 72);
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(7);
+        doc.setTextColor(120, 120, 120);
+        doc.text("Scan to verify", MR - 48, sigY + 82, { align: "center" });
+
+        /* ── BOTTOM BAND ── */
+        doc.setFillColor(63, 81, 181);
+        doc.rect(28, ph - 60, pw - 56, 28, "F");
+
+        doc.setTextColor(255, 255, 255);
+        doc.setFont("helvetica", "italic");
+        doc.setFontSize(7.5);
+        doc.text(
+          "This is a computer-generated receipt  ·  Any alteration renders it invalid  ·  Verify via QR code",
+          pw / 2, ph - 42, { align: "center" }
+        );
+
+        if (options.all && i < payments.length - 1) doc.addPage();
+      }
+
+      doc.save(options.all
+        ? `Receipts_${student.matric_number}.pdf`
+        : `Receipt_${student.matric_number}_${payments[0].id}.pdf`);
+    }
+
+    /* ===== DOWNLOAD HANDLERS ===== */
+    async function downloadReceipt(single = true) {
+      const matric = sessionStorage.getItem("matric");
+      if (!matric) return alert("Student info missing");
+
+      const { data: student, error: studentError } = await sb
+        .from("students").select("fullname, matric_number, level_arabic, email")
+        .eq("matric_number", matric).single();
+      if (studentError) return alert("Failed to fetch student info");
+
+      const { data: payments, error: paymentError } = await sb
+        .from("payments").select("*").eq("matric_number", matric)
+        .order("created_at", { ascending: true });
+      if (paymentError || !payments) return alert("Failed to fetch payments");
+
+      await generateReceiptPDF(payments, student, { all: !single });
+    }
+
+    document.getElementById("downloadReceiptBtn").addEventListener("click",      () => downloadReceipt(true));
+    document.getElementById("downloadAllReceiptsBtn")?.addEventListener("click", () => downloadReceipt(false));
+  </script>
 </body>
 </html>

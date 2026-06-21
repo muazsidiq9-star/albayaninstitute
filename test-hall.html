@@ -3,115 +3,185 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Test Hall - Al-Bayan</title>
+  <title>Test Hall - Al-Bayan Arabic Institute Online</title>
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="test-hall.css">
+  <link rel="stylesheet" href="course-pages.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
-<!-- Navigation -->
-<nav class="master-nav">
-  <div class="nav-container">
-    <a href="index.html" class="logo">
-      <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
-    </a>
-    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
-    <div class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="courses.html">Courses</a>
-      <a href="students-dashboard.html">Student Dashboard</a>
-      <a href="contact.html">Contact</a>
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="students-dashboard.html" data-translate="Student Dashboard">Student Dashboard</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================================================
+       EXAM HEADER
+       JS targets: #examTitle, #examMessage, #timer, #time,
+       #timeWarning, #countdownBarContainer, #countdownBar,
+       #progressBarContainer, #progressBar
+  ================================================ -->
+  <header class="hall-header" data-no-translate="true">
+
+    <div class="hall-header-top">
+      <div class="hall-meta">
+        <h1 id="examTitle" data-no-translate="true">Loading Test...</h1>
+        <p id="examMessage" data-no-translate="true">Your test details will appear here once it starts</p>
+      </div>
+      <div class="hall-timer-box">
+        <div class="hall-timer-label">
+          <i class="fa-solid fa-clock"></i>
+          <span data-translate="Time Left">Time Left</span>
+        </div>
+        <div id="timer" class="hall-timer-display">
+          <span id="time">--:--</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="timeWarning" class="time-warning hidden">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span data-translate="⚠️ Only 2 minutes remaining. Please finalize your answers">
+        ⚠️ Only 2 minutes remaining. Please finalize your answers
+      </span>
+    </div>
+
+    <div class="bar-row">
+      <span class="bar-label" data-translate="Time">Time</span>
+      <div id="countdownBarContainer">
+        <div id="countdownBar" class="countdown-safe"></div>
+      </div>
+    </div>
+
+    <div class="bar-row">
+      <span class="bar-label" data-translate="Progress">Progress</span>
+      <div id="progressBarContainer">
+        <div id="progressBar"></div>
+      </div>
+    </div>
+
+  </header>
+
+  <!-- QUESTIONS  (JS injects here) -->
+  <section id="questionsContainer"></section>
+
+  <!-- NAV BUTTONS — JS targets #prevBtn, #reviewBtn, #nextBtn -->
+  <div class="question-nav">
+    <button id="prevBtn" class="btn-nav" disabled>
+      <i class="fa-solid fa-arrow-left"></i>
+      <span data-translate="Previous">Previous</span>
+    </button>
+    <button id="reviewBtn" class="btn-nav btn-review" disabled>
+      <i class="fa-solid fa-list-check"></i>
+      <span data-translate="Review">Review</span>
+    </button>
+    <button id="nextBtn" class="btn-nav btn-next" disabled>
+      <span data-translate="Next">Next</span>
+      <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </div>
+
+  <!-- REVIEW MODAL — JS targets #reviewModal, #reviewList,
+       #closeReviewModal, #backToExamBtn, #finalSubmitBtn -->
+  <div id="reviewModal">
+    <div class="modal-content">
+      <button id="closeReviewModal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="review-modal-header">
+        <div class="review-modal-icon-wrap">
+          <i class="fa-solid fa-list-check"></i>
+        </div>
+        <h2 data-translate="Review Your Answers">Review Your Answers</h2>
+        <p data-translate="Check your answers before final submission.">
+          Check your answers before final submission.
+        </p>
+      </div>
+      <div id="reviewList"></div>
+      <div class="review-modal-actions">
+        <button id="backToExamBtn">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span data-translate="Back to Exam">Back to Exam</span>
+        </button>
+        <button id="finalSubmitBtn">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span data-translate="Submit All Answers">Submit All Answers</span>
+        </button>
+      </div>
     </div>
   </div>
-</nav>
 
-<!-- Header -->
-<header class="hall-header" data-no-translate="true" style="background-image: url('background-main.jpg');">
-    <div class="header-overlay">
-  <h1 id="examTitle" data-no-translate="true">Loading Test...</h1>
-  <p id="examMessage" data-no-translate="true">Your test details will appear here once it starts</p>  <div id="timer">Time Left: <span id="time">--:--</span></div>
-  <div id="timeWarning" class="time-warning hidden">
-  ⚠️ Only 2 minutes remaining. Please finalize your answers
-</div>
-  <div id="countdownBarContainer">
-    <div id="countdownBar"></div>
+  <!-- COMPLETION MODAL — JS targets #completionModal,
+       #goDashboardBtn, #logoutBtn -->
+  <div id="completionModal" style="display:none;">
+    <div class="modal-content">
+      <div class="completion-icon">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h2 data-translate="Test/Exam Submitted">✅ Test/Exam Submitted</h2>
+      <p data-translate="Thank you. Your test/exam has been successfully submitted. Results will be released later.">
+        Thank you. Your test/exam has been successfully submitted. Results will be released later.
+      </p>
+      <div class="completion-actions">
+        <button id="goDashboardBtn">
+          <i class="fa-solid fa-gauge-high"></i>
+          <span data-translate="Go to Dashboard">Go to Dashboard</span>
+        </button>
+        <button id="logoutBtn">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span data-translate="Logout">Logout</span>
+        </button>
+      </div>
+    </div>
   </div>
-  <div id="progressBarContainer">
-    <div id="progressBar"></div>
-  </div>
-</header>
 
-<!-- Questions Container -->
-<section id="questionsContainer">
-  <!-- JS injects one question at a time here -->
-</section>
+  <!-- FOOTER -->
+  <footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
 
-<!-- Navigation Buttons -->
-<div class="question-nav">
-  <button id="prevBtn" class="btn-nav" disabled>Previous</button>
-  <button id="reviewBtn" class="btn-nav" disabled>Review</button>
-  <button id="nextBtn" class="btn-nav" disabled>Next</button>
-</div>
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
 
-<!-- Review Modal -->
-<div id="reviewModal">
-  <div class="modal-content">
-    <button id="closeReviewModal" class="close-modal-btn">✖</button>
-    <h2>Review Your Answers</h2>
-    <div id="reviewList"></div>
-    <button id="backToExamBtn">Back to Exam</button>
-    <button id="finalSubmitBtn">Submit All Answers</button>
-  </div>
-</div>
-
-<div id="completionModal" style="display:none;">
-  <div class="modal-content">
-    <h2>✅ Test/Exam Submitted</h2>
-    <p>Thank you. Your test/exam has been successfully submitted. Results will be released later.</p>
-
-    <button id="goDashboardBtn">Go to Dashboard</button>
-    <button id="logoutBtn">Logout</button>
-  </div>
-</div>
-
-<!-- WhatsApp Button -->
-<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
-
-<footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
-
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
-<script>
-  // Hamburger Menu
-  function toggleMenu() {
-    const nav = document.getElementById("navLinks");
-    nav.classList.toggle("show");
-  }
-  document.addEventListener("click", function(e) {
-    const nav = document.getElementById("navLinks");
-    const hamburger = document.querySelector(".hamburger");
-    if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
-      nav.classList.remove("show");
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
     }
-  });
-</script>
-<script src="test-hall.js"></script>
-<script src="translate.js"></script>
-
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+    });
+  </script>
+  <script src="test-hall.js"></script>
+  <script src="translate.js"></script>
 </body>
 </html>

@@ -1,17 +1,42 @@
 // ===========================
-// Student Guard (with DEV bypass)
+// Student Session Restore + Guard
 // ===========================
-const DEV_BYPASS = false; // 🔴 switch to true skips login
-const matric = sessionStorage.getItem("matric");
+const DEV_BYPASS = false;
 
 (function () {
   if (DEV_BYPASS) return;
+
+  // Try to restore from localStorage if sessionStorage is empty
   const role = sessionStorage.getItem("role");
-  if (role !== "student" || !matric) {
+  if (!role) {
+    const raw = localStorage.getItem("studentSession");
+    if (raw) {
+      try {
+        const saved = JSON.parse(raw);
+        if (saved.expiresAt && Date.now() < saved.expiresAt) {
+          sessionStorage.setItem("role", saved.role);
+          sessionStorage.setItem("matric", saved.matric);
+          sessionStorage.setItem("currentStudent", saved.currentStudent);
+        } else {
+          // Expired — clean up
+          localStorage.removeItem("studentSession");
+        }
+      } catch (e) {
+        localStorage.removeItem("studentSession");
+      }
+    }
+  }
+
+  const restoredRole = sessionStorage.getItem("role");
+  const restoredMatric = sessionStorage.getItem("matric");
+
+  if (restoredRole !== "student" || !restoredMatric) {
     alert(t("Student login required"));
     window.location.href = "login.html";
   }
 })();
+
+const matric = sessionStorage.getItem("matric");
 
 // ===========================
 // Students Dashboard JS
@@ -27,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   banner.style.top = "0";
   banner.style.left = "0";
   banner.style.width = "100%";
-  banner.style.background = "#4CAF50";
+  banner.style.background = "#2b72ad";
   banner.style.color = "#fff";
   banner.style.fontSize = "1.2rem";
   banner.style.fontWeight = "bold";
@@ -166,7 +191,7 @@ if (totalOutstanding > 0) {
       `Hello Sir/Madam, Please I will complete my payment for ${outstandingMonths} soon in sha Allah.`
     );
 
-    whatsappBtn.href = `https://wa.me/2348110705054?text=${message}`;
+    whatsappBtn.href = `https://wa.me/2348105215518?text=${message}`;
 
     modal.classList.remove("hidden");
 
@@ -286,96 +311,246 @@ function renderMessage(message) {
   }
 }
 
-async function loadNotifications(matric) {  
-  const list = document.querySelector(".notifications-list");
-  const latest = document.querySelector(".notification-latest");
-  if (!list || !latest) return;  
+function getHiddenNotifications() {
+  return JSON.parse(
+    localStorage.getItem("hiddenNotifications") || "[]"
+  );
+}
 
-  try {  
-    const { data, error } = await sb  
-      .from("notifications")  
-      .select("message, title, created_at")  
-      .eq("matric_number", matric)  
-      .order("created_at", { ascending: false })  
-      .limit(5);  
+function hideNotification(id) {
 
-    if (error) throw error;  
+  let hidden = getHiddenNotifications();
 
-    if (!data || data.length === 0) {
-      list.innerHTML = `<p>${"No notifications yet."}</p>`;
-      latest.innerHTML = `<p style="margin:0;">${"No notifications"}</p><span class="dropdown-arrow">▼</span>`;
+  if (!hidden.includes(id)) {
+    hidden.push(id);
+  }
+
+  localStorage.setItem(
+    "hiddenNotifications",
+    JSON.stringify(hidden)
+  );
+
+  loadNotifications(matric);
+}
+
+function restoreNotifications() {
+
+  localStorage.removeItem("hiddenNotifications");
+
+  loadNotifications(matric);
+}
+
+async function loadNotifications(matric) {
+
+  const list =
+    document.querySelector(".notifications-list");
+
+  const latest =
+    document.querySelector(".notification-latest");
+
+  const cardsContainer =
+    document.getElementById("notificationCards");
+
+  if (!list || !latest) return;
+
+  try {
+
+    const { data, error } = await sb
+      .from("notifications")
+      .select("message,title,created_at")
+      .eq("matric_number", matric)
+      .order("created_at", { ascending: false })
+      .limit(15);
+
+    if (error) throw error;
+
+    const hidden = getHiddenNotifications();
+
+    const visibleNotifications =
+      (data || []).filter(
+        n => !hidden.includes(n.created_at)
+      );
+
+    if (visibleNotifications.length === 0) {
+      // Update sub-text only — preserve the header structure
+      const subEl = latest.querySelector(".sd-notif-sub");
+      if (subEl) subEl.textContent = t("No notifications available.");
+      cardsContainer.innerHTML = `<p style="padding:10px 0;color:var(--text-muted);">${t("No notifications available.")}</p>`;
       return;
     }
 
-    // Build latest notification as a full card
-    const latestNotif = data[0];
+    const latestNotif =
+      visibleNotifications[0];
+
     let typeClass = "";
     let borderColor = "";
     let icon = "🔔";
 
-    const t = latestNotif.title.toLowerCase();
-    if (t.includes("schedule")) { typeClass = "schedule"; borderColor = "#fcbb08"; icon="📅"; }
-    else if (t.includes("payment")) { typeClass = "payments"; borderColor = "#00ff55"; icon="💰"; }
-    else if (t.includes("grade")) { typeClass = "grades"; borderColor = "#0011ff"; icon="⭐"; }
-    else { 
-      const hash = Array.from(t).reduce((acc, char) => acc + char.charCodeAt(0), 0);
-      const colors = ["#9b59b6", "#1abc9c", "#e74c3c", "#f1c40f", "#34495e"];
-      borderColor = colors[hash % colors.length]; 
-      icon="🔔";
+    const title =
+      latestNotif.title.toLowerCase();
+
+    if (title.includes("schedule")) {
+      borderColor = "#fcbb08";
+      icon = "📅";
+    }
+    else if (title.includes("payment")) {
+      borderColor = "#00ff55";
+      icon = "💰";
+    }
+    else if (title.includes("grade")) {
+      borderColor = "#0011ff";
+      icon = "⭐";
+    }
+    else {
+      const hash =
+        Array.from(title)
+        .reduce((a,c)=>a+c.charCodeAt(0),0);
+
+      const colors = [
+        "#9b59b6",
+        "#1abc9c",
+        "#e74c3c",
+        "#f1c40f",
+        "#34495e"
+      ];
+
+      borderColor =
+        colors[hash % colors.length];
     }
 
-    latest.innerHTML = `
-  <div class="notifications-card ${typeClass}" style="border-left:5px solid ${borderColor}; display:flex; align-items:center; justify-content:space-between; cursor:pointer;">
-    <span style="margin-right:8px;font-size:18px;">${icon}</span>
-    <p style="margin:0; flex:1;">${renderMessage(latestNotif.message)}</p>
-    <span class="time" style="font-size:12px; color:#cc0202;">${new Date(latestNotif.created_at).toLocaleString()}</span>
-    <span class="dropdown-arrow">▼</span>
-  </div>
-`;
+    // Update the existing header elements without replacing the structure
+    const bellEl = latest.querySelector(".sd-notif-bell");
+    const titleEl = latest.querySelector("h2");
+    const subEl = latest.querySelector(".sd-notif-sub");
+    if (bellEl) bellEl.innerHTML = `<span style="font-size:1.2rem;">${icon}</span>`;
+    if (titleEl) latest.style.borderLeft = `4px solid ${borderColor}`;
+    if (subEl) {
+      const dateStr = new Date(latestNotif.created_at).toLocaleString();
+      const msg = renderMessage(latestNotif.message);
+      subEl.innerHTML = `<span style="direction:ltr;unicode-bidi:embed;white-space:nowrap;">${dateStr}</span> — ${msg.substring(0,55)}${msg.length > 55 ? "…" : ""}`;
+    }
 
-    // Populate dropdown list (all notifications)
-    list.innerHTML = data
-      .map((n) => {
-        let typeClass = "";
+    cardsContainer.innerHTML =
+      visibleNotifications.map(n => {
+
         let borderColor = "";
         let icon = "🔔";
 
-        const t = n.title.toLowerCase();
-        if (t.includes("schedule")) { typeClass = "schedule"; borderColor = "#fcbb08"; icon="📅"; }
-        else if (t.includes("payment")) { typeClass = "payments"; borderColor = "#00ff55"; icon="💰"; }
-        else if (t.includes("grade")) { typeClass = "grades"; borderColor = "#0011ff"; icon="⭐"; }
-        else { 
-          const hash = Array.from(t).reduce((acc, char) => acc + char.charCodeAt(0), 0);
-          const colors = ["#9b59b6", "#1abc9c", "#e74c3c", "#f1c40f", "#34495e"];
-          borderColor = colors[hash % colors.length]; 
-          icon="🔔";
+        const t =
+          n.title.toLowerCase();
+
+        if (t.includes("schedule")) {
+          borderColor = "#fcbb08";
+          icon = "📅";
+        }
+        else if (t.includes("payment")) {
+          borderColor = "#00ff55";
+          icon = "💰";
+        }
+        else if (t.includes("grade")) {
+          borderColor = "#0011ff";
+          icon = "⭐";
+        }
+        else {
+
+          const hash =
+            Array.from(t)
+            .reduce(
+              (a,c)=>a+c.charCodeAt(0),
+              0
+            );
+
+          const colors = [
+            "#9b59b6",
+            "#1abc9c",
+            "#e74c3c",
+            "#f1c40f",
+            "#34495e"
+          ];
+
+          borderColor =
+            colors[hash % colors.length];
         }
 
+        const dateStr = new Date(n.created_at).toLocaleString();
         return `
-          <div class="notifications-card" style="border-left: 5px solid ${borderColor};">
-            <span style="margin-right:8px;font-size:18px;">${icon}</span>
-            <p>${renderMessage(n.message)}</p>
-            <span class="time">${new Date(n.created_at).toLocaleString()}</span>
+          <div class="notifications-card" style="border-left-color:${borderColor};">
+            <span class="notif-icon">${icon}</span>
+            <p class="notif-message">${renderMessage(n.message)}</p>
+            <span class="time">${dateStr}</span>
+            <button
+              class="notif-remove"
+              onclick="hideNotification('${n.created_at}')"
+              title="Hide notification"
+            >✕</button>
           </div>
         `;
-      })
-      .join("");  
+      }).join("");
 
-  } catch (err) {  
-    console.error("Notifications error:", err);  
-   list.innerHTML = `<p style='color:red'>"Failed to load notifications"</p>`; 
-    latest.innerHTML = `<p style='color:red;margin:0'>Failed to load</p><span class="dropdown-arrow">▼</span>`;
-  }  
+  }
+  catch (err) {
+
+    console.error(
+      "Notifications error:",
+      err
+    );
+
+    latest.innerHTML = `
+      <p style="color:red;">
+        ${t("Failed to load")}
+      </p>
+      <span class="dropdown-arrow">
+        ▼
+      </span>
+    `;
+
+    cardsContainer.innerHTML = `
+      <p style="color:red;">
+        ${t("Failed to load notifications")}
+      </p>
+    `;
+  }
 }
-console.log("LANG:", localStorage.getItem("lang"));
+
+document.addEventListener(
+  "input",
+  function(e) {
+
+    if (
+      e.target.id !==
+      "notificationSearch"
+    ) return;
+
+    const term =
+      e.target.value.toLowerCase();
+
+    document
+      .querySelectorAll(
+        "#notificationCards .notifications-card"
+      )
+      .forEach(card => {
+
+        card.style.display =
+          card.innerText
+            .toLowerCase()
+            .includes(term)
+            ? "flex"
+            : "none";
+
+      });
+
+  }
+);
+
 // ===========================
 // Logout
 // ===========================
 const logoutBtn = document.getElementById("logoutBtn");
 if (logoutBtn) {
   logoutBtn.addEventListener("click", () => {
-    sessionStorage.clear();
-    localStorage.removeItem("rememberedEmail");
-    window.location.href = "login.html";
-  });
+  sessionStorage.clear();
+  localStorage.removeItem("rememberedEmail");
+  localStorage.removeItem("studentSession"); // 👈 add this
+  window.location.href = "login.html";
+});
 }

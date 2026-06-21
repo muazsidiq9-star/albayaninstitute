@@ -3,218 +3,230 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Semester Activities</title>
+  <title>Semester Activities - Al-Bayan Arabic Isntitute Online</title>
 
-  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- Styles -->
   <link rel="stylesheet" href="master.css">
-
-  <style>
-    body {
-      background: var(--bg-color);
-      color: var(--text-color);
-    }
-
-    .semester-container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 2rem;
-      margin-top: 3rem;
-    }
-
-    .semester-block {
-      margin-bottom: 3rem;
-    }
-
-    .semester-title {
-      font-size: 1.6rem;
-      margin-bottom: 1.5rem;
-      border-left: 5px solid var(--primary-color);
-      padding-left: 10px;
-    }
-
-    /* Timeline */
-    .timeline {
-      border-left: 2px solid var(--border-color);
-      padding-left: 20px;
-      margin-top: 1rem;
-    }
-
-    .timeline-item {
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-
-    .timeline-item::before {
-      content: "";
-      width: 12px;
-      height: 12px;
-      background: var(--primary-color);
-      border-radius: 50%;
-      position: absolute;
-      left: -27px;
-      top: 4px;
-    }
-
-    .timeline-title {
-      font-weight: bold;
-    }
-
-    .timeline-date {
-      font-size: 0.85rem;
-      opacity: 0.7;
-    }
-
-    /* Outline Box */
-    .outline-box {
-      background: var(--card-color);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 1rem;
-      margin-top: 1rem;
-    }
-
-    .outline-title {
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-    }
-  </style>
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-
+  <link rel="stylesheet" href="semester.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
-<!-- NAVIGATION -->
+  <!-- NAVIGATION -->
   <nav class="master-nav">
     <div class="nav-container">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
       </a>
-      <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
       <div class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="courses.html">Courses</a>
-        <a href="register.html">Register</a>
-        <a href="students-dashboard.html">Student Dashboard</a>
-        <a href="semester.html"  class="active page-indicator">Semester Activities</a>
-        <a href="payment.html">Payment</a>
-        <a href="schedule.html">Schedule</a>
-        <a href="contact.html">Contact</a>
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Student Dashboard">Student Dashboard</a>
+        <a href="semester.html" class="active" data-translate="Semester Activities">Semester Activities</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="schedule.html" data-translate="Schedule">Schedule</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
       </div>
     </div>
   </nav>
 
-<div class="semester-container">
-  <h1>📚 Semester Activities</h1>
-  <div id="semesterContent"></div>
-</div>
+  <!-- ================================================
+       PAGE BANNER
+  ================================================ -->
+  <header class="page-banner">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+      <img src="logo.png" alt="Al-Bayan Logo" class="header-logo">
+      <p class="banner-eyebrow">
+        <i class="fa-solid fa-calendar-check"></i>
+        <span data-translate="Academic Calendar">Academic Calendar</span>
+      </p>
+      <h1 data-translate="Semester Activities">Semester Activities</h1>
+      <p data-translate="View your semester timeline, course outlines and key academic dates.">
+        View your semester timeline, course outlines and key academic dates.
+      </p>
+    </div>
+  </header>
 
-<!-- HAMBURGER MENU -->
-   <script src="translate.js"></script>
+  <!-- ================================================
+       SEMESTER CONTENT
+       JS targets: #semesterContent
+       JS injects: .semester-block, .semester-title,
+                   .timeline, .timeline-item, .timeline-title,
+                   .timeline-date, .outline-box, .outline-title
+  ================================================ -->
+  <div class="semester-container">
+
+    <!-- Loading state -->
+    <div class="sem-loading" id="semLoading">
+      <div class="sem-spinner"></div>
+      <p data-translate="Loading semester data...">Loading semester data...</p>
+    </div>
+
+    <!-- JS injects here — id must stay -->
+    <div id="semesterContent"></div>
+
+  </div>
+
+  <!-- FOOTER -->
+   <footer>
+    <p data-translate="Al-Bayan Arabic Isntitute Online">Al-Bayan Arabic Isntitute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
+
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
+
+  <!-- SCRIPTS -->
   <script>
+
+
     function toggleMenu() {
-      const nav = document.getElementById("navLinks");
-      nav.classList.toggle("show");
+      document.getElementById('navLinks').classList.toggle('show');
     }
-    document.addEventListener("click", function(e) {
-      const nav = document.getElementById("navLinks");
-      const hamburger = document.querySelector(".hamburger");
-      if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
-        nav.classList.remove("show");
-      }
+    document.addEventListener('click', function (e) {
+      const nav       = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
     });
   </script>
 
-<script>
-const supabaseUrl = "https://cjrpjekmqrckozrbtwps.supabase.co";
-const supabaseKey = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+  <script>
+    const supabaseUrl = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const supabaseKey = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    const db = supabase.createClient(supabaseUrl, supabaseKey);
 
-const db = supabase.createClient(supabaseUrl, supabaseKey);
+    async function loadSemester() {
+      const { data, error } = await db
+        .from("semester_schedule")
+        .select("*")
+        .order("start_date", { ascending: true });
 
-async function loadSemester() {
-  const { data, error } = await db
-    .from("semester_schedule")
-    .select("*")
-    .order("start_date", { ascending: true });
+      const loading = document.getElementById("semLoading");
+      if (loading) loading.style.display = "none";
 
-  if (error) {
-    console.error(error);
-    return;
-  }
-
-  const container = document.getElementById("semesterContent");
-  container.innerHTML = "";
-
-  if (!data.length) {
-    container.innerHTML = "<p>No semester data available.</p>";
-    return;
-  }
-
-  /* Group by semester */
-  const grouped = {};
-
-  data.forEach(item => {
-    if (!grouped[item.semester]) grouped[item.semester] = [];
-    grouped[item.semester].push(item);
-  });
-
-  Object.keys(grouped).forEach(semester => {
-
-    const block = document.createElement("div");
-    block.className = "semester-block";
-
-    block.innerHTML = `<div class="semester-title">${semester}</div>`;
-
-    const timeline = document.createElement("div");
-    timeline.className = "timeline";
-
-    grouped[semester].forEach(item => {
-
-      if (item.type === "activity") {
-
-        const div = document.createElement("div");
-        div.className = "timeline-item";
-
-        div.innerHTML = `
-          <div class="timeline-title">${item.title}</div>
-          <div>${item.description}</div>
-          <div class="timeline-date">
-            ${item.start_date || ""} 
-            ${item.end_date ? " → " + item.end_date : ""}
-          </div>
-        `;
-
-        timeline.appendChild(div);
+      if (error) {
+        console.error(error);
+        return;
       }
 
-      if (item.type === "course_outline") {
+      const container = document.getElementById("semesterContent");
+      container.innerHTML = "";
 
-        const outline = document.createElement("div");
-        outline.className = "outline-box";
-
-        outline.innerHTML = `
-          <div class="outline-title">${item.title}</div>
-          <div>${item.description}</div>
-        `;
-
-        timeline.appendChild(outline);
+      if (!data.length) {
+        container.innerHTML = `
+          <div class="sem-empty">
+            <i class="fa-solid fa-calendar-xmark"></i>
+            <h3 data-translate="No semester data available.">No semester data available.</h3>
+            <p data-translate="Please check back later when semester activities have been published.">
+              Please check back later when semester activities have been published.
+            </p>
+          </div>`;
+        return;
       }
 
-    });
+      /* Group by semester — JS class names preserved exactly */
+      const grouped = {};
+      data.forEach(item => {
+        if (!grouped[item.semester]) grouped[item.semester] = [];
+        grouped[item.semester].push(item);
+      });
 
-    block.appendChild(timeline);
-    container.appendChild(block);
-  });
-}
+      Object.keys(grouped).forEach((semester, idx) => {
+        const block = document.createElement("div");
+        block.className = "semester-block";
+        /* Animate in with stagger */
+        block.style.animationDelay = `${idx * 0.1}s`;
 
-loadSemester();
-</script>
+        block.innerHTML = `
+          <div class="semester-title">
+            <span class="sem-title-icon"><i class="fa-solid fa-book-open"></i></span>
+            ${semester}
+          </div>`;
+
+        const timeline = document.createElement("div");
+        timeline.className = "timeline";
+
+        grouped[semester].forEach(item => {
+
+          if (item.type === "activity") {
+            const div = document.createElement("div");
+            div.className = "timeline-item";
+
+            /* Format dates nicely */
+            const startFmt = item.start_date
+              ? new Date(item.start_date).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" })
+              : "";
+            const endFmt = item.end_date
+              ? new Date(item.end_date).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" })
+              : "";
+
+            div.innerHTML = `
+              <div class="timeline-title">
+                <i class="fa-solid fa-circle-dot timeline-dot-icon"></i>
+                ${item.title}
+              </div>
+              <div class="timeline-desc">${item.description || ""}</div>
+              ${startFmt ? `
+              <div class="timeline-date">
+                <i class="fa-regular fa-calendar"></i>
+                ${startFmt}${endFmt ? ` &rarr; ${endFmt}` : ""}
+              </div>` : ""}
+            `;
+
+            timeline.appendChild(div);
+          }
+
+          if (item.type === "course_outline") {
+            const outline = document.createElement("div");
+            outline.className = "outline-box";
+
+            outline.innerHTML = `
+              <div class="outline-title">
+                <i class="fa-solid fa-list-check outline-icon"></i>
+                ${item.title}
+              </div>
+              <div class="outline-desc">${item.description || ""}</div>
+            `;
+
+            timeline.appendChild(outline);
+          }
+
+        });
+
+        block.appendChild(timeline);
+        container.appendChild(block);
+      });
+
+      /* Scroll reveal */
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.06 });
+      document.querySelectorAll('.timeline-item, .outline-box').forEach(el => obs.observe(el));
+    }
+
+    loadSemester();
+  </script>
+  <script src="translate.js"></script>
 </body>
 </html>

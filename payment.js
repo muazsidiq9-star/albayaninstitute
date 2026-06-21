@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (hamburger && navLinks) {
     hamburger.addEventListener('click', () => navLinks.classList.toggle('show'));
+
     document.addEventListener('click', e => {
       if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
         navLinks.classList.remove('show');
@@ -35,10 +36,104 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ================= SUPABASE ================= */
   const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
-  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  /* ================= PAYMENT FORM ================= */
+  /* ================= CURRENT STUDENT (SOURCE OF TRUTH) ================= */
+  function getCurrentStudent() {
+    try {
+      return JSON.parse(sessionStorage.getItem('currentStudent'));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  const currentStudent = getCurrentStudent();
+  console.log("Current student:", currentStudent);
+
+  let detectedStudent = null;
+
+  /* ================= LEVEL & PLAN MAPS ================= */
+
+  // Maps any stored variant (English or Arabic) → the exact option value in the <select>
+  const LEVEL_MAP = {
+    // English (case-insensitive handled below)
+    'preliminary'  : 'Preliminary',
+    'beginner'     : 'Beginner',
+    'intermediate' : 'Intermediate',
+    'advanced'     : 'Advanced',
+    // Arabic variants — add more here as you discover them in Supabase
+    'تمهيدي'       : 'Preliminary',
+    'مبتدئ'        : 'Beginner',
+    'مبتدئء'       : 'Beginner',
+    'مبتديء'       : 'Beginner',
+    'متوسط'        : 'Intermediate',
+    'متقدم'        : 'Advanced',
+  };
+
+  // Maps any stored plan variant → the exact option value in the <select>
+  const PLAN_MAP = {
+    // English
+    'general'  : 'general',
+    'private'  : 'private',
+    'premium'  : 'private',   // in case DB stores "Premium" instead of "private"
+    // Arabic variants
+    'عام'      : 'general',
+    'خاص'      : 'private',
+    'مميز'     : 'private',
+  };
+
+  /* ================= HELPERS ================= */
+
+  function resolveFromMap(map, rawValue) {
+    if (!rawValue) return null;
+    const trimmed = rawValue.trim();
+    // Try lowercase first (handles English case differences)
+    return map[trimmed.toLowerCase()] || map[trimmed] || null;
+  }
+
+  function setLevel(value) {
+    const resolved = resolveFromMap(LEVEL_MAP, value);
+    console.log("setLevel raw:", value, "→ resolved:", resolved);
+    if (!resolved) return;
+
+    const select = document.getElementById('level-arabic');
+    for (const option of select.options) {
+      if (option.value === resolved) {
+        option.selected = true;
+        break;
+      }
+    }
+  }
+
+  function setPlan(value) {
+    const resolved = resolveFromMap(PLAN_MAP, value);
+    console.log("setPlan raw:", value, "→ resolved:", resolved);
+    if (!resolved) return;
+
+    const select = document.getElementById('plan-type');
+    for (const option of select.options) {
+      if (option.value === resolved) {
+        option.selected = true;
+        break;
+      }
+    }
+  }
+
+  function showError(message) {
+    errorMsg.textContent = message;
+    errorMsg.style.display = 'block';
+    successMsg.textContent = '';
+    successMsg.style.display = 'none';
+  }
+
+  function showSuccess(message) {
+    successMsg.textContent = message;
+    successMsg.style.display = 'block';
+    errorMsg.textContent = '';
+    errorMsg.style.display = 'none';
+  }
+
   const paymentForm = document.querySelector('.payment-form');
   const successMsg = document.querySelector('.success-msg');
   const errorMsg = document.querySelector('.error-msg');
@@ -49,161 +144,83 @@ document.addEventListener('DOMContentLoaded', () => {
   successMsg.style.display = 'none';
   errorMsg.style.display = 'none';
 
-  /* ================= CURRENT STUDENT ================= */
-  const currentStudent = JSON.parse(sessionStorage.getItem('currentStudent'));
-  console.log("Current student from session:", currentStudent);
+  /* ================= AUTO FILL FROM SESSION ================= */
+  if (currentStudent) {
+    document.getElementById('student-name').value  = currentStudent.fullname || '';
+    document.getElementById('student-email').value = currentStudent.email    || '';
+    document.getElementById('country').value       = currentStudent.country  || '';
 
-  let detectedStudent = null;
-
-  // Auto-fill form if logged in
-if (currentStudent) {
-
-  document.getElementById('student-name').value =
-    currentStudent.fullname || '';
-
-  document.getElementById('student-email').value =
-    currentStudent.email || '';
-
-  document.getElementById('country').value =
-    currentStudent.country || '';
-
-  // plan type
-  if (currentStudent.plan_type) {
-
-    const planSelect =
-      document.getElementById('plan-type');
-
-    for (let option of planSelect.options) {
-
-      if (option.value === currentStudent.plan_type) {
-
-        option.selected = true;
-        break;
-      }
-    }
+    setPlan(currentStudent.plan_type);
+    setLevel(currentStudent.level);
   }
 
-  // level
-  if (currentStudent.level) {
+  /* ================= EMAIL LOOKUP ================= */
+  const emailInput = document.getElementById('student-email');
 
-    const levelSelect =
-      document.getElementById('level-arabic');
+  emailInput?.addEventListener('blur', async () => {
 
-    for (let option of levelSelect.options) {
+    const email = emailInput.value.trim().toLowerCase();
+    if (!email) return;
 
-      if (option.text === currentStudent.level) {
+    try {
+      const { data, error } = await supabase
+        .from("students")
+        .select("*")
+        .eq("email", email)
+        .maybeSingle();
 
-        option.selected = true;
-        break;
-      }
+      if (error) throw error;
+      if (!data) return;
+
+      detectedStudent = data;
+
+      console.log("Student found — plan_type:", data.plan_type, "| level_arabic:", data.level_arabic);
+
+      document.getElementById('student-name').value = data.fullname || '';
+      document.getElementById('country').value      = data.country  || '';
+
+      setPlan(data.plan_type);
+      setLevel(data.level_arabic);
+
+      showSuccess(t('Student record found automatically.'));
+
+    } catch (err) {
+      console.error("Student lookup failed:", err);
     }
-  }
-}
+  });
 
-const emailInput =
-  document.getElementById('student-email');
-
-emailInput?.addEventListener('blur', async () => {
-
-  const email =
-    emailInput.value.trim().toLowerCase();
-
-  if (!email) return;
-
-  try {
-
-    const { data, error } = await supabase
-      .from("students")
-      .select("*")
-      .eq("email", email)
-      .maybeSingle();
-
-    if (error) throw error;
-
-    if (!data) return;
-
-    detectedStudent = data;
-
-    console.log(
-      "Student detected:",
-      detectedStudent
-    );
-
-    // AUTO-FILL FORM
-    document.getElementById('student-name').value =
-      data.fullname || '';
-
-    document.getElementById('country').value =
-      data.country || '';
-
-    // LEVEL
-    const levelSelect =
-      document.getElementById('level-arabic');
-
-    for (let option of levelSelect.options) {
-
-      if (
-        option.value === data.level_arabic
-      ) {
-        option.selected = true;
-        break;
-      }
-    }
-
-    // OPTIONAL SUCCESS MESSAGE
-    successMsg.textContent =
-      t('Student record found automatically.');
-
-    successMsg.style.display = 'block';
-
-  } catch (err) {
-
-    console.error(
-      "Student lookup failed:",
-      err
-    );
-
-  }
-
-});
-
-
-paymentForm.addEventListener('submit', async (e) => {
+  /* ================= PAYMENT SUBMIT ================= */
+  paymentForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const fullname = document.getElementById('student-name').value.trim();
-    const email = document.getElementById('student-email').value.trim();
-    const country = document.getElementById('country')?.value || null;
-    const plan_type = document.getElementById('plan-type')?.value || null;
-    const level = document.getElementById('level-arabic').value;
-    const method = document.getElementById('payment-method').value.trim();
-    const amount = document.getElementById('amount').value;
-    
-    const currency = document.getElementById("currency").value;
-    
-    const date = document.getElementById("payment-date")?.value || null;
-    const month = document.getElementById('month').value;
+    const fullname   = document.getElementById('student-name').value.trim();
+    const email      = document.getElementById('student-email').value.trim();
+    const country    = document.getElementById('country')?.value || null;
+    const plan_type  = document.getElementById('plan-type')?.value || null;
+    const level      = document.getElementById('level-arabic').value;
+    const method     = document.getElementById('payment-method').value.trim();
+    const amount     = document.getElementById('amount').value;
+    const currency   = document.getElementById("currency").value;
+    const date       = document.getElementById("payment-date")?.value || null;
+    const month      = document.getElementById('month').value;
     const receiptFile = document.getElementById('receipt')?.files[0] || null;
 
     if (!fullname || !email || !level || !method || !amount || !month) {
-  errorMsg.textContent = t('Please fill all required fields correctly.');
-  errorMsg.style.display = 'block';
-  successMsg.style.display = 'none';
-  return;
-}
+      showError(t('Please fill all required fields correctly.'));
+      return;
+    }
 
     submitBtn.disabled = true;
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = t('Processing... ⏳');
 
     try {
-      // Upload receipt inside try so errors are caught
+
       let receipt_url = null;
 
       if (receiptFile) {
         const fileExt = receiptFile.name.split('.').pop();
-        const fileName =
-  `${Date.now()}-${Math.floor(Math.random() * 100000)}.${fileExt}`;
+        const fileName = `${Date.now()}-${Math.floor(Math.random() * 100000)}.${fileExt}`;
 
         const { error: uploadError } = await supabase.storage
           .from('payment_receipts')
@@ -217,81 +234,63 @@ paymentForm.addEventListener('submit', async (e) => {
       }
 
       const insertData = {
-        matric_number:
-  (detectedStudent || currentStudent)
-    ?.matric_number || null,
-        payer_name: fullname || null,
-        payer_email: email || null,
+        matric_number  : (detectedStudent || currentStudent)?.matric_number || null,
+        payer_name     : fullname,
+        payer_email    : email,
         country,
         plan_type,
-        level_arabic: level,
-        payment_method: method,
-        amount: Number(amount),
+        level_arabic   : level,
+        payment_method : method,
+        amount         : Number(amount),
         currency,
-        payment_date: date || null,
+        payment_date   : date,
         month,
         receipt_url,
-        status: "pending"
+        status         : "pending"
       };
 
-  
       const { error } = await supabase.from("payments").insert([insertData]);
       if (error) throw error;
 
+      /* ================= WEB3FORMS NOTIFICATION ================= */
       try {
-
-  await fetch("https://api.web3forms.com/submit", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      access_key: "73556940-2533-43e1-8458-aab6b0e894dc",
-
-      subject: "New Payment Submitted 💰",
-
-      message: `
+        await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            access_key : "73556940-2533-43e1-8458-aab6b0e894dc",
+            subject    : "New Payment Submitted 💰",
+            message    : `
 Payment received:
 
 Name: ${fullname}
 Email: ${email}
-Matric:
-${(detectedStudent || currentStudent)?.matric_number || "N/A"}
+Matric: ${(detectedStudent || currentStudent)?.matric_number || "N/A"}
 Amount: ${amount} ${currency}
-Plan: ${plan_type}
-Country: ${country}
+Plan: ${plan_type || "N/A"}
+Country: ${country || "N/A"}
 Month: ${month}
 Payment Method: ${method}
 Receipt: ${receipt_url || "No receipt uploaded"}
 `
-    })
-  });
-
-} catch (emailError) {
-
-  console.error(
-    "Web3Forms notification failed:",
-    emailError
-  );
-
-}
+          })
+        });
+      } catch (emailError) {
+        console.error("Web3Forms notification failed:", emailError);
+      }
 
       paymentForm.reset();
 
       if (currentStudent) {
-        document.getElementById('student-name').value = currentStudent.fullname || '';
-        document.getElementById('student-email').value = currentStudent.email || '';
+        document.getElementById('student-name').value  = currentStudent.fullname || '';
+        document.getElementById('student-email').value = currentStudent.email    || '';
       }
 
-      successMsg.textContent = t('Payment submitted successfully. We will confirm shortly.');
-      successMsg.style.display = 'block';
-      errorMsg.style.display = 'none';
+      showSuccess(t('Payment submitted successfully. We will confirm shortly.'));
 
     } catch (err) {
       console.error('Payment submission error:', err);
-      errorMsg.textContent = t('Something went wrong: ') + (err.message || JSON.stringify(err));
-      errorMsg.style.display = 'block';
-      successMsg.style.display = 'none';
+      showError(t('Something went wrong: ') + (err.message || JSON.stringify(err)));
 
     } finally {
       submitBtn.disabled = false;

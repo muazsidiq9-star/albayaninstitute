@@ -3,35 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>Schedule - Al-Bayan</title>
+  <title>Schedule | Al-Bayan Arabic Institute Online</title>
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="schedule.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
   <!-- NAVIGATION -->
   <nav class="master-nav">
     <div class="nav-container">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
       </a>
-      <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
       <div class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="courses.html">Courses</a>
-        <a href="register.html">Register</a>
-        <a href="students-dashboard.html">Dashboard</a>
-      
-        <a href="payment.html">Payment</a>
-        <a href="schedule.html" class="active">Schedule</a>
-        <a href="contact.html">Contact</a>
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Student Dashboard">Student Dashboard</a>
+        <a href="payment.html" data-translate="Payments">Payments</a>
+        <a href="schedule.html" class="active" data-translate="Schedule">Schedule</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
       </div>
     </div>
   </nav>
@@ -40,67 +41,78 @@
   <header class="schedule-header">
     <div class="header-overlay">
       <img src="logo.png" alt="Al-Bayan Logo" class="header-logo">
-      <h1>Class Schedule</h1>
-      <p>View your upcoming classes, timings, and instructors</p>
+      <h1 data-translate="Class Schedule">Class Schedule</h1>
+      <p data-translate="View your upcoming classes, timings, and instructors">
+        View your upcoming classes, timings, and instructors
+      </p>
     </div>
   </header>
 
-  <!-- SCHEDULE TABLE -->
+  <!-- MAIN -->
   <main>
     <section class="schedule-section">
-  <h2>Your Classes</h2>
 
-  <div class="table-wrapper">
-    <table class="schedule-table">
-      <thead>
-        <tr>
-          <th>Class</th>
-          <th>Course</th>
-          <th>Instructor</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Link</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="scheduleTable">
-      </tbody>
-    </table>
-  </div>
-</section>
+      <div class="section-header">
+        <h2>
+          <i class="fa-solid fa-calendar-days"></i>
+          <span data-translate="Your Classes">Your Classes</span>
+        </h2>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th data-translate="Class">Class</th>
+              <th data-translate="Course">Course</th>
+              <th data-translate="Instructor">Instructor</th>
+              <th data-translate="Date">Date</th>
+              <th data-translate="Time">Time</th>
+              <th data-translate="Link">Link</th>
+              <th data-translate="Status">Status</th>
+            </tr>
+          </thead>
+          <tbody id="scheduleTable">
+          </tbody>
+        </table>
+      </div>
+
+    </section>
   </main>
 
   <!-- FOOTER -->
   <footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
 
   <!-- WHATSAPP FLOAT -->
-  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
 
   <!-- SCRIPTS -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="schedule.js"></script>
   <script>
+    
+
     function toggleMenu() {
-      const nav = document.getElementById("navLinks");
-      nav.classList.toggle("show");
+      document.getElementById('navLinks').classList.toggle('show');
     }
-    document.addEventListener("click", function(e) {
-      const menu = document.getElementById("navLinks");
-      const burger = document.querySelector(".hamburger");
-      if (!menu.contains(e.target) && !burger.contains(e.target)) {
-        menu.classList.remove("show");
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+        nav.classList.remove('show');
       }
     });
   </script>
   <script src="translate.js"></script>
+  <script src="schedule.js"></script>
 </body>
 </html>

@@ -1,274 +1,552 @@
-/* =====================================================
-   RESET & BASE
-===================================================== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ============================================================
+   Al-Bayan — REGISTER PAGE STYLES (register.css)
+============================================================ */
 
-body {
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  background: var(--bg-color);
-  color: var(--text-color);
-  line-height: 1.6;
-  overflow-x: hidden;
-}
+html, body { overflow-x: hidden; }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
-/* =====================================================
-   HEADER
-===================================================== */
-.register-header {
+
+/* ============================================================
+   PAGE BANNER
+============================================================ */
+.page-banner {
   position: relative;
-  height: 200px; /* fixed, not full screen */
-  background: url("Background-Register.jpg") center/cover no-repeat;
-  margin-top: 0px; /* push below nav */
+  height: 48vh;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
 }
 
-.header-overlay {
+.banner-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.45);
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.50) 0%, rgba(0,50,20,0.62) 100%);
+  z-index: 1;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 20px;
+  max-width: 680px;
 }
 
 .header-logo {
-  width: 45px;
+  width: 72px;
   height: auto;
-  margin-bottom: 0.1rem;
-  animation: heartbeat 1.5s infinite;
+  margin-bottom: 12px;
+  animation: gentlePulse 3s ease-in-out infinite;
 }
 
-.register-header h1 {
+.banner-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #bbeef7;
+  margin-bottom: 8px;
+}
+
+.page-banner h1 {
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  font-weight: 800;
   color: #fff;
-  font-size: 1.5rem;
-  margin-bottom: 0.1rem;
+  margin-bottom: 10px;
 }
 
-.register-header p {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 1rem;
-  margin-bottom: 0rem;
+.page-banner p {
+  font-size: clamp(0.88rem, 2vw, 1rem);
+  color: #dff4f5;
+  line-height: 1.7;
 }
 
-/* Heartbeat animation */
-@keyframes heartbeat {
+@keyframes gentlePulse {
   0%, 100% { transform: scale(1); }
-  25% { transform: scale(1.1); }
-  50% { transform: scale(1); }
-  75% { transform: scale(1.1); }
+  50%       { transform: scale(1.05); }
 }
 
-/* =====================================================
-   REGISTRATION FORM
-===================================================== */
+
+/* ============================================================
+   REGISTER SECTION WRAPPER
+============================================================ */
 .register-section {
-  max-width: 900px;
-  margin: 2rem auto 4rem;
-  padding: 2.5rem;
-  background: var(--card-color);
-  border-radius: 20px;
-  box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+  max-width: 860px;
+  margin: 40px auto 60px;
+  padding: 0 20px;
 }
 
-form {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
+
+/* ============================================================
+   PROGRESS STEPS
+============================================================ */
+.progress-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 28px;
 }
 
-label {
-  font-size: 0.95rem;
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 80px;
+}
+
+.step-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--border-light);
+  background: var(--surface-color);
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.step span {
+  font-size: 0.75rem;
   font-weight: 600;
-  color: #1f6fe5;
+  color: var(--text-muted);
+  text-align: center;
+  transition: color 0.3s;
 }
 
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 0.75rem 1rem;
+.step.active .step-circle {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.step.active span { color: var(--primary-dark); }
+
+.step.done .step-circle {
+  background: #dcfbfc;
+  border-color: var(--primary);
+  color: var(--primary-dark);
+}
+
+.step.done .step-circle::after {
+  content: "✓";
+  font-size: 1rem;
+}
+
+.step.done .step-circle { font-size: 0; } /* hide number, show tick */
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--border-light);
+  margin-bottom: 22px;
+  max-width: 80px;
+  transition: background 0.3s;
+}
+
+
+/* ============================================================
+   NOTE & WARNING BARS
+============================================================ */
+.register-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
   border-radius: 10px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7f7;
+  color: var(--primary-dark);
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.register-note i { color: var(--primary); margin-top: 1px; flex-shrink: 0; }
+
+.register-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #9a3412;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+.register-warning i { color: #ea580c; margin-top: 1px; flex-shrink: 0; }
+
+
+/* ============================================================
+   FORM STEPS
+============================================================ */
+.form-step {
+  display: none;
+  background: var(--card-color);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 32px 28px;
+  animation: fadeUp 0.35s ease;
+}
+
+.form-step.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.step-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.step-title i { color: var(--primary); }
+
+
+/* ============================================================
+   FORM GRID
+============================================================ */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1 / -1; }
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.req { color: #dc2626; margin-left: 2px; }
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
   border: 1px solid var(--border-color);
-  font-size: 0.95rem;
-  transition: all 0.25s ease;
+  background: var(--surface-color);
+  color: var(--text-color);
+  font-size: 0.92rem;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
   outline: none;
-  border-color: #2d6a4f;
-  box-shadow: 0 0 0 2px rgba(45,106,79,0.15);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(22,163,74,0.15);
 }
 
-textarea {
-  resize: vertical;
+.form-group textarea { resize: vertical; min-height: 100px; }
+
+
+/* ============================================================
+   STEP NAVIGATION BUTTONS
+============================================================ */
+.step-nav {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 28px;
 }
+
+.btn-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 28px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.btn-next:hover { background: var(--primary-dark); transform: translateX(2px); }
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-back:hover { background: var(--surface-color); color: var(--text-color); }
+
+.submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 32px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.submit-btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+
+/* ============================================================
+   PASSPORT UPLOAD
+============================================================ */
 .passport-upload {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1px;
+  gap: 14px;
+  padding: 24px;
+  border: 2px dashed var(--border-light);
+  border-radius: 14px;
+  background: var(--surface-color);
+  margin-bottom: 10px;
 }
 
 #passport-preview {
   width: 120px;
   height: 120px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  margin-top: 6px;
-}
-.passport-note {
-  font-size: 0.9rem;
-  color: var(--text-color);
-  margin-top: 1px;
-}
-.register-note {
-  color: #1a73e8;
-  text-align: center;
-  margin-bottom: 10px;
-  font-size: 1.3rem;
-  font-weight: bold;
-}
-.register-note1 {
-  font-size: 1.1rem;
-  color: #ff0000;
-  margin-top: 8px;
-  text-align: center;
-}
-
-/* Submit button with heartbeat */
-button[type="submit"] {
-  margin-top: 1.2rem;
-  padding: 0.85rem 0;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  background: #1f6fe5;
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  animation: heartbeat 1.5s infinite;
-  transition: all 0.3s ease;
-}
-
-button[type="submit"]:hover {
-  background: #40916c;
-  transform: scale(1.05);
-}
-
-/* =====================================================
-   FOOTER
-===================================================== */
-footer {
-  background: #1f6fe5;
-  color: #eaf4f4;
-  text-align: center;
-  padding: 2rem 1rem;
-  font-size: 0.85rem;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-}
-
-footer p {
-  margin-bottom: 0.4rem;
-}
-
-/* =====================================================
-   WHATSAPP FLOAT
-===================================================== */
-.whatsapp-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-
-  width: 55px;
-  height: 55px;
-  background-color: #25D366;
   border-radius: 50%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-  z-index: 9999;
-
-  cursor: grab;
-}
-
-.whatsapp-float img {
-  width: 28px;
-  height: 28px;
-}
-
-#passport-preview {
-  width: 130px;
-  height: 130px;
   object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid #1e7f4f;
-  background: var(--card-color);
+  border: 3px solid var(--primary);
   animation: softPulse 2.5s infinite;
 }
 
-/* subtle heartbeat */
 @keyframes softPulse {
-  0% { box-shadow: 0 0 0 0 rgba(30,127,79,0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(30,127,79,0); }
-  100% { box-shadow: 0 0 0 0 rgba(30,127,79,0); }
+  0%   { box-shadow: 0 0 0 0 rgba(22, 135, 163, 0.35); }
+  70%  { box-shadow: 0 0 0 10px rgba(22,163,74,0); }
+  100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); }
 }
 
-#passport-warning {
-  font-size: 0.85rem;
-  font-weight: 500;
+.upload-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 22px;
+  border-radius: 8px;
+  background: var(--primary-xlight);
+  border: 1px solid var(--primary);
+  color: var(--primary-dark);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
 }
+
+.upload-label:hover { background: #bbf3f7; }
+
+.passport-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  max-width: 400px;
+}
+
+.passport-note i { color: var(--primary); margin-top: 2px; flex-shrink: 0; }
+
+#passport-warning {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  color: #dc2626;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* success / error messages */
+#success-msg {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: #dcfce7;
+  color: #157080;
+  border: 1px solid #bbf0f7;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+#error-msg {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* ============================================================
+   SUCCESS TOAST NOTIFICATION
+============================================================ */
 
 .success-toast {
   position: fixed;
-  top: -120px; /* start hidden */
+  top: 90px;
   right: 20px;
-  background: #28a745;
-  color: white;
-  padding: 1rem 1.2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  width: min(420px, calc(100vw - 30px));
+
+  background: var(--card-color);
+  border-left: 5px solid var(--primary);
+  border-radius: 14px;
+  border: 1px solid var(--border-light);
+
+  padding: 18px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+
   z-index: 9999;
-  transition: top 0.3s ease, opacity 0.3s ease;
+
+  transform: translateX(120%);
   opacity: 0;
+  transition: all .35s ease;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
+
+
 .success-toast.show {
-  top: 20px;
+  transform: translateX(0);
   opacity: 1;
 }
-.success-toast button {
-  margin-top: 0.5rem;
-  padding: 0.3rem 0.8rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background: rgba(255,255,255,0.9);
-  color: #28a745;
-  font-weight: 600;
+
+.success-toast p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--text-color);
+  font-size: 0.92rem;
 }
+
+.success-toast p:first-child {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.success-toast strong {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.success-toast button {
+  align-self: flex-start;
+
+  border: none;
+  background: var(--primary);
+
+  color: #fff;
+  font-weight: 600;
+
+  padding: 10px 18px;
+  border-radius: 8px;
+
+  cursor: pointer;
+  transition: .25s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .success-toast button:hover {
-  background: white;
+  background: var(--primary-dark);
+}
+
+
+/* Mobile */
+@media (max-width: 640px) {
+
+  .success-toast {
+    top: 20px;
+    bottom: auto;
+    left: 15px;
+    right: 15px;
+    width: auto;
+
+    transform: translateY(-120%);
+  }
+
+  .success-toast.show {
+    transform: translateY(0);
+  }    
+
+  .success-toast button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 640px) {
+  .page-banner { height: 42vh; min-height: 260px; }
+  .header-logo { width: 58px; }
+
+  .form-step { padding: 22px 16px; }
+
+  .form-grid { grid-template-columns: 1fr; }
+  .form-group.full { grid-column: 1; }
+
+  .progress-steps { gap: 0; }
+  .step { min-width: 60px; }
+  .step span { font-size: 0.68rem; }
+  .step-line { max-width: 40px; }
+
+  .step-nav { flex-direction: column-reverse; }
+  .btn-next, .btn-back, .submit-btn { width: 100%; justify-content: center; }
 }

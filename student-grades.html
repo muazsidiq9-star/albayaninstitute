@@ -3,48 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="google" content="notranslate">
-  <title>My Grades - Al-Bayan</title>
+  <title>My Grades - Al-Bayan Arabic Institute Online Online</title>
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="student-grades.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+</head>
 <body>
 
   <!-- NAVIGATION -->
   <nav class="master-nav">
     <div class="nav-container">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Al-Bayan Logo"> Al-Bayan
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
       </a>
-      <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
       <div class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="courses.html">Courses</a>
-        <a href="register.html">Register</a>
-        <a href="students-dashboard.html">Dashboard</a>
-        <a href="payment.html">Payment</a>
-        <a href="schedule.html">Schedule</a>
-        <a href="contact.html">Contact</a>
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="schedule.html" data-translate="Schedule">Schedule</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
       </div>
     </div>
   </nav>
 
-  <!-- HEADER -->
-  <header class="page-header grades-header">
-    <div class="header-overlay">
+  <!-- PAGE BANNER -->
+  <header class="sg-banner" style="background-image: url('result-check.jpg');">
+    <div class="sg-banner-overlay"></div>
+    <div class="sg-banner-content">
       <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
-      <h1>My Grades</h1>
-      <p>View your scores, assessments, and overall progress</p>
+      <span class="sg-eyebrow">
+        <i class="fa-solid fa-chart-bar"></i>
+        <span data-translate="My Grades">My Grades</span>
+      </span>
+      <h1 data-translate="My Grades">My Grades</h1>
+      <p data-translate="View your scores, assessments, and overall progress">
+        View your scores, assessments, and overall progress
+      </p>
     </div>
   </header>
 
-  <!-- MAIN CONTENT -->
+ <!-- MAIN CONTENT -->
   <main class="grades-section">
     <div class="grades-controls">
       <input type="text" id="gradesSearch" class="search-input" placeholder="Search by course...">
@@ -79,47 +88,49 @@
 
     <div class="download-wrapper">
       <button class="download-btn" onclick="downloadGradesPDF()">
-        <i class="fa-solid fa-download"></i> Download My Grades (PDF)
+        <i class="fa-solid fa-file-arrow-down"></i>
+        <span data-translate="Download My Grades (PDF)">Download My Grades (PDF)</span>
       </button>
     </div>
   </main>
 
   <!-- FOOTER -->
-  <footer>
-  <p>Al-Bayan Arabic Institute Online</p>
-  <p>Email: albayaninstitute068@gmail.com | Phone: +2347054711066</p>
-  <p id="footerCopyright">
-  © <span id="year"></span> Al-Bayan Arabic Institute Online. All rights reserved.
-</p>
-<a href="privacy.html">Privacy Policy</a>
-</footer>
+<footer>
+    <p data-translate="Al-Bayan Arabic Institute Online Online">Al-Bayan Arabic Institute Online Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  </footer>
 
   <!-- WHATSAPP FLOAT -->
-  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
-  <img src="whatsapp-icon.png" alt="WhatsApp">
-</a>
-<script>
-function toggleMenu() {
-  document.getElementById("navLinks").classList.toggle("show");
-}
-document.addEventListener("click", e => {
-  const nav = document.getElementById("navLinks");
-  const burger = document.querySelector(".hamburger");
-  if (!nav.contains(e.target) && !burger.contains(e.target)) {
-    nav.classList.remove("show");
-  }
-});
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-  <!-- Supabase -->
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script>
-  const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
-  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-</script>
-<script src="student-grades.js"></script>
-<script src="translate.js"></script>
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
+
+  <script>
+
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
+    }
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+    });
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  </script>
+  <script src="student-grades.js"></script>
+  <script src="translate.js"></script>
 </body>
 </html>

@@ -32,32 +32,32 @@ async function initRegisterCourses() {
     .select("course_id")
     .eq("matric_number", matric);
 
-  const registeredIds = registered.map(r => r.course_id);
+  const registeredIds = (registered || []).map(r => r.course_id);
 
   // =========================
   // DISPLAY COURSES
   // =========================
-  container.innerHTML = courses.map(course => {
+  container.innerHTML = courses.map((course, index) => {
 
-    const isRegistered = registeredIds.includes(course.id);
+  const isRegistered = registeredIds.includes(course.id);
 
-    return `
-      <div class="course-card">
-  <h3>${course.course_name}</h3>
+  return `
+    <div class="course-card visible" style="transition-delay:${index * 60}ms">
+      <h3>${course.course_name}</h3>
 
-  <p><strong>${tmpl("level")}:</strong> ${course.level || "-"}</p>
-  <p><strong>${tmpl("instructor")}:</strong> ${course.instructor || "-"}</p>
+      <p><strong>${tmpl("level")}:</strong> ${course.level || "-"}</p>
+      <p><strong>${tmpl("instructor")}:</strong> ${course.instructor || "-"}</p>
 
-  <button 
-    class="register-btn"
-    data-id="${course.id}"
-    data-registered="${isRegistered}"
-  >
-    ${isRegistered ? tmpl("registered") : tmpl("register")}
-  </button>
-</div>
-    `;
-  }).join("");
+      <button 
+        class="register-btn"
+        data-id="${course.id}"
+        data-registered="${isRegistered}"
+      >
+        ${isRegistered ? tmpl("registered") : tmpl("register")}
+      </button>
+    </div>
+  `;
+}).join("");
 
   // =========================
   // HANDLE CLICK
@@ -74,34 +74,45 @@ async function initRegisterCourses() {
       // =====================
       if (isRegistered) {
 
-        await sb
-          .from("course_registrations")
-          .delete()
-          .eq("course_id", courseId)
-          .eq("matric_number", matric);
+const { data, error: deleteError } = await sb
+  .from("course_registrations")
+  .delete()
+  .eq("course_id", courseId)
+  .eq("matric_number", matric)
+  .select();
 
-        btn.textContent = "Register";
-        btn.dataset.registered = "false";
+if (deleteError) {
+  console.error(deleteError);
+  alert(deleteError.message);
+  return;
+}
+
+btn.textContent = tmpl("register");
+btn.dataset.registered = "false";
         return;
       }
 
       // =====================
       // REGISTER
       // =====================
-      const { error } = await sb
-        .from("course_registrations")
-        .insert([{
-          matric_number: matric,
-          course_id: courseId
-        }]);
+const { error } = await sb
+  await sb.from("course_registrations").upsert(
+  {
+    matric_number: matric,
+    course_id: courseId
+  },
+  { onConflict: "matric_number,course_id" }
+);
 
-      if (error) {
-        alert("Error registering");
-        return;
-      }
+if (error) {
+  console.error(error);
+  alert(error.message);
+console.log(error);
+  return;
+}
 
-      btn.textContent = "✅ Registered";
-      btn.dataset.registered = "true";
+btn.textContent = tmpl("registered");
+btn.dataset.registered = "true";
     });
 
   });

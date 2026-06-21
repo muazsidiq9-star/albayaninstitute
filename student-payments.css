@@ -1,316 +1,522 @@
-/* ========== BODY + FLEX ========== */
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-body {
-  overflow-x: hidden;
+/* ============================================================
+   Al-Bayan — STUDENT PAYMENTS (student-payments.css)
+   Premium redesign — matches admission letter token system
+   Typefaces: Playfair Display · EB Garamond · Montserrat
+============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@400;500;600;700&display=swap');
+
+/* ── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --pay-green:      #0515c4;
+  --pay-green-mid:  #3f51b5;
+  --pay-green-xlt:  #e8f5e9;
+  --pay-gold:       #b8972a;
+  --pay-gold-pale:  #fdf6e0;
+  --pay-gold-rule:  #d4c89a;
 }
 
-main, .payments-section {
-  flex: 1;
-  padding: 0 20px;
-}
+html, body { overflow-x: hidden; }
 
-/* ========== HEADER (MATCH HTML) ========== */
-.profile-header {
+
+/* ============================================================
+   PAGE BANNER
+============================================================ */
+.spm-banner {
   position: relative;
-  height: 180px;
+  min-height: 220px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 0;
   background-size: cover;
   background-position: center;
+  overflow: hidden;
 }
 
-.profile-header::before {
-  content: "";
+.spm-banner-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.45);
+  background: linear-gradient(to bottom,
+    rgba(0,30,10,0.72) 0%,
+    rgba(0,55,18,0.65) 100%);
+  z-index: 1;
 }
 
-.profile-header .header-overlay {
+.spm-banner-content {
   position: relative;
+  z-index: 2;
   text-align: center;
   color: #fff;
-  padding: 15px;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.profile-header .header-logo {
-  width: 60px;
+.spm-banner-content .header-logo {
+  width: 58px;
+  height: auto;
   margin-bottom: 10px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
 }
 
-.profile-header h1 {
-  font-size: 1.8rem;
-}
-
-.profile-header p {
-  font-size: 0.95rem;
-  opacity: 0.9;
-}
-
-/* =========================
-   STATS SECTION (PAYMENTS)
-========================= */
-.stats-section {
-  margin: 30px auto 50px;
-  padding: 0 20px;
-}
-
-.profile-info h2 {
-color: var(--text-color);
-margin: 30px auto 0px;
-}
-.stats-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px; /* ✅ reduced from 300px */
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.stats-cards .card {
-  background: var(--card-color);
-  border-radius: 16px;
-  padding: 22px;
-  display: flex;
+.spm-eyebrow {
+  display: inline-flex;
   align-items: center;
-  gap: 18px;
-  box-shadow: 0 10px 30px rgba(15, 0, 41, 0.185);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.stats-cards .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
-}
-
-.stats-cards .icon {
-  font-size: 36px;
-}
-
-.stats-cards .details h3 {
-  margin: 0;
-  font-size: 26px;
+  gap: 7px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem;
   font-weight: 700;
-  color: var(--text-color);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 8px;
 }
 
-.stats-cards .details p {
-  margin: 0;
-  font-size: 14px;
-  color: var(--text-color);
+.spm-banner-content h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  letter-spacing: 0.01em;
 }
 
-@media (max-width: 768px) {
-  .stats-cards {
-    grid-template-columns: 1fr; /* stack cards */
-    gap: 15px;
-  }
-
-  .stats-cards .card {
-    padding: 16px;
-    gap: 12px;
-  }
-
-  .stats-cards .details h3 {
-    font-size: 20px;
-  }
+.spm-banner-content p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.7);
 }
 
-/* =========================
-   PAYMENT HISTORY
-========================= */
-.notifications-list {
-  max-width: 1100px;
-  margin: 20px auto;
+/* Gold rule beneath banner */
+.spm-banner-rule {
+  height: 3px;
+  background: linear-gradient(to right, transparent, var(--pay-gold), transparent);
+}
+
+
+/* ============================================================
+   MAIN LAYOUT
+============================================================ */
+.spm-main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 36px 20px 64px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 24px;
 }
 
-.notifications-card {
-  background: var(--card-color);
+
+/* ============================================================
+   OVERDUE ALERT
+============================================================ */
+.spm-fee-alert {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: var(--pay-gold-pale);
+  border: 1px solid var(--pay-gold-rule);
+  border-left: 5px solid var(--pay-gold);
   border-radius: 12px;
-  padding: 15px 18px;
-  box-shadow: 0 6px 18px rgba(5, 0, 48, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 18px 20px;
 }
 
-.notifications-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.12);
-}
-
-.notifications-card p {
-  margin: 0;
-  font-size: 14px;
-}
-
-.notifications-card .time {
-  display: block;
-  margin-top: 8px;
-  font-size: 12px;
-  color: var(--text-color);
-}
-
-/* Status colors */
-.notifications-card.paid {
-  border-left: 5px solid #2ecc71;
-}
-
-.notifications-card.pending {
-  border-left: 5px solid #f39c12;
-}
-
-.notifications-card.failed {
-  border-left: 5px solid #e74c3c;
-}
-
-/* ========== FOOTER ========== */
-footer {
-  background-color: #0a4d92;
-  color: #fff;
-  text-align: center;
-  padding: 25px 15px;
-  font-size: 14px;
-}
-
-/* ========== WHATSAPP FLOAT ========== */
-.whatsapp-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-
-  width: 55px;
-  height: 55px;
-  background-color: #25D366;
-  border-radius: 50%;
-
+.spm-fee-icon {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #fef3c7;
+  color: #b45309;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-  z-index: 9999;
-
-  cursor: grab;
+  font-size: 1.1rem;
 }
 
-.whatsapp-float img {
-  width: 28px;
-  height: 28px;
-}
-
-/* ========== RESPONSIVE ========== */
-@media (max-width: 768px) {
-  .profile-header { height: 200px; }
-  .profile-header h1 { font-size: 1.5rem; }
-}
-.download-btn {
-  background-color: #0a4d92;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 22px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.25s ease;
-}
-
-.download-btn:hover {
-  background-color: #06326b;
-}
-
-.action-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px; /* 👈 clean spacing between buttons */
-  margin: 20px 0;
-  flex-wrap: wrap; /* helps on mobile */
-}
-
-@media (max-width: 768px) {
-  .action-buttons {
-    gap: 10px;
-  }
-
-  .download-btn {
-    width: 100%; /* stack nicely */
-    max-width: 300px;
-  }
-}
-
-.payment-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-}
-
-.dropdown-icon {
-  font-size: 30px;
-}
-
-.notifications-dropdown {
-  max-height: 320px;
-  overflow-y: auto;
-  margin-top: 10px;
-  background: var(--card-color);
-  transform: translateY(-2px);
-}
-
-.hidden {
-  display: none;
-}
-
-.notifications-wrapper {
-  max-height: 300px;      /* adjust like dashboard */
-  overflow-y: auto;
-  padding-right: 5px;
-  background: var(--card-color);
-}
-
-.notifications-list {
+.spm-fee-text {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 3px;
+  min-width: 0;
 }
 
-.fee-alert {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #a5a5a5;
-  border-left: 5px solid #ff9800;
-  padding: 15px;
-  border-radius: 8px;
-  margin: 15px 0;
-  gap: 10px;
+.spm-fee-text strong {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #78350f;
 }
 
-.fee-text {
-  color: #856404;
-}
-
-.fee-alert-icon {
-  font-size: 24px;
+.spm-fee-text span {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.98rem;
+  color: #92400e;
+  line-height: 1.5;
 }
 
 .amount-red {
-  color: red;
-  font-weight: bold;
+  color: #dc2626;
+  font-weight: 700;
+  animation: blinkRed 1.4s ease-in-out infinite;
 }
 
-.pay-btn {
-  background: #ff0000;
-  color: white;
-  border: none;
-  padding: 8px 12px;
+@keyframes blinkRed {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+.spm-pay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 20px;
   border-radius: 6px;
+  background: var(--pay-green);
+  color: #fff;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 3px 10px rgba(0,66,17,0.2);
+}
+
+.spm-pay-btn:hover {
+  background: var(--pay-green-mid);
+  transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   SECTION WRAPPER
+============================================================ */
+.spm-section {
+  background: var(--card-color);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.spm-section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 22px;
+  background: var(--pay-green);
+  position: relative;
+}
+
+/* Gold underline accent on section header */
+.spm-section-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--pay-gold), transparent);
+}
+
+.spm-section-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.spm-section-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.spm-section-body {
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+
+/* ============================================================
+   STATS GRID
+============================================================ */
+.spm-stats-grid {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 16px 16px;
+  transition: transform 0.22s, box-shadow 0.22s;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle left bar matching the admission letter accent bars */
+.stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--pay-green), var(--pay-green-mid));
+  border-radius: 10px 0 0 10px;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
+
+.stat-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  background: var(--pay-green-xlt);
+  color: var(--pay-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.stat-icon.payments { background: #dbfeef; color: #1dd86b; }
+.stat-icon.alert    { background: #fee2e2; color: #dc2626; }
+
+.stat-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-info p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+
+/* ============================================================
+   PAYMENT HISTORY LIST
+============================================================ */
+.spm-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.spm-empty {
+  font-family: 'EB Garamond', serif;
+  font-size: 1rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 24px 0;
+  font-style: italic;
+}
+
+.spm-history-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 14px 16px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.spm-history-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+}
+
+.spm-history-card.paid    { border-left: 4px solid #1693a3; }
+.spm-history-card.pending { border-left: 4px solid var(--pay-gold); }
+.spm-history-card.failed  { border-left: 4px solid #dc2626; }
+
+.spm-history-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.spm-history-icon.paid    { background: #dcfce7; color: #16a34a; }
+.spm-history-icon.pending { background: var(--pay-gold-pale); color: #b45309; }
+.spm-history-icon.failed  { background: #fee2e2; color: #dc2626; }
+
+.spm-history-body { flex: 1; min-width: 0; }
+
+.spm-history-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.spm-history-month {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-color);
+}
+
+.spm-history-badge {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 2px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.spm-history-badge.paid    { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+.spm-history-badge.pending { background: var(--pay-gold-pale); color: #92400e; border: 1px solid var(--pay-gold-rule); }
+.spm-history-badge.failed  { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+
+.spm-history-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 2px;
+}
+
+.spm-history-date {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+
+/* ============================================================
+   DOWNLOAD STRIP
+============================================================ */
+.spm-download-strip {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.spm-download-btn {
+  flex: 1;
+  min-width: 200px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 8px;
+  background: var(--pay-green);
+  color: #fff;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 3px 10px rgba(0,66,17,0.2);
+}
+
+.spm-download-btn:hover {
+  background: var(--pay-green-mid);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,66,17,0.28);
+}
+
+.spm-download-btn--outline {
+  background: transparent;
+  border: 2px solid var(--pay-green);
+  color: var(--pay-green);
+  box-shadow: none;
+}
+
+.spm-download-btn--outline:hover {
+  background: var(--pay-green-xlt);
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .spm-download-btn--outline {
+  border-color: #4ad9de;
+  color: #4aded7;
+}
+
+[data-theme="dark"] .spm-download-btn--outline:hover {
+  background: rgba(74,222,128,0.08);
+}
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 768px) {
+  .spm-banner { min-height: 180px; }
+  .spm-banner-content h1 { font-size: 1.4rem; }
+
+  .spm-fee-alert { flex-direction: column; align-items: flex-start; }
+  .spm-pay-btn   { width: 100%; justify-content: center; }
+
+  .spm-stats-grid { flex-direction: column; }
+
+  .stat-card { min-width: unset; }
+}
+
+@media (max-width: 480px) {
+  .spm-main { padding: 20px 12px 48px; gap: 18px; }
+  .spm-download-strip { flex-direction: column; }
+  .spm-download-btn { min-width: unset; width: 100%; }
+  .spm-section-body { padding: 16px 14px; }
 }

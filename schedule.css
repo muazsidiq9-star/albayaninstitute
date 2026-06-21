@@ -1,209 +1,240 @@
-/* =========================
+/* ============================================================
+   Al-Bayan — SCHEDULE PAGE STYLES (schedule.css)
+   All IDs and JS-dependent classes preserved exactly
+============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+
+/* ============================================================
    HEADER
-========================= */
+============================================================ */
 .schedule-header {
   position: relative;
   background: url("background-schedule.jpg") center/cover no-repeat;
-  height: 300px;
+  background-color: var(--primary-dark);
+  height: 280px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 0; /* match navbar height */
+  overflow: hidden;
 }
 
 .schedule-header::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.50) 0%, rgba(0,50,20,0.65) 100%);
+  z-index: 1;
 }
 
 .schedule-header .header-overlay {
   position: relative;
+  z-index: 2;
   text-align: center;
   color: #fff;
   padding: 20px;
-  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .header-logo {
-  width: 90px;
-  margin-bottom: 10px;
+  width: 80px;
+  height: auto;
+  margin-bottom: 12px;
 }
 
 .schedule-header h1 {
-  font-size: 2.4rem;
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: #fff;
   margin-bottom: 6px;
 }
 
 .schedule-header p {
-  font-size: 1rem;
-  opacity: 0.95;
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  color: #dff4f5;
 }
 
-/* =========================
-   SECTION
-========================= */
+@media (max-width: 768px) {
+  .schedule-header { height: 220px; }
+  .header-logo { width: 62px; }
+}
+
+
+/* ============================================================
+   SCHEDULE SECTION
+============================================================ */
 .schedule-section {
   max-width: 1100px;
-  margin: 3rem auto;
-  padding: 0 1rem;
+  margin: 36px auto;
+  padding: 0 16px;
 }
 
-.schedule-section h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: #039752;
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px 12px;
+  border-bottom: 2px solid var(--border-light);
+  margin-bottom: 22px;
 }
 
-/* =========================
-   TABLE WRAPPER (SCROLL)
-========================= */
+.section-header h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.section-header h2 i {
+  color: var(--primary);
+}
+
+
+/* ============================================================
+   TABLE WRAPPER
+============================================================ */
 .table-wrapper {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  background: var(--card-color);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
 }
 
-/* scrollbar styling */
 .table-wrapper::-webkit-scrollbar {
   height: 6px;
 }
 .table-wrapper::-webkit-scrollbar-thumb {
-  background: #1a73e8;
+  background: var(--primary-dark);
   border-radius: 10px;
 }
 
-/* =========================
-   TABLE
-========================= */
+
+/* ============================================================
+   SCHEDULE TABLE
+============================================================ */
 .schedule-table {
   width: 100%;
-  min-width: 750px; /* forces horizontal scroll */
-  border-collapse: separate; /* IMPORTANT for sticky */
+  min-width: 750px;
+  border-collapse: separate;
   border-spacing: 0;
-
   background: var(--card-color);
-  border-radius: 12px;
-  overflow: hidden;
-
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  color: var(--text-color);
 }
 
-/* =========================
-   HEADER (STICKY)
-========================= */
 .schedule-table thead th {
   position: sticky;
   top: 0;
   z-index: 5;
-
-  background: #0f5132;
+  background: var(--primary-dark);
   color: #fff;
-}
-
-/* =========================
-   CELLS
-========================= */
-.schedule-table th,
-.schedule-table td {
-  padding: 14px 16px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 12px 14px;
   text-align: center;
   white-space: nowrap;
-  font-size: 0.95rem;
+  border-bottom: 2px solid var(--primary);
 }
 
-/* =========================
-   ROW STYLES
-========================= */
+.schedule-table td {
+  padding: 11px 14px;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 0.88rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
 .schedule-table tbody tr:nth-child(even) {
   background: var(--surface-color);
 }
 
 .schedule-table tbody tr:hover {
-  background: #a3bef707;
+  background: var(--primary-xlight);
 }
 
-/* =========================
-   STICKY FIRST COLUMN
-========================= */
+/* Sticky first column */
 .schedule-table th:first-child,
 .schedule-table td:first-child {
   position: sticky;
   left: 0;
   z-index: 4;
   background: var(--card-color);
+  box-shadow: 2px 0 6px rgba(0,0,0,0.07);
 }
 
-/* keep header above everything */
 .schedule-table thead th:first-child {
   z-index: 6;
-  background: #0f5132;
+  background: var(--primary-dark);
 }
 
-/* subtle separation shadow */
-.schedule-table th:first-child,
-.schedule-table td:first-child {
-  box-shadow: 2px 0 6px rgba(0,0,0,0.08);
-}
-
-/* =========================
-   COLUMN HIGHLIGHTS
-========================= */
 .schedule-table td:nth-child(1) {
-  font-weight: 600;
-  color: #0f766e;
+  font-weight: 700;
+  color: var(--border-color);
 }
 
 .schedule-table td:nth-child(4) {
   font-weight: 600;
 }
 
-/* =========================
-   BADGES & STATES
-========================= */
+
+/* ============================================================
+   STATUS BADGES (JS-rendered — keep classes)
+============================================================ */
 .status-badge {
-  padding: 3px 8px;
-  border-radius: 6px;
-  color: #f0fdfa;
-  font-size: 13px;
-  font-weight: 600;
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: capitalize;
+  color: #fff;
 }
 
-.status-badge.scheduled { background-color: #3498db; }
-.status-badge.completed { background-color: #2ecc71; }
-.status-badge.cancelled { background-color: #e74c3c; }
+.status-badge.scheduled { background-color: var(--primary); }
+.status-badge.completed { background-color: #25eb60; }
+.status-badge.cancelled { background-color: #dc2626; }
 
+
+/* ============================================================
+   JOIN BUTTON (JS-rendered — keep class)
+============================================================ */
 .join-btn {
-  background-color: #03a9f4;
+  display: inline-block;
+  padding: 5px 12px;
+  background: #2563eb;
   color: #fff;
-  padding: 4px 10px;
-  border-radius: 5px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.82rem;
   text-decoration: none;
-  font-weight: bold;
-  font-size: 14px;
+  transition: background 0.2s, transform 0.1s;
 }
 
 .join-btn:hover {
-  background-color: #0288d1;
+  background: #1d4ed8;
+  transform: scale(1.04);
 }
 
-/* =========================
-   SPECIAL STATES
-========================= */
-.today-class {
-  border-left: 5px solid #0f766e;
-}
 
-.ended {
-  color: #94a3b8;
-  font-style: italic;
-  font-size: 0.85rem;
-}
-
-/* =========================
-   BUTTON BASE
-========================= */
+/* ============================================================
+   EXAM / START BUTTON (JS-rendered — keep class)
+============================================================ */
 .btn {
   border: none;
   outline: none;
@@ -212,112 +243,57 @@
   transition: all 0.25s ease;
 }
 
-/* =========================
-   ENTER EXAM BUTTON
-========================= */
 .btn-start {
-  background: linear-gradient(135deg, #ff9800, #f57c00);
+  background: linear-gradient(135deg, #f97316, #ea580c);
   color: #fff;
-
-  padding: 8px 14px;
+  padding: 7px 14px;
   border-radius: 8px;
-
-  font-size: 0.85rem;
-  font-weight: 600;
-
+  font-size: 0.82rem;
+  font-weight: 700;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
-/* Hover effect */
-.btn-start:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(255,152,0,0.4);
-}
-
-/* Active (tap feel on mobile) */
-.btn-start:active {
-  transform: scale(0.95);
-}
-/* =========================
-   FOOTER
-========================= */
-footer {
-  background-color: #1a73e8;
-  color: #ffffff;
-  text-align: center;
-  padding: 25px 15px;
-  font-size: 14px;
-  margin-top: 60px;
-}
-
-footer p {
-  margin-bottom: 6px;
-}
-
-/* =========================
-   WHATSAPP FLOAT
-========================= */
-.whatsapp-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-
-  width: 55px;
-  height: 55px;
-  background-color: #25D366;
-  border-radius: 50%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-  z-index: 9999;
-
-  cursor: grab;
-}
-
-.whatsapp-float img {
-  width: 28px;
-  height: 28px;
-}
-
-/* =========================
-   MOBILE
-========================= */
-@media (max-width: 768px) {
-
-  .schedule-header {
-    height: 240px;
-  }
-
-  .header-logo {
-    width: 70px;
-  }
-
-  .schedule-header h1 {
-    font-size: 1.9rem;
-  }
-
-  .schedule-table th,
-  .schedule-table td {
-    padding: 10px;
-    font-size: 0.85rem;
-  }
-}
-
-/* Glow for ongoing exam */
-.btn-start {
   animation: pulse-glow 1.5s infinite;
 }
 
+.btn-start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(249,115,22,0.4);
+}
+
+.btn-start:active {
+  transform: scale(0.95);
+}
+
 @keyframes pulse-glow {
-  0% { box-shadow: 0 0 0 rgba(255,152,0,0.4); }
-  50% { box-shadow: 0 0 12px rgba(255,152,0,0.8); }
-  100% { box-shadow: 0 0 0 rgba(255,152,0,0.4); }
+  0%   { box-shadow: 0 0 0 rgba(249,115,22,0.4); }
+  50%  { box-shadow: 0 0 14px rgba(249,115,22,0.75); }
+  100% { box-shadow: 0 0 0 rgba(249,115,22,0.4); }
+}
+
+
+/* ============================================================
+   SPECIAL ROW STATES (JS-rendered — keep classes)
+============================================================ */
+.today-class {
+  border-left: 4px solid var(--primary);
+}
+
+.ended {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.83rem;
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+@media (max-width: 768px) {
+  .schedule-table th,
+  .schedule-table td {
+    padding: 9px 10px;
+    font-size: 0.82rem;
+  }
 }

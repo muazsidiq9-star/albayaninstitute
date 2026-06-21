@@ -1,49 +1,55 @@
-/* ==========================
-   BASE LAYOUT FIX
-========================== */
+/* ============================================================
+   Al-Bayan — TEST/EXAM WELCOME (test-welcome.css)
+   Premium version — all JS-dependent IDs & classes preserved
+============================================================ */
 
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", Tahoma, sans-serif;
   background: var(--bg-color);
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
-/* Page wrapper */
+/* JS-used layout wrapper */
 .page-content {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* ==========================
-   HEADER SECTION
-========================== */
 
+/* ============================================================
+   HALL HEADER
+============================================================ */
 .hall-header {
-  position: relative; /* IMPORTANT FIX */
-  background-image: url('background-main.jpg');
+  position: relative;
   background-size: cover;
   background-position: center;
-  color: #fff;
-  text-align: center;
-  padding: 4rem 1rem 2rem;
+  min-height: 46vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
-/* dark overlay */
-.hall-header::before {
-  content: "";
+/* Dark gradient overlay */
+.hall-header-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
+  background: linear-gradient(
+    160deg,
+    rgba(0,0,0,0.62) 0%,
+    rgba(0,50,18,0.70) 100%
+  );
   z-index: 1;
 }
 
-/* content */
+/* Content layer */
 .header-overlay {
   position: relative;
   z-index: 2;
@@ -51,138 +57,321 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  padding: 48px 20px 44px;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
 }
 
-.hall-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+/* JS sets textContent of these — keep existing IDs */
+#examTitle {
+  font-size: clamp(1.6rem, 4.5vw, 2.8rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
 }
 
-.hall-header p {
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
+#examMessage {
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  color: rgba(255,255,255,0.82);
+  line-height: 1.7;
+  max-width: 520px;
 }
 
-/* ==========================
-   EXAM INFO BOX
-========================== */
 
+/* ============================================================
+   STATUS BADGE  (JS sets class on #statusBadge)
+============================================================ */
+.tw-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  backdrop-filter: blur(4px);
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.tw-badge-icon { font-size: 0.85rem; }
+
+/* Badge variants — JS adds these classes */
+.badge-ongoing  { background: rgba(22,163,74,0.35);  border-color: #4ade80; color: #bbf7d0; }
+.badge-upcoming { background: rgba(59,130,246,0.30); border-color: #93c5fd; color: #bfdbfe; }
+.badge-waiting  { background: rgba(245,158,11,0.30); border-color: #fde68a; color: #fef9c3; }
+.badge-ended    { background: rgba(220,38,38,0.30);  border-color: #fca5a5; color: #fee2e2; }
+.badge-none     { background: rgba(107,114,128,0.3); border-color: #d1d5db; color: #f3f4f6; }
+.badge-loading  { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #fff; }
+
+
+/* ============================================================
+   EXAM INFO SECTION  (JS injects .tw-info-grid inside #examInfo)
+============================================================ */
 .exam-info {
   background: var(--card-color);
-  max-width: 700px;
-  margin: 2rem auto;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  font-size: 1.1rem;
+  max-width: 720px;
+  width: calc(100% - 40px);
+  margin: -24px auto 0;       /* overlaps header — premium feel */
+  padding: 0;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
 }
 
-.exam-info p {
-  margin: 0.8rem 0;
+/* Top accent line */
+.exam-info::before {
+  content: "";
+  display: block;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), #4acdde);
 }
 
-/* ==========================
-   BUTTON (FIXED ID)
-========================== */
+/* 2-column info grid — JS injects this */
+.tw-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  padding: 8px 0;
+}
 
+.tw-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border-light);
+  transition: background 0.2s;
+}
+
+.tw-info-item:hover { background: var(--primary-xlight); }
+
+/* Remove bottom border from last 2 items */
+.tw-info-item:nth-last-child(-n+2) { border-bottom: none; }
+
+.tw-info-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+}
+
+.tw-info-label i { color: var(--primary); font-size: 0.78rem; }
+
+.tw-info-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+/* Type badge inside info grid */
+.tw-type-badge {
+  display: inline-block;
+  background: var(--primary-xlight);
+  color: var(--primary-dark);
+  padding: 2px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: capitalize;
+  border: 1px solid var(--border-light);
+}
+
+/* Loading skeleton */
+.tw-skeleton {
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tw-skel-row {
+  height: 16px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--surface-color) 25%, var(--border-light) 50%, var(--surface-color) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.tw-skel-row.short { width: 55%; }
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (max-width: 600px) {
+  .exam-info { margin: -16px 16px 0; width: auto; }
+  .tw-info-grid { grid-template-columns: 1fr; }
+  .tw-info-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--border-light); }
+  .tw-info-item:last-child { border-bottom: none; }
+  .tw-info-item { padding: 13px 16px; }
+}
+
+
+/* ============================================================
+   RULES CARD
+============================================================ */
+.tw-rules-card {
+  max-width: 720px;
+  width: calc(100% - 40px);
+  margin: 20px auto 0;
+  background: var(--card-color);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+.tw-rules-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--text-color);
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.tw-rules-title i { color: var(--primary); }
+
+.tw-rules-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tw-rules-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--text-color);
+  line-height: 1.55;
+}
+
+.tw-rules-list li i {
+  color: var(--primary);
+  font-size: 0.85rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .tw-rules-card { margin: 16px 16px 0; width: auto; padding: 16px; }
+}
+
+
+/* ============================================================
+   ATTEMPT BUTTON WRAPPER
+============================================================ */
+.tw-btn-wrap {
+  text-align: center;
+  margin: 28px auto 48px;
+  max-width: 720px;
+  width: calc(100% - 40px);
+}
+
+/* JS targets #attemptBtn — keep the ID */
 #attemptBtn {
-  background-color: #1E90FF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--primary);
   color: #fff;
-  font-weight: bold;
-  padding: 12px 28px;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 15px 40px;
   border: none;
-  border-radius: 8px;
+  border-radius: 999px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1.1rem;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: background 0.25s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 20px rgba(22,163,74,0.35);
+  min-width: 220px;
+  letter-spacing: 0.02em;
+}
+
+/* JS adds .btn-active when exam is live */
+#attemptBtn.btn-active {
+  background: var(--primary);
+  animation: pulseGreen 2.2s infinite;
+}
+
+@keyframes pulseGreen {
+  0%   { box-shadow: 0 0 0 0 rgba(22,163,74,0.5); }
+  70%  { box-shadow: 0 0 0 16px rgba(22,163,74,0); }
+  100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); }
 }
 
 #attemptBtn:hover:not(:disabled) {
-  background-color: #187bcd;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(0,0,0,0.25);
+  background: var(--primary-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(22,163,74,0.4);
 }
 
 #attemptBtn:disabled {
-  background-color: #aaa;
+  background: #9ca3af;
+  color: #e5e7eb;
   cursor: not-allowed;
   box-shadow: none;
+  transform: none;
+  animation: none;
 }
 
-/* ==========================
-   SPINNER (MISSING FIX)
-========================== */
+@media (max-width: 600px) {
+  .tw-btn-wrap { margin: 20px 16px 36px; width: auto; }
+  #attemptBtn  { width: 100%; padding: 14px; font-size: 0.95rem; }
+}
 
+
+/* ============================================================
+   SPINNER  (JS injects .spinner inside button)
+============================================================ */
 .spinner {
   width: 16px;
   height: 16px;
-  border: 2px solid #fff;
-  border-top: 2px solid transparent;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
   border-radius: 50%;
   display: inline-block;
   animation: spin 0.7s linear infinite;
-  margin-right: 6px;
+  flex-shrink: 0;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
+  0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-/* ==========================
-   WHATSAPP FLOAT
-========================== */
 
-.whatsapp-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 55px;
-  height: 55px;
-  background-color: #25D366;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-  z-index: 9999;
-}
-
-/* ==========================
-   FOOTER
-========================== */
-
-footer {
-  background-color: #222;
-  color: #fff;
-  text-align: center;
-  padding: 1.5rem 1rem;
-  margin-top: auto;
-  font-size: 0.9rem;
-}
-
-/* ==========================
-   RESPONSIVE
-========================== */
-
+/* ============================================================
+   RESPONSIVE — header height
+============================================================ */
 @media (max-width: 768px) {
-  .hall-header h1 {
-    font-size: 2rem;
-  }
-
-  .hall-header p {
-    font-size: 1rem;
-  }
-
-  .exam-info {
-    margin: 1rem;
-    padding: 1.5rem;
-    font-size: 1rem;
-  }
-
-  #attemptBtn {
-    font-size: 1rem;
-    padding: 10px 20px;
-  }
+  .hall-header    { min-height: 38vh; }
+  .header-overlay { padding: 36px 16px 32px; }
+  #examTitle      { font-size: 1.5rem; }
+  #examMessage    { font-size: 0.9rem; }
 }
