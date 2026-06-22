@@ -151,6 +151,10 @@
       <i class="fa-solid fa-book-open"></i>
       <span data-translate="Courses">Courses</span>
     </button>
+    <button class="dash-tab" data-tab="tab-videos" onclick="switchDashTab('tab-videos', this)">
+      <i class="fa-solid fa-film"></i>
+      <span data-translate="Video Library">Video Library</span>
+    </button>
     <button class="dash-tab" data-tab="tab-certificates" onclick="switchDashTab('tab-certificates', this)">
       <i class="fa-solid fa-certificate"></i>
       <span data-translate="Certificates">Certificates</span>
@@ -647,6 +651,184 @@
     </div>
   </section>
   </div><!-- /tab-courses -->
+  
+ 
+  <!-- ================================================
+       VIDEO LIBRARY SECTION (tab-videos)
+  ================================================ -->
+  <div class="dash-tab-panel" id="tab-videos" style="display:none;">
+
+    <!-- ── BOOKS ──────────────────────────────────── -->
+    <section class="dash-section">
+      <div class="card">
+
+        <!-- Add / Edit Book form -->
+        <h2 class="section-title">
+          <i class="fa-solid fa-folder-plus"></i>
+          <span data-translate="Add Book">Add Book</span>
+        </h2>
+        <div class="vl-book-form">
+          <select id="vl-book-course">
+            <option value="" data-translate="Select Course">Select Course</option>
+          </select>
+          <input type="text" id="vl-book-title"
+                 placeholder="Book title e.g. Book 1"
+                 data-translate-placeholder="Book title e.g. Book 1">
+          <input type="number" id="vl-book-order"
+                 placeholder="Order (1, 2, 3...)"
+                 data-translate-placeholder="Order (1, 2, 3...)"
+                 min="0" style="width:140px;">
+          <button id="vl-save-book-btn" class="btn btn-save" onclick="vlSaveBook()">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span data-translate="Add Book">Add Book</span>
+          </button>
+          <button class="btn btn-cancel" onclick="vlCancelEditBook()">
+            <span data-translate="Cancel">Cancel</span>
+          </button>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- Books table -->
+        <h2 class="section-title">
+          <i class="fa-solid fa-list"></i>
+          <span data-translate="All Books">All Books</span>
+        </h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th data-translate="Course">Course</th>
+                <th data-translate="Book Title">Book Title</th>
+                <th data-translate="Order">Order</th>
+                <th data-translate="Edit">Edit</th>
+                <th data-translate="Delete">Delete</th>
+              </tr>
+            </thead>
+            <tbody id="vl-books-body">
+              <tr>
+                <td colspan="5" class="empty-row" data-translate="No books yet">No books yet</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── VIDEOS ─────────────────────────────────── -->
+    <section class="dash-section" style="margin-top:0;">
+      <div class="card">
+
+        <div class="section-header" style="margin-bottom:16px;">
+          <h2 class="section-title" style="margin:0;">
+            <i class="fa-solid fa-film"></i>
+            <span data-translate="Videos">Videos</span>
+          </h2>
+          <div class="vl-video-filter">
+            <select id="vl-video-filter-course" onchange="vlLoadFilterBooks()">
+              <option value="" data-translate="All Courses">All Courses</option>
+            </select>
+            <select id="vl-video-filter-book" onchange="vlLoadVideos()">
+              <option value="" data-translate="All Books">All Books</option>
+            </select>
+          </div>
+          <button class="add-btn" onclick="vlOpenAddVideo()">
+            <i class="fa-solid fa-plus"></i>
+            <span data-translate="Add Video">Add Video</span>
+          </button>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th data-translate="Course">Course</th>
+                <th data-translate="Book">Book</th>
+                <th data-translate="Title">Title</th>
+                <th data-translate="Language">Language</th>
+                <th data-translate="Month">Month</th>
+                <th data-translate="YouTube">YouTube</th>
+                <th data-translate="Edit">Edit</th>
+                <th data-translate="Delete">Delete</th>
+              </tr>
+            </thead>
+            <tbody id="vl-videos-body">
+              <tr>
+                <td colspan="8" class="empty-row" data-translate="No videos yet">No videos yet</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /tab-videos -->
+
+
+
+  <div class="modal" id="videoLibModal">
+    <div class="modal-content modal-large">
+      <button class="btn btn-close" onclick="closeModal('videoLibModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 id="vl-modal-heading" data-translate="Add Video">Add Video</h2>
+      <div class="modal-grid">
+
+        <label data-translate="Course">Course</label>
+        <select id="vl-modal-course" onchange="vlLoadModalBooks()">
+          <option value="" data-translate="Select Course">Select Course</option>
+        </select>
+
+        <label data-translate="Book">Book</label>
+        <select id="vl-modal-book">
+          <option value="" data-translate="Select Course First">Select Course First</option>
+        </select>
+
+        <label data-translate="Video Title">Video Title</label>
+        <input type="text" id="vl-modal-title-input"
+               placeholder="e.g. Book 1 — Lesson 1"
+               data-translate-placeholder="e.g. Book 1 — Lesson 1">
+
+        <label data-translate="Language">Language</label>
+        <select id="vl-modal-language">
+          <option value="english" data-translate="English">English</option>
+          <option value="arabic" data-translate="Arabic">Arabic</option>
+        </select>
+
+        <label data-translate="Month">Month</label>
+        <select id="vl-modal-month">
+          <option value="" data-translate="Select Month">Select Month</option>
+          <option>January</option><option>February</option><option>March</option>
+          <option>April</option><option>May</option><option>June</option>
+          <option>July</option><option>August</option><option>September</option>
+          <option>October</option><option>November</option><option>December</option>
+        </select>
+
+        <label data-translate="YouTube Video ID">YouTube Video ID</label>
+        <input type="text" id="vl-modal-youtube"
+               placeholder="e.g. dQw4w9WgXcQ (ID only, not full URL)"
+               data-translate-placeholder="e.g. dQw4w9WgXcQ (ID only, not full URL)">
+
+        <label data-translate="Telegram Link">Telegram Link</label>
+        <input type="url" id="vl-modal-telegram"
+               placeholder="https://t.me/..."
+               data-translate-placeholder="https://t.me/...">
+
+      </div>
+      <div class="modal-actions">
+        <button id="vl-modal-save-btn" class="btn btn-save" onclick="vlSaveVideo()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span data-translate="Save Video">Save Video</span>
+        </button>
+        <button class="btn btn-cancel" onclick="closeModal('videoLibModal')">
+          <span data-translate="Cancel">Cancel</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
 
   <!-- ================================================
        CERTIFICATES SECTION (tab-certificates)
@@ -831,7 +1013,7 @@
                data-translate-placeholder="Age">
         <label data-translate="Level">Level</label>
         <select id="studentLevel" required>
-          <option value="" data-translate="Choose Level">-- Choose Level --</option>
+          <option value="" data-translate="Choose Level">Choose Level</option>
           <option data-translate="Preliminary">Preliminary</option>
           <option data-translate="Beginner">Beginner</option>
           <option data-translate="Intermediate">Intermediate</option>
@@ -876,7 +1058,7 @@
         </select>
         <label data-translate="Level">Level</label>
         <select id="paymentLevel" required>
-          <option value="" data-translate="Select Level">-- Select Level --</option>
+          <option value="" data-translate="Select Level">Select Level</option>
           <option data-translate="Preliminary">Preliminary</option>
           <option data-translate="Beginner">Beginner</option>
           <option data-translate="Intermediate">Intermediate</option>
@@ -951,7 +1133,7 @@
         <input type="hidden" id="gradeStudentId">
         <label data-translate="Level">Level</label>
         <select id="gradeLevel" required>
-          <option value="" data-translate="Choose Level">-- Choose Level --</option>
+          <option value="" data-translate="Choose Level">Choose Level</option>
           <option data-translate="Preliminary">Preliminary</option>
           <option data-translate="Beginner">Beginner</option>
           <option data-translate="Intermediate">Intermediate</option>
@@ -962,7 +1144,7 @@
                data-translate-placeholder="Course Name">
         <label data-translate="Semester">Semester</label>
         <select id="gradeSemester" required>
-          <option value="" data-translate="Select Semester">-- Select Semester --</option>
+          <option value="" data-translate="Select Semester">Select Semester</option>
           <option data-translate="First">First</option>
           <option data-translate="Second">Second</option>
         </select>
@@ -1010,7 +1192,7 @@
       <div class="modal-grid">
         <label data-translate="Level">Level</label>
         <select id="classLevel" required>
-          <option value="" data-translate="Choose Level">-- Choose Level --</option>
+          <option value="" data-translate="Choose Level">Choose Level</option>
           <option data-translate="Preliminary">Preliminary</option>
           <option data-translate="Beginner">Beginner</option>
           <option data-translate="Intermediate">Intermediate</option>
@@ -1061,7 +1243,7 @@
                data-translate-placeholder="e.g. Beginner Arabic - Lesson 5">
         <label data-translate="Level">Level</label>
         <select id="attendanceLevel">
-          <option value="" data-translate="Choose Level">-- Choose Level --</option>
+          <option value="" data-translate="Choose Level">Choose Level</option>
           <option data-translate="Preliminary">Preliminary</option>
           <option data-translate="Beginner">Beginner</option>
           <option data-translate="Intermediate">Intermediate</option>
@@ -1139,7 +1321,7 @@
                data-translate-placeholder="Assessment Title">
         <label data-translate="Level">Level</label>
         <select id="assessmentLevel">
-          <option value="" data-translate="Choose Level">-- Choose Level --</option>
+          <option value="" data-translate="Choose Level">Choose Level</option>
           <option data-translate="Preliminary">Preliminary</option>
           <option data-translate="Beginner">Beginner</option>
           <option data-translate="Intermediate">Intermediate</option>
@@ -1150,13 +1332,13 @@
                data-translate-placeholder="Course Name">
         <label data-translate="Semester">Semester</label>
         <select id="assessmentSemester">
-          <option value="" data-translate="Select Semester">-- Select Semester --</option>
+          <option value="" data-translate="Select Semester">Select Semester</option>
           <option data-translate="First">First</option>
           <option data-translate="Second">Second</option>
         </select>
         <label data-translate="Type">Type</label>
         <select id="assessmentType">
-          <option value="" data-translate="Select Type">-- Select Type --</option>
+          <option value="" data-translate="Select Type">Select Type</option>
           <option value="test" data-translate="Test">Test</option>
           <option value="exam" data-translate="Exam">Exam</option>
         </select>
@@ -1172,7 +1354,7 @@
         <input type="datetime-local" id="assessmentEnd">
         <label data-translate="Status">Status</label>
         <select id="assessmentStatus">
-          <option value="" data-translate="Select Status">-- Select Status --</option>
+          <option value="" data-translate="Select Status">Select Status</option>
           <option value="active" data-translate="Active">Active</option>
           <option value="inactive" data-translate="Inactive">Inactive</option>
         </select>
@@ -1295,10 +1477,11 @@
     // DASHBOARD TAB SYSTEM
     // ===========================
     const TAB_ROLE_MAP = {
-      mudeer:           ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-grades","tab-schedule","tab-attendance","tab-assessments","tab-courses","tab-certificates","tab-passwords","tab-deleted"],
-      assistant_mudeer: ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-grades","tab-schedule","tab-attendance","tab-assessments","tab-courses","tab-certificates","tab-passwords","tab-deleted"],
+    
+    mudeer:           ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-grades","tab-schedule","tab-attendance","tab-assessments","tab-courses","tab-videos","tab-certificates","tab-passwords","tab-deleted"],
+  assistant_mudeer: ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-grades","tab-schedule","tab-attendance","tab-assessments","tab-courses","tab-videos","tab-certificates","tab-passwords","tab-deleted"],
+  registrar:        ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-attendance","tab-courses","tab-videos"],
       h_o_d:           ["tab-profile","tab-mypayments","tab-students","tab-grades","tab-schedule","tab-attendance","tab-courses","tab-passwords"],
-      registrar:        ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-attendance","tab-courses"],
       bursar:           ["tab-profile","tab-mypayments","tab-payments","tab-fees"]
     };
 
@@ -1347,6 +1530,10 @@
       }
 
       if (tabId === "tab-mypayments" && typeof loadAdminMyPayments === "function") loadAdminMyPayments();
+      
+      if (tabId === "tab-videos" && typeof loadVideoLibraryTab === "function") {
+        loadVideoLibraryTab();
+      }
 
       sessionStorage.setItem("activeTab", tabId);
     }

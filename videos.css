@@ -145,7 +145,118 @@ html, body { overflow-x: hidden; }
 
 
 /* ============================================================
-   VIDEOS GRID
+   DRILL BREADCRUMB
+============================================================ */
+.drill-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.drill-breadcrumb .crumb {
+  color: var(--primary);
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  padding: 4px 0;
+}
+
+.drill-breadcrumb .crumb:hover { opacity: 0.7; }
+
+.drill-breadcrumb .crumb.current {
+  color: var(--text-color);
+  cursor: default;
+  font-weight: 600;
+}
+
+.drill-breadcrumb .sep {
+  color: var(--border-light);
+  font-size: 0.7rem;
+}
+
+
+/* ============================================================
+   FOLDER GRID (courses + books level)
+============================================================ */
+.folder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+.folder-card {
+  position: relative;
+  background: var(--card-color);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 22px 44px 22px 20px; /* right pad leaves room for arrow */
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+  outline: none;
+}
+
+.folder-card:hover,
+.folder-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.10);
+  border-color: var(--primary);
+}
+
+.folder-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(22, 163, 74, 0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.folder-card-icon i {
+  font-size: 1.4rem;
+  color: var(--primary);
+}
+
+.folder-card h3 {
+  font-size: 0.97rem;
+  font-weight: 700;
+  color: var(--text-color);
+  line-height: 1.35;
+  margin: 0;
+}
+
+.folder-card p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.folder-arrow {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--border-light);
+  font-size: 0.85rem;
+  transition: color 0.2s, right 0.18s;
+}
+
+.folder-card:hover .folder-arrow,
+.folder-card:focus-visible .folder-arrow {
+  color: var(--primary);
+  right: 12px;
+}
+
+
+/* ============================================================
+   VIDEOS GRID (level 2 — actual video cards)
 ============================================================ */
 .videos-grid {
   display: grid;
@@ -170,9 +281,11 @@ html, body { overflow-x: hidden; }
   justify-content: flex-end;
   transition: transform 0.28s, box-shadow 0.28s;
   border: 1px solid var(--border-light);
+  outline: none;
 }
 
-.video-card:hover {
+.video-card:hover,
+.video-card:focus-visible {
   transform: translateY(-5px);
   box-shadow: 0 14px 32px rgba(0,0,0,0.18);
 }
@@ -202,6 +315,7 @@ html, body { overflow-x: hidden; }
   justify-content: center;
   z-index: 2;
   transition: background 0.2s, transform 0.2s;
+  pointer-events: none; /* card itself is the click target */
 }
 
 .play-btn i {
@@ -210,7 +324,8 @@ html, body { overflow-x: hidden; }
   margin-left: 3px;
 }
 
-.video-card:hover .play-btn {
+.video-card:hover .play-btn,
+.video-card:focus-visible .play-btn {
   background: var(--primary);
   border-color: var(--primary);
   transform: translate(-50%, -50%) scale(1.1);
@@ -227,19 +342,27 @@ html, body { overflow-x: hidden; }
   line-height: 1.3;
 }
 
-/* Month badge */
-.video-month {
+/* Language badge (replaces old month badge) */
+.lang-badge {
   position: absolute;
   top: 10px;
   left: 10px;
   z-index: 3;
-  background: var(--primary);
-  color: #fff;
   font-size: 0.7rem;
   font-weight: 700;
   padding: 3px 10px;
   border-radius: 999px;
   letter-spacing: 0.04em;
+}
+
+.lang-badge.english {
+  background: var(--primary);
+  color: #fff;
+}
+
+.lang-badge.arabic {
+  background: #0369a1;
+  color: #fff;
 }
 
 /* Lock overlay */
@@ -256,6 +379,8 @@ html, body { overflow-x: hidden; }
   color: #fff;
   font-size: 0.88rem;
   font-weight: 600;
+  text-align: center;
+  padding: 16px;
 }
 
 .lock-overlay i {
@@ -366,11 +491,17 @@ html, body { overflow-x: hidden; }
   .header-logo { width: 58px; }
   .page-banner h1 { font-size: 1.4rem; }
 
+  .folder-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .folder-card { padding: 16px 38px 16px 14px; gap: 10px; }
+  .folder-card-icon { width: 40px; height: 40px; border-radius: 10px; }
+  .folder-card-icon i { font-size: 1.2rem; }
+
   .videos-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
   .video-card  { height: 170px; }
 }
 
 @media (max-width: 480px) {
+  .folder-grid { grid-template-columns: 1fr; }
   .videos-grid { grid-template-columns: 1fr; }
   .video-card  { height: 200px; }
 }

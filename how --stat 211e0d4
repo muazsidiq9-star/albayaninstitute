@@ -1,0 +1,53 @@
+[33mcommit d44535feb769322941f77519251147c2a2f50663[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: muazsidiq9-star <muazsidiq9@gmail.com>
+Date:   Sat Jun 13 06:51:16 2026 +0100
+
+    update recent logo span and h4 changes
+
+ about.html                  |  9 [32m+++++[m[31m----[m
+ admin-dashboard.html        |  5 [32m+++[m[31m--[m
+ admin-inbox.html            |  5 [32m+++[m[31m--[m
+ contact.css                 |  2 [32m+[m[31m-[m
+ contact.html                | 15 [32m++++++++[m[31m-------[m
+ course-advance.html         |  7 [32m++++[m[31m---[m
+ course-beginner.html        |  7 [32m++++[m[31m---[m
+ course-conversational.html  |  7 [32m++++[m[31m---[m
+ course-fiqh.html            |  7 [32m++++[m[31m---[m
+ course-hadeeth.html         |  7 [32m++++[m[31m---[m
+ course-intermediate.html    |  7 [32m++++[m[31m---[m
+ course-literature.html      |  7 [32m++++[m[31m---[m
+ course-nahw.html            |  7 [32m++++[m[31m---[m
+ course-poetry.html          |  7 [32m++++[m[31m---[m
+ course-quran.html           |  7 [32m++++[m[31m---[m
+ course-read-write.html      |  7 [32m++++[m[31m---[m
+ course-sarf.html            |  7 [32m++++[m[31m---[m
+ course-seerah-taareekh.html |  7 [32m++++[m[31m---[m
+ course-tafseer.html         |  7 [32m++++[m[31m---[m
+ course-tawheed.html         |  7 [32m++++[m[31m---[m
+ courses.html                |  9 [32m+++++[m[31m----[m
+ forgot-password.html        |  4 [32m+++[m[31m-[m
+ home.css                    |  2 [32m+[m[31m-[m
+ index.html                  | 14 [32m+++++++[m[31m-------[m
+ login.html                  |  5 [32m+++[m[31m--[m
+ my-certificate.html         |  5 [32m+++[m[31m--[m
+ my-courses.html             |  5 [32m+++[m[31m--[m
+ online-classes.html         |  5 [32m+++[m[31m--[m
+ payment.html                |  7 [32m++++[m[31m---[m
+ register-courses.html       |  5 [32m+++[m[31m--[m
+ register.html               |  6 [32m+++[m[31m---[m
+ reset-password.html         |  4 [32m+++[m[31m-[m
+ resources.html              |  5 [32m+++[m[31m--[m
+ schedule.html               |  5 [32m+++[m[31m--[m
+ semester-admin.html         |  5 [32m+++[m[31m--[m
+ semester.html               |  5 [32m+++[m[31m--[m
+ staff-dashboard.html        |  5 [32m+++[m[31m--[m
+ student-exam-timetable.html |  5 [32m+++[m[31m--[m
+ student-grades.html         |  5 [32m+++[m[31m--[m
+ student-payments.html       |  5 [32m+++[m[31m--[m
+ student-profile.html        |  5 [32m+++[m[31m--[m
+ students-dashboard.html     |  5 [32m+++[m[31m--[m
+ test-hall.html              |  5 [32m+++[m[31m--[m
+ test-welcome.html           |  5 [32m+++[m[31m--[m
+ translate.js                | 10 [32m+++++[m[31m-----[m
+ videos.html                 |  5 [32m+++[m[31m--[m
+ 46 files changed, 165 insertions(+), 122 deletions(-)

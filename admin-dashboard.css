@@ -1593,3 +1593,88 @@ input:checked + .slider:before { transform: translateX(22px); }
     padding: 12px 14px 16px;
   }
 }
+
+/* =====================================================
+   SNIPPET 5 — CSS
+   Paste at the bottom of admin-dashboard.css
+====================================================== */
+
+/* Book add/edit inline form */
+.vl-book-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.vl-book-form select,
+.vl-book-form input {
+  flex: 1;
+  min-width: 160px;
+  padding: 9px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  background: var(--surface-color);
+  color: var(--text-color);
+}
+
+/* Video filter bar */
+.vl-video-filter {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.vl-video-filter select {
+  padding: 8px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  background: var(--surface-color);
+  color: var(--text-color);
+  min-width: 160px;
+}
+
+/* Language pill in videos table */
+.lang-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.lang-pill.english {
+  background: rgba(22, 163, 74, 0.12);
+  color: #16a34a;
+}
+
+.lang-pill.arabic {
+  background: rgba(3, 105, 161, 0.12);
+  color: #0369a1;
+}
+
+/* Small preview link in table */
+.link-small {
+  font-size: 0.8rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.link-small:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .vl-book-form { flex-direction: column; }
+  .vl-book-form select,
+  .vl-book-form input { width: 100%; min-width: unset; }
+  .vl-video-filter { flex-direction: column; }
+  .vl-video-filter select { width: 100%; }
+}

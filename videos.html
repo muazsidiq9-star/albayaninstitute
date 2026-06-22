@@ -58,15 +58,17 @@
   ================================================ -->
   <main class="videos-page">
 
+    <!-- Breadcrumb — hidden at level 0, shown by JS at deeper levels -->
+    <nav class="drill-breadcrumb" id="drillBreadcrumb" aria-label="Video navigation" style="display:none;"></nav>
+
     <!-- Loading state -->
     <div class="videos-loading" id="videosLoading">
       <div class="loading-spinner"></div>
       <p data-translate="Loading your videos...">Loading your videos...</p>
     </div>
 
-    <!-- Videos grid — JS injects cards here -->
-    <section class="videos-grid" id="videosGrid" style="display:none;">
-    </section>
+    <!-- Drill container — JS renders folder grid or video grid here -->
+    <div id="drillContainer" style="display:none;"></div>
 
     <!-- Empty state -->
     <div class="videos-empty" id="videosEmpty" style="display:none;">
@@ -84,7 +86,7 @@
   ================================================ -->
   <div id="videoModal" class="video-modal">
     <div class="modal-content">
-      <button class="modal-close" id="modalClose">
+      <button class="modal-close" id="modalClose" aria-label="Close video">
         <i class="fa-solid fa-xmark"></i>
       </button>
       <div class="modal-video-wrap">
@@ -116,8 +118,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    
-
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('show');
     }
@@ -127,15 +127,15 @@
       if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
     });
 
-    /* Modal close */
+    /* Modal close — both X button and backdrop click */
     document.getElementById('modalClose').addEventListener('click', () => {
-      document.getElementById('videoModal').style.display = 'none';
+      document.getElementById('videoModal').classList.remove('open');
       document.getElementById('youtubeFrame').src = '';
     });
 
     document.getElementById('videoModal').addEventListener('click', function (e) {
       if (e.target === this) {
-        this.style.display = 'none';
+        this.classList.remove('open');
         document.getElementById('youtubeFrame').src = '';
       }
     });

@@ -2557,7 +2557,7 @@ async function loadAdminProfile() {
     if (roleTagEl) {
       const tagMap = {
         mudeer: "#Director", assistant_mudeer: "#Asst. Director",
-        h_o_d: "#Head of Dept.",
+        h_o_d: "#Head of Department",
         bursar: "#Bursar", registrar: "#Registrar", teacher: "#Teacher"
       };
       const classMap = {
@@ -3346,3 +3346,381 @@ const studentMap = {};
 }
 
 window.loadAttendanceSessions = loadAttendanceSessions;
+
+// =====================================================
+// SNIPPET 4 — VIDEO LIBRARY ADMIN FUNCTIONS
+// Paste anywhere near the bottom of admin-dashboard.js
+// (before the closing of DOMContentLoaded or after all
+//  other feature blocks — it doesn't matter where)
+// =====================================================
+
+// ===================================================
+// VIDEO LIBRARY ADMIN (tab-videos)
+// ===================================================
+
+let vlBooks       = {}; // cache: bookId → book row (avoids re-fetch for edit)
+let vlEditBookId  = null;
+let vlEditVideoId = null;
+
+// Called by switchDashTab whenever tab-videos is opened
+async function loadVideoLibraryTab() {
+  await vlPopulateCourseDropdowns();
+  await vlLoadBooks();
+  await vlLoadVideos();
+}
+
+// Fill every course <select> in the tab with current courses
+async function vlPopulateCourseDropdowns() {
+  const { data: courses } = await db
+    .from("courses")
+    .select("id, course_name")
+    .eq("deleted", false)
+    .order("created_at");
+
+  const opts =
+    `<option value="">Select Course</option>` +
+    (courses || []).map(c => `<option value="${c.id}">${c.course_name}</option>`).join("");
+
+  ["vl-book-course", "vl-video-filter-course", "vl-modal-course"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = opts;
+  });
+}
+
+
+// ── BOOKS ─────────────────────────────────────────
+
+async function vlLoadBooks() {
+  const tbody = document.getElementById("vl-books-body");
+  if (!tbody) return;
+
+  tbody.innerHTML = `<tr><td colspan="5" class="empty-row">Loading...</td></tr>`;
+
+  const { data: books, error } = await db
+    .from("books")
+    .select("id, title, order_index, course_id, courses(course_name)")
+    .eq("deleted", false)
+    .order("order_index");
+
+  vlBooks = {};
+
+  if (error || !books?.length) {
+    tbody.innerHTML = `<tr><td colspan="5" class="empty-row" data-translate="No books yet">No books yet</td></tr>`;
+    return;
+  }
+
+  books.forEach(b => (vlBooks[b.id] = b));
+
+  tbody.innerHTML = books.map(b => `
+    <tr>
+      <td>${b.courses?.course_name || "—"}</td>
+      <td>${b.title}</td>
+      <td>${b.order_index}</td>
+      <td>
+        <button class="btn btn-edit" onclick="vlEditBook('${b.id}')">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+      </td>
+      <td>
+        <button class="btn btn-delete" onclick="vlDeleteBook('${b.id}')">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+  `).join("");
+}
+
+async function vlSaveBook() {
+  const courseId = document.getElementById("vl-book-course").value;
+  const title    = document.getElementById("vl-book-title").value.trim();
+  const order    = parseInt(document.getElementById("vl-book-order").value) || 0;
+  const btn      = document.getElementById("vl-save-book-btn");
+
+  if (!courseId || !title) {
+    showToast("Please select a course and enter a book title.", "error");
+    return;
+  }
+
+  btn.disabled = true;
+  const payload = { course_id: courseId, title, order_index: order };
+
+  if (vlEditBookId) {
+    // Update existing book
+    const { error } = await db.from("books").update(payload).eq("id", vlEditBookId).select();
+    if (error) { showToast("Error: " + error.message, "error"); btn.disabled = false; return; }
+    showToast("Book updated.", "success");
+  } else {
+    // Insert new book — use RLS silent-failure check
+    const { data, error } = await db.from("books").insert(payload).select();
+    if (error) { showToast("Error: " + error.message, "error"); btn.disabled = false; return; }
+    if (!data || data.length === 0) {
+      showToast("Blocked by permissions. Check RLS policies.", "error");
+      btn.disabled = false;
+      return;
+    }
+    showToast("Book added.", "success");
+  }
+
+  // Reset form
+  vlEditBookId = null;
+  document.getElementById("vl-book-course").value = "";
+  document.getElementById("vl-book-title").value  = "";
+  document.getElementById("vl-book-order").value  = "";
+  btn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> <span>Add Book</span>`;
+  btn.disabled  = false;
+
+  await vlLoadBooks();
+  await vlRefreshModalBookDropdown(); // keep video modal book list fresh
+}
+
+function vlEditBook(id) {
+  const b = vlBooks[id];
+  if (!b) return;
+  vlEditBookId = id;
+  document.getElementById("vl-book-course").value = b.course_id;
+  document.getElementById("vl-book-title").value  = b.title;
+  document.getElementById("vl-book-order").value  = b.order_index;
+  document.getElementById("vl-save-book-btn").innerHTML =
+    `<i class="fa-solid fa-floppy-disk"></i> <span>Update Book</span>`;
+  document.getElementById("vl-book-title").focus();
+  // Scroll form into view on mobile
+  document.getElementById("vl-book-title").scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function vlCancelEditBook() {
+  vlEditBookId = null;
+  document.getElementById("vl-book-course").value = "";
+  document.getElementById("vl-book-title").value  = "";
+  document.getElementById("vl-book-order").value  = "";
+  document.getElementById("vl-save-book-btn").innerHTML =
+    `<i class="fa-solid fa-floppy-disk"></i> <span>Add Book</span>`;
+}
+
+async function vlDeleteBook(id) {
+  if (!confirm("Soft-delete this book? It will be hidden from students but can be restored.")) return;
+  const { error } = await db.from("books").update({ deleted: true }).eq("id", id);
+  if (error) { showToast("Error: " + error.message, "error"); return; }
+  showToast("Book deleted.", "success");
+  await vlLoadBooks();
+}
+
+
+// ── VIDEO MODAL ────────────────────────────────────
+
+// Called when course changes in the modal
+async function vlLoadModalBooks() {
+  const courseId = document.getElementById("vl-modal-course")?.value;
+  const bookSel  = document.getElementById("vl-modal-book");
+  if (!bookSel) return;
+
+  if (!courseId) {
+    bookSel.innerHTML = `<option value="">Select Course First</option>`;
+    return;
+  }
+
+  const { data: books } = await db
+    .from("books")
+    .select("id, title")
+    .eq("course_id", courseId)
+    .eq("deleted", false)
+    .order("order_index");
+
+  bookSel.innerHTML =
+    `<option value="">Select Book</option>` +
+    (books || []).map(b => `<option value="${b.id}">${b.title}</option>`).join("");
+}
+
+// Silently refresh modal book dropdown (called after saving a book)
+async function vlRefreshModalBookDropdown() {
+  await vlLoadModalBooks();
+}
+
+function vlOpenAddVideo() {
+  vlEditVideoId = null;
+  document.getElementById("vl-modal-heading").textContent    = "Add Video";
+  document.getElementById("vl-modal-course").value           = "";
+  document.getElementById("vl-modal-book").innerHTML         = `<option value="">Select Course First</option>`;
+  document.getElementById("vl-modal-title-input").value      = "";
+  document.getElementById("vl-modal-language").value         = "english";
+  document.getElementById("vl-modal-month").value            = "";
+  document.getElementById("vl-modal-youtube").value          = "";
+  document.getElementById("vl-modal-telegram").value         = "";
+  openModal("videoLibModal");
+}
+
+async function vlEditVideo(id) {
+  // videos.id is bigint so pass as number, not string
+  const { data: v, error } = await db
+    .from("videos")
+    .select("*, books(course_id)")
+    .eq("id", id)
+    .single();
+
+  if (error || !v) { showToast("Could not load video.", "error"); return; }
+
+  vlEditVideoId = id;
+  document.getElementById("vl-modal-heading").textContent = "Edit Video";
+
+  // Set course, load books for that course, then set the book
+  document.getElementById("vl-modal-course").value = v.books?.course_id || "";
+  await vlLoadModalBooks();
+  document.getElementById("vl-modal-book").value          = v.book_id || "";
+  document.getElementById("vl-modal-title-input").value   = v.title || "";
+  document.getElementById("vl-modal-language").value      = v.language || "english";
+  document.getElementById("vl-modal-month").value         = v.month || "";
+  document.getElementById("vl-modal-youtube").value       = v.youtube_link || "";
+  document.getElementById("vl-modal-telegram").value      = v.telegram_link || "";
+
+  openModal("videoLibModal");
+}
+
+async function vlSaveVideo() {
+  const bookId   = document.getElementById("vl-modal-book").value;
+  const title    = document.getElementById("vl-modal-title-input").value.trim();
+  const language = document.getElementById("vl-modal-language").value;
+  const month    = document.getElementById("vl-modal-month").value;
+  const ytLink   = document.getElementById("vl-modal-youtube").value.trim();
+  const tgLink   = document.getElementById("vl-modal-telegram").value.trim();
+  const saveBtn  = document.getElementById("vl-modal-save-btn");
+
+  if (!bookId || !title || !ytLink) {
+    showToast("Book, title and YouTube ID are required.", "error");
+    return;
+  }
+
+  saveBtn.disabled = true;
+  const payload = {
+    book_id: bookId,
+    title,
+    language,
+    month,
+    youtube_link: ytLink,
+    telegram_link: tgLink || null
+  };
+
+  if (vlEditVideoId) {
+    const { error } = await db.from("videos").update(payload).eq("id", vlEditVideoId).select();
+    if (error) { showToast("Error: " + error.message, "error"); saveBtn.disabled = false; return; }
+    showToast("Video updated.", "success");
+  } else {
+    const { data, error } = await db.from("videos").insert(payload).select();
+    if (error) { showToast("Error: " + error.message, "error"); saveBtn.disabled = false; return; }
+    // RLS silent-failure check
+    if (!data || data.length === 0) {
+      showToast("Blocked by permissions. Check RLS policies.", "error");
+      saveBtn.disabled = false;
+      return;
+    }
+    showToast("Video added.", "success");
+  }
+
+  saveBtn.disabled = false;
+  closeModal("videoLibModal");
+  await vlLoadVideos();
+}
+
+async function vlDeleteVideo(id) {
+  if (!confirm("Permanently delete this video? This cannot be undone.")) return;
+  const { error } = await db.from("videos").delete().eq("id", id);
+  if (error) { showToast("Error: " + error.message, "error"); return; }
+  showToast("Video deleted.", "success");
+  await vlLoadVideos();
+}
+
+
+// ── VIDEOS TABLE ───────────────────────────────────
+
+async function vlLoadVideos() {
+  const courseFilter = document.getElementById("vl-video-filter-course")?.value;
+  const bookFilter   = document.getElementById("vl-video-filter-book")?.value;
+  const tbody = document.getElementById("vl-videos-body");
+  if (!tbody) return;
+
+  tbody.innerHTML = `<tr><td colspan="8" class="empty-row">Loading...</td></tr>`;
+
+  let query = db
+    .from("videos")
+    .select("id, title, language, month, youtube_link, book_id, books(title, course_id, courses(course_name))")
+    .not("book_id", "is", null)
+    .order("created_at", { ascending: false });
+
+  if (bookFilter) {
+    query = query.eq("book_id", bookFilter);
+  } else if (courseFilter) {
+    // Filter by course: first get book IDs for that course
+    const { data: bids } = await db
+      .from("books")
+      .select("id")
+      .eq("course_id", courseFilter)
+      .eq("deleted", false);
+
+    if (bids?.length) {
+      query = query.in("book_id", bids.map(b => b.id));
+    } else {
+      tbody.innerHTML = `<tr><td colspan="8" class="empty-row">No videos found for this course</td></tr>`;
+      return;
+    }
+  }
+
+  const { data: videos, error } = await query;
+
+  if (error || !videos?.length) {
+    tbody.innerHTML = `<tr><td colspan="8" class="empty-row" data-translate="No videos yet">No videos yet</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = videos.map(v => `
+    <tr>
+      <td>${v.books?.courses?.course_name || "—"}</td>
+      <td>${v.books?.title || "—"}</td>
+      <td>${v.title || "—"}</td>
+      <td>
+        <span class="lang-pill ${v.language || ''}">
+          ${v.language === "arabic" ? "Arabic" : v.language === "english" ? "English" : v.language || "—"}
+        </span>
+      </td>
+      <td>${v.month || "—"}</td>
+      <td>
+        ${v.youtube_link
+          ? `<a href="https://youtu.be/${v.youtube_link}" target="_blank" rel="noopener" class="link-small">▶ Preview</a>`
+          : "—"}
+      </td>
+      <td>
+        <button class="btn btn-edit" onclick="vlEditVideo(${v.id})">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+      </td>
+      <td>
+        <button class="btn btn-delete" onclick="vlDeleteVideo(${v.id})">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+  `).join("");
+}
+
+// Called when course filter changes — refreshes book filter dropdown then reloads table
+async function vlLoadFilterBooks() {
+  const courseId = document.getElementById("vl-video-filter-course")?.value;
+  const bookSel  = document.getElementById("vl-video-filter-book");
+  if (!bookSel) return;
+
+  if (!courseId) {
+    bookSel.innerHTML = `<option value="">-- All Books --</option>`;
+    await vlLoadVideos();
+    return;
+  }
+
+  const { data: books } = await db
+    .from("books")
+    .select("id, title")
+    .eq("course_id", courseId)
+    .eq("deleted", false)
+    .order("order_index");
+
+  bookSel.innerHTML =
+    `<option value="">-- All Books --</option>` +
+    (books || []).map(b => `<option value="${b.id}">${b.title}</option>`).join("");
+
+  await vlLoadVideos();
+}

@@ -134,7 +134,7 @@ function formatRole(role) {
   const map = {
     mudeer: t("Director"),
     assistant_mudeer: t("Asst. Director"),
-    h_o_d: t("Head of Dept."),
+    h_o_d: t("Head of Department"),
     bursar: t("Bursar"),
     registrar: t("Registrar"),
     teacher: t("Teacher")
@@ -147,7 +147,7 @@ function getRoleTag(role) {
   const map = {
     mudeer: `#${t("Director")}`,
     assistant_mudeer: `#${t("Asst. Director")}`,
-    h_o_d: `#${t("Head of Dept.")}`,
+    h_o_d: `#${t("Head of Department")}`,
     bursar: `#${t("Bursar")}`,
     registrar: `#${t("Registrar")}`,
     teacher: `#${t("Teacher")}`
@@ -760,21 +760,9 @@ async function deleteStaff(staffId) {
   if (!confirm(t("Are you sure you want to delete this staff record? This cannot be undone."))) return;
 
   try {
-    // Get passport path first to clean up storage
-    const { data: s } = await db
-      .from("profiles")
-      .select("passport_path, full_name")
-      .eq("id", staffId)
-      .single();
-
-    if (s?.passport_path) {
-      await db.storage.from("passports").remove([s.passport_path]);
-    }
-
-    const { error } = await db
-      .from("profiles")
-      .delete()
-      .eq("id", staffId);
+    const { data, error } = await db.functions.invoke("delete-staff", {
+      body: { staffId },
+    });
 
     if (error) throw error;
 
