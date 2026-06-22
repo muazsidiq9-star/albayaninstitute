@@ -14,7 +14,7 @@ const drillEl      = document.getElementById("drillContainer");
 const breadcrumbEl = document.getElementById("drillBreadcrumb");
 const videoModal   = document.getElementById("videoModal");
 const youtubeFrame = document.getElementById("youtubeFrame");
-const telegramLink = document.getElementById("telegramLink");
+
 
 
 // ===== State =====
@@ -156,7 +156,6 @@ function renderVideoGrid(videos) {
         <div class="video-card${isUnlocked ? "" : " locked"}"
              style="background-image:url('${thumbUrl}');"
              data-ytid="${video.youtube_link}"
-             data-tg="${video.telegram_link || "#"}"
              data-unlocked="${isUnlocked}"
              tabindex="0" role="button" aria-label="${video.title}">
           <div class="play-btn">
@@ -196,7 +195,6 @@ function openModal(card) {
   }
 
   youtubeFrame.src  = `https://www.youtube.com/embed/${card.dataset.ytid}?autoplay=1`;
-  telegramLink.href = card.dataset.tg;
   videoModal.classList.add("open");
 }
 

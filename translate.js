@@ -128,46 +128,6 @@ const DICT = {
 "Exam Score": "درجة الامتحان",
 "Total Score": "المجموع الكلي",
 
-"Add Course": "إضافة مقرر",
-"All Courses": "جميع المقررات",
-"Assessments": "التقييمات",
-"+ Add Assessment": "+ إضافة تقييم",
-
-"✅ Approved": "✅ تم القبول",
-"❌ Not Approved": "❌ لم يتم القبول",
-
-"🔍 Search Grades...": "🔍 البحث في الدرجات...",
-"🔍 Search Students...": "🔍 البحث عن الطلاب...",
-"🔍 Search Payments...": "🔍 البحث في المدفوعات...",
-"🔍 Search Assessments...": "🔍 البحث في التقييمات...",
-"🔍 Search Schedule...": "🔍 البحث في الجدول...",
-
-"💾 Save": "💾 حفظ",
-
-"🔍 Search by matric...": "🔍 البحث برقم التسجيل...",
-
-"💳 Manage Student Fees": "💳 إدارة رسوم الطلاب",
-"Amount": "المبلغ",
-
-"🔐 Change My Password": "🔐 تغيير كلمة المرور",
-"🔐 Reset Student Password": "🔐 إعادة تعيين كلمة مرور الطالب",
-
-"Enter new password": "أدخل كلمة المرور الجديدة",
-"Enter current password": "أدخل كلمة المرور الحالية",
-
-"Current Password": "كلمة المرور الحالية",
-"New Password": "كلمة المرور الجديدة",
-"Select Student": "اختر الطالب",
-
-"Update Password": "تحديث كلمة المرور",
-
-"Password updated successfully": "تم تحديث كلمة المرور بنجاح",
-"Failed to update password": "فشل في تحديث كلمة المرور",
-"Select student and enter password": "اختر الطالب وأدخل كلمة المرور",
-
-"Password Updated": "تم تحديث كلمة المرور",
-"Your account password has been updated by the admin. Please log in with your new password.": "تم تحديث كلمة مرور حسابك من قبل الإدارة. يرجى تسجيل الدخول باستخدام كلمة المرور الجديدة.",
-
 "Password Reset": "إعادة تعيين كلمة المرور",
 "Password reset link sent. Please check your email.": "تم إرسال رابط إعادة تعيين كاملة المرور. انظر في بريدك الالكتروني",
 "Your temporary password is:": "كلمة مرورك المؤقتة هي:",
@@ -584,6 +544,9 @@ const DICT = {
 "All Courses": "جميع المقررات",
 "Assessments": "التقييمات",
 "+ Add Assessment": "+ إضافة تقييم",
+"Exams": "الامتحانات",
+"TESTS/EXAMS": "الاختبارات/الامتحانات",
+"Select Instructor": "اختر المدرس",
 
 "✅ Approved": "✅ تم القبول",
 "❌ Not Approved": "❌ لم يتم القبول",

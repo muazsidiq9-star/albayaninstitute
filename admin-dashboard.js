@@ -12,6 +12,13 @@ const LEVEL_MAP = {
   'beginner'     : 'Beginner',
   'intermediate' : 'Intermediate',
   'advanced'     : 'Advanced',
+
+  "Preliminary": "التمهيدي",
+"Beginner": "المبتدئ",
+"Intermediate": "المتوسط",
+"Advanced": "المتقدم",
+"Choose Level": "اختر المستوى",
+
   // Arabic variants — add more here as you find them in Supabase
   'تمهيدي'       : 'Preliminary',
   'مبتدئ'        : 'Beginner',
@@ -19,11 +26,7 @@ const LEVEL_MAP = {
   'مبتديء'       : 'Beginner',
   'متوسط'        : 'Intermediate',
   'متقدم'        : 'Advanced',
-"Preliminary": "التمهيدي",
-"Beginner": "المبتدئ",
-"Intermediate": "المتوسط",
-"Advanced": "المتقدم",
-"Choose Level": "اختر المستوى",
+
 
 };
 
@@ -151,6 +154,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadStudentDropdown();
     loadPasswordStudentDropdown();
     updateUnreadCounter();
+    loadTeachers();
 
     enableTableSearch("searchStudents", "students-table");
     enableTableSearch("searchPayments", "payments-table");
@@ -1468,18 +1472,37 @@ function formatForInput(dateString) {
 ------------------------------------------------------- */
 async function addCourse() {
   const name = document.getElementById("courseName").value.trim();
-  const level = document.getElementById("courseLevel").value.trim();
-  const instructor = document.getElementById("courseInstructor").value.trim();
+  const level = document.getElementById("courseLevel").value;
+
+if (!level) {
+  return alert(t("Please select a level"));
+}
+  const instructorSelect = document.getElementById("courseInstructor");
+
+  const instructor_id = instructorSelect.value;
+  const instructor_name = instructorSelect.options[instructorSelect.selectedIndex]?.text;
 
   if (!name) {
     alert(t("Course name is required"));
     return;
   }
 
+  if (!instructor_id) {
+    alert(t("Please select an instructor"));
+    return;
+  }
+
+  const payload = {
+    course_name: name,
+    level,
+    instructor_id,
+    instructor: instructor_name // 👈 store name too
+  };
+
   if (window.editingCourseId) {
     const { error } = await db
       .from("courses")
-      .update({ course_name: name, level, instructor })
+      .update(payload)
       .eq("id", window.editingCourseId);
 
     if (error) {
@@ -1491,12 +1514,10 @@ async function addCourse() {
     showToast(t("Course updated ✅"));
     window.editingCourseId = null;
 
-    const btn = document.querySelector("[onclick='addCourse()']");
-    if (btn) btn.textContent = t("Add Course");
   } else {
     const { error } = await db
       .from("courses")
-      .insert([{ course_name: name, level, instructor }]);
+      .insert([payload]);
 
     if (error) {
       console.error(error);

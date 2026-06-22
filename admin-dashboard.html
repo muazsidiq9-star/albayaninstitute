@@ -633,10 +633,16 @@
       <div class="course-form">
         <input type="text" id="courseName" placeholder="Course Name"
                data-translate-placeholder="Course Name">
-        <input type="text" id="courseLevel" placeholder="Level"
-               data-translate-placeholder="Level">
-        <input type="text" id="courseInstructor" placeholder="Instructor"
-               data-translate-placeholder="Instructor">
+        <select id="courseLevel">
+  <option value="">Select Level</option>
+  <option value="Preliminary">Preliminary</option>
+  <option value="Beginner">Beginner</option>
+  <option value="Intermediate">Intermediate</option>
+  <option value="Advanced">Advanced</option>
+</select>
+        <select id="courseInstructor">
+  <option value="">Select Instructor</option>
+</select>
         <button class="btn btn-primary" id="addCourseBtn" onclick="addCourse()">
           <i class="fa-solid fa-plus"></i>
           <span data-translate="Add Course">Add Course</span>
