@@ -1470,13 +1470,31 @@ function formatForInput(dateString) {
 /* -------------------------------------------------------
    COURSES
 ------------------------------------------------------- */
+async function loadTeachers() {
+  const { data, error } = await db
+    .from("profiles")
+    .select("id, full_name")
+    .eq("role", "teacher");
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  const select = document.getElementById("courseInstructor");
+  select.innerHTML = `<option value="">Select Instructor</option>`;
+
+  data.forEach(teacher => {
+    const option = document.createElement("option");
+    option.value = teacher.id; // UUID
+    option.textContent = teacher.full_name;
+    select.appendChild(option);
+  });
+}
+
 async function addCourse() {
   const name = document.getElementById("courseName").value.trim();
   const level = document.getElementById("courseLevel").value;
-
-if (!level) {
-  return alert(t("Please select a level"));
-}
   const instructorSelect = document.getElementById("courseInstructor");
 
   const instructor_id = instructorSelect.value;

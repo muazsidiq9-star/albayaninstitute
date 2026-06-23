@@ -10,7 +10,7 @@ const corsHeaders = {
 
 serve(async (req) => {
   // ===========================
-  // CORS PRE-FLIGHT HANDLER
+  // CORS PRE-FLIGHT
   // ===========================
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -18,7 +18,7 @@ serve(async (req) => {
 
   try {
     // ===========================
-    // INIT SUPABASE CLIENT
+    // INIT SUPABASE
     // ===========================
     const supabaseAdmin = createClient(
       "https://cjrpjekmqrckozrbtwps.supabase.co",
@@ -52,7 +52,7 @@ serve(async (req) => {
     }
 
     // ===========================
-    // ADMIN ROLE CHECK
+    // ROLE CHECK
     // ===========================
     const { data: profile } = await supabaseAdmin
       .from("profiles")
@@ -62,15 +62,15 @@ serve(async (req) => {
 
     const allowedRoles = ["mudeer", "assistant_mudeer"];
 
-if (!allowedRoles.includes(profile?.role)) {
-  return new Response(
-    JSON.stringify({
-      success: false,
-      error: "Forbidden: insufficient permissions",
-    }),
-    { status: 403, headers: corsHeaders }
-  );
-}
+    if (!allowedRoles.includes(profile?.role)) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "Forbidden: insufficient permissions",
+        }),
+        { status: 403, headers: corsHeaders }
+      );
+    }
 
     // ===========================
     // GET STAFF ID
@@ -84,10 +84,10 @@ if (!allowedRoles.includes(profile?.role)) {
       );
     }
 
-    console.log("Admin deleting staff:", staffId);
+    console.log("Deleting staff:", staffId);
 
     // ===========================
-    // GET PROFILE DATA (for storage cleanup)
+    // GET PROFILE DATA
     // ===========================
     const { data: profileData } = await supabaseAdmin
       .from("profiles")
@@ -96,25 +96,21 @@ if (!allowedRoles.includes(profile?.role)) {
       .single();
 
     // ===========================
-    // 1. DELETE AUTH USER (IMPORTANT FIRST)
+    // 1. DELETE AUTH USER (SAFE)
     // ===========================
+    console.log("Attempting auth delete:", staffId);
+
     const { error: authError } =
       await supabaseAdmin.auth.admin.deleteUser(staffId);
 
     if (authError) {
-      console.error("Auth delete error:", authError);
-
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: "Failed to delete auth user",
-        }),
-        { status: 500, headers: corsHeaders }
-      );
+      console.warn("Auth delete issue (continuing):", authError.message);
+    } else {
+      console.log("Auth deleted successfully");
     }
 
     // ===========================
-    // 2. DELETE PROFILE ROW
+    // 2. DELETE PROFILE
     // ===========================
     const { error: profileError } = await supabaseAdmin
       .from("profiles")
@@ -122,11 +118,11 @@ if (!allowedRoles.includes(profile?.role)) {
       .eq("id", staffId);
 
     if (profileError) {
-      console.error("Profile delete error:", profileError);
+      console.warn("Profile delete error:", profileError.message);
     }
 
     // ===========================
-    // 3. DELETE STORAGE FILE (BEST EFFORT)
+    // 3. DELETE STORAGE (BEST EFFORT)
     // ===========================
     if (profileData?.passport_path) {
       const { error: storageError } = await supabaseAdmin.storage
@@ -134,7 +130,7 @@ if (!allowedRoles.includes(profile?.role)) {
         .remove([profileData.passport_path]);
 
       if (storageError) {
-        console.error("Storage delete error:", storageError);
+        console.warn("Storage delete error:", storageError.message);
       }
     }
 
