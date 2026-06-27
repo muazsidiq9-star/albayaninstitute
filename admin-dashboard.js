@@ -1408,6 +1408,10 @@ async function editAssessment(id) {
   document.getElementById("assessmentModal").classList.add("show");
 }
 
+function isAssessmentExpired(a) {
+  return new Date(a.end_time) < new Date();
+}
+
 async function loadAssessments() {
   try {
     const { data } = await db.from("assessments").select("*").eq("deleted", false).order("start_time");
@@ -1432,9 +1436,13 @@ async function loadAssessments() {
           <td>${t(a.status)}</td>
           <td>
             <label class="switch">
-              <input type="checkbox" ${a.is_active ? "checked" : ""} onchange="toggleAssessment('${a.id}', this.checked)">
+              <input type="checkbox"
+                ${a.is_active && !isAssessmentExpired(a) ? "checked" : ""}
+                ${isAssessmentExpired(a) ? "disabled" : ""}
+                onchange="toggleAssessment('${a.id}', this.checked)">
               <span class="slider"></span>
             </label>
+            ${isAssessmentExpired(a) ? `<div class="tw-ended-tag" style="color:#c0392b;font-size:12px;margin-top:4px;">${t("Ended")}</div>` : ""}
           </td>
           <td>
             <div class="table-row-actions">

@@ -39,6 +39,7 @@ let currentIndex = 0;
 let studentAnswers = {};
 let durationMinutes = 0;
 let timeRemaining = 0;
+let examEndTime = null; // absolute epoch ms timestamp - source of truth for the countdown
 let timerInterval;
 let warningShown = false;
 let testEnded = false;
@@ -127,11 +128,26 @@ async function loadActiveAssessment() {
             `exam_state_${assessmentId}_${matricNumber}`
         );
 
+        // ===== TIMER FIX =====
+        // We no longer trust a stored "secondsRemaining" counter, because it is
+        // only ever written when the student clicks next/prev or types an answer.
+        // Instead we store/restore an absolute end timestamp (examEndTime) and
+        // always derive timeRemaining = examEndTime - now. This survives
+        // refreshes, closed tabs, throttled background tabs, etc.
         if (savedState) {
             const state = JSON.parse(savedState);
-            timeRemaining = state.timeRemaining || durationMinutes * 60;
+
+            if (state.examEndTime) {
+                examEndTime = state.examEndTime;
+                timeRemaining = Math.max(0, Math.round((examEndTime - Date.now()) / 1000));
+            } else {
+                // Backward compatibility with any state saved before this fix
+                timeRemaining = state.timeRemaining || durationMinutes * 60;
+                examEndTime = Date.now() + timeRemaining * 1000;
+            }
         } else {
             timeRemaining = durationMinutes * 60;
+            examEndTime = Date.now() + timeRemaining * 1000;
         }
 
         startTimer();
@@ -198,7 +214,14 @@ finalSubmitBtn.disabled = true;
 
         currentIndex = state.currentIndex || 0;
         studentAnswers = state.studentAnswers || {};
-        timeRemaining = state.timeRemaining || durationMinutes * 60;
+
+        // Keep timeRemaining/examEndTime in sync with what loadActiveAssessment already
+        // computed from the real clock. We do NOT overwrite examEndTime with a stale
+        // value here - it was already correctly restored above.
+        if (!examEndTime && state.examEndTime) {
+            examEndTime = state.examEndTime;
+            timeRemaining = Math.max(0, Math.round((examEndTime - Date.now()) / 1000));
+        }
 
         const orderMap = new Map();
         data.forEach(q => orderMap.set(q.id, q));
@@ -284,11 +307,11 @@ function renderQuestion() {
                         answer_text: input.value,
                         is_final: false
                     }, {
-                        onConflict: ['matric_number', 'question_id']
+                        onConflict: 'matric_number,assessment_id,question_id'
                     });
 
                 if (error) {
-                    
+                    console.error("MCQ autosave error:", error);
                 }
 
                 saveExamState();
@@ -343,7 +366,7 @@ function renderQuestion() {
                         answer_text: answer,
                         is_final: false
                     }, {
-                        onConflict: ['matric_number', 'question_id']
+                        onConflict: 'matric_number,assessment_id,question_id'
                     });
 
                 if (error) {
@@ -451,6 +474,7 @@ function saveExamState() {
         assessmentId,
         currentIndex,
         timeRemaining,
+        examEndTime,
         studentAnswers,
         questionsOrder: questions.map(q => q.id)
     };
@@ -486,6 +510,12 @@ function startTimer() {
             clearInterval(timerInterval);
             return;
         }
+
+        // Always derive remaining time from the absolute end timestamp rather than
+        // decrementing a counter. This keeps the displayed time accurate even if
+        // the tab was backgrounded/throttled, and means a refresh just re-reads
+        // the same examEndTime and shows the correct remaining time.
+        timeRemaining = Math.max(0, Math.round((examEndTime - Date.now()) / 1000));
 
         if (timeRemaining <= 0) {
 
@@ -536,7 +566,11 @@ function startTimer() {
             }
         }
 
-        timeRemaining--;
+        // Periodically persist state (every ~10s) so timeRemaining/examEndTime
+        // stay backed up even if the student never clicks next/prev/types.
+        if (timeRemaining % 10 === 0) {
+            saveExamState();
+        }
 
     }, 1000);
 }
@@ -586,6 +620,93 @@ window.addEventListener('click', e => {
     }
 });
 
+// ================= UNANSWERED-QUESTIONS CONFIRM MODAL =================
+// Built dynamically so no HTML changes are required. Returns a Promise that
+// resolves to true if the student chose "Submit Anyway", false if they chose
+// to go back and review unanswered questions.
+function ensureUnansweredModal() {
+    if (document.getElementById('unansweredConfirmModal')) return;
+
+    const modal = document.createElement('div');
+    modal.id = 'unansweredConfirmModal';
+    modal.style.cssText = `
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.55);
+        z-index: 99999;
+        align-items: center;
+        justify-content: center;
+    `;
+
+    modal.innerHTML = `
+        <div style="
+            background: var(--card-color, #fff);
+            color: var(--text-color, #1a1a1a);
+            padding: 28px;
+            border-radius: 10px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+            font-family: inherit;
+            border: 1px solid var(--border-light, #d1fae5);
+        ">
+            <h3 style="margin: 0 0 12px; color: var(--text-color, #1a1a1a);">Unanswered Questions</h3>
+            <p id="unansweredConfirmText" style="margin: 0 0 22px; color: var(--text-muted, #555);"></p>
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button id="cancelUnansweredBtn" style="
+                    padding: 10px 18px;
+                    border-radius: 6px;
+                    border: 1px solid var(--border-light, #ccc);
+                    background: var(--surface-color, #f5f5f5);
+                    color: var(--text-color, #1a1a1a);
+                    cursor: pointer;
+                    font-size: 14px;
+                ">Go Back</button>
+                <button id="confirmUnansweredBtn" style="
+                    padding: 10px 18px;
+                    border-radius: 6px;
+                    border: 1px solid var(--primary-dark, var(--primary, #153280));
+                    background: var(--primary, #1816a3);
+                    color: #fff;
+                    cursor: pointer;
+                    font-size: 14px;
+                ">Submit Anyway</button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+}
+
+function showUnansweredConfirmModal(unansweredCount) {
+    ensureUnansweredModal();
+
+    const modal = document.getElementById('unansweredConfirmModal');
+    const text = document.getElementById('unansweredConfirmText');
+    const cancelBtn = document.getElementById('cancelUnansweredBtn');
+    const confirmBtn = document.getElementById('confirmUnansweredBtn');
+
+    text.textContent = `You have ${unansweredCount} unanswered question${unansweredCount > 1 ? 's' : ''}. You can submit anyway, or go back and finish them first.`;
+
+    modal.style.display = 'flex';
+
+    return new Promise(resolve => {
+        function cleanup() {
+            modal.style.display = 'none';
+            cancelBtn.removeEventListener('click', onCancel);
+            confirmBtn.removeEventListener('click', onConfirm);
+        }
+        function onCancel() { cleanup(); resolve(false); }
+        function onConfirm() { cleanup(); resolve(true); }
+
+        cancelBtn.addEventListener('click', onCancel);
+        confirmBtn.addEventListener('click', onConfirm);
+    });
+}
+
 // ================= FINAL SUBMIT =================
 async function finalSubmit() {
 
@@ -602,16 +723,16 @@ async function finalSubmit() {
 
         await saveAnswer();
 
-        const unanswered = questions.some(q => {
+        const unansweredQuestions = questions.filter(q => {
             const ans = studentAnswers[q.id];
             return !ans || ans.trim() === '';
         });
 
-        if (unanswered) {
+        if (unansweredQuestions.length > 0) {
 
-            alert("Unanswered questions detected. Please review before submitting.");
+            const proceedAnyway = await showUnansweredConfirmModal(unansweredQuestions.length);
 
-            if (!confirmSubmit) {
+            if (!proceedAnyway) {
 
                 reviewBtn.click();
 
@@ -620,15 +741,21 @@ async function finalSubmit() {
 
                 return;
             }
+            // proceedAnyway === true: fall through and submit despite gaps
         }
 
-        for (let qid in studentAnswers) {
+        const { error: finalizeError } = await supabaseClient
+            .from('student_answers')
+            .update({ is_final: true })
+            .eq('matric_number', matricNumber)
+            .eq('assessment_id', assessmentId);
 
-            await supabaseClient
-                .from('student_answers')
-                .update({ is_final: true })
-                .eq('matric_number', matricNumber)
-                .eq('question_id', qid);
+        if (finalizeError) {
+            alert('Submission error');
+            console.error(finalizeError);
+            finalSubmitBtn.textContent = originalText;
+            finalSubmitBtn.disabled = false;
+            return;
         }
 
         const { data, error } = await supabaseClient.rpc(
