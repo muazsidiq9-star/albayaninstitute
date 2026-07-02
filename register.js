@@ -19,8 +19,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const passportPreview = document.getElementById("passport-preview");
   const passportWarning = document.getElementById("passport-warning");
   const submitBtn = document.querySelector('.submit-btn');
+  const planTypeSelect = document.getElementById("planType");
+  const planPriceCards = document.querySelectorAll(".plan-price-card");
 
   if (!form) return;
+
+  // ===========================
+  // Plan Price Highlight
+  // ===========================
+  if (planTypeSelect && planPriceCards.length) {
+    const highlightSelectedPlan = () => {
+      const selected = planTypeSelect.value;
+      planPriceCards.forEach((card) => {
+        card.classList.toggle("selected", card.dataset.plan === selected);
+      });
+    };
+
+    planTypeSelect.addEventListener("change", highlightSelectedPlan);
+
+    planPriceCards.forEach((card) => {
+      card.addEventListener("click", () => {
+        planTypeSelect.value = card.dataset.plan;
+        highlightSelectedPlan();
+      });
+    });
+
+    highlightSelectedPlan();
+  }
 
   // ===========================
   // 3️⃣ Form Submit
@@ -140,15 +165,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .single(); // Return the inserted row
 
          if (error) {
-  console.log("ERROR OBJECT:", error);
-  alert(
-    `Message: ${error.message}\n\n` +
-    `Details: ${error.details || "None"}\n\n` +
-    `Hint: ${error.hint || "None"}\n\n` +
-    `Code: ${error.code || "None"}`
-  );
-  return;
-}
+        console.error(error);
+        alert(t("Registration failed. Check console for details."));
+        return;
+      }
 
 try {
   const response = await fetch(
@@ -159,7 +179,7 @@ try {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        access_key: "YOUR_ACCESS_KEY",
+        access_key: "73556940-2533-43e1-8458-aab6b0e894dc",
         subject: "New Student Registration 🎓",
         message: `
 A new student just registered:

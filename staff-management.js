@@ -584,7 +584,10 @@ async function sendStaffInvite(inviteId, email) {
 
   try {
     const { data, error } = await window.supabaseClient.functions.invoke("invite-staff", {
-  body: { invite_id: inviteId, email, redirect_origin: window.location.origin }
+  body: {
+  invite_id: inviteId,
+  email
+}
 });
 
     if (error) throw error;

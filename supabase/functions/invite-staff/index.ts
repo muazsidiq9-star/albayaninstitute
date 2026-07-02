@@ -99,9 +99,12 @@ Deno.serve(async (req) => {
 
     const { invite_id, email, redirect_origin } = body;
     
-    const redirectTo = redirect_origin
-  ? `${redirect_origin}/staff-register.html`
-  : DEFAULT_REDIRECT_URL;
+    const redirectTo =
+  redirect_origin &&
+  !redirect_origin.includes("127.0.0.1") &&
+  !redirect_origin.includes("localhost")
+    ? `${redirect_origin}/staff-register.html`
+    : DEFAULT_REDIRECT_URL;
 
     if (!invite_id || !email) {
       return new Response(
