@@ -571,7 +571,7 @@ async function loadStudents() {
 async function populateStudentSelects() {
   const { data } = await db
     .from("students")
-    .select("fullname, matric_number")
+    .select("fullname, matric_number, level_arabic")
     .order("fullname");
 
   ["paymentStudent", "gradeStudent"].forEach(id => {
@@ -582,10 +582,25 @@ async function populateStudentSelects() {
     data?.forEach(s => {
       const opt = document.createElement("option");
       opt.value = s.matric_number;
-      opt.textContent = s.fullname;
+      opt.textContent = `${s.fullname} (${s.matric_number})`;
+      opt.dataset.level = s.level_arabic || "";
       select.appendChild(opt);
     });
   });
+}
+
+// Auto-fills a Level <select> from the level_arabic stashed on the chosen
+// student <option> (data-level). Wired via onchange on paymentStudent /
+// gradeStudent. Silently no-ops if the student has no level on file yet —
+// admin can still pick one manually.
+function autofillStudentLevel(studentSelectId, levelSelectId) {
+  const studentSelect = document.getElementById(studentSelectId);
+  const levelSelect = document.getElementById(levelSelectId);
+  if (!studentSelect || !levelSelect) return;
+
+  const chosen = studentSelect.selectedOptions[0];
+  const level = chosen?.dataset.level;
+  if (level) levelSelect.value = level;
 }
 
 async function addStudent() {
@@ -2239,8 +2254,8 @@ async function openCertificateModal(studentId, matric, fullname, level) {
 
   window.certStudentData = { studentId, matric, fullname, level };
 
-  const courseSelect = document.getElementById("certCourse");
-  courseSelect.innerHTML = `<option value="">${t("Loading courses...")}</option>`;
+  const courseList = document.getElementById("certCourseList");
+  courseList.innerHTML = `<span>${t("Loading courses...")}</span>`;
 
   const { data: existing } = await db
     .from("certificates")
@@ -2254,7 +2269,7 @@ async function openCertificateModal(studentId, matric, fullname, level) {
     .eq("matric_number", matric);
 
   if (error || !registrations || registrations.length === 0) {
-    courseSelect.innerHTML = `<option value="">${t("No courses found")}</option>`;
+    courseList.innerHTML = `<span>${t("No courses found")}</span>`;
     renderExistingCerts(existing || []);
     openModal("certificateModal");
     return;
@@ -2268,14 +2283,20 @@ async function openCertificateModal(studentId, matric, fullname, level) {
     .in("id", courseIds);
 
   if (coursesError || !courses) {
-    courseSelect.innerHTML = `<option value="">${t("Failed to load courses.")}</option>`;
+    courseList.innerHTML = `<span>${t("Failed to load courses.")}</span>`;
     renderExistingCerts(existing || []);
     openModal("certificateModal");
     return;
   }
 
-  courseSelect.innerHTML = `<option value="">${t("Select Course")}</option>` +
-    courses.map(c => `<option value="${c.course_name}">${c.course_name}</option>`).join("");
+  // Checkbox per registered course — tick one for a single-course certificate,
+  // or several to issue one certificate covering a full program.
+  courseList.innerHTML = courses.map((c, i) => `
+    <label style="display:flex; align-items:center; gap:8px; font-weight:400; cursor:pointer;">
+      <input type="checkbox" class="certCourseCheckbox" value="${c.course_name.replace(/"/g, "&quot;")}" id="certCourseCb${i}">
+      <span>${c.course_name}</span>
+    </label>
+  `).join("");
 
   renderExistingCerts(existing || []);
   openModal("certificateModal");
@@ -2346,10 +2367,13 @@ function renderExistingCerts(certs) {
 
 async function issueCertificate() {
   const { matric, fullname, level } = window.certStudentData || {};
-  const course_name = document.getElementById("certCourse").value;
+  const checkedCourses = Array.from(document.querySelectorAll(".certCourseCheckbox:checked"))
+    .map(cb => cb.value)
+    .sort(); // canonical order so duplicate-detection isn't fooled by checkbox click order
+  const course_name = checkedCourses.join(", ");
 
-  if (!matric || !fullname || !level || !course_name) {
-    alert(t("Please select a course before issuing."));
+  if (!matric || !fullname || !level || checkedCourses.length === 0) {
+    alert(t("Please select at least one course before issuing."));
     return;
   }
 
@@ -2438,8 +2462,9 @@ function editCertificate(certId, currentCourse, currentGradeNote) {
 
   form.innerHTML = `
     <h3 style="margin-bottom:12px; font-size:1rem;">${t("Edit Certificate")}</h3>
-    <label style="font-weight:600; font-size:0.9rem;">${t("Course Name")}</label>
+    <label style="font-weight:600; font-size:0.9rem;">${t("Course Name(s)")}</label>
     <input type="text" id="editCertCourse" value="${currentCourse}"
+      placeholder="${t("For multiple courses, separate with a comma")}"
       style="width:100%; padding:8px; margin:6px 0 12px; border-radius:6px; border:1px solid #ccc; font-size:0.9rem;">
     <label style="font-weight:600; font-size:0.9rem;">${t("Grade Note")}</label>
     <input type="text" id="editCertGradeNote" value="${currentGradeNote}"

@@ -382,14 +382,18 @@ body.light-mode .privacy-header {
 
 .footer-links {
   display: flex;
-  gap: 24px;
+  align-items: center;
+  gap: 22px;
   flex-wrap: wrap;
+  row-gap: 10px;
 }
 
 .footer-links a {
+  position: relative;
   color: var(--muted);
   text-decoration: none;
   font-size: 0.82rem;
+  white-space: nowrap;
   transition: 0.25s ease;
 }
 
@@ -397,20 +401,16 @@ body.light-mode .privacy-header {
   color: var(--accent-light);
 }
 
-.footer-link {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.footer-link a {
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 0.90rem;
-  transition: 0.25s ease;
-}
-
-.footer-link a:hover {
-  color: var(--accent-light);
+/* Thin separator between links, skipped after the last one */
+.footer-links a:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -11px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 12px;
+  background: var(--border-mid);
 }
 /* ============================================================
    RESPONSIVE
@@ -445,6 +445,16 @@ body.light-mode .privacy-header {
   .footer-inner {
     flex-direction: column;
     text-align: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+    gap: 14px;
+    row-gap: 8px;
+  }
+
+  .footer-links a:not(:last-child)::after {
+    right: -7px;
   }
 }
 

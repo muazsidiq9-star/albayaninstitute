@@ -654,7 +654,13 @@
 
     /* ===========================
        GENERATE CERTIFICATE PDF
-       !! DO NOT MODIFY — fitted to cert-bg.png template !!
+       Positions are fitted to cert-bg.png. Single-course certificates render
+       at the exact original coordinates below. Multi-course certificates
+       (course_name stored as a comma list, e.g. "Grammar, Tajweed") wrap
+       onto extra lines and push the matric/grade/date block down to match —
+       everything above the date block shifts by the same amount, so nothing
+       overlaps. If courses still overflow with 4+ long names, shrink the
+       course font size or widen maxCourseWidth below.
     =========================== */
     async function downloadCertificate(certId, fullname, matricNumber, courseName, level, issuedAt, gradeNote) {
       const { jsPDF } = window.jspdf;
@@ -699,14 +705,32 @@
       doc.setFontSize(17);
       doc.setFont("helvetica", "bold");
       doc.text(`for the Successful Completion of ${level}`, pageWidth / 2, 390, { align: "center" });
+
+      // COURSE LIST — one course keeps the original single-line wording;
+      // several courses get quoted + comma-joined and wrap if too wide.
+      const courses = courseName.split(",").map(c => c.trim()).filter(Boolean);
+      const courseLabel = courses.length > 1
+        ? `${courses.map(c => `"${c}"`).join(", ")} Courses`
+        : `"${courseName}" Course`;
+
       doc.setFontSize(18);
-      doc.text(`"${courseName}" Course`, pageWidth / 2, 415, { align: "center" });
+      doc.setFont("helvetica", "bold");
+      const maxCourseWidth = pageWidth - 200;
+      const courseLines = doc.splitTextToSize(courseLabel, maxCourseWidth);
+      const courseLineHeight = 22;
+      courseLines.forEach((line, i) => {
+        doc.text(line, pageWidth / 2, 415 + i * courseLineHeight, { align: "center" });
+      });
+
+      // Everything below shifts down by however many extra lines the course
+      // list needed, so a multi-course cert never overlaps its own content.
+      const extraShift = (courseLines.length - 1) * courseLineHeight;
 
       // MATRIC NUMBER
       doc.setTextColor(20, 20, 20);
       doc.setFontSize(14);
       doc.setFont("helvetica", "bold");
-      doc.text(`Matric No: ${matricNumber}`, pageWidth / 2, 478, { align: "center" });
+      doc.text(`Matric No: ${matricNumber}`, pageWidth / 2, 478 + extraShift, { align: "center" });
 
       // GRADE NOTE
       const rawGrade = gradeNote && gradeNote.trim() !== "" ? gradeNote.trim() : null;
@@ -716,7 +740,7 @@
         doc.setTextColor(25, 25, 25);
         doc.setFontSize(16);
         doc.setFont("helvetica", "bolditalic");
-        doc.text(displayGrade, pageWidth / 2, 455, { align: "center" });
+        doc.text(displayGrade, pageWidth / 2, 455 + extraShift, { align: "center" });
       }
 
       // DATE
@@ -726,23 +750,25 @@
       doc.setTextColor(10, 10, 10);
       doc.setFontSize(18);
       doc.setFont("helvetica", "bold");
-      doc.text(formattedDate, 155, 540, { align: "center" });
+      doc.text(formattedDate, 155, 540 + extraShift, { align: "center" });
       doc.setDrawColor(10, 10, 10);
       doc.setLineWidth(1);
-      doc.line(60, 548, 250, 548);
+      doc.line(60, 548 + extraShift, 250, 548 + extraShift);
       doc.setTextColor(60, 60, 60);
       doc.setFontSize(13);
       doc.setTextColor(40, 40, 40);
-      doc.text("Date", 155, 566, { align: "center" });
+      doc.text("Date", 155, 566 + extraShift, { align: "center" });
 
-      // CERTIFICATE ID
+      // CERTIFICATE ID — anchored to the bottom edge, so it stays put
+      // regardless of how much the content above it grows.
       doc.setFontSize(11);
       doc.setTextColor(40, 40, 40);
       doc.setFont("helvetica", "bold");
       doc.text(`Certificate Id: ${certId}`, pageWidth / 2, pageHeight - 50, { align: "center" });
 
-      // SAVE
-      doc.save(`Certificate_${matricNumber}_${courseName}.pdf`);
+      // SAVE — comma-joined multi-course names get sanitized into a safe filename
+      const safeCourseSlug = courseName.replace(/[^a-z0-9]+/gi, "_").replace(/^_+|_+$/g, "").slice(0, 60);
+      doc.save(`Certificate_${matricNumber}_${safeCourseSlug}.pdf`);
     }
   </script>
 

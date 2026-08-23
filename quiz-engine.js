@@ -1,5 +1,5 @@
 /* ============================================================
-   Al-Bayan  Institute Online
+   Al-Bayan Institute Online
    quiz-engine.js — Quiz Engine v2.3 (Complete)
    Dual Badge System + Rewards Modal (Mobile-Optimized)
    Features: Difficulties, XP/Levels, Tiered Badges, Claimable
@@ -1835,7 +1835,7 @@ showScreen("screen-welcome");
     const { breakdown, overallPct, totalCorrect, totalQuestions } = gatherCertificateData();
     const grade = getGrade(overallPct);
     const xpData = getXPData();
-    const tutor = state.quiz.tutor || "Al-Bayan  Institute";
+    const tutor = state.quiz.tutor || "Al-Bayan Institute";
 
     // Signature stamp — adjust STAMP_URL if stamp.png lives somewhere
     // other than the same folder as this page. Missing/broken image
@@ -2365,9 +2365,11 @@ const completed = diffStars === diffMax && diffMax > 0;
 const nextBtn = document.getElementById("quiz-endless-next-btn");
 
 if (e.lives <= 0) {
-  // The Out of Lives modal handles the decision now.
+  // Pop the modal immediately — a disabled button can never
+  // fire onclick, so we can't wait for a click to trigger it.
   nextBtn.disabled = true;
   nextBtn.textContent = "Out of Lives";
+  quizShowOutOfLives();
 } else {
   nextBtn.disabled = false;
   nextBtn.textContent = "Next ➜";

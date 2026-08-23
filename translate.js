@@ -3265,7 +3265,14 @@ NEW FILES START HERE
 
 // JS validation alert
 "Please agree to the Terms & Conditions, Privacy Policy, and Refund Policy before submitting.": "يرجى الموافقة على الشروط والأحكام وسياسة الخصوصية وسياسة الاسترداد قبل الإرسال.",
+"Quizzes": "الاختبارات",
+"Practice Quizzes": "اختبارات تدريبية",
 
+"Course(s)": "الدورة (الدورات)",
+"Course Name(s)": "اسم الدورة (الدورات)",
+"For multiple courses, separate with a comma": "للدورات المتعددة، افصل بفاصلة",
+"Please select at least one course before issuing.": "يرجى اختيار دورة واحدة على الأقل قبل الإصدار.",
+"Tick every course this certificate should cover — pick one for a single-course certificate, or several for a full-program certificate.": "حدد كل دورة يجب أن تغطيها هذه الشهادة — اختر واحدة لشهادة دورة واحدة، أو عدة دورات لشهادة برنامج كامل.",
   // ===== DYNAMIC TEMPLATES ===== 
 
 en: {
@@ -3552,10 +3559,17 @@ let currentLang = localStorage.getItem("lang") || "en";
 
 // THEN this can run safely
 const savedLang = currentLang;
-translate(savedLang);
 
-// Set direction
-document.documentElement.dir = savedLang === "ar" ? "rtl" : "ltr";
+// Quiz pages set window.QUIZ_PAGE_NO_TRANSLATE = true before this script
+// loads, so they skip translation and direction-flipping entirely and
+// stay on their own fixed LTR layout, untranslated. Every other page
+// leaves this flag unset (falsy), so nothing changes for them.
+if (!window.QUIZ_PAGE_NO_TRANSLATE) {
+  translate(savedLang);
+
+  // Set direction
+  document.documentElement.dir = savedLang === "ar" ? "rtl" : "ltr";
+}
 // ================================
 // JS Translator Helper
 // ================================
@@ -3860,39 +3874,43 @@ document.addEventListener("DOMContentLoaded", () => {
   // ====================
   // LANGUAGE BUTTON
   // ====================
-  const btn = document.createElement("div");
-  btn.id = "langToggleBtn";
-  btn.textContent = currentLang === "en" ? "AR" : "EN";
+  // Skipped entirely on quiz pages — no button gets created, so
+  // nothing sits in the layout and nothing there is clickable.
+  if (!window.QUIZ_PAGE_NO_TRANSLATE) {
+    const btn = document.createElement("div");
+    btn.id = "langToggleBtn";
+    btn.textContent = currentLang === "en" ? "AR" : "EN";
 
-  btn.style.cssText = `
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 52px;
-    height: 52px;
-    background: #040f91;
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    cursor: grab;
-    z-index: 10000;
-    user-select: none;
-  `;
+    btn.style.cssText = `
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 52px;
+      height: 52px;
+      background: #040f91;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      cursor: grab;
+      z-index: 10000;
+      user-select: none;
+    `;
 
-  document.body.appendChild(btn);
+    document.body.appendChild(btn);
 
-  // click toggle
-  btn.addEventListener("click", () => {
-    const newLang = currentLang === "en" ? "ar" : "en";
-    localStorage.setItem("lang", newLang);
-    location.reload();
-  });
+    // click toggle
+    btn.addEventListener("click", () => {
+      const newLang = currentLang === "en" ? "ar" : "en";
+      localStorage.setItem("lang", newLang);
+      location.reload();
+    });
 
-  // make draggable
-  makeDraggable(btn, "langBtnPos");
+    // make draggable
+    makeDraggable(btn, "langBtnPos");
+  }
 
 
   // ====================
@@ -3947,6 +3965,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // GLOBAL TRANSLATION FUNCTIONS
 // ================================
 window.translatePage = function () {
+  if (window.QUIZ_PAGE_NO_TRANSLATE) return;
   translate(localStorage.getItem("lang") || "en");
 };
 

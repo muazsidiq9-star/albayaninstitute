@@ -1060,7 +1060,7 @@
       <h2 data-translate="Add Payment">Add Payment</h2>
       <div class="modal-grid">
         <label data-translate="Student">Student</label>
-        <select id="paymentStudent">
+        <select id="paymentStudent" onchange="autofillStudentLevel('paymentStudent','paymentLevel')">
           <option value="" data-translate="Select a student">Select a student</option>
         </select>
         <label data-translate="Level">Level</label>
@@ -1134,7 +1134,7 @@
       <h2 data-translate="Add Grade">Add Grade</h2>
       <div class="modal-grid">
         <label data-translate="Student">Student</label>
-        <select id="gradeStudent">
+        <select id="gradeStudent" onchange="autofillStudentLevel('gradeStudent','gradeLevel')">
           <option value="" data-translate="Select a student">Select a student</option>
         </select>
         <input type="hidden" id="gradeStudentId">
@@ -1398,11 +1398,17 @@
           <input type="text" id="certGradeNote"
                  placeholder="e.g. with a total score of 85%"
                  data-translate-placeholder="e.g. with a total score of 85%">
-          <label data-translate="Course">Course</label>
-          <select id="certCourse">
-            <option value="" data-translate="Select Course">Select Course</option>
-          </select>
+          <label data-translate="Course(s)">Course(s)</label>
+          <div id="certCourseList" class="cert-course-checklist"
+               style="display:flex; flex-direction:column; gap:6px; padding:10px;
+                      border:1px solid var(--border-color); border-radius:6px; max-height:160px; overflow-y:auto;">
+            <span data-translate="Loading courses...">Loading courses...</span>
+          </div>
         </div>
+        <p class="cert-multi-course-hint" style="font-size:0.85rem; opacity:0.75; margin:-8px 0 0;"
+           data-translate="Tick every course this certificate should cover — pick one for a single-course certificate, or several for a full-program certificate.">
+          Tick every course this certificate should cover — pick one for a single-course certificate, or several for a full-program certificate.
+        </p>
         <div class="modal-actions">
           <button class="btn btn-save" onclick="issueCertificate()">
             <i class="fa-solid fa-certificate"></i>
