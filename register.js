@@ -20,31 +20,95 @@ document.addEventListener("DOMContentLoaded", () => {
   const passportWarning = document.getElementById("passport-warning");
   const submitBtn = document.querySelector('.submit-btn');
   const planTypeSelect = document.getElementById("planType");
-  const planPriceCards = document.querySelectorAll(".plan-price-card");
+  const planPriceStrip = document.getElementById("planPriceStrip");
+  const countrySelect = document.getElementById("country");
 
   if (!form) return;
 
   // ===========================
-  // Plan Price Highlight
+  // Country-based Plan Rendering
   // ===========================
-  if (planTypeSelect && planPriceCards.length) {
-    const highlightSelectedPlan = () => {
-      const selected = planTypeSelect.value;
-      planPriceCards.forEach((card) => {
-        card.classList.toggle("selected", card.dataset.plan === selected);
-      });
-    };
+  const WEST_AFRICA_COUNTRIES = [
+    "nigeria", "ghana", "benin", "togo", "niger", "cameroon",
+    "senegal", "mali", "burkina faso", "guinea", "guinea-bissau",
+    "sierra leone", "liberia", "ivory coast", "gambia",
+    "cape verde", "mauritania"
+  ];
 
-    planTypeSelect.addEventListener("change", highlightSelectedPlan);
+  function isWestAfrica(countryRaw) {
+    if (!countryRaw) return false;
+    return WEST_AFRICA_COUNTRIES.includes(countryRaw.trim().toLowerCase());
+  }
 
-    planPriceCards.forEach((card) => {
+  function attachPlanCardListeners() {
+    document.querySelectorAll(".plan-price-card").forEach((card) => {
       card.addEventListener("click", () => {
         planTypeSelect.value = card.dataset.plan;
-        highlightSelectedPlan();
+        document.querySelectorAll(".plan-price-card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
       });
     });
+  }
 
-    highlightSelectedPlan();
+  function renderPlanOptions() {
+    const country = countrySelect.value;
+
+    if (!country) {
+      planPriceStrip.innerHTML = `
+        <p class="plan-price-hint" data-translate="Please select your country in Step 1 first.">
+          Please select your country in Step 1 first.
+        </p>`;
+      planTypeSelect.innerHTML = `<option value="" data-translate="Select">Select</option>`;
+      if (typeof translate === "function") translate(localStorage.getItem("lang") || "en");
+      return;
+    }
+
+    const westAfrica = isWestAfrica(country);
+
+    if (westAfrica) {
+      planTypeSelect.innerHTML = `
+        <option value="" data-translate="Select">Select</option>
+        <option value="General" data-translate="General">General</option>
+        <option value="Premium" data-translate="Premium">Premium</option>
+      `;
+      planPriceStrip.innerHTML = `
+        <div class="plan-price-card" data-plan="General" data-amount="10000" data-currency="NGN">
+          <span class="plan-price-name" data-translate="General">General</span>
+          <span class="plan-price-amount">₦10,000<small data-translate="/month">/month</small></span>
+        </div>
+        <div class="plan-price-card" data-plan="Premium" data-amount="50000" data-currency="NGN">
+          <span class="plan-price-name" data-translate="Premium">Premium</span>
+          <span class="plan-price-amount">₦50,000<small data-translate="/month">/month</small></span>
+        </div>
+      `;
+    } else {
+      planTypeSelect.innerHTML = `<option value="Premium" selected>Premium</option>`;
+      planPriceStrip.innerHTML = `
+        <div class="plan-price-card selected" data-plan="Premium" data-amount="50" data-currency="USD">
+          <span class="plan-price-name" data-translate="Premium">Premium</span>
+          <span class="plan-price-amount">$50<small data-translate="/month">/month</small></span>
+        </div>
+      `;
+    }
+
+    attachPlanCardListeners();
+    if (typeof translate === "function") translate(localStorage.getItem("lang") || "en");
+  }
+
+  if (countrySelect && planTypeSelect && planPriceStrip) {
+    countrySelect.addEventListener("change", renderPlanOptions);
+    renderPlanOptions();
+  }
+
+  // Reads amount + currency from the selected plan card (single source of truth for pricing)
+  function getSelectedPlanPricing() {
+    const selectedPlan = planTypeSelect.value;
+    const card = document.querySelector(`.plan-price-card[data-plan="${selectedPlan}"]`);
+    if (!card) return { amount: null, currency: null };
+    return {
+      amount: Number(card.dataset.amount) || null,
+      currency: card.dataset.currency || null
+    };
   }
 
   // ===========================
@@ -80,6 +144,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!email || !fullName) {
         alert(t("Full Name and Email are required."));
+        return;
+      }
+
+      const agreeTermsCheckbox = document.getElementById("agreeTerms");
+      if (agreeTermsCheckbox && !agreeTermsCheckbox.checked) {
+        alert(t("Please agree to the Terms & Conditions, Privacy Policy, and Refund Policy before submitting."));
         return;
       }
 
@@ -138,6 +208,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
 
+      // ----- Derive pricing from the selected plan card -----
+      const { amount: amountDue, currency: currencyDue } = getSelectedPlanPricing();
+
       // ----- Insert Student -----
       const { data, error } = await sb
         .from("students")
@@ -158,7 +231,10 @@ document.addEventListener("DOMContentLoaded", () => {
             class_time: classTime,
             reason_arabic: reasonArabic,
             additional: additional,
-            passport_url: passportUrl
+            passport_url: passportUrl,
+            payment_status: "unpaid",
+            amount_due: amountDue,
+            currency_due: currencyDue
           }
         ])
         .select("matric_number")

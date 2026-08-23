@@ -189,20 +189,19 @@
     <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
   </p>
 
-  <p>
-    © 2026 - <span id="year"></span>
-    <span data-translate="All rights reserved.">All rights reserved.</span>
-  </p>
-
-  <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
-</footer>
+  <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+    <a href="terms.html" data-translate="Terms & Conditions">Terms & Conditions</a>
+    <a href="refund-policy.html" data-translate="Refund Policy">Refund Policy</a>
+    <a href="contact.html" data-translate="Contact">Contact</a>
+  </footer>
 
 <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank">
   <img src="whatsapp-icon.png" alt="WhatsApp">
 </a>
 
 <script>
-document.getElementById("year").textContent = new Date().getFullYear();
+
 
 function toggleMenu(){
   document.getElementById("navLinks").classList.toggle("show");

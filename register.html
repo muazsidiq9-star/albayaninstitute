@@ -144,9 +144,44 @@
             <label for="country">
               <span data-translate="Country of Residence">Country of Residence</span> <span class="req">*</span>
             </label>
-            <input type="text" id="country" name="country"
-                   placeholder="e.g. Nigeria"
-                   data-translate-placeholder="e.g. Nigeria" required>
+            <select id="country" name="country" required>
+              <option value="" data-translate="Select">Select</option>
+              <optgroup label="West Africa">
+                <option value="Nigeria" data-translate="Nigeria">Nigeria</option>
+                <option value="Ghana" data-translate="Ghana">Ghana</option>
+                <option value="Benin" data-translate="Benin">Benin</option>
+                <option value="Togo" data-translate="Togo">Togo</option>
+                <option value="Niger" data-translate="Niger">Niger</option>
+                <option value="Cameroon" data-translate="Cameroon">Cameroon</option>
+                <option value="Senegal" data-translate="Senegal">Senegal</option>
+                <option value="Mali" data-translate="Mali">Mali</option>
+                <option value="Burkina Faso" data-translate="Burkina Faso">Burkina Faso</option>
+                <option value="Guinea" data-translate="Guinea">Guinea</option>
+                <option value="Guinea-Bissau" data-translate="Guinea-Bissau">Guinea-Bissau</option>
+                <option value="Sierra Leone" data-translate="Sierra Leone">Sierra Leone</option>
+                <option value="Liberia" data-translate="Liberia">Liberia</option>
+                <option value="Ivory Coast" data-translate="Ivory Coast">Ivory Coast</option>
+                <option value="Gambia" data-translate="Gambia">Gambia</option>
+                <option value="Cape Verde" data-translate="Cape Verde">Cape Verde</option>
+                <option value="Mauritania" data-translate="Mauritania">Mauritania</option>
+              </optgroup>
+              <optgroup label="Other Countries">
+                <option value="United States" data-translate="United States">United States</option>
+                <option value="United Kingdom" data-translate="United Kingdom">United Kingdom</option>
+                <option value="Canada" data-translate="Canada">Canada</option>
+                <option value="South Africa" data-translate="South Africa">South Africa</option>
+                <option value="Kenya" data-translate="Kenya">Kenya</option>
+                <option value="Egypt" data-translate="Egypt">Egypt</option>
+                <option value="Saudi Arabia" data-translate="Saudi Arabia">Saudi Arabia</option>
+                <option value="United Arab Emirates" data-translate="United Arab Emirates">United Arab Emirates</option>
+                <option value="India" data-translate="India">India</option>
+                <option value="Pakistan" data-translate="Pakistan">Pakistan</option>
+                <option value="Malaysia" data-translate="Malaysia">Malaysia</option>
+                <option value="Indonesia" data-translate="Indonesia">Indonesia</option>
+                <option value="Australia" data-translate="Australia">Australia</option>
+                <option value="Other" data-translate="Other">Other</option>
+              </optgroup>
+            </select>
           </div>
 
           <div class="form-group full">
@@ -200,15 +235,10 @@
               <option value="Premium" data-translate="Premium">Premium</option>
             </select>
 
-            <div class="plan-price-strip">
-              <div class="plan-price-card" data-plan="General">
-                <span class="plan-price-name" data-translate="General">General</span>
-                <span class="plan-price-amount">₦10,000<small data-translate="/month">/month</small></span>
-              </div>
-              <div class="plan-price-card" data-plan="Premium">
-                <span class="plan-price-name" data-translate="Premium">Premium</span>
-                <span class="plan-price-amount">₦50,000<small data-translate="/month">/month</small></span>
-              </div>
+            <div class="plan-price-strip" id="planPriceStrip">
+              <p class="plan-price-hint" data-translate="Please select your country in Step 1 first.">
+                Please select your country in Step 1 first.
+              </p>
             </div>
           </div>
 
@@ -329,6 +359,17 @@
           </span>
         </div>
 
+        <div class="terms-agreement">
+          <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+          <label for="agreeTerms">
+            <span data-translate="I agree to the">I agree to the</span>
+            <a href="terms.html" target="_blank" data-translate="Terms & Conditions">Terms &amp; Conditions</a>,
+            <a href="privacy.html" target="_blank" data-translate="Privacy Policy">Privacy Policy</a>,
+            <span data-translate="and">and</span>
+            <a href="refund-policy.html" target="_blank" data-translate="Refund Policy">Refund Policy</a>.
+          </label>
+        </div>
+
         <div class="step-nav">
           <button type="button" class="btn-back" onclick="goStep(2)">
             <i class="fa-solid fa-arrow-left"></i>
@@ -357,6 +398,9 @@
     </p>
     <p id="footerCopyright"></p>
     <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+    <a href="terms.html" data-translate="Terms & Conditions">Terms & Conditions</a>
+    <a href="refund-policy.html" data-translate="Refund Policy">Refund Policy</a>
+    <a href="contact.html" data-translate="Contact">Contact</a>
   </footer>
 
   <!-- Floating WhatsApp -->
@@ -386,7 +430,32 @@
     });
 
     /* ── Multi-step ── */
+
+    // Validates all [required] fields inside a given step using the browser's
+    // own checkValidity()/reportValidity() — automatically covers every
+    // required input/select already marked up in the HTML.
+    function validateStep(stepEl) {
+      if (!stepEl) return true;
+      const fields = stepEl.querySelectorAll('[required]');
+      for (const field of fields) {
+        if (!field.checkValidity()) {
+          field.reportValidity();
+          field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return false;
+        }
+      }
+      return true;
+    }
+
     function goStep(n) {
+      const currentStepEl = document.querySelector('.form-step.active');
+      const currentNum = currentStepEl ? parseInt(currentStepEl.id.replace('step', '')) : 1;
+
+      // Only validate when moving forward — going back should always be allowed.
+      if (n > currentNum && !validateStep(currentStepEl)) {
+        return;
+      }
+
       document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
       document.querySelectorAll('.step').forEach(s => s.classList.remove('active', 'done'));
       document.getElementById('step' + n).classList.add('active');
