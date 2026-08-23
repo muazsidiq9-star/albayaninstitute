@@ -1,0 +1,3744 @@
+{
+  "id": "nahw-foundations",
+  "title": "Nahw Foundations",
+  "titleArabic": "أساسيات النحو",
+  "subtitle": "Master the rules of Arabic sentence structure",
+  "icon": "🖋️",
+  "description": "A three-level journey through classical Nahw (Arabic grammar) — from the basic word types and case endings, through verbal sentences and prepositions, to the deeper rules of particles that govern i'rab.",
+  "difficulties": [
+    {
+      "id": "beginner",
+      "label": "Beginner",
+      "icon": "🌱",
+      "description": "Word-level foundations — the building blocks of every Arabic sentence",
+      "stages": [
+        {
+          "id": "stage1",
+          "title": "Al-Kalimah — Word Types",
+          "icon": "🔤",
+          "description": "Every Arabic word is one of three types: Ism, Fi'l, or Ḥarf",
+          "kicker": "Word Types",
+          "questions": [
+            {
+              "text": "How many types of Kalimah (word) exist in Arabic according to Nahw?",
+              "options": [
+                "Three (Ism, Fi'l, Ḥarf)",
+                "Two (Noun, Verb)",
+                "Four",
+                "Five"
+              ],
+              "answer": "Three (Ism, Fi'l, Ḥarf)"
+            },
+            {
+              "text": "What is Al-Ism?",
+              "options": [
+                "A noun — a word referring to a person, place, thing, or idea",
+                "A verb showing action",
+                "A particle with only grammatical meaning",
+                "A number"
+              ],
+              "answer": "A noun — a word referring to a person, place, thing, or idea"
+            },
+            {
+              "text": "What is Al-Fi'l?",
+              "options": [
+                "A verb — a word expressing an action tied to a time",
+                "A noun",
+                "A particle",
+                "A pronoun"
+              ],
+              "answer": "A verb — a word expressing an action tied to a time"
+            },
+            {
+              "text": "What is Al-Ḥarf?",
+              "options": [
+                "A particle — has no independent meaning except with other words",
+                "A type of noun",
+                "A type of verb",
+                "A number"
+              ],
+              "answer": "A particle — has no independent meaning except with other words"
+            },
+            {
+              "text": "Which of these is an example of Al-Ḥarf?",
+              "options": [
+                "فِي (fī — \"in\")",
+                "كِتَابٌ (kitābun — \"a book\")",
+                "ذَهَبَ (dhahaba — \"he went\")",
+                "زَيْدٌ (Zaydun)"
+              ],
+              "answer": "فِي (fī — \"in\")"
+            }
+          ]
+        },
+        {
+          "id": "stage2",
+          "title": "Signs of Al-Ism",
+          "icon": "🏷️",
+          "description": "How to recognize a noun by its grammatical markers",
+          "kicker": "Recognizing Nouns",
+          "questions": [
+            {
+              "text": "Which of these is a sign that a word is an Ism (noun)?",
+              "options": [
+                "It can take Tanwīn",
+                "It can be conjugated for past tense",
+                "It only has one letter",
+                "It cannot be preceded by a preposition"
+              ],
+              "answer": "It can take Tanwīn"
+            },
+            {
+              "text": "Another sign of an Ism is that it can take الـ (\"al-\"). Which example fits?",
+              "options": [
+                "It can take الـ",
+                "It can only take الـ in the plural",
+                "It always ends in ة",
+                "It cannot follow a preposition"
+              ],
+              "answer": "It can take الـ"
+            },
+            {
+              "text": "A word that can follow a Ḥarf al-Jarr (preposition) like فِي or مِنْ is most likely a...",
+              "options": [
+                "Ism (noun)",
+                "Fi'l (verb)",
+                "Ḥarf (particle)",
+                "None of these"
+              ],
+              "answer": "Ism (noun)"
+            },
+            {
+              "text": "كِتَابٌ (kitābun) — how do we know this is an Ism?",
+              "options": [
+                "It takes Tanwīn (ـٌ) and can take الـ",
+                "It has a past-tense meaning",
+                "It cannot stand alone",
+                "It is a Ḥarf"
+              ],
+              "answer": "It takes Tanwīn (ـٌ) and can take الـ"
+            },
+            {
+              "text": "Can an Ism be preceded by the vocative particle يَا (e.g. يَا زَيْدُ)?",
+              "options": [
+                "Yes, this is another sign of an Ism",
+                "No, only verbs can follow يَا",
+                "Only Ḥarf can follow يَا",
+                "Only if the noun is already definite"
+              ],
+              "answer": "Yes, this is another sign of an Ism"
+            }
+          ]
+        },
+        {
+          "id": "stage3",
+          "title": "Signs of Al-Fi'l",
+          "icon": "⚙️",
+          "description": "How to recognize a verb by its grammatical markers",
+          "kicker": "Recognizing Verbs",
+          "questions": [
+            {
+              "text": "Which of these is a sign that a word is a Fi'l (verb)?",
+              "options": [
+                "It can take قَدْ before it",
+                "It can take Tanwīn",
+                "It can take الـ",
+                "It can follow a Ḥarf al-Jarr"
+              ],
+              "answer": "It can take قَدْ before it"
+            },
+            {
+              "text": "Al-Fi'l al-Muḍāri' (present-tense verb) can be recognized by beginning with which letters?",
+              "options": [
+                "أ ن ي ت (gathered in the word أَنَيْتُ)",
+                "ك ت ب only",
+                "ال (al-)",
+                "و (wāw) only"
+              ],
+              "answer": "أ ن ي ت (gathered in the word أَنَيْتُ)"
+            },
+            {
+              "text": "Tā' at-Ta'nīth as-Sākinah (the resting feminine tā', e.g. ذَهَبَتْ) attaching to a word is a sign that the word is...",
+              "options": [
+                "A Fi'l al-Māḍī (past-tense verb)",
+                "An Ism",
+                "A Ḥarf",
+                "A pronoun"
+              ],
+              "answer": "A Fi'l al-Māḍī (past-tense verb)"
+            },
+            {
+              "text": "Sīn at-Tanfīs (the future sīn, e.g. سَيَذْهَبُ) attaching to a word shows it is a...",
+              "options": [
+                "Fi'l al-Muḍāri' (present/future verb)",
+                "Ism",
+                "Ḥarf",
+                "Muḍāf"
+              ],
+              "answer": "Fi'l al-Muḍāri' (present/future verb)"
+            },
+            {
+              "text": "Can a Fi'l ever take Tanwīn like an Ism does?",
+              "options": [
+                "No — Tanwīn is exclusive to the Ism",
+                "Yes, but only in the dual form",
+                "Only in the past tense",
+                "Only in commands"
+              ],
+              "answer": "No — Tanwīn is exclusive to the Ism"
+            }
+          ]
+        },
+        {
+          "id": "stage4",
+          "title": "Ad-Damā'ir — Personal Pronouns",
+          "icon": "👤",
+          "description": "Attached and separate pronouns for I, you, he, she...",
+          "kicker": "Personal Pronouns",
+          "questions": [
+            {
+              "text": "What does أَنَا (anā) mean?",
+              "options": [
+                "\"I\"",
+                "\"you\" (masc.)",
+                "\"he\"",
+                "\"we\""
+              ],
+              "answer": "\"I\""
+            },
+            {
+              "text": "What does هُوَ (huwa) mean?",
+              "options": [
+                "\"he\"",
+                "\"she\"",
+                "\"they\"",
+                "\"I\""
+              ],
+              "answer": "\"he\""
+            },
+            {
+              "text": "What does أَنْتَ (anta) mean, and to whom does it refer?",
+              "options": [
+                "\"you\", masculine singular",
+                "\"you\", feminine singular",
+                "\"you\", plural",
+                "\"I\""
+              ],
+              "answer": "\"you\", masculine singular"
+            },
+            {
+              "text": "Damā'ir are divided into separate (munfaṣilah) and attached (muttaṣilah). What is a Ḍamīr Muttaṣil?",
+              "options": [
+                "A pronoun that attaches to another word",
+                "A pronoun that replaces an entire verb",
+                "A type of verb",
+                "A type of noun"
+              ],
+              "answer": "A pronoun that attaches to another word"
+            },
+            {
+              "text": "In رَأَيْتُهُ (\"I saw him\"), what is ـهُ?",
+              "options": [
+                "A Ḍamīr Muttaṣil (attached pronoun) functioning as Maf'ūl Bih",
+                "A separate word",
+                "A Ḥarf",
+                "A verb ending only, with no meaning"
+              ],
+              "answer": "A Ḍamīr Muttaṣil (attached pronoun) functioning as Maf'ūl Bih"
+            }
+          ]
+        },
+        {
+          "id": "stage5",
+          "title": "Asmā' al-Ishārah — Demonstratives",
+          "icon": "👉",
+          "description": "Pointing words: this, that, these, those",
+          "kicker": "Demonstratives",
+          "questions": [
+            {
+              "text": "هَذَا (hādhā) means...",
+              "options": [
+                "\"this\" (masculine)",
+                "\"this\" (feminine)",
+                "\"that\" (masculine)",
+                "\"these\""
+              ],
+              "answer": "\"this\" (masculine)"
+            },
+            {
+              "text": "هَذِهِ (hādhihi) means...",
+              "options": [
+                "\"this\" (feminine)",
+                "\"this\" (masculine)",
+                "\"that\" (feminine)",
+                "\"those\""
+              ],
+              "answer": "\"this\" (feminine)"
+            },
+            {
+              "text": "ذَلِكَ (dhālika) means...",
+              "options": [
+                "\"that\" (masculine, far)",
+                "\"this\" (masculine, near)",
+                "\"that\" (feminine)",
+                "\"these\""
+              ],
+              "answer": "\"that\" (masculine, far)"
+            },
+            {
+              "text": "هَؤُلَاءِ (hā'ulā'i) is used for...",
+              "options": [
+                "\"these\" (plural, near)",
+                "\"this\" (singular)",
+                "\"that\" (far)",
+                "\"those\" (far)"
+              ],
+              "answer": "\"these\" (plural, near)"
+            },
+            {
+              "text": "Are Asmā' al-Ishārah (demonstratives) Mu'rab or Mabnī?",
+              "options": [
+                "Mabnī (their ending does not change)",
+                "Fully Mu'rab",
+                "Neither",
+                "Only Mu'rab in the dual"
+              ],
+              "answer": "Mabnī (their ending does not change)"
+            }
+          ]
+        },
+        {
+          "id": "stage6",
+          "title": "Al-Ism al-Mawṣūl — Relative Pronouns (Intro)",
+          "icon": "🔗",
+          "description": "An introduction to who/which — connecting words",
+          "kicker": "Relative Pronouns: First Look",
+          "questions": [
+            {
+              "text": "الَّذِي (alladhī) means...",
+              "options": [
+                "\"who/which\" (masculine singular)",
+                "\"who/which\" (feminine singular)",
+                "\"who/which\" (plural)",
+                "\"this\""
+              ],
+              "answer": "\"who/which\" (masculine singular)"
+            },
+            {
+              "text": "الَّتِي (allatī) means...",
+              "options": [
+                "\"who/which\" (feminine singular)",
+                "\"who/which\" (masculine singular)",
+                "\"these\"",
+                "\"that\""
+              ],
+              "answer": "\"who/which\" (feminine singular)"
+            },
+            {
+              "text": "What comes after an Ism al-Mawṣūl to complete its meaning?",
+              "options": [
+                "A descriptive clause (Ṣilah)",
+                "Nothing, it stands alone",
+                "Only a single noun",
+                "A number"
+              ],
+              "answer": "A descriptive clause (Ṣilah)"
+            },
+            {
+              "text": "الَّذِينَ (alladhīna) is used for...",
+              "options": [
+                "\"who/which\" (masculine plural)",
+                "\"who/which\" (feminine singular)",
+                "\"this\"",
+                "\"that\""
+              ],
+              "answer": "\"who/which\" (masculine plural)"
+            },
+            {
+              "text": "Are Asmā' al-Mawṣūl Mu'rab or Mabnī?",
+              "options": [
+                "Mabnī (fixed ending)",
+                "Fully Mu'rab",
+                "Only Mu'rab in Jarr",
+                "They have no ending at all, spoken or written"
+              ],
+              "answer": "Mabnī (fixed ending)"
+            }
+          ]
+        },
+        {
+          "id": "stage7",
+          "title": "Ma'rifah wa Nakirah",
+          "icon": "🔍",
+          "description": "Definite vs indefinite nouns",
+          "kicker": "Definite & Indefinite",
+          "questions": [
+            {
+              "text": "What is An-Nakirah?",
+              "options": [
+                "An indefinite noun",
+                "A definite noun",
+                "A verb",
+                "A pronoun"
+              ],
+              "answer": "An indefinite noun"
+            },
+            {
+              "text": "What is Al-Ma'rifah?",
+              "options": [
+                "A definite noun",
+                "An indefinite noun",
+                "A type of verb",
+                "A particle"
+              ],
+              "answer": "A definite noun"
+            },
+            {
+              "text": "Which of these makes a noun definite?",
+              "options": [
+                "Adding الـ (\"al-\") to it",
+                "Adding Tanwīn to it",
+                "Making it plural",
+                "Making it feminine"
+              ],
+              "answer": "Adding الـ (\"al-\") to it"
+            },
+            {
+              "text": "Is a proper name like زَيْدٌ (without \"al-\") considered Ma'rifah or Nakirah?",
+              "options": [
+                "Ma'rifah (definite), because proper names are inherently definite",
+                "Nakirah, since it lacks \"al-\"",
+                "Neither",
+                "It depends on the sentence only"
+              ],
+              "answer": "Ma'rifah (definite), because proper names are inherently definite"
+            },
+            {
+              "text": "Besides \"al-\" and proper names, pronouns (like هُوَ) and demonstratives (like هَذَا) are also considered...",
+              "options": [
+                "Ma'rifah (definite)",
+                "Nakirah (indefinite)",
+                "Neither definite nor indefinite",
+                "Definite only when used as a Khabar"
+              ],
+              "answer": "Ma'rifah (definite)"
+            }
+          ]
+        },
+        {
+          "id": "stage8",
+          "title": "Alif-Lām — Sun & Moon Letters",
+          "icon": "🌙",
+          "description": "How the ل of the definite article assimilates or stays audible depending on the following letter",
+          "kicker": "Sun & Moon Letters",
+          "questions": [
+            {
+              "text": "What are Al-Ḥurūf ash-Shamsiyyah (\"Sun Letters\")?",
+              "options": [
+                "Letters that cause the ل of \"al-\" to assimilate (become silent) and double the following letter",
+                "Letters that require a Sukūn on the ل",
+                "A type of verb ending",
+                "A type of plural"
+              ],
+              "answer": "Letters that cause the ل of \"al-\" to assimilate (become silent) and double the following letter"
+            },
+            {
+              "text": "What are Al-Ḥurūf al-Qamariyyah (\"Moon Letters\")?",
+              "options": [
+                "Letters where the ل of \"al-\" is pronounced clearly",
+                "Letters that silence the ل",
+                "A type of noun",
+                "A type of verb"
+              ],
+              "answer": "Letters where the ل of \"al-\" is pronounced clearly"
+            },
+            {
+              "text": "In الشَّمْسُ (ash-shamsu, \"the sun\"), ش is a Sun letter — what happens to the ل?",
+              "options": [
+                "The ل is silent and ش is doubled (shaddah)",
+                "The ل is pronounced clearly",
+                "The ل is dropped entirely",
+                "It changes the meaning of the word"
+              ],
+              "answer": "The ل is silent and ش is doubled (shaddah)"
+            },
+            {
+              "text": "In الْقَمَرُ (al-qamaru, \"the moon\"), ق is a Moon letter — what happens to the ل?",
+              "options": [
+                "The ل is pronounced clearly",
+                "The ل is silent",
+                "The ل doubles the ق",
+                "There is no ل at all"
+              ],
+              "answer": "The ل is pronounced clearly"
+            },
+            {
+              "text": "Does the Sun/Moon distinction change the WRITTEN spelling of \"al-\", or only the pronunciation?",
+              "options": [
+                "Only the pronunciation — the spelling ال stays the same in both cases",
+                "It changes the spelling completely",
+                "It removes the ل from writing too",
+                "It adds an extra ل when written"
+              ],
+              "answer": "Only the pronunciation — the spelling ال stays the same in both cases"
+            }
+          ]
+        },
+        {
+          "id": "stage9",
+          "title": "At-Tadhkīr wa't-Ta'nīth — Gender",
+          "icon": "⚥",
+          "description": "Masculine and feminine nouns",
+          "kicker": "Gender",
+          "questions": [
+            {
+              "text": "What is the most common sign of a feminine noun (Mu'annath)?",
+              "options": [
+                "Ending in ة (Tā' Marbūṭah)",
+                "Ending in ونَ",
+                "Starting with أَ",
+                "Ending in ي only"
+              ],
+              "answer": "Ending in ة (Tā' Marbūṭah)"
+            },
+            {
+              "text": "مُعَلِّمٌ (mu'allimun) — is this masculine or feminine?",
+              "options": [
+                "Masculine (Mudhakkar)",
+                "Feminine (Mu'annath)",
+                "Neither",
+                "Both"
+              ],
+              "answer": "Masculine (Mudhakkar)"
+            },
+            {
+              "text": "مُعَلِّمَةٌ (mu'allimatun) — is this masculine or feminine?",
+              "options": [
+                "Feminine (Mu'annath)",
+                "Masculine (Mudhakkar)",
+                "Neither",
+                "Both"
+              ],
+              "answer": "Feminine (Mu'annath)"
+            },
+            {
+              "text": "Are all feminine nouns marked with ة? (e.g. a name like زَيْنَبُ or a word like شَمْسٌ \"sun\")",
+              "options": [
+                "No — some feminine nouns are feminine by meaning alone, without the letter ة",
+                "Yes, but only for human nouns",
+                "Only proper names lack ة",
+                "Only body-part words lack it"
+              ],
+              "answer": "No — some feminine nouns are feminine by meaning alone, without the letter ة"
+            },
+            {
+              "text": "Does the gender of a noun affect the verb or adjective that goes with it?",
+              "options": [
+                "Yes — verbs and adjectives must agree with the noun's gender",
+                "No, gender has no effect on agreement",
+                "Only in the plural",
+                "Only in questions"
+              ],
+              "answer": "Yes — verbs and adjectives must agree with the noun's gender"
+            }
+          ]
+        },
+        {
+          "id": "stage10",
+          "title": "Al-Ifrād, at-Tathniyah, al-Jam' — Overview",
+          "icon": "🔢",
+          "description": "Singular, dual, and plural at a glance",
+          "kicker": "Number Overview",
+          "questions": [
+            {
+              "text": "What is Al-Mufrad?",
+              "options": [
+                "Singular — referring to one",
+                "Referring to two",
+                "Referring to three or more",
+                "A verb form"
+              ],
+              "answer": "Singular — referring to one"
+            },
+            {
+              "text": "What is Al-Muthannā?",
+              "options": [
+                "Dual — referring to exactly two",
+                "Referring to one",
+                "Referring to plural",
+                "A type of pronoun"
+              ],
+              "answer": "Dual — referring to exactly two"
+            },
+            {
+              "text": "What is Al-Jam'?",
+              "options": [
+                "Plural — referring to three or more",
+                "Referring to exactly two",
+                "Referring to one",
+                "A verb tense"
+              ],
+              "answer": "Plural — referring to three or more"
+            },
+            {
+              "text": "How is Al-Muthannā typically formed from a singular noun?",
+              "options": [
+                "Adding ـَانِ or ـَيْنِ to the end",
+                "Adding ونَ",
+                "Adding ة",
+                "Removing the last letter"
+              ],
+              "answer": "Adding ـَانِ or ـَيْنِ to the end"
+            },
+            {
+              "text": "Arabic grammatically distinguishes between how many categories of number?",
+              "options": [
+                "Three — Singular, Dual, Plural",
+                "Two — Singular, Plural",
+                "Four",
+                "Five"
+              ],
+              "answer": "Three — Singular, Dual, Plural"
+            }
+          ]
+        },
+        {
+          "id": "stage11",
+          "title": "Al-Muthannā — The Dual in Detail",
+          "icon": "2️⃣",
+          "description": "How dual nouns are formed and declined across the three cases",
+          "kicker": "The Dual, In Detail",
+          "questions": [
+            {
+              "text": "How is Al-Muthannā formed when Marfū' (from a singular noun)?",
+              "options": [
+                "Adding ـَانِ to the end",
+                "Adding ـَيْنِ",
+                "Adding ونَ",
+                "Adding ات"
+              ],
+              "answer": "Adding ـَانِ to the end"
+            },
+            {
+              "text": "How does the dual ending change when Manṣūb or Majrūr?",
+              "options": [
+                "It changes to ـَيْنِ",
+                "It stays ـَانِ regardless of case",
+                "It changes to ونَ",
+                "It changes to ات"
+              ],
+              "answer": "It changes to ـَيْنِ"
+            },
+            {
+              "text": "جَاءَ الطَّالِبَانِ (\"The two students came\") — what is the i'rāb of الطَّالِبَانِ, and how do we know?",
+              "options": [
+                "Marfū', shown by the ـَانِ ending",
+                "Manṣūb, shown by ـَيْنِ",
+                "Majrūr",
+                "Mabnī with no case"
+              ],
+              "answer": "Marfū', shown by the ـَانِ ending"
+            },
+            {
+              "text": "رَأَيْتُ الطَّالِبَيْنِ (\"I saw the two students\") — what is the i'rāb of الطَّالِبَيْنِ؟",
+              "options": [
+                "Manṣūb, shown by the ـَيْنِ ending",
+                "Marfū', shown by ـَانِ",
+                "Majrūr, shown by ة",
+                "Mabnī"
+              ],
+              "answer": "Manṣūb, shown by the ـَيْنِ ending"
+            },
+            {
+              "text": "When a dual noun is Muḍāf (in an iḍāfah), what happens to its final ن؟",
+              "options": [
+                "The ن is dropped",
+                "Nothing changes",
+                "It doubles",
+                "It becomes a Hamzah"
+              ],
+              "answer": "The ن is dropped"
+            }
+          ]
+        },
+        {
+          "id": "stage12",
+          "title": "Jam' Sālim — Sound Plurals",
+          "icon": "👥",
+          "description": "Regular plurals formed by adding a consistent ending",
+          "kicker": "Sound Plurals",
+          "questions": [
+            {
+              "text": "What is Jam' Mudhakkar Sālim (sound masculine plural)?",
+              "options": [
+                "Formed by adding ونَ or ينَ to a masculine singular",
+                "Formed by changing internal vowels",
+                "Formed by adding ات",
+                "Formed by adding ـَانِ"
+              ],
+              "answer": "Formed by adding ونَ or ينَ to a masculine singular"
+            },
+            {
+              "text": "What is Jam' Mu'annath Sālim (sound feminine plural)?",
+              "options": [
+                "Formed by adding ات to a feminine (or some masculine) singular",
+                "Formed by adding ونَ",
+                "Formed by internal vowel change",
+                "Formed by adding ـَيْنِ"
+              ],
+              "answer": "Formed by adding ات to a feminine (or some masculine) singular"
+            },
+            {
+              "text": "مُسْلِمُونَ (Muslimūna) — what is this an example of?",
+              "options": [
+                "Jam' Mudhakkar Sālim",
+                "Jam' Mu'annath Sālim",
+                "Jam' Taksīr",
+                "Muthannā"
+              ],
+              "answer": "Jam' Mudhakkar Sālim"
+            },
+            {
+              "text": "When Manṣūb or Majrūr, the ending of Jam' Mudhakkar Sālim changes from ونَ to...",
+              "options": [
+                "ينَ",
+                "اتٌ",
+                "انِ",
+                "No change"
+              ],
+              "answer": "ينَ"
+            },
+            {
+              "text": "مُؤْمِنَاتٌ (Mu'mināt) — what is this an example of?",
+              "options": [
+                "Jam' Mu'annath Sālim",
+                "Jam' Mudhakkar Sālim",
+                "Jam' Taksīr",
+                "Muthannā"
+              ],
+              "answer": "Jam' Mu'annath Sālim"
+            }
+          ]
+        },
+        {
+          "id": "stage13",
+          "title": "Jam' Taksīr — Broken Plurals (Intro)",
+          "icon": "🧩",
+          "description": "Irregular plurals formed by changing the word's internal pattern",
+          "kicker": "Broken Plurals",
+          "questions": [
+            {
+              "text": "What is Jam' Taksīr (broken plural)?",
+              "options": [
+                "A plural formed by changing the internal structure/pattern of the singular, not just adding an ending",
+                "A plural formed only by adding ونَ",
+                "A plural formed only by adding ات",
+                "A type of Muthannā"
+              ],
+              "answer": "A plural formed by changing the internal structure/pattern of the singular, not just adding an ending"
+            },
+            {
+              "text": "كِتَابٌ (kitābun, \"a book\") becomes which plural?",
+              "options": [
+                "كُتُبٌ (kutubun) — Jam' Taksīr",
+                "كِتَابُونَ — Jam' Mudhakkar Sālim",
+                "كِتَابَاتٌ — Jam' Mu'annath Sālim",
+                "كِتَابَانِ — Muthannā"
+              ],
+              "answer": "كُتُبٌ (kutubun) — Jam' Taksīr"
+            },
+            {
+              "text": "رَجُلٌ (rajulun, \"a man\") becomes which broken plural?",
+              "options": [
+                "رِجَالٌ (rijālun)",
+                "رَجُلُونَ",
+                "رَجُلَاتٌ",
+                "رَجُلَانِ"
+              ],
+              "answer": "رِجَالٌ (rijālun)"
+            },
+            {
+              "text": "Why is it called \"broken\" (Taksīr)?",
+              "options": [
+                "Because the word's original singular pattern is reshaped internally, not just extended",
+                "Because it refers to broken objects",
+                "Because it is grammatically incorrect",
+                "Because it has no meaning"
+              ],
+              "answer": "Because the word's original singular pattern is reshaped internally, not just extended"
+            },
+            {
+              "text": "Compared to Jam' Sālim, is Jam' Taksīr more or less common in Arabic?",
+              "options": [
+                "More common — most Arabic plurals are actually broken plurals",
+                "Less common",
+                "Equally rare",
+                "It doesn't exist in Classical Arabic"
+              ],
+              "answer": "More common — most Arabic plurals are actually broken plurals"
+            }
+          ]
+        },
+        {
+          "id": "stage14",
+          "title": "I'rāb Basics — The Three Ḥarakāt",
+          "icon": "🎯",
+          "description": "Dammah, Fatḥah, and Kasrah — the three case markers",
+          "kicker": "I'rāb Basics",
+          "questions": [
+            {
+              "text": "What is Al-I'rāb?",
+              "options": [
+                "The change in a word's ending based on its grammatical role in the sentence",
+                "A type of verb",
+                "A type of noun",
+                "The plural system"
+              ],
+              "answer": "The change in a word's ending based on its grammatical role in the sentence"
+            },
+            {
+              "text": "Ar-Raf' (Marfū') is typically marked by which vowel?",
+              "options": [
+                "Dammah (ـُ)",
+                "Fatḥah (ـَ)",
+                "Kasrah (ـِ)",
+                "Sukūn (ـْ)"
+              ],
+              "answer": "Dammah (ـُ)"
+            },
+            {
+              "text": "An-Naṣb (Manṣūb) is typically marked by which vowel?",
+              "options": [
+                "Fatḥah (ـَ)",
+                "Dammah (ـُ)",
+                "Kasrah (ـِ)",
+                "Sukūn (ـْ)"
+              ],
+              "answer": "Fatḥah (ـَ)"
+            },
+            {
+              "text": "Al-Jarr (Majrūr) is typically marked by which vowel?",
+              "options": [
+                "Kasrah (ـِ)",
+                "Dammah (ـُ)",
+                "Fatḥah (ـَ)",
+                "Sukūn (ـْ)"
+              ],
+              "answer": "Kasrah (ـِ)"
+            },
+            {
+              "text": "Which of these three case states applies ONLY to nouns, never to verbs?",
+              "options": [
+                "Al-Jarr (Majrūr)",
+                "Ar-Raf' (Marfū')",
+                "An-Naṣb (Manṣūb)",
+                "None — all three apply to both nouns and verbs"
+              ],
+              "answer": "Al-Jarr (Majrūr)"
+            }
+          ]
+        },
+        {
+          "id": "stage15",
+          "title": "Mabnī vs Mu'rab (Intro)",
+          "icon": "🔒",
+          "description": "Words whose ending never changes vs words whose ending changes",
+          "kicker": "Fixed vs Changing Words",
+          "questions": [
+            {
+              "text": "What is Al-Mu'rab?",
+              "options": [
+                "A word whose ending changes according to its grammatical role",
+                "A word whose ending changes only in the plural",
+                "Only a type of verb",
+                "Only a type of particle"
+              ],
+              "answer": "A word whose ending changes according to its grammatical role"
+            },
+            {
+              "text": "What is Al-Mabnī?",
+              "options": [
+                "A word whose ending stays fixed no matter its grammatical role",
+                "A word whose ending changes only when definite",
+                "A type of Ism only",
+                "A type of Fi'l only"
+              ],
+              "answer": "A word whose ending stays fixed no matter its grammatical role"
+            },
+            {
+              "text": "Which of these word types is generally Mabnī (fixed)?",
+              "options": [
+                "Ḥurūf (particles)",
+                "Ordinary nouns like كِتَابٌ",
+                "Ordinary present-tense verbs",
+                "Adjectives"
+              ],
+              "answer": "Ḥurūf (particles)"
+            },
+            {
+              "text": "Are pronouns (Damā'ir) like هُوَ and أَنَا Mabnī or Mu'rab?",
+              "options": [
+                "Mabnī — their ending never changes",
+                "Mu'rab — their ending changes with case",
+                "Sometimes one, sometimes the other, unpredictably",
+                "Neither"
+              ],
+              "answer": "Mabnī — their ending never changes"
+            },
+            {
+              "text": "Most ordinary nouns and present-tense verbs in Arabic are...",
+              "options": [
+                "Mu'rab (declinable)",
+                "Mabnī (fixed)",
+                "Neither",
+                "Mabnī only in the dual and plural"
+              ],
+              "answer": "Mu'rab (declinable)"
+            }
+          ]
+        },
+        {
+          "id": "stage16",
+          "title": "Al-Mubtada wa'l-Khabar",
+          "icon": "⚖️",
+          "description": "The subject and predicate of a nominal sentence",
+          "kicker": "Subject & Predicate",
+          "questions": [
+            {
+              "text": "What is Al-Mubtada?",
+              "options": [
+                "The subject of a nominal sentence (Jumlah Ismiyyah), usually first and definite",
+                "The object of a verb",
+                "The predicate",
+                "A preposition"
+              ],
+              "answer": "The subject of a nominal sentence (Jumlah Ismiyyah), usually first and definite"
+            },
+            {
+              "text": "What is Al-Khabar?",
+              "options": [
+                "The predicate — it completes the meaning about the Mubtada",
+                "The subject",
+                "A type of verb",
+                "A particle"
+              ],
+              "answer": "The predicate — it completes the meaning about the Mubtada"
+            },
+            {
+              "text": "الْبَيْتُ كَبِيرٌ (\"The house is big\") — what is الْبَيْتُ?",
+              "options": [
+                "Al-Mubtada",
+                "Al-Khabar",
+                "Al-Fā'il",
+                "Al-Maf'ūl Bih"
+              ],
+              "answer": "Al-Mubtada"
+            },
+            {
+              "text": "In that same sentence, what is كَبِيرٌ?",
+              "options": [
+                "Al-Khabar",
+                "Al-Mubtada",
+                "Al-Muḍāf",
+                "Al-Munādā"
+              ],
+              "answer": "Al-Khabar"
+            },
+            {
+              "text": "What is the default i'rāb of both Al-Mubtada and Al-Khabar?",
+              "options": [
+                "Both Marfū'",
+                "Both Manṣūb",
+                "Mubtada Marfū', Khabar Manṣūb",
+                "Both Majrūr"
+              ],
+              "answer": "Both Marfū'"
+            }
+          ]
+        },
+        {
+          "id": "stage17",
+          "title": "Anwā' al-Khabar — Types of Khabar",
+          "icon": "🧾",
+          "description": "Single-word, prepositional, and sentence predicates",
+          "kicker": "Types of Predicate",
+          "questions": [
+            {
+              "text": "What is Khabar Mufrad?",
+              "options": [
+                "A Khabar that is a single word",
+                "A Khabar that is a whole sentence",
+                "A Khabar made of a preposition",
+                "A Khabar made of two coordinated words"
+              ],
+              "answer": "A Khabar that is a single word"
+            },
+            {
+              "text": "What is Khabar Jumlah?",
+              "options": [
+                "A Khabar that is a complete sentence (nominal or verbal)",
+                "A Khabar that is one word",
+                "A Khabar with no meaning",
+                "A type of Mubtada"
+              ],
+              "answer": "A Khabar that is a complete sentence (nominal or verbal)"
+            },
+            {
+              "text": "زَيْدٌ يَكْتُبُ (\"Zayd is writing\") — what is يَكْتُبُ here?",
+              "options": [
+                "Khabar Jumlah Fi'liyyah (a verbal-sentence predicate)",
+                "Khabar Mufrad",
+                "Al-Mubtada",
+                "Al-Fā'il only, with no Khabar role"
+              ],
+              "answer": "Khabar Jumlah Fi'liyyah (a verbal-sentence predicate)"
+            },
+            {
+              "text": "What is Khabar Shibh Jumlah?",
+              "options": [
+                "A Khabar that is a prepositional or adverbial phrase",
+                "A Khabar that repeats the Mubtada verbatim",
+                "A Khabar that is a question",
+                "A Khabar that comes only after Kāna"
+              ],
+              "answer": "A Khabar that is a prepositional or adverbial phrase"
+            },
+            {
+              "text": "In الْكِتَابُ عَلَى الطَّاوِلَةِ (\"The book is on the table\"), what serves as the Khabar?",
+              "options": [
+                "عَلَى الطَّاوِلَةِ (the Jār-Majrūr, Khabar Shibh Jumlah)",
+                "الْكِتَابُ",
+                "الطَّاوِلَةِ alone",
+                "There is no Khabar here"
+              ],
+              "answer": "عَلَى الطَّاوِلَةِ (the Jār-Majrūr, Khabar Shibh Jumlah)"
+            }
+          ]
+        },
+        {
+          "id": "stage18",
+          "title": "Ḥurūf al-'Aṭf — Conjunctions",
+          "icon": "➕",
+          "description": "Words that join two nouns, verbs, or sentences together",
+          "kicker": "Conjunctions",
+          "questions": [
+            {
+              "text": "What does وَ (wa) mean as a conjunction?",
+              "options": [
+                "\"and\"",
+                "\"or\"",
+                "\"but\"",
+                "\"then\""
+              ],
+              "answer": "\"and\""
+            },
+            {
+              "text": "What does أَوْ (aw) mean as a conjunction?",
+              "options": [
+                "\"or\"",
+                "\"and\"",
+                "\"but\"",
+                "\"then, immediately\""
+              ],
+              "answer": "\"or\""
+            },
+            {
+              "text": "What does ثُمَّ (thumma) mean as a conjunction?",
+              "options": [
+                "\"then\" (with a pause/delay)",
+                "\"and\"",
+                "\"or\"",
+                "\"but\""
+              ],
+              "answer": "\"then\" (with a pause/delay)"
+            },
+            {
+              "text": "What does فَ (fa) mean as a conjunction, and how does it differ from ثُمَّ?",
+              "options": [
+                "\"then\" (immediately, no delay)",
+                "\"or\"",
+                "\"but\"",
+                "\"and\", identical to وَ in every way"
+              ],
+              "answer": "\"then\" (immediately, no delay)"
+            },
+            {
+              "text": "When a Ḥarf al-'Aṭf joins two nouns, what happens to the i'rāb of the second noun?",
+              "options": [
+                "It matches (follows) the i'rāb of the first noun",
+                "It takes the opposite case of the first noun",
+                "It is always Majrūr regardless",
+                "It has no i'rāb"
+              ],
+              "answer": "It matches (follows) the i'rāb of the first noun"
+            }
+          ]
+        },
+        {
+          "id": "stage19",
+          "title": "Ḥurūf al-Jarr — First Look",
+          "icon": "🧭",
+          "description": "Meeting the most common prepositions and what they mean",
+          "kicker": "Meeting the Prepositions",
+          "questions": [
+            {
+              "text": "What does فِي (fī) mean?",
+              "options": [
+                "\"in/inside\"",
+                "\"from\"",
+                "\"to\"",
+                "\"on\""
+              ],
+              "answer": "\"in/inside\""
+            },
+            {
+              "text": "What does مِنْ (min) mean?",
+              "options": [
+                "\"from\"",
+                "\"in\"",
+                "\"to\"",
+                "\"with\""
+              ],
+              "answer": "\"from\""
+            },
+            {
+              "text": "What does إِلَى (ilā) mean?",
+              "options": [
+                "\"to/towards\"",
+                "\"from\"",
+                "\"in\"",
+                "\"on\""
+              ],
+              "answer": "\"to/towards\""
+            },
+            {
+              "text": "What does عَلَى ('alā) mean?",
+              "options": [
+                "\"on/upon\"",
+                "\"in\"",
+                "\"from\"",
+                "\"with\""
+              ],
+              "answer": "\"on/upon\""
+            },
+            {
+              "text": "What is a Ḥarf al-Jarr, in the simplest sense?",
+              "options": [
+                "A short particle that connects to a noun to show a relationship like place, direction, or means",
+                "A type of verb",
+                "A type of pronoun",
+                "A plural marker"
+              ],
+              "answer": "A short particle that connects to a noun to show a relationship like place, direction, or means"
+            }
+          ]
+        },
+        {
+          "id": "stage20",
+          "title": "Al-Jumlah al-Ismiyyah wa'l-Fi'liyyah — Synthesis",
+          "icon": "🧠",
+          "description": "Bringing it together: recognizing nominal vs verbal sentences",
+          "kicker": "Sentence Types — Synthesis",
+          "questions": [
+            {
+              "text": "What is Al-Jumlah al-Ismiyyah?",
+              "options": [
+                "A sentence that begins with an Ism (noun), typically Mubtada + Khabar",
+                "A sentence that begins with a Fi'l",
+                "A sentence with no meaning",
+                "A single word"
+              ],
+              "answer": "A sentence that begins with an Ism (noun), typically Mubtada + Khabar"
+            },
+            {
+              "text": "What is Al-Jumlah al-Fi'liyyah?",
+              "options": [
+                "A sentence that begins with a Fi'l (verb)",
+                "A sentence that begins with an Ism",
+                "A sentence with only particles",
+                "A question only"
+              ],
+              "answer": "A sentence that begins with a Fi'l (verb)"
+            },
+            {
+              "text": "الطَّالِبُ يَكْتُبُ الدَّرْسَ (\"The student writes the lesson\") — is this Jumlah Ismiyyah or Fi'liyyah, and why?",
+              "options": [
+                "Jumlah Ismiyyah, because it begins with the Ism الطَّالِبُ (even though its Khabar is a verbal sentence)",
+                "Jumlah Fi'liyyah, because it contains a verb",
+                "Neither, it's a fragment",
+                "Jumlah Fi'liyyah, because the verb comes first"
+              ],
+              "answer": "Jumlah Ismiyyah, because it begins with the Ism الطَّالِبُ (even though its Khabar is a verbal sentence)"
+            },
+            {
+              "text": "يَكْتُبُ الطَّالِبُ الدَّرْسَ (\"The student writes the lesson\") — is this Jumlah Ismiyyah or Fi'liyyah?",
+              "options": [
+                "Jumlah Fi'liyyah, because it begins with the verb يَكْتُبُ",
+                "Jumlah Ismiyyah",
+                "Neither",
+                "A question"
+              ],
+              "answer": "Jumlah Fi'liyyah, because it begins with the verb يَكْتُبُ"
+            },
+            {
+              "text": "What is the essential difference in classification between these two sentence types?",
+              "options": [
+                "It depends on whether the FIRST word is an Ism or a Fi'l",
+                "It depends on the sentence's length",
+                "It depends on whether it has a Khabar",
+                "It depends on whether it's definite or indefinite"
+              ],
+              "answer": "It depends on whether the FIRST word is an Ism or a Fi'l"
+            },
+            {
+              "text": "Can a Jumlah Ismiyyah have a Khabar that is itself a Jumlah Fi'liyyah?",
+              "options": [
+                "Yes — as seen in الطَّالِبُ يَكْتُبُ الدَّرْسَ above",
+                "Only when the subject is plural",
+                "Only in questions",
+                "Only with Kāna"
+              ],
+              "answer": "Yes — as seen in الطَّالِبُ يَكْتُبُ الدَّرْسَ above"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intermediate",
+      "label": "Intermediate",
+      "icon": "🌿",
+      "description": "Sentence expansion & governance — fā'il, maf'ūl, and the particles that shape them",
+      "stages": [
+        {
+          "id": "stage1",
+          "title": "Al-Fi'l — Tenses Recap",
+          "icon": "🕰️",
+          "description": "Revisiting Māḍī, Muḍāri', and Amr, and the default case of the present verb",
+          "kicker": "Verb Tenses Recap",
+          "questions": [
+            {
+              "text": "What are the three tenses (forms) of the Arabic verb (Fi'l)?",
+              "options": [
+                "Māḍī, Muḍāri', Amr",
+                "Māḍī, Ḥāl, Mustaqbal",
+                "Ism, Fi'l, Ḥarf",
+                "Marfū', Manṣūb, Majzūm"
+              ],
+              "answer": "Māḍī, Muḍāri', Amr"
+            },
+            {
+              "text": "كَتَبَ (kataba — \"he wrote\") is which tense?",
+              "options": [
+                "Al-Fi'l al-Māḍī (past)",
+                "Al-Fi'l al-Muḍāri' (present)",
+                "Al-Fi'l al-Amr (command)",
+                "Ism"
+              ],
+              "answer": "Al-Fi'l al-Māḍī (past)"
+            },
+            {
+              "text": "يَكْتُبُ (yaktubu — \"he writes/will write\") is which tense?",
+              "options": [
+                "Al-Fi'l al-Muḍāri'",
+                "Al-Fi'l al-Māḍī",
+                "Al-Fi'l al-Amr",
+                "Ḥarf"
+              ],
+              "answer": "Al-Fi'l al-Muḍāri'"
+            },
+            {
+              "text": "اُكْتُبْ (uktub — \"write!\") is which tense?",
+              "options": [
+                "Al-Fi'l al-Amr",
+                "Al-Fi'l al-Māḍī",
+                "Al-Fi'l al-Muḍāri'",
+                "Ism al-Fi'l"
+              ],
+              "answer": "Al-Fi'l al-Amr"
+            },
+            {
+              "text": "What is the default i'rāb of Al-Fi'l al-Muḍāri' when nothing affects it?",
+              "options": [
+                "Marfū'",
+                "Manṣūb",
+                "Majzūm",
+                "Majrūr"
+              ],
+              "answer": "Marfū'"
+            },
+            {
+              "text": "Is Al-Fi'l al-Māḍī ever Mu'rab (declinable, changes ending)?",
+              "options": [
+                "No, it is always Mabnī (fixed)",
+                "Yes, but only in the passive voice",
+                "Only in the plural",
+                "Only with a Fā'il"
+              ],
+              "answer": "No, it is always Mabnī (fixed)"
+            }
+          ]
+        },
+        {
+          "id": "stage2",
+          "title": "Al-Fā'il — The Doer",
+          "icon": "🎯",
+          "description": "The subject of a verbal sentence, always Marfū'",
+          "kicker": "The Doer",
+          "questions": [
+            {
+              "text": "What is Al-Fā'il?",
+              "options": [
+                "The doer of the action in a verbal sentence, always Marfū'",
+                "The object of the action",
+                "The predicate",
+                "A preposition"
+              ],
+              "answer": "The doer of the action in a verbal sentence, always Marfū'"
+            },
+            {
+              "text": "ذَهَبَ زَيْدٌ (\"Zayd went\") — what is زَيْدٌ?",
+              "options": [
+                "Al-Fā'il, Marfū'",
+                "Al-Maf'ūl Bih",
+                "Al-Mubtada",
+                "Al-Khabar"
+              ],
+              "answer": "Al-Fā'il, Marfū'"
+            },
+            {
+              "text": "Must Al-Fā'il always come after the verb in standard word order?",
+              "options": [
+                "Yes — in a Jumlah Fi'liyyah, the verb precedes the Fā'il",
+                "No, the Fā'il can freely appear before or after",
+                "Word order doesn't matter at all",
+                "Only in questions"
+              ],
+              "answer": "Yes — in a Jumlah Fi'liyyah, the verb precedes the Fā'il"
+            },
+            {
+              "text": "If the Fā'il is feminine, does the verb change?",
+              "options": [
+                "Yes, the verb typically takes a feminine marker (تْ)",
+                "Only when the Fā'il is a proper name",
+                "Only in the plural",
+                "Only in the dual"
+              ],
+              "answer": "Yes, the verb typically takes a feminine marker (تْ)"
+            },
+            {
+              "text": "Can the Fā'il be a hidden/implied pronoun (mustatir)?",
+              "options": [
+                "Yes, a hidden pronoun can serve as the Fā'il",
+                "Only in the passive voice",
+                "Only in commands",
+                "Only in questions"
+              ],
+              "answer": "Yes, a hidden pronoun can serve as the Fā'il"
+            }
+          ]
+        },
+        {
+          "id": "stage3",
+          "title": "Nā'ib al-Fā'il — The Deputy Subject",
+          "icon": "🎭",
+          "description": "The passive subject, standing in for the Fā'il",
+          "kicker": "Passive Subject",
+          "questions": [
+            {
+              "text": "What is Nā'ib al-Fā'il?",
+              "options": [
+                "The noun that takes the Fā'il's Marfū' role in a passive sentence, when the doer is not mentioned",
+                "The doer of an action",
+                "A type of Khabar",
+                "A preposition"
+              ],
+              "answer": "The noun that takes the Fā'il's Marfū' role in a passive sentence, when the doer is not mentioned"
+            },
+            {
+              "text": "كُتِبَ الدَّرْسُ (\"The lesson was written\") — what is الدَّرْسُ?",
+              "options": [
+                "Nā'ib al-Fā'il, Marfū'",
+                "Fā'il, Marfū'",
+                "Maf'ūl Bih, Manṣūb",
+                "Khabar"
+              ],
+              "answer": "Nā'ib al-Fā'il, Marfū'"
+            },
+            {
+              "text": "In the passive voice, what happens to the original Fā'il (the doer)?",
+              "options": [
+                "It is omitted/not mentioned",
+                "It becomes Majrūr",
+                "It becomes the new subject",
+                "It is doubled"
+              ],
+              "answer": "It is omitted/not mentioned"
+            },
+            {
+              "text": "What happens to the internal vowels of the past-tense verb when it becomes passive, e.g. كَتَبَ → كُتِبَ?",
+              "options": [
+                "First vowel becomes Dammah, the one before last becomes Kasrah",
+                "Nothing changes",
+                "All vowels become Fatḥah",
+                "The verb becomes a noun"
+              ],
+              "answer": "First vowel becomes Dammah, the one before last becomes Kasrah"
+            },
+            {
+              "text": "Can a sentence with Nā'ib al-Fā'il be grammatically complete without ever mentioning who did the action?",
+              "options": [
+                "Yes",
+                "Only if the verb is transitive",
+                "Only in questions",
+                "Only with Kāna"
+              ],
+              "answer": "Yes"
+            }
+          ]
+        },
+        {
+          "id": "stage4",
+          "title": "Al-Maf'ūl Bih — The Direct Object",
+          "icon": "🎯",
+          "description": "The noun that receives the action, always Manṣūb",
+          "kicker": "The Direct Object",
+          "questions": [
+            {
+              "text": "What is Al-Maf'ūl Bih?",
+              "options": [
+                "The direct object — receives the action of the verb, Manṣūb",
+                "The subject",
+                "The predicate",
+                "A preposition"
+              ],
+              "answer": "The direct object — receives the action of the verb, Manṣūb"
+            },
+            {
+              "text": "كَتَبَ الطَّالِبُ الدَّرْسَ — what is الدَّرْسَ?",
+              "options": [
+                "Al-Maf'ūl Bih, Manṣūb",
+                "Al-Fā'il, Marfū'",
+                "Al-Khabar",
+                "Al-Muḍāf"
+              ],
+              "answer": "Al-Maf'ūl Bih, Manṣūb"
+            },
+            {
+              "text": "What is the default i'rāb of Al-Maf'ūl Bih?",
+              "options": [
+                "Manṣūb",
+                "Marfū'",
+                "Majrūr",
+                "Majzūm"
+              ],
+              "answer": "Manṣūb"
+            },
+            {
+              "text": "Can a verb have more than one Maf'ūl Bih?",
+              "options": [
+                "Yes, some verbs take two objects",
+                "Only certain measure-verbs (Bāb) can",
+                "Only passive verbs can",
+                "Only Kāna can"
+              ],
+              "answer": "Yes, some verbs take two objects"
+            },
+            {
+              "text": "Can the Maf'ūl Bih be a pronoun instead of a full noun?",
+              "options": [
+                "Yes, an attached pronoun can serve as the Maf'ūl Bih",
+                "Only a separate (munfaṣil) pronoun can",
+                "Only separate pronouns",
+                "Only a demonstrative pronoun can"
+              ],
+              "answer": "Yes, an attached pronoun can serve as the Maf'ūl Bih"
+            }
+          ]
+        },
+        {
+          "id": "stage5",
+          "title": "Al-Fi'l al-Lāzim wa al-Muta'addī",
+          "icon": "🔀",
+          "description": "Verbs that need an object vs verbs that don't",
+          "kicker": "Transitive & Intransitive",
+          "questions": [
+            {
+              "text": "What is Al-Fi'l al-Lāzim?",
+              "options": [
+                "An intransitive verb — does not take a direct object",
+                "A transitive verb",
+                "A passive verb",
+                "A command verb"
+              ],
+              "answer": "An intransitive verb — does not take a direct object"
+            },
+            {
+              "text": "What is Al-Fi'l al-Muta'addī?",
+              "options": [
+                "A transitive verb — takes a direct object",
+                "An intransitive verb",
+                "A passive-only verb",
+                "A verb with no meaning"
+              ],
+              "answer": "A transitive verb — takes a direct object"
+            },
+            {
+              "text": "ذَهَبَ زَيْدٌ إِلَى الْمَسْجِدِ — is ذَهَبَ Lāzim or Muta'addī, given it needs إِلَى to connect to a place?",
+              "options": [
+                "Lāzim (intransitive) — it needs a preposition, not a direct object, to reach its meaning",
+                "Muta'addī, since it has a \"place\" attached",
+                "Neither",
+                "Both equally"
+              ],
+              "answer": "Lāzim (intransitive) — it needs a preposition, not a direct object, to reach its meaning"
+            },
+            {
+              "text": "Can an intransitive (Lāzim) verb be made passive with a Nā'ib al-Fā'il in the normal way?",
+              "options": [
+                "Generally no — passive normally requires a direct object to promote",
+                "Yes, in the same way as transitive verbs",
+                "Only in the past tense",
+                "Only with pronouns"
+              ],
+              "answer": "Generally no — passive normally requires a direct object to promote"
+            },
+            {
+              "text": "كَتَبَ (kataba, \"wrote\") is Muta'addī. How many objects can it typically take?",
+              "options": [
+                "One",
+                "Two, if followed by a second noun",
+                "Always three",
+                "None"
+              ],
+              "answer": "One"
+            }
+          ]
+        },
+        {
+          "id": "stage6",
+          "title": "Al-Asmā' al-Khamsah — The Five Nouns",
+          "icon": "✋",
+          "description": "Nouns declined with letters instead of vowels",
+          "kicker": "The Five Nouns",
+          "questions": [
+            {
+              "text": "What are Al-Asmā' al-Khamsah (the Five Nouns)?",
+              "options": [
+                "أَب، أَخ، حَم، فُو، ذُو — declined with letters, not vowels",
+                "The five pillars of grammar",
+                "Five random nouns",
+                "Nouns that lose their letters in iḍāfah"
+              ],
+              "answer": "أَب، أَخ، حَم، فُو، ذُو — declined with letters, not vowels"
+            },
+            {
+              "text": "When Marfū', what letter do the Five Nouns take?",
+              "options": [
+                "و (Wāw)",
+                "ا (Alif)",
+                "ي (Yā')",
+                "ة (Tā' Marbūṭah)"
+              ],
+              "answer": "و (Wāw)"
+            },
+            {
+              "text": "When Manṣūb, what letter do the Five Nouns take?",
+              "options": [
+                "ا (Alif)",
+                "و (Wāw)",
+                "ي (Yā')",
+                "No letter"
+              ],
+              "answer": "ا (Alif)"
+            },
+            {
+              "text": "When Majrūr, what letter do the Five Nouns take?",
+              "options": [
+                "ي (Yā')",
+                "ا (Alif)",
+                "و (Wāw)",
+                "ة (Tā' Marbūṭah)"
+              ],
+              "answer": "ي (Yā')"
+            },
+            {
+              "text": "جَاءَ أَبُوكَ (\"your father came\") — why does أَبُوكَ end in و?",
+              "options": [
+                "Because it is one of the Five Nouns and is Marfū' (Fā'il)",
+                "Because it is Manṣūb",
+                "Because it is Majrūr",
+                "No specific reason"
+              ],
+              "answer": "Because it is one of the Five Nouns and is Marfū' (Fā'il)"
+            },
+            {
+              "text": "For the Five Nouns to be declined this special way, what condition must be met?",
+              "options": [
+                "They must be Muḍāf to something other than the pronoun ي (\"my\")",
+                "They must be plural",
+                "They must be indefinite",
+                "They must be feminine"
+              ],
+              "answer": "They must be Muḍāf to something other than the pronoun ي (\"my\")"
+            }
+          ]
+        },
+        {
+          "id": "stage7",
+          "title": "Ḥurūf al-Jarr — Prepositions",
+          "icon": "🧷",
+          "description": "Particles that govern a noun into Jarr, and their meanings",
+          "kicker": "Prepositions",
+          "questions": [
+            {
+              "text": "What is the effect of every Ḥarf al-Jarr on the noun that follows it?",
+              "options": [
+                "It makes the noun Majrūr",
+                "It makes the noun Marfū'",
+                "It makes the noun Manṣūb",
+                "It has no effect"
+              ],
+              "answer": "It makes the noun Majrūr"
+            },
+            {
+              "text": "What does the preposition عَنْ ('an) typically mean?",
+              "options": [
+                "\"about/away from\"",
+                "\"in/inside\"",
+                "\"to/towards\"",
+                "\"with\""
+              ],
+              "answer": "\"about/away from\""
+            },
+            {
+              "text": "What does the preposition عَلَى ('alā) typically mean?",
+              "options": [
+                "\"on/upon\"",
+                "\"from\"",
+                "\"about\"",
+                "\"under\""
+              ],
+              "answer": "\"on/upon\""
+            },
+            {
+              "text": "بِ (bi) can carry several meanings. Which of these is one of them?",
+              "options": [
+                "\"with/by means of\"",
+                "\"after\"",
+                "\"before\"",
+                "\"except\""
+              ],
+              "answer": "\"with/by means of\""
+            },
+            {
+              "text": "What does إِلَى (ilā) typically mean?",
+              "options": [
+                "\"to/towards\"",
+                "\"from\"",
+                "\"about\"",
+                "\"under\""
+              ],
+              "answer": "\"to/towards\""
+            },
+            {
+              "text": "A Ḥarf al-Jarr together with the noun it governs (Majrūr) is together called...",
+              "options": [
+                "Jār wa Majrūr",
+                "Muḍāf wa Muḍāf Ilayh",
+                "Mubtada wa Khabar",
+                "Fā'il wa Maf'ūl"
+              ],
+              "answer": "Jār wa Majrūr"
+            }
+          ]
+        },
+        {
+          "id": "stage8",
+          "title": "Al-Iḍāfah — The Possessive Construction",
+          "icon": "🔗",
+          "description": "Joining two nouns to show possession or association",
+          "kicker": "Possessive Construction",
+          "questions": [
+            {
+              "text": "What is Al-Iḍāfah?",
+              "options": [
+                "Joining two nouns where the second (Muḍāf Ilayh) specifies or owns the first (Muḍāf)",
+                "A type of verb",
+                "A conjunction",
+                "A pronoun"
+              ],
+              "answer": "Joining two nouns where the second (Muḍāf Ilayh) specifies or owns the first (Muḍāf)"
+            },
+            {
+              "text": "In كِتَابُ الطَّالِبِ, what is كِتَابُ called?",
+              "options": [
+                "Al-Muḍāf",
+                "Al-Muḍāf Ilayh",
+                "Al-Khabar",
+                "Al-Fā'il"
+              ],
+              "answer": "Al-Muḍāf"
+            },
+            {
+              "text": "In that same phrase, what is الطَّالِبِ called, and what is its case?",
+              "options": [
+                "Al-Muḍāf Ilayh, always Majrūr",
+                "Al-Muḍāf, Marfū'",
+                "Al-Khabar, Manṣūb",
+                "Al-Badal, Majrūr"
+              ],
+              "answer": "Al-Muḍāf Ilayh, always Majrūr"
+            },
+            {
+              "text": "Can Al-Muḍāf take الـ (\"al-\") or Tanwīn at the same time as being in an iḍāfah?",
+              "options": [
+                "No — it drops Tanwīn and never takes \"al-\" directly",
+                "Only when the Muḍāf Ilayh is indefinite",
+                "Only Tanwīn, never \"al-\"",
+                "Only \"al-\", never Tanwīn"
+              ],
+              "answer": "No — it drops Tanwīn and never takes \"al-\" directly"
+            },
+            {
+              "text": "Does Al-Iḍāfah make the whole phrase definite or indefinite?",
+              "options": [
+                "It typically becomes definite if the Muḍāf Ilayh is definite",
+                "It depends only on the Muḍāf, not the Muḍāf Ilayh",
+                "It has no effect on definiteness",
+                "It becomes a question"
+              ],
+              "answer": "It typically becomes definite if the Muḍāf Ilayh is definite"
+            }
+          ]
+        },
+        {
+          "id": "stage9",
+          "title": "An-Na't — Adjectives",
+          "icon": "🎨",
+          "description": "Descriptive words that agree with the noun they modify",
+          "kicker": "Adjectives",
+          "questions": [
+            {
+              "text": "What is An-Na't?",
+              "options": [
+                "An adjective that describes a noun and agrees with it in case, gender, number, and definiteness",
+                "A verb",
+                "A preposition",
+                "A pronoun"
+              ],
+              "answer": "An adjective that describes a noun and agrees with it in case, gender, number, and definiteness"
+            },
+            {
+              "text": "الْبَيْتُ الْكَبِيرُ (\"the big house\") — what is الْكَبِيرُ?",
+              "options": [
+                "An-Na't (adjective) for الْبَيْتُ",
+                "Al-Khabar",
+                "Al-Muḍāf Ilayh",
+                "Al-Badal"
+              ],
+              "answer": "An-Na't (adjective) for الْبَيْتُ"
+            },
+            {
+              "text": "In how many things must An-Na't agree with the noun it describes (Al-Man'ūt)?",
+              "options": [
+                "Case, gender, number, and definiteness",
+                "Only case",
+                "Only gender",
+                "Only number"
+              ],
+              "answer": "Case, gender, number, and definiteness"
+            },
+            {
+              "text": "رَأَيْتُ رَجُلًا طَوِيلًا (\"I saw a tall man\") — why is طَوِيلًا Manṣūب?",
+              "options": [
+                "Because it agrees in case with رَجُلًا, which is Manṣūb as Maf'ūl Bih",
+                "Because it directly follows the verb",
+                "Because it is Al-Muḍāf",
+                "No reason"
+              ],
+              "answer": "Because it agrees in case with رَجُلًا, which is Manṣūb as Maf'ūl Bih"
+            },
+            {
+              "text": "Can An-Na't ever be a full sentence (Jumlah) instead of one word?",
+              "options": [
+                "Yes, when describing an indefinite noun",
+                "Only when describing a definite noun",
+                "Only for definite nouns",
+                "Only in questions"
+              ],
+              "answer": "Yes, when describing an indefinite noun"
+            }
+          ]
+        },
+        {
+          "id": "stage10",
+          "title": "Al-'Aṭf — Conjunctions in Depth",
+          "icon": "➕",
+          "description": "How coordinated nouns must agree in i'rāb",
+          "kicker": "Coordination in Depth",
+          "questions": [
+            {
+              "text": "When Ḥarf al-'Aṭf joins two nouns, the second must match the first in what?",
+              "options": [
+                "I'rāb (case)",
+                "Meaning only",
+                "Gender only",
+                "Nothing at all"
+              ],
+              "answer": "I'rāb (case)"
+            },
+            {
+              "text": "جَاءَ زَيْدٌ وَخَالِدٌ — what is the i'rāb of خَالِدٌ, and why?",
+              "options": [
+                "Marfū', because it's coordinated onto the Marfū' Fā'il زَيْدٌ",
+                "Majrūr, since وَ can also act like a preposition",
+                "Majrūr",
+                "Mabnī"
+              ],
+              "answer": "Marfū', because it's coordinated onto the Marfū' Fā'il زَيْدٌ"
+            },
+            {
+              "text": "رَأَيْتُ زَيْدًا وَخَالِدًا — what is the i'rāb of both names, and why?",
+              "options": [
+                "Both Manṣūb, since زَيْدًا is Maf'ūl Bih and خَالِدًا is coordinated onto it",
+                "Both Marfū'",
+                "Both Majrūr",
+                "Mixed"
+              ],
+              "answer": "Both Manṣūb, since زَيْدًا is Maf'ūl Bih and خَالِدًا is coordinated onto it"
+            },
+            {
+              "text": "بِزَيْدٍ وَخَالِدٍ — what is the i'rāb of both, and why?",
+              "options": [
+                "Both Majrūr, since they follow the Ḥarf al-Jarr بِ",
+                "Both Marfū'",
+                "Both Manṣūb",
+                "Mabnī"
+              ],
+              "answer": "Both Majrūr, since they follow the Ḥarf al-Jarr بِ"
+            },
+            {
+              "text": "Can more than two items be coordinated in a single chain with وَ?",
+              "options": [
+                "Yes, the chain can be extended with more items",
+                "No, only two at a time",
+                "Only with أَوْ",
+                "Only with أَوْ, not وَ"
+              ],
+              "answer": "Yes, the chain can be extended with more items"
+            }
+          ]
+        },
+        {
+          "id": "stage11",
+          "title": "At-Tawkīd",
+          "icon": "💪",
+          "description": "Emphasis — confirming a noun with nafs, 'ayn, kull, and more",
+          "kicker": "Emphasis",
+          "questions": [
+            {
+              "text": "What is At-Tawkīd?",
+              "options": [
+                "A word used to emphasize or confirm the noun before it",
+                "A word that negates the sentence",
+                "A type of question particle",
+                "A verb tense"
+              ],
+              "answer": "A word used to emphasize or confirm the noun before it"
+            },
+            {
+              "text": "جَاءَ الأَمِيرُ نَفْسُهُ (\"The prince himself came\") — what is نَفْسُهُ here?",
+              "options": [
+                "Tawkīd (emphasis)",
+                "Badal",
+                "Na't",
+                "Khabar"
+              ],
+              "answer": "Tawkīd (emphasis)"
+            },
+            {
+              "text": "What is the i'rāb of At-Tawkīd relative to the word it emphasizes?",
+              "options": [
+                "It matches (follows) the same case",
+                "It follows a fixed case, never the word before it",
+                "It is always Manṣūb",
+                "It has no case"
+              ],
+              "answer": "It matches (follows) the same case"
+            },
+            {
+              "text": "كُلّ (kull) as a tawkīd word means...",
+              "options": [
+                "\"all/entirety\", emphasizing totality",
+                "\"self\"",
+                "\"eye/very\"",
+                "\"both\""
+              ],
+              "answer": "\"all/entirety\", emphasizing totality"
+            },
+            {
+              "text": "Which of these is a word commonly used for At-Tawkīd al-Ma'nawī (emphasis by meaning)?",
+              "options": [
+                "عَيْن ('ayn)",
+                "مِنْ (min)",
+                "هَلْ (hal)",
+                "لَنْ (lan)"
+              ],
+              "answer": "عَيْن ('ayn)"
+            }
+          ]
+        },
+        {
+          "id": "stage12",
+          "title": "Al-Badal",
+          "icon": "🔄",
+          "description": "The substitute — a noun that stands in for the one before it",
+          "kicker": "Apposition & Substitution",
+          "questions": [
+            {
+              "text": "What is Al-Badal?",
+              "options": [
+                "A noun that follows another to explain or replace it, taking its i'rāb",
+                "A type of verb",
+                "A conditional particle",
+                "A demonstrative pronoun"
+              ],
+              "answer": "A noun that follows another to explain or replace it, taking its i'rāb"
+            },
+            {
+              "text": "جَاءَ الْمُعَلِّمُ خَالِدٌ (\"The teacher, Khalid, came\") — what is خَالِدٌ here?",
+              "options": [
+                "Badal (substitute) for الْمُعَلِّمُ",
+                "Khabar",
+                "Fā'il",
+                "Na't"
+              ],
+              "answer": "Badal (substitute) for الْمُعَلِّمُ"
+            },
+            {
+              "text": "Must Al-Badal agree with the word before it (Al-Mubdal Minhu) in i'rāb?",
+              "options": [
+                "Yes, it takes the same case",
+                "No, it always matches the sentence's default case",
+                "No, it is always Marfū'",
+                "Only sometimes"
+              ],
+              "answer": "Yes, it takes the same case"
+            },
+            {
+              "text": "In Badal Ba'ḍ min Kull (\"part of the whole\"), what does the Badal represent?",
+              "options": [
+                "A part of the original noun",
+                "The exact same thing, just renamed",
+                "Something totally unrelated",
+                "A mistake to be corrected"
+              ],
+              "answer": "A part of the original noun"
+            },
+            {
+              "text": "How does Al-Badal differ from An-Na't (adjective)?",
+              "options": [
+                "Al-Badal can stand alone in place of the first noun with the same meaning; An-Na't only describes it",
+                "They are identical in every way",
+                "An-Na't can never be dropped, Badal can",
+                "Al-Badal must always be a verb"
+              ],
+              "answer": "Al-Badal can stand alone in place of the first noun with the same meaning; An-Na't only describes it"
+            }
+          ]
+        },
+        {
+          "id": "stage13",
+          "title": "Kāna wa Akhawātuhā",
+          "icon": "🔄",
+          "description": "Verbs that raise the subject and put the predicate into naṣb",
+          "kicker": "Kāna & Sisters",
+          "questions": [
+            {
+              "text": "What does كَانَ (kāna) mean, and what effect does it have on a Jumlah Ismiyyah?",
+              "options": [
+                "\"was/were\" — keeps Ismu Kāna Marfū', makes Khabaru Kāna Manṣūb",
+                "\"is\" — has no grammatical effect",
+                "\"will be\" — makes both Majrūr",
+                "\"became\" — makes both Marfū'"
+              ],
+              "answer": "\"was/were\" — keeps Ismu Kāna Marfū', makes Khabaru Kāna Manṣūb"
+            },
+            {
+              "text": "كَانَ الطَّقْسُ جَمِيلًا (\"The weather was beautiful\") — what is الطَّقْسُ called?",
+              "options": [
+                "Ismu Kāna, Marfū'",
+                "Khabaru Kāna, Manṣūb",
+                "Fā'il",
+                "Mubtada with no Kāna effect"
+              ],
+              "answer": "Ismu Kāna, Marfū'"
+            },
+            {
+              "text": "In that sentence, what is جَمِيلًا called, and what is its case?",
+              "options": [
+                "Khabaru Kāna, Manṣūb",
+                "Ismu Kāna, Marfū'",
+                "Fā'il, Marfū'",
+                "Muḍāf Ilayh, Majrūr"
+              ],
+              "answer": "Khabaru Kāna, Manṣūb"
+            },
+            {
+              "text": "أَصْبَحَ (aṣbaḥa, \"became\") is a sister of كَانَ. What meaning does it typically add?",
+              "options": [
+                "\"became (in the morning / as a result)\"",
+                "\"was continuously\"",
+                "\"is not\"",
+                "\"almost\""
+              ],
+              "answer": "\"became (in the morning / as a result)\""
+            },
+            {
+              "text": "لَيْسَ (laysa, \"is not\") is a sister of كَانَ. What does it do grammatically?",
+              "options": [
+                "Negates the sentence while still making its Ism Marfū' and Khabar Manṣūb",
+                "Has no grammatical effect",
+                "Makes both Majrūr",
+                "Only works with verbs"
+              ],
+              "answer": "Negates the sentence while still making its Ism Marfū' and Khabar Manṣūb"
+            }
+          ]
+        },
+        {
+          "id": "stage14",
+          "title": "Inna wa Akhawātuhā",
+          "icon": "🔑",
+          "description": "Particles that put the mubtada into naṣb",
+          "kicker": "Inna & Sisters",
+          "questions": [
+            {
+              "text": "What effect does إِنَّ (inna) have when it enters a Jumlah Ismiyyah?",
+              "options": [
+                "Makes the subject (mubtada) manṣūb, keeps the khabar marfū'",
+                "Makes both manṣūb",
+                "Makes both marfū'",
+                "Makes both majrūr"
+              ],
+              "answer": "Makes the subject (mubtada) manṣūb, keeps the khabar marfū'"
+            },
+            {
+              "text": "In إِنَّ اللَّهَ غَفُورٌ (\"Indeed Allah is Forgiving\"), what is اللَّهَ called?",
+              "options": [
+                "Ismu Inna",
+                "Khabaru Inna",
+                "Fā'il",
+                "Mubtada"
+              ],
+              "answer": "Ismu Inna"
+            },
+            {
+              "text": "In that sentence, what is غَفُورٌ called, and what is its case?",
+              "options": [
+                "Khabaru Inna, and it stays Marfū'",
+                "Ismu Inna, and it is Manṣūb",
+                "Fā'il, and it is Marfū'",
+                "Maf'ūl Bih, and it is Manṣūb"
+              ],
+              "answer": "Khabaru Inna, and it stays Marfū'"
+            },
+            {
+              "text": "Which of these is a \"sister\" of إِنَّ (same grammatical family)?",
+              "options": [
+                "لَكِنَّ",
+                "ذَهَبَ",
+                "كَانَ",
+                "قَرَأَ"
+              ],
+              "answer": "لَكِنَّ"
+            },
+            {
+              "text": "لَعَلَّ (la'alla), a sister of إِنَّ, means...",
+              "options": [
+                "\"perhaps/hopefully\"",
+                "\"but\"",
+                "\"as if\"",
+                "\"that\""
+              ],
+              "answer": "\"perhaps/hopefully\""
+            },
+            {
+              "text": "كَأَنَّ (ka'anna), a sister of إِنَّ, means...",
+              "options": [
+                "\"as if\"",
+                "\"perhaps\"",
+                "\"but\"",
+                "\"indeed\""
+              ],
+              "answer": "\"as if\""
+            }
+          ]
+        },
+        {
+          "id": "stage15",
+          "title": "Al-Ḥāl — The Circumstantial State",
+          "icon": "🎬",
+          "description": "Describing the state of the subject or object when the action occurs",
+          "kicker": "Circumstantial State",
+          "questions": [
+            {
+              "text": "What is Al-Ḥāl?",
+              "options": [
+                "A word describing the STATE of the subject/object at the time of the action, always Manṣūb",
+                "The subject of the sentence",
+                "A type of adjective for permanent qualities",
+                "A preposition"
+              ],
+              "answer": "A word describing the STATE of the subject/object at the time of the action, always Manṣūb"
+            },
+            {
+              "text": "جَاءَ زَيْدٌ رَاكِبًا (\"Zayd came riding\") — what is رَاكِبًا?",
+              "options": [
+                "Al-Ḥāl, Manṣūb, describing Zayd's state while coming",
+                "Al-Khabar",
+                "Al-Muḍāf Ilayh",
+                "An-Na't"
+              ],
+              "answer": "Al-Ḥāl, Manṣūb, describing Zayd's state while coming"
+            },
+            {
+              "text": "What is the default i'rāb of Al-Ḥāl?",
+              "options": [
+                "Manṣūb",
+                "Marfū'",
+                "Majrūr",
+                "Majzūm"
+              ],
+              "answer": "Manṣūb"
+            },
+            {
+              "text": "Must the owner of the Ḥāl (Ṣāḥib al-Ḥāl) typically be definite?",
+              "options": [
+                "Yes, normally",
+                "No, it must be indefinite",
+                "It doesn't matter",
+                "Only if plural"
+              ],
+              "answer": "Yes, normally"
+            },
+            {
+              "text": "How does Al-Ḥāl differ from An-Na't (adjective)?",
+              "options": [
+                "Al-Ḥāl describes a temporary state during the action; An-Na't describes a lasting quality of the noun",
+                "They are identical",
+                "Al-Ḥāl only describes people, An-Na't only describes objects",
+                "Al-Ḥāl only applies to verbs"
+              ],
+              "answer": "Al-Ḥāl describes a temporary state during the action; An-Na't describes a lasting quality of the noun"
+            }
+          ]
+        },
+        {
+          "id": "stage16",
+          "title": "At-Tamyīz — Specification",
+          "icon": "📏",
+          "description": "Clarifying an ambiguous noun or number, always Manṣūb",
+          "kicker": "Specification",
+          "questions": [
+            {
+              "text": "What is At-Tamyīz?",
+              "options": [
+                "A word that removes ambiguity from a preceding noun or number, always Manṣūb",
+                "A type of Khabar",
+                "A conjunction",
+                "A preposition"
+              ],
+              "answer": "A word that removes ambiguity from a preceding noun or number, always Manṣūb"
+            },
+            {
+              "text": "عِنْدِي عِشْرُونَ كِتَابًا (\"I have twenty books\") — what is كِتَابًا?",
+              "options": [
+                "At-Tamyīz, Manṣūb, clarifying what \"twenty\" refers to",
+                "Al-Khabar",
+                "Al-Fā'il",
+                "Al-Muḍāf Ilayh"
+              ],
+              "answer": "At-Tamyīz, Manṣūb, clarifying what \"twenty\" refers to"
+            },
+            {
+              "text": "What is the default i'rāb of At-Tamyīz?",
+              "options": [
+                "Manṣūb",
+                "Marfū'",
+                "Majrūr",
+                "Majzūm"
+              ],
+              "answer": "Manṣūb"
+            },
+            {
+              "text": "زَيْدٌ أَكْثَرُ مِنْكَ مَالًا (\"Zayd has more wealth than you\") — what is مَالًا?",
+              "options": [
+                "At-Tamyīz, clarifying in what respect Zayd is \"more\"",
+                "Al-Ḥāl",
+                "Al-Khabar",
+                "Al-Fā'il"
+              ],
+              "answer": "At-Tamyīz, clarifying in what respect Zayd is \"more\""
+            },
+            {
+              "text": "Is At-Tamyīz usually definite or indefinite?",
+              "options": [
+                "Indefinite (Nakirah)",
+                "Definite (Ma'rifah)",
+                "Either, with no preference",
+                "It has no definiteness"
+              ],
+              "answer": "Indefinite (Nakirah)"
+            }
+          ]
+        },
+        {
+          "id": "stage17",
+          "title": "Al-Maf'ūl al-Muṭlaq — The Cognate Object",
+          "icon": "➰",
+          "description": "A verbal noun that reinforces, describes, or counts the action",
+          "kicker": "Cognate Object",
+          "questions": [
+            {
+              "text": "What is Al-Maf'ūl al-Muṭlaq?",
+              "options": [
+                "A verbal noun (maṣdar) from the same root as the verb, used to reinforce, describe, or count the action, always Manṣūb",
+                "The direct object of the verb",
+                "A type of adjective",
+                "A preposition"
+              ],
+              "answer": "A verbal noun (maṣdar) from the same root as the verb, used to reinforce, describe, or count the action, always Manṣūb"
+            },
+            {
+              "text": "ضَرَبْتُهُ ضَرْبًا (\"I hit him, a [proper] hitting\") — what is ضَرْبًا?",
+              "options": [
+                "Al-Maf'ūl al-Muṭlaq, reinforcing the verb",
+                "Al-Maf'ūl Bih",
+                "Al-Ḥāl",
+                "Al-Fā'il"
+              ],
+              "answer": "Al-Maf'ūl al-Muṭlaq, reinforcing the verb"
+            },
+            {
+              "text": "ضَرَبْتُهُ ضَرْبًا شَدِيدًا (\"I hit him a severe hitting\") — what type of Maf'ūl al-Muṭlaq is this?",
+              "options": [
+                "Maf'ūl Muṭlaq of description (describing HOW the action happened)",
+                "Maf'ūl Muṭlaq of mere emphasis",
+                "Maf'ūl Muṭlaq of counting",
+                "None of these"
+              ],
+              "answer": "Maf'ūl Muṭlaq of description (describing HOW the action happened)"
+            },
+            {
+              "text": "ضَرَبْتُهُ ضَرْبَتَيْنِ (\"I hit him twice\") — what type of Maf'ūl al-Muṭlaq is this?",
+              "options": [
+                "Maf'ūl Muṭlaq of counting (how many times)",
+                "Maf'ūl Muṭlaq of emphasis",
+                "Maf'ūl Muṭlaq of description",
+                "None"
+              ],
+              "answer": "Maf'ūl Muṭlaq of counting (how many times)"
+            },
+            {
+              "text": "What is the default i'rāb of Al-Maf'ūl al-Muṭlaq?",
+              "options": [
+                "Manṣūb",
+                "Marfū'",
+                "Majrūr",
+                "Majzūm"
+              ],
+              "answer": "Manṣūb"
+            }
+          ]
+        },
+        {
+          "id": "stage18",
+          "title": "Al-Munādā — The Vocative",
+          "icon": "📣",
+          "description": "Calling out to someone with يَا",
+          "kicker": "The Vocative",
+          "questions": [
+            {
+              "text": "What is Al-Munādā?",
+              "options": [
+                "The noun called out to, usually after يَا",
+                "The subject of a sentence",
+                "A type of Khabar",
+                "A preposition"
+              ],
+              "answer": "The noun called out to, usually after يَا"
+            },
+            {
+              "text": "يَا زَيْدُ (calling a single, definite name) — what is the i'rāb of زَيْدُ?",
+              "options": [
+                "Mabnī on Dammah, in the position of Naṣb",
+                "Fully Manṣūb with Fatḥah and Tanwīn",
+                "Majrūr",
+                "Marfū' with Tanwīn"
+              ],
+              "answer": "Mabnī on Dammah, in the position of Naṣb"
+            },
+            {
+              "text": "What is يَا in يَا زَيْدُ called?",
+              "options": [
+                "Ḥarf an-Nidā' (the vocative particle)",
+                "Ḥarf al-'Aṭf",
+                "Ḥarf al-Jarr",
+                "Ḥarf an-Naṣb"
+              ],
+              "answer": "Ḥarf an-Nidā' (the vocative particle)"
+            },
+            {
+              "text": "يَا عَبْدَ اللَّهِ (\"O 'Abdullah!\") — since this Munādā is Muḍāf, what is its i'rāb?",
+              "options": [
+                "Manṣūb (visibly, with Fatḥah)",
+                "Mabnī on Dammah",
+                "Majrūr",
+                "Marfū'"
+              ],
+              "answer": "Manṣūb (visibly, with Fatḥah)"
+            },
+            {
+              "text": "Besides يَا, are there other (less common) vocative particles in Arabic?",
+              "options": [
+                "Yes, though these are far less common than يَا",
+                "No, يَا is the only one ever used",
+                "Only when calling someone far away",
+                "Vocative particles don't exist elsewhere"
+              ],
+              "answer": "Yes, though these are far less common than يَا"
+            }
+          ]
+        },
+        {
+          "id": "stage19",
+          "title": "Al-Istifhām — Interrogatives",
+          "icon": "❓",
+          "description": "Words used to ask questions",
+          "kicker": "Asking Questions",
+          "questions": [
+            {
+              "text": "هَلْ (hal) is used for what kind of question?",
+              "options": [
+                "A yes/no question",
+                "A question about a person",
+                "A question about a place",
+                "A question about quantity"
+              ],
+              "answer": "A yes/no question"
+            },
+            {
+              "text": "مَنْ (man) as an interrogative means...",
+              "options": [
+                "\"who?\"",
+                "\"what?\"",
+                "\"where?\"",
+                "\"when?\""
+              ],
+              "answer": "\"who?\""
+            },
+            {
+              "text": "مَا (mā) as an interrogative means...",
+              "options": [
+                "\"what?\"",
+                "\"who?\"",
+                "\"where?\"",
+                "\"why?\""
+              ],
+              "answer": "\"what?\""
+            },
+            {
+              "text": "أَيْنَ (ayna) as an interrogative means...",
+              "options": [
+                "\"where?\"",
+                "\"when?\"",
+                "\"how?\"",
+                "\"how many?\""
+              ],
+              "answer": "\"where?\""
+            },
+            {
+              "text": "كَمْ (kam) as an interrogative means...",
+              "options": [
+                "\"how many/much?\"",
+                "\"why?\"",
+                "\"who?\"",
+                "\"where?\""
+              ],
+              "answer": "\"how many/much?\""
+            },
+            {
+              "text": "أَ (the interrogative hamzah) functions similarly to which other particle?",
+              "options": [
+                "هَلْ, both introduce yes/no questions",
+                "مَنْ",
+                "مَا",
+                "أَيْنَ"
+              ],
+              "answer": "هَلْ, both introduce yes/no questions"
+            }
+          ]
+        },
+        {
+          "id": "stage20",
+          "title": "Ẓuruf az-Zamān wa al-Makān",
+          "icon": "⏳",
+          "description": "Adverbs of time and place, and their fixed manṣūb case",
+          "kicker": "Adverbs of Time & Place",
+          "questions": [
+            {
+              "text": "What is Ẓarf az-Zamān?",
+              "options": [
+                "A noun expressing WHEN an action happened",
+                "A noun expressing WHERE an action happened",
+                "The subject of the sentence",
+                "A type of verb"
+              ],
+              "answer": "A noun expressing WHEN an action happened"
+            },
+            {
+              "text": "What is Ẓarf al-Makān?",
+              "options": [
+                "A noun expressing WHERE an action happened",
+                "A noun expressing WHEN an action happened",
+                "A negation particle",
+                "A conditional particle"
+              ],
+              "answer": "A noun expressing WHERE an action happened"
+            },
+            {
+              "text": "What is the default i'rāb of a Ẓarf functioning as an adverb?",
+              "options": [
+                "Manṣūb",
+                "Marfū'",
+                "Majrūr",
+                "Majzūm"
+              ],
+              "answer": "Manṣūb"
+            },
+            {
+              "text": "جَلَسْتُ أَمَامَ الْبَيْتِ (\"I sat in front of the house\") — what is the i'rāb of أَمَامَ?",
+              "options": [
+                "Manṣūb, as Ẓarf Makān",
+                "Marfū', as Fā'il",
+                "Majrūr, as Muḍāf Ilayh",
+                "Mabnī"
+              ],
+              "answer": "Manṣūb, as Ẓarf Makān"
+            },
+            {
+              "text": "سَافَرْتُ لَيْلًا (\"I traveled at night\") — what is لَيْلًا?",
+              "options": [
+                "Ẓarf Zamān, Manṣūb",
+                "Ẓarf Makān, Majrūr",
+                "Fā'il, Marfū'",
+                "Khabar, Marfū'"
+              ],
+              "answer": "Ẓarf Zamān, Manṣūb"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "advanced",
+      "label": "Advanced",
+      "icon": "🌳",
+      "description": "Diptotes, weak verbs, deep case theory, and the fuller family of kāna",
+      "stages": [
+        {
+          "id": "stage1",
+          "title": "Al-Mamnū' min aṣ-Ṣarf",
+          "icon": "🚷",
+          "description": "Diptotes — nouns barred from full declension",
+          "kicker": "Diptotes",
+          "questions": [
+            {
+              "text": "What does Al-Mamnū' min aṣ-Ṣarf mean?",
+              "options": [
+                "A noun barred from taking tanwīn and Kasrah due to specific reasons",
+                "A verb that cannot be conjugated",
+                "A noun that cannot be used as a Mubtada",
+                "A particle with no meaning"
+              ],
+              "answer": "A noun barred from taking tanwīn and Kasrah due to specific reasons"
+            },
+            {
+              "text": "When Majrūr, what vowel does a Mamnū' min aṣ-Ṣarf noun take instead of Kasrah (with no Tanwīn)?",
+              "options": [
+                "Fatḥah",
+                "Dammah",
+                "Sukūn",
+                "Kasrah with Tanwīn"
+              ],
+              "answer": "Fatḥah"
+            },
+            {
+              "text": "Which of these is a common reason a proper name becomes Mamnū' min aṣ-Ṣarf?",
+              "options": [
+                "Being a foreign (non-Arabic) name",
+                "Being short",
+                "Being masculine",
+                "Starting with Alif"
+              ],
+              "answer": "Being a foreign (non-Arabic) name"
+            },
+            {
+              "text": "The plural pattern مَفَاعِل (like مَسَاجِد) is typically...",
+              "options": [
+                "Mamnū' min aṣ-Ṣarf (Ṣīghat Muntahā al-Jumū')",
+                "Fully Munsarif",
+                "Mabnī",
+                "A verb pattern"
+              ],
+              "answer": "Mamnū' min aṣ-Ṣarf (Ṣīghat Muntahā al-Jumū')"
+            },
+            {
+              "text": "ذَهَبْتُ إِلَى مَسَاجِدَ كَثِيرَةٍ — why does مَسَاجِدَ end in Fatḥah instead of Kasrah, despite following إِلَى?",
+              "options": [
+                "Because it is Mamnū' min aṣ-Ṣarf",
+                "Because إِلَى doesn't cause jarr",
+                "Because it is Manṣūb, not Majrūr",
+                "There is no reason"
+              ],
+              "answer": "Because it is Mamnū' min aṣ-Ṣarf"
+            },
+            {
+              "text": "Does a Mamnū' min aṣ-Ṣarf noun become fully Munsarif again if it takes \"al-\" or is Muḍāf?",
+              "options": [
+                "Yes — it then takes normal Kasrah in Jarr",
+                "Only if it is also Muthannā",
+                "Only for feminine names",
+                "Only in poetry"
+              ],
+              "answer": "Yes — it then takes normal Kasrah in Jarr"
+            }
+          ]
+        },
+        {
+          "id": "stage2",
+          "title": "At-Ta'ajjub",
+          "icon": "❗",
+          "description": "Constructing exclamations of amazement",
+          "kicker": "Exclamation",
+          "questions": [
+            {
+              "text": "What is Uslūb at-Ta'ajjub used for?",
+              "options": [
+                "Expressing amazement/wonder",
+                "Asking a question",
+                "Giving a command",
+                "Negating a sentence"
+              ],
+              "answer": "Expressing amazement/wonder"
+            },
+            {
+              "text": "مَا أَجْمَلَ السَّمَاءَ! (\"How beautiful the sky is!\") — what pattern is used here?",
+              "options": [
+                "مَا أَفْعَلَ",
+                "أَفْعِلْ بِـ",
+                "لَيْتَ",
+                "هَلْ"
+              ],
+              "answer": "مَا أَفْعَلَ"
+            },
+            {
+              "text": "In مَا أَجْمَلَ السَّمَاءَ, what is the i'rāb of السَّمَاءَ?",
+              "options": [
+                "Manṣūb, as Maf'ūl Bih",
+                "Marfū', as Fā'il",
+                "Majrūr",
+                "Majzūm"
+              ],
+              "answer": "Manṣūb, as Maf'ūl Bih"
+            },
+            {
+              "text": "What is the second common pattern of ta'ajjub, e.g. أَجْمِلْ بِالسَّمَاءِ!?",
+              "options": [
+                "أَفْعِلْ بِـ",
+                "مَا أَفْعَلَ",
+                "كَمْ",
+                "إِنَّمَا"
+              ],
+              "answer": "أَفْعِلْ بِـ"
+            },
+            {
+              "text": "In the أَفْعِلْ بِـ pattern, what is the grammatical status of السَّمَاءِ (after بِـ)?",
+              "options": [
+                "Majrūr in form, but Marfū' in position (Fā'il)",
+                "Simply Majrūr with no special role",
+                "Manṣūb",
+                "Mabnī with no case"
+              ],
+              "answer": "Majrūr in form, but Marfū' in position (Fā'il)"
+            }
+          ]
+        },
+        {
+          "id": "stage3",
+          "title": "Uslūb al-Madḥ wa adh-Dhamm",
+          "icon": "👏",
+          "description": "Praise and blame constructions with ni'ma and bi'sa",
+          "kicker": "Praise & Blame",
+          "questions": [
+            {
+              "text": "What does نِعْمَ (ni'ma) introduce?",
+              "options": [
+                "A statement of praise",
+                "A statement of blame",
+                "A question",
+                "A conditional clause"
+              ],
+              "answer": "A statement of praise"
+            },
+            {
+              "text": "What does بِئْسَ (bi'sa) introduce?",
+              "options": [
+                "A statement of blame/dispraise",
+                "A statement of praise",
+                "A greeting",
+                "A command"
+              ],
+              "answer": "A statement of blame/dispraise"
+            },
+            {
+              "text": "In نِعْمَ الرَّجُلُ خَالِدٌ, what is the i'rāb of الرَّجُلُ?",
+              "options": [
+                "Marfū', as Fā'il of نِعْمَ",
+                "Manṣūb, as Maf'ūl Bih",
+                "Majrūr",
+                "Mabnī with no case"
+              ],
+              "answer": "Marfū', as Fā'il of نِعْمَ"
+            },
+            {
+              "text": "In that same sentence, what is خَالِدٌ called?",
+              "options": [
+                "Al-Makhṣūṣ bil-Madḥ (the one specifically praised)",
+                "Al-Fā'il",
+                "Al-Maf'ūl Bih",
+                "Al-Muḍāf Ilayh"
+              ],
+              "answer": "Al-Makhṣūṣ bil-Madḥ (the one specifically praised)"
+            },
+            {
+              "text": "Are نِعْمَ and بِئْسَ verbs or particles?",
+              "options": [
+                "Frozen (jāmid) verbs — they don't conjugate for tense",
+                "Ordinary conjugating verbs",
+                "Prepositions",
+                "Conditional particles"
+              ],
+              "answer": "Frozen (jāmid) verbs — they don't conjugate for tense"
+            }
+          ]
+        },
+        {
+          "id": "stage4",
+          "title": "Al-Manqūṣ, al-Maqṣūr, al-Mamdūd",
+          "icon": "🌊",
+          "description": "Nouns ending in weak letters and how they're declined",
+          "kicker": "Weak-Ending Nouns",
+          "questions": [
+            {
+              "text": "What is Al-Ism al-Manqūṣ?",
+              "options": [
+                "A noun ending in a fixed ي preceded by Kasrah",
+                "A noun ending in Alif",
+                "A noun ending in Hamzah",
+                "Any weak verb"
+              ],
+              "answer": "A noun ending in a fixed ي preceded by Kasrah"
+            },
+            {
+              "text": "What happens to the ي of Al-Ism al-Manqūṣ when Marfū' or Majrūr and indefinite?",
+              "options": [
+                "The ي is dropped, and only Tanwīn on the Kasrah remains (estimated i'rāb)",
+                "It stays visible with a Dammah",
+                "It changes into Alif",
+                "Nothing changes at all"
+              ],
+              "answer": "The ي is dropped, and only Tanwīn on the Kasrah remains (estimated i'rāb)"
+            },
+            {
+              "text": "What is Al-Ism al-Maqṣūr?",
+              "options": [
+                "A noun ending in a fixed Alif, whose i'rāb is always estimated (taqdīrī)",
+                "A noun ending in ي",
+                "A noun ending in و",
+                "A verb in the past tense"
+              ],
+              "answer": "A noun ending in a fixed Alif, whose i'rāb is always estimated (taqdīrī)"
+            },
+            {
+              "text": "What is Al-Ism al-Mamdūd?",
+              "options": [
+                "A noun ending in a Hamzah preceded by an Alif",
+                "A noun ending in ي",
+                "Any long word",
+                "A type of verb"
+              ],
+              "answer": "A noun ending in a Hamzah preceded by an Alif"
+            },
+            {
+              "text": "Does Al-Ism al-Mamdūd decline normally with visible case vowels?",
+              "options": [
+                "Yes, its Hamzah takes visible Dammah/Fatḥah/Kasrah like a regular noun",
+                "No, it follows the same pattern as Ism Maqṣūr",
+                "It never takes any case",
+                "It is always Mabnī"
+              ],
+              "answer": "Yes, its Hamzah takes visible Dammah/Fatḥah/Kasrah like a regular noun"
+            },
+            {
+              "text": "جَاءَ الْقَاضِي (\"the judge came\") — why is no visible Dammah seen on الْقَاضِي even though it is Marfū' as Fā'il?",
+              "options": [
+                "Because it is Ism Manqūṣ and its i'rāb is estimated (taqdīrī) on the ي",
+                "Because it is Manṣūb",
+                "Because قَاضِي is a verb",
+                "There is no reason"
+              ],
+              "answer": "Because it is Ism Manqūṣ and its i'rāb is estimated (taqdīrī) on the ي"
+            }
+          ]
+        },
+        {
+          "id": "stage5",
+          "title": "Kāna wa Akhawātuhā — Extended",
+          "icon": "🔄",
+          "description": "Ẓalla, bāta, mā zāla, and the rest of Kāna's larger family",
+          "kicker": "The Fuller Family of Kāna",
+          "questions": [
+            {
+              "text": "What does ظَلَّ (ẓalla) mean as a sister of كَانَ?",
+              "options": [
+                "\"remained/continued (during the day)\"",
+                "\"became\"",
+                "\"is not\"",
+                "\"used to\""
+              ],
+              "answer": "\"remained/continued (during the day)\""
+            },
+            {
+              "text": "What does بَاتَ (bāta) mean as a sister of كَانَ?",
+              "options": [
+                "\"spent the night (in a state)\"",
+                "\"became\"",
+                "\"is not\"",
+                "\"remained forever\""
+              ],
+              "answer": "\"spent the night (in a state)\""
+            },
+            {
+              "text": "مَا زَالَ (mā zāla) means...",
+              "options": [
+                "\"continued to be / still is\"",
+                "\"is no longer\"",
+                "\"became suddenly\"",
+                "\"used to be\""
+              ],
+              "answer": "\"continued to be / still is\""
+            },
+            {
+              "text": "مَا زَالَ الطِّفْلُ نَائِمًا (\"The child is still sleeping\") — what is the i'rāb of نَائِمًا?",
+              "options": [
+                "Manṣūb, as Khabar of مَا زَالَ",
+                "Marfū', as Ismu مَا زَالَ",
+                "Majrūr",
+                "Mabnī"
+              ],
+              "answer": "Manṣūb, as Khabar of مَا زَالَ"
+            },
+            {
+              "text": "مَا دَامَ (mā dāma) means...",
+              "options": [
+                "\"as long as\"",
+                "\"before\"",
+                "\"became\"",
+                "\"is not\""
+              ],
+              "answer": "\"as long as\""
+            },
+            {
+              "text": "Do all of Kāna's sisters function exactly the same grammatically (raf' the ism, naṣb the khabar)?",
+              "options": [
+                "Yes — the whole family shares this same core function",
+                "No, each works completely differently",
+                "Only كَانَ itself does this",
+                "None of them do this"
+              ],
+              "answer": "Yes — the whole family shares this same core function"
+            }
+          ]
+        },
+        {
+          "id": "stage6",
+          "title": "Kāda wa Akhawātuhā",
+          "icon": "⏱️",
+          "description": "Verbs of proximity, hope, and beginning",
+          "kicker": "Verbs of Proximity & Onset",
+          "questions": [
+            {
+              "text": "What category do كَادَ، أَوْشَكَ، and كَرَبَ belong to?",
+              "options": [
+                "Af'āl al-Muqārabah (verbs of proximity — \"almost\")",
+                "Af'āl al-Qulūb",
+                "Ḥurūf al-Jarr",
+                "Asmā' al-Ishārah"
+              ],
+              "answer": "Af'āl al-Muqārabah (verbs of proximity — \"almost\")"
+            },
+            {
+              "text": "كَادَ الطِّفْلُ يَبْكِي (\"The child almost cried\") — what is the i'rāb of يَبْكِي as Khabaru Kāda?",
+              "options": [
+                "A verbal sentence (jumlah fi'liyyah) in the position of Naṣb",
+                "Simply Manṣūb as a single word",
+                "Marfū' with no position",
+                "Majrūr"
+              ],
+              "answer": "A verbal sentence (jumlah fi'liyyah) in the position of Naṣb"
+            },
+            {
+              "text": "What category do عَسَى and حَرَى belong to?",
+              "options": [
+                "Af'āl ar-Rajā' (verbs of hope — \"perhaps/hopefully\")",
+                "Af'āl ash-Shurū' (verbs of beginning)",
+                "Ḥurūf an-Naṣb",
+                "Asmā' al-Khamsah"
+              ],
+              "answer": "Af'āl ar-Rajā' (verbs of hope — \"perhaps/hopefully\")"
+            },
+            {
+              "text": "What category do شَرَعَ، بَدَأَ، and أَخَذَ belong to when followed by a verb?",
+              "options": [
+                "Af'āl ash-Shurū' (verbs of beginning — \"started to\")",
+                "Af'āl al-Muqārabah",
+                "Af'āl ar-Rajā'",
+                "Ḥurūf al-Jazm"
+              ],
+              "answer": "Af'āl ash-Shurū' (verbs of beginning — \"started to\")"
+            },
+            {
+              "text": "بَدَأَ الطَّالِبُ يَكْتُبُ (\"The student began to write\") — what does يَكْتُبُ represent grammatically?",
+              "options": [
+                "Khabaru بَدَأَ, a verbal sentence in the position of Naṣb",
+                "Fā'il of بَدَأَ",
+                "Maf'ūl Bih of بَدَأَ",
+                "An unrelated new sentence"
+              ],
+              "answer": "Khabaru بَدَأَ, a verbal sentence in the position of Naṣb"
+            },
+            {
+              "text": "Do Af'āl al-Muqārabah, ar-Rajā', and ash-Shurū' generally follow the same raf'-ism/naṣb-khabar pattern as كَانَ?",
+              "options": [
+                "Yes, they belong to the same broader family as Kāna wa Akhawātuhā",
+                "No, they are entirely unrelated grammatically",
+                "Only Af'āl ar-Rajā' does",
+                "Only Af'āl ash-Shurū' follows this pattern"
+              ],
+              "answer": "Yes, they belong to the same broader family as Kāna wa Akhawātuhā"
+            }
+          ]
+        },
+        {
+          "id": "stage7",
+          "title": "Al-Ism al-Mawṣūl",
+          "icon": "🔗",
+          "description": "Relative pronouns and the clauses that follow them",
+          "kicker": "Relative Pronouns",
+          "questions": [
+            {
+              "text": "What is Al-Ism al-Mawṣūl?",
+              "options": [
+                "A relative pronoun that connects to a following descriptive clause (ṣilah)",
+                "A demonstrative pronoun",
+                "A personal pronoun",
+                "A conditional particle"
+              ],
+              "answer": "A relative pronoun that connects to a following descriptive clause (ṣilah)"
+            },
+            {
+              "text": "جَاءَ الَّذِي نَجَحَ (\"The one who succeeded came\") — what is نَجَحَ called in relation to الَّذِي?",
+              "options": [
+                "Ṣilat al-Mawṣūl (the descriptive clause completing its meaning)",
+                "Khabar of الَّذِي",
+                "Fā'il of الَّذِي",
+                "An unrelated sentence"
+              ],
+              "answer": "Ṣilat al-Mawṣūl (the descriptive clause completing its meaning)"
+            },
+            {
+              "text": "Is Al-Ism al-Mawṣūl (like الَّذِي) Mu'rab or Mabnī?",
+              "options": [
+                "Mabnī (its ending never changes)",
+                "Fully Mu'rab like ordinary nouns",
+                "It has no ending at all",
+                "It changes only in the dual"
+              ],
+              "answer": "Mabnī (its ending never changes)"
+            },
+            {
+              "text": "الَّتِي (allatī) refers to which gender?",
+              "options": [
+                "Feminine singular (\"who/which\", she)",
+                "Masculine singular",
+                "Masculine plural",
+                "Dual"
+              ],
+              "answer": "Feminine singular (\"who/which\", she)"
+            },
+            {
+              "text": "Does Al-Ism al-Mawṣūl require a returning pronoun ('ā'id) in the ṣilah clause that refers back to it?",
+              "options": [
+                "Yes, normally",
+                "Only when the ṣilah is a Jumlah Ismiyyah",
+                "Only for feminine mawṣūl",
+                "Only in questions"
+              ],
+              "answer": "Yes, normally"
+            },
+            {
+              "text": "مَنْ and مَا can also function as Asmā' Mawṣūlah (relative pronouns) in addition to their conditional use. What do they mean here?",
+              "options": [
+                "\"the one who\" / \"that which\"",
+                "\"if\" / \"when\"",
+                "\"but\" / \"however\"",
+                "\"O\" (vocative)"
+              ],
+              "answer": "\"the one who\" / \"that which\""
+            }
+          ]
+        },
+        {
+          "id": "stage8",
+          "title": "Al-Adawāt ash-Sharṭiyyah al-Jāzimah",
+          "icon": "⚡",
+          "description": "The full range of conditional particles that cause jazm",
+          "kicker": "Jazm-Causing Conditionals",
+          "questions": [
+            {
+              "text": "إِنْ (in) among the jāzim conditionals is used for...",
+              "options": [
+                "General, hypothetical conditions (\"if\")",
+                "Only people",
+                "Only time",
+                "Only place"
+              ],
+              "answer": "General, hypothetical conditions (\"if\")"
+            },
+            {
+              "text": "مَنْ (man) as a jāzim conditional particle is used for...",
+              "options": [
+                "People — \"whoever\"",
+                "Places — \"wherever\"",
+                "Time — \"whenever\"",
+                "Things — \"whatever\""
+              ],
+              "answer": "People — \"whoever\""
+            },
+            {
+              "text": "مَا and مَهْمَا as jāzim conditional particles are used for...",
+              "options": [
+                "Things — \"whatever\"",
+                "People — \"whoever\"",
+                "Time only",
+                "Place only"
+              ],
+              "answer": "Things — \"whatever\""
+            },
+            {
+              "text": "أَيْنَ (ayna) as a jāzim conditional particle is used for...",
+              "options": [
+                "Place — \"wherever\"",
+                "Time — \"whenever\"",
+                "People — \"whoever\"",
+                "Manner — \"however\""
+              ],
+              "answer": "Place — \"wherever\""
+            },
+            {
+              "text": "مَتَى (matā) as a jāzim conditional particle is used for...",
+              "options": [
+                "Time — \"whenever\"",
+                "Place — \"wherever\"",
+                "People — \"whoever\"",
+                "Reason — \"because\""
+              ],
+              "answer": "Time — \"whenever\""
+            },
+            {
+              "text": "مَنْ يَجْتَهِدْ يَنْجَحْ — how many verbs are affected by jazm here, and why?",
+              "options": [
+                "Both verbs (fi'l ash-shart and jawāb ash-shart), because of the conditional particle مَنْ",
+                "Only the first verb",
+                "Only the second verb",
+                "Neither, since مَنْ has no effect here"
+              ],
+              "answer": "Both verbs (fi'l ash-shart and jawāb ash-shart), because of the conditional particle مَنْ"
+            }
+          ]
+        },
+        {
+          "id": "stage9",
+          "title": "Law wa Lawlā",
+          "icon": "🌫️",
+          "description": "Conditional particles that do NOT cause jazm",
+          "kicker": "Non-Jazm Conditionals",
+          "questions": [
+            {
+              "text": "Does لَوْ (law — \"if [hypothetically, unlikely/impossible]\") cause jazm on its verbs?",
+              "options": [
+                "No — it does not cause jazm at all",
+                "Yes, but only on the first verb",
+                "Only on the first verb",
+                "Only in the plural"
+              ],
+              "answer": "No — it does not cause jazm at all"
+            },
+            {
+              "text": "لَوْ اجْتَهَدْتَ لَنَجَحْتَ (\"Had you strived, you would have succeeded\") — what tense are the verbs in this sentence?",
+              "options": [
+                "Al-Fi'l al-Māḍī (past tense), even though the meaning may be conditional",
+                "Al-Fi'l al-Muḍāri' only",
+                "Al-Fi'l al-Amr",
+                "A mix of Amr and Muḍāri'"
+              ],
+              "answer": "Al-Fi'l al-Māḍī (past tense), even though the meaning may be conditional"
+            },
+            {
+              "text": "What does لَوْلَا (lawlā) mean?",
+              "options": [
+                "\"were it not for\"",
+                "\"if\"",
+                "\"whenever\"",
+                "\"because\""
+              ],
+              "answer": "\"were it not for\""
+            },
+            {
+              "text": "لَوْلَا اللَّهُ لَهَلَكْنَا (\"Were it not for Allah, we would have perished\") — what is اللَّهُ called after لَوْلَا?",
+              "options": [
+                "Mubtada whose khabar is omitted (understood)",
+                "Fā'il of a verb",
+                "Maf'ūl Bih",
+                "Ismu Kāna"
+              ],
+              "answer": "Mubtada whose khabar is omitted (understood)"
+            },
+            {
+              "text": "Does إِذَا (idhā), often meaning \"when/if\", typically cause jazm like إِنْ does?",
+              "options": [
+                "No, not usually — though it shares a similar conditional meaning",
+                "Yes, but only in formal registers",
+                "Only with Fi'l Amr",
+                "Only in negative sentences"
+              ],
+              "answer": "No, not usually — though it shares a similar conditional meaning"
+            }
+          ]
+        },
+        {
+          "id": "stage10",
+          "title": "Al-Fi'l al-Majhūl",
+          "icon": "🎭",
+          "description": "The passive voice — when the doer is hidden or unknown",
+          "kicker": "The Passive Voice",
+          "questions": [
+            {
+              "text": "What is Al-Fi'l al-Majhūl?",
+              "options": [
+                "The passive voice, where the doer (Fā'il) is not mentioned",
+                "A verb with no meaning",
+                "A verb only used in commands",
+                "A verb that has two objects"
+              ],
+              "answer": "The passive voice, where the doer (Fā'il) is not mentioned"
+            },
+            {
+              "text": "In a passive sentence, what replaces the Fā'il and takes its Marfū' case?",
+              "options": [
+                "Nā'ib al-Fā'il (the deputy subject, usually the original object)",
+                "Nothing — passive sentences have no subject",
+                "The verb itself",
+                "A new pronoun"
+              ],
+              "answer": "Nā'ib al-Fā'il (the deputy subject, usually the original object)"
+            },
+            {
+              "text": "كُتِبَ الدَّرْسُ (\"The lesson was written\") — what is الدَّرْسُ called, and what is its case?",
+              "options": [
+                "Nā'ib al-Fā'il, Marfū'",
+                "Maf'ūl Bih, Manṣūb",
+                "Fā'il, Marfū'",
+                "Khabar, Marfū'"
+              ],
+              "answer": "Nā'ib al-Fā'il, Marfū'"
+            },
+            {
+              "text": "How does the internal vowel pattern of a past-tense verb change when made passive, e.g. كَتَبَ → كُتِبَ?",
+              "options": [
+                "The first vowel becomes Dammah and the one before the last becomes Kasrah",
+                "Nothing changes at all",
+                "It becomes entirely a new word",
+                "Only the ending changes"
+              ],
+              "answer": "The first vowel becomes Dammah and the one before the last becomes Kasrah"
+            },
+            {
+              "text": "Can a passive sentence still be a full, grammatically complete sentence without a Fā'il?",
+              "options": [
+                "Yes — the Nā'ib al-Fā'il fills that grammatical role",
+                "Only if the Nā'ib al-Fā'il is a pronoun",
+                "Only if it has an object too",
+                "Only in questions"
+              ],
+              "answer": "Yes — the Nā'ib al-Fā'il fills that grammatical role"
+            },
+            {
+              "text": "If the original sentence had two objects (like with ظَنَّ), what happens to the second object when the verb is made passive?",
+              "options": [
+                "It becomes the Khabar of Nā'ib al-Fā'il and stays Manṣūb",
+                "It disappears entirely",
+                "It also becomes Nā'ib al-Fā'il",
+                "It becomes Majrūr"
+              ],
+              "answer": "It becomes the Khabar of Nā'ib al-Fā'il and stays Manṣūb"
+            }
+          ]
+        },
+        {
+          "id": "stage11",
+          "title": "Al-Fi'l al-Mu'tal",
+          "icon": "🌀",
+          "description": "Weak verbs — Mithāl, Ajwaf, and Nāqiṣ",
+          "kicker": "Weak Verbs",
+          "questions": [
+            {
+              "text": "What is Al-Fi'l al-Mu'tal?",
+              "options": [
+                "A verb whose root contains one or more weak letters (و، ي، ا)",
+                "A verb with a doubled letter",
+                "Any four-letter verb",
+                "A verb only used in the passive"
+              ],
+              "answer": "A verb whose root contains one or more weak letters (و، ي، ا)"
+            },
+            {
+              "text": "What is Al-Fi'l al-Mithāl?",
+              "options": [
+                "A weak verb whose FIRST root letter is و or ي",
+                "A weak verb whose middle letter is weak",
+                "A weak verb whose last letter is weak",
+                "A verb with no weak letters"
+              ],
+              "answer": "A weak verb whose FIRST root letter is و or ي"
+            },
+            {
+              "text": "What is Al-Fi'l al-Ajwaf?",
+              "options": [
+                "A weak verb whose MIDDLE root letter is و or ي",
+                "A weak verb whose first letter is weak",
+                "A weak verb whose last letter is weak",
+                "A doubled verb"
+              ],
+              "answer": "A weak verb whose MIDDLE root letter is و or ي"
+            },
+            {
+              "text": "What is Al-Fi'l an-Nāqiṣ?",
+              "options": [
+                "A weak verb whose LAST root letter is و or ي",
+                "A weak verb whose first letter is weak",
+                "A verb with no meaning",
+                "A doubled verb"
+              ],
+              "answer": "A weak verb whose LAST root letter is و or ي"
+            },
+            {
+              "text": "In Fi'l Muḍāri' from a Nāqiṣ root ending in Alif (like يَدْعُو or يَخْشَى), what happens to that final weak letter when the verb is Majzūm?",
+              "options": [
+                "It is typically dropped",
+                "It is doubled",
+                "It changes into a Hamzah",
+                "Nothing changes"
+              ],
+              "answer": "It is typically dropped"
+            },
+            {
+              "text": "لَمْ يَرْمِ (\"he did not throw\", from رَمَى) — why does the ي disappear here?",
+              "options": [
+                "Because the verb is Majzūm by لَمْ, and the sign of jazm on a Nāqiṣ verb is dropping the weak letter",
+                "Because it's Manṣūb",
+                "Because it's Marfū'",
+                "There is no reason"
+              ],
+              "answer": "Because the verb is Majzūm by لَمْ, and the sign of jazm on a Nāqiṣ verb is dropping the weak letter"
+            }
+          ]
+        },
+        {
+          "id": "stage12",
+          "title": "Al-Ḥāl al-Jumlah",
+          "icon": "🎬",
+          "description": "When the circumstantial state is a full sentence, not one word",
+          "kicker": "The Sentence as Ḥāl",
+          "questions": [
+            {
+              "text": "Can Al-Ḥāl be an entire sentence (Jumlah) instead of a single word?",
+              "options": [
+                "Yes — it can be a Jumlah Ismiyyah or Fi'liyyah in the position of Naṣb",
+                "No, it must always include a Wāw",
+                "Only if it's a question",
+                "Only with Kāna"
+              ],
+              "answer": "Yes — it can be a Jumlah Ismiyyah or Fi'liyyah in the position of Naṣb"
+            },
+            {
+              "text": "جَاءَ زَيْدٌ وَهُوَ يَضْحَكُ (\"Zayd came while he was laughing\") — what is وَهُوَ يَضْحَكُ?",
+              "options": [
+                "Jumlah al-Ḥāl (a sentence functioning as Ḥāl), in the position of Naṣb",
+                "Jumlah aṣ-Ṣilah",
+                "Khabaru Kāna",
+                "Al-Mustathnā"
+              ],
+              "answer": "Jumlah al-Ḥāl (a sentence functioning as Ḥāl), in the position of Naṣb"
+            },
+            {
+              "text": "What is the وَ in وَهُوَ يَضْحَكُ commonly called?",
+              "options": [
+                "Wāw al-Ḥāl",
+                "Wāw al-'Aṭf",
+                "Wāw al-Qasam",
+                "Wāw az-Zā'idah"
+              ],
+              "answer": "Wāw al-Ḥāl"
+            },
+            {
+              "text": "Can a Ḥāl-sentence be a Jumlah Fi'liyyah directly with no Wāw, e.g. جَاءَ زَيْدٌ يَضْحَكُ?",
+              "options": [
+                "Yes, this is also valid, especially with a Muḍāri' verb",
+                "No, only with an Ismiyyah Ḥāl",
+                "Only with Māḍī verbs",
+                "Only valid with an implied Wāw"
+              ],
+              "answer": "Yes, this is also valid, especially with a Muḍāri' verb"
+            },
+            {
+              "text": "In a Jumlah Ismiyyah acting as Ḥāl, what usually links it back to the subject it describes?",
+              "options": [
+                "A pronoun (rābiṭ) referring back",
+                "Nothing is needed",
+                "A repeated verb",
+                "A Ḥarf al-Jarr"
+              ],
+              "answer": "A pronoun (rābiṭ) referring back"
+            }
+          ]
+        },
+        {
+          "id": "stage13",
+          "title": "At-Tamyīz al-Malfūẓ wa al-Mulāḥaẓ",
+          "icon": "🔍",
+          "description": "Explicit tamyīz vs. tamyīz implied by the sentence's meaning",
+          "kicker": "Two Kinds of Specification",
+          "questions": [
+            {
+              "text": "What is At-Tamyīz al-Malfūẓ?",
+              "options": [
+                "Tamyīz that clarifies an explicitly-stated ambiguous word",
+                "Tamyīz with no noun before it at all",
+                "A type of verb",
+                "A conditional clause"
+              ],
+              "answer": "Tamyīz that clarifies an explicitly-stated ambiguous word"
+            },
+            {
+              "text": "عِنْدِي عِشْرُونَ كِتَابًا (\"I have twenty books\") — what is كِتَابًا?",
+              "options": [
+                "Tamyīz al-Malfūẓ, clarifying what \"twenty\" refers to",
+                "Tamyīz al-Mulāḥaẓ",
+                "Al-Ḥāl",
+                "Al-Badal"
+              ],
+              "answer": "Tamyīz al-Malfūẓ, clarifying what \"twenty\" refers to"
+            },
+            {
+              "text": "What is At-Tamyīz al-Mulāḥaẓ?",
+              "options": [
+                "Tamyīz that clarifies the vague subject or object of an entire sentence (implied ambiguity), not a single stated word",
+                "Tamyīz that has no grammatical case",
+                "Tamyīz used only for numbers",
+                "A synonym for Ḥāl"
+              ],
+              "answer": "Tamyīz that clarifies the vague subject or object of an entire sentence (implied ambiguity), not a single stated word"
+            },
+            {
+              "text": "طَابَ زَيْدٌ نَفْسًا (\"Zayd became pleasant in himself/spirit\") — what is نَفْسًا an example of?",
+              "options": [
+                "Tamyīz al-Mulāḥaẓ, specifying in what respect Zayd became pleasant",
+                "Tamyīz al-Malfūẓ",
+                "Al-Ḥāl",
+                "Al-Mustathnā"
+              ],
+              "answer": "Tamyīz al-Mulāḥaẓ, specifying in what respect Zayd became pleasant"
+            },
+            {
+              "text": "Does the i'rāb of At-Tamyīz change between these two types (Malfūẓ and Mulāḥaẓ)?",
+              "options": [
+                "No — both are still Manṣūb",
+                "Yes, Malfūẓ is Marfū' and Mulāḥaẓ is Manṣūb",
+                "Yes, Malfūẓ is Majrūr and Mulāḥaẓ is Marfū'",
+                "Neither has a case"
+              ],
+              "answer": "No — both are still Manṣūb"
+            }
+          ]
+        },
+        {
+          "id": "stage14",
+          "title": "Al-Isnād ilā aḍ-Ḍamā'ir",
+          "icon": "🧬",
+          "description": "How verb conjugation changes when attached to pronoun subjects",
+          "kicker": "Verb-Pronoun Agreement",
+          "questions": [
+            {
+              "text": "What does Al-Isnād ilā aḍ-Ḍamā'ir mean?",
+              "options": [
+                "Attaching a verb to a pronoun subject, changing its conjugated form",
+                "Making a verb passive",
+                "Turning a verb into a noun",
+                "Negating a verb"
+              ],
+              "answer": "Attaching a verb to a pronoun subject, changing its conjugated form"
+            },
+            {
+              "text": "كَتَبْتُ (katabtu — \"I wrote\") — what pronoun is attached here, and where is the Fā'il?",
+              "options": [
+                "تُ (\"I\"), attached and fused as the Fā'il",
+                "No pronoun is attached",
+                "هُوَ, hidden",
+                "أَنْتَ, separate"
+              ],
+              "answer": "تُ (\"I\"), attached and fused as the Fā'il"
+            },
+            {
+              "text": "كَتَبُوا (katabū — \"they wrote\", masc. plural) — what does the وا ending represent?",
+              "options": [
+                "The attached Fā'il pronoun \"they\" (masculine plural)",
+                "A Ḥarf al-Jarr",
+                "Ismu Kāna",
+                "A Tamyīz marker"
+              ],
+              "answer": "The attached Fā'il pronoun \"they\" (masculine plural)"
+            },
+            {
+              "text": "In يَكْتُبْنَ (yaktubna — \"they write\", fem. plural), does the verb's ending change to match the fused Fā'il?",
+              "options": [
+                "Yes — the ending نَ marks the feminine plural fused subject",
+                "No, it stays identical to the masculine form",
+                "Only in the past tense",
+                "Only with Amr"
+              ],
+              "answer": "Yes — the ending نَ marks the feminine plural fused subject"
+            },
+            {
+              "text": "When a Fi'l is attached to a hidden (mustatir) pronoun like هُوَ in ذَهَبَ, is there still technically a Fā'il?",
+              "options": [
+                "Yes — every verb must have a Fā'il, even if it's not visibly written",
+                "No, the sentence is incomplete",
+                "Only if the subject is plural",
+                "Only in the passive voice"
+              ],
+              "answer": "Yes — every verb must have a Fā'il, even if it's not visibly written"
+            },
+            {
+              "text": "Does the SAME rule of \"every verb needs a Fā'il\" apply even to Fi'l al-Amr (command verbs)?",
+              "options": [
+                "Yes — command verbs also have a (often hidden) Fā'il",
+                "No, commands have no Fā'il",
+                "Only for plural commands",
+                "Only in the passive"
+              ],
+              "answer": "Yes — command verbs also have a (often hidden) Fā'il"
+            }
+          ]
+        },
+        {
+          "id": "stage15",
+          "title": "Al-Mubtada an-Nakirah",
+          "icon": "🔓",
+          "description": "When an indefinite noun can validly begin a sentence",
+          "kicker": "Indefinite Subjects",
+          "questions": [
+            {
+              "text": "What is the normal rule for Al-Mubtada regarding definiteness?",
+              "options": [
+                "It is normally Ma'rifah (definite)",
+                "It is normally Nakirah (indefinite)",
+                "It has no definiteness requirement",
+                "It must always be Nakirah"
+              ],
+              "answer": "It is normally Ma'rifah (definite)"
+            },
+            {
+              "text": "Can Al-Mubtada ever be Nakirah (indefinite)?",
+              "options": [
+                "Yes, if it conveys a complete/useful meaning",
+                "Only in interrogative sentences",
+                "Only in questions",
+                "Only with Kāna"
+              ],
+              "answer": "Yes, if it conveys a complete/useful meaning"
+            },
+            {
+              "text": "فِي الْبَيْتِ رَجُلٌ (\"In the house is a man\") — why is رَجُلٌ, though indefinite, acceptable as Mubtada here?",
+              "options": [
+                "Because the sentence is preceded by a Ẓarf/Jār-Majrūr, giving it a complete/useful meaning",
+                "Because it's a proper name",
+                "Because it's Marfū'",
+                "There is no valid reason"
+              ],
+              "answer": "Because the sentence is preceded by a Ẓarf/Jār-Majrūr, giving it a complete/useful meaning"
+            },
+            {
+              "text": "In this structure, what actually happens to word order?",
+              "options": [
+                "The Khabar (the Ẓarf/Jār-Majrūr) is fronted before the Nakirah Mubtada",
+                "Nothing changes",
+                "The whole sentence becomes a question",
+                "It becomes a question"
+              ],
+              "answer": "The Khabar (the Ẓarf/Jār-Majrūr) is fronted before the Nakirah Mubtada"
+            },
+            {
+              "text": "هَلْ رَجُلٌ فِي الدَّارِ? — does the interrogative هَلْ also help make a Nakirah Mubtada acceptable?",
+              "options": [
+                "Yes, an interrogative context is one of the recognized exceptions",
+                "No, هَلْ has no effect on this rule",
+                "Only with negation",
+                "Only with Kāna"
+              ],
+              "answer": "Yes, an interrogative context is one of the recognized exceptions"
+            }
+          ]
+        },
+        {
+          "id": "stage16",
+          "title": "Al-I'rāb at-Taqdīrī wa al-Maḥallī",
+          "icon": "🧠",
+          "description": "Estimated and positional case — the deepest layer of i'rāb theory",
+          "kicker": "Estimated & Positional Case",
+          "questions": [
+            {
+              "text": "What is Al-I'rāb aẓ-Ẓāhirī?",
+              "options": [
+                "Visible i'rāb — the case vowel is physically seen on the word",
+                "I'rāb that cannot be seen or estimated",
+                "I'rāb only used for verbs",
+                "I'rāb only for Mabnī words"
+              ],
+              "answer": "Visible i'rāb — the case vowel is physically seen on the word"
+            },
+            {
+              "text": "What is Al-I'rāb at-Taqdīrī?",
+              "options": [
+                "Estimated i'rāb — the case is understood/assumed but not visibly pronounced",
+                "I'rāb that changes randomly",
+                "I'rāb only for plurals",
+                "The same as Ẓāhirī"
+              ],
+              "answer": "Estimated i'rāb — the case is understood/assumed but not visibly pronounced"
+            },
+            {
+              "text": "What is Al-I'rāb al-Maḥallī?",
+              "options": [
+                "Positional i'rāb — assigned to a Mabnī word or a full sentence based on its grammatical ROLE, not any visible marker",
+                "I'rāb only found in poetry",
+                "The absence of any case",
+                "I'rāb used only for verbs in the past tense"
+              ],
+              "answer": "Positional i'rāb — assigned to a Mabnī word or a full sentence based on its grammatical ROLE, not any visible marker"
+            },
+            {
+              "text": "هَذَا كِتَابِي (\"This is my book\") — what type of i'rāb does هَذَا (Mabnī) have, in the position of Mubtada?",
+              "options": [
+                "I'rāb Maḥallī (positional) — Raf'",
+                "I'rāb Ẓāhirī",
+                "I'rāb Taqdīrī",
+                "No i'rāb at all"
+              ],
+              "answer": "I'rāb Maḥallī (positional) — Raf'"
+            },
+            {
+              "text": "A full Jumlah acting as Khabaru Inna would have what kind of i'rāb?",
+              "options": [
+                "I'rāb Maḥallī, in the position of Raf'",
+                "I'rāb Ẓāhirī",
+                "I'rāb Taqdīrī",
+                "It has no relation to i'rāb"
+              ],
+              "answer": "I'rāb Maḥallī, in the position of Raf'"
+            },
+            {
+              "text": "Why does classical Nahw distinguish between Ẓāhirī, Taqdīrī, and Maḥallī i'rāb at all?",
+              "options": [
+                "Because not every word or sentence can visibly display its case, yet its grammatical role must still be identified",
+                "Because Arabic has no consistent grammar",
+                "It's purely a stylistic naming convention with no real function",
+                "Only Maḥallī actually matters; the others are outdated"
+              ],
+              "answer": "Because not every word or sentence can visibly display its case, yet its grammatical role must still be identified"
+            }
+          ]
+        },
+        {
+          "id": "stage17",
+          "title": "Al-Munādā — Deeper Look",
+          "icon": "📣",
+          "description": "A deeper look at the vocative and its five categories",
+          "kicker": "Vocative — Deeper Look",
+          "questions": [
+            {
+              "text": "يَا زَيْدُ (\"O Zayd!\") — since زَيْدُ is Munādā Mufrad al-'Alam (a single proper name), what is its i'rāb?",
+              "options": [
+                "Mabnī on Dammah, in the position of Naṣb",
+                "Fully Manṣūb with Fatḥah and Tanwīn",
+                "Majrūr",
+                "Marfū' with Tanwīn"
+              ],
+              "answer": "Mabnī on Dammah, in the position of Naṣb"
+            },
+            {
+              "text": "يَا عَبْدَ اللَّهِ (\"O 'Abdullah!\") — since this Munādā is Muḍāf, what is its i'rāb?",
+              "options": [
+                "Manṣūb (visibly, with Fatḥah)",
+                "Mabnī on Dammah",
+                "Majrūr",
+                "Marfū'"
+              ],
+              "answer": "Manṣūb (visibly, with Fatḥah)"
+            },
+            {
+              "text": "يَا رَجُلًا (\"O [any] man!\", addressing an unspecified person) — what is the i'rāb of رَجُلًا here, as Munādā Nakirah Ghayr Maqṣūdah?",
+              "options": [
+                "Manṣūb, since the person addressed is unspecified",
+                "Mabnī on Dammah",
+                "Majrūr",
+                "Marfū'"
+              ],
+              "answer": "Manṣūb, since the person addressed is unspecified"
+            },
+            {
+              "text": "يَا رَجُلُ (calling out to a specific man present, though not by name) — what is this category called, and what is its i'rāb?",
+              "options": [
+                "Munādā Nakirah Maqṣūdah — Mabnī on Dammah, like a definite name",
+                "Munādā Muḍāf — Manṣūb",
+                "Munādā Nakirah Ghayr Maqṣūdah — Manṣūb",
+                "Not a valid Munādā"
+              ],
+              "answer": "Munādā Nakirah Maqṣūdah — Mabnī on Dammah, like a definite name"
+            },
+            {
+              "text": "What is the fifth category, Ash-Shabīh bil-Muḍāf, and what is its i'rāb?",
+              "options": [
+                "A Munādā connected to something after it (like a Muḍāf) but not truly a possessive — it is Manṣūb",
+                "A Munādā with no connection to anything — Mabnī",
+                "The same as Munādā Mufrad al-'Alam",
+                "Mabnī on Ḍammah, like other Munādā"
+              ],
+              "answer": "A Munādā connected to something after it (like a Muḍāf) but not truly a possessive — it is Manṣūb"
+            }
+          ]
+        },
+        {
+          "id": "stage18",
+          "title": "Al-Mustathnā al-Mufarragh",
+          "icon": "🕳️",
+          "description": "Exception in a negated, incomplete sentence",
+          "kicker": "The 'Emptied' Exception",
+          "questions": [
+            {
+              "text": "What is Al-Uslūb al-Mufarragh (the \"emptied\" style) of exception?",
+              "options": [
+                "When the Mustathnā Minhu is entirely absent, and the sentence is negative, so إِلَّا has essentially no grammatical effect",
+                "A style where every word is Manṣūb",
+                "A style used only in questions",
+                "The opposite of exception"
+              ],
+              "answer": "When the Mustathnā Minhu is entirely absent, and the sentence is negative, so إِلَّا has essentially no grammatical effect"
+            },
+            {
+              "text": "مَا نَجَحَ إِلَّا خَالِدٌ (\"None succeeded except Khalid\") — what is the i'rāb of خَالِدٌ, and why?",
+              "options": [
+                "Marfū', as Fā'il — because إِلَّا has no effect in this negated, mufarragh structure",
+                "Manṣūb, because of إِلَّا automatically",
+                "Majrūr",
+                "Mabnī"
+              ],
+              "answer": "Marfū', as Fā'il — because إِلَّا has no effect in this negated, mufarragh structure"
+            },
+            {
+              "text": "مَا رَأَيْتُ إِلَّا خَالِدًا (\"I saw no one except Khalid\") — what is the i'rāb of خَالِدًا here, and why?",
+              "options": [
+                "Manṣūb, as Maf'ūl Bih — the role it would have had without إِلَّا",
+                "Marfū'",
+                "Majrūr",
+                "Mabnī on Dammah"
+              ],
+              "answer": "Manṣūb, as Maf'ūl Bih — the role it would have had without إِلَّا"
+            },
+            {
+              "text": "For Al-Uslūb al-Mufarragh to apply, what condition MUST be met?",
+              "options": [
+                "The sentence must be negative (or interrogative in a negative sense) and the Mustathnā Minhu absent",
+                "There must be two separate verbs",
+                "There must be two exceptions",
+                "It only works with proper names"
+              ],
+              "answer": "The sentence must be negative (or interrogative in a negative sense) and the Mustathnā Minhu absent"
+            },
+            {
+              "text": "Why is this called \"Mufarragh\" (\"emptied/vacated\")?",
+              "options": [
+                "Because the verb is effectively left without its usual object/subject until the Mustathnā fills that empty role",
+                "Because the sentence has no verb at all",
+                "Because the Mustathnā always comes first",
+                "Because the sentence describes an empty space"
+              ],
+              "answer": "Because the verb is effectively left without its usual object/subject until the Mustathnā fills that empty role"
+            }
+          ]
+        },
+        {
+          "id": "stage19",
+          "title": "Al-'Aṭf 'alā aḍ-Ḍamīr al-Marfū'",
+          "icon": "🔗",
+          "description": "Coordinating onto an attached subject pronoun — a fine point of style",
+          "kicker": "A Fine Point of Coordination",
+          "questions": [
+            {
+              "text": "When coordinating a new noun onto an attached Marfū' pronoun already fused to a verb (e.g. ذَهَبْتُ وَخَالِدٌ), what is generally recommended first?",
+              "options": [
+                "Reinforcing with a separate pronoun (like أَنَا) before the وَ, for clarity and correctness",
+                "Repeating the pronoun twice for emphasis",
+                "Doubling the verb before the وَ",
+                "Repeating the verb twice"
+              ],
+              "answer": "Reinforcing with a separate pronoun (like أَنَا) before the وَ, for clarity and correctness"
+            },
+            {
+              "text": "ذَهَبْتُ أَنَا وَخَالِدٌ (\"I and Khalid went\") — grammatically, what is خَالِدٌ here?",
+              "options": [
+                "Ma'ṭūf (coordinated) onto the Fā'il, sharing its Marfū' case",
+                "Khabar",
+                "Maf'ūl Bih",
+                "Munādā"
+              ],
+              "answer": "Ma'ṭūf (coordinated) onto the Fā'il, sharing its Marfū' case"
+            },
+            {
+              "text": "Why do many grammarians prefer inserting a separate pronoun before coordinating onto an attached pronoun?",
+              "options": [
+                "Because coordinating directly onto a fused, hidden-in-form pronoun can sound grammatically weak or ambiguous",
+                "Because the fused pronoun changes its vowel otherwise",
+                "Because it changes the meaning entirely",
+                "Because a fused pronoun cannot take its own emphasis word"
+              ],
+              "answer": "Because coordinating directly onto a fused, hidden-in-form pronoun can sound grammatically weak or ambiguous"
+            },
+            {
+              "text": "Is the construction ذَهَبْتُ وَخَالِدٌ (without the reinforcing pronoun) considered completely wrong?",
+              "options": [
+                "No — some grammarians allow it, though the reinforced form is more broadly preferred",
+                "Yes, but only in Modern Standard Arabic",
+                "It's only wrong in poetry",
+                "It's only wrong for feminine subjects"
+              ],
+              "answer": "No — some grammarians allow it, though the reinforced form is more broadly preferred"
+            },
+            {
+              "text": "This entire discussion is a fine point primarily relevant to which broader topic?",
+              "options": [
+                "Al-'Aṭf (coordination) intersecting with fused pronoun subjects",
+                "Al-Istithnā'",
+                "Al-Munādā",
+                "Al-Manqūṣ"
+              ],
+              "answer": "Al-'Aṭf (coordination) intersecting with fused pronoun subjects"
+            }
+          ]
+        },
+        {
+          "id": "stage20",
+          "title": "Murāja'ah 'Ulyā — Capstone Review",
+          "icon": "🎓",
+          "description": "The capstone review: analyzing a rich, multi-layered sentence",
+          "kicker": "Capstone Review",
+          "questions": [
+            {
+              "text": "إِنَّ الَّذِي كَادَ يَنْجَحُ لَمْ يَيْأَسْ — identify the role of الَّذِي in this sentence.",
+              "options": [
+                "Ismu Inna, in the position of Naṣb (Mabnī, Maḥallī i'rāb)",
+                "Khabaru Inna",
+                "Fā'il of a separate verb",
+                "Munādā"
+              ],
+              "answer": "Ismu Inna, in the position of Naṣb (Mabnī, Maḥallī i'rāb)"
+            },
+            {
+              "text": "In that same sentence, what does كَادَ يَنْجَحُ represent?",
+              "options": [
+                "Ṣilat al-Mawṣūl, describing الَّذِي (كَادَ is Af'āl al-Muqārabah, يَنْجَحُ is its Khabar)",
+                "Khabaru Inna directly",
+                "Al-Ḥāl",
+                "Al-Mustathnā"
+              ],
+              "answer": "Ṣilat al-Mawṣūl, describing الَّذِي (كَادَ is Af'āl al-Muqārabah, يَنْجَحُ is its Khabar)"
+            },
+            {
+              "text": "لَمْ يَيْأَسْ — what is the i'rāb of يَيْأَسْ, and why?",
+              "options": [
+                "Majzūm, because لَمْ is a Ḥarf al-Jazm",
+                "Manṣūb, because of a Ḥarf an-Naṣb",
+                "Marfū', the default",
+                "Mabnī, since it's a command"
+              ],
+              "answer": "Majzūm, because لَمْ is a Ḥarf al-Jazm"
+            },
+            {
+              "text": "مَا كَتَبَ إِلَّا مَا يَنْفَعُ النَّاسَ — what construction does إِلَّا مَا يَنْفَعُ represent here?",
+              "options": [
+                "Al-Mustathnā al-Mufarragh, since the sentence is negated with مَا and the Mustathnā Minhu is absent",
+                "A simple Badal",
+                "Al-Ḥāl al-Jumlah",
+                "Al-Munādā"
+              ],
+              "answer": "Al-Mustathnā al-Mufarragh, since the sentence is negated with مَا and the Mustathnā Minhu is absent"
+            },
+            {
+              "text": "لَوْلَا الصَّبْرُ لَمَا نَجَحَ أَحَدٌ — what role does الصَّبْرُ play after لَوْلَا?",
+              "options": [
+                "Mubtada with an omitted (understood) khabar",
+                "Fā'il of a stated verb",
+                "Maf'ūl Bih",
+                "Munādā"
+              ],
+              "answer": "Mubtada with an omitted (understood) khabar"
+            },
+            {
+              "text": "مَا أَجْمَلَ صَبْرَ الَّذِينَ نَجَحُوا! — what uslūb (style) opens this sentence, and what is the i'rāb of صَبْرَ?",
+              "options": [
+                "Uslūb at-Ta'ajjub (مَا أَفْعَلَ); صَبْرَ is Manṣūb as Maf'ūl Bih",
+                "Uslūb al-Madḥ; صَبْرَ is Marfū'",
+                "A simple question; صَبْرَ is Majrūr",
+                "Uslūb ash-Sharṭ; صَبْرَ is Mabnī"
+              ],
+              "answer": "Uslūb at-Ta'ajjub (مَا أَفْعَلَ); صَبْرَ is Manṣūb as Maf'ūl Bih"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

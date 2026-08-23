@@ -1,0 +1,34 @@
+[
+  {
+    "id": "quran",
+    "title": "Qur'an Challenge",
+    "subtitle": "Qur'an Memorization — Al-Fatihah to An-Nas",
+    "icon": "🕌",
+    "course": "Qur'an Memorisation"
+  },
+  
+  {
+    "id": "tabir-expression",
+    "title": "Arabic Expression",
+    "subtitle": "Build skill in written and spoken Arabic self-expression",
+    "icon": "🗣️",
+    "course": "Arabic Expression (Ta'bir')"
+  },
+  
+  {
+    "id": "nahw-foundations",
+    "title": "Nahw Foundations",
+    "subtitle": "Master the rules of Arabic sentence structure",
+    "icon": "🖋️",
+    "course": "Arabic Grammar (Nahw)"
+  },
+  
+  {
+    "id": "sarf-foundations",
+    "title": "Sarf Foundations",
+    "titleArabic": "أساسيات الصرف",
+    "subtitle": "Master the patterns and forms of Arabic morphology",
+    "icon": "🧩",
+    "course": "Arabic Morphology (Sarf)"
+  }
+]

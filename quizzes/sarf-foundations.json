@@ -1,0 +1,3874 @@
+{
+  "id": "sarf-foundations",
+  "title": "Sarf Foundations",
+  "titleArabic": "أساسيات الصرف",
+  "subtitle": "Master the patterns and forms of Arabic morphology",
+  "icon": "🧩",
+  "description": "A three-level journey through classical Sarf (Arabic morphology) — from root types and basic conjugation, through augmented verb forms and weak roots, to the deepest patterns of derivation and irregularity.",
+  "difficulties": [
+    {
+      "id": "beginner",
+      "label": "Beginner",
+      "icon": "🌱",
+      "description": "Word formation basics, bare root patterns, and simple conjugation",
+      "stages": [
+        {
+          "id": "stage1",
+          "title": "What is Sarf?",
+          "icon": "🧭",
+          "description": "The scope and purpose of Arabic morphology",
+          "kicker": "Introduction to Sarf",
+          "questions": [
+            {
+              "text": "What does 'Ilm as-Sarf study?",
+              "options": [
+                "The internal structure and form-changes of words",
+                "The case endings (i'rāb) of words in a sentence",
+                "Only the meanings of words",
+                "Only Qur'anic recitation rules"
+              ],
+              "answer": "The internal structure and form-changes of words"
+            },
+            {
+              "text": "Which branch of grammar studies i'rāb (case endings) instead of word formation?",
+              "options": [
+                "Nahw",
+                "Sarf",
+                "Balāghah",
+                "Tajwīd"
+              ],
+              "answer": "Nahw"
+            },
+            {
+              "text": "Which type of Kalimah (word) is studied in Sarf?",
+              "options": [
+                "Ism and Fi'l (not Harf)",
+                "Only Harf",
+                "Only Fi'l",
+                "All three equally"
+              ],
+              "answer": "Ism and Fi'l (not Harf)"
+            },
+            {
+              "text": "What is At-Taṣrīf?",
+              "options": [
+                "The process of deriving different word-forms from a root",
+                "A type of i'rāb",
+                "A conjunction",
+                "A plural pattern"
+              ],
+              "answer": "The process of deriving different word-forms from a root"
+            },
+            {
+              "text": "Why is Sarf sometimes called a foundational science alongside Nahw?",
+              "options": [
+                "Because correct word-formation underlies correct usage in sentences",
+                "Because it was the first science ever developed",
+                "Because it has no rules",
+                "Because it only applies to poetry"
+              ],
+              "answer": "Because correct word-formation underlies correct usage in sentences"
+            },
+            {
+              "text": "Which of these is a valid Sarf output form derived from a root?",
+              "options": [
+                "Ism al-Fā'il (active participle)",
+                "Ḥarf al-Jarr",
+                "Ḍamīr",
+                "I'rāb case"
+              ],
+              "answer": "Ism al-Fā'il (active participle)"
+            }
+          ]
+        },
+        {
+          "id": "stage2",
+          "title": "Mujarrad vs Mazīd",
+          "icon": "🌾",
+          "description": "The bare root vs the augmented root",
+          "kicker": "Bare vs Augmented Roots",
+          "questions": [
+            {
+              "text": "What does Al-Fi'l al-Mujarrad mean?",
+              "options": [
+                "A verb consisting only of its original root letters",
+                "A verb with extra letters added",
+                "A plural verb",
+                "A passive verb"
+              ],
+              "answer": "A verb consisting only of its original root letters"
+            },
+            {
+              "text": "What does Al-Fi'l al-Mazīd mean?",
+              "options": [
+                "A verb with one or more extra letters added to the root",
+                "The bare root verb",
+                "A negated verb",
+                "A dual verb"
+              ],
+              "answer": "A verb with one or more extra letters added to the root"
+            },
+            {
+              "text": "كَتَبَ (kataba) is an example of...",
+              "options": [
+                "Fi'l Mujarrad (bare root)",
+                "Fi'l Mazīd",
+                "Ism",
+                "Harf"
+              ],
+              "answer": "Fi'l Mujarrad (bare root)"
+            },
+            {
+              "text": "كَاتَبَ (kātaba — \"to correspond with\") compared to كَتَبَ is an example of...",
+              "options": [
+                "Fi'l Mazīd (an alif added)",
+                "Fi'l Mujarrad",
+                "A different root entirely",
+                "A plural form"
+              ],
+              "answer": "Fi'l Mazīd (an alif added)"
+            },
+            {
+              "text": "Adding extra letters to a Mazīd verb typically does what to its meaning?",
+              "options": [
+                "Shifts or intensifies the meaning of the root",
+                "Has no effect at all",
+                "Only changes pronunciation",
+                "Turns it into a noun"
+              ],
+              "answer": "Shifts or intensifies the meaning of the root"
+            },
+            {
+              "text": "Which root category can a Fi'l Mujarrad belong to, based on letter count?",
+              "options": [
+                "Thulāthī (3 letters) or Rubā'ī (4 letters)",
+                "Only if the root has a weak middle letter",
+                "Only 5 letters",
+                "Only 2 letters"
+              ],
+              "answer": "Thulāthī (3 letters) or Rubā'ī (4 letters)"
+            }
+          ]
+        },
+        {
+          "id": "stage3",
+          "title": "Al-Thulāthī al-Mujarrad — The Six Abwāb",
+          "icon": "🔟",
+          "description": "The six vowel patterns of the bare triliteral verb",
+          "kicker": "The Six Patterns",
+          "questions": [
+            {
+              "text": "How many Abwāb (patterns) does the bare triliteral verb (Al-Thulāthī al-Mujarrad) have?",
+              "options": [
+                "Six",
+                "Three",
+                "Ten",
+                "Four"
+              ],
+              "answer": "Six"
+            },
+            {
+              "text": "Bāb 1 follows which vowel pattern (Māḍī–Muḍāri')?",
+              "options": [
+                "Fatḥah–Dammah (نَصَرَ يَنصُرُ)",
+                "Fatḥah–Kasrah",
+                "Kasrah–Fatḥah",
+                "Dammah–Dammah"
+              ],
+              "answer": "Fatḥah–Dammah (نَصَرَ يَنصُرُ)"
+            },
+            {
+              "text": "ضَرَبَ يَضْرِبُ (daraba — yaḍribu) follows which Bāb pattern?",
+              "options": [
+                "Fatḥah–Kasrah",
+                "Fatḥah–Dammah",
+                "Dammah–Dammah",
+                "Kasrah–Kasrah"
+              ],
+              "answer": "Fatḥah–Kasrah"
+            },
+            {
+              "text": "فَتَحَ يَفْتَحُ (fataḥa — yaftaḥu) follows which Bāb pattern?",
+              "options": [
+                "Fatḥah–Fatḥah",
+                "Fatḥah–Kasrah",
+                "Kasrah–Fatḥah",
+                "Dammah–Dammah"
+              ],
+              "answer": "Fatḥah–Fatḥah"
+            },
+            {
+              "text": "عَلِمَ يَعْلَمُ ('alima — ya'lamu) follows which Bāb pattern?",
+              "options": [
+                "Kasrah–Fatḥah",
+                "Fatḥah–Kasrah",
+                "Dammah–Dammah",
+                "Kasrah–Kasrah"
+              ],
+              "answer": "Kasrah–Fatḥah"
+            },
+            {
+              "text": "كَرُمَ يَكْرُمُ (karuma — yakrumu) follows which Bāb pattern?",
+              "options": [
+                "Dammah–Dammah",
+                "Fatḥah–Dammah",
+                "Kasrah–Fatḥah",
+                "Fatḥah–Fatḥah"
+              ],
+              "answer": "Dammah–Dammah"
+            },
+            {
+              "text": "Which Bāb is considered the rarest among the six?",
+              "options": [
+                "Kasrah–Kasrah (Bāb 6)",
+                "Fatḥah–Dammah",
+                "Fatḥah–Kasrah",
+                "Dammah–Dammah"
+              ],
+              "answer": "Kasrah–Kasrah (Bāb 6)"
+            }
+          ]
+        },
+        {
+          "id": "stage4",
+          "title": "Al-Fi'l al-Māḍī — Past Tense",
+          "icon": "⏪",
+          "description": "The full 14-form conjugation of the past tense",
+          "kicker": "Past Tense Conjugation",
+          "questions": [
+            {
+              "text": "What is the Māḍī form of كَتَبَ for هُوَ (he)?",
+              "options": [
+                "كَتَبَ",
+                "كَتَبَا",
+                "كَتَبُوا",
+                "كَتَبَتْ"
+              ],
+              "answer": "كَتَبَ"
+            },
+            {
+              "text": "What is the Māḍī form of كَتَبَ for هِيَ (she)?",
+              "options": [
+                "كَتَبَتْ",
+                "كَتَبَ",
+                "كَتَبْنَ",
+                "كَتَبْتِ"
+              ],
+              "answer": "كَتَبَتْ"
+            },
+            {
+              "text": "What is the Māḍī form of كَتَبَ for هُمْ (they, masc. plural)?",
+              "options": [
+                "كَتَبُوا",
+                "كَتَبَا",
+                "كَتَبْنَ",
+                "كَتَبَ"
+              ],
+              "answer": "كَتَبُوا"
+            },
+            {
+              "text": "What is the Māḍī form of كَتَبَ for أَنْتَ (you, masc. singular)?",
+              "options": [
+                "كَتَبْتَ",
+                "كَتَبْتِ",
+                "كَتَبْتُ",
+                "كَتَبْتُمْ"
+              ],
+              "answer": "كَتَبْتَ"
+            },
+            {
+              "text": "What is the Māḍī form of كَتَبَ for أَنَا (I)?",
+              "options": [
+                "كَتَبْتُ",
+                "كَتَبْتَ",
+                "كَتَبْنَا",
+                "كَتَبَ"
+              ],
+              "answer": "كَتَبْتُ"
+            },
+            {
+              "text": "What is the Māḍī form of كَتَبَ for نَحْنُ (we)?",
+              "options": [
+                "كَتَبْنَا",
+                "كَتَبْتُمْ",
+                "كَتَبُوا",
+                "كَتَبْتُ"
+              ],
+              "answer": "كَتَبْنَا"
+            },
+            {
+              "text": "How many total conjugated forms does a Māḍī verb have across all persons?",
+              "options": [
+                "Fourteen",
+                "Ten",
+                "Six",
+                "Twenty"
+              ],
+              "answer": "Fourteen"
+            }
+          ]
+        },
+        {
+          "id": "stage5",
+          "title": "Al-Fi'l al-Muḍāri' — Present Tense",
+          "icon": "⏩",
+          "description": "The full conjugation of the present/future tense",
+          "kicker": "Present Tense Conjugation",
+          "questions": [
+            {
+              "text": "What is the Muḍāri' form of كَتَبَ for هُوَ (he)?",
+              "options": [
+                "يَكْتُبُ",
+                "تَكْتُبُ",
+                "أَكْتُبُ",
+                "نَكْتُبُ"
+              ],
+              "answer": "يَكْتُبُ"
+            },
+            {
+              "text": "What is the Muḍāri' form of كَتَبَ for هِيَ (she)?",
+              "options": [
+                "تَكْتُبُ",
+                "يَكْتُبُ",
+                "تَكْتُبِينَ",
+                "يَكْتُبْنَ"
+              ],
+              "answer": "تَكْتُبُ"
+            },
+            {
+              "text": "What is the Muḍāri' form of كَتَبَ for أَنْتِ (you, fem. singular)?",
+              "options": [
+                "تَكْتُبِينَ",
+                "تَكْتُبُ",
+                "تَكْتُبَانِ",
+                "تَكْتُبْنَ"
+              ],
+              "answer": "تَكْتُبِينَ"
+            },
+            {
+              "text": "What is the Muḍāri' form of كَتَبَ for أَنَا (I)?",
+              "options": [
+                "أَكْتُبُ",
+                "نَكْتُبُ",
+                "يَكْتُبُ",
+                "تَكْتُبُ"
+              ],
+              "answer": "أَكْتُبُ"
+            },
+            {
+              "text": "What is the Muḍāri' form of كَتَبَ for نَحْنُ (we)?",
+              "options": [
+                "نَكْتُبُ",
+                "أَكْتُبُ",
+                "يَكْتُبُونَ",
+                "تَكْتُبُونَ"
+              ],
+              "answer": "نَكْتُبُ"
+            },
+            {
+              "text": "What is the Muḍāri' form of كَتَبَ for هُمْ (they, masc. plural)?",
+              "options": [
+                "يَكْتُبُونَ",
+                "يَكْتُبْنَ",
+                "تَكْتُبُونَ",
+                "يَكْتُبَانِ"
+              ],
+              "answer": "يَكْتُبُونَ"
+            },
+            {
+              "text": "Which prefix letter is used for أَنَا (I) in the Muḍāri'?",
+              "options": [
+                "أَ",
+                "تَ",
+                "يَ",
+                "نَ"
+              ],
+              "answer": "أَ"
+            }
+          ]
+        },
+        {
+          "id": "stage6",
+          "title": "Al-Fi'l al-Amr — The Imperative",
+          "icon": "❗",
+          "description": "Forming commands from the present tense",
+          "kicker": "The Imperative",
+          "questions": [
+            {
+              "text": "Al-Fi'l al-Amr (imperative) is derived from which tense?",
+              "options": [
+                "Al-Fi'l al-Muḍāri'",
+                "Al-Fi'l al-Māḍī",
+                "It's a separate root entirely",
+                "Ism al-Fā'il"
+              ],
+              "answer": "Al-Fi'l al-Muḍāri'"
+            },
+            {
+              "text": "What is the Amr form of كَتَبَ for أَنْتَ (you, masc. singular)?",
+              "options": [
+                "اُكْتُبْ",
+                "تَكْتُبْ",
+                "كَتَبْتَ",
+                "اُكْتُبِي"
+              ],
+              "answer": "اُكْتُبْ"
+            },
+            {
+              "text": "What is the Amr form of كَتَبَ for أَنْتِ (you, fem. singular)?",
+              "options": [
+                "اُكْتُبِي",
+                "اُكْتُبْ",
+                "اُكْتُبَا",
+                "اُكْتُبْنَ"
+              ],
+              "answer": "اُكْتُبِي"
+            },
+            {
+              "text": "What is the Amr form of كَتَبَ for أَنْتُمْ (you all, masc. plural)?",
+              "options": [
+                "اُكْتُبُوا",
+                "اُكْتُبْ",
+                "اُكْتُبَا",
+                "اُكْتُبْنَ"
+              ],
+              "answer": "اُكْتُبُوا"
+            },
+            {
+              "text": "For how many grammatical persons does the Amr (imperative) exist?",
+              "options": [
+                "Only the second person (you)",
+                "All persons, including 'I' and 'he'",
+                "Only first person",
+                "Only third person"
+              ],
+              "answer": "Only the second person (you)"
+            },
+            {
+              "text": "What typically happens to the Muḍāri' prefix when forming the Amr?",
+              "options": [
+                "It is dropped, and the ending changes to jazm",
+                "It is doubled",
+                "It becomes a suffix instead",
+                "Nothing changes at all"
+              ],
+              "answer": "It is dropped, and the ending changes to jazm"
+            }
+          ]
+        },
+        {
+          "id": "stage7",
+          "title": "Ism al-Fā'il — The Active Participle",
+          "icon": "🏃",
+          "description": "The \"doer\" noun — pattern fā'il",
+          "kicker": "Active Participle",
+          "questions": [
+            {
+              "text": "What does Ism al-Fā'il mean/express?",
+              "options": [
+                "The doer of an action (\"one who writes\")",
+                "The receiver of an action",
+                "A place name",
+                "An instrument"
+              ],
+              "answer": "The doer of an action (\"one who writes\")"
+            },
+            {
+              "text": "What is the pattern (wazn) of Ism al-Fā'il from a bare triliteral root?",
+              "options": [
+                "فَاعِل (fā'il)",
+                "مَفْعُول (maf'ūl)",
+                "فَعِيل (fa'īl)",
+                "أَفْعَل (af'al)"
+              ],
+              "answer": "فَاعِل (fā'il)"
+            },
+            {
+              "text": "What is the Ism al-Fā'il from كَتَبَ (kataba — to write)?",
+              "options": [
+                "كَاتِب (kātib — one who writes)",
+                "مَكْتُوب (maktūb)",
+                "كِتَاب (kitāb)",
+                "كَتَّاب (kattāb)"
+              ],
+              "answer": "كَاتِب (kātib — one who writes)"
+            },
+            {
+              "text": "What is the Ism al-Fā'il from قَرَأَ (qara'a — to read)?",
+              "options": [
+                "قَارِئ (qāri' — one who reads)",
+                "مَقْرُوء (maqrū')",
+                "قِرَاءَة (qirā'ah)",
+                "قَرَّاء (qarrā')"
+              ],
+              "answer": "قَارِئ (qāri' — one who reads)"
+            },
+            {
+              "text": "Ism al-Fā'il grammatically behaves most like which part of speech?",
+              "options": [
+                "A descriptive noun/adjective",
+                "A fixed particle",
+                "A conjunction",
+                "A number"
+              ],
+              "answer": "A descriptive noun/adjective"
+            },
+            {
+              "text": "What is the Ism al-Fā'il from ذَهَبَ (dhahaba — to go)?",
+              "options": [
+                "ذَاهِب (dhāhib — one who goes)",
+                "مَذْهُوب",
+                "ذَهَاب",
+                "ذَهَّاب"
+              ],
+              "answer": "ذَاهِب (dhāhib — one who goes)"
+            }
+          ]
+        },
+        {
+          "id": "stage8",
+          "title": "Ism al-Maf'ūl — The Passive Participle",
+          "icon": "🎯",
+          "description": "The \"receiver\" noun — pattern maf'ūl",
+          "kicker": "Passive Participle",
+          "questions": [
+            {
+              "text": "What does Ism al-Maf'ūl mean/express?",
+              "options": [
+                "The receiver of an action (\"that which is written\")",
+                "The doer of an action",
+                "A place of action",
+                "A tool used"
+              ],
+              "answer": "The receiver of an action (\"that which is written\")"
+            },
+            {
+              "text": "What is the pattern (wazn) of Ism al-Maf'ūl from a bare triliteral root?",
+              "options": [
+                "مَفْعُول (maf'ūl)",
+                "فَاعِل (fā'il)",
+                "فَعِيل (fa'īl)",
+                "مِفْعَال (mif'āl)"
+              ],
+              "answer": "مَفْعُول (maf'ūl)"
+            },
+            {
+              "text": "What is the Ism al-Maf'ūl from كَتَبَ (kataba)?",
+              "options": [
+                "مَكْتُوب (maktūb — that which is written)",
+                "كَاتِب (kātib)",
+                "كِتَابَة",
+                "مَكْتَب"
+              ],
+              "answer": "مَكْتُوب (maktūb — that which is written)"
+            },
+            {
+              "text": "What is the Ism al-Maf'ūl from فَهِمَ (fahima — to understand)?",
+              "options": [
+                "مَفْهُوم (mafhūm — understood/a concept)",
+                "فَاهِم (fāhim)",
+                "فَهْم",
+                "مِفْهَام"
+              ],
+              "answer": "مَفْهُوم (mafhūm — understood/a concept)"
+            },
+            {
+              "text": "Can Ism al-Maf'ūl only be formed from transitive (muta'addī) verbs?",
+              "options": [
+                "Yes — a verb needs an object to have a \"receiver\" form",
+                "No, any verb can form it",
+                "Only from Mazīd verbs",
+                "Only from weak verbs"
+              ],
+              "answer": "Yes — a verb needs an object to have a \"receiver\" form"
+            },
+            {
+              "text": "What is the Ism al-Maf'ūl from نَصَرَ (naṣara — to help/support)?",
+              "options": [
+                "مَنْصُور (manṣūr — one who is helped)",
+                "نَاصِر (nāṣir)",
+                "نَصْر",
+                "مِنْصَار"
+              ],
+              "answer": "مَنْصُور (manṣūr — one who is helped)"
+            }
+          ]
+        },
+        {
+          "id": "stage9",
+          "title": "Al-Maṣdar — The Verbal Noun",
+          "icon": "📜",
+          "description": "The noun expressing the action itself",
+          "kicker": "The Verbal Noun",
+          "questions": [
+            {
+              "text": "What is Al-Maṣdar?",
+              "options": [
+                "A noun expressing the pure action/concept of the verb, without tense",
+                "A past-tense verb",
+                "A type of pronoun",
+                "A preposition"
+              ],
+              "answer": "A noun expressing the pure action/concept of the verb, without tense"
+            },
+            {
+              "text": "What is the Maṣdar of كَتَبَ (kataba — to write)?",
+              "options": [
+                "كِتَابَة (kitābah — writing)",
+                "كَاتِب",
+                "مَكْتُوب",
+                "كِتَاب"
+              ],
+              "answer": "كِتَابَة (kitābah — writing)"
+            },
+            {
+              "text": "What is the Maṣdar of قَرَأَ (qara'a — to read)?",
+              "options": [
+                "قِرَاءَة (qirā'ah — reading)",
+                "قَارِئ",
+                "مَقْرُوء",
+                "قُرْآن"
+              ],
+              "answer": "قِرَاءَة (qirā'ah — reading)"
+            },
+            {
+              "text": "Unlike a conjugated verb, does Al-Maṣdar carry tense (past/present)?",
+              "options": [
+                "No, it is timeless — just the concept of the action",
+                "Yes, but only for transitive verbs",
+                "Only when paired with كَانَ",
+                "It changes tense based on context"
+              ],
+              "answer": "No, it is timeless — just the concept of the action"
+            },
+            {
+              "text": "Are the Maṣdar patterns of the bare triliteral root (Thulāthī Mujarrad) fixed or varied?",
+              "options": [
+                "Varied — they must be learned individually per verb (samā'ī)",
+                "Usually the same pattern, with a few common exceptions",
+                "Similar to, but distinct from, the Muḍāri' pattern",
+                "They don't exist for bare roots"
+              ],
+              "answer": "Varied — they must be learned individually per verb (samā'ī)"
+            },
+            {
+              "text": "What is the Maṣdar of ذَهَبَ (dhahaba — to go)?",
+              "options": [
+                "ذَهَاب (dhahāb — going)",
+                "ذَاهِب",
+                "مَذْهُوب",
+                "ذَهَّاب"
+              ],
+              "answer": "ذَهَاب (dhahāb — going)"
+            }
+          ]
+        },
+        {
+          "id": "stage10",
+          "title": "Ṣaḥīḥ vs Mu'tall Verbs",
+          "icon": "💧",
+          "description": "Sound roots vs roots containing a weak letter",
+          "kicker": "Sound vs Weak Roots",
+          "questions": [
+            {
+              "text": "What is Al-Fi'l aṣ-Ṣaḥīḥ?",
+              "options": [
+                "A verb whose root letters are all sound (no wāw, yā', or hamzah issues)",
+                "A verb with a weak letter in its root",
+                "A doubled-letter verb",
+                "A hollow verb"
+              ],
+              "answer": "A verb whose root letters are all sound (no wāw, yā', or hamzah issues)"
+            },
+            {
+              "text": "What is Al-Fi'l al-Mu'tall?",
+              "options": [
+                "A verb containing a weak letter (wāw or yā') as one of its root letters",
+                "A verb with no vowels at all",
+                "A plural verb",
+                "A negated verb"
+              ],
+              "answer": "A verb containing a weak letter (wāw or yā') as one of its root letters"
+            },
+            {
+              "text": "Which of these root letters are considered \"weak\" (ḥurūf al-'illah)?",
+              "options": [
+                "و (wāw), ي (yā'), ا (alif)",
+                "ب, ت, ث",
+                "ك, ل, م",
+                "ص, ض, ط"
+              ],
+              "answer": "و (wāw), ي (yā'), ا (alif)"
+            },
+            {
+              "text": "وَجَدَ (wajada — to find) is an example of which category?",
+              "options": [
+                "Mu'tall (weak root — starts with wāw)",
+                "Ṣaḥīḥ",
+                "Muḍā'af",
+                "Mahmūz"
+              ],
+              "answer": "Mu'tall (weak root — starts with wāw)"
+            },
+            {
+              "text": "كَتَبَ (kataba) is an example of which category?",
+              "options": [
+                "Ṣaḥīḥ (all sound letters)",
+                "Mu'tall",
+                "Ajwaf",
+                "Nāqiṣ"
+              ],
+              "answer": "Ṣaḥīḥ (all sound letters)"
+            },
+            {
+              "text": "Why does Sarf give special attention to Mu'tall verbs?",
+              "options": [
+                "Their weak letters often change or drop during conjugation, creating irregular forms",
+                "They are conjugated exactly like Ṣaḥīḥ verbs",
+                "They are conjugated the same in the passive voice",
+                "They only exist in the plural"
+              ],
+              "answer": "Their weak letters often change or drop during conjugation, creating irregular forms"
+            }
+          ]
+        },
+        {
+          "id": "stage11",
+          "title": "Passive Past Tense",
+          "icon": "🔄",
+          "description": "Mabnī lil-Majhūl — the passive voice in Māḍī",
+          "kicker": "Passive Past Tense",
+          "questions": [
+            {
+              "text": "What does Mabnī lil-Majhūl mean?",
+              "options": [
+                "\"Built for the unknown [doer]\" — the passive voice",
+                "The active voice",
+                "The imperative",
+                "A negated verb"
+              ],
+              "answer": "\"Built for the unknown [doer]\" — the passive voice"
+            },
+            {
+              "text": "What is the vowel pattern of a sound verb's passive Māḍī?",
+              "options": [
+                "Dammah on the first letter, Kasrah before the last (فُعِلَ)",
+                "Fatḥah throughout",
+                "Kasrah on the first letter only",
+                "No vowel change from the active"
+              ],
+              "answer": "Dammah on the first letter, Kasrah before the last (فُعِلَ)"
+            },
+            {
+              "text": "What is the passive Māḍī of كَتَبَ؟",
+              "options": [
+                "كُتِبَ (kutiba)",
+                "كَاتَبَ",
+                "أُكْتِبَ",
+                "كَتَّبَ"
+              ],
+              "answer": "كُتِبَ (kutiba)"
+            },
+            {
+              "text": "What is the passive Māḍī of قَرَأَ؟",
+              "options": [
+                "قُرِئَ (quri'a)",
+                "قَارَأَ",
+                "أَقْرَأَ",
+                "قَرَّأَ"
+              ],
+              "answer": "قُرِئَ (quri'a)"
+            },
+            {
+              "text": "In a passive sentence, what happens to the Fā'il (original doer)?",
+              "options": [
+                "It is omitted from the sentence entirely",
+                "It becomes Manṣūb",
+                "It stays exactly as in the active sentence",
+                "It moves to the end"
+              ],
+              "answer": "It is omitted from the sentence entirely"
+            },
+            {
+              "text": "What is the noun that replaces the Fā'il in a passive sentence called?",
+              "options": [
+                "Nā'ib al-Fā'il (deputy subject)",
+                "Al-Khabar",
+                "Al-Maf'ūl al-Muṭlaq",
+                "Al-Munādā"
+              ],
+              "answer": "Nā'ib al-Fā'il (deputy subject)"
+            }
+          ]
+        },
+        {
+          "id": "stage12",
+          "title": "Passive Present Tense",
+          "icon": "🔃",
+          "description": "Mabnī lil-Majhūl — the passive voice in Muḍāri'",
+          "kicker": "Passive Present Tense",
+          "questions": [
+            {
+              "text": "What is the vowel pattern of the passive Muḍāri' for a sound verb?",
+              "options": [
+                "Dammah on the prefix, Fatḥah before the last letter (يُفْعَلُ)",
+                "Kasrah throughout",
+                "Same as the active form",
+                "Sukūn on the prefix"
+              ],
+              "answer": "Dammah on the prefix, Fatḥah before the last letter (يُفْعَلُ)"
+            },
+            {
+              "text": "What is the passive Muḍāri' of يَكْتُبُ؟",
+              "options": [
+                "يُكْتَبُ (yuktabu — \"it is written\")",
+                "يَكْتُبُ",
+                "يُكَاتِبُ",
+                "أُكْتَبُ"
+              ],
+              "answer": "يُكْتَبُ (yuktabu — \"it is written\")"
+            },
+            {
+              "text": "What is the passive Muḍāri' of يَفْتَحُ؟",
+              "options": [
+                "يُفْتَحُ (yuftaḥu)",
+                "يَفْتَحُ",
+                "يُفَتِّحُ",
+                "أُفْتَحُ"
+              ],
+              "answer": "يُفْتَحُ (yuftaḥu)"
+            },
+            {
+              "text": "What case does the Nā'ib al-Fā'il take?",
+              "options": [
+                "Marfū', same as a regular Fā'il",
+                "Manṣūb",
+                "Majrūr",
+                "Majzūm"
+              ],
+              "answer": "Marfū', same as a regular Fā'il"
+            },
+            {
+              "text": "يُقْرَأُ الْكِتَابُ — what is الْكِتَابُ here?",
+              "options": [
+                "Nā'ib al-Fā'il, Marfū'",
+                "Maf'ūl Bih, Manṣūb",
+                "Muḍāf Ilayhi, Majrūr",
+                "Khabar"
+              ],
+              "answer": "Nā'ib al-Fā'il, Marfū'"
+            },
+            {
+              "text": "Which prefix vowel distinguishes passive from active in Muḍāri' verbs?",
+              "options": [
+                "Dammah on the first letter instead of Fatḥah",
+                "Kasrah instead of Dammah",
+                "No difference exists",
+                "Sukūn instead of Fatḥah"
+              ],
+              "answer": "Dammah on the first letter instead of Fatḥah"
+            }
+          ]
+        },
+        {
+          "id": "stage13",
+          "title": "Negation Particles & Verb Effects",
+          "icon": "🚫",
+          "description": "How lā, lam, and lan change a verb's tense and case",
+          "kicker": "Negating Verbs",
+          "questions": [
+            {
+              "text": "What does لَا (lā) do to a Muḍāri' verb in general negation?",
+              "options": [
+                "Negates it in the present, with no case change",
+                "Shifts it to the past",
+                "Shifts it to the future",
+                "Makes it passive"
+              ],
+              "answer": "Negates it in the present, with no case change"
+            },
+            {
+              "text": "What does لَمْ (lam) do to a Muḍāri' verb?",
+              "options": [
+                "Negates it, shifts the meaning to past, and causes Jazm",
+                "Negates it for the future only",
+                "Has no grammatical effect",
+                "Makes it passive"
+              ],
+              "answer": "Negates it, shifts the meaning to past, and causes Jazm"
+            },
+            {
+              "text": "What does لَنْ (lan) do to a Muḍāri' verb?",
+              "options": [
+                "Negates it for the future and causes Naṣb",
+                "Negates it for the past and causes Jazm",
+                "Has no case effect",
+                "Makes it an imperative"
+              ],
+              "answer": "Negates it for the future and causes Naṣb"
+            },
+            {
+              "text": "Which particle negates a Māḍī verb directly, without changing its tense?",
+              "options": [
+                "مَا (mā)",
+                "لَمْ (lam)",
+                "لَنْ (lan)",
+                "لَا النَّاهِيَة"
+              ],
+              "answer": "مَا (mā)"
+            },
+            {
+              "text": "لَمْ يَكْتُبْ means...",
+              "options": [
+                "\"He did not write\"",
+                "\"He will not write\"",
+                "\"He is not writing\"",
+                "\"Do not write!\""
+              ],
+              "answer": "\"He did not write\""
+            },
+            {
+              "text": "لَنْ يَكْتُبَ means...",
+              "options": [
+                "\"He will not write\"",
+                "\"He did not write\"",
+                "\"He is not writing\"",
+                "\"Write!\""
+              ],
+              "answer": "\"He will not write\""
+            }
+          ]
+        },
+        {
+          "id": "stage14",
+          "title": "Mushtaqq vs Jāmid Nouns",
+          "icon": "🌳",
+          "description": "Derived nouns vs frozen, non-derived nouns",
+          "kicker": "Derived vs Frozen Nouns",
+          "questions": [
+            {
+              "text": "What is Ism Jāmid?",
+              "options": [
+                "A noun NOT derived from a verb root",
+                "A noun derived from a verb",
+                "A plural noun",
+                "A feminine noun"
+              ],
+              "answer": "A noun NOT derived from a verb root"
+            },
+            {
+              "text": "What is Ism Mushtaqq?",
+              "options": [
+                "A noun derived from a verb root, carrying the action's meaning",
+                "A frozen, non-derived noun",
+                "A proper name only",
+                "A particle"
+              ],
+              "answer": "A noun derived from a verb root, carrying the action's meaning"
+            },
+            {
+              "text": "Is كَاتِب (kātib) Jāmid or Mushtaqq?",
+              "options": [
+                "Mushtaqq — derived from كَتَبَ",
+                "Jāmid — no root",
+                "Neither, it's a Harf",
+                "Both equally"
+              ],
+              "answer": "Mushtaqq — derived from كَتَبَ"
+            },
+            {
+              "text": "Is قَمَر (qamar — moon) Jāmid or Mushtaqq?",
+              "options": [
+                "Jāmid",
+                "Mushtaqq",
+                "It's a verb",
+                "It's a Harf"
+              ],
+              "answer": "Jāmid"
+            },
+            {
+              "text": "Which of these IS a Mushtaqq noun category studied in Sarf?",
+              "options": [
+                "Ism al-Fā'il",
+                "A random object name like بَيْت",
+                "A body part name like يَد",
+                "An animal name like أَسَد"
+              ],
+              "answer": "Ism al-Fā'il"
+            },
+            {
+              "text": "Can Jāmid nouns form an Ism al-Fā'il or Ism al-Maf'ūl?",
+              "options": [
+                "No, since they have no verb root to derive from",
+                "Only if a synonymous verb root exists",
+                "Only in the plural",
+                "Only if feminine"
+              ],
+              "answer": "No, since they have no verb root to derive from"
+            }
+          ]
+        },
+        {
+          "id": "stage15",
+          "title": "Morphological Gender Markers",
+          "icon": "⚥",
+          "description": "Beyond tā' marbūṭah — alif maqṣūrah and alif mamdūdah",
+          "kicker": "Feminine Markers",
+          "questions": [
+            {
+              "text": "Besides ة (tā' marbūṭah), which ending can mark a feminine noun?",
+              "options": [
+                "Alif Maqṣūrah (ى), as in حُبْلَى",
+                "Wāw at the start",
+                "Sukūn at the end",
+                "Tanwīn Kasrah"
+              ],
+              "answer": "Alif Maqṣūrah (ى), as in حُبْلَى"
+            },
+            {
+              "text": "What is Alif Mamdūdah as a feminine marker?",
+              "options": [
+                "A final اء ending, as in صَحْرَاء",
+                "A final ة ending",
+                "A final ى ending",
+                "A doubled letter"
+              ],
+              "answer": "A final اء ending, as in صَحْرَاء"
+            },
+            {
+              "text": "حُبْلَى (ḥublā — pregnant) uses which feminine marker?",
+              "options": [
+                "Alif Maqṣūrah",
+                "Tā' Marbūṭah",
+                "Alif Mamdūdah",
+                "None — it's masculine"
+              ],
+              "answer": "Alif Maqṣūrah"
+            },
+            {
+              "text": "صَحْرَاء (ṣaḥrā' — desert) uses which feminine marker?",
+              "options": [
+                "Alif Mamdūdah",
+                "Tā' Marbūṭah",
+                "Alif Maqṣūrah",
+                "None — it's masculine"
+              ],
+              "answer": "Alif Mamdūdah"
+            },
+            {
+              "text": "Does a single word typically carry more than one feminine marker at once?",
+              "options": [
+                "No, typically only one appears per word",
+                "Only when the noun is also a broken plural",
+                "Only in poetic or archaic usage",
+                "Only proper names can combine two markers"
+              ],
+              "answer": "No, typically only one appears per word"
+            }
+          ]
+        },
+        {
+          "id": "stage16",
+          "title": "Singular, Dual & Plural — Formation Basics",
+          "icon": "🔢",
+          "description": "How number categories are built morphologically",
+          "kicker": "Number Formation",
+          "questions": [
+            {
+              "text": "What are the three number categories in Arabic morphology?",
+              "options": [
+                "Mufrad, Muthannā, Jam'",
+                "Mudhakkar, Mu'annath, Jāmid",
+                "Ṣaḥīḥ, Mu'tall, Muḍā'af",
+                "Mujarrad, Mazīd, Rubā'ī"
+              ],
+              "answer": "Mufrad, Muthannā, Jam'"
+            },
+            {
+              "text": "How is Muthannā (dual) formed from a Mufrad noun?",
+              "options": [
+                "Adding ـَانِ / ـَيْنِ to the singular",
+                "Adding ة to the singular",
+                "Doubling the middle letter",
+                "Adding ونَ to the singular"
+              ],
+              "answer": "Adding ـَانِ / ـَيْنِ to the singular"
+            },
+            {
+              "text": "طَالِب → طَالِبَانِ is an example of forming...",
+              "options": [
+                "The dual (Muthannā)",
+                "The sound plural",
+                "The broken plural",
+                "The feminine form"
+              ],
+              "answer": "The dual (Muthannā)"
+            },
+            {
+              "text": "How many sub-categories does Jam' (plural) have in Arabic morphology?",
+              "options": [
+                "Two — Jam' Sālim and Jam' Taksīr",
+                "Three",
+                "One",
+                "Four"
+              ],
+              "answer": "Two — Jam' Sālim and Jam' Taksīr"
+            },
+            {
+              "text": "What defines Jam' Sālim (sound plural)?",
+              "options": [
+                "The singular form stays intact, with a suffix added",
+                "The internal pattern of the word changes completely",
+                "It only applies to broken words",
+                "It has no fixed rule"
+              ],
+              "answer": "The singular form stays intact, with a suffix added"
+            }
+          ]
+        },
+        {
+          "id": "stage17",
+          "title": "Sound Plural Formation Rules",
+          "icon": "👥",
+          "description": "The exact suffixes for masculine and feminine sound plurals",
+          "kicker": "Sound Plural Suffixes",
+          "questions": [
+            {
+              "text": "What suffix forms Jam' Mudhakkar Sālim (Marfū')?",
+              "options": [
+                "ونَ (ūna)",
+                "ينَ (īna)",
+                "اتٌ (ātun)",
+                "َانِ (āni)"
+              ],
+              "answer": "ونَ (ūna)"
+            },
+            {
+              "text": "What suffix forms Jam' Mudhakkar Sālim in Manṣūb/Majrūr?",
+              "options": [
+                "ينَ (īna)",
+                "ونَ (ūna)",
+                "اتٌ (ātun)",
+                "َيْنِ (ayni)"
+              ],
+              "answer": "ينَ (īna)"
+            },
+            {
+              "text": "What suffix forms Jam' Mu'annath Sālim (sound feminine plural)?",
+              "options": [
+                "اتٌ (ātun)",
+                "ونَ (ūna)",
+                "ينَ (īna)",
+                "َانِ (āni)"
+              ],
+              "answer": "اتٌ (ātun)"
+            },
+            {
+              "text": "مُسْلِمُونَ is formed by adding ونَ to which singular?",
+              "options": [
+                "مُسْلِم",
+                "مُسْلِمَة",
+                "أَسْلَمَ",
+                "إِسْلَام"
+              ],
+              "answer": "مُسْلِم"
+            },
+            {
+              "text": "Jam' Mudhakkar Sālim mainly applies to which category of nouns?",
+              "options": [
+                "Rational/human male nouns",
+                "All nouns without exception",
+                "Only animal names",
+                "Only place names"
+              ],
+              "answer": "Rational/human male nouns"
+            }
+          ]
+        },
+        {
+          "id": "stage18",
+          "title": "Intro to Broken Plural Patterns",
+          "icon": "🧩",
+          "description": "Jam' Taksīr — plurals formed by internal pattern change",
+          "kicker": "Broken Plurals",
+          "questions": [
+            {
+              "text": "What is Jam' Taksīr?",
+              "options": [
+                "A plural formed by an internal pattern change, not just a suffix",
+                "A plural formed only by adding ونَ",
+                "A plural formed only by adding اتٌ",
+                "Another name for the dual"
+              ],
+              "answer": "A plural formed by an internal pattern change, not just a suffix"
+            },
+            {
+              "text": "كُتُب is the broken plural of...",
+              "options": [
+                "كِتَاب (kitāb)",
+                "كَاتِب",
+                "كِتَابَة",
+                "مَكْتَب"
+              ],
+              "answer": "كِتَاب (kitāb)"
+            },
+            {
+              "text": "رِجَال is the broken plural of...",
+              "options": [
+                "رَجُل (rajul)",
+                "رَجَعَ",
+                "رَاجِل",
+                "مَرْجِل"
+              ],
+              "answer": "رَجُل (rajul)"
+            },
+            {
+              "text": "Are broken plural patterns predictable by one simple rule?",
+              "options": [
+                "No — many patterns exist and must be learned individually (samā'ī)",
+                "Yes, there's exactly one pattern for all nouns",
+                "Only broken plurals need individual learning",
+                "They don't follow any pattern at all"
+              ],
+              "answer": "No — many patterns exist and must be learned individually (samā'ī)"
+            },
+            {
+              "text": "Which of these is a broken plural (Jam' Taksīr)?",
+              "options": [
+                "كُتُب",
+                "كَاتِبُونَ",
+                "كَاتِبَات",
+                "كَاتِبَانِ"
+              ],
+              "answer": "كُتُب"
+            }
+          ]
+        },
+        {
+          "id": "stage19",
+          "title": "Why Ḥarf Is Never Derived",
+          "icon": "🔒",
+          "description": "Contrasting Ism/Fi'l against fixed particles",
+          "kicker": "Particles & Derivation",
+          "questions": [
+            {
+              "text": "Can a Harf (particle) undergo Sarf-style derivation like Ism al-Fā'il or Maṣdar?",
+              "options": [
+                "No — Ḥurūf are fixed and never derived",
+                "Yes, every particle has a Maṣdar",
+                "Only some particles can",
+                "Only in the plural"
+              ],
+              "answer": "No — Ḥurūf are fixed and never derived"
+            },
+            {
+              "text": "Why does Sarf not study Ḥurūf at all?",
+              "options": [
+                "Because Ḥurūf have no root-based forms to derive from",
+                "Because Ḥurūf are too rare",
+                "Because Ḥurūf are only used in poetry",
+                "Because Ḥurūf are a type of Ism"
+              ],
+              "answer": "Because Ḥurūf have no root-based forms to derive from"
+            },
+            {
+              "text": "مِنْ (min) is which kalimah type?",
+              "options": [
+                "Harf",
+                "Ism",
+                "Fi'l",
+                "Maṣdar"
+              ],
+              "answer": "Harf"
+            },
+            {
+              "text": "Which two kalimah types does Sarf actually study?",
+              "options": [
+                "Ism and Fi'l",
+                "Ism and Harf",
+                "Fi'l and Harf",
+                "Only Fi'l"
+              ],
+              "answer": "Ism and Fi'l"
+            },
+            {
+              "text": "Does every Ism undergo derivation (i.e. is Mushtaqq)?",
+              "options": [
+                "No — Jāmid nouns don't; only Mushtaqq nouns do",
+                "Yes, every noun is derived from a verb",
+                "Only feminine nouns are derived",
+                "Only plural nouns are derived"
+              ],
+              "answer": "No — Jāmid nouns don't; only Mushtaqq nouns do"
+            }
+          ]
+        },
+        {
+          "id": "stage20",
+          "title": "Beginner Synthesis",
+          "icon": "🧭",
+          "description": "Bringing the whole Beginner level together",
+          "kicker": "Review & Synthesis",
+          "questions": [
+            {
+              "text": "Which pattern is Ism al-Fā'il derived on, from a bare triliteral root?",
+              "options": [
+                "فَاعِل",
+                "مَفْعُول",
+                "فَعِيل",
+                "أَفْعَل"
+              ],
+              "answer": "فَاعِل"
+            },
+            {
+              "text": "Which pattern is Ism al-Maf'ūl derived on?",
+              "options": [
+                "مَفْعُول",
+                "فَاعِل",
+                "فَعِيل",
+                "مِفْعَال"
+              ],
+              "answer": "مَفْعُول"
+            },
+            {
+              "text": "كُتِبَ is which voice and tense?",
+              "options": [
+                "Passive Māḍī",
+                "Active Māḍī",
+                "Passive Muḍāri'",
+                "Active Muḍāri'"
+              ],
+              "answer": "Passive Māḍī"
+            },
+            {
+              "text": "يُكْتَبُ is which voice and tense?",
+              "options": [
+                "Passive Muḍāri'",
+                "Active Muḍāri'",
+                "Passive Māḍī",
+                "Active Māḍī"
+              ],
+              "answer": "Passive Muḍāri'"
+            },
+            {
+              "text": "مَكْتَب is which derived noun type?",
+              "options": [
+                "Ism al-Makān (noun of place)",
+                "Ism al-Fā'il",
+                "Ism al-Maf'ūl",
+                "Ism al-Ālah"
+              ],
+              "answer": "Ism al-Makān (noun of place)"
+            },
+            {
+              "text": "كُتُب, relative to كِتَاب, is an example of...",
+              "options": [
+                "Jam' Taksīr (broken plural)",
+                "Jam' Sālim (sound plural)",
+                "Al-Muthannā (dual)",
+                "Ism al-Maf'ūl"
+              ],
+              "answer": "Jam' Taksīr (broken plural)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intermediate",
+      "label": "Intermediate",
+      "icon": "🌿",
+      "description": "Augmented verb forms and the three categories of weak roots",
+      "stages": [
+        {
+          "id": "stage1",
+          "title": "Al-Thulāthī al-Mazīd — Overview",
+          "icon": "🌟",
+          "description": "How extra letters reshape a triliteral root",
+          "kicker": "Augmented Forms Overview",
+          "questions": [
+            {
+              "text": "How many letters can be added to a bare triliteral root to form Mazīd patterns?",
+              "options": [
+                "One, two, or three extra letters",
+                "Only one",
+                "Usually only one, rarely more",
+                "Only vowels can be added, not consonants"
+              ],
+              "answer": "One, two, or three extra letters"
+            },
+            {
+              "text": "How many total forms (awzān) of the augmented triliteral verb are commonly taught?",
+              "options": [
+                "Ten (Forms II–X, using Form I as the bare root)",
+                "Three",
+                "Five",
+                "Fourteen"
+              ],
+              "answer": "Ten (Forms II–X, using Form I as the bare root)"
+            },
+            {
+              "text": "What is the general effect of augmentation (ziyādah) on meaning?",
+              "options": [
+                "It shifts meaning — causative, reflexive, reciprocal, intensive, etc., depending on the pattern",
+                "It only adds emphasis, nothing more",
+                "It only affects the verb's tense",
+                "It removes the verb's meaning entirely"
+              ],
+              "answer": "It shifts meaning — causative, reflexive, reciprocal, intensive, etc., depending on the pattern"
+            },
+            {
+              "text": "Which letters are commonly used as augmentation letters in Arabic (remembered by سَأَلْتُمُونِيهَا)?",
+              "options": [
+                "س، أ، ل، ت، م، و، ن، ي، هـ، ا",
+                "ب، ت، ث، ج",
+                "Only alif",
+                "Only hamzah"
+              ],
+              "answer": "س، أ، ل، ت، م، و، ن، ي، هـ، ا"
+            },
+            {
+              "text": "Does every Mazīd form change the Māḍī, Muḍāri', AND Maṣdar patterns together?",
+              "options": [
+                "Yes — each Mazīd form has its own consistent set of all three",
+                "No, only the Māḍī changes",
+                "No, only the Maṣdar changes",
+                "Mazīd forms have no Maṣdar"
+              ],
+              "answer": "Yes — each Mazīd form has its own consistent set of all three"
+            }
+          ]
+        },
+        {
+          "id": "stage2",
+          "title": "Wazn Af'ala — Form IV",
+          "icon": "4️⃣",
+          "description": "أَفْعَلَ — often causative",
+          "kicker": "Form IV (أَفْعَلَ)",
+          "questions": [
+            {
+              "text": "What is the Māḍī pattern of Form IV?",
+              "options": [
+                "أَفْعَلَ (af'ala)",
+                "فَعَّلَ (fa''ala)",
+                "فَاعَلَ (fā'ala)",
+                "اِنْفَعَلَ (infa'ala)"
+              ],
+              "answer": "أَفْعَلَ (af'ala)"
+            },
+            {
+              "text": "What meaning does Form IV commonly add to the root?",
+              "options": [
+                "Causative (\"to make/cause to do\")",
+                "Reciprocal (\"to do together\")",
+                "Passive/reflexive",
+                "Seeking (\"to ask for\")"
+              ],
+              "answer": "Causative (\"to make/cause to do\")"
+            },
+            {
+              "text": "أَخْرَجَ (akhraja — \"to take out/expel\") is Form IV of which root meaning \"to go out\"?",
+              "options": [
+                "خَرَجَ (kharaja)",
+                "دَخَلَ (dakhala)",
+                "رَجَعَ (raja'a)",
+                "نَزَلَ (nazala)"
+              ],
+              "answer": "خَرَجَ (kharaja)"
+            },
+            {
+              "text": "What is the Muḍāri' pattern of Form IV?",
+              "options": [
+                "يُفْعِلُ (yuf'ilu)",
+                "يَفْعُلُ (yaf'ulu)",
+                "يُفَاعِلُ",
+                "يَنْفَعِلُ"
+              ],
+              "answer": "يُفْعِلُ (yuf'ilu)"
+            },
+            {
+              "text": "What is the Ism al-Fā'il pattern of Form IV?",
+              "options": [
+                "مُفْعِل (muf'il)",
+                "فَاعِل (fā'il)",
+                "مُفَعِّل",
+                "مُتَفَاعِل"
+              ],
+              "answer": "مُفْعِل (muf'il)"
+            }
+          ]
+        },
+        {
+          "id": "stage3",
+          "title": "Wazn Fa''ala — Form II",
+          "icon": "2️⃣",
+          "description": "فَعَّلَ — doubling the middle letter, causative/intensive",
+          "kicker": "Form II (فَعَّلَ)",
+          "questions": [
+            {
+              "text": "What is the Māḍī pattern of Form II?",
+              "options": [
+                "فَعَّلَ (fa''ala — middle letter doubled)",
+                "أَفْعَلَ",
+                "فَاعَلَ",
+                "تَفَعَّلَ"
+              ],
+              "answer": "فَعَّلَ (fa''ala — middle letter doubled)"
+            },
+            {
+              "text": "What does doubling the middle root letter (tashdīd) typically signal in Form II?",
+              "options": [
+                "Causative or intensive meaning",
+                "A weak root",
+                "A plural noun",
+                "A question"
+              ],
+              "answer": "Causative or intensive meaning"
+            },
+            {
+              "text": "عَلَّمَ ('allama — \"to teach\") is Form II of which root meaning \"to know\"?",
+              "options": [
+                "عَلِمَ ('alima)",
+                "عَمِلَ ('amila)",
+                "عَلَا ('alā)",
+                "عَلَقَ ('alaqa)"
+              ],
+              "answer": "عَلِمَ ('alima)"
+            },
+            {
+              "text": "What is the Maṣdar pattern of Form II?",
+              "options": [
+                "تَفْعِيل (taf'īl)",
+                "إِفْعَال (if'āl)",
+                "مُفَاعَلَة (mufā'alah)",
+                "اِنْفِعَال"
+              ],
+              "answer": "تَفْعِيل (taf'īl)"
+            },
+            {
+              "text": "What is the Ism al-Fā'il pattern of Form II?",
+              "options": [
+                "مُفَعِّل (mufa''il)",
+                "مُفْعِل",
+                "فَاعِل",
+                "مُتَفَعِّل"
+              ],
+              "answer": "مُفَعِّل (mufa''il)"
+            }
+          ]
+        },
+        {
+          "id": "stage4",
+          "title": "Wazn Fā'ala — Form III",
+          "icon": "3️⃣",
+          "description": "فَاعَلَ — mutual or reciprocal action",
+          "kicker": "Form III (فَاعَلَ)",
+          "questions": [
+            {
+              "text": "What is the Māḍī pattern of Form III?",
+              "options": [
+                "فَاعَلَ (fā'ala — alif after the first letter)",
+                "فَعَّلَ",
+                "أَفْعَلَ",
+                "تَفَاعَلَ"
+              ],
+              "answer": "فَاعَلَ (fā'ala — alif after the first letter)"
+            },
+            {
+              "text": "What meaning does Form III commonly express?",
+              "options": [
+                "A mutual or reciprocal action involving two parties",
+                "A causative action",
+                "A passive action",
+                "A command"
+              ],
+              "answer": "A mutual or reciprocal action involving two parties"
+            },
+            {
+              "text": "كَاتَبَ (kātaba — \"to correspond/write to each other\") is Form III of which root?",
+              "options": [
+                "كَتَبَ (kataba)",
+                "كَذَبَ (kadhaba)",
+                "كَبُرَ (kabura)",
+                "كَسَرَ (kasara)"
+              ],
+              "answer": "كَتَبَ (kataba)"
+            },
+            {
+              "text": "What is the Maṣdar pattern of Form III?",
+              "options": [
+                "مُفَاعَلَة (mufā'alah)",
+                "تَفْعِيل",
+                "إِفْعَال",
+                "اِفْتِعَال"
+              ],
+              "answer": "مُفَاعَلَة (mufā'alah)"
+            },
+            {
+              "text": "What is the Ism al-Fā'il pattern of Form III?",
+              "options": [
+                "مُفَاعِل (mufā'il)",
+                "مُفَعِّل",
+                "مُفْعِل",
+                "مُتَفَاعِل"
+              ],
+              "answer": "مُفَاعِل (mufā'il)"
+            }
+          ]
+        },
+        {
+          "id": "stage5",
+          "title": "Wazn Infa'ala — Form VII",
+          "icon": "7️⃣",
+          "description": "اِنْفَعَلَ — passive or reflexive sense",
+          "kicker": "Form VII (اِنْفَعَلَ)",
+          "questions": [
+            {
+              "text": "What is the Māḍī pattern of Form VII?",
+              "options": [
+                "اِنْفَعَلَ (infa'ala)",
+                "اِفْتَعَلَ",
+                "تَفَعَّلَ",
+                "اِسْتَفْعَلَ"
+              ],
+              "answer": "اِنْفَعَلَ (infa'ala)"
+            },
+            {
+              "text": "What meaning does Form VII typically express?",
+              "options": [
+                "A passive or automatic/reflexive result of the root action",
+                "A causative action",
+                "A reciprocal action",
+                "A command"
+              ],
+              "answer": "A passive or automatic/reflexive result of the root action"
+            },
+            {
+              "text": "اِنْكَسَرَ (inkasara — \"to be broken/to break [itself]\") is Form VII of which root?",
+              "options": [
+                "كَسَرَ (kasara — to break)",
+                "كَتَبَ (kataba)",
+                "كَبُرَ (kabura)",
+                "كَرِهَ (kariha)"
+              ],
+              "answer": "كَسَرَ (kasara — to break)"
+            },
+            {
+              "text": "What is the Muḍāri' pattern of Form VII?",
+              "options": [
+                "يَنْفَعِلُ (yanfa'ilu)",
+                "يَفْتَعِلُ",
+                "يَتَفَعَّلُ",
+                "يَسْتَفْعِلُ"
+              ],
+              "answer": "يَنْفَعِلُ (yanfa'ilu)"
+            },
+            {
+              "text": "Is Form VII commonly used with transitive or intransitive meaning?",
+              "options": [
+                "Intransitive — it expresses something happening TO the subject",
+                "Usually passive in meaning",
+                "Only as a command",
+                "Only in the plural"
+              ],
+              "answer": "Intransitive — it expresses something happening TO the subject"
+            }
+          ]
+        },
+        {
+          "id": "stage6",
+          "title": "Wazn Ifta'ala — Form VIII",
+          "icon": "8️⃣",
+          "description": "اِفْتَعَلَ — reflexive or acquisitive sense",
+          "kicker": "Form VIII (اِفْتَعَلَ)",
+          "questions": [
+            {
+              "text": "What is the Māḍī pattern of Form VIII?",
+              "options": [
+                "اِفْتَعَلَ (ifta'ala — tā' inserted after the first root letter)",
+                "اِنْفَعَلَ",
+                "اِسْتَفْعَلَ",
+                "تَفَاعَلَ"
+              ],
+              "answer": "اِفْتَعَلَ (ifta'ala — tā' inserted after the first root letter)"
+            },
+            {
+              "text": "اِجْتَمَعَ (ijtama'a — \"to gather/assemble\") is Form VIII of which root?",
+              "options": [
+                "جَمَعَ (jama'a — to gather)",
+                "جَلَسَ (jalasa)",
+                "جَعَلَ (ja'ala)",
+                "جَرَى (jarā)"
+              ],
+              "answer": "جَمَعَ (jama'a — to gather)"
+            },
+            {
+              "text": "What meaning does Form VIII often express?",
+              "options": [
+                "A reflexive or self-benefiting action",
+                "A causative action only",
+                "A negated action",
+                "A comparative form"
+              ],
+              "answer": "A reflexive or self-benefiting action"
+            },
+            {
+              "text": "In roots starting with و (wāw), what commonly happens to the wāw when forming Form VIII?",
+              "options": [
+                "It assimilates into the inserted tā', becoming a doubled tā'",
+                "It is simply dropped with no trace",
+                "It becomes an alif",
+                "Nothing changes"
+              ],
+              "answer": "It assimilates into the inserted tā', becoming a doubled tā'"
+            },
+            {
+              "text": "What is the Maṣdar pattern of Form VIII?",
+              "options": [
+                "اِفْتِعَال (ifti'āl)",
+                "اِنْفِعَال",
+                "تَفَعُّل",
+                "اِسْتِفْعَال"
+              ],
+              "answer": "اِفْتِعَال (ifti'āl)"
+            }
+          ]
+        },
+        {
+          "id": "stage7",
+          "title": "Forms V & VI — Tafa''ala & Tafā'ala",
+          "icon": "🔁",
+          "description": "The reflexive counterparts of Forms II and III",
+          "kicker": "Forms V & VI",
+          "questions": [
+            {
+              "text": "What is the Māḍī pattern of Form V?",
+              "options": [
+                "تَفَعَّلَ (tafa''ala)",
+                "تَفَاعَلَ",
+                "اِفْتَعَلَ",
+                "اِنْفَعَلَ"
+              ],
+              "answer": "تَفَعَّلَ (tafa''ala)"
+            },
+            {
+              "text": "Form V is the reflexive counterpart of which form?",
+              "options": [
+                "Form II (فَعَّلَ)",
+                "Form III (فَاعَلَ)",
+                "Form IV (أَفْعَلَ)",
+                "Form VII"
+              ],
+              "answer": "Form II (فَعَّلَ)"
+            },
+            {
+              "text": "تَعَلَّمَ (ta'allama — \"to learn/teach oneself\") relates to which Form II verb?",
+              "options": [
+                "عَلَّمَ ('allama — to teach)",
+                "عَلِمَ ('alima)",
+                "عَمِلَ ('amila)",
+                "عَلَا ('alā)"
+              ],
+              "answer": "عَلَّمَ ('allama — to teach)"
+            },
+            {
+              "text": "What is the Māḍī pattern of Form VI?",
+              "options": [
+                "تَفَاعَلَ (tafā'ala)",
+                "تَفَعَّلَ",
+                "اِفْتَعَلَ",
+                "اِسْتَفْعَلَ"
+              ],
+              "answer": "تَفَاعَلَ (tafā'ala)"
+            },
+            {
+              "text": "Form VI is the reflexive/mutual counterpart of which form?",
+              "options": [
+                "Form III (فَاعَلَ)",
+                "Form II (فَعَّلَ)",
+                "Form IV",
+                "Form VIII"
+              ],
+              "answer": "Form III (فَاعَلَ)"
+            },
+            {
+              "text": "تَكَاتَبَ (takātaba — \"they corresponded with each other\") relates to which Form III verb?",
+              "options": [
+                "كَاتَبَ (kātaba)",
+                "كَتَبَ (kataba)",
+                "كَبُرَ (kabura)",
+                "كَسَرَ (kasara)"
+              ],
+              "answer": "كَاتَبَ (kātaba)"
+            }
+          ]
+        },
+        {
+          "id": "stage8",
+          "title": "Wazn Istaf'ala — Form X",
+          "icon": "🔟",
+          "description": "اِسْتَفْعَلَ — seeking or requesting",
+          "kicker": "Form X (اِسْتَفْعَلَ)",
+          "questions": [
+            {
+              "text": "What is the Māḍī pattern of Form X?",
+              "options": [
+                "اِسْتَفْعَلَ (istaf'ala)",
+                "اِفْتَعَلَ",
+                "اِنْفَعَلَ",
+                "تَفَاعَلَ"
+              ],
+              "answer": "اِسْتَفْعَلَ (istaf'ala)"
+            },
+            {
+              "text": "What meaning does Form X commonly express?",
+              "options": [
+                "Seeking or requesting the root action (\"to ask for/consider\")",
+                "A simple causative meaning",
+                "A reciprocal meaning",
+                "A command only"
+              ],
+              "answer": "Seeking or requesting the root action (\"to ask for/consider\")"
+            },
+            {
+              "text": "اِسْتَغْفَرَ (istaghfara — \"to seek forgiveness\") is Form X of which root?",
+              "options": [
+                "غَفَرَ (ghafara — to forgive)",
+                "غَفَلَ (ghafala)",
+                "غَرَبَ (gharaba)",
+                "غَلَبَ (ghalaba)"
+              ],
+              "answer": "غَفَرَ (ghafara — to forgive)"
+            },
+            {
+              "text": "What is the Maṣdar pattern of Form X?",
+              "options": [
+                "اِسْتِفْعَال (istif'āl)",
+                "اِفْتِعَال",
+                "اِنْفِعَال",
+                "تَفَعُّل"
+              ],
+              "answer": "اِسْتِفْعَال (istif'āl)"
+            },
+            {
+              "text": "اِسْتَخْرَجَ (istakhraja — \"to extract\") relates to which Form IV verb?",
+              "options": [
+                "أَخْرَجَ (akhraja — to take out)",
+                "خَرَجَ (kharaja)",
+                "دَخَلَ (dakhala)",
+                "أَدْخَلَ (adkhala)"
+              ],
+              "answer": "أَخْرَجَ (akhraja — to take out)"
+            }
+          ]
+        },
+        {
+          "id": "stage9",
+          "title": "The Three Weak-Root Categories",
+          "icon": "💦",
+          "description": "Mithāl, Ajwaf, and Nāqiṣ — where the weak letter sits",
+          "kicker": "Weak Roots by Position",
+          "questions": [
+            {
+              "text": "What is Al-Mithāl?",
+              "options": [
+                "A verb weak in its FIRST root letter",
+                "A verb weak in its middle root letter",
+                "A verb weak in its last root letter",
+                "A verb with two weak letters"
+              ],
+              "answer": "A verb weak in its FIRST root letter"
+            },
+            {
+              "text": "وَجَدَ (wajada — to find) is an example of...",
+              "options": [
+                "Al-Mithāl (weak first letter)",
+                "Al-Ajwaf",
+                "Al-Nāqiṣ",
+                "Al-Muḍā'af"
+              ],
+              "answer": "Al-Mithāl (weak first letter)"
+            },
+            {
+              "text": "What is Al-Ajwaf?",
+              "options": [
+                "A verb weak in its MIDDLE root letter",
+                "A verb weak in its first root letter",
+                "A verb weak in its last root letter",
+                "A doubled-letter verb"
+              ],
+              "answer": "A verb weak in its MIDDLE root letter"
+            },
+            {
+              "text": "قَالَ (qāla — to say, root ق-و-ل) is an example of...",
+              "options": [
+                "Al-Ajwaf (weak middle letter)",
+                "Al-Mithāl",
+                "Al-Nāqiṣ",
+                "Al-Muḍā'af"
+              ],
+              "answer": "Al-Ajwaf (weak middle letter)"
+            },
+            {
+              "text": "What is Al-Nāqiṣ?",
+              "options": [
+                "A verb weak in its LAST root letter",
+                "A verb weak in its first root letter",
+                "A verb weak in its middle root letter",
+                "A verb with a hamzah"
+              ],
+              "answer": "A verb weak in its LAST root letter"
+            },
+            {
+              "text": "دَعَا (da'ā — to call, root د-ع-و) is an example of...",
+              "options": [
+                "Al-Nāqiṣ (weak last letter)",
+                "Al-Mithāl",
+                "Al-Ajwaf",
+                "Al-Muḍā'af"
+              ],
+              "answer": "Al-Nāqiṣ (weak last letter)"
+            }
+          ]
+        },
+        {
+          "id": "stage10",
+          "title": "Al-Muḍā'af & Derived Noun Patterns",
+          "icon": "🧱",
+          "description": "Doubled roots, and nouns of time, place, and instrument",
+          "kicker": "Doubled Roots & Derived Nouns",
+          "questions": [
+            {
+              "text": "What is Al-Fi'l al-Muḍā'af?",
+              "options": [
+                "A verb whose 2nd and 3rd root letters are identical",
+                "A verb with a weak letter",
+                "A verb with a hamzah",
+                "A plural verb form"
+              ],
+              "answer": "A verb whose 2nd and 3rd root letters are identical"
+            },
+            {
+              "text": "مَدَّ (madda — to extend, root م-د-د) is an example of...",
+              "options": [
+                "Al-Muḍā'af (doubled root)",
+                "Al-Mithāl",
+                "Al-Ajwaf",
+                "Al-Nāqiṣ"
+              ],
+              "answer": "Al-Muḍā'af (doubled root)"
+            },
+            {
+              "text": "What does Ism az-Zamān wal-Makān express?",
+              "options": [
+                "The time or place of an action",
+                "The doer of an action",
+                "The tool used for an action",
+                "The intensity of an action"
+              ],
+              "answer": "The time or place of an action"
+            },
+            {
+              "text": "مَكْتَب (maktab — \"office/place of writing\") from كَتَبَ is an example of...",
+              "options": [
+                "Ism al-Makān (noun of place)",
+                "Ism al-Fā'il",
+                "Ism al-Maf'ūl",
+                "Ism al-Ālah"
+              ],
+              "answer": "Ism al-Makān (noun of place)"
+            },
+            {
+              "text": "What does Ism al-Ālah express?",
+              "options": [
+                "The instrument or tool used to perform an action",
+                "The place of an action",
+                "The time of an action",
+                "The doer of an action"
+              ],
+              "answer": "The instrument or tool used to perform an action"
+            },
+            {
+              "text": "مِفْتَاح (miftāḥ — \"key\") from فَتَحَ (to open) is an example of...",
+              "options": [
+                "Ism al-Ālah (noun of instrument)",
+                "Ism az-Zamān",
+                "Ism al-Fā'il",
+                "Al-Maṣdar"
+              ],
+              "answer": "Ism al-Ālah (noun of instrument)"
+            }
+          ]
+        },
+        {
+          "id": "stage11",
+          "title": "Wazn Ifta'alla — Form IX",
+          "icon": "🎨",
+          "description": "اِفْعَلَّ — colors and physical defects",
+          "kicker": "Form IX (اِفْعَلَّ)",
+          "questions": [
+            {
+              "text": "What is the Māḍī pattern of Form IX?",
+              "options": [
+                "اِفْعَلَّ (if'alla — final letter doubled)",
+                "اِفْتَعَلَ",
+                "اِنْفَعَلَ",
+                "اِسْتَفْعَلَ"
+              ],
+              "answer": "اِفْعَلَّ (if'alla — final letter doubled)"
+            },
+            {
+              "text": "What meanings does Form IX typically express?",
+              "options": [
+                "Colors or physical defects",
+                "Reciprocal actions",
+                "Causative actions",
+                "Seeking/requesting"
+              ],
+              "answer": "Colors or physical defects"
+            },
+            {
+              "text": "اِحْمَرَّ (iḥmarra — \"to become/turn red\") is Form IX of which root meaning \"red\"?",
+              "options": [
+                "حَمِرَ / أَحْمَر",
+                "حَمَلَ",
+                "حَمَدَ",
+                "حَمَى"
+              ],
+              "answer": "حَمِرَ / أَحْمَر"
+            },
+            {
+              "text": "اِعْوَجَّ (i'wajja — \"to become crooked\") is Form IX, expressing...",
+              "options": [
+                "A physical defect (crookedness)",
+                "A color",
+                "A reciprocal action",
+                "A command"
+              ],
+              "answer": "A physical defect (crookedness)"
+            },
+            {
+              "text": "Why is Form IX considered rare compared to Forms II, III, IV, VIII, and X?",
+              "options": [
+                "Its meaning is restricted to a narrow category (colors/defects)",
+                "It has no Muḍāri' form",
+                "It was recently invented",
+                "It only exists in poetry"
+              ],
+              "answer": "Its meaning is restricted to a narrow category (colors/defects)"
+            }
+          ]
+        },
+        {
+          "id": "stage12",
+          "title": "Ar-Rubā'ī al-Mujarrad",
+          "icon": "🀄",
+          "description": "The bare quadriliteral root — four original letters",
+          "kicker": "The Bare Quadriliteral Root",
+          "questions": [
+            {
+              "text": "What is Ar-Rubā'ī al-Mujarrad?",
+              "options": [
+                "A verb whose bare root has four original letters",
+                "A verb with three letters",
+                "An augmented triliteral verb",
+                "A doubled triliteral verb"
+              ],
+              "answer": "A verb whose bare root has four original letters"
+            },
+            {
+              "text": "What is the single Māḍī pattern for Rubā'ī Mujarrad?",
+              "options": [
+                "فَعْلَلَ (fa'lala)",
+                "فَعَّلَ",
+                "أَفْعَلَ",
+                "فَاعَلَ"
+              ],
+              "answer": "فَعْلَلَ (fa'lala)"
+            },
+            {
+              "text": "دَحْرَجَ (daḥraja — \"to roll [something]\") is an example of...",
+              "options": [
+                "Rubā'ī Mujarrad",
+                "Thulāthī Mujarrad",
+                "Thulāthī Mazīd",
+                "Rubā'ī Mazīd"
+              ],
+              "answer": "Rubā'ī Mujarrad"
+            },
+            {
+              "text": "What is the Muḍāri' pattern of Rubā'ī Mujarrad?",
+              "options": [
+                "يُفَعْلِلُ (yufa'lilu)",
+                "يَفْعُلُ",
+                "يُفَعِّلُ",
+                "يُفَاعِلُ"
+              ],
+              "answer": "يُفَعْلِلُ (yufa'lilu)"
+            },
+            {
+              "text": "زَلْزَلَ (zalzala — \"to shake violently\") is an example of a Rubā'ī root formed by...",
+              "options": [
+                "Repeating two letters (a common Rubā'ī pattern)",
+                "Adding a hamzah",
+                "Doubling the middle letter of a triliteral",
+                "Removing a letter"
+              ],
+              "answer": "Repeating two letters (a common Rubā'ī pattern)"
+            }
+          ]
+        },
+        {
+          "id": "stage13",
+          "title": "Ar-Rubā'ī al-Mazīd",
+          "icon": "🀫",
+          "description": "Augmented forms of the quadriliteral root",
+          "kicker": "Augmented Quadriliteral Forms",
+          "questions": [
+            {
+              "text": "What is Ar-Rubā'ī al-Mazīd?",
+              "options": [
+                "A quadriliteral root with extra letters added",
+                "The bare quadriliteral root",
+                "A triliteral root",
+                "A weak root"
+              ],
+              "answer": "A quadriliteral root with extra letters added"
+            },
+            {
+              "text": "What is the most common Mazīd pattern added to a Rubā'ī root?",
+              "options": [
+                "تَفَعْلَلَ (tafa'lala) — adding a tā' prefix",
+                "أَفْعَلَ",
+                "اِسْتَفْعَلَ",
+                "فَاعَلَ"
+              ],
+              "answer": "تَفَعْلَلَ (tafa'lala) — adding a tā' prefix"
+            },
+            {
+              "text": "تَدَحْرَجَ (tadaḥraja — \"to roll [itself]\") relates to which Rubā'ī Mujarrad verb?",
+              "options": [
+                "دَحْرَجَ (daḥraja)",
+                "زَلْزَلَ (zalzala)",
+                "دَحَرَ (daḥara)",
+                "دَرَجَ (daraja)"
+              ],
+              "answer": "دَحْرَجَ (daḥraja)"
+            },
+            {
+              "text": "What meaning does the تَفَعْلَلَ pattern typically add to a Rubā'ī root?",
+              "options": [
+                "A reflexive sense (the action happening to the subject itself)",
+                "A causative sense",
+                "A negated sense",
+                "A plural sense"
+              ],
+              "answer": "A reflexive sense (the action happening to the subject itself)"
+            },
+            {
+              "text": "Are Rubā'ī Mazīd forms as numerous as Thulāthī Mazīd forms (10 forms)?",
+              "options": [
+                "No — Rubā'ī has far fewer recognized Mazīd patterns",
+                "Yes, exactly the same 10 forms apply",
+                "Rubā'ī has more forms than Thulāthī",
+                "Rubā'ī has no Mazīd forms at all"
+              ],
+              "answer": "No — Rubā'ī has far fewer recognized Mazīd patterns"
+            }
+          ]
+        },
+        {
+          "id": "stage14",
+          "title": "Al-Mithāl — A Deeper Look",
+          "icon": "🔵",
+          "description": "Verbs weak in the first root letter, and how the Muḍāri' changes",
+          "kicker": "Weak First Letter — Deeper Look",
+          "questions": [
+            {
+              "text": "In Al-Mithāl al-Wāwī (first letter و), what commonly happens to the وَ in the Muḍāri'?",
+              "options": [
+                "It is often dropped entirely",
+                "It turns into a hamzah",
+                "It doubles",
+                "Nothing changes"
+              ],
+              "answer": "It is often dropped entirely"
+            },
+            {
+              "text": "وَجَدَ → يَجِدُ — what happened to the initial وَ?",
+              "options": [
+                "It was dropped in the Muḍāri' form",
+                "It became an alif",
+                "It became a hamzah",
+                "It was kept unchanged"
+              ],
+              "answer": "It was dropped in the Muḍāri' form"
+            },
+            {
+              "text": "وَصَلَ → يَصِلُ follows the same pattern as which verb?",
+              "options": [
+                "وَجَدَ → يَجِدُ",
+                "قَالَ → يَقُولُ",
+                "دَعَا → يَدْعُو",
+                "كَتَبَ → يَكْتُبُ"
+              ],
+              "answer": "وَجَدَ → يَجِدُ"
+            },
+            {
+              "text": "Does Al-Mithāl al-Yā'ī (first letter ي) behave the same way as Al-Mithāl al-Wāwī?",
+              "options": [
+                "No — the يَ is typically kept, unlike وَ which is often dropped",
+                "Yes, identically",
+                "Both are typically kept unchanged",
+                "Neither is ever affected"
+              ],
+              "answer": "No — the يَ is typically kept, unlike وَ which is often dropped"
+            },
+            {
+              "text": "يَسَرَ (\"to be easy\") keeps its يَ in the Muḍāri': يَيْسِرُ. This confirms that...",
+              "options": [
+                "Mithāl Yā'ī verbs usually retain their weak letter",
+                "All Mithāl verbs drop their weak letter",
+                "This verb is actually Ajwaf",
+                "This verb is actually Nāqiṣ"
+              ],
+              "answer": "Mithāl Yā'ī verbs usually retain their weak letter"
+            }
+          ]
+        },
+        {
+          "id": "stage15",
+          "title": "Al-Ajwaf — A Deeper Look",
+          "icon": "🟡",
+          "description": "Verbs weak in the middle root letter, and how the vowel shifts",
+          "kicker": "Weak Middle Letter — Deeper Look",
+          "questions": [
+            {
+              "text": "In Al-Ajwaf, what typically happens to the middle weak letter in the Māḍī for most persons?",
+              "options": [
+                "It turns into a long vowel (alif)",
+                "It is dropped entirely",
+                "It becomes a hamzah",
+                "It doubles"
+              ],
+              "answer": "It turns into a long vowel (alif)"
+            },
+            {
+              "text": "قَالَ (root ق-و-ل) for أَنَا becomes...",
+              "options": [
+                "قُلْتُ (qultu — the weak letter shortens)",
+                "قَالْتُ",
+                "قَوَلْتُ",
+                "قِلْتُ"
+              ],
+              "answer": "قُلْتُ (qultu — the weak letter shortens)"
+            },
+            {
+              "text": "بَاعَ (root ب-ي-ع, \"to sell\") for أَنَا becomes...",
+              "options": [
+                "بِعْتُ (bi'tu)",
+                "بَاعْتُ",
+                "بَيَعْتُ",
+                "بُعْتُ"
+              ],
+              "answer": "بِعْتُ (bi'tu)"
+            },
+            {
+              "text": "What is the Muḍāri' of قَالَ?",
+              "options": [
+                "يَقُولُ (yaqūlu)",
+                "يَقَالُ",
+                "يَقِيلُ",
+                "يَقْوَلُ"
+              ],
+              "answer": "يَقُولُ (yaqūlu)"
+            },
+            {
+              "text": "Why does the middle weak letter shorten (e.g. قَالَ → قُلْتُ) with certain subject endings?",
+              "options": [
+                "To avoid two long vowels/heavy sounds clashing when a consonant-starting suffix is added",
+                "For no linguistic reason, it's arbitrary",
+                "Because the root actually changes",
+                "Because it becomes passive"
+              ],
+              "answer": "To avoid two long vowels/heavy sounds clashing when a consonant-starting suffix is added"
+            }
+          ]
+        },
+        {
+          "id": "stage16",
+          "title": "Al-Nāqiṣ — A Deeper Look",
+          "icon": "🟢",
+          "description": "Verbs weak in the last root letter, and how endings drop",
+          "kicker": "Weak Last Letter — Deeper Look",
+          "questions": [
+            {
+              "text": "In Al-Nāqiṣ, what commonly happens to the final weak letter in the Jazm case?",
+              "options": [
+                "It is dropped entirely",
+                "It is kept and lengthened",
+                "It becomes a hamzah",
+                "It doubles"
+              ],
+              "answer": "It is dropped entirely"
+            },
+            {
+              "text": "دَعَا (root د-ع-و) for هُوَ in the Muḍāri' is...",
+              "options": [
+                "يَدْعُو (yad'ū)",
+                "يَدْعَى",
+                "يَدْعِي",
+                "يَدْعَاوُ"
+              ],
+              "answer": "يَدْعُو (yad'ū)"
+            },
+            {
+              "text": "In the Jazm case (e.g. after لَمْ), يَدْعُو becomes...",
+              "options": [
+                "لَمْ يَدْعُ (the wāw is dropped)",
+                "لَمْ يَدْعُوَ",
+                "لَمْ يَدْعُونَ",
+                "لَمْ يَدْعَا"
+              ],
+              "answer": "لَمْ يَدْعُ (the wāw is dropped)"
+            },
+            {
+              "text": "رَمَى (root ر-م-ي, \"to throw\") for هُوَ in the Muḍāri' is...",
+              "options": [
+                "يَرْمِي (yarmī)",
+                "يَرْمُو",
+                "يَرْمَى",
+                "يَرْمَاي"
+              ],
+              "answer": "يَرْمِي (yarmī)"
+            },
+            {
+              "text": "Why does Al-Nāqiṣ specifically lose its ending in Jazm, unlike a Ṣaḥīḥ verb which just takes Sukūn?",
+              "options": [
+                "A long vowel cannot take Sukūn, so it is dropped instead",
+                "It's a random exception with no reason",
+                "It changes to a Sukūn like any Ṣaḥīḥ verb",
+                "The whole word is replaced"
+              ],
+              "answer": "A long vowel cannot take Sukūn, so it is dropped instead"
+            }
+          ]
+        },
+        {
+          "id": "stage17",
+          "title": "Ism az-Zamān wal-Makān — A Deeper Look",
+          "icon": "🕰️",
+          "description": "The patterns behind nouns of time and place",
+          "kicker": "Nouns of Time & Place — Deeper Look",
+          "questions": [
+            {
+              "text": "What is the common pattern for Ism az-Zamān/Makān from a Bāb-1 or Bāb-2 verb (Fatḥah-Dammah / Fatḥah-Kasrah Muḍāri')?",
+              "options": [
+                "مَفْعَل (maf'al)",
+                "مَفْعِل (maf'il)",
+                "فَاعِل",
+                "مَفْعُول"
+              ],
+              "answer": "مَفْعَل (maf'al)"
+            },
+            {
+              "text": "What is the common pattern when the Muḍāri' has Kasrah before the last letter (e.g. Bāb-3)?",
+              "options": [
+                "مَفْعِل (maf'il)",
+                "مَفْعَل (maf'al)",
+                "فَاعِل",
+                "أَفْعَل"
+              ],
+              "answer": "مَفْعِل (maf'il)"
+            },
+            {
+              "text": "مَلْعَب (mal'ab — \"playground\") from لَعِبَ (yal'abu) follows which pattern?",
+              "options": [
+                "مَفْعَل",
+                "مَفْعِل",
+                "مَفْعُول",
+                "فَاعِل"
+              ],
+              "answer": "مَفْعَل"
+            },
+            {
+              "text": "مَسْجِد (masjid — \"place of prostration\") from سَجَدَ (yasjudu) follows which pattern?",
+              "options": [
+                "مَفْعِد → مَفْعِل family",
+                "مَفْعَل",
+                "مَفْعُول",
+                "فَاعِل"
+              ],
+              "answer": "مَفْعِد → مَفْعِل family"
+            },
+            {
+              "text": "Does Ism az-Zamān and Ism al-Makān typically share the exact same pattern from one root?",
+              "options": [
+                "Yes — context (not form) usually distinguishes time from place",
+                "Only when derived from different verb forms",
+                "Only Ism al-Makān exists",
+                "Only Ism az-Zamān exists"
+              ],
+              "answer": "Yes — context (not form) usually distinguishes time from place"
+            }
+          ]
+        },
+        {
+          "id": "stage18",
+          "title": "Ism al-Ālah — A Deeper Look",
+          "icon": "🔧",
+          "description": "The three common patterns for tools and instruments",
+          "kicker": "Nouns of Instrument — Deeper Look",
+          "questions": [
+            {
+              "text": "Which of these is a recognized Ism al-Ālah pattern?",
+              "options": [
+                "مِفْعَل (mif'al)",
+                "فَاعِل",
+                "مَفْعُول",
+                "أَفْعَل"
+              ],
+              "answer": "مِفْعَل (mif'al)"
+            },
+            {
+              "text": "Which of these is also a recognized Ism al-Ālah pattern?",
+              "options": [
+                "مِفْعَال (mif'āl)",
+                "فَعِيل",
+                "اِفْتِعَال",
+                "تَفْعِيل"
+              ],
+              "answer": "مِفْعَال (mif'āl)"
+            },
+            {
+              "text": "مِفْتَاح (miftāḥ — \"key\") follows which Ism al-Ālah pattern?",
+              "options": [
+                "مِفْعَال",
+                "مِفْعَل",
+                "مِفْعَلَة",
+                "فَاعُول"
+              ],
+              "answer": "مِفْعَال"
+            },
+            {
+              "text": "مِكْنَسَة (miknasah — \"broom\") follows which Ism al-Ālah pattern?",
+              "options": [
+                "مِفْعَلَة (mif'alah)",
+                "مِفْعَال",
+                "مِفْعَل",
+                "فَعَّالَة"
+              ],
+              "answer": "مِفْعَلَة (mif'alah)"
+            },
+            {
+              "text": "مِبْرَد (mibrad — \"file/rasp\") follows which Ism al-Ālah pattern?",
+              "options": [
+                "مِفْعَل (mif'al)",
+                "مِفْعَال",
+                "مِفْعَلَة",
+                "فَاعِل"
+              ],
+              "answer": "مِفْعَل (mif'al)"
+            }
+          ]
+        },
+        {
+          "id": "stage19",
+          "title": "At-Taṣghīr — The Diminutive",
+          "icon": "🔎",
+          "description": "Shrinking a noun's meaning through pattern change",
+          "kicker": "The Diminutive Form",
+          "questions": [
+            {
+              "text": "What does At-Taṣghīr express?",
+              "options": [
+                "Smallness, endearment, or lessening of a noun's meaning",
+                "Plurality",
+                "Negation",
+                "Comparison"
+              ],
+              "answer": "Smallness, endearment, or lessening of a noun's meaning"
+            },
+            {
+              "text": "What is the most common Taṣghīr pattern for a triliteral noun?",
+              "options": [
+                "فُعَيْل (fu'ayl)",
+                "فَعِيل",
+                "فَاعِل",
+                "مَفْعُول"
+              ],
+              "answer": "فُعَيْل (fu'ayl)"
+            },
+            {
+              "text": "كُتَيِّب (kutayyib — \"little book/booklet\") is the Taṣghīr of...",
+              "options": [
+                "كِتَاب (kitāb)",
+                "كَاتِب",
+                "مَكْتَب",
+                "كِتَابَة"
+              ],
+              "answer": "كِتَاب (kitāb)"
+            },
+            {
+              "text": "رُجَيْل (rujayl — \"little man\") is the Taṣghīr of...",
+              "options": [
+                "رَجُل (rajul)",
+                "رِجَال",
+                "رَاجِل",
+                "مَرْجِل"
+              ],
+              "answer": "رَجُل (rajul)"
+            },
+            {
+              "text": "Besides physical smallness, what else can Taṣghīr express?",
+              "options": [
+                "Endearment/affection, or belittlement, depending on context",
+                "Only plurality",
+                "Only negation",
+                "Only past tense"
+              ],
+              "answer": "Endearment/affection, or belittlement, depending on context"
+            }
+          ]
+        },
+        {
+          "id": "stage20",
+          "title": "Intermediate Synthesis",
+          "icon": "🧭",
+          "description": "Bringing the whole Intermediate level together",
+          "kicker": "Review & Synthesis",
+          "questions": [
+            {
+              "text": "Which Mazīd form commonly expresses a mutual/reciprocal action?",
+              "options": [
+                "Form III (فَاعَلَ)",
+                "Form IV (أَفْعَلَ)",
+                "Form VII",
+                "Form IX"
+              ],
+              "answer": "Form III (فَاعَلَ)"
+            },
+            {
+              "text": "Which Mazīd form is restricted mainly to colors and physical defects?",
+              "options": [
+                "Form IX (اِفْعَلَّ)",
+                "Form II",
+                "Form V",
+                "Form X"
+              ],
+              "answer": "Form IX (اِفْعَلَّ)"
+            },
+            {
+              "text": "What is the bare Māḍī pattern for a Rubā'ī Mujarrad root?",
+              "options": [
+                "فَعْلَلَ",
+                "فَعَّلَ",
+                "فَاعَلَ",
+                "أَفْعَلَ"
+              ],
+              "answer": "فَعْلَلَ"
+            },
+            {
+              "text": "In قَالَ → قُلْتُ, which weak-root category is this verb?",
+              "options": [
+                "Al-Ajwaf",
+                "Al-Mithāl",
+                "Al-Nāqiṣ",
+                "Al-Muḍā'af"
+              ],
+              "answer": "Al-Ajwaf"
+            },
+            {
+              "text": "مِفْتَاح is an example of which noun category?",
+              "options": [
+                "Ism al-Ālah",
+                "Ism az-Zamān wal-Makān",
+                "Ism at-Taṣghīr",
+                "Ism al-Maf'ūl"
+              ],
+              "answer": "Ism al-Ālah"
+            },
+            {
+              "text": "كُتَيِّب is an example of which noun category?",
+              "options": [
+                "At-Taṣghīr (diminutive)",
+                "Ism al-Ālah",
+                "Jam' Taksīr",
+                "Ism al-Fā'il"
+              ],
+              "answer": "At-Taṣghīr (diminutive)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "advanced",
+      "label": "Advanced",
+      "icon": "🌳",
+      "description": "Deep morphology, irregular patterns, and full derivation mastery",
+      "stages": [
+        {
+          "id": "stage1",
+          "title": "Al-Mīzān aṣ-Ṣarfī",
+          "icon": "⚖️",
+          "description": "The root-weighing system using ف-ع-ل",
+          "kicker": "The Morphological Scale",
+          "questions": [
+            {
+              "text": "What is Al-Mīzān aṣ-Ṣarfī?",
+              "options": [
+                "A system using ف-ع-ل to represent the pattern of any word",
+                "A system for counting syllables only",
+                "A type of i'rāb",
+                "A plural pattern"
+              ],
+              "answer": "A system using ف-ع-ل to represent the pattern of any word"
+            },
+            {
+              "text": "In the Mīzān, what does the ف (fā') represent?",
+              "options": [
+                "The first root letter of the word being measured",
+                "The final root letter of the word being measured",
+                "The second root letter",
+                "An augmentation letter"
+              ],
+              "answer": "The first root letter of the word being measured"
+            },
+            {
+              "text": "What is the Mīzān weight of كَاتِب؟",
+              "options": [
+                "فَاعِل",
+                "فَعَّل",
+                "أَفْعَل",
+                "مَفْعُول"
+              ],
+              "answer": "فَاعِل"
+            },
+            {
+              "text": "What is the Mīzān weight of مَكْتُوب؟",
+              "options": [
+                "مَفْعُول",
+                "فَاعِل",
+                "فَعِيل",
+                "اِفْتِعَال"
+              ],
+              "answer": "مَفْعُول"
+            },
+            {
+              "text": "If a root has 4 original letters, how is the extra letter represented in the Mīzān?",
+              "options": [
+                "By repeating the ل (lām)",
+                "By dropping it",
+                "By adding a hamzah",
+                "By using ف twice"
+              ],
+              "answer": "By repeating the ل (lām)"
+            },
+            {
+              "text": "Why is the Mīzān useful for identifying augmentation letters?",
+              "options": [
+                "Any letter NOT matching ف-ع-ل in the word is an added letter",
+                "It only measures vowels",
+                "It ignores all consonants",
+                "It only works for nouns"
+              ],
+              "answer": "Any letter NOT matching ف-ع-ل in the word is an added letter"
+            }
+          ]
+        },
+        {
+          "id": "stage2",
+          "title": "Al-Ibdāl",
+          "icon": "🔀",
+          "description": "Substitution of one letter for another",
+          "kicker": "Letter Substitution",
+          "questions": [
+            {
+              "text": "What is Al-Ibdāl?",
+              "options": [
+                "The substitution of one letter for another under specific conditions",
+                "The complete deletion of a letter",
+                "The doubling of a letter",
+                "A type of case ending"
+              ],
+              "answer": "The substitution of one letter for another under specific conditions"
+            },
+            {
+              "text": "In Form VIII (اِفْتَعَلَ), what happens to the inserted tā' when the root's first letter is و or ي?",
+              "options": [
+                "It commonly assimilates or shifts",
+                "Nothing changes at all",
+                "The tā' is removed",
+                "The whole root changes"
+              ],
+              "answer": "It commonly assimilates or shifts"
+            },
+            {
+              "text": "اِتَّصَلَ (ittaṣala — \"to connect\") is the Form VIII of وَصَلَ, where the وَ has undergone...",
+              "options": [
+                "Ibdāl — substitution into a tā', which then merges with the pattern's own tā'",
+                "No change",
+                "Deletion only",
+                "Vowel lengthening only"
+              ],
+              "answer": "Ibdāl — substitution into a tā', which then merges with the pattern's own tā'"
+            },
+            {
+              "text": "When a root starting with ز, د، or ذ takes Form VIII, what commonly happens to the inserted تَ؟",
+              "options": [
+                "It substitutes into دَ or ذَ to match",
+                "It shifts to ط to match the surrounding vowels",
+                "It is deleted entirely",
+                "It becomes a hamzah"
+              ],
+              "answer": "It substitutes into دَ or ذَ to match"
+            },
+            {
+              "text": "Is Ibdāl a random process or a rule-governed one?",
+              "options": [
+                "Rule-governed, based on the specific letters involved",
+                "Completely random with no pattern",
+                "It only happens in the passive voice",
+                "It only affects vowels"
+              ],
+              "answer": "Rule-governed, based on the specific letters involved"
+            }
+          ]
+        },
+        {
+          "id": "stage3",
+          "title": "Al-I'lāl",
+          "icon": "💫",
+          "description": "Vowel and weak-letter transformations",
+          "kicker": "Weak-Letter Transformations",
+          "questions": [
+            {
+              "text": "What is Al-I'lāl?",
+              "options": [
+                "Changes affecting weak letters (و، ي، ا) such as conversion, deletion, or vowel-quieting",
+                "A type of plural",
+                "A case-ending rule",
+                "A type of negation"
+              ],
+              "answer": "Changes affecting weak letters (و، ي، ا) such as conversion, deletion, or vowel-quieting"
+            },
+            {
+              "text": "What is I'lāl bil-Qalb (conversion)?",
+              "options": [
+                "A weak letter changes into a different weak letter",
+                "A letter is deleted completely",
+                "A vowel is simply shortened",
+                "A consonant becomes a vowel sign only"
+              ],
+              "answer": "A weak letter changes into a different weak letter"
+            },
+            {
+              "text": "قَوَلَ → قَالَ shows which type of I'lāl?",
+              "options": [
+                "Qalb — the و converted to ا",
+                "Ḥadhf — the و was deleted",
+                "Iskān — the و was quieted",
+                "No I'lāl occurred"
+              ],
+              "answer": "Qalb — the و converted to ا"
+            },
+            {
+              "text": "What is I'lāl bil-Ḥadhf (deletion)?",
+              "options": [
+                "A weak letter is dropped entirely",
+                "A weak letter is converted to another",
+                "A vowel is added",
+                "A consonant is doubled"
+              ],
+              "answer": "A weak letter is dropped entirely"
+            },
+            {
+              "text": "What is I'lāl bil-Iskān (quieting)?",
+              "options": [
+                "A weak letter's vowel is dropped, leaving it with Sukūn",
+                "The letter is converted to a different one",
+                "The letter is duplicated",
+                "The whole word is negated"
+              ],
+              "answer": "A weak letter's vowel is dropped, leaving it with Sukūn"
+            },
+            {
+              "text": "Which weak letter results when a يَ carries a Dammah before it (as in the root ق-و-ل type patterns)?",
+              "options": [
+                "It converts to و under certain vowel-harmony rules",
+                "It converts to a hamzah under the same conditions",
+                "It becomes a hamzah",
+                "It merges with a neighboring consonant instead"
+              ],
+              "answer": "It converts to و under certain vowel-harmony rules"
+            }
+          ]
+        },
+        {
+          "id": "stage4",
+          "title": "Al-Idghām",
+          "icon": "🧲",
+          "description": "Assimilation in doubled (Muḍā'af) verbs",
+          "kicker": "Assimilation in Doubled Verbs",
+          "questions": [
+            {
+              "text": "What is Al-Idghām in the context of Muḍā'af verbs?",
+              "options": [
+                "Merging two identical adjacent letters into one doubled (shaddah) letter",
+                "Deleting one of the identical letters entirely",
+                "Converting one letter into a different letter",
+                "Adding a new letter between them"
+              ],
+              "answer": "Merging two identical adjacent letters into one doubled (shaddah) letter"
+            },
+            {
+              "text": "مَدَدَ (the raw root form) becomes مَدَّ through...",
+              "options": [
+                "Idghām — the two دs merge into one doubled د",
+                "Ibdāl — a letter substitution",
+                "I'lāl — a weak letter change",
+                "Ḥadhf — deletion with no trace"
+              ],
+              "answer": "Idghām — the two دs merge into one doubled د"
+            },
+            {
+              "text": "In مَدَدْتُ (\"I extended\"), why does the Idghām NOT occur here (i.e., it stays مَدَدْتُ, not مَدَّتُ)?",
+              "options": [
+                "Because a Sākin (vowelless) consonant follows, blocking the merge",
+                "Idghām applies but only in the Muḍāri'",
+                "It's a spelling error",
+                "The root only has one د"
+              ],
+              "answer": "Because a Sākin (vowelless) consonant follows, blocking the merge"
+            },
+            {
+              "text": "What condition is generally required for Idghām to occur in a doubled root?",
+              "options": [
+                "Both identical letters must be voweled (mutaḥarrik), not one of them Sākin",
+                "The letters must be different, not identical",
+                "The word must be plural",
+                "The word must be passive"
+              ],
+              "answer": "Both identical letters must be voweled (mutaḥarrik), not one of them Sākin"
+            },
+            {
+              "text": "فِرَرْتُ vs فَرَّ — why does the Amr/Māḍī with pronoun suffix (فَرَرْتُ) avoid full Idghām while the base Māḍī (فَرَّ) has it?",
+              "options": [
+                "Because the suffix adds a Sākin letter right after, blocking the merge",
+                "Because they are different roots",
+                "Because one is passive",
+                "Because one is a noun"
+              ],
+              "answer": "Because the suffix adds a Sākin letter right after, blocking the merge"
+            }
+          ]
+        },
+        {
+          "id": "stage5",
+          "title": "Al-Hamzah aṣ-Ṣarfiyyah — Mahmūz Verbs",
+          "icon": "🔺",
+          "description": "Verbs with hamzah as a root letter",
+          "kicker": "Hamzah as a Root Letter",
+          "questions": [
+            {
+              "text": "What is Al-Fi'l al-Mahmūz?",
+              "options": [
+                "A verb that has a hamzah as one of its three root letters",
+                "A verb with a weak letter",
+                "A doubled-letter verb",
+                "A negated verb"
+              ],
+              "answer": "A verb that has a hamzah as one of its three root letters"
+            },
+            {
+              "text": "أَخَذَ (akhadha — \"to take\") is Mahmūz because...",
+              "options": [
+                "Its FIRST root letter is a hamzah",
+                "Its middle letter is a hamzah",
+                "Its last letter is a hamzah",
+                "It has no hamzah at all"
+              ],
+              "answer": "Its FIRST root letter is a hamzah"
+            },
+            {
+              "text": "سَأَلَ (sa'ala — \"to ask\") is Mahmūz al-'Ayn, meaning the hamzah is...",
+              "options": [
+                "In the middle (second root letter) position",
+                "In the first position",
+                "In the last position",
+                "Not present at all"
+              ],
+              "answer": "In the middle (second root letter) position"
+            },
+            {
+              "text": "قَرَأَ (qara'a — \"to read\") is Mahmūz al-Lām, meaning the hamzah is...",
+              "options": [
+                "In the last (third root letter) position",
+                "In the first position",
+                "In the middle position",
+                "Doubled"
+              ],
+              "answer": "In the last (third root letter) position"
+            },
+            {
+              "text": "Why do Mahmūz verbs get special attention in Sarf, similar to weak verbs?",
+              "options": [
+                "The hamzah's seat (written form: ء، أ، إ، ؤ، ئ) can shift depending on surrounding vowels",
+                "Hamzah only changes at the start of a word",
+                "They are conjugated exactly like Ṣaḥīḥ verbs",
+                "They have no Muḍāri' form"
+              ],
+              "answer": "The hamzah's seat (written form: ء، أ، إ، ؤ، ئ) can shift depending on surrounding vowels"
+            },
+            {
+              "text": "What is the Ism al-Fā'il of قَرَأَ?",
+              "options": [
+                "قَارِئ (qāri' — hamzah seated on yā')",
+                "قَارِي",
+                "قَارِؤ",
+                "قَاري بدون همزة"
+              ],
+              "answer": "قَارِئ (qāri' — hamzah seated on yā')"
+            }
+          ]
+        },
+        {
+          "id": "stage6",
+          "title": "Ism at-Tafḍīl",
+          "icon": "🥇",
+          "description": "The comparative and superlative pattern",
+          "kicker": "Comparative & Superlative",
+          "questions": [
+            {
+              "text": "What is the pattern (wazn) of Ism at-Tafḍīl?",
+              "options": [
+                "أَفْعَل (af'al)",
+                "فَاعِل",
+                "مَفْعُول",
+                "فَعِيل"
+              ],
+              "answer": "أَفْعَل (af'al)"
+            },
+            {
+              "text": "أَكْبَر (akbar — \"bigger/biggest\") is the Ism at-Tafḍīl of which root?",
+              "options": [
+                "كَبُرَ (kabura — to be big)",
+                "كَتَبَ",
+                "كَذَبَ",
+                "كَسَرَ"
+              ],
+              "answer": "كَبُرَ (kabura — to be big)"
+            },
+            {
+              "text": "Which condition must a root generally meet to form a direct Ism at-Tafḍīl?",
+              "options": [
+                "It must be a triliteral, Ṣaḥīḥ (or manageable weak) verb with a gradable meaning",
+                "It must be a Rubā'ī (four-letter) root",
+                "It must already carry a comparative meaning",
+                "It must be derived from a noun, not a verb"
+              ],
+              "answer": "It must be a triliteral, Ṣaḥīḥ (or manageable weak) verb with a gradable meaning"
+            },
+            {
+              "text": "How is comparison typically expressed using Ism at-Tafḍīl (\"bigger THAN\")?",
+              "options": [
+                "Followed by مِنْ (min)",
+                "Followed by فِي (fī)",
+                "Followed by عَلَى ('alā)",
+                "No preposition is used"
+              ],
+              "answer": "Followed by مِنْ (min)"
+            },
+            {
+              "text": "For verbs whose Tafḍīl can't be formed directly (e.g. colors, defects, or already-augmented meanings), what workaround is used?",
+              "options": [
+                "Using أَشَدّ / أَكْثَر + the Maṣdar",
+                "The comparison is simply impossible",
+                "Doubling the adjective",
+                "Doubling the base adjective instead"
+              ],
+              "answer": "Using أَشَدّ / أَكْثَر + the Maṣdar"
+            }
+          ]
+        },
+        {
+          "id": "stage7",
+          "title": "Ṣiyagh al-Mubālaghah",
+          "icon": "🔊",
+          "description": "Intensive/exaggeration patterns",
+          "kicker": "Intensive Patterns",
+          "questions": [
+            {
+              "text": "What do Ṣiyagh al-Mubālaghah express?",
+              "options": [
+                "An intensified or habitual version of Ism al-Fā'il's meaning",
+                "A diminutive meaning",
+                "A passive meaning only",
+                "A plural meaning"
+              ],
+              "answer": "An intensified or habitual version of Ism al-Fā'il's meaning"
+            },
+            {
+              "text": "Which of these is a recognized Mubālaghah pattern?",
+              "options": [
+                "فَعَّال (fa''āl)",
+                "مَفْعُول",
+                "تَفْعِيل",
+                "اِنْفِعَال"
+              ],
+              "answer": "فَعَّال (fa''āl)"
+            },
+            {
+              "text": "غَفَّار (ghaffār — \"the Ever-Forgiving\") uses which Mubālaghah pattern, compared to غَافِر (ghāfir — \"one who forgives\")?",
+              "options": [
+                "فَعَّال — intensified from فَاعِل",
+                "مَفْعُول",
+                "فَعِيل",
+                "أَفْعَل"
+              ],
+              "answer": "فَعَّال — intensified from فَاعِل"
+            },
+            {
+              "text": "Which of these is ALSO a recognized Mubālaghah pattern?",
+              "options": [
+                "مِفْعَال (mif'āl)",
+                "مُفَاعِل",
+                "تَفَاعُل",
+                "اِسْتِفْعَال"
+              ],
+              "answer": "مِفْعَال (mif'āl)"
+            },
+            {
+              "text": "عَلِيم ('alīm — \"All-Knowing\") uses which Mubālaghah pattern?",
+              "options": [
+                "فَعِيل (fa'īl)",
+                "فَعَّال",
+                "مِفْعَال",
+                "فَعُول"
+              ],
+              "answer": "فَعِيل (fa'īl)"
+            },
+            {
+              "text": "غَفُور (ghafūr — \"Most Forgiving\") uses which Mubālaghah pattern?",
+              "options": [
+                "فَعُول (fa'ūl)",
+                "فَعِيل",
+                "فَعَّال",
+                "مِفْعَال"
+              ],
+              "answer": "فَعُول (fa'ūl)"
+            }
+          ]
+        },
+        {
+          "id": "stage8",
+          "title": "Aṣ-Ṣifah al-Mushabbahah",
+          "icon": "🧬",
+          "description": "The adjective resembling a participle — permanent qualities",
+          "kicker": "Permanent-Quality Adjectives",
+          "questions": [
+            {
+              "text": "What does Aṣ-Ṣifah al-Mushabbahah express?",
+              "options": [
+                "A permanent, inherent quality, rather than a temporary action (unlike Ism al-Fā'il)",
+                "A one-time completed action",
+                "A future action",
+                "A negated action"
+              ],
+              "answer": "A permanent, inherent quality, rather than a temporary action (unlike Ism al-Fā'il)"
+            },
+            {
+              "text": "حَسَن (ḥasan — \"handsome/good [by nature]\") is an example of...",
+              "options": [
+                "Aṣ-Ṣifah al-Mushabbahah",
+                "Ism al-Fā'il",
+                "Ism al-Maf'ūl",
+                "Ism at-Tafḍīl"
+              ],
+              "answer": "Aṣ-Ṣifah al-Mushabbahah"
+            },
+            {
+              "text": "Which pattern is common for Aṣ-Ṣifah al-Mushabbahah from Bāb 4 (Dammah-Dammah, e.g. كَرُمَ)?",
+              "options": [
+                "فَعِيل or أَفْعَل-family patterns",
+                "مَفْعُول only",
+                "فَاعِل only",
+                "اِفْتِعَال"
+              ],
+              "answer": "فَعِيل or أَفْعَل-family patterns"
+            },
+            {
+              "text": "How does Aṣ-Ṣifah al-Mushabbahah differ functionally from Ism al-Fā'il, despite both being descriptive?",
+              "options": [
+                "It describes a lasting trait rather than someone actively doing something",
+                "It only applies to verbs, not nouns",
+                "It has no plural form ever",
+                "It cannot be used as an adjective"
+              ],
+              "answer": "It describes a lasting trait rather than someone actively doing something"
+            },
+            {
+              "text": "أَحْمَر (aḥmar — \"red\") functions as which type of derived word here?",
+              "options": [
+                "Aṣ-Ṣifah al-Mushabbahah (a permanent color quality)",
+                "Ism al-Fā'il",
+                "Ism al-Maf'ūl",
+                "Al-Maṣdar"
+              ],
+              "answer": "Aṣ-Ṣifah al-Mushabbahah (a permanent color quality)"
+            }
+          ]
+        },
+        {
+          "id": "stage9",
+          "title": "Al-Maṣādir al-Mazīdah",
+          "icon": "📚",
+          "description": "Verbal nouns of the augmented forms",
+          "kicker": "Verbal Nouns of Augmented Forms",
+          "questions": [
+            {
+              "text": "Unlike the bare root's Maṣdar (which is unpredictable), are the Maṣādir of the Mazīd forms fixed?",
+              "options": [
+                "Yes — each Mazīd form (II–X) has one standard, predictable Maṣdar pattern",
+                "No, they are just as unpredictable as the bare root",
+                "They don't have Maṣādir at all",
+                "Only Form IV has a Maṣdar"
+              ],
+              "answer": "Yes — each Mazīd form (II–X) has one standard, predictable Maṣdar pattern"
+            },
+            {
+              "text": "What is the Maṣdar pattern of Form IV (أَفْعَلَ)?",
+              "options": [
+                "إِفْعَال (if'āl)",
+                "تَفْعِيل",
+                "مُفَاعَلَة",
+                "اِفْتِعَال"
+              ],
+              "answer": "إِفْعَال (if'āl)"
+            },
+            {
+              "text": "إِخْرَاج (ikhrāj — \"expulsion/extraction\") is the Maṣdar of which Form IV verb?",
+              "options": [
+                "أَخْرَجَ (akhraja)",
+                "خَرَجَ (kharaja)",
+                "أَدْخَلَ",
+                "خَرَّجَ"
+              ],
+              "answer": "أَخْرَجَ (akhraja)"
+            },
+            {
+              "text": "What is the Maṣdar pattern of Form V (تَفَعَّلَ)?",
+              "options": [
+                "تَفَعُّل (tafa''ul)",
+                "تَفَاعُل",
+                "اِفْتِعَال",
+                "اِسْتِفْعَال"
+              ],
+              "answer": "تَفَعُّل (tafa''ul)"
+            },
+            {
+              "text": "What is the Maṣdar pattern of Form VI (تَفَاعَلَ)?",
+              "options": [
+                "تَفَاعُل (tafā'ul)",
+                "تَفَعُّل",
+                "مُفَاعَلَة",
+                "اِنْفِعَال"
+              ],
+              "answer": "تَفَاعُل (tafā'ul)"
+            }
+          ]
+        },
+        {
+          "id": "stage10",
+          "title": "Jam' at-Taksīr — Deep Patterns",
+          "icon": "🗃️",
+          "description": "The recognized weight-patterns of the broken plural",
+          "kicker": "Broken Plural — Deep Patterns",
+          "questions": [
+            {
+              "text": "رِجَال (from رَجُل) follows which broken plural weight?",
+              "options": [
+                "فِعَال (fi'āl)",
+                "أَفْعَال",
+                "فُعُول",
+                "مَفَاعِل"
+              ],
+              "answer": "فِعَال (fi'āl)"
+            },
+            {
+              "text": "أَقْلَام (from قَلَم — pen) follows which broken plural weight?",
+              "options": [
+                "أَفْعَال (af'āl)",
+                "فِعَال",
+                "فُعُول",
+                "فَعَائِل"
+              ],
+              "answer": "أَفْعَال (af'āl)"
+            },
+            {
+              "text": "قُلُوب (from قَلْب — heart) follows which broken plural weight?",
+              "options": [
+                "فُعُول (fu'ūl)",
+                "أَفْعَال",
+                "فِعَال",
+                "مَفَاعِيل"
+              ],
+              "answer": "فُعُول (fu'ūl)"
+            },
+            {
+              "text": "مَسَاجِد (from مَسْجِد) follows which broken plural weight?",
+              "options": [
+                "مَفَاعِل (mafā'il)",
+                "أَفْعِلَة",
+                "فَعَائِل",
+                "فُعَلَاء"
+              ],
+              "answer": "مَفَاعِل (mafā'il)"
+            },
+            {
+              "text": "عُلَمَاء (from عَالِم — scholar) follows which broken plural weight?",
+              "options": [
+                "فُعَلَاء (fu'alā')",
+                "أَفْعِلَاء",
+                "مَفَاعِيل",
+                "فَعَالَى"
+              ],
+              "answer": "فُعَلَاء (fu'alā')"
+            },
+            {
+              "text": "About how many distinct Jam' Taksīr weight-patterns are commonly recognized in classical Sarf?",
+              "options": [
+                "Around thirty",
+                "Exactly three",
+                "Exactly five",
+                "Over a thousand"
+              ],
+              "answer": "Around thirty"
+            }
+          ]
+        },
+        {
+          "id": "stage11",
+          "title": "An-Nasab",
+          "icon": "🏷️",
+          "description": "The relative adjective suffix — \"belonging to\"",
+          "kicker": "The Relative Adjective",
+          "questions": [
+            {
+              "text": "What does An-Nasab express?",
+              "options": [
+                "Relation or belonging to something, formed by adding يّ",
+                "Plurality",
+                "Negation",
+                "Comparison"
+              ],
+              "answer": "Relation or belonging to something, formed by adding يّ"
+            },
+            {
+              "text": "مِصْرِيّ (miṣriyy — \"Egyptian\") is formed from مِصْر by...",
+              "options": [
+                "Adding the Nasab suffix يّ",
+                "Adding a plural suffix",
+                "Adding a Tafḍīl pattern",
+                "Converting to Ism al-Fā'il"
+              ],
+              "answer": "Adding the Nasab suffix يّ"
+            },
+            {
+              "text": "What typically happens to a noun ending in ة (tā' marbūṭah) before adding the Nasab يّ?",
+              "options": [
+                "The ة is dropped first",
+                "The ة is kept as-is",
+                "The ة becomes a hamzah",
+                "Nothing can be done — no Nasab is possible"
+              ],
+              "answer": "The ة is dropped first"
+            },
+            {
+              "text": "مَكِّيّ (Makkiyy — \"Meccan\") is the Nasab form of...",
+              "options": [
+                "مَكَّة (Makkah)",
+                "مَكَان",
+                "مَلِك",
+                "مَكِين"
+              ],
+              "answer": "مَكَّة (Makkah)"
+            },
+            {
+              "text": "What happens to a noun ending in Alif Maqṣūrah (ى) when forming Nasab, in many cases?",
+              "options": [
+                "The alif often converts to a wāw before adding يّ",
+                "Nothing changes at all",
+                "The whole word is replaced",
+                "It becomes a broken plural instead"
+              ],
+              "answer": "The alif often converts to a wāw before adding يّ"
+            }
+          ]
+        },
+        {
+          "id": "stage12",
+          "title": "At-Ta'nīth aṣ-Ṣarfī — Deeper Rules",
+          "icon": "⚧️",
+          "description": "Feminine markers and their morphological exceptions",
+          "kicker": "Feminine Markers — Deeper Rules",
+          "questions": [
+            {
+              "text": "Is every noun ending in ة biologically/grammatically feminine, or can some be masculine?",
+              "options": [
+                "Some are masculine despite the ة",
+                "Every single one is strictly feminine with no exception",
+                "Every occurrence of ة is strictly feminine, without exception",
+                "ة only appears on verbs"
+              ],
+              "answer": "Some are masculine despite the ة"
+            },
+            {
+              "text": "Can a word be grammatically feminine (Mu'annath Ma'nawī) without ANY visible feminine marker?",
+              "options": [
+                "Yes, some words are feminine by meaning alone, with no visible marker at all",
+                "No, impossible without a marker",
+                "Only plurals can do this",
+                "Only proper names can do this"
+              ],
+              "answer": "Yes, some words are feminine by meaning alone, with no visible marker at all"
+            },
+            {
+              "text": "Which of the three feminine markers (ة، ى، اء) is generally considered morphologically \"heaviest\" or most fixed?",
+              "options": [
+                "Alif Mamdūdah (اء) — it behaves like a true root-final letter in some analyses",
+                "Tā' Marbūṭah — it's the heaviest",
+                "None of them differ in weight",
+                "Alif Maqṣūrah is heaviest"
+              ],
+              "answer": "Alif Mamdūdah (اء) — it behaves like a true root-final letter in some analyses"
+            },
+            {
+              "text": "Does the Mubālaghah pattern فَعَّالَة ever appear, combining intensity with a feminine referent?",
+              "options": [
+                "Yes, this combination does occur, for extra emphasis",
+                "Only for professions, never for personal traits",
+                "Only for animals",
+                "Only for plurals"
+              ],
+              "answer": "Yes, this combination does occur, for extra emphasis"
+            },
+            {
+              "text": "In dual and sound feminine plural formation, which feminine marker is typically dropped first?",
+              "options": [
+                "Tā' Marbūṭah — it converts to a regular ت before the suffix is added",
+                "None are ever dropped",
+                "Alif Mamdūdah",
+                "Alif Maqṣūrah"
+              ],
+              "answer": "Tā' Marbūṭah — it converts to a regular ت before the suffix is added"
+            }
+          ]
+        },
+        {
+          "id": "stage13",
+          "title": "Al-Mamnū' min aṣ-Ṣarf",
+          "icon": "🚧",
+          "description": "Morphological causes that block full declension",
+          "kicker": "Blocked from Full Declension",
+          "questions": [
+            {
+              "text": "What does Al-Mamnū' min aṣ-Ṣarf mean?",
+              "options": [
+                "A noun that cannot take Tanwīn or Kasrah, due to specific morphological causes",
+                "A verb that cannot be negated",
+                "A noun with no plural",
+                "A particle with no meaning"
+              ],
+              "answer": "A noun that cannot take Tanwīn or Kasrah, due to specific morphological causes"
+            },
+            {
+              "text": "Which of these is a morphological cause of Mamnū' min aṣ-Ṣarf?",
+              "options": [
+                "Being on the pattern أَفْعَل",
+                "Being a simple triliteral noun",
+                "Being definite with الـ",
+                "Being in Iḍāfah"
+              ],
+              "answer": "Being on the pattern أَفْعَل"
+            },
+            {
+              "text": "Which is ANOTHER morphological cause of Mamnū' min aṣ-Ṣarf?",
+              "options": [
+                "Ending in Alif Mamdūdah with a feminine sense",
+                "Ending in a regular Sukūn",
+                "Being masculine and singular",
+                "Being a verb"
+              ],
+              "answer": "Ending in Alif Mamdūdah with a feminine sense"
+            },
+            {
+              "text": "مَسَاجِد (broken plural pattern مَفَاعِل) is Mamnū' min aṣ-Ṣarf because...",
+              "options": [
+                "It follows a Muntahā al-Jumū' (\"plural of maximum extent\") pattern",
+                "It's a proper name",
+                "It ends in ة",
+                "It's a dual form"
+              ],
+              "answer": "It follows a Muntahā al-Jumū' (\"plural of maximum extent\") pattern"
+            },
+            {
+              "text": "What case-ending does a Mamnū' min aṣ-Ṣarf noun take in the Majrūr position, instead of Kasrah?",
+              "options": [
+                "Fatḥah (a borrowed Manṣūb-style ending)",
+                "Dammah",
+                "Sukūn",
+                "It keeps Kasrah normally"
+              ],
+              "answer": "Fatḥah (a borrowed Manṣūb-style ending)"
+            }
+          ]
+        },
+        {
+          "id": "stage14",
+          "title": "Al-Af'āl al-Jāmidah",
+          "icon": "🧊",
+          "description": "Frozen verbs that don't conjugate through all tenses",
+          "kicker": "Frozen Verbs",
+          "questions": [
+            {
+              "text": "What is Al-Fi'l al-Jāmid?",
+              "options": [
+                "A verb that only exists in one fixed tense/form, not fully conjugated",
+                "A verb with a weak root",
+                "A negated verb",
+                "A passive verb"
+              ],
+              "answer": "A verb that only exists in one fixed tense/form, not fully conjugated"
+            },
+            {
+              "text": "عَسَى ('asā — \"perhaps/it may be\") is an example of...",
+              "options": [
+                "A Jāmid verb — it only exists in Māḍī form",
+                "A fully conjugated regular verb",
+                "An imperative-only verb",
+                "A passive-only verb"
+              ],
+              "answer": "A Jāmid verb — it only exists in Māḍī form"
+            },
+            {
+              "text": "نِعْمَ (ni'ma — \"how excellent is...\") and بِئْسَ (bi'sa — \"how terrible is...\") are examples of...",
+              "options": [
+                "Jāmid verbs of praise/blame, fixed in the Māḍī form only",
+                "Regular fully-conjugated verbs",
+                "Nouns, not verbs at all",
+                "Particles"
+              ],
+              "answer": "Jāmid verbs of praise/blame, fixed in the Māḍī form only"
+            },
+            {
+              "text": "Does a Jāmid verb have a Muḍāri' or Amr form?",
+              "options": [
+                "No — by definition, it is frozen in just one form",
+                "Only the Muḍāri' form exists alongside it",
+                "Only the Amr form exists",
+                "Only the Muḍāri' exists"
+              ],
+              "answer": "No — by definition, it is frozen in just one form"
+            },
+            {
+              "text": "Why do Jāmid verbs matter in Sarf despite being \"irregular\"?",
+              "options": [
+                "They still need to be recognized and correctly identified rather than mistakenly conjugated",
+                "They are the most common verbs in Arabic",
+                "They form the basis of all other verbs",
+                "They don't matter and are ignored"
+              ],
+              "answer": "They still need to be recognized and correctly identified rather than mistakenly conjugated"
+            }
+          ]
+        },
+        {
+          "id": "stage15",
+          "title": "Muqārabah, Rajā' & Shurū' Verbs",
+          "icon": "🌗",
+          "description": "Verbs of proximity, hope, and inception",
+          "kicker": "Proximity, Hope & Beginning",
+          "questions": [
+            {
+              "text": "What do Af'āl al-Muqārabah express?",
+              "options": [
+                "That an action is close to happening (\"about to...\")",
+                "That an action has definitely finished",
+                "A command",
+                "A negation"
+              ],
+              "answer": "That an action is close to happening (\"about to...\")"
+            },
+            {
+              "text": "كَادَ (kāda — \"almost/nearly\") belongs to which category?",
+              "options": [
+                "Af'āl al-Muqārabah",
+                "Af'āl ar-Rajā'",
+                "Af'āl ash-Shurū'",
+                "Af'āl al-Jāmidah only"
+              ],
+              "answer": "Af'āl al-Muqārabah"
+            },
+            {
+              "text": "What do Af'āl ar-Rajā' express?",
+              "options": [
+                "Hope that an action will happen",
+                "That an action is beginning",
+                "That an action is impossible",
+                "A completed action"
+              ],
+              "answer": "Hope that an action will happen"
+            },
+            {
+              "text": "عَسَى, discussed earlier as Jāmid, also belongs to which functional category?",
+              "options": [
+                "Af'āl ar-Rajā' (verbs of hope)",
+                "Af'āl ash-Shurū'",
+                "Af'āl al-Muqārabah only",
+                "None of these categories"
+              ],
+              "answer": "Af'āl ar-Rajā' (verbs of hope)"
+            },
+            {
+              "text": "What do Af'āl ash-Shurū' express?",
+              "options": [
+                "The beginning/onset of an action",
+                "The end of an action",
+                "Doubt about an action",
+                "Praise of an action"
+              ],
+              "answer": "The beginning/onset of an action"
+            },
+            {
+              "text": "شَرَعَ (shara'a — \"he began\") followed by a Muḍāri' verb (e.g. شَرَعَ يَكْتُبُ — \"he began to write\") is an example of...",
+              "options": [
+                "Af'āl ash-Shurū'",
+                "Af'āl al-Muqārabah",
+                "Af'āl ar-Rajā'",
+                "A Jāmid verb"
+              ],
+              "answer": "Af'āl ash-Shurū'"
+            }
+          ]
+        },
+        {
+          "id": "stage16",
+          "title": "Manqūṣ, Maqṣūr & Mamdūd Nouns",
+          "icon": "📐",
+          "description": "Special noun categories based on their final letter",
+          "kicker": "Special Noun Endings",
+          "questions": [
+            {
+              "text": "What is Al-Ism al-Manqūṣ?",
+              "options": [
+                "A noun ending in a fixed يَ preceded by Kasrah",
+                "A noun ending in Alif Maqṣūrah",
+                "A noun ending in Alif Mamdūdah",
+                "A noun with no ending at all"
+              ],
+              "answer": "A noun ending in a fixed يَ preceded by Kasrah"
+            },
+            {
+              "text": "What is Al-Ism al-Maqṣūr?",
+              "options": [
+                "A noun ending in a fixed Alif (ى or ا)",
+                "A noun ending in a hamzah",
+                "A noun ending in a doubled letter",
+                "A noun with a broken plural only"
+              ],
+              "answer": "A noun ending in a fixed Alif (ى or ا)"
+            },
+            {
+              "text": "What is Al-Ism al-Mamdūd?",
+              "options": [
+                "A noun ending in a hamzah preceded by a long alif",
+                "A noun ending in يَ",
+                "A noun ending in a doubled letter",
+                "A noun with no i'rāb at all"
+              ],
+              "answer": "A noun ending in a hamzah preceded by a long alif"
+            },
+            {
+              "text": "In the indefinite Marfū'/Majrūr state, what happens to the ending of an Ism Manqūṣ like قَاضٍ?",
+              "options": [
+                "The يَ is dropped, leaving only Tanwīn Kasrah",
+                "Nothing changes at all",
+                "It becomes Maqṣūr instead",
+                "It becomes plural automatically"
+              ],
+              "answer": "The يَ is dropped, leaving only Tanwīn Kasrah"
+            },
+            {
+              "text": "Does the i'rāb (case ending) show visibly on an Ism Maqṣūr like مُصْطَفَى?",
+              "options": [
+                "No — the fixed alif blocks any visible case marker (estimated/muqaddar i'rāb)",
+                "Only visible when the noun is Muthannā",
+                "Only in the plural",
+                "Only when indefinite"
+              ],
+              "answer": "No — the fixed alif blocks any visible case marker (estimated/muqaddar i'rāb)"
+            }
+          ]
+        },
+        {
+          "id": "stage17",
+          "title": "I'lāl in Derived Nouns",
+          "icon": "🔬",
+          "description": "How weak-letter changes carry into Ism al-Fā'il, Maf'ūl, and more",
+          "kicker": "Weak Letters in Derived Nouns",
+          "questions": [
+            {
+              "text": "What happens to the Ism al-Fā'il of an Ajwaf (hollow) root like قَالَ?",
+              "options": [
+                "The middle weak letter converts to a hamzah",
+                "It stays completely unchanged as قَاوِل",
+                "It is dropped entirely",
+                "It becomes a broken plural"
+              ],
+              "answer": "The middle weak letter converts to a hamzah"
+            },
+            {
+              "text": "What is the Ism al-Maf'ūl of a Nāqiṣ (weak-final) root like رَمَى, in its basic form?",
+              "options": [
+                "مَرْمِيّ (marmiyy), with the weak letter converting and doubling",
+                "مَرْمُوي",
+                "مَرْمَاي",
+                "مَرْمِي بدون تغيير"
+              ],
+              "answer": "مَرْمِيّ (marmiyy), with the weak letter converting and doubling"
+            },
+            {
+              "text": "What is the Ism al-Fā'il of دَعَا (a Nāqiṣ root)?",
+              "options": [
+                "دَاعٍ (dā'in) — following the Ism Manqūṣ pattern",
+                "دَاعِي بدون تغيير",
+                "دَاعُو",
+                "دَاعِيّ مع تشديد"
+              ],
+              "answer": "دَاعٍ (dā'in) — following the Ism Manqūṣ pattern"
+            },
+            {
+              "text": "Why does I'lāl in derived nouns often connect back to the Manqūṣ/Maqṣūr noun categories?",
+              "options": [
+                "Because the weak letters in derived nouns often produce exactly those noun-ending patterns",
+                "There is no real connection",
+                "Because all derived nouns are automatically Jāmid",
+                "Because derived nouns are always Mabnī"
+              ],
+              "answer": "Because the weak letters in derived nouns often produce exactly those noun-ending patterns"
+            },
+            {
+              "text": "What is the Maṣdar of قَالَ (a hollow/Ajwaf root)?",
+              "options": [
+                "قَوْل (qawl) — the middle weak letter surfaces as a consonant وْ here",
+                "قِيَال",
+                "قَائِل",
+                "قَوَال"
+              ],
+              "answer": "قَوْل (qawl) — the middle weak letter surfaces as a consonant وْ here"
+            }
+          ]
+        },
+        {
+          "id": "stage18",
+          "title": "One Root, Many Meanings",
+          "icon": "🌐",
+          "description": "How the same root shifts meaning across different Mazīd forms",
+          "kicker": "Root Families Across Forms",
+          "questions": [
+            {
+              "text": "From the root س-ل-م, what does أَسْلَمَ (Form IV) mean?",
+              "options": [
+                "\"To submit/surrender [to Allah]\" — a shift toward a specific religious sense",
+                "\"To be safe\" (the base meaning, unchanged)",
+                "\"To greet each other\"",
+                "\"To seek safety\""
+              ],
+              "answer": "\"To submit/surrender [to Allah]\" — a shift toward a specific religious sense"
+            },
+            {
+              "text": "From the same root س-ل-م, what does سَلَّمَ (Form II) commonly mean?",
+              "options": [
+                "\"To hand over/deliver\" or \"to greet\"",
+                "\"To submit religiously\"",
+                "\"To seek peace\"",
+                "\"To be broken\""
+              ],
+              "answer": "\"To hand over/deliver\" or \"to greet\""
+            },
+            {
+              "text": "From the root ع-ل-م, what does عَلَّمَ (Form II) mean, compared to عَلِمَ (bare root, \"to know\")?",
+              "options": [
+                "\"To teach\" (causative — to make someone know)",
+                "\"To know intensely\"",
+                "\"To ask about knowledge\"",
+                "\"To forget\""
+              ],
+              "answer": "\"To teach\" (causative — to make someone know)"
+            },
+            {
+              "text": "From the root ع-ل-م, what does تَعَلَّمَ (Form V) mean?",
+              "options": [
+                "\"To learn\" (reflexive — to cause oneself to know)",
+                "\"To teach others\"",
+                "\"To be unaware\"",
+                "\"To know mutually\""
+              ],
+              "answer": "\"To learn\" (reflexive — to cause oneself to know)"
+            },
+            {
+              "text": "Why is tracing one root across all its Mazīd forms a valuable advanced Sarf exercise?",
+              "options": [
+                "It reveals the underlying logic connecting a whole family of related words and meanings",
+                "It only helps with memorizing the Mīzān",
+                "It only matters for weak roots",
+                "It replaces the need to learn Nahw"
+              ],
+              "answer": "It reveals the underlying logic connecting a whole family of related words and meanings"
+            }
+          ]
+        },
+        {
+          "id": "stage19",
+          "title": "Ism al-Marrah wal-Hay'ah",
+          "icon": "🔂",
+          "description": "Nouns of single occurrence and of manner",
+          "kicker": "Occurrence & Manner Nouns",
+          "questions": [
+            {
+              "text": "What does Ism al-Marrah express?",
+              "options": [
+                "A single occurrence of an action (\"one time\")",
+                "The manner/style of an action",
+                "The tool used for an action",
+                "The place of an action"
+              ],
+              "answer": "A single occurrence of an action (\"one time\")"
+            },
+            {
+              "text": "What is the pattern of Ism al-Marrah from a bare triliteral root?",
+              "options": [
+                "فَعْلَة (fa'lah)",
+                "فِعْلَة",
+                "مَفْعَل",
+                "فَعِيل"
+              ],
+              "answer": "فَعْلَة (fa'lah)"
+            },
+            {
+              "text": "ضَرْبَة (ḍarbah — \"a single hit/strike\") is the Ism al-Marrah of which root?",
+              "options": [
+                "ضَرَبَ (ḍaraba — to hit)",
+                "ضَرُبَ",
+                "دَرَبَ",
+                "ضَبَرَ"
+              ],
+              "answer": "ضَرَبَ (ḍaraba — to hit)"
+            },
+            {
+              "text": "What does Ism al-Hay'ah express?",
+              "options": [
+                "The manner or style in which an action was performed",
+                "A single occurrence",
+                "The tool used",
+                "The place of the action"
+              ],
+              "answer": "The manner or style in which an action was performed"
+            },
+            {
+              "text": "What is the pattern of Ism al-Hay'ah from a bare triliteral root?",
+              "options": [
+                "فِعْلَة (fi'lah)",
+                "فَعْلَة",
+                "مَفْعَل",
+                "فُعُول"
+              ],
+              "answer": "فِعْلَة (fi'lah)"
+            },
+            {
+              "text": "جِلْسَة (jilsah — \"a manner/way of sitting\") is the Ism al-Hay'ah of which root?",
+              "options": [
+                "جَلَسَ (jalasa — to sit)",
+                "جَلَّسَ",
+                "جَالَسَ",
+                "أَجْلَسَ"
+              ],
+              "answer": "جَلَسَ (jalasa — to sit)"
+            }
+          ]
+        },
+        {
+          "id": "stage20",
+          "title": "Advanced Synthesis",
+          "icon": "🏔️",
+          "description": "Deriving every major form from a single given root",
+          "kicker": "Full Derivation — Review & Synthesis",
+          "questions": [
+            {
+              "text": "Given the root ك-ر-م (\"to be noble/generous\"), which Bāb does كَرُمَ belong to?",
+              "options": [
+                "Dammah–Dammah (Bāb 4)",
+                "Fatḥah–Dammah",
+                "Fatḥah–Kasrah",
+                "Kasrah–Fatḥah"
+              ],
+              "answer": "Dammah–Dammah (Bāb 4)"
+            },
+            {
+              "text": "What is the Ism al-Fā'il-family word (Ṣifah Mushabbahah) for \"generous\" from ك-ر-م?",
+              "options": [
+                "كَرِيم (karīm)",
+                "مَكْرُوم",
+                "كَارِم",
+                "أَكْرَم فقط"
+              ],
+              "answer": "كَرِيم (karīm)"
+            },
+            {
+              "text": "What is the Ism at-Tafḍīl from ك-ر-م (\"more/most generous\")?",
+              "options": [
+                "أَكْرَم (akram)",
+                "كَرِيم",
+                "كَارِم",
+                "مُكْرَم"
+              ],
+              "answer": "أَكْرَم (akram)"
+            },
+            {
+              "text": "What is the Form IV verb from ك-ر-م, meaning \"to honor [someone]\"?",
+              "options": [
+                "أَكْرَمَ (akrama)",
+                "كَرَّمَ فقط",
+                "تَكَرَّمَ",
+                "اِسْتَكْرَمَ"
+              ],
+              "answer": "أَكْرَمَ (akrama)"
+            },
+            {
+              "text": "What is the Ism al-Maf'ūl of أَكْرَمَ (\"one who is honored\")?",
+              "options": [
+                "مُكْرَم (mukram)",
+                "كَرِيم",
+                "مُكَرِّم",
+                "كَارِم"
+              ],
+              "answer": "مُكْرَم (mukram)"
+            },
+            {
+              "text": "Putting it all together — which Sarf skill lets you predict كَرِيم, أَكْرَم, أَكْرَمَ, and مُكْرَم all from the single root ك-ر-م؟",
+              "options": [
+                "Recognizing patterns (awzān) and applying them systematically to any root",
+                "Memorizing every word individually with no system",
+                "Only Nahw can explain this, not Sarf",
+                "It's random and unpredictable"
+              ],
+              "answer": "Recognizing patterns (awzān) and applying them systematically to any root"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

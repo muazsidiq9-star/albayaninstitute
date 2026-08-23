@@ -1,0 +1,3604 @@
+{
+  "id": "tabir-expression",
+  "title": "Arabic Expression",
+  "titleArabic": "التعبير",
+  "subtitle": "Build skill in written and spoken Arabic self-expression",
+  "icon": "🗣️",
+  "description": "A three-level journey through At-Ta'bīr (Arabic Expression/Composition) — from simple self-introduction and daily-life sentences, through structured description, narration, and opinion-with-reasoning, to full argumentative essays, advanced discourse connectors, and formal speech.",
+  "difficulties": [
+    {
+      "id": "beginner",
+      "label": "Beginner",
+      "icon": "🌱",
+      "description": "Simple, correct sentences about yourself, your surroundings, and your day",
+      "stages": [
+        {
+          "id": "stage1",
+          "title": "At-Ta'āruf — Self-Introduction",
+          "icon": "👋",
+          "description": "Introducing yourself: name, nationality, profession",
+          "kicker": "Self-Introduction",
+          "questions": [
+            {
+              "text": "What is the standard way to introduce your name in Arabic?",
+              "options": [
+                "اسْمِي ... (\"My name is...\")",
+                "أَنَا فِي ... (\"I am in...\")",
+                "هَذَا ... (\"This is...\")",
+                "عِنْدِي ... (\"I have...\")"
+              ],
+              "answer": "اسْمِي ... (\"My name is...\")"
+            },
+            {
+              "text": "How would you express your nationality, e.g. \"I am Nigerian\"?",
+              "options": [
+                "أَنَا نَيْجِيرِيٌّ",
+                "عِنْدِي نَيْجِيرِيَا",
+                "هَذِهِ نَيْجِيرِيَا",
+                "نَيْجِيرِيَا لِي"
+              ],
+              "answer": "أَنَا نَيْجِيرِيٌّ"
+            },
+            {
+              "text": "Which phrase correctly asks someone's profession?",
+              "options": [
+                "مَا مِهْنَتُكَ؟",
+                "كَمْ عُمْرُكَ؟",
+                "أَيْنَ تَسْكُنُ؟",
+                "مَاذَا تَأْكُلُ؟"
+              ],
+              "answer": "مَا مِهْنَتُكَ؟"
+            },
+            {
+              "text": "To say \"I am a student\" (masculine), which is correct?",
+              "options": [
+                "أَنَا طَالِبٌ",
+                "أَنَا طَالِبَةٌ",
+                "أَنَا مُدَرِّسٌ",
+                "أَنَا كِتَابٌ"
+              ],
+              "answer": "أَنَا طَالِبٌ"
+            },
+            {
+              "text": "Which expression politely closes a self-introduction, meaning \"I'm honored to know you\"?",
+              "options": [
+                "تَشَرَّفْتُ بِمَعْرِفَتِكَ",
+                "إِلَى اللِّقَاءِ",
+                "بِسْمِ اللهِ",
+                "مَعَ السَّلَامَةِ فَقَط"
+              ],
+              "answer": "تَشَرَّفْتُ بِمَعْرِفَتِكَ"
+            }
+          ]
+        },
+        {
+          "id": "stage2",
+          "title": "Al-Usrah wal-Bayt — Family & Home",
+          "icon": "🏠",
+          "description": "Describing your family and home in simple sentences",
+          "kicker": "Family & Home",
+          "questions": [
+            {
+              "text": "How do you say \"I have two brothers\"?",
+              "options": [
+                "عِنْدِي أَخَوَانِ",
+                "لِي أُخْتَانِ فَقَط",
+                "أَنَا أَخٌ",
+                "هَذَانِ أَخَوَانِ"
+              ],
+              "answer": "عِنْدِي أَخَوَانِ"
+            },
+            {
+              "text": "Which sentence correctly describes a house: \"My house is big and beautiful\"?",
+              "options": [
+                "بَيْتِي كَبِيرٌ وَجَمِيلٌ",
+                "بَيْتِي فِي كَبِيرٍ",
+                "بَيْتِي يَكْبُرُ",
+                "بَيْتِي جَمِيلَةٌ كَبِيرَةٌ"
+              ],
+              "answer": "بَيْتِي كَبِيرٌ وَجَمِيلٌ"
+            },
+            {
+              "text": "Which connector fits: \"أُمِّي طَبِيبَةٌ ___ أَبِي مُهَنْدِسٌ\" (\"My mother is a doctor ___ my father is an engineer\")?",
+              "options": [
+                "وَ",
+                "أَوْ",
+                "لَكِنْ",
+                "لِأَنَّ"
+              ],
+              "answer": "وَ"
+            },
+            {
+              "text": "Which word means \"how many\", as in \"How many brothers do you have?\"",
+              "options": [
+                "كَمْ",
+                "مَاذَا",
+                "مَتَى",
+                "أَيْنَ"
+              ],
+              "answer": "كَمْ"
+            },
+            {
+              "text": "Which sentence best expresses \"My house is near the school\"?",
+              "options": [
+                "بَيْتِي قَرِيبٌ مِنَ الْمَدْرَسَةِ",
+                "بَيْتِي فِي الْمَدْرَسَةِ",
+                "الْمَدْرَسَةُ بَيْتِي",
+                "بَيْتِي بَعِيدٌ مِنَ الْمَدْرَسَةِ"
+              ],
+              "answer": "بَيْتِي قَرِيبٌ مِنَ الْمَدْرَسَةِ"
+            }
+          ]
+        },
+        {
+          "id": "stage3",
+          "title": "Al-Yawm ad-Dirāsī wal-Hiwāyāt — Daily Routine & Hobbies",
+          "icon": "🕐",
+          "description": "Talking about your day and interests in sequence",
+          "kicker": "Daily Routine & Hobbies",
+          "questions": [
+            {
+              "text": "Which word starts a sequence of daily actions, meaning \"firstly\"?",
+              "options": [
+                "أَوَّلًا",
+                "لَكِنْ",
+                "رُبَّمَا",
+                "هَلْ"
+              ],
+              "answer": "أَوَّلًا"
+            },
+            {
+              "text": "What is the best translation of \"Then I go to school\"?",
+              "options": [
+                "ثُمَّ أَذْهَبُ إِلَى الْمَدْرَسَةِ",
+                "أَذْهَبُ ثُمَّ الْمَدْرَسَةِ",
+                "الْمَدْرَسَةُ ثُمَّ أَذْهَبُ",
+                "أَذْهَبُ الْمَدْرَسَةُ ثُمَّ"
+              ],
+              "answer": "ثُمَّ أَذْهَبُ إِلَى الْمَدْرَسَةِ"
+            },
+            {
+              "text": "Which sentence correctly expresses the hobby \"I like reading books\"?",
+              "options": [
+                "أُحِبُّ قِرَاءَةَ الْكُتُبِ",
+                "أُحِبُّ الْكُتُبَ قِرَاءَةً",
+                "قِرَاءَةُ أُحِبُّ الْكُتُبِ",
+                "الْكُتُبُ تُحِبُّنِي"
+              ],
+              "answer": "أُحِبُّ قِرَاءَةَ الْكُتُبِ"
+            },
+            {
+              "text": "Which word means \"finally / at last\", used to close a sequence of actions?",
+              "options": [
+                "أَخِيرًا",
+                "أَوَّلًا",
+                "بَعْدَ ذَلِكَ",
+                "الْآنَ"
+              ],
+              "answer": "أَخِيرًا"
+            },
+            {
+              "text": "Which is the correct way to say \"After that, I eat dinner\"?",
+              "options": [
+                "بَعْدَ ذَلِكَ آكُلُ الْعَشَاءَ",
+                "بَعْدَ ذَلِكَ الْعَشَاءَ آكُلُ",
+                "آكُلُ بَعْدَ ذَلِكَ",
+                "الْعَشَاءُ بَعْدَ ذَلِكَ"
+              ],
+              "answer": "بَعْدَ ذَلِكَ آكُلُ الْعَشَاءَ"
+            }
+          ]
+        },
+        {
+          "id": "stage4",
+          "title": "Adawāt ar-Rabṭ al-Basīṭah — Basic Connectors",
+          "icon": "🔗",
+          "description": "The small words that link simple sentences together",
+          "kicker": "Basic Connectors",
+          "questions": [
+            {
+              "text": "Which connector expresses contrast, \"but\"?",
+              "options": [
+                "لَكِنْ",
+                "وَ",
+                "ثُمَّ",
+                "أَيْضًا"
+              ],
+              "answer": "لَكِنْ"
+            },
+            {
+              "text": "Which connector expresses reason, \"because\"?",
+              "options": [
+                "لِأَنَّ",
+                "أَوْ",
+                "إِذَنْ",
+                "مَعَ"
+              ],
+              "answer": "لِأَنَّ"
+            },
+            {
+              "text": "Complete: \"أَنَا مُتْعَبٌ ___ سَأَذْهَبُ إِلَى النَّوْمِ\" (\"I am tired, ___ I will go to sleep\")",
+              "options": [
+                "لِذَلِكَ",
+                "لَكِنْ",
+                "أَوْ",
+                "مَعَ أَنَّ"
+              ],
+              "answer": "لِذَلِكَ"
+            },
+            {
+              "text": "Which word means \"also / too\", used to add an extra point?",
+              "options": [
+                "أَيْضًا",
+                "لَكِنْ",
+                "لِأَنَّ",
+                "إِذَا"
+              ],
+              "answer": "أَيْضًا"
+            },
+            {
+              "text": "Which connector presents an alternative, \"or\"?",
+              "options": [
+                "أَوْ",
+                "وَ",
+                "ثُمَّ",
+                "لِأَنَّ"
+              ],
+              "answer": "أَوْ"
+            }
+          ]
+        },
+        {
+          "id": "stage5",
+          "title": "At-Ta'bīr 'an ar-Ra'y al-Basīṭ — Simple Opinion",
+          "icon": "💭",
+          "description": "Giving a simple opinion and agreeing or disagreeing",
+          "kicker": "Simple Opinion",
+          "questions": [
+            {
+              "text": "Which phrase means \"In my opinion...\"?",
+              "options": [
+                "فِي رَأْيِي...",
+                "فِي بَيْتِي...",
+                "عِنْدَ سُؤَالِي...",
+                "أَمَامَ عَيْنِي..."
+              ],
+              "answer": "فِي رَأْيِي..."
+            },
+            {
+              "text": "Which phrase means \"I think that...\"?",
+              "options": [
+                "أَعْتَقِدُ أَنَّ...",
+                "أَذْهَبُ أَنَّ...",
+                "أَسْكُنُ أَنَّ...",
+                "أَقْرَأُ أَنَّ..."
+              ],
+              "answer": "أَعْتَقِدُ أَنَّ..."
+            },
+            {
+              "text": "What is the simplest way to say \"I like this / I don't like this\"?",
+              "options": [
+                "أُحِبُّ هَذَا / لَا أُحِبُّ هَذَا",
+                "أَنَا هَذَا / لَسْتُ هَذَا",
+                "هَذَا يُحِبُّنِي",
+                "أَحْبَبْتُ لَنْ"
+              ],
+              "answer": "أُحِبُّ هَذَا / لَا أُحِبُّ هَذَا"
+            },
+            {
+              "text": "Which phrase means \"I agree with you\"?",
+              "options": [
+                "أُوَافِقُكَ الرَّأْيَ",
+                "أُخَالِفُكَ الرَّأْيَ",
+                "لَا أَعْرِفُ",
+                "أَنَا غَاضِبٌ"
+              ],
+              "answer": "أُوَافِقُكَ الرَّأْيَ"
+            },
+            {
+              "text": "Which phrase means \"I disagree with you\"?",
+              "options": [
+                "أُخَالِفُكَ الرَّأْيَ",
+                "أُوَافِقُكَ الرَّأْيَ",
+                "أَشْكُرُكَ",
+                "أُحِبُّكَ"
+              ],
+              "answer": "أُخَالِفُكَ الرَّأْيَ"
+            }
+          ]
+        },
+        {
+          "id": "stage6",
+          "title": "Al-Ma'kal wal-Mashrab — Food & Drink",
+          "icon": "🍽️",
+          "description": "Expressing hunger, taste, and preference around food",
+          "kicker": "Food & Drink",
+          "questions": [
+            {
+              "text": "How do you say \"I am hungry\"?",
+              "options": [
+                "أَنَا جَائِعٌ",
+                "أَنَا عَطْشَانُ",
+                "أَنَا مُتْعَبٌ",
+                "أَنَا سَعِيدٌ"
+              ],
+              "answer": "أَنَا جَائِعٌ"
+            },
+            {
+              "text": "Which phrase politely orders food: \"I would like a cup of tea, please\"?",
+              "options": [
+                "أُرِيدُ كُوبًا مِنَ الشَّايِ مِنْ فَضْلِكَ",
+                "أُرِيدُ الشَّايَ كُوبًا",
+                "الشَّايُ يُرِيدُنِي",
+                "مِنْ فَضْلِكَ أَنَا شَايٌ"
+              ],
+              "answer": "أُرِيدُ كُوبًا مِنَ الشَّايِ مِنْ فَضْلِكَ"
+            },
+            {
+              "text": "How do you say \"This food is delicious\"?",
+              "options": [
+                "هَذَا الطَّعَامُ لَذِيذٌ",
+                "هَذَا الطَّعَامُ سَيِّئٌ",
+                "هَذَا الطَّعَامُ بَارِدٌ",
+                "أَنَا لَذِيذٌ"
+              ],
+              "answer": "هَذَا الطَّعَامُ لَذِيذٌ"
+            },
+            {
+              "text": "Which sentence expresses a preference: \"I prefer tea over coffee\"?",
+              "options": [
+                "أُفَضِّلُ الشَّايَ عَلَى الْقَهْوَةِ",
+                "أُفَضِّلُ الشَّايَ مَعَ الْقَهْوَةِ",
+                "الشَّايُ أُفَضِّلُ",
+                "أُحِبُّ لَا الشَّايَ"
+              ],
+              "answer": "أُفَضِّلُ الشَّايَ عَلَى الْقَهْوَةِ"
+            },
+            {
+              "text": "Which is correct for \"I don't eat meat\"?",
+              "options": [
+                "لَا آكُلُ اللَّحْمَ",
+                "لَا أَكَلْتُ اللَّحْمَ",
+                "أَكَلْتُ لَا اللَّحْمَ",
+                "اللَّحْمُ لَا يَأْكُلُ"
+              ],
+              "answer": "لَا آكُلُ اللَّحْمَ"
+            }
+          ]
+        },
+        {
+          "id": "stage7",
+          "title": "At-Taqs wal-Fuṣūl — Weather & Seasons",
+          "icon": "☀️",
+          "description": "Talking about weather and the seasons of the year",
+          "kicker": "Weather & Seasons",
+          "questions": [
+            {
+              "text": "Which sentence means \"The weather is hot today\"?",
+              "options": [
+                "الطَّقْسُ حَارٌّ الْيَوْمَ",
+                "الطَّقْسُ بَارِدٌ الْيَوْمَ",
+                "أَنَا حَارٌّ الْيَوْمَ",
+                "الْيَوْمُ طَقْسٌ"
+              ],
+              "answer": "الطَّقْسُ حَارٌّ الْيَوْمَ"
+            },
+            {
+              "text": "Which word means \"winter\"?",
+              "options": [
+                "الشِّتَاءُ",
+                "الصَّيْفُ",
+                "الرَّبِيعُ",
+                "الْخَرِيفُ"
+              ],
+              "answer": "الشِّتَاءُ"
+            },
+            {
+              "text": "Which sentence means \"The weather is rainy today\"?",
+              "options": [
+                "الْجَوُّ مُمْطِرٌ الْيَوْمَ",
+                "الْجَوُّ مُشْمِسٌ الْيَوْمَ",
+                "الْجَوُّ حَارٌّ الْيَوْمَ",
+                "أَنَا مُمْطِرٌ الْيَوْمَ"
+              ],
+              "answer": "الْجَوُّ مُمْطِرٌ الْيَوْمَ"
+            },
+            {
+              "text": "Which word means \"sunny\"?",
+              "options": [
+                "مُشْمِسٌ",
+                "غَائِمٌ",
+                "مُثْلِجٌ",
+                "عَاصِفٌ"
+              ],
+              "answer": "مُشْمِسٌ"
+            },
+            {
+              "text": "How do you ask \"How is the weather today?\"",
+              "options": [
+                "كَيْفَ الطَّقْسُ الْيَوْمَ؟",
+                "مَاذَا الطَّقْسُ؟",
+                "أَيْنَ الطَّقْسُ الْيَوْمَ؟",
+                "مَنْ الطَّقْسُ؟"
+              ],
+              "answer": "كَيْفَ الطَّقْسُ الْيَوْمَ؟"
+            }
+          ]
+        },
+        {
+          "id": "stage8",
+          "title": "Al-Ashkhāṣ wal-Awṣāf — Describing People",
+          "icon": "🧑",
+          "description": "Describing appearance and character",
+          "kicker": "Describing People",
+          "questions": [
+            {
+              "text": "Which sentence means \"He is tall and kind\"?",
+              "options": [
+                "هُوَ طَوِيلٌ وَلَطِيفٌ",
+                "هُوَ طَوِيلَةٌ وَلَطِيفَةٌ",
+                "هِيَ طَوِيلٌ وَلَطِيفٌ",
+                "هُوَ قَصِيرٌ وَلَطِيفٌ"
+              ],
+              "answer": "هُوَ طَوِيلٌ وَلَطِيفٌ"
+            },
+            {
+              "text": "Which sentence means \"She has black hair\"?",
+              "options": [
+                "شَعْرُهَا أَسْوَدُ",
+                "شَعْرُهُ أَسْوَدُ",
+                "هِيَ شَعْرٌ أَسْوَدُ",
+                "أَسْوَدُ شَعْرُهَا هِيَ"
+              ],
+              "answer": "شَعْرُهَا أَسْوَدُ"
+            },
+            {
+              "text": "Which sentence describes character: \"My friend is honest and hardworking\"?",
+              "options": [
+                "صَدِيقِي صَادِقٌ وَمُجْتَهِدٌ",
+                "صَدِيقِي كَسْلَانُ وَكَاذِبٌ",
+                "صَدِيقِي طَوِيلٌ وَقَصِيرٌ",
+                "صَدِيقَتِي صَادِقٌ"
+              ],
+              "answer": "صَدِيقِي صَادِقٌ وَمُجْتَهِدٌ"
+            },
+            {
+              "text": "How do you ask \"What does he look like?\"",
+              "options": [
+                "كَيْفَ شَكْلُهُ؟",
+                "مَاذَا يَفْعَلُ؟",
+                "أَيْنَ هُوَ؟",
+                "مَنْ هُوَ؟"
+              ],
+              "answer": "كَيْفَ شَكْلُهُ؟"
+            },
+            {
+              "text": "Which sentence means \"They (masc. pl.) are intelligent students\"?",
+              "options": [
+                "هُمْ طُلَّابٌ أَذْكِيَاءُ",
+                "هُمْ طَالِبَةٌ ذَكِيَّةٌ",
+                "هُنَّ طُلَّابٌ أَذْكِيَاءُ",
+                "هُوَ طُلَّابٌ أَذْكِيَاءُ"
+              ],
+              "answer": "هُمْ طُلَّابٌ أَذْكِيَاءُ"
+            }
+          ]
+        },
+        {
+          "id": "stage9",
+          "title": "Al-Amkinah — Describing Places",
+          "icon": "🏙️",
+          "description": "Describing cities, parks, and neighborhoods",
+          "kicker": "Describing Places",
+          "questions": [
+            {
+              "text": "Which sentence means \"This city is crowded and noisy\"?",
+              "options": [
+                "هَذِهِ الْمَدِينَةُ مُزْدَحِمَةٌ وَصَاخِبَةٌ",
+                "هَذِهِ الْمَدِينَةُ هَادِئَةٌ وَجَمِيلَةٌ",
+                "هَذَا الْمَدِينَةُ مُزْدَحِمٌ",
+                "الْمَدِينَةُ هَذِهِ فَارِغَةٌ"
+              ],
+              "answer": "هَذِهِ الْمَدِينَةُ مُزْدَحِمَةٌ وَصَاخِبَةٌ"
+            },
+            {
+              "text": "Which sentence means \"The park is full of trees and flowers\"?",
+              "options": [
+                "الْحَدِيقَةُ مَلِيئَةٌ بِالْأَشْجَارِ وَالْأَزْهَارِ",
+                "الْحَدِيقَةُ فَارِغَةٌ مِنَ الْأَشْجَارِ",
+                "الْأَشْجَارُ مَلِيئَةٌ بِالْحَدِيقَةِ",
+                "الْحَدِيقَةُ بَعِيدَةٌ عَنِ الْأَشْجَارِ"
+              ],
+              "answer": "الْحَدِيقَةُ مَلِيئَةٌ بِالْأَشْجَارِ وَالْأَزْهَارِ"
+            },
+            {
+              "text": "Which phrase correctly says \"next to the library\"?",
+              "options": [
+                "بِجَانِبِ الْمَكْتَبَةِ",
+                "دَاخِلَ الْمَكْتَبَةِ",
+                "أَمَامَ الطَّبِيبِ",
+                "تَحْتَ الْكُرْسِيِّ"
+              ],
+              "answer": "بِجَانِبِ الْمَكْتَبَةِ"
+            },
+            {
+              "text": "Which sentence means \"There is a big market in our neighborhood\"?",
+              "options": [
+                "يُوجَدُ سُوقٌ كَبِيرٌ فِي حَيِّنَا",
+                "يُوجَدُ سُوقٌ صَغِيرٌ خَارِجَ حَيِّنَا",
+                "حَيُّنَا يُوجَدُ فِي السُّوقِ",
+                "لَا يُوجَدُ سُوقٌ فِي حَيِّنَا"
+              ],
+              "answer": "يُوجَدُ سُوقٌ كَبِيرٌ فِي حَيِّنَا"
+            },
+            {
+              "text": "How do you ask \"Where is the nearest hospital?\"",
+              "options": [
+                "أَيْنَ أَقْرَبُ مُسْتَشْفَى؟",
+                "مَتَى الْمُسْتَشْفَى؟",
+                "كَمِ الْمُسْتَشْفَى؟",
+                "مَنِ الْمُسْتَشْفَى؟"
+              ],
+              "answer": "أَيْنَ أَقْرَبُ مُسْتَشْفَى؟"
+            }
+          ]
+        },
+        {
+          "id": "stage10",
+          "title": "Al-Waqt — Telling Time & Schedule",
+          "icon": "⏰",
+          "description": "Expressing time, routines, and schedules",
+          "kicker": "Telling Time",
+          "questions": [
+            {
+              "text": "How do you ask \"What time is it?\"",
+              "options": [
+                "كَمِ السَّاعَةُ؟",
+                "أَيْنَ السَّاعَةُ؟",
+                "مَاذَا السَّاعَةُ؟",
+                "مَنِ السَّاعَةُ؟"
+              ],
+              "answer": "كَمِ السَّاعَةُ؟"
+            },
+            {
+              "text": "Which sentence means \"It is three o'clock\"?",
+              "options": [
+                "السَّاعَةُ الثَّالِثَةُ",
+                "السَّاعَةُ ثَلَاثَةٌ رِجَال",
+                "ثَلَاثَةُ سَاعَاتٍ",
+                "السَّاعَةُ الثَّالِثُ"
+              ],
+              "answer": "السَّاعَةُ الثَّالِثَةُ"
+            },
+            {
+              "text": "Which sentence means \"I wake up early every morning\"?",
+              "options": [
+                "أَسْتَيْقِظُ مُبَكِّرًا كُلَّ صَبَاحٍ",
+                "أَنَامُ مُبَكِّرًا كُلَّ صَبَاحٍ",
+                "اسْتَيْقَظْتُ مُبَكِّرًا غَدًا",
+                "أَسْتَيْقِظُ مُتَأَخِّرًا"
+              ],
+              "answer": "أَسْتَيْقِظُ مُبَكِّرًا كُلَّ صَبَاحٍ"
+            },
+            {
+              "text": "Which sentence means \"My class starts at eight in the morning\"?",
+              "options": [
+                "تَبْدَأُ حِصَّتِي فِي السَّاعَةِ الثَّامِنَةِ صَبَاحًا",
+                "تَنْتَهِي حِصَّتِي فِي السَّاعَةِ الثَّامِنَةِ صَبَاحًا",
+                "حِصَّتِي بَعْدَ الثَّامِنَةِ مَسَاءً",
+                "لَا حِصَّةَ لِي الْيَوْمَ"
+              ],
+              "answer": "تَبْدَأُ حِصَّتِي فِي السَّاعَةِ الثَّامِنَةِ صَبَاحًا"
+            },
+            {
+              "text": "Which phrase expresses \"every day\"?",
+              "options": [
+                "كُلَّ يَوْمٍ",
+                "بَعْدَ يَوْمٍ",
+                "قَبْلَ يَوْمٍ",
+                "يَوْمًا مَا"
+              ],
+              "answer": "كُلَّ يَوْمٍ"
+            }
+          ]
+        },
+        {
+          "id": "stage11",
+          "title": "At-Tasawwuq — Shopping Expressions",
+          "icon": "🛍️",
+          "description": "Asking prices, sizes, and negotiating simply",
+          "kicker": "Shopping",
+          "questions": [
+            {
+              "text": "How do you ask \"How much does this cost?\"",
+              "options": [
+                "كَمْ سِعْرُ هَذَا؟",
+                "أَيْنَ سِعْرُ هَذَا؟",
+                "مَاذَا سِعْرُ هَذَا؟",
+                "مَنْ سِعْرُ هَذَا؟"
+              ],
+              "answer": "كَمْ سِعْرُ هَذَا؟"
+            },
+            {
+              "text": "Which sentence means \"This is too expensive\"?",
+              "options": [
+                "هَذَا غَالٍ جِدًّا",
+                "هَذَا رَخِيصٌ جِدًّا",
+                "هَذَا جَيِّدٌ جِدًّا",
+                "أَنَا غَالٍ جِدًّا"
+              ],
+              "answer": "هَذَا غَالٍ جِدًّا"
+            },
+            {
+              "text": "Which sentence means \"Do you have a smaller size?\"",
+              "options": [
+                "هَلْ عِنْدَكَ مَقَاسٌ أَصْغَرُ؟",
+                "هَلْ عِنْدَكَ مَقَاسٌ أَكْبَرُ؟",
+                "هَلْ أَنْتَ مَقَاسٌ أَصْغَرُ؟",
+                "أَيْنَ الْمَقَاسُ؟"
+              ],
+              "answer": "هَلْ عِنْدَكَ مَقَاسٌ أَصْغَرُ؟"
+            },
+            {
+              "text": "Which sentence means \"I would like to buy this shirt\"?",
+              "options": [
+                "أُرِيدُ أَنْ أَشْتَرِيَ هَذَا الْقَمِيصَ",
+                "أُرِيدُ أَنْ أَبِيعَ هَذَا الْقَمِيصَ",
+                "اشْتَرَيْتُ هَذَا الْقَمِيصَ أَمْسِ",
+                "هَذَا الْقَمِيصُ يُرِيدُنِي"
+              ],
+              "answer": "أُرِيدُ أَنْ أَشْتَرِيَ هَذَا الْقَمِيصَ"
+            },
+            {
+              "text": "Which sentence means \"Can you give me a discount?\"",
+              "options": [
+                "هَلْ يُمْكِنُكَ أَنْ تُعْطِيَنِي خَصْمًا؟",
+                "هَلْ يُمْكِنُكَ أَنْ تَأْخُذَ مِنِّي خَصْمًا؟",
+                "أَعْطِنِي السِّعْرَ الْكَامِلَ",
+                "لَا أُرِيدُ خَصْمًا"
+              ],
+              "answer": "هَلْ يُمْكِنُكَ أَنْ تُعْطِيَنِي خَصْمًا؟"
+            }
+          ]
+        },
+        {
+          "id": "stage12",
+          "title": "As-Ṣiḥḥah wal-Mashā'ir — Health & Feelings",
+          "icon": "❤️",
+          "description": "Expressing how you feel, physically and emotionally",
+          "kicker": "Health & Feelings",
+          "questions": [
+            {
+              "text": "Which sentence means \"I feel sick today\"?",
+              "options": [
+                "أَشْعُرُ بِالْمَرَضِ الْيَوْمَ",
+                "أَشْعُرُ بِالسَّعَادَةِ الْيَوْمَ",
+                "أَنَا مَرَضٌ",
+                "الْمَرَضُ يَشْعُرُ بِي"
+              ],
+              "answer": "أَشْعُرُ بِالْمَرَضِ الْيَوْمَ"
+            },
+            {
+              "text": "Which sentence means \"I have a headache\"?",
+              "options": [
+                "عِنْدِي صُدَاعٌ",
+                "عِنْدِي جُوعٌ",
+                "أَنَا صُدَاعٌ",
+                "الصُّدَاعُ عِنْدِي يَذْهَبُ"
+              ],
+              "answer": "عِنْدِي صُدَاعٌ"
+            },
+            {
+              "text": "Which sentence means \"I am very happy today\"?",
+              "options": [
+                "أَنَا سَعِيدٌ جِدًّا الْيَوْمَ",
+                "أَنَا حَزِينٌ جِدًّا الْيَوْمَ",
+                "الْيَوْمُ سَعِيدٌ جِدًّا أَنَا",
+                "أَنَا سَعِيدَةٌ جِدًّا"
+              ],
+              "answer": "أَنَا سَعِيدٌ جِدًّا الْيَوْمَ"
+            },
+            {
+              "text": "Which sentence means \"You should see a doctor\"?",
+              "options": [
+                "يَجِبُ أَنْ تَذْهَبَ إِلَى الطَّبِيبِ",
+                "يَجِبُ أَلَّا تَذْهَبَ إِلَى الطَّبِيبِ",
+                "الطَّبِيبُ يَجِبُ أَنْ يَذْهَبَ إِلَيْكَ",
+                "أَنْتَ طَبِيبٌ"
+              ],
+              "answer": "يَجِبُ أَنْ تَذْهَبَ إِلَى الطَّبِيبِ"
+            },
+            {
+              "text": "Which sentence means \"I feel much better now\"?",
+              "options": [
+                "أَشْعُرُ بِتَحَسُّنٍ كَبِيرٍ الْآنَ",
+                "أَشْعُرُ بِتَعَبٍ كَبِيرٍ الْآنَ",
+                "شَعَرْتُ بِتَحَسُّنٍ أَمْسِ فَقَط",
+                "لَا أَشْعُرُ بِأَيِّ شَيْءٍ"
+              ],
+              "answer": "أَشْعُرُ بِتَحَسُّنٍ كَبِيرٍ الْآنَ"
+            }
+          ]
+        },
+        {
+          "id": "stage13",
+          "title": "As-Safar al-Basīṭ — Simple Travel Expressions",
+          "icon": "✈️",
+          "description": "Basic phrases for airports, taxis, and trips",
+          "kicker": "Simple Travel",
+          "questions": [
+            {
+              "text": "Which sentence means \"I am traveling to Cairo next week\"?",
+              "options": [
+                "سَأُسَافِرُ إِلَى الْقَاهِرَةِ الْأُسْبُوعَ الْقَادِمَ",
+                "سَافَرْتُ إِلَى الْقَاهِرَةِ الْأُسْبُوعَ الْمَاضِيَ",
+                "أَنَا فِي الْقَاهِرَةِ الْآنَ",
+                "الْقَاهِرَةُ سَتُسَافِرُ إِلَيَّ"
+              ],
+              "answer": "سَأُسَافِرُ إِلَى الْقَاهِرَةِ الْأُسْبُوعَ الْقَادِمَ"
+            },
+            {
+              "text": "How do you ask \"Where is the airport?\"",
+              "options": [
+                "أَيْنَ الْمَطَارُ؟",
+                "مَتَى الْمَطَارُ؟",
+                "كَمِ الْمَطَارُ؟",
+                "مَنِ الْمَطَارُ؟"
+              ],
+              "answer": "أَيْنَ الْمَطَارُ؟"
+            },
+            {
+              "text": "Which sentence means \"I need a taxi to the hotel\"?",
+              "options": [
+                "أَحْتَاجُ إِلَى سَيَّارَةِ أُجْرَةٍ إِلَى الْفُنْدُقِ",
+                "أَحْتَاجُ إِلَى فُنْدُقٍ فِي السَّيَّارَةِ",
+                "لَا أَحْتَاجُ إِلَى سَيَّارَةِ أُجْرَةٍ",
+                "السَّيَّارَةُ تَحْتَاجُ إِلَيَّ"
+              ],
+              "answer": "أَحْتَاجُ إِلَى سَيَّارَةِ أُجْرَةٍ إِلَى الْفُنْدُقِ"
+            },
+            {
+              "text": "Which sentence means \"My passport and ticket are in my bag\"?",
+              "options": [
+                "جَوَازُ سَفَرِي وَتَذْكِرَتِي فِي حَقِيبَتِي",
+                "حَقِيبَتِي فِي جَوَازِ سَفَرِي",
+                "لَيْسَ لَدَيَّ جَوَازُ سَفَرٍ",
+                "تَذْكِرَتِي فِي الْمَطَارِ فَقَط"
+              ],
+              "answer": "جَوَازُ سَفَرِي وَتَذْكِرَتِي فِي حَقِيبَتِي"
+            },
+            {
+              "text": "How do you ask \"How long does the flight take?\"",
+              "options": [
+                "كَمْ تَسْتَغْرِقُ الرِّحْلَةُ؟",
+                "أَيْنَ تَسْتَغْرِقُ الرِّحْلَةُ؟",
+                "مَاذَا تَسْتَغْرِقُ الرِّحْلَةُ؟",
+                "مَنْ يَسْتَغْرِقُ الرِّحْلَةَ؟"
+              ],
+              "answer": "كَمْ تَسْتَغْرِقُ الرِّحْلَةُ؟"
+            }
+          ]
+        },
+        {
+          "id": "stage14",
+          "title": "Al-Mujāmalāt al-Yawmiyyah — Daily Courtesies",
+          "icon": "🙏",
+          "description": "Everyday polite expressions: thanks, apology, congratulations",
+          "kicker": "Daily Courtesies",
+          "questions": [
+            {
+              "text": "How do you say \"Thank you very much\"?",
+              "options": [
+                "شُكْرًا جَزِيلًا",
+                "عَفْوًا",
+                "آسِفٌ جِدًّا",
+                "مَعَ السَّلَامَةِ"
+              ],
+              "answer": "شُكْرًا جَزِيلًا"
+            },
+            {
+              "text": "How do you respond \"You're welcome\"?",
+              "options": [
+                "عَفْوًا",
+                "شُكْرًا",
+                "مِنْ فَضْلِكَ",
+                "آسِفٌ"
+              ],
+              "answer": "عَفْوًا"
+            },
+            {
+              "text": "How do you apologize, \"I'm sorry\"?",
+              "options": [
+                "أَنَا آسِفٌ",
+                "أَنَا سَعِيدٌ",
+                "أَنَا مَشْغُولٌ",
+                "أَنَا جَاهِزٌ"
+              ],
+              "answer": "أَنَا آسِفٌ"
+            },
+            {
+              "text": "Which sentence politely asks for help: \"Please, could you help me?\"",
+              "options": [
+                "مِنْ فَضْلِكَ، هَلْ يُمْكِنُكَ مُسَاعَدَتِي؟",
+                "مِنْ فَضْلِكَ، لَا تُسَاعِدْنِي",
+                "سَاعَدْتُكَ أَمْسِ",
+                "هَلْ يُمْكِنُنِي مُسَاعَدَتَكَ؟"
+              ],
+              "answer": "مِنْ فَضْلِكَ، هَلْ يُمْكِنُكَ مُسَاعَدَتِي؟"
+            },
+            {
+              "text": "How do you say \"Congratulations!\"?",
+              "options": [
+                "مَبْرُوكٌ!",
+                "تَعَازِيَّ!",
+                "بِالتَّوْفِيقِ!",
+                "مَعَ السَّلَامَةِ!"
+              ],
+              "answer": "مَبْرُوكٌ!"
+            }
+          ]
+        },
+        {
+          "id": "stage15",
+          "title": "At-Ta'bīr bil-Amr — Requests & Polite Commands",
+          "icon": "🙋",
+          "description": "Making polite requests, suggestions, and commands",
+          "kicker": "Requests & Commands",
+          "questions": [
+            {
+              "text": "Which sentence means \"Please open the window\"?",
+              "options": [
+                "افْتَحِ النَّافِذَةَ مِنْ فَضْلِكَ",
+                "أَغْلِقِ النَّافِذَةَ مِنْ فَضْلِكَ",
+                "النَّافِذَةُ مَفْتُوحَةٌ",
+                "هَلْ فَتَحْتَ النَّافِذَةَ؟"
+              ],
+              "answer": "افْتَحِ النَّافِذَةَ مِنْ فَضْلِكَ"
+            },
+            {
+              "text": "Which sentence means \"Don't be late\"?",
+              "options": [
+                "لَا تَتَأَخَّرْ",
+                "تَأَخَّرْ",
+                "لَا تُسْرِعْ",
+                "أَنْتَ مُتَأَخِّرٌ"
+              ],
+              "answer": "لَا تَتَأَخَّرْ"
+            },
+            {
+              "text": "Which sentence means \"Let's go together\"?",
+              "options": [
+                "لِنَذْهَبْ مَعًا",
+                "اذْهَبْ وَحْدَكَ",
+                "ذَهَبْنَا مَعًا أَمْسِ",
+                "هَلْ نَذْهَبُ؟"
+              ],
+              "answer": "لِنَذْهَبْ مَعًا"
+            },
+            {
+              "text": "Which sentence means \"Please sit down\"?",
+              "options": [
+                "تَفَضَّلْ بِالْجُلُوسِ",
+                "تَفَضَّلْ بِالْوُقُوفِ",
+                "لَا تَجْلِسْ",
+                "أَنَا جَالِسٌ"
+              ],
+              "answer": "تَفَضَّلْ بِالْجُلُوسِ"
+            },
+            {
+              "text": "Which sentence means \"Could you please repeat that?\"",
+              "options": [
+                "هَلْ يُمْكِنُكَ أَنْ تُعِيدَ ذَلِكَ مِنْ فَضْلِكَ؟",
+                "لَا تُعِدْ ذَلِكَ",
+                "أَعَدْتُ ذَلِكَ أَمْسِ",
+                "هَلْ فَهِمْتَ ذَلِكَ؟"
+              ],
+              "answer": "هَلْ يُمْكِنُكَ أَنْ تُعِيدَ ذَلِكَ مِنْ فَضْلِكَ؟"
+            }
+          ]
+        },
+        {
+          "id": "stage16",
+          "title": "As-Su'āl wal-Jawāb — Question Formation",
+          "icon": "❓",
+          "description": "Forming questions to gather information",
+          "kicker": "Question Formation",
+          "questions": [
+            {
+              "text": "Which question word means \"why\"?",
+              "options": [
+                "لِمَاذَا",
+                "كَيْفَ",
+                "مَتَى",
+                "أَيْنَ"
+              ],
+              "answer": "لِمَاذَا"
+            },
+            {
+              "text": "Which is the correct way to ask \"How do you go to school?\"",
+              "options": [
+                "كَيْفَ تَذْهَبُ إِلَى الْمَدْرَسَةِ؟",
+                "مَتَى تَذْهَبُ إِلَى الْمَدْرَسَةِ؟",
+                "لِمَاذَا تَذْهَبُ إِلَى الْمَدْرَسَةِ؟",
+                "مَنْ يَذْهَبُ إِلَى الْمَدْرَسَةِ؟"
+              ],
+              "answer": "كَيْفَ تَذْهَبُ إِلَى الْمَدْرَسَةِ؟"
+            },
+            {
+              "text": "Which question word asks about a person, \"who\"?",
+              "options": [
+                "مَنْ",
+                "مَا",
+                "أَيّ",
+                "كَمْ"
+              ],
+              "answer": "مَنْ"
+            },
+            {
+              "text": "Which is the correct way to ask \"Which book do you prefer?\"",
+              "options": [
+                "أَيُّ كِتَابٍ تُفَضِّلُ؟",
+                "مَنْ كِتَابٍ تُفَضِّلُ؟",
+                "كَيْفَ كِتَابٍ تُفَضِّلُ؟",
+                "مَتَى كِتَابٍ تُفَضِّلُ؟"
+              ],
+              "answer": "أَيُّ كِتَابٍ تُفَضِّلُ؟"
+            },
+            {
+              "text": "To turn a statement into a yes/no question, which particle is added at the start?",
+              "options": [
+                "هَلْ",
+                "مَا",
+                "مَنْ",
+                "كَمْ"
+              ],
+              "answer": "هَلْ"
+            }
+          ]
+        },
+        {
+          "id": "stage17",
+          "title": "Wasf al-Ashyā' — Describing Objects",
+          "icon": "📦",
+          "description": "Describing color, size, shape, and material",
+          "kicker": "Describing Objects",
+          "questions": [
+            {
+              "text": "Which sentence means \"This bag is red and small\"?",
+              "options": [
+                "هَذِهِ الْحَقِيبَةُ حَمْرَاءُ وَصَغِيرَةٌ",
+                "هَذِهِ الْحَقِيبَةُ أَحْمَرُ وَصَغِيرٌ",
+                "هَذَا الْحَقِيبَةُ حَمْرَاءُ",
+                "الْحَقِيبَةُ هَذِهِ زَرْقَاءُ وَكَبِيرَةٌ"
+              ],
+              "answer": "هَذِهِ الْحَقِيبَةُ حَمْرَاءُ وَصَغِيرَةٌ"
+            },
+            {
+              "text": "Which sentence means \"The table is made of wood\"?",
+              "options": [
+                "الطَّاوِلَةُ مَصْنُوعَةٌ مِنَ الْخَشَبِ",
+                "الطَّاوِلَةُ مَصْنُوعَةٌ مِنَ الْحَدِيدِ",
+                "الْخَشَبُ مَصْنُوعٌ مِنَ الطَّاوِلَةِ",
+                "الطَّاوِلَةُ لَيْسَتْ مَصْنُوعَةً مِنْ شَيْءٍ"
+              ],
+              "answer": "الطَّاوِلَةُ مَصْنُوعَةٌ مِنَ الْخَشَبِ"
+            },
+            {
+              "text": "Which sentence means \"This is a round, white plate\"?",
+              "options": [
+                "هَذَا صَحْنٌ مُسْتَدِيرٌ وَأَبْيَضُ",
+                "هَذَا صَحْنٌ مُرَبَّعٌ وَأَسْوَدُ",
+                "هَذِهِ صَحْنٌ مُسْتَدِيرٌ",
+                "الصَّحْنُ مُسْتَدِيرٌ لَيْسَ أَبْيَضَ"
+              ],
+              "answer": "هَذَا صَحْنٌ مُسْتَدِيرٌ وَأَبْيَضُ"
+            },
+            {
+              "text": "Which adjective correctly describes something as \"soft\"?",
+              "options": [
+                "نَاعِمٌ",
+                "خَشِنٌ",
+                "صَلْبٌ",
+                "ثَقِيلٌ"
+              ],
+              "answer": "نَاعِمٌ"
+            },
+            {
+              "text": "Which sentence means \"This phone is new, but that one is old\"?",
+              "options": [
+                "هَذَا الْهَاتِفُ جَدِيدٌ، لَكِنَّ ذَلِكَ قَدِيمٌ",
+                "هَذَا الْهَاتِفُ قَدِيمٌ، لَكِنَّ ذَلِكَ جَدِيدٌ",
+                "هَذَا الْهَاتِفُ جَدِيدٌ وَذَلِكَ جَدِيدٌ أَيْضًا",
+                "الْهَاتِفَانِ قَدِيمَانِ"
+              ],
+              "answer": "هَذَا الْهَاتِفُ جَدِيدٌ، لَكِنَّ ذَلِكَ قَدِيمٌ"
+            }
+          ]
+        },
+        {
+          "id": "stage18",
+          "title": "Al-Muqāranah al-Basīṭah — Simple Comparison",
+          "icon": "⚖️",
+          "description": "Comparing two things: bigger, smaller, best, equal",
+          "kicker": "Simple Comparison",
+          "questions": [
+            {
+              "text": "Which sentence means \"This car is bigger than that one\"?",
+              "options": [
+                "هَذِهِ السَّيَّارَةُ أَكْبَرُ مِنْ تِلْكَ",
+                "هَذِهِ السَّيَّارَةُ كَبِيرَةٌ مِثْلَ تِلْكَ",
+                "هَذِهِ السَّيَّارَةُ أَصْغَرُ مِنْ تِلْكَ",
+                "تِلْكَ السَّيَّارَةُ أَكْبَرُ"
+              ],
+              "answer": "هَذِهِ السَّيَّارَةُ أَكْبَرُ مِنْ تِلْكَ"
+            },
+            {
+              "text": "Which pattern is used to form the comparative \"more ___ than\" in Arabic (e.g. أَكْبَرُ)?",
+              "options": [
+                "أَفْعَلُ pattern",
+                "فَاعِلٌ pattern",
+                "مَفْعُولٌ pattern",
+                "فِعَالٌ pattern"
+              ],
+              "answer": "أَفْعَلُ pattern"
+            },
+            {
+              "text": "Which sentence means \"My brother is older than me\"?",
+              "options": [
+                "أَخِي أَكْبَرُ مِنِّي",
+                "أَخِي أَصْغَرُ مِنِّي",
+                "أَنَا أَكْبَرُ مِنْ أَخِي",
+                "أَخِي مِثْلِي فِي الْعُمْرِ"
+              ],
+              "answer": "أَخِي أَكْبَرُ مِنِّي"
+            },
+            {
+              "text": "Which sentence means \"This is the most beautiful city I have seen\"?",
+              "options": [
+                "هَذِهِ أَجْمَلُ مَدِينَةٍ رَأَيْتُهَا",
+                "هَذِهِ مَدِينَةٌ جَمِيلَةٌ",
+                "هَذِهِ أَقْبَحُ مَدِينَةٍ رَأَيْتُهَا",
+                "هَذِهِ مَدِينَةٌ مِثْلُ الْأُخْرَى"
+              ],
+              "answer": "هَذِهِ أَجْمَلُ مَدِينَةٍ رَأَيْتُهَا"
+            },
+            {
+              "text": "Which sentence means \"This dress is as beautiful as that one\"?",
+              "options": [
+                "هَذَا الْفُسْتَانُ جَمِيلٌ مِثْلَ ذَلِكَ",
+                "هَذَا الْفُسْتَانُ أَجْمَلُ مِنْ ذَلِكَ",
+                "هَذَا الْفُسْتَانُ أَقَلُّ جَمَالًا مِنْ ذَلِكَ",
+                "هَذَا الْفُسْتَانُ لَيْسَ جَمِيلًا"
+              ],
+              "answer": "هَذَا الْفُسْتَانُ جَمِيلٌ مِثْلَ ذَلِكَ"
+            }
+          ]
+        },
+        {
+          "id": "stage19",
+          "title": "Kitābat Jumal Mutarābiṭah — Linked Sentences",
+          "icon": "📝",
+          "description": "Joining simple sentences into a short, flowing mini-paragraph",
+          "kicker": "Linked Sentences",
+          "questions": [
+            {
+              "text": "Which set of connectors best links three ideas about a morning routine into one flowing mini-paragraph?",
+              "options": [
+                "أَوَّلًا... ثُمَّ... وَأَخِيرًا",
+                "لَكِنْ... لَكِنْ... لَكِنْ",
+                "أَوْ... أَوْ... أَوْ",
+                "لِأَنَّ... لِأَنَّ... لِأَنَّ"
+              ],
+              "answer": "أَوَّلًا... ثُمَّ... وَأَخِيرًا"
+            },
+            {
+              "text": "Which sentence best serves as an opening topic sentence for a paragraph about \"My favorite hobby is reading\"?",
+              "options": [
+                "هِوَايَتِي الْمُفَضَّلَةُ هِيَ الْقِرَاءَةُ",
+                "الْكِتَابُ عَلَى الطَّاوِلَةِ",
+                "قَرَأْتُ كِتَابًا أَمْسِ",
+                "الْقِرَاءَةُ صَعْبَةٌ"
+              ],
+              "answer": "هِوَايَتِي الْمُفَضَّلَةُ هِيَ الْقِرَاءَةُ"
+            },
+            {
+              "text": "Which sentence would NOT belong in a short paragraph about \"My daily routine\"?",
+              "options": [
+                "عَاصِمَةُ فَرَنْسَا هِيَ بَارِيسُ",
+                "أَسْتَيْقِظُ فِي السَّاعَةِ السَّابِعَةِ",
+                "بَعْدَ ذَلِكَ أَتَنَاوَلُ الْفُطُورَ",
+                "أَخِيرًا أَذْهَبُ إِلَى النَّوْمِ"
+              ],
+              "answer": "عَاصِمَةُ فَرَنْسَا هِيَ بَارِيسُ"
+            },
+            {
+              "text": "Which connector best adds a supporting reason: \"أُحِبُّ مَدِينَتِي ___ فِيهَا حَدَائِقُ جَمِيلَةٌ\" (\"I love my city ___ it has beautiful parks\")?",
+              "options": [
+                "لِأَنَّ",
+                "لَكِنْ",
+                "أَوْ",
+                "ثُمَّ"
+              ],
+              "answer": "لِأَنَّ"
+            },
+            {
+              "text": "What is the correct order to build a coherent mini-paragraph?",
+              "options": [
+                "Topic sentence → supporting details → closing sentence",
+                "Closing sentence → topic sentence → details",
+                "Random order, order doesn't matter",
+                "Only supporting details, no topic or closing sentence"
+              ],
+              "answer": "Topic sentence → supporting details → closing sentence"
+            }
+          ]
+        },
+        {
+          "id": "stage20",
+          "title": "Murāja'ah — Beginner Capstone Review",
+          "icon": "🎓",
+          "description": "The capstone review: combining everything into short, connected expression",
+          "kicker": "Capstone Review",
+          "questions": [
+            {
+              "text": "Combine correctly: \"اسْمِي أَحْمَدُ. أَنَا طَالِبٌ. أَسْكُنُ فِي الْقَاهِرَةِ.\" Which version best joins these into one flowing sentence?",
+              "options": [
+                "اسْمِي أَحْمَدُ، وَأَنَا طَالِبٌ أَسْكُنُ فِي الْقَاهِرَةِ",
+                "اسْمِي أَحْمَدُ لَكِنْ أَنَا طَالِبٌ لَكِنْ أَسْكُنُ فِي الْقَاهِرَةِ",
+                "اسْمِي أَحْمَدُ أَوْ أَنَا طَالِبٌ أَوْ أَسْكُنُ فِي الْقَاهِرَةِ",
+                "اسْمِي أَحْمَدُ. طَالِبٌ. الْقَاهِرَةُ."
+              ],
+              "answer": "اسْمِي أَحْمَدُ، وَأَنَا طَالِبٌ أَسْكُنُ فِي الْقَاهِرَةِ"
+            },
+            {
+              "text": "Which sentence correctly combines opinion + reason: \"I think Cairo is beautiful because it has a rich history\"?",
+              "options": [
+                "أَعْتَقِدُ أَنَّ الْقَاهِرَةَ جَمِيلَةٌ لِأَنَّ لَهَا تَارِيخًا غَنِيًّا",
+                "أَعْتَقِدُ أَنَّ الْقَاهِرَةَ جَمِيلَةٌ أَوْ لَهَا تَارِيخًا غَنِيًّا",
+                "الْقَاهِرَةُ جَمِيلَةٌ لَكِنَّ تَارِيخَهَا غَنِيٌّ",
+                "أَعْتَقِدُ لِأَنَّ الْقَاهِرَةَ جَمِيلَةٌ أَنَّ"
+              ],
+              "answer": "أَعْتَقِدُ أَنَّ الْقَاهِرَةَ جَمِيلَةٌ لِأَنَّ لَهَا تَارِيخًا غَنِيًّا"
+            },
+            {
+              "text": "Which sentence best describes a person AND a place together coherently: \"My friend, who lives near the big park, is very kind\"?",
+              "options": [
+                "صَدِيقِي الَّذِي يَسْكُنُ بِجَانِبِ الْحَدِيقَةِ الْكَبِيرَةِ لَطِيفٌ جِدًّا",
+                "صَدِيقِي لَطِيفٌ جِدًّا وَالْحَدِيقَةُ بَعِيدَةٌ",
+                "الْحَدِيقَةُ الْكَبِيرَةُ صَدِيقِي",
+                "صَدِيقِي بِجَانِبِ الْحَدِيقَةِ الصَّغِيرَةِ"
+              ],
+              "answer": "صَدِيقِي الَّذِي يَسْكُنُ بِجَانِبِ الْحَدِيقَةِ الْكَبِيرَةِ لَطِيفٌ جِدًّا"
+            },
+            {
+              "text": "Which closing line would appropriately end a short self-introduction paragraph?",
+              "options": [
+                "هَذَا كُلُّ شَيْءٍ عَنِّي، تَشَرَّفْتُ بِمَعْرِفَتِكَ",
+                "أَيْنَ الْمَطَارُ؟",
+                "كَمْ سِعْرُ هَذَا؟",
+                "الطَّقْسُ حَارٌّ الْيَوْمَ"
+              ],
+              "answer": "هَذَا كُلُّ شَيْءٍ عَنِّي، تَشَرَّفْتُ بِمَعْرِفَتِكَ"
+            },
+            {
+              "text": "Across everything covered in Beginner Tabir, what is the main skill being built?",
+              "options": [
+                "Producing simple, correctly connected Arabic sentences about yourself and daily life",
+                "Memorizing classical poetry",
+                "Analyzing rhetorical devices in the Qur'an",
+                "Studying historical grammar debates"
+              ],
+              "answer": "Producing simple, correctly connected Arabic sentences about yourself and daily life"
+            },
+            {
+              "text": "Writing a 3-sentence paragraph about your family using at least one connector tests which combination of skills?",
+              "options": [
+                "Sentence-linking + family vocabulary + basic connectors",
+                "Advanced argumentative essay structure",
+                "Formal business correspondence",
+                "Debate rebuttal techniques"
+              ],
+              "answer": "Sentence-linking + family vocabulary + basic connectors"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intermediate",
+      "label": "Intermediate",
+      "icon": "🌿",
+      "description": "Structured paragraphs — description, narration, reasoning, dialogue, and register control",
+      "stages": [
+        {
+          "id": "stage1",
+          "title": "Al-Waṣf al-Mufaṣṣal — Detailed Description",
+          "icon": "🔍",
+          "description": "Layering detail, simile, and precise vocabulary into description",
+          "kicker": "Detailed Description",
+          "questions": [
+            {
+              "text": "Which sentence gives a detailed description combining size, color, and location: \"The old red house stands at the end of the quiet street\"?",
+              "options": [
+                "يَقِفُ الْبَيْتُ الْأَحْمَرُ الْقَدِيمُ فِي نِهَايَةِ الشَّارِعِ الْهَادِئِ",
+                "الْبَيْتُ أَحْمَرُ",
+                "الشَّارِعُ هَادِئٌ فَقَط",
+                "يَقِفُ الْبَيْتُ فِي وَسَطِ الْمَدِينَةِ الصَّاخِبَةِ"
+              ],
+              "answer": "يَقِفُ الْبَيْتُ الْأَحْمَرُ الْقَدِيمُ فِي نِهَايَةِ الشَّارِعِ الْهَادِئِ"
+            },
+            {
+              "text": "Which technique helps the reader \"see\" through comparison, e.g. عَيْنَاهَا كَالْبَحْرِ (\"her eyes were like the sea\")?",
+              "options": [
+                "At-Tashbīh (simile)",
+                "Al-Amr (command)",
+                "As-Su'āl (question)",
+                "An-Nafy (negation)"
+              ],
+              "answer": "At-Tashbīh (simile)"
+            },
+            {
+              "text": "Which sentence builds a layered description moving from general to specific: \"The city is beautiful; its old market, in particular, is full of life\"?",
+              "options": [
+                "الْمَدِينَةُ جَمِيلَةٌ، وَسُوقُهَا الْقَدِيمُ عَلَى وَجْهِ الْخُصُوصِ مَلِيءٌ بِالْحَيَاةِ",
+                "سُوقُهَا الْقَدِيمُ مَلِيءٌ بِالْحَيَاةِ فَقَط",
+                "الْمَدِينَةُ جَمِيلَةٌ وَالسُّوقُ بَعِيدٌ عَنْهَا",
+                "الْمَدِينَةُ لَيْسَتْ جَمِيلَةً لَكِنَّ سُوقَهَا جَمِيلٌ"
+              ],
+              "answer": "الْمَدِينَةُ جَمِيلَةٌ، وَسُوقُهَا الْقَدِيمُ عَلَى وَجْهِ الْخُصُوصِ مَلِيءٌ بِالْحَيَاةِ"
+            },
+            {
+              "text": "Which phrase introduces a specific supporting detail, meaning \"for example\"?",
+              "options": [
+                "عَلَى سَبِيلِ الْمِثَالِ",
+                "بِالرَّغْمِ مِنْ ذَلِكَ",
+                "فِي الْمُقَابِلِ",
+                "بِاخْتِصَارٍ"
+              ],
+              "answer": "عَلَى سَبِيلِ الْمِثَالِ"
+            },
+            {
+              "text": "Which is more vivid and precise than the vague \"the weather was bad\"?",
+              "options": [
+                "كَانَتِ السَّمَاءُ رَمَادِيَّةً وَالرِّيَاحُ عَاصِفَةً وَالْأَمْطَارُ غَزِيرَةً",
+                "كَانَ الطَّقْسُ سَيِّئًا",
+                "الطَّقْسُ لَيْسَ جَيِّدًا",
+                "لَا أَعْرِفُ كَيْفَ كَانَ الطَّقْسُ"
+              ],
+              "answer": "كَانَتِ السَّمَاءُ رَمَادِيَّةً وَالرِّيَاحُ عَاصِفَةً وَالْأَمْطَارُ غَزِيرَةً"
+            }
+          ]
+        },
+        {
+          "id": "stage2",
+          "title": "As-Sard — Narrative Expression",
+          "icon": "📖",
+          "description": "Narrating a sequence of past events with tense consistency",
+          "kicker": "Narrative Expression",
+          "questions": [
+            {
+              "text": "Which verb tense is primarily used for narrating past events?",
+              "options": [
+                "Al-Māḍī (past tense)",
+                "Al-Muḍāri' (present tense)",
+                "Al-Amr (imperative)",
+                "Al-Muḍāri' al-Majzūm"
+              ],
+              "answer": "Al-Māḍī (past tense)"
+            },
+            {
+              "text": "Which phrase means \"one day\", commonly used to open a narrative?",
+              "options": [
+                "فِي أَحَدِ الْأَيَّامِ",
+                "فِي الْمُسْتَقْبَلِ",
+                "كُلَّ يَوْمٍ",
+                "أَبَدًا"
+              ],
+              "answer": "فِي أَحَدِ الْأَيَّامِ"
+            },
+            {
+              "text": "Which sentence correctly narrates a sequence: \"I woke up, then I got dressed, and after that I left the house\"?",
+              "options": [
+                "اسْتَيْقَظْتُ، ثُمَّ ارْتَدَيْتُ مَلَابِسِي، وَبَعْدَ ذَلِكَ خَرَجْتُ مِنَ الْبَيْتِ",
+                "أَسْتَيْقِظُ، ثُمَّ ارْتَدَيْتُ مَلَابِسِي",
+                "سَأَسْتَيْقِظُ، ثُمَّ سَأَرْتَدِي مَلَابِسِي",
+                "اسْتَيْقَظْتُ أَوْ ارْتَدَيْتُ مَلَابِسِي"
+              ],
+              "answer": "اسْتَيْقَظْتُ، ثُمَّ ارْتَدَيْتُ مَلَابِسِي، وَبَعْدَ ذَلِكَ خَرَجْتُ مِنَ الْبَيْتِ"
+            },
+            {
+              "text": "Which phrase signals a sudden, unexpected turn in a narrative?",
+              "options": [
+                "فَجْأَةً",
+                "تَدْرِيجِيًّا",
+                "عَادَةً",
+                "أَحْيَانًا"
+              ],
+              "answer": "فَجْأَةً"
+            },
+            {
+              "text": "Which sentence provides a satisfying narrative ending: \"And so, the day ended happily\"?",
+              "options": [
+                "وَهَكَذَا، انْتَهَى الْيَوْمُ بِسَعَادَةٍ",
+                "وَهَكَذَا، بَدَأَ الْيَوْمُ بِسَعَادَةٍ",
+                "الْيَوْمُ لَمْ يَنْتَهِ بَعْدُ",
+                "لَا أَعْرِفُ كَيْفَ انْتَهَى الْيَوْمُ"
+              ],
+              "answer": "وَهَكَذَا، انْتَهَى الْيَوْمُ بِسَعَادَةٍ"
+            }
+          ]
+        },
+        {
+          "id": "stage3",
+          "title": "Al-Muqāranah wal-Muqābalah — Comparison & Contrast",
+          "icon": "🔀",
+          "description": "Connectors that highlight similarity and difference",
+          "kicker": "Comparison & Contrast",
+          "questions": [
+            {
+              "text": "Which phrase introduces a contrasting point at paragraph level, \"on the other hand\"?",
+              "options": [
+                "مِنْ نَاحِيَةٍ أُخْرَى",
+                "بِالْإِضَافَةِ إِلَى ذَلِكَ",
+                "عَلَى سَبِيلِ الْمِثَالِ",
+                "بِنَاءً عَلَى ذَلِكَ"
+              ],
+              "answer": "مِنْ نَاحِيَةٍ أُخْرَى"
+            },
+            {
+              "text": "Which word means \"while / whereas\", contrasting two clauses in one sentence?",
+              "options": [
+                "بَيْنَمَا",
+                "لِأَنَّ",
+                "لِذَلِكَ",
+                "أَيْضًا"
+              ],
+              "answer": "بَيْنَمَا"
+            },
+            {
+              "text": "Which sentence correctly contrasts city and village life: \"Life in the city is fast, while life in the village is calm\"?",
+              "options": [
+                "الْحَيَاةُ فِي الْمَدِينَةِ سَرِيعَةٌ، بَيْنَمَا الْحَيَاةُ فِي الْقَرْيَةِ هَادِئَةٌ",
+                "الْحَيَاةُ فِي الْمَدِينَةِ سَرِيعَةٌ لِأَنَّ الْقَرْيَةَ هَادِئَةٌ",
+                "الْحَيَاةُ فِي الْمَدِينَةِ وَالْقَرْيَةِ سَرِيعَةٌ",
+                "الْحَيَاةُ فِي الْقَرْيَةِ سَرِيعَةٌ بَيْنَمَا الْمَدِينَةُ هَادِئَةٌ"
+              ],
+              "answer": "الْحَيَاةُ فِي الْمَدِينَةِ سَرِيعَةٌ، بَيْنَمَا الْحَيَاةُ فِي الْقَرْيَةِ هَادِئَةٌ"
+            },
+            {
+              "text": "Which phrase means \"in contrast / conversely\"?",
+              "options": [
+                "فِي الْمُقَابِلِ",
+                "عِلَاوَةً عَلَى ذَلِكَ",
+                "نَتِيجَةً لِذَلِكَ",
+                "بِنَفْسِ الطَّرِيقَةِ"
+              ],
+              "answer": "فِي الْمُقَابِلِ"
+            },
+            {
+              "text": "Which phrase highlights a shared similarity, \"similarly / likewise\"?",
+              "options": [
+                "بِالْمِثْلِ",
+                "عَلَى الْعَكْسِ",
+                "مَعَ ذَلِكَ",
+                "بِخِلَافِ ذَلِكَ"
+              ],
+              "answer": "بِالْمِثْلِ"
+            }
+          ]
+        },
+        {
+          "id": "stage4",
+          "title": "Ar-Ra'y wal-Ḥujjah — Opinion with Reasoning",
+          "icon": "🧭",
+          "description": "Structuring an opinion with evidence and counterpoints",
+          "kicker": "Opinion & Reasoning",
+          "questions": [
+            {
+              "text": "Which structure best supports an opinion with a clear reason: \"I believe reading is important because it broadens the mind\"?",
+              "options": [
+                "أَعْتَقِدُ أَنَّ الْقِرَاءَةَ مُهِمَّةٌ لِأَنَّهَا تُوَسِّعُ الْعَقْلَ",
+                "أَعْتَقِدُ أَنَّ الْقِرَاءَةَ مُهِمَّةٌ وَلَكِنْ لَا أَعْرِفُ لِمَاذَا",
+                "الْقِرَاءَةُ مُهِمَّةٌ رُبَّمَا",
+                "لَا أَعْتَقِدُ أَيَّ شَيْءٍ عَنِ الْقِرَاءَةِ"
+              ],
+              "answer": "أَعْتَقِدُ أَنَّ الْقِرَاءَةَ مُهِمَّةٌ لِأَنَّهَا تُوَسِّعُ الْعَقْلَ"
+            },
+            {
+              "text": "Which phrase introduces supporting evidence, \"this is evidenced by...\"?",
+              "options": [
+                "وَيَدُلُّ عَلَى ذَلِكَ...",
+                "وَعَلَى الرَّغْمِ مِنْ ذَلِكَ...",
+                "وَبِالتَّالِي لَا شَيْءَ...",
+                "وَلَكِنْ رُبَّمَا..."
+              ],
+              "answer": "وَيَدُلُّ عَلَى ذَلِكَ..."
+            },
+            {
+              "text": "Which sentence acknowledges a counterpoint before reaffirming one's opinion: \"Although some may disagree, I still believe education is the key to progress\"?",
+              "options": [
+                "عَلَى الرَّغْمِ مِنْ أَنَّ بَعْضَهُمْ قَدْ يُخَالِفُ، أَعْتَقِدُ أَنَّ التَّعْلِيمَ هُوَ مِفْتَاحُ التَّقَدُّمِ",
+                "بَعْضُهُمْ يُخَالِفُ، لِذَلِكَ أُوَافِقُهُمْ فَوْرًا",
+                "التَّعْلِيمُ مِفْتَاحُ التَّقَدُّمِ وَلَا يُوجَدُ رَأْيٌ آخَرُ",
+                "لَا أَعْرِفُ إِنْ كَانَ التَّعْلِيمُ مُهِمًّا"
+              ],
+              "answer": "عَلَى الرَّغْمِ مِنْ أَنَّ بَعْضَهُمْ قَدْ يُخَالِفُ، أَعْتَقِدُ أَنَّ التَّعْلِيمَ هُوَ مِفْتَاحُ التَّقَدُّمِ"
+            },
+            {
+              "text": "Which phrase means \"in my view / from my perspective\", slightly more formal than فِي رَأْيِي؟",
+              "options": [
+                "مِنْ وِجْهَةِ نَظَرِي",
+                "فِي بَيْتِي",
+                "أَمَامِي",
+                "بِجَانِبِي"
+              ],
+              "answer": "مِنْ وِجْهَةِ نَظَرِي"
+            },
+            {
+              "text": "Which sentence correctly concludes an opinion paragraph: \"For all these reasons, I support this idea\"?",
+              "options": [
+                "لِكُلِّ هَذِهِ الْأَسْبَابِ، أُؤَيِّدُ هَذِهِ الْفِكْرَةَ",
+                "لِكُلِّ هَذِهِ الْأَسْبَابِ، أَرْفُضُ هَذِهِ الْفِكْرَةَ",
+                "رُبَّمَا أُؤَيِّدُ هَذِهِ الْفِكْرَةَ رُبَّمَا",
+                "لَا عَلَاقَةَ لِلْأَسْبَابِ بِرَأْيِي"
+              ],
+              "answer": "لِكُلِّ هَذِهِ الْأَسْبَابِ، أُؤَيِّدُ هَذِهِ الْفِكْرَةَ"
+            }
+          ]
+        },
+        {
+          "id": "stage5",
+          "title": "Ar-Rasā'il ash-Shakhṣiyyah — Personal Letters",
+          "icon": "✉️",
+          "description": "Openings, closings, and tone for informal personal letters",
+          "kicker": "Personal Letters",
+          "questions": [
+            {
+              "text": "Which opening is appropriate for a personal/informal letter to a friend?",
+              "options": [
+                "عَزِيزِي صَدِيقِي...",
+                "سَعَادَةَ السَّفِيرِ الْمُحْتَرَمِ...",
+                "حَضْرَةَ الْمُدِيرِ الْعَامِّ...",
+                "إِلَى مَنْ يُهِمُّهُ الْأَمْرُ..."
+              ],
+              "answer": "عَزِيزِي صَدِيقِي..."
+            },
+            {
+              "text": "Which closing phrase suits an informal personal letter, \"with love\"?",
+              "options": [
+                "مَعَ حُبِّي",
+                "وَتَفَضَّلُوا بِقَبُولِ فَائِقِ الِاحْتِرَامِ",
+                "الْمُخْلِصُ",
+                "تَحِيَّاتِي الرَّسْمِيَّةَ"
+              ],
+              "answer": "مَعَ حُبِّي"
+            },
+            {
+              "text": "Which sentence fits the body of a personal letter catching a friend up on news: \"I miss you a lot and hope to see you soon\"?",
+              "options": [
+                "أَشْتَاقُ إِلَيْكَ كَثِيرًا وَأَتَمَنَّى أَنْ أَرَاكَ قَرِيبًا",
+                "أُرْفِقُ طَيَّهُ الْمُسْتَنَدَاتِ الْمَطْلُوبَةَ",
+                "نَرْجُو الرَّدَّ فِي أَقْرَبِ وَقْتٍ مُمْكِنٍ",
+                "بِالْإِشَارَةِ إِلَى رِسَالَتِكُمْ السَّابِقَةِ"
+              ],
+              "answer": "أَشْتَاقُ إِلَيْكَ كَثِيرًا وَأَتَمَنَّى أَنْ أَرَاكَ قَرِيبًا"
+            },
+            {
+              "text": "What is the general structure of a personal letter?",
+              "options": [
+                "Opening greeting → body with news/feelings → closing wish → sign-off",
+                "Only a list of demands, no greeting",
+                "Legal terms → signature → date only",
+                "A single sentence with no structure"
+              ],
+              "answer": "Opening greeting → body with news/feelings → closing wish → sign-off"
+            },
+            {
+              "text": "Which phrase near the start of a letter asks about the recipient's wellbeing?",
+              "options": [
+                "كَيْفَ حَالُكَ؟",
+                "مَا اسْمُكَ؟",
+                "أَيْنَ تَسْكُنُ؟",
+                "كَمْ عُمْرُكَ؟"
+              ],
+              "answer": "كَيْفَ حَالُكَ؟"
+            }
+          ]
+        },
+        {
+          "id": "stage6",
+          "title": "Sharḥ al-Kayfiyyah — Explaining a Process",
+          "icon": "🛠️",
+          "description": "Giving step-by-step instructions clearly",
+          "kicker": "Explaining a Process",
+          "questions": [
+            {
+              "text": "Which set of ordering words best structures a \"how to\" explanation?",
+              "options": [
+                "أَوَّلًا... ثُمَّ... بَعْدَ ذَلِكَ... وَأَخِيرًا",
+                "رُبَّمَا... رُبَّمَا... رُبَّمَا... رُبَّمَا",
+                "لَكِنْ... لَكِنْ... لَكِنْ... لَكِنْ",
+                "أَوْ... أَوْ... أَوْ... أَوْ"
+              ],
+              "answer": "أَوَّلًا... ثُمَّ... بَعْدَ ذَلِكَ... وَأَخِيرًا"
+            },
+            {
+              "text": "Which verb form is typically used for general instructions, e.g. \"you cut the vegetables\"?",
+              "options": [
+                "Al-Fi'l al-Muḍāri' (present tense) — تُقَطِّعُ الْخُضْرَوَاتِ",
+                "Al-Fi'l al-Māḍī (past tense) only",
+                "Al-Fi'l al-Amr negated only",
+                "Al-Ism al-Manṣūb only"
+              ],
+              "answer": "Al-Fi'l al-Muḍāri' (present tense) — تُقَطِّعُ الْخُضْرَوَاتِ"
+            },
+            {
+              "text": "Which sentence correctly explains a conditional step: \"If the water boils, add the rice\"?",
+              "options": [
+                "إِذَا غَلَى الْمَاءُ، أَضِفِ الْأُرْزَّ",
+                "إِذَا غَلَى الْمَاءُ، لَا تُضِفِ الْأُرْزَّ",
+                "الْأُرْزُّ يَغْلِي إِذَا أَضَفْتَ الْمَاءَ",
+                "أَضِفِ الْأُرْزَّ قَبْلَ أَنْ يَغْلِيَ الْمَاءُ"
+              ],
+              "answer": "إِذَا غَلَى الْمَاءُ، أَضِفِ الْأُرْزَّ"
+            },
+            {
+              "text": "Which phrase warns of a common mistake, \"be careful not to...\"?",
+              "options": [
+                "احْذَرْ أَنْ...",
+                "لَا بَأْسَ أَنْ...",
+                "يُفَضَّلُ أَنْ...",
+                "مِنَ الْمُمْكِنِ أَنْ..."
+              ],
+              "answer": "احْذَرْ أَنْ..."
+            },
+            {
+              "text": "Which sentence appropriately closes a process explanation: \"And that's how you make tea\"?",
+              "options": [
+                "وَهَكَذَا تُحَضِّرُ الشَّايَ",
+                "وَهَكَذَا لَا تُحَضِّرُ الشَّايَ أَبَدًا",
+                "رُبَّمَا تُحَضِّرُ الشَّايَ رُبَّمَا لَا",
+                "الشَّايُ يُحَضِّرُ نَفْسَهُ"
+              ],
+              "answer": "وَهَكَذَا تُحَضِّرُ الشَّايَ"
+            }
+          ]
+        },
+        {
+          "id": "stage7",
+          "title": "As-Sabab wan-Natījah — Cause & Effect",
+          "icon": "⛓️",
+          "description": "Linking causes to their consequences clearly",
+          "kicker": "Cause & Effect",
+          "questions": [
+            {
+              "text": "Which phrase introduces a result/effect, \"as a result\"?",
+              "options": [
+                "نَتِيجَةً لِذَلِكَ",
+                "عَلَى الرَّغْمِ مِنْ ذَلِكَ",
+                "بِالْمُقَارَنَةِ مَعَ ذَلِكَ",
+                "بِخِلَافِ ذَلِكَ"
+              ],
+              "answer": "نَتِيجَةً لِذَلِكَ"
+            },
+            {
+              "text": "Which sentence correctly links a cause to its effect: \"Because it rained heavily, the streets were flooded\"?",
+              "options": [
+                "لِأَنَّ الْمَطَرَ كَانَ غَزِيرًا، غَرِقَتِ الشَّوَارِعُ",
+                "لِأَنَّ الشَّوَارِعَ غَرِقَتْ، كَانَ الْمَطَرُ غَزِيرًا",
+                "الْمَطَرُ غَزِيرٌ لَكِنَّ الشَّوَارِعَ جَافَّةٌ",
+                "لَا عَلَاقَةَ بَيْنَ الْمَطَرِ وَالشَّوَارِعِ"
+              ],
+              "answer": "لِأَنَّ الْمَطَرَ كَانَ غَزِيرًا، غَرِقَتِ الشَّوَارِعُ"
+            },
+            {
+              "text": "Which phrase means \"due to / because of\" (used with a noun, not a full clause)?",
+              "options": [
+                "بِسَبَبِ",
+                "لِأَنَّ",
+                "عَلَى الرَّغْمِ مِنْ",
+                "بِالْإِضَافَةِ إِلَى"
+              ],
+              "answer": "بِسَبَبِ"
+            },
+            {
+              "text": "Which phrase introduces a logical consequence, \"therefore / thus\"?",
+              "options": [
+                "وَبِالتَّالِي",
+                "وَمَعَ ذَلِكَ",
+                "وَمِنْ نَاحِيَةٍ أُخْرَى",
+                "وَبِخِلَافِ ذَلِكَ"
+              ],
+              "answer": "وَبِالتَّالِي"
+            },
+            {
+              "text": "Which sentence best explains a chain of cause and effect: \"Pollution increases, therefore diseases increase, and as a result, healthcare costs rise\"?",
+              "options": [
+                "يَزْدَادُ التَّلَوُّثُ، وَبِالتَّالِي تَزْدَادُ الْأَمْرَاضُ، وَنَتِيجَةً لِذَلِكَ تَرْتَفِعُ تَكَالِيفُ الرِّعَايَةِ الصِّحِّيَّةِ",
+                "يَزْدَادُ التَّلَوُّثُ لَكِنَّ الْأَمْرَاضَ تَقِلُّ",
+                "تَرْتَفِعُ تَكَالِيفُ الرِّعَايَةِ الصِّحِّيَّةِ لِذَلِكَ يَزْدَادُ التَّلَوُّثُ",
+                "لَا عَلَاقَةَ بَيْنَ التَّلَوُّثِ وَالْأَمْرَاضِ"
+              ],
+              "answer": "يَزْدَادُ التَّلَوُّثُ، وَبِالتَّالِي تَزْدَادُ الْأَمْرَاضُ، وَنَتِيجَةً لِذَلِكَ تَرْتَفِعُ تَكَالِيفُ الرِّعَايَةِ الصِّحِّيَّةِ"
+            }
+          ]
+        },
+        {
+          "id": "stage8",
+          "title": "At-Ta'bīr 'an al-Mashā'ir al-Mu'aqqadah — Complex Emotions",
+          "icon": "🎭",
+          "description": "Expressing mixed, nuanced, or conflicted feelings",
+          "kicker": "Complex Emotions",
+          "questions": [
+            {
+              "text": "Which sentence expresses a mixed feeling: \"I am happy for you, but I also feel a little sad\"?",
+              "options": [
+                "أَنَا سَعِيدٌ مِنْ أَجْلِكَ، لَكِنِّي أَشْعُرُ بِقَلِيلٍ مِنَ الْحُزْنِ أَيْضًا",
+                "أَنَا سَعِيدٌ فَقَط، لَا حُزْنَ عِنْدِي",
+                "أَنَا حَزِينٌ فَقَط، لَا سَعَادَةَ عِنْدِي",
+                "لَا أَشْعُرُ بِأَيِّ شَيْءٍ تِجَاهَ هَذَا"
+              ],
+              "answer": "أَنَا سَعِيدٌ مِنْ أَجْلِكَ، لَكِنِّي أَشْعُرُ بِقَلِيلٍ مِنَ الْحُزْنِ أَيْضًا"
+            },
+            {
+              "text": "Which phrase expresses nostalgia, \"I long for...\"?",
+              "options": [
+                "أَحِنُّ إِلَى...",
+                "أَخَافُ مِنْ...",
+                "أَغْضَبُ مِنْ...",
+                "أَمَلُّ مِنْ..."
+              ],
+              "answer": "أَحِنُّ إِلَى..."
+            },
+            {
+              "text": "Which sentence expresses hesitation: \"I don't know whether to accept this offer or not\"?",
+              "options": [
+                "لَا أَعْرِفُ هَلْ أَقْبَلُ هَذَا الْعَرْضَ أَمْ لَا",
+                "أَنَا مُتَأَكِّدٌ أَنِّي سَأَقْبَلُ هَذَا الْعَرْضَ",
+                "رَفَضْتُ هَذَا الْعَرْضَ بِالْفِعْلِ",
+                "لَا يُوجَدُ عَرْضٌ أَصْلًا"
+              ],
+              "answer": "لَا أَعْرِفُ هَلْ أَقْبَلُ هَذَا الْعَرْضَ أَمْ لَا"
+            },
+            {
+              "text": "Which word best captures the feeling of being torn between two choices?",
+              "options": [
+                "مُتَرَدِّدٌ",
+                "وَاثِقٌ",
+                "مُطْمَئِنٌّ",
+                "حَاسِمٌ"
+              ],
+              "answer": "مُتَرَدِّدٌ"
+            },
+            {
+              "text": "Which sentence expresses gratitude mixed with humility: \"I am deeply grateful, though I feel I don't deserve this much kindness\"?",
+              "options": [
+                "أَنَا مُمْتَنٌّ جِدًّا، وَإِنْ كُنْتُ أَشْعُرُ أَنِّي لَا أَسْتَحِقُّ كُلَّ هَذَا اللُّطْفِ",
+                "أَنَا مُمْتَنٌّ جِدًّا وَأَسْتَحِقُّ كُلَّ شَيْءٍ",
+                "لَسْتُ مُمْتَنًّا عَلَى الْإِطْلَاقِ",
+                "أَنَا غَاضِبٌ مِنْ هَذَا اللُّطْفِ"
+              ],
+              "answer": "أَنَا مُمْتَنٌّ جِدًّا، وَإِنْ كُنْتُ أَشْعُرُ أَنِّي لَا أَسْتَحِقُّ كُلَّ هَذَا اللُّطْفِ"
+            }
+          ]
+        },
+        {
+          "id": "stage9",
+          "title": "Kitābat al-Fiqrah — Paragraph Structure",
+          "icon": "📄",
+          "description": "Topic sentence, support, and conclusion",
+          "kicker": "Paragraph Structure",
+          "questions": [
+            {
+              "text": "What are the three essential parts of a well-formed paragraph?",
+              "options": [
+                "Topic sentence, supporting sentences, concluding sentence",
+                "Only a title and a date",
+                "A list of random facts",
+                "Only questions with no statements"
+              ],
+              "answer": "Topic sentence, supporting sentences, concluding sentence"
+            },
+            {
+              "text": "Which sentence is the best topic sentence for a paragraph about the benefits of exercise?",
+              "options": [
+                "لِلرِّيَاضَةِ فَوَائِدُ عَدِيدَةٌ عَلَى الْجِسْمِ وَالْعَقْلِ",
+                "أَنَا أَلْعَبُ كُرَةَ الْقَدَمِ يَوْمَ الْجُمُعَةِ",
+                "الطَّقْسُ الْيَوْمَ مُشْمِسٌ",
+                "أَخِي يُحِبُّ السِّبَاحَةَ"
+              ],
+              "answer": "لِلرِّيَاضَةِ فَوَائِدُ عَدِيدَةٌ عَلَى الْجِسْمِ وَالْعَقْلِ"
+            },
+            {
+              "text": "Which sentence functions as a strong concluding sentence for that same paragraph?",
+              "options": [
+                "لِذَلِكَ، مِنَ الْمُهِمِّ أَنْ نُمَارِسَ الرِّيَاضَةَ بِانْتِظَامٍ",
+                "الرِّيَاضَةُ مُمِلَّةٌ جِدًّا",
+                "لَا أُحِبُّ الرِّيَاضَةَ إِطْلَاقًا",
+                "الطَّعَامُ لَذِيذٌ الْيَوْمَ"
+              ],
+              "answer": "لِذَلِكَ، مِنَ الْمُهِمِّ أَنْ نُمَارِسَ الرِّيَاضَةَ بِانْتِظَامٍ"
+            },
+            {
+              "text": "Which supporting sentence best fits within the exercise paragraph?",
+              "options": [
+                "فَهِيَ تُقَوِّي الْقَلْبَ وَتُحَسِّنُ الْمِزَاجَ",
+                "السَّمَاءُ زَرْقَاءُ الْيَوْمَ",
+                "أُحِبُّ قِرَاءَةَ الرِّوَايَاتِ",
+                "الْمَدْرَسَةُ بَعِيدَةٌ عَنْ بَيْتِي"
+              ],
+              "answer": "فَهِيَ تُقَوِّي الْقَلْبَ وَتُحَسِّنُ الْمِزَاجَ"
+            },
+            {
+              "text": "What is \"coherence\" (الِاتِّسَاق) in paragraph writing?",
+              "options": [
+                "The logical, smooth flow of ideas connected by appropriate linking words",
+                "Using as many big words as possible",
+                "Writing extremely short sentences only",
+                "Repeating the same word many times"
+              ],
+              "answer": "The logical, smooth flow of ideas connected by appropriate linking words"
+            }
+          ]
+        },
+        {
+          "id": "stage10",
+          "title": "Al-Ḥiwār — Dialogue Writing",
+          "icon": "💬",
+          "description": "Writing natural, responsive exchanges between speakers",
+          "kicker": "Dialogue Writing",
+          "questions": [
+            {
+              "text": "Which line reflects a polite disagreement: \"I understand your point, but I see it differently\"?",
+              "options": [
+                "أَفْهَمُ وِجْهَةَ نَظَرِكَ، لَكِنِّي أَرَى الْأَمْرَ بِشَكْلٍ مُخْتَلِفٍ",
+                "أَفْهَمُ وِجْهَةَ نَظَرِكَ وَأُوَافِقُكَ تَمَامًا",
+                "لَا أَفْهَمُ شَيْئًا مِمَّا تَقُولُ",
+                "أَنْتَ مُخْطِئٌ تَمَامًا وَلَا أُرِيدُ سَمَاعَ رَأْيِكَ"
+              ],
+              "answer": "أَفْهَمُ وِجْهَةَ نَظَرِكَ، لَكِنِّي أَرَى الْأَمْرَ بِشَكْلٍ مُخْتَلِفٍ"
+            },
+            {
+              "text": "In a dialogue about planning a trip, which line best asks for the other's input?",
+              "options": [
+                "مَا رَأْيُكَ فِيمَا يَجِبُ أَنْ نَفْعَلَهُ أَوَّلًا؟",
+                "سَأَفْعَلُ مَا أُرِيدُ وَحْدِي",
+                "لَا يُهِمُّنِي رَأْيُكَ",
+                "لَنْ نُسَافِرَ أَبَدًا"
+              ],
+              "answer": "مَا رَأْيُكَ فِيمَا يَجِبُ أَنْ نَفْعَلَهُ أَوَّلًا؟"
+            },
+            {
+              "text": "Which format correctly introduces a speaker's line in written Arabic dialogue?",
+              "options": [
+                "قَالَ أَحْمَدُ: \"...\"",
+                "أَحْمَدُ يَقُولُ لَا شَيْءَ",
+                "لَا يُوجَدُ مُتَحَدِّثٌ",
+                "A quoted line with no attribution at all"
+              ],
+              "answer": "قَالَ أَحْمَدُ: \"...\""
+            },
+            {
+              "text": "Which response naturally continues a dialogue after being asked \"Are you free tomorrow?\"",
+              "options": [
+                "نَعَمْ، أَنَا حُرٌّ غَدًا، مَاذَا تَقْتَرِحُ؟",
+                "الْقِطَّةُ تَنَامُ عَلَى الْأَرِيكَةِ",
+                "لَا أَعْرِفُ اسْمَكَ",
+                "السَّاعَةُ الْآنَ الثَّالِثَةُ"
+              ],
+              "answer": "نَعَمْ، أَنَا حُرٌّ غَدًا، مَاذَا تَقْتَرِحُ؟"
+            },
+            {
+              "text": "What makes written dialogue feel natural and realistic?",
+              "options": [
+                "Short, responsive exchanges that build logically on what the other person just said",
+                "Each speaker gives an unrelated long speech ignoring the other",
+                "No questions are ever asked",
+                "Both speakers always agree instantly with no exchange of ideas"
+              ],
+              "answer": "Short, responsive exchanges that build logically on what the other person just said"
+            }
+          ]
+        },
+        {
+          "id": "stage11",
+          "title": "At-Ta'bīr 'an al-Mustaqbal — Future Plans & Goals",
+          "icon": "🎯",
+          "description": "Expressing intentions, hopes, and step-by-step future plans",
+          "kicker": "Future Plans & Goals",
+          "questions": [
+            {
+              "text": "Which sentence expresses a future goal: \"I intend to become a doctor in the future\"?",
+              "options": [
+                "أَنْوِي أَنْ أُصْبِحَ طَبِيبًا فِي الْمُسْتَقْبَلِ",
+                "كُنْتُ طَبِيبًا فِي الْمَاضِي",
+                "لَا أَنْوِي أَنْ أُصْبِحَ طَبِيبًا",
+                "أَنَا طَبِيبٌ الْآنَ"
+              ],
+              "answer": "أَنْوِي أَنْ أُصْبِحَ طَبِيبًا فِي الْمُسْتَقْبَلِ"
+            },
+            {
+              "text": "Which phrase expresses hope for the future, \"I hope that...\"?",
+              "options": [
+                "أَتَمَنَّى أَنْ...",
+                "أَتَذَكَّرُ أَنَّ...",
+                "أَنْسَى أَنَّ...",
+                "أَنْدَمُ عَلَى..."
+              ],
+              "answer": "أَتَمَنَّى أَنْ..."
+            },
+            {
+              "text": "Which sentence outlines concrete steps toward a goal: \"First, I will finish my studies, then I will look for a job\"?",
+              "options": [
+                "أَوَّلًا، سَأُنْهِي دِرَاسَتِي، ثُمَّ سَأَبْحَثُ عَنْ وَظِيفَةٍ",
+                "أَوَّلًا، سَأَبْحَثُ عَنْ وَظِيفَةٍ، ثُمَّ سَأَبْدَأُ دِرَاسَتِي",
+                "لَنْ أُنْهِيَ دِرَاسَتِي أَبَدًا",
+                "أَنْهَيْتُ دِرَاسَتِي أَمْسِ وَبَدَأْتُ الْعَمَلَ"
+              ],
+              "answer": "أَوَّلًا، سَأُنْهِي دِرَاسَتِي، ثُمَّ سَأَبْحَثُ عَنْ وَظِيفَةٍ"
+            },
+            {
+              "text": "Which phrase expresses determination toward a future goal, \"I am determined to...\"?",
+              "options": [
+                "أَنَا مُصَمِّمٌ عَلَى أَنْ...",
+                "أَنَا مُتَرَدِّدٌ فِي أَنْ...",
+                "أَنَا خَائِفٌ مِنْ أَنْ...",
+                "أَنَا نَادِمٌ عَلَى أَنْ..."
+              ],
+              "answer": "أَنَا مُصَمِّمٌ عَلَى أَنْ..."
+            },
+            {
+              "text": "Which sentence expresses a long-term aspiration: \"Within five years, I hope to have opened my own business\"?",
+              "options": [
+                "خِلَالَ خَمْسِ سَنَوَاتٍ، أَتَمَنَّى أَنْ أَكُونَ قَدْ فَتَحْتُ مَشْرُوعِي الْخَاصَّ",
+                "قَبْلَ خَمْسِ سَنَوَاتٍ، فَتَحْتُ مَشْرُوعِي الْخَاصَّ",
+                "لَا أَخْطِطُ لِفَتْحِ أَيِّ مَشْرُوعٍ",
+                "رُبَّمَا لَنْ أَعْمَلَ أَبَدًا"
+              ],
+              "answer": "خِلَالَ خَمْسِ سَنَوَاتٍ، أَتَمَنَّى أَنْ أَكُونَ قَدْ فَتَحْتُ مَشْرُوعِي الْخَاصَّ"
+            }
+          ]
+        },
+        {
+          "id": "stage12",
+          "title": "Al-Wasf bi'l-Ḥawāss — Descriptive Writing Using the Senses",
+          "icon": "🌊",
+          "description": "Enriching description with sight, sound, smell, and touch",
+          "kicker": "Sensory Description",
+          "questions": [
+            {
+              "text": "Which sentence uses smell to enrich a description: \"The scent of fresh bread filled the small kitchen\"?",
+              "options": [
+                "مَلَأَتْ رَائِحَةُ الْخُبْزِ الطَّازَجِ الْمَطْبَخَ الصَّغِيرَ",
+                "كَانَ الْمَطْبَخُ صَغِيرًا فَقَط",
+                "الْخُبْزُ لَذِيذٌ",
+                "لَا رَائِحَةَ فِي الْمَطْبَخِ"
+              ],
+              "answer": "مَلَأَتْ رَائِحَةُ الْخُبْزِ الطَّازَجِ الْمَطْبَخَ الصَّغِيرَ"
+            },
+            {
+              "text": "Which sentence uses sound to build atmosphere: \"The waves crashed loudly against the rocks\"?",
+              "options": [
+                "ارْتَطَمَتِ الْأَمْوَاجُ بِالصُّخُورِ بِصَوْتٍ عَالٍ",
+                "كَانَتِ الصُّخُورُ كَبِيرَةً فَقَط",
+                "الْبَحْرُ هَادِئٌ تَمَامًا وَلَا صَوْتَ لَهُ",
+                "لَا تُوجَدُ أَمْوَاجٌ الْيَوْمَ"
+              ],
+              "answer": "ارْتَطَمَتِ الْأَمْوَاجُ بِالصُّخُورِ بِصَوْتٍ عَالٍ"
+            },
+            {
+              "text": "Which sentence uses touch/texture to deepen a description: \"The old book's pages felt rough and dry beneath my fingers\"?",
+              "options": [
+                "شَعَرْتُ بِخُشُونَةِ وَجَفَافِ صَفَحَاتِ الْكِتَابِ الْقَدِيمِ تَحْتَ أَصَابِعِي",
+                "الْكِتَابُ الْقَدِيمُ عَلَى الطَّاوِلَةِ فَقَط",
+                "صَفَحَاتُ الْكِتَابِ نَاعِمَةٌ وَجَدِيدَةٌ",
+                "لَمْ أَلْمَسِ الْكِتَابَ أَبَدًا"
+              ],
+              "answer": "شَعَرْتُ بِخُشُونَةِ وَجَفَافِ صَفَحَاتِ الْكِتَابِ الْقَدِيمِ تَحْتَ أَصَابِعِي"
+            },
+            {
+              "text": "Why do skilled writers combine multiple senses in description?",
+              "options": [
+                "It makes the scene feel more vivid and immersive for the reader",
+                "It makes the writing shorter",
+                "It avoids the need for any adjectives",
+                "It is required only in formal legal writing"
+              ],
+              "answer": "It makes the scene feel more vivid and immersive for the reader"
+            },
+            {
+              "text": "Which sentence combines two senses (sight + sound) in one vivid description: \"The colorful stalls buzzed with the shouts of vendors\"?",
+              "options": [
+                "كَانَتِ الْأَكْشَاكُ الْمُلَوَّنَةُ تَضِجُّ بِصِيَاحِ الْبَاعَةِ",
+                "الْأَكْشَاكُ الْمُلَوَّنَةُ فَقَط، لَا صَوْتَ",
+                "كَانَ السُّوقُ هَادِئًا وَصَامِتًا تَمَامًا",
+                "لَا تُوجَدُ أَكْشَاكٌ فِي السُّوقِ"
+              ],
+              "answer": "كَانَتِ الْأَكْشَاكُ الْمُلَوَّنَةُ تَضِجُّ بِصِيَاحِ الْبَاعَةِ"
+            }
+          ]
+        },
+        {
+          "id": "stage13",
+          "title": "At-Talkhīṣ al-Basīṭ — Simple Summarizing",
+          "icon": "📋",
+          "description": "Condensing a text's main ideas neutrally and briefly",
+          "kicker": "Simple Summarizing",
+          "questions": [
+            {
+              "text": "What is the main goal of a summary (تَلْخِيص)?",
+              "options": [
+                "To restate the main ideas of a text briefly, in one's own words",
+                "To copy the text word-for-word",
+                "To add new opinions not found in the original text",
+                "To make the text longer with more detail"
+              ],
+              "answer": "To restate the main ideas of a text briefly, in one's own words"
+            },
+            {
+              "text": "Which phrase appropriately opens a summary, \"The text discusses...\"?",
+              "options": [
+                "يَتَنَاوَلُ النَّصُّ...",
+                "أَنَا لَا أَفْهَمُ النَّصَّ...",
+                "هَذَا النَّصُّ خَطَأٌ تَمَامًا...",
+                "لَمْ أَقْرَأِ النَّصَّ..."
+              ],
+              "answer": "يَتَنَاوَلُ النَّصُّ..."
+            },
+            {
+              "text": "Which is a key skill when summarizing a long article about renewable energy?",
+              "options": [
+                "Identifying and condensing only the central points, omitting minor details",
+                "Including every single detail and example from the article",
+                "Quoting the entire article word for word",
+                "Focusing only on one minor side detail while ignoring the main point"
+              ],
+              "answer": "Identifying and condensing only the central points, omitting minor details"
+            },
+            {
+              "text": "Which is an appropriately concise summary sentence for an article about traffic congestion in cities?",
+              "options": [
+                "يُنَاقِشُ النَّصُّ أَسْبَابَ ازْدِحَامِ الْمُرُورِ فِي الْمُدُنِ وَحُلُولَهُ الْمُمْكِنَةَ",
+                "يَذْكُرُ النَّصُّ فِي السَّطْرِ الثَّالِثِ اسْمَ شَارِعٍ مُعَيَّنٍ فِي الْمَدِينَةِ",
+                "يَتَحَدَّثُ النَّصُّ عَنِ الطَّقْسِ الْحَارِّ",
+                "لَا يَقُولُ النَّصُّ شَيْئًا مُهِمًّا"
+              ],
+              "answer": "يُنَاقِشُ النَّصُّ أَسْبَابَ ازْدِحَامِ الْمُرُورِ فِي الْمُدُنِ وَحُلُولَهُ الْمُمْكِنَةَ"
+            },
+            {
+              "text": "Why should a good summary avoid the summarizer's personal opinions?",
+              "options": [
+                "Because a summary should neutrally reflect the original text's content, not the summarizer's views",
+                "Because opinions are illegal to write",
+                "Because summaries must always be negative",
+                "Because opinions make summaries too short"
+              ],
+              "answer": "Because a summary should neutrally reflect the original text's content, not the summarizer's views"
+            }
+          ]
+        },
+        {
+          "id": "stage14",
+          "title": "Al-Iqnā' al-Awwalī — Basic Persuasive Expression",
+          "icon": "📢",
+          "description": "Making a simple case and appealing to shared reasoning",
+          "kicker": "Basic Persuasion",
+          "questions": [
+            {
+              "text": "Which phrase directly appeals to the reader's reasoning, \"Don't you think that...?\"",
+              "options": [
+                "أَلَا تَعْتَقِدُ أَنَّ...؟",
+                "أَنَا لَا أَهْتَمُّ بِرَأْيِكَ",
+                "لَا تُفَكِّرْ فِي هَذَا الْأَمْرِ",
+                "هَذَا لَا يَهُمُّكَ"
+              ],
+              "answer": "أَلَا تَعْتَقِدُ أَنَّ...؟"
+            },
+            {
+              "text": "Which sentence appeals to shared benefit: \"This solution benefits all of us, not just some\"?",
+              "options": [
+                "هَذَا الْحَلُّ يُفِيدُنَا جَمِيعًا، وَلَيْسَ بَعْضَنَا فَقَط",
+                "هَذَا الْحَلُّ يُفِيدُنِي أَنَا فَقَط",
+                "هَذَا الْحَلُّ لَا يُفِيدُ أَحَدًا",
+                "هَذَا الْحَلُّ يُفِيدُ بَعْضَنَا وَيُؤْذِي الْبَاقِينَ"
+              ],
+              "answer": "هَذَا الْحَلُّ يُفِيدُنَا جَمِيعًا، وَلَيْسَ بَعْضَنَا فَقَط"
+            },
+            {
+              "text": "Which persuasive technique uses a hypothetical scenario, e.g. \"Imagine a city with no traffic at all\"?",
+              "options": [
+                "تَخَيَّلْ مَدِينَةً بِلَا ازْدِحَامٍ مُرُورِيٍّ عَلَى الْإِطْلَاقِ",
+                "الْمَدِينَةُ فِيهَا ازْدِحَامٌ مُرُورِيٌّ كَبِيرٌ",
+                "لَا أُحِبُّ الْمُدُنَ",
+                "الْمُرُورُ مَوْجُودٌ فِي كُلِّ مَكَانٍ"
+              ],
+              "answer": "تَخَيَّلْ مَدِينَةً بِلَا ازْدِحَامٍ مُرُورِيٍّ عَلَى الْإِطْلَاقِ"
+            },
+            {
+              "text": "Which phrase strengthens a persuasive claim, \"it is essential that...\"?",
+              "options": [
+                "مِنَ الضَّرُورِيِّ أَنْ...",
+                "مِنَ الْمُمْكِنِ أَنْ...",
+                "رُبَّمَا مِنَ الْجَيِّدِ أَنْ...",
+                "لَا يُهِمُّ إِنْ..."
+              ],
+              "answer": "مِنَ الضَّرُورِيِّ أَنْ..."
+            },
+            {
+              "text": "Which basic persuasive paragraph structure is most effective?",
+              "options": [
+                "Clear claim → supporting reasons → call to action",
+                "Random unrelated facts with no claim",
+                "Only questions with no claims or reasons",
+                "A claim followed immediately by an unrelated topic"
+              ],
+              "answer": "Clear claim → supporting reasons → call to action"
+            }
+          ]
+        },
+        {
+          "id": "stage15",
+          "title": "Ar-Rasā'il ar-Rasmiyyah al-Basīṭah — Basic Formal Letters",
+          "icon": "📨",
+          "description": "Register control: formal openings, requests, and closings",
+          "kicker": "Basic Formal Letters",
+          "questions": [
+            {
+              "text": "Which opening phrase is appropriate for a basic formal letter/email, \"Dear Sir/Madam\"?",
+              "options": [
+                "السَّيِّدُ الْمُحْتَرَمُ / السَّيِّدَةُ الْمُحْتَرَمَةُ",
+                "يَا حَبِيبِي",
+                "أَهْلًا يَا صَاحِبِي",
+                "سَلَامٌ يَا صَدِيقِي الْعَزِيزُ"
+              ],
+              "answer": "السَّيِّدُ الْمُحْتَرَمُ / السَّيِّدَةُ الْمُحْتَرَمَةُ"
+            },
+            {
+              "text": "Which sentence appropriately opens the body of a formal complaint letter?",
+              "options": [
+                "أَكْتُبُ إِلَيْكُمْ لِلشَّكْوَى مِنْ...",
+                "أَكْتُبُ إِلَيْكُمْ لِأُخْبِرَكُمْ كَمْ أُحِبُّكُمْ",
+                "لَا شَيْءَ يُزْعِجُنِي عَلَى الْإِطْلَاقِ",
+                "أَكْتُبُ لَكُمْ لِأَسْأَلَ عَنْ أَحْوَالِكُمْ"
+              ],
+              "answer": "أَكْتُبُ إِلَيْكُمْ لِلشَّكْوَى مِنْ..."
+            },
+            {
+              "text": "Which closing phrase is standard for a basic formal letter, \"Sincerely / Yours faithfully\"?",
+              "options": [
+                "وَتَفَضَّلُوا بِقَبُولِ فَائِقِ الِاحْتِرَامِ وَالتَّقْدِيرِ",
+                "قُبْلَاتِي",
+                "أَرَاكَ لَاحِقًا يَا صَاحِبِي",
+                "مَعَ حُبِّي الشَّدِيدِ"
+              ],
+              "answer": "وَتَفَضَّلُوا بِقَبُولِ فَائِقِ الِاحْتِرَامِ وَالتَّقْدِيرِ"
+            },
+            {
+              "text": "Which sentence correctly and formally requests information: \"I would be grateful if you could provide further details\"?",
+              "options": [
+                "سَأَكُونُ مُمْتَنًّا لَوْ تَكَرَّمْتُمْ بِتَزْوِيدِي بِمَزِيدٍ مِنَ التَّفَاصِيلِ",
+                "أَعْطِنِي التَّفَاصِيلَ حَالًا!",
+                "لَا أُرِيدُ أَيَّ تَفَاصِيلَ",
+                "أَنَا أَعْرِفُ كُلَّ التَّفَاصِيلِ بِالْفِعْلِ"
+              ],
+              "answer": "سَأَكُونُ مُمْتَنًّا لَوْ تَكَرَّمْتُمْ بِتَزْوِيدِي بِمَزِيدٍ مِنَ التَّفَاصِيلِ"
+            },
+            {
+              "text": "What key difference distinguishes formal letter register from personal letter register?",
+              "options": [
+                "Formal letters use respectful, impersonal titles and structured, polite phrasing rather than casual, affectionate language",
+                "Formal letters must always be handwritten",
+                "Formal letters never have a closing",
+                "Formal letters use slang to sound friendly"
+              ],
+              "answer": "Formal letters use respectful, impersonal titles and structured, polite phrasing rather than casual, affectionate language"
+            }
+          ]
+        },
+        {
+          "id": "stage16",
+          "title": "At-Ta'bīr bi'sh-Sharṭ — Conditional Expression",
+          "icon": "🔁",
+          "description": "Real, hypothetical, and habitual conditional sentences",
+          "kicker": "Conditional Expression",
+          "questions": [
+            {
+              "text": "Which conditional particle expresses \"if\" for a real/possible condition, e.g. \"If you study, you will succeed\"?",
+              "options": [
+                "إِذَا",
+                "لَوْ",
+                "لَوْلَا",
+                "أَمَّا"
+              ],
+              "answer": "إِذَا"
+            },
+            {
+              "text": "Which sentence correctly forms a real conditional: \"If you study, you will succeed\"?",
+              "options": [
+                "إِذَا ذَاكَرْتَ، سَتَنْجَحُ",
+                "إِذَا ذَاكَرْتَ، فَشِلْتَ",
+                "ذَاكَرْتَ لِذَلِكَ لَنْ تَنْجَحَ أَبَدًا",
+                "لَوْلَا الْمُذَاكَرَةُ، سَتَنْجَحُ"
+              ],
+              "answer": "إِذَا ذَاكَرْتَ، سَتَنْجَحُ"
+            },
+            {
+              "text": "Which particle is used for a hypothetical or contrary-to-fact condition, e.g. \"If I were rich, I would travel the world\"?",
+              "options": [
+                "لَوْ",
+                "إِذَا",
+                "هَلْ",
+                "كَيْ"
+              ],
+              "answer": "لَوْ"
+            },
+            {
+              "text": "Which sentence correctly uses لَوْلَا to mean \"were it not for...\": \"Were it not for your help, I would not have succeeded\"?",
+              "options": [
+                "لَوْلَا مُسَاعَدَتُكَ، لَمَا نَجَحْتُ",
+                "لَوْلَا مُسَاعَدَتُكَ، نَجَحْتُ بِسُهُولَةٍ",
+                "بِمُسَاعَدَتِكَ، لَمْ أَنْجَحْ أَبَدًا",
+                "لَوْلَا الْفَشَلُ، لَمَا سَاعَدْتَنِي"
+              ],
+              "answer": "لَوْلَا مُسَاعَدَتُكَ، لَمَا نَجَحْتُ"
+            },
+            {
+              "text": "Which conditional sentence expresses a general/habitual truth: \"Whenever it rains, the streets get crowded with cars seeking shelter\"?",
+              "options": [
+                "كُلَّمَا أَمْطَرَتِ السَّمَاءُ، ازْدَحَمَتِ الشَّوَارِعُ بِالسَّيَّارَاتِ الْبَاحِثَةِ عَنْ مَأْوًى",
+                "كُلَّمَا أَمْطَرَتِ السَّمَاءُ، خَلَتِ الشَّوَارِعُ تَمَامًا مِنَ السَّيَّارَاتِ",
+                "لَنْ تُمْطِرَ السَّمَاءُ أَبَدًا",
+                "الشَّوَارِعُ مُزْدَحِمَةٌ فِي الطَّقْسِ الْمُشْمِسِ فَقَط"
+              ],
+              "answer": "كُلَّمَا أَمْطَرَتِ السَّمَاءُ، ازْدَحَمَتِ الشَّوَارِعُ بِالسَّيَّارَاتِ الْبَاحِثَةِ عَنْ مَأْوًى"
+            }
+          ]
+        },
+        {
+          "id": "stage17",
+          "title": "Kitābat Taqrīr Qaṣīr — Short Report Writing",
+          "icon": "🗂️",
+          "description": "Objective, structured reporting of facts and findings",
+          "kicker": "Short Report Writing",
+          "questions": [
+            {
+              "text": "What is the primary purpose of a short report (تَقْرِيرٌ قَصِيرٌ)؟",
+              "options": [
+                "To objectively present findings, facts, or events on a specific topic in an organized way",
+                "To express purely personal feelings with no facts",
+                "To tell an imaginative fictional story",
+                "To write a casual message to a friend"
+              ],
+              "answer": "To objectively present findings, facts, or events on a specific topic in an organized way"
+            },
+            {
+              "text": "Which opening line suits a short report on a school event, \"This report presents an overview of...\"?",
+              "options": [
+                "يُقَدِّمُ هَذَا التَّقْرِيرُ لَمْحَةً عَامَّةً عَنْ...",
+                "أَشْتَاقُ إِلَيْكَ كَثِيرًا...",
+                "كَانَ يَا مَا كَانَ فِي قَدِيمِ الزَّمَانِ...",
+                "مَعَ حُبِّي وَتَقْدِيرِي..."
+              ],
+              "answer": "يُقَدِّمُ هَذَا التَّقْرِيرُ لَمْحَةً عَامَّةً عَنْ..."
+            },
+            {
+              "text": "Which sentence best fits a report's objective, neutral tone?",
+              "options": [
+                "بَلَغَ عَدَدُ الْحُضُورِ مِائَتَيْ شَخْصٍ",
+                "كَانَ الْحَدَثُ رَائِعًا وَأَنَا أُحِبُّهُ كَثِيرًا جِدًّا!",
+                "أَشْعُرُ أَنَّ هَذَا الْحَدَثَ كَانَ أَفْضَلَ شَيْءٍ فِي حَيَاتِي",
+                "أَحْبَبْتُ كُلَّ لَحْظَةٍ فِي هَذَا الْحَدَثِ الْمُذْهِلِ"
+              ],
+              "answer": "بَلَغَ عَدَدُ الْحُضُورِ مِائَتَيْ شَخْصٍ"
+            },
+            {
+              "text": "Which structure is typical for a short report?",
+              "options": [
+                "Introduction → main findings/body → recommendations or conclusion",
+                "Only a greeting and a farewell, no content",
+                "A single long unbroken paragraph of opinions",
+                "Only dialogue between two people"
+              ],
+              "answer": "Introduction → main findings/body → recommendations or conclusion"
+            },
+            {
+              "text": "Which sentence appropriately closes a short report with a recommendation: \"It is recommended that the event be held again next year\"?",
+              "options": [
+                "يُوصَى بِإِقَامَةِ الْحَدَثِ مَرَّةً أُخْرَى فِي الْعَامِ الْقَادِمِ",
+                "لَنْ يُقَامَ هَذَا الْحَدَثُ مُطْلَقًا مَرَّةً أُخْرَى",
+                "لَا أَعْرِفُ إِذَا كَانَ يَنْبَغِي إِقَامَتُهُ مَرَّةً أُخْرَى",
+                "الْحَدَثُ كَانَ سَيِّئًا وَلَا يَسْتَحِقُّ التَّكْرَارَ"
+              ],
+              "answer": "يُوصَى بِإِقَامَةِ الْحَدَثِ مَرَّةً أُخْرَى فِي الْعَامِ الْقَادِمِ"
+            }
+          ]
+        },
+        {
+          "id": "stage18",
+          "title": "At-Tafḍīl wal-Muqāranah al-Mutaqaddimah — Advanced Comparison & Preference",
+          "icon": "🎚️",
+          "description": "Qualified, nuanced comparisons and preferences",
+          "kicker": "Advanced Comparison",
+          "questions": [
+            {
+              "text": "Which sentence expresses a nuanced preference with a qualifying condition: \"I prefer traveling by train, provided the journey isn't too long\"?",
+              "options": [
+                "أُفَضِّلُ السَّفَرَ بِالْقِطَارِ، بِشَرْطِ أَلَّا تَكُونَ الرِّحْلَةُ طَوِيلَةً جِدًّا",
+                "أُفَضِّلُ السَّفَرَ بِالْقِطَارِ بِلَا أَيِّ شُرُوطٍ عَلَى الْإِطْلَاقِ",
+                "لَا أُفَضِّلُ السَّفَرَ بِالْقِطَارِ مُطْلَقًا",
+                "أُفَضِّلُ السَّفَرَ بِالطَّائِرَةِ لَا بِالْقِطَارِ"
+              ],
+              "answer": "أُفَضِّلُ السَّفَرَ بِالْقِطَارِ، بِشَرْطِ أَلَّا تَكُونَ الرِّحْلَةُ طَوِيلَةً جِدًّا"
+            },
+            {
+              "text": "Which phrase weighs two options in a balanced, advanced way, \"weighing the pros and cons of each\"?",
+              "options": [
+                "بِمُوَازَنَةِ إِيجَابِيَّاتِ وَسَلْبِيَّاتِ كُلٍّ مِنْهُمَا",
+                "بِرَفْضِ كُلِّ الْخِيَارَاتِ فَوْرًا",
+                "بِتَجَاهُلِ الْمُقَارَنَةِ تَمَامًا",
+                "بِاخْتِيَارِ الْخِيَارِ الْأَوَّلِ بِلَا تَفْكِيرٍ"
+              ],
+              "answer": "بِمُوَازَنَةِ إِيجَابِيَّاتِ وَسَلْبِيَّاتِ كُلٍّ مِنْهُمَا"
+            },
+            {
+              "text": "Which sentence expresses a comparison qualified by degree: \"This option is only slightly better than that one\"?",
+              "options": [
+                "هَذَا الْخِيَارُ أَفْضَلُ قَلِيلًا مِنْ ذَلِكَ فَقَط",
+                "هَذَا الْخِيَارُ أَفْضَلُ بِكَثِيرٍ مِنْ ذَلِكَ",
+                "هَذَا الْخِيَارُ أَسْوَأُ مِنْ ذَلِكَ",
+                "الْخِيَارَانِ مُتَسَاوِيَانِ تَمَامًا"
+              ],
+              "answer": "هَذَا الْخِيَارُ أَفْضَلُ قَلِيلًا مِنْ ذَلِكَ فَقَط"
+            },
+            {
+              "text": "Which phrase introduces a comparison based on a specific criterion, \"in terms of cost...\"?",
+              "options": [
+                "مِنْ حَيْثُ التَّكْلِفَةُ...",
+                "بِالرَّغْمِ مِنَ التَّكْلِفَةِ...",
+                "بِسَبَبِ عَدَمِ وُجُودِ تَكْلِفَةٍ...",
+                "خَارِجَ نِطَاقِ التَّكْلِفَةِ..."
+              ],
+              "answer": "مِنْ حَيْثُ التَّكْلِفَةُ..."
+            },
+            {
+              "text": "Which sentence makes an advanced, qualified superlative claim: \"This is arguably one of the best solutions available, though not without drawbacks\"?",
+              "options": [
+                "يُمْكِنُ الْقَوْلُ إِنَّ هَذَا مِنْ أَفْضَلِ الْحُلُولِ الْمُتَاحَةِ، وَإِنْ لَمْ يَخْلُ مِنَ الْعُيُوبِ",
+                "هَذَا هُوَ الْحَلُّ الْأَفْضَلُ الْوَحِيدُ بِلَا أَيِّ عُيُوبٍ",
+                "هَذَا الْحَلُّ سَيِّئٌ تَمَامًا وَلَا فَائِدَةَ مِنْهُ",
+                "لَا يُمْكِنُ الْمُقَارَنَةُ بَيْنَ الْحُلُولِ إِطْلَاقًا"
+              ],
+              "answer": "يُمْكِنُ الْقَوْلُ إِنَّ هَذَا مِنْ أَفْضَلِ الْحُلُولِ الْمُتَاحَةِ، وَإِنْ لَمْ يَخْلُ مِنَ الْعُيُوبِ"
+            }
+          ]
+        },
+        {
+          "id": "stage19",
+          "title": "Kitābat Qiṣṣah Qaṣīrah — Short Story Writing",
+          "icon": "📚",
+          "description": "Setting scene, building tension, and resolving a narrative",
+          "kicker": "Short Story Writing",
+          "questions": [
+            {
+              "text": "Which element is essential to a short story but generally absent from a factual report?",
+              "options": [
+                "A narrative arc with characters, conflict, and resolution",
+                "A neutral, impersonal tone throughout",
+                "A list of statistics",
+                "A formal letterhead"
+              ],
+              "answer": "A narrative arc with characters, conflict, and resolution"
+            },
+            {
+              "text": "Which opening line effectively sets a story's scene: \"On a cold winter night, the old man walked alone through the empty streets\"?",
+              "options": [
+                "فِي لَيْلَةٍ شِتَائِيَّةٍ بَارِدَةٍ، مَشَى الرَّجُلُ الْعَجُوزُ وَحِيدًا فِي الشَّوَارِعِ الْخَالِيَةِ",
+                "الرَّجُلُ الْعَجُوزُ لَهُ عَنْوَانٌ فِي الْمَدِينَةِ",
+                "يُوجَدُ رَجُلٌ عَجُوزٌ فِي قَاعِدَةِ الْبَيَانَاتِ",
+                "هَذَا تَقْرِيرٌ عَنِ الرِّجَالِ الْعَجَائِزِ"
+              ],
+              "answer": "فِي لَيْلَةٍ شِتَائِيَّةٍ بَارِدَةٍ، مَشَى الرَّجُلُ الْعَجُوزُ وَحِيدًا فِي الشَّوَارِعِ الْخَالِيَةِ"
+            },
+            {
+              "text": "Which sentence introduces narrative tension, essential to a short story: \"Suddenly, he heard a strange noise behind him\"?",
+              "options": [
+                "فَجْأَةً، سَمِعَ صَوْتًا غَرِيبًا خَلْفَهُ",
+                "كَانَ كُلُّ شَيْءٍ هَادِئًا وَمُمِلًّا طَوَالَ الْقِصَّةِ بِلَا أَيِّ حَدَثٍ",
+                "لَمْ يَحْدُثْ شَيْءٌ فِي هَذِهِ اللَّحْظَةِ",
+                "اسْتَمَرَّ فِي الْمَشْيِ بِهُدُوءٍ تَامٍّ بِلَا تَغْيِيرٍ"
+              ],
+              "answer": "فَجْأَةً، سَمِعَ صَوْتًا غَرِيبًا خَلْفَهُ"
+            },
+            {
+              "text": "Which sentence provides narrative resolution: \"In the end, he realized the noise was only the wind, and he smiled with relief\"?",
+              "options": [
+                "فِي النِّهَايَةِ، أَدْرَكَ أَنَّ الصَّوْتَ لَمْ يَكُنْ سِوَى الرِّيحِ، وَابْتَسَمَ بِارْتِيَاحٍ",
+                "فِي النِّهَايَةِ، لَمْ يَعْرِفْ أَبَدًا مَصْدَرَ الصَّوْتِ وَبَقِيَ خَائِفًا إِلَى الْأَبَدِ",
+                "بَدَأَتِ الْقِصَّةُ بِسَمَاعِ الصَّوْتِ الْغَرِيبِ",
+                "لَمْ يَحْدُثْ شَيْءٌ فِي هَذِهِ الْقِصَّةِ مِنَ الْبِدَايَةِ"
+              ],
+              "answer": "فِي النِّهَايَةِ، أَدْرَكَ أَنَّ الصَّوْتَ لَمْ يَكُنْ سِوَى الرِّيحِ، وَابْتَسَمَ بِارْتِيَاحٍ"
+            },
+            {
+              "text": "Why is varied, descriptive vocabulary especially important in short story writing?",
+              "options": [
+                "It brings characters, settings, and events vividly to life for the reader",
+                "It is not important at all in stories",
+                "Stories should use only simple present-tense verbs",
+                "Descriptive vocabulary is only used in formal reports, not stories"
+              ],
+              "answer": "It brings characters, settings, and events vividly to life for the reader"
+            }
+          ]
+        },
+        {
+          "id": "stage20",
+          "title": "Murāja'ah — Intermediate Capstone Review",
+          "icon": "🎓",
+          "description": "The capstone review: combining description, narration, reasoning, and register",
+          "kicker": "Capstone Review",
+          "questions": [
+            {
+              "text": "Which paragraph best combines description, cause-effect, and opinion about city pollution: \"Our city is beautiful, but pollution has increased because of traffic; therefore, I believe stricter laws are needed\"?",
+              "options": [
+                "مَدِينَتُنَا جَمِيلَةٌ، لَكِنَّ التَّلَوُّثَ ازْدَادَ بِسَبَبِ حَرَكَةِ الْمُرُورِ، لِذَلِكَ أَعْتَقِدُ أَنَّنَا بِحَاجَةٍ إِلَى قَوَانِينَ أَكْثَرَ صَرَامَةً",
+                "مَدِينَتُنَا جَمِيلَةٌ وَلَا تَلَوُّثَ فِيهَا عَلَى الْإِطْلَاقِ",
+                "التَّلَوُّثُ لَا عَلَاقَةَ لَهُ بِالْمُرُورِ",
+                "لَا أَعْتَقِدُ أَنَّنَا بِحَاجَةٍ إِلَى أَيِّ قَوَانِينَ"
+              ],
+              "answer": "مَدِينَتُنَا جَمِيلَةٌ، لَكِنَّ التَّلَوُّثَ ازْدَادَ بِسَبَبِ حَرَكَةِ الْمُرُورِ، لِذَلِكَ أَعْتَقِدُ أَنَّنَا بِحَاجَةٍ إِلَى قَوَانِينَ أَكْثَرَ صَرَامَةً"
+            },
+            {
+              "text": "Which sentence best opens a short story using vivid sensory detail: \"The smell of the sea filled the air as the old fisherman walked slowly along the shore\"?",
+              "options": [
+                "مَلَأَتْ رَائِحَةُ الْبَحْرِ الْهَوَاءَ بَيْنَمَا كَانَ الصَّيَّادُ الْعَجُوزُ يَمْشِي بِبُطْءٍ عَلَى طُولِ الشَّاطِئِ",
+                "الصَّيَّادُ يَعْمَلُ فِي مَكْتَبٍ بَعِيدٍ عَنِ الْبَحْرِ",
+                "لَا رَائِحَةَ لِلْبَحْرِ عَلَى الْإِطْلَاقِ",
+                "هَذَا تَقْرِيرٌ رَسْمِيٌّ عَنِ الصَّيْدِ"
+              ],
+              "answer": "مَلَأَتْ رَائِحَةُ الْبَحْرِ الْهَوَاءَ بَيْنَمَا كَانَ الصَّيَّادُ الْعَجُوزُ يَمْشِي بِبُطْءٍ عَلَى طُولِ الشَّاطِئِ"
+            },
+            {
+              "text": "Which formal letter opening + request combination matches register: \"Dear Sir, I would be grateful if you could send the report by Monday\"?",
+              "options": [
+                "السَّيِّدُ الْمُحْتَرَمُ، سَأَكُونُ مُمْتَنًّا لَوْ تَكَرَّمْتُمْ بِإِرْسَالِ التَّقْرِيرِ يَوْمَ الِاثْنَيْنِ",
+                "يَا حَبِيبِي، أَرْسِلْ لِي التَّقْرِيرَ حَالًا!",
+                "السَّيِّدُ الْمُحْتَرَمُ، لَا أُرِيدُ أَيَّ تَقْرِيرٍ",
+                "أَهْلًا يَا صَاحِبِي، مَتَى التَّقْرِيرُ؟"
+              ],
+              "answer": "السَّيِّدُ الْمُحْتَرَمُ، سَأَكُونُ مُمْتَنًّا لَوْ تَكَرَّمْتُمْ بِإِرْسَالِ التَّقْرِيرِ يَوْمَ الِاثْنَيْنِ"
+            },
+            {
+              "text": "Which conditional + persuasive combination is most effective in an argumentative closing: \"If we act now, we can still protect our environment for future generations\"?",
+              "options": [
+                "إِذَا تَحَرَّكْنَا الْآنَ، فَمَا زَالَ بِإِمْكَانِنَا حِمَايَةُ بِيئَتِنَا لِلْأَجْيَالِ الْقَادِمَةِ",
+                "إِذَا تَحَرَّكْنَا الْآنَ، فَلَنْ نَسْتَطِيعَ حِمَايَةَ شَيْءٍ عَلَى الْإِطْلَاقِ",
+                "لَنْ نَتَحَرَّكَ أَبَدًا وَلَا دَاعِيَ لِذَلِكَ",
+                "بِيئَتُنَا لَيْسَتْ بِحَاجَةٍ إِلَى أَيِّ حِمَايَةٍ"
+              ],
+              "answer": "إِذَا تَحَرَّكْنَا الْآنَ، فَمَا زَالَ بِإِمْكَانِنَا حِمَايَةُ بِيئَتِنَا لِلْأَجْيَالِ الْقَادِمَةِ"
+            },
+            {
+              "text": "Which is the best one-sentence summary of a long article about the benefits and risks of social media?",
+              "options": [
+                "يَسْتَعْرِضُ النَّصُّ فَوَائِدَ وَسَائِلِ التَّوَاصُلِ الِاجْتِمَاعِيِّ وَمَخَاطِرَهَا الْمُحْتَمَلَةَ",
+                "يَتَحَدَّثُ النَّصُّ عَنْ نَوْعٍ مُعَيَّنٍ مِنَ الْقَهْوَةِ",
+                "لَا يُوجَدُ أَيُّ مَحْتَوَى فِي هَذَا النَّصِّ",
+                "النَّصُّ يَتَحَدَّثُ فَقَط عَنِ اسْمِ الْكَاتِبِ"
+              ],
+              "answer": "يَسْتَعْرِضُ النَّصُّ فَوَائِدَ وَسَائِلِ التَّوَاصُلِ الِاجْتِمَاعِيِّ وَمَخَاطِرَهَا الْمُحْتَمَلَةَ"
+            },
+            {
+              "text": "Across the Intermediate level, what is the overarching skill progression compared to Beginner?",
+              "options": [
+                "Moving from single simple sentences to structured, multi-sentence paragraphs that combine description, narration, reasoning, and register control",
+                "Simply repeating the same beginner-level sentences with new vocabulary",
+                "Focusing exclusively on memorizing grammar rules with no composition practice",
+                "Abandoning connectors and writing only isolated single words"
+              ],
+              "answer": "Moving from single simple sentences to structured, multi-sentence paragraphs that combine description, narration, reasoning, and register control"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "advanced",
+      "label": "Advanced",
+      "icon": "🔥",
+      "description": "Full argumentative essays, advanced discourse connectors, critical analysis, and formal speech",
+      "stages": [
+        {
+          "id": "stage1",
+          "title": "Al-Muqaddimah al-Iqnā'iyyah — The Persuasive Introduction",
+          "icon": "🎯",
+          "description": "Opening an argumentative piece with a clear thesis statement",
+          "kicker": "Persuasive Introduction",
+          "questions": [
+            {
+              "text": "Which sentence best functions as a clear thesis statement opening an essay on renewable energy: \"This essay argues that renewable energy is the only sustainable path forward\"?",
+              "options": [
+                "تَزْعُمُ هَذِهِ الْمَقَالَةُ أَنَّ الطَّاقَةَ الْمُتَجَدِّدَةَ هِيَ السَّبِيلُ الْمُسْتَدَامُ الْوَحِيدُ",
+                "الطَّاقَةُ الْمُتَجَدِّدَةُ كَلِمَةٌ نَسْمَعُهَا أَحْيَانًا",
+                "لَا أَعْرِفُ شَيْئًا عَنِ الطَّاقَةِ عَلَى الْإِطْلَاقِ",
+                "رُبَّمَا تَكُونُ الطَّاقَةُ مُهِمَّةً أَوْ لَا"
+              ],
+              "answer": "تَزْعُمُ هَذِهِ الْمَقَالَةُ أَنَّ الطَّاقَةَ الْمُتَجَدِّدَةَ هِيَ السَّبِيلُ الْمُسْتَدَامُ الْوَحِيدُ"
+            },
+            {
+              "text": "Which phrase signals to the reader that a formal argumentative position is about to be stated, \"This paper contends that...\"?",
+              "options": [
+                "تَذْهَبُ هَذِهِ الْوَرَقَةُ إِلَى أَنَّ...",
+                "رُبَّمَا يَكُونُ صَحِيحًا أَنَّ...",
+                "لَا أَدْرِي إِنْ كَانَ...",
+                "قَالَ لِي صَدِيقِي إِنَّ..."
+              ],
+              "answer": "تَذْهَبُ هَذِهِ الْوَرَقَةُ إِلَى أَنَّ..."
+            },
+            {
+              "text": "A strong thesis statement should be:",
+              "options": [
+                "Specific, arguable, and stated with confidence",
+                "Vague and open to no interpretation",
+                "A simple factual observation with no claim",
+                "A question rather than a statement"
+              ],
+              "answer": "Specific, arguable, and stated with confidence"
+            },
+            {
+              "text": "Which sentence previews the essay's structure, \"In what follows, I will first examine the causes, then the effects, before proposing solutions\"?",
+              "options": [
+                "فِيمَا يَلِي، سَأَتَنَاوَلُ أَوَّلًا الْأَسْبَابَ، ثُمَّ الْآثَارَ، قَبْلَ اقْتِرَاحِ الْحُلُولِ",
+                "لَا أَعْرِفُ مَاذَا سَأَكْتُبُ فِيمَا يَلِي",
+                "الْأَسْبَابُ وَالْآثَارُ لَا تَهُمُّنِي",
+                "سَأَتَحَدَّثُ عَنْ أَيِّ شَيْءٍ يَخْطُرُ بِبَالِي"
+              ],
+              "answer": "فِيمَا يَلِي، سَأَتَنَاوَلُ أَوَّلًا الْأَسْبَابَ، ثُمَّ الْآثَارَ، قَبْلَ اقْتِرَاحِ الْحُلُولِ"
+            },
+            {
+              "text": "Which opening best establishes the stakes/importance of the topic before the thesis: \"Few issues today are as urgent as the future of our climate\"?",
+              "options": [
+                "قَلِيلَةٌ هِيَ الْقَضَايَا الْيَوْمَ الَّتِي تَبْلُغُ إِلْحَاحَ مُسْتَقْبَلِ مُنَاخِنَا",
+                "الْمُنَاخُ مَوْضُوعٌ لَا أَهَمِّيَّةَ لَهُ إِطْلَاقًا",
+                "لَا يُوجَدُ أَيُّ قَضَايَا مُهِمَّةٍ فِي عَصْرِنَا",
+                "سَأَتَحَدَّثُ عَنِ الطَّقْسِ فَقَط دُونَ أَيِّ سِيَاقٍ"
+              ],
+              "answer": "قَلِيلَةٌ هِيَ الْقَضَايَا الْيَوْمَ الَّتِي تَبْلُغُ إِلْحَاحَ مُسْتَقْبَلِ مُنَاخِنَا"
+            }
+          ]
+        },
+        {
+          "id": "stage2",
+          "title": "Binā' al-Ḥujjah — Building an Argument",
+          "icon": "🧱",
+          "description": "Structuring a claim with supporting evidence and reasoning",
+          "kicker": "Building an Argument",
+          "questions": [
+            {
+              "text": "Which sentence correctly links a claim to its supporting evidence: \"Studies show that reading daily improves vocabulary, which supports my claim that schools should encourage it\"?",
+              "options": [
+                "تُظْهِرُ الدِّرَاسَاتُ أَنَّ الْقِرَاءَةَ الْيَوْمِيَّةَ تُحَسِّنُ الْمُفْرَدَاتِ، مِمَّا يَدْعَمُ رَأْيِي بِأَنَّ عَلَى الْمَدَارِسِ تَشْجِيعَهَا",
+                "الْقِرَاءَةُ شَيْءٌ يَفْعَلُهُ بَعْضُ النَّاسِ أَحْيَانًا",
+                "لَا تُوجَدُ أَيُّ عَلَاقَةٍ بَيْنَ الْقِرَاءَةِ وَالْمُفْرَدَاتِ",
+                "الْمَدَارِسُ لَا يَنْبَغِي أَنْ تَهْتَمَّ بِالْقِرَاءَةِ"
+              ],
+              "answer": "تُظْهِرُ الدِّرَاسَاتُ أَنَّ الْقِرَاءَةَ الْيَوْمِيَّةَ تُحَسِّنُ الْمُفْرَدَاتِ، مِمَّا يَدْعَمُ رَأْيِي بِأَنَّ عَلَى الْمَدَارِسِ تَشْجِيعَهَا"
+            },
+            {
+              "text": "Which phrase introduces evidence formally, meaning \"as evidenced by...\"?",
+              "options": [
+                "كَمَا يَتَّضِحُ مِنْ...",
+                "بِعِيدًا عَنْ...",
+                "رَغْمَ عَدَمِ وُجُودِ...",
+                "بِلَا أَيِّ سَبَبٍ..."
+              ],
+              "answer": "كَمَا يَتَّضِحُ مِنْ..."
+            },
+            {
+              "text": "In a well-built argument, the 'warrant' is best described as:",
+              "options": [
+                "The reasoning that explains why the evidence supports the claim",
+                "A random fact unrelated to the claim",
+                "The opposite of the claim",
+                "A restatement of the introduction"
+              ],
+              "answer": "The reasoning that explains why the evidence supports the claim"
+            },
+            {
+              "text": "Which sentence uses a logical connector to move from evidence to conclusion, \"Given this evidence, it follows that...\"?",
+              "options": [
+                "بِنَاءً عَلَى هَذَا الدَّلِيلِ، يَتَرَتَّبُ عَلَى ذَلِكَ أَنَّ...",
+                "بِالرَّغْمِ مِنْ هَذَا الدَّلِيلِ، فَلَا شَيْءَ يَتَرَتَّبُ",
+                "هَذَا الدَّلِيلُ لَا عَلَاقَةَ لَهُ بِأَيِّ شَيْءٍ",
+                "أَتَجَاهَلُ هَذَا الدَّلِيلَ تَمَامًا"
+              ],
+              "answer": "بِنَاءً عَلَى هَذَا الدَّلِيلِ، يَتَرَتَّبُ عَلَى ذَلِكَ أَنَّ..."
+            },
+            {
+              "text": "Which sentence strengthens an argument by citing a statistic: \"According to recent statistics, 70% of students prefer online resources\"?",
+              "options": [
+                "وَفْقًا لِإِحْصَائِيَّاتٍ حَدِيثَةٍ، يُفَضِّلُ سَبْعُونَ بِالْمِائَةِ مِنَ الطُّلَّابِ الْمَصَادِرَ الْإِلِكْتْرُونِيَّةَ",
+                "رُبَّمَا يُفَضِّلُ بَعْضُ الطُّلَّابِ شَيْئًا مَا",
+                "لَا تُوجَدُ إِحْصَائِيَّاتٌ عَنْ هَذَا الْمَوْضُوعِ إِطْلَاقًا",
+                "الطُّلَّابُ لَا يَسْتَخْدِمُونَ الْإِنْتِرْنِتَ أَبَدًا"
+              ],
+              "answer": "وَفْقًا لِإِحْصَائِيَّاتٍ حَدِيثَةٍ، يُفَضِّلُ سَبْعُونَ بِالْمِائَةِ مِنَ الطُّلَّابِ الْمَصَادِرَ الْإِلِكْتْرُونِيَّةَ"
+            }
+          ]
+        },
+        {
+          "id": "stage3",
+          "title": "Adawāt ar-Rabṭ al-Mutaqaddimah — Advanced Discourse Connectors",
+          "icon": "🔗",
+          "description": "Sophisticated connectors for concession, emphasis, and nuance",
+          "kicker": "Advanced Connectors",
+          "questions": [
+            {
+              "text": "Which connector introduces a concession before a stronger counterpoint, \"Even though / despite the fact that\"?",
+              "options": [
+                "عَلَى الرَّغْمِ مِنْ أَنَّ",
+                "لِأَنَّ",
+                "لِذَلِكَ",
+                "بِسَبَبِ"
+              ],
+              "answer": "عَلَى الرَّغْمِ مِنْ أَنَّ"
+            },
+            {
+              "text": "Which connector expresses emphatic addition, \"not only... but also\"?",
+              "options": [
+                "لَيْسَ فَقَط ... بَلْ أَيْضًا",
+                "إِمَّا ... أَوْ",
+                "لَا ... وَلَا",
+                "سَوَاءٌ ... أَمْ"
+              ],
+              "answer": "لَيْسَ فَقَط ... بَلْ أَيْضًا"
+            },
+            {
+              "text": "Which connector introduces a logical consequence in formal writing, \"consequently / as a result\"?",
+              "options": [
+                "وَبِالتَّالِي",
+                "وَمَعَ ذَلِكَ",
+                "فِي الْمُقَابِلِ",
+                "عَلَى النَّقِيضِ مِنْ ذَلِكَ"
+              ],
+              "answer": "وَبِالتَّالِي"
+            },
+            {
+              "text": "Which connector is used to introduce a clarifying example in formal register, \"to illustrate / for instance\"?",
+              "options": [
+                "وَلِتَوْضِيحِ ذَلِكَ",
+                "بِالرَّغْمِ مِنْ ذَلِكَ",
+                "خِلَافًا لِذَلِكَ",
+                "بِمَعْزِلٍ عَنْ ذَلِكَ"
+              ],
+              "answer": "وَلِتَوْضِيحِ ذَلِكَ"
+            },
+            {
+              "text": "Which sentence correctly uses a contrastive connector meaning \"whereas / while\" to compare two ideas: \"While some prefer the city, others prefer the countryside\"?",
+              "options": [
+                "فِي حِينِ أَنَّ بَعْضَهُمْ يُفَضِّلُ الْمَدِينَةَ، يُفَضِّلُ آخَرُونَ الرِّيفَ",
+                "بِسَبَبِ أَنَّ بَعْضَهُمْ يُفَضِّلُ الْمَدِينَةَ",
+                "لِأَنَّ الرِّيفَ لَا يُفَضِّلُهُ أَحَدٌ",
+                "الْمَدِينَةُ وَالرِّيفُ مُتَشَابِهَانِ تَمَامًا بِلَا فَرْقٍ"
+              ],
+              "answer": "فِي حِينِ أَنَّ بَعْضَهُمْ يُفَضِّلُ الْمَدِينَةَ، يُفَضِّلُ آخَرُونَ الرِّيفَ"
+            }
+          ]
+        },
+        {
+          "id": "stage4",
+          "title": "Ar-Radd 'alā al-Ḥujaj al-Muḍāddah — Rebuttal & Counter-Argument",
+          "icon": "🛡️",
+          "description": "Acknowledging and refuting opposing viewpoints",
+          "kicker": "Rebuttal & Counter-Argument",
+          "questions": [
+            {
+              "text": "Which sentence correctly acknowledges an opposing view before refuting it: \"Some may argue that this policy is costly; however, the long-term savings outweigh the initial expense\"?",
+              "options": [
+                "قَدْ يَزْعُمُ الْبَعْضُ أَنَّ هَذِهِ السِّيَاسَةَ مُكْلِفَةٌ؛ غَيْرَ أَنَّ الْوَفْرَ عَلَى الْمَدَى الْبَعِيدِ يَفُوقُ التَّكْلِفَةَ الْأَوَّلِيَّةَ",
+                "هَذِهِ السِّيَاسَةُ مُكْلِفَةٌ وَلَا فَائِدَةَ مِنْهَا أَبَدًا",
+                "لَا أَحَدَ يَعْتَرِضُ عَلَى هَذِهِ السِّيَاسَةِ",
+                "التَّكْلِفَةُ لَا عَلَاقَةَ لَهَا بِالْمَوْضُوعِ"
+              ],
+              "answer": "قَدْ يَزْعُمُ الْبَعْضُ أَنَّ هَذِهِ السِّيَاسَةَ مُكْلِفَةٌ؛ غَيْرَ أَنَّ الْوَفْرَ عَلَى الْمَدَى الْبَعِيدِ يَفُوقُ التَّكْلِفَةَ الْأَوَّلِيَّةَ"
+            },
+            {
+              "text": "Which phrase formally introduces a counter-argument, \"critics of this view argue that...\"?",
+              "options": [
+                "يَرَى مُنْتَقِدُو هَذَا الرَّأْيِ أَنَّ...",
+                "يُحِبُّ الْجَمِيعُ هَذَا الرَّأْيَ بِلَا اسْتِثْنَاءٍ",
+                "لَا يُوجَدُ أَيُّ نَقْدٍ لِهَذَا الرَّأْيِ",
+                "هَذَا الرَّأْيُ لَا يُنَاقَشُ أَبَدًا"
+              ],
+              "answer": "يَرَى مُنْتَقِدُو هَذَا الرَّأْيِ أَنَّ..."
+            },
+            {
+              "text": "A strong rebuttal typically does which of the following?",
+              "options": [
+                "Fairly states the opposing view, then explains its weakness with reasoning or evidence",
+                "Ignores the opposing view completely",
+                "Insults those who hold the opposing view",
+                "Simply repeats the original claim louder"
+              ],
+              "answer": "Fairly states the opposing view, then explains its weakness with reasoning or evidence"
+            },
+            {
+              "text": "Which sentence uses a concessive-then-rebuttal structure meaning \"While it is true that X, it does not follow that Y\"?",
+              "options": [
+                "وَإِنْ كَانَ صَحِيحًا أَنَّ كَذَا، فَلَا يَعْنِي ذَلِكَ أَنَّ كَذَا",
+                "بِمَا أَنَّ كَذَا صَحِيحٌ، فَإِنَّ كَذَا صَحِيحٌ أَيْضًا حَتْمًا",
+                "كَذَا غَيْرُ صَحِيحٍ عَلَى الْإِطْلَاقِ",
+                "لَا عَلَاقَةَ بَيْنَ كَذَا وَكَذَا"
+              ],
+              "answer": "وَإِنْ كَانَ صَحِيحًا أَنَّ كَذَا، فَلَا يَعْنِي ذَلِكَ أَنَّ كَذَا"
+            },
+            {
+              "text": "Which phrase signals refutation of a claim's underlying assumption, \"this argument overlooks the fact that...\"?",
+              "options": [
+                "يَتَجَاهَلُ هَذَا الِاسْتِدْلَالُ حَقِيقَةَ أَنَّ...",
+                "يُؤَكِّدُ هَذَا الِاسْتِدْلَالُ بِقُوَّةٍ أَنَّ...",
+                "لَا أَعْتَرِضُ عَلَى هَذَا الِاسْتِدْلَالِ إِطْلَاقًا",
+                "هَذَا الِاسْتِدْلَالُ مَقْبُولٌ تَمَامًا بِلَا نِقَاشٍ"
+              ],
+              "answer": "يَتَجَاهَلُ هَذَا الِاسْتِدْلَالُ حَقِيقَةَ أَنَّ..."
+            }
+          ]
+        },
+        {
+          "id": "stage5",
+          "title": "Al-Khiṭābah — Formal Speech & Oratory",
+          "icon": "🎙️",
+          "description": "Crafting and delivering a formal spoken address",
+          "kicker": "Formal Speech & Oratory",
+          "questions": [
+            {
+              "text": "Which opening is appropriate for a formal speech addressing an audience, \"Distinguished guests, ladies and gentlemen\"?",
+              "options": [
+                "أَيُّهَا الضُّيُوفُ الْكِرَامُ، السَّيِّدَاتُ وَالسَّادَةُ",
+                "يَا رِفَاقِي الصِّغَارَ",
+                "مَرْحَبًا يَا شَبَابُ",
+                "أَهْلًا يَا أَصْدِقَائِي الْمُقَرَّبِينَ"
+              ],
+              "answer": "أَيُّهَا الضُّيُوفُ الْكِرَامُ، السَّيِّدَاتُ وَالسَّادَةُ"
+            },
+            {
+              "text": "Which rhetorical device is commonly used in oratory to emphasize a point through repetition of a phrase across successive sentences?",
+              "options": [
+                "Anaphora (repeating an opening phrase for emphasis)",
+                "Random word insertion",
+                "Avoiding all repetition entirely",
+                "Using only single-word sentences"
+              ],
+              "answer": "Anaphora (repeating an opening phrase for emphasis)"
+            },
+            {
+              "text": "Which closing line effectively ends a formal speech with a call to action: \"Let us, together, build a brighter future\"?",
+              "options": [
+                "فَلْنَبْنِ مَعًا مُسْتَقْبَلًا أَكْثَرَ إِشْرَاقًا",
+                "لَا دَاعِيَ لِبِنَاءِ أَيِّ مُسْتَقْبَلٍ",
+                "الْمُسْتَقْبَلُ لَا يَعْنِينِي إِطْلَاقًا",
+                "لِنَتَوَقَّفْ عَنِ الْعَمَلِ تَمَامًا"
+              ],
+              "answer": "فَلْنَبْنِ مَعًا مُسْتَقْبَلًا أَكْثَرَ إِشْرَاقًا"
+            },
+            {
+              "text": "Which sentence uses a rhetorical question effectively within a speech, \"Is it not our duty to protect the coming generations?\"?",
+              "options": [
+                "أَلَيْسَ مِنْ وَاجِبِنَا أَنْ نَحْمِيَ الْأَجْيَالَ الْقَادِمَةَ؟",
+                "لَا وَاجِبَ عَلَيْنَا تُجَاهَ أَحَدٍ",
+                "الْأَجْيَالُ الْقَادِمَةُ لَا تَهُمُّنَا",
+                "لَنْ أَتَحَدَّثَ عَنِ الْوَاجِبِ أَبَدًا"
+              ],
+              "answer": "أَلَيْسَ مِنْ وَاجِبِنَا أَنْ نَحْمِيَ الْأَجْيَالَ الْقَادِمَةَ؟"
+            },
+            {
+              "text": "In formal oratory, tone and pacing should generally be:",
+              "options": [
+                "Measured and deliberate, with emphasis placed on key phrases",
+                "Rushed and monotone throughout",
+                "Identical to casual conversation",
+                "Silent for most of the speech"
+              ],
+              "answer": "Measured and deliberate, with emphasis placed on key phrases"
+            }
+          ]
+        },
+        {
+          "id": "stage6",
+          "title": "Al-Muqālah al-Ḥijājiyyah — The Argumentative Essay",
+          "icon": "📝",
+          "description": "Structuring a complete essay: introduction, body, rebuttal, conclusion",
+          "kicker": "The Argumentative Essay",
+          "questions": [
+            {
+              "text": "What is the correct overall structure of a well-formed argumentative essay?",
+              "options": [
+                "Introduction with thesis → body paragraphs with evidence → rebuttal of counter-arguments → conclusion",
+                "A single long paragraph with no divisions",
+                "Conclusion first, then evidence, then no introduction",
+                "Random order of ideas with no thesis"
+              ],
+              "answer": "Introduction with thesis → body paragraphs with evidence → rebuttal of counter-arguments → conclusion"
+            },
+            {
+              "text": "Which topic sentence best opens a body paragraph supporting a thesis about screen time: \"First, excessive screen time has been linked to reduced attention spans in children\"?",
+              "options": [
+                "أَوَّلًا، ارْتَبَطَ الْإِفْرَاطُ فِي وَقْتِ الشَّاشَةِ بِانْخِفَاضِ فَتْرَةِ الِانْتِبَاهِ لَدَى الْأَطْفَالِ",
+                "الشَّاشَاتُ شَيْءٌ نَسْتَخْدِمُهُ أَحْيَانًا فَقَط",
+                "لَا عَلَاقَةَ بَيْنَ الشَّاشَاتِ وَالِانْتِبَاهِ إِطْلَاقًا",
+                "الْأَطْفَالُ لَا يَسْتَخْدِمُونَ الشَّاشَاتِ أَبَدًا"
+              ],
+              "answer": "أَوَّلًا، ارْتَبَطَ الْإِفْرَاطُ فِي وَقْتِ الشَّاشَةِ بِانْخِفَاضِ فَتْرَةِ الِانْتِبَاهِ لَدَى الْأَطْفَالِ"
+            },
+            {
+              "text": "Which sentence transitions from one body paragraph to the next while maintaining logical flow, \"In addition to the above, another key factor is...\"?",
+              "options": [
+                "إِضَافَةً إِلَى مَا سَبَقَ، هُنَاكَ عَامِلٌ رَئِيسِيٌّ آخَرُ هُوَ...",
+                "بِخِلَافِ مَا سَبَقَ تَمَامًا وَلَا عَلَاقَةَ لَهُ بِهِ",
+                "لَا شَيْءَ آخَرَ يُذْكَرُ بَعْدَ هَذَا",
+                "أَنْهِي كِتَابَتِي هُنَا بِلَا أَيِّ إِضَافَةٍ"
+              ],
+              "answer": "إِضَافَةً إِلَى مَا سَبَقَ، هُنَاكَ عَامِلٌ رَئِيسِيٌّ آخَرُ هُوَ..."
+            },
+            {
+              "text": "Which sentence forms an effective, non-repetitive conclusion that reinforces the thesis without merely restating it word-for-word: \"Ultimately, the evidence presented makes clear that reform is not optional but necessary\"?",
+              "options": [
+                "فِي نِهَايَةِ الْمَطَافِ، تُوَضِّحُ الْأَدِلَّةُ الْمَعْرُوضَةُ أَنَّ الْإِصْلَاحَ لَيْسَ خِيَارًا بَلْ ضَرُورَةً",
+                "كَمَا قُلْتُ فِي الْبِدَايَةِ بِالضَّبْطِ وَبِنَفْسِ الْكَلِمَاتِ",
+                "لَا أَدْرِي إِنْ كَانَ الْإِصْلَاحُ مُهِمًّا",
+                "الْإِصْلَاحُ مَوْضُوعٌ لَا يَسْتَحِقُّ الْكِتَابَةَ عَنْهُ"
+              ],
+              "answer": "فِي نِهَايَةِ الْمَطَافِ، تُوَضِّحُ الْأَدِلَّةُ الْمَعْرُوضَةُ أَنَّ الْإِصْلَاحَ لَيْسَ خِيَارًا بَلْ ضَرُورَةً"
+            },
+            {
+              "text": "Why should an argumentative essay address counter-arguments rather than ignore them?",
+              "options": [
+                "Addressing them strengthens credibility by showing the writer has considered other perspectives fairly",
+                "It is required only in casual writing, never formal essays",
+                "Counter-arguments should always be hidden from the reader",
+                "It makes the essay shorter and less convincing"
+              ],
+              "answer": "Addressing them strengthens credibility by showing the writer has considered other perspectives fairly"
+            }
+          ]
+        },
+        {
+          "id": "stage7",
+          "title": "At-Taḥlīl an-Naqdī — Critical Analysis",
+          "icon": "🔍",
+          "description": "Analyzing a text's argument, evidence, and effectiveness",
+          "kicker": "Critical Analysis",
+          "questions": [
+            {
+              "text": "Which sentence critically evaluates an author's evidence rather than just summarizing it: \"While the author cites relevant statistics, the sample size raises questions about reliability\"?",
+              "options": [
+                "وَإِنِ اسْتَشْهَدَ الْكَاتِبُ بِإِحْصَائِيَّاتٍ ذَاتِ صِلَةٍ، فَإِنَّ حَجْمَ الْعَيِّنَةِ يُثِيرُ تَسَاؤُلَاتٍ حَوْلَ الْمِصْدَاقِيَّةِ",
+                "الْكَاتِبُ ذَكَرَ بَعْضَ الْأَرْقَامِ فَقَط",
+                "لَا أَهَمِّيَّةَ لِلْإِحْصَائِيَّاتِ فِي أَيِّ نَصٍّ",
+                "الْمِصْدَاقِيَّةُ لَا عَلَاقَةَ لَهَا بِحَجْمِ الْعَيِّنَةِ"
+              ],
+              "answer": "وَإِنِ اسْتَشْهَدَ الْكَاتِبُ بِإِحْصَائِيَّاتٍ ذَاتِ صِلَةٍ، فَإِنَّ حَجْمَ الْعَيِّنَةِ يُثِيرُ تَسَاؤُلَاتٍ حَوْلَ الْمِصْدَاقِيَّةِ"
+            },
+            {
+              "text": "Which phrase introduces an evaluation of an argument's logical weakness, \"this reasoning is flawed because...\"?",
+              "options": [
+                "هَذَا الِاسْتِدْلَالُ مَعِيبٌ لِأَنَّ...",
+                "هَذَا الِاسْتِدْلَالُ مُتِينٌ جِدًّا بِلَا أَيِّ عَيْبٍ",
+                "لَا يُمْكِنُ تَقْيِيمُ أَيِّ اسْتِدْلَالٍ أَبَدًا",
+                "هَذَا الِاسْتِدْلَالُ غَيْرُ مَوْجُودٍ أَصْلًا"
+              ],
+              "answer": "هَذَا الِاسْتِدْلَالُ مَعِيبٌ لِأَنَّ..."
+            },
+            {
+              "text": "Critical analysis of a text differs from a summary chiefly because it:",
+              "options": [
+                "Evaluates the strength, bias, and effectiveness of the argument rather than just restating it",
+                "Only restates the author's points in the same order",
+                "Avoids forming any judgment whatsoever",
+                "Focuses solely on spelling and grammar errors"
+              ],
+              "answer": "Evaluates the strength, bias, and effectiveness of the argument rather than just restating it"
+            },
+            {
+              "text": "Which sentence identifies a potential bias in a source: \"Given that the report was funded by the industry itself, its conclusions should be read with caution\"?",
+              "options": [
+                "بِمَا أَنَّ التَّقْرِيرَ مُوَّلٌ مِنَ الصِّنَاعَةِ نَفْسِهَا، فَيَنْبَغِي قِرَاءَةُ اسْتِنْتَاجَاتِهِ بِحَذَرٍ",
+                "التَّقْرِيرُ مُمَوَّلٌ فَلَا بُدَّ أَنَّهُ صَحِيحٌ تَمَامًا",
+                "مَصْدَرُ التَّمْوِيلِ لَا يُؤَثِّرُ عَلَى شَيْءٍ أَبَدًا",
+                "لَا يَنْبَغِي قِرَاءَةُ أَيِّ تَقْرِيرٍ عَلَى الْإِطْلَاقِ"
+              ],
+              "answer": "بِمَا أَنَّ التَّقْرِيرَ مُوَّلٌ مِنَ الصِّنَاعَةِ نَفْسِهَا، فَيَنْبَغِي قِرَاءَةُ اسْتِنْتَاجَاتِهِ بِحَذَرٍ"
+            },
+            {
+              "text": "Which phrase acknowledges a text's strength before noting a limitation, \"the argument is compelling, yet it fails to address...\"?",
+              "options": [
+                "الِاسْتِدْلَالُ مُقْنِعٌ، غَيْرَ أَنَّهُ لَا يُعَالِجُ...",
+                "الِاسْتِدْلَالُ ضَعِيفٌ تَمَامًا مِنَ الْبِدَايَةِ",
+                "لَا يُوجَدُ أَيُّ اسْتِدْلَالٍ فِي هَذَا النَّصِّ",
+                "الِاسْتِدْلَالُ يُعَالِجُ كُلَّ شَيْءٍ بِلَا اسْتِثْنَاءٍ"
+              ],
+              "answer": "الِاسْتِدْلَالُ مُقْنِعٌ، غَيْرَ أَنَّهُ لَا يُعَالِجُ..."
+            }
+          ]
+        },
+        {
+          "id": "stage8",
+          "title": "Al-Uslūb al-Akādīmī — Academic Register & Tone",
+          "icon": "🎓",
+          "description": "Formal, objective, precise academic writing conventions",
+          "kicker": "Academic Register & Tone",
+          "questions": [
+            {
+              "text": "Which sentence uses appropriate academic hedging rather than an overconfident claim, \"The findings suggest, though do not conclusively prove, a correlation\"?",
+              "options": [
+                "تُشِيرُ النَّتَائِجُ، دُونَ أَنْ تُثْبِتَ ذَلِكَ بِشَكْلٍ قَاطِعٍ، إِلَى وُجُودِ ارْتِبَاطٍ",
+                "النَّتَائِجُ تُثْبِتُ هَذَا الِارْتِبَاطَ بِشَكْلٍ قَاطِعٍ لَا شَكَّ فِيهِ",
+                "لَا تُوجَدُ أَيَّةُ نَتَائِجَ فِي هَذِهِ الدِّرَاسَةِ",
+                "الِارْتِبَاطُ مُسْتَحِيلٌ عِلْمِيًّا"
+              ],
+              "answer": "تُشِيرُ النَّتَائِجُ، دُونَ أَنْ تُثْبِتَ ذَلِكَ بِشَكْلٍ قَاطِعٍ، إِلَى وُجُودِ ارْتِبَاطٍ"
+            },
+            {
+              "text": "Which of the following is characteristic of academic register in Arabic writing?",
+              "options": [
+                "Avoiding colloquial expressions and using precise, impersonal, formal vocabulary",
+                "Using slang and regional dialect freely",
+                "Writing in the first-person casual style used in text messages",
+                "Frequent use of exclamation marks for emphasis"
+              ],
+              "answer": "Avoiding colloquial expressions and using precise, impersonal, formal vocabulary"
+            },
+            {
+              "text": "Which phrase is an appropriately impersonal academic construction, \"it can be observed that...\" (rather than \"I saw that...\")?",
+              "options": [
+                "يُلَاحَظُ أَنَّ...",
+                "أَنَا رَأَيْتُ أَنَّ...",
+                "صَدِيقِي قَالَ إِنَّ...",
+                "أَعْتَقِدُ رُبَّمَا رُبَّمَا أَنَّ..."
+              ],
+              "answer": "يُلَاحَظُ أَنَّ..."
+            },
+            {
+              "text": "Which sentence correctly cites a source in formal academic style, \"As Ibn Khaldūn notes in his Muqaddimah...\"?",
+              "options": [
+                "كَمَا يُشِيرُ ابْنُ خَلْدُونٍ فِي مُقَدِّمَتِهِ...",
+                "قَالَ لِي شَخْصٌ لَا أَعْرِفُهُ...",
+                "سَمِعْتُ فِي مَكَانٍ مَا أَنَّ...",
+                "رُبَّمَا قَالَ أَحَدٌ شَيْئًا مَا يَوْمًا مَا..."
+              ],
+              "answer": "كَمَا يُشِيرُ ابْنُ خَلْدُونٍ فِي مُقَدِّمَتِهِ..."
+            },
+            {
+              "text": "Why is precision of vocabulary especially valued in academic Arabic writing?",
+              "options": [
+                "It reduces ambiguity and ensures the reader interprets claims exactly as intended",
+                "It makes the text sound more mysterious and hard to understand",
+                "It is not valued; vague language is preferred",
+                "It replaces the need for evidence entirely"
+              ],
+              "answer": "It reduces ambiguity and ensures the reader interprets claims exactly as intended"
+            }
+          ]
+        },
+        {
+          "id": "stage9",
+          "title": "At-Talkhīṣ al-Mutaqaddim — Advanced Summarizing & Synthesis",
+          "icon": "🧩",
+          "description": "Condensing and synthesizing multiple sources into one coherent account",
+          "kicker": "Advanced Summarizing",
+          "questions": [
+            {
+              "text": "Which sentence best synthesizes two differing sources into one coherent statement: \"While one study emphasizes economic benefits, another highlights environmental costs, together painting a more complete picture\"?",
+              "options": [
+                "فِي حِينِ تُبْرِزُ إِحْدَى الدِّرَاسَتَيْنِ الْفَوَائِدَ الِاقْتِصَادِيَّةَ، تُسَلِّطُ الْأُخْرَى الضَّوْءَ عَلَى التَّكَالِيفِ الْبِيئِيَّةِ، لِتُشَكِّلَا مَعًا صُورَةً أَكْمَلَ",
+                "الدِّرَاسَتَانِ مُتَطَابِقَتَانِ تَمَامًا بِلَا أَيِّ فَرْقٍ",
+                "لَا فَائِدَةَ مِنْ قِرَاءَةِ دِرَاسَتَيْنِ مُخْتَلِفَتَيْنِ",
+                "إِحْدَى الدِّرَاسَتَيْنِ خَاطِئَةٌ تَمَامًا بِلَا شَكٍّ"
+              ],
+              "answer": "فِي حِينِ تُبْرِزُ إِحْدَى الدِّرَاسَتَيْنِ الْفَوَائِدَ الِاقْتِصَادِيَّةَ، تُسَلِّطُ الْأُخْرَى الضَّوْءَ عَلَى التَّكَالِيفِ الْبِيئِيَّةِ، لِتُشَكِّلَا مَعًا صُورَةً أَكْمَلَ"
+            },
+            {
+              "text": "What distinguishes synthesis from simple summarizing?",
+              "options": [
+                "Synthesis combines ideas from multiple sources into a new, integrated understanding",
+                "Synthesis only repeats one source's ideas word for word",
+                "Synthesis ignores all sources and states personal opinion only",
+                "Synthesis is identical to summarizing, just longer"
+              ],
+              "answer": "Synthesis combines ideas from multiple sources into a new, integrated understanding"
+            },
+            {
+              "text": "Which phrase signals a shift to compare two sources' differing conclusions, \"by contrast, the second source concludes that...\"?",
+              "options": [
+                "فِي الْمُقَابِلِ، يَخْلُصُ الْمَصْدَرُ الثَّانِي إِلَى أَنَّ...",
+                "وَبِنَفْسِ الطَّرِيقَةِ تَمَامًا دُونَ أَيِّ اخْتِلَافٍ",
+                "الْمَصْدَرُ الثَّانِي لَا يَذْكُرُ أَيَّ اسْتِنْتَاجٍ",
+                "لَا عَلَاقَةَ بَيْنَ الْمَصْدَرَيْنِ عَلَى الْإِطْلَاقِ"
+              ],
+              "answer": "فِي الْمُقَابِلِ، يَخْلُصُ الْمَصْدَرُ الثَّانِي إِلَى أَنَّ..."
+            },
+            {
+              "text": "Which one-sentence synthesis best captures the shared conclusion of several sources on urban housing, without listing each source separately?",
+              "options": [
+                "تَتَّفِقُ الْمَصَادِرُ عُمُومًا عَلَى أَنَّ أَزْمَةَ الْإِسْكَانِ الْحَضَرِيِّ تَتَطَلَّبُ حُلُولًا سِيَاسِيَّةً وَاقْتِصَادِيَّةً مُشْتَرَكَةً",
+                "كُلُّ مَصْدَرٍ يَقُولُ شَيْئًا مُخْتَلِفًا تَمَامًا عَنِ الْآخَرِ بِلَا أَيِّ رَابِطٍ",
+                "الْإِسْكَانُ الْحَضَرِيُّ لَيْسَ مَوْضُوعًا يَسْتَحِقُّ الدِّرَاسَةَ",
+                "لَا تُوجَدُ أَيَّةُ مَصَادِرَ تَتَحَدَّثُ عَنْ هَذَا الْمَوْضُوعِ"
+              ],
+              "answer": "تَتَّفِقُ الْمَصَادِرُ عُمُومًا عَلَى أَنَّ أَزْمَةَ الْإِسْكَانِ الْحَضَرِيِّ تَتَطَلَّبُ حُلُولًا سِيَاسِيَّةً وَاقْتِصَادِيَّةً مُشْتَرَكَةً"
+            },
+            {
+              "text": "When synthesizing sources, a writer should primarily avoid:",
+              "options": [
+                "Simply stacking separate summaries without showing how the sources relate to each other",
+                "Mentioning more than one source in the same paragraph",
+                "Using connectors between ideas",
+                "Forming an integrated overall conclusion"
+              ],
+              "answer": "Simply stacking separate summaries without showing how the sources relate to each other"
+            }
+          ]
+        },
+        {
+          "id": "stage10",
+          "title": "Al-Muqāranah bayn Wijhatay Naẓar — Comparing Two Viewpoints",
+          "icon": "⚖️",
+          "description": "Presenting and weighing two contrasting perspectives fairly",
+          "kicker": "Comparing Two Viewpoints",
+          "questions": [
+            {
+              "text": "Which sentence fairly presents both sides of a debate before offering a personal position: \"Proponents cite economic growth, while opponents warn of inequality; on balance, I find the latter concern more pressing\"?",
+              "options": [
+                "يَسْتَشْهِدُ الْمُؤَيِّدُونَ بِالنُّمُوِّ الِاقْتِصَادِيِّ، بَيْنَمَا يُحَذِّرُ الْمُعَارِضُونَ مِنَ التَّفَاوُتِ؛ وَفِي التَّوَازُنِ، أَجِدُ الْمِخَاوَفَ الْأَخِيرَةَ أَكْثَرَ إِلْحَاحًا",
+                "الْمُؤَيِّدُونَ عَلَى حَقٍّ تَمَامًا وَالْمُعَارِضُونَ مُخْطِئُونَ دَائِمًا",
+                "لَا يُوجَدُ أَيُّ خِلَافٍ حَوْلَ هَذَا الْمَوْضُوعِ",
+                "لَا رَأْيَ لِي عَلَى الْإِطْلَاقِ فِي أَيِّ شَيْءٍ"
+              ],
+              "answer": "يَسْتَشْهِدُ الْمُؤَيِّدُونَ بِالنُّمُوِّ الِاقْتِصَادِيِّ، بَيْنَمَا يُحَذِّرُ الْمُعَارِضُونَ مِنَ التَّفَاوُتِ؛ وَفِي التَّوَازُنِ، أَجِدُ الْمِخَاوَفَ الْأَخِيرَةَ أَكْثَرَ إِلْحَاحًا"
+            },
+            {
+              "text": "Which phrase introduces the first of two viewpoints in a balanced comparison, \"on the one hand...\"?",
+              "options": [
+                "مِنْ نَاحِيَةٍ...",
+                "بِلَا أَيِّ نَاحِيَةٍ",
+                "خَارِجَ كُلِّ النَّوَاحِي",
+                "دُونَ ذِكْرِ أَيِّ نَاحِيَةٍ"
+              ],
+              "answer": "مِنْ نَاحِيَةٍ..."
+            },
+            {
+              "text": "Which phrase introduces the second, contrasting viewpoint, \"on the other hand...\"?",
+              "options": [
+                "وَمِنْ نَاحِيَةٍ أُخْرَى...",
+                "وَبِنَفْسِ النَّاحِيَةِ تَمَامًا...",
+                "دُونَ أَيِّ نَاحِيَةٍ ثَانِيَةٍ...",
+                "بِمَعْزِلٍ عَنْ كُلِّ النَّوَاحِي..."
+              ],
+              "answer": "وَمِنْ نَاحِيَةٍ أُخْرَى..."
+            },
+            {
+              "text": "A fair comparison of two viewpoints should:",
+              "options": [
+                "Represent each side accurately before evaluating them, avoiding straw-man distortion",
+                "Deliberately misrepresent the weaker side to make it easier to dismiss",
+                "Only present one side and ignore the other",
+                "Avoid ever stating a personal conclusion, even when asked"
+              ],
+              "answer": "Represent each side accurately before evaluating them, avoiding straw-man distortion"
+            },
+            {
+              "text": "Which sentence weighs two viewpoints and reaches a qualified conclusion: \"Although both arguments have merit, the evidence tilts slightly in favor of the first\"?",
+              "options": [
+                "عَلَى الرَّغْمِ مِنْ أَنَّ لِكِلَا الرَّأْيَيْنِ وَجَاهَةً، فَإِنَّ الْأَدِلَّةَ تَمِيلُ قَلِيلًا لِصَالِحِ الْأَوَّلِ",
+                "الرَّأْيُ الْأَوَّلُ صَحِيحٌ مِائَةً بِالْمِائَةِ وَالثَّانِي خَاطِئٌ تَمَامًا",
+                "لَا وَجَاهَةَ لِأَيٍّ مِنَ الرَّأْيَيْنِ",
+                "لَا يُمْكِنُ تَقْيِيمُ أَيِّ رَأْيٍ عَلَى الْإِطْلَاقِ"
+              ],
+              "answer": "عَلَى الرَّغْمِ مِنْ أَنَّ لِكِلَا الرَّأْيَيْنِ وَجَاهَةً، فَإِنَّ الْأَدِلَّةَ تَمِيلُ قَلِيلًا لِصَالِحِ الْأَوَّلِ"
+            }
+          ]
+        },
+        {
+          "id": "stage11",
+          "title": "Kitābat al-Muqtaraḥ — Proposal Writing",
+          "icon": "📋",
+          "description": "Proposing a solution or project with justification and plan",
+          "kicker": "Proposal Writing",
+          "questions": [
+            {
+              "text": "Which sentence correctly opens a proposal by identifying a problem, \"This proposal addresses the growing issue of traffic congestion downtown\"?",
+              "options": [
+                "يَتَنَاوَلُ هَذَا الِاقْتِرَاحُ مُشْكِلَةَ ازْدِحَامِ الْمُرُورِ الْمُتَزَايِدَةَ فِي وَسَطِ الْمَدِينَةِ",
+                "لَا تُوجَدُ أَيَّةُ مُشْكِلَةٍ فِي وَسَطِ الْمَدِينَةِ",
+                "الْمُرُورُ لَيْسَ مَوْضُوعًا يَسْتَحِقُّ اقْتِرَاحًا",
+                "هَذَا الِاقْتِرَاحُ لَا يَتَنَاوَلُ أَيَّ شَيْءٍ مُحَدَّدٍ"
+              ],
+              "answer": "يَتَنَاوَلُ هَذَا الِاقْتِرَاحُ مُشْكِلَةَ ازْدِحَامِ الْمُرُورِ الْمُتَزَايِدَةَ فِي وَسَطِ الْمَدِينَةِ"
+            },
+            {
+              "text": "Which phrase introduces a proposed solution formally, \"it is recommended that...\"?",
+              "options": [
+                "يُوصَى بِأَنْ...",
+                "مِنَ الْمُسْتَحِيلِ أَنْ...",
+                "لَا يُنْصَحُ بِـ...",
+                "قَدْ يَحْدُثُ رُبَّمَا أَنْ..."
+              ],
+              "answer": "يُوصَى بِأَنْ..."
+            },
+            {
+              "text": "A well-formed proposal typically includes:",
+              "options": [
+                "Problem statement, proposed solution, justification, and an implementation plan",
+                "Only a list of complaints with no solution",
+                "A single sentence with no supporting detail",
+                "Personal opinions unrelated to the problem"
+              ],
+              "answer": "Problem statement, proposed solution, justification, and an implementation plan"
+            },
+            {
+              "text": "Which sentence justifies a proposal with a cost-benefit statement, \"the initial investment will be offset by long-term savings\"?",
+              "options": [
+                "سَيُعَوَّضُ الِاسْتِثْمَارُ الْأَوَّلِيُّ بِالْوَفْرِ عَلَى الْمَدَى الْبَعِيدِ",
+                "الِاسْتِثْمَارُ لَا فَائِدَةَ مِنْهُ أَبَدًا",
+                "لَا عَلَاقَةَ بَيْنَ الِاسْتِثْمَارِ وَالْوَفْرِ",
+                "سَيَخْسَرُ الْمَشْرُوعُ بِلَا شَكٍّ"
+              ],
+              "answer": "سَيُعَوَّضُ الِاسْتِثْمَارُ الْأَوَّلِيُّ بِالْوَفْرِ عَلَى الْمَدَى الْبَعِيدِ"
+            },
+            {
+              "text": "Which sentence outlines a concrete implementation timeline, \"The first phase will be completed within six months\"?",
+              "options": [
+                "سَتُنْجَزُ الْمَرْحَلَةُ الْأُولَى خِلَالَ سِتَّةِ أَشْهُرٍ",
+                "لَا جَدْوَلَ زَمَنِيًّا لِهَذَا الْمَشْرُوعِ",
+                "الْمَشْرُوعُ لَنْ يَبْدَأَ أَبَدًا",
+                "الْمَرَاحِلُ غَيْرُ مُحَدَّدَةٍ عَلَى الْإِطْلَاقِ"
+              ],
+              "answer": "سَتُنْجَزُ الْمَرْحَلَةُ الْأُولَى خِلَالَ سِتَّةِ أَشْهُرٍ"
+            }
+          ]
+        },
+        {
+          "id": "stage12",
+          "title": "At-Ta'bīr 'an as-Sababiyyah al-Mu'aqqadah — Complex Causality",
+          "icon": "🔄",
+          "description": "Expressing multi-layered causes, effects, and feedback loops",
+          "kicker": "Complex Causality",
+          "questions": [
+            {
+              "text": "Which sentence expresses a chain of causality with more than one link: \"Rising temperatures melt glaciers, which in turn raises sea levels, threatening coastal cities\"?",
+              "options": [
+                "يُذِيبُ ارْتِفَاعُ دَرَجَاتِ الْحَرَارَةِ الْأَنْهَارَ الْجَلِيدِيَّةَ، مِمَّا يَرْفَعُ مُسْتَوَى الْبِحَارِ بِدَوْرِهِ، وَيُهَدِّدُ الْمُدُنَ السَّاحِلِيَّةَ",
+                "دَرَجَاتُ الْحَرَارَةِ لَا تُؤَثِّرُ عَلَى شَيْءٍ إِطْلَاقًا",
+                "الْأَنْهَارُ الْجَلِيدِيَّةُ لَا عَلَاقَةَ لَهَا بِمُسْتَوَى الْبِحَارِ",
+                "الْمُدُنُ السَّاحِلِيَّةُ آمِنَةٌ تَمَامًا فِي كُلِّ الْأَحْوَالِ"
+              ],
+              "answer": "يُذِيبُ ارْتِفَاعُ دَرَجَاتِ الْحَرَارَةِ الْأَنْهَارَ الْجَلِيدِيَّةَ، مِمَّا يَرْفَعُ مُسْتَوَى الْبِحَارِ بِدَوْرِهِ، وَيُهَدِّدُ الْمُدُنَ السَّاحِلِيَّةَ"
+            },
+            {
+              "text": "Which phrase distinguishes a root cause from a contributing factor, \"the underlying cause, as opposed to a mere contributing factor, is...\"?",
+              "options": [
+                "السَّبَبُ الْجَذْرِيُّ، بِخِلَافِ الْعَامِلِ الْمُسَاهِمِ فَقَط، هُوَ...",
+                "كُلُّ الْأَسْبَابِ مُتَسَاوِيَةٌ فِي الْأَهَمِّيَّةِ دَائِمًا",
+                "لَا يُوجَدُ أَيُّ سَبَبٍ جَذْرِيٍّ لِأَيِّ شَيْءٍ",
+                "الْعَوَامِلُ الْمُسَاهِمَةُ هِيَ نَفْسُهَا السَّبَبُ الْجَذْرِيُّ دَائِمًا"
+              ],
+              "answer": "السَّبَبُ الْجَذْرِيُّ، بِخِلَافِ الْعَامِلِ الْمُسَاهِمِ فَقَط، هُوَ..."
+            },
+            {
+              "text": "Which sentence describes a feedback loop, where an effect further intensifies its own cause: \"As trust declines, cooperation weakens, which further erodes trust\"?",
+              "options": [
+                "كُلَّمَا تَرَاجَعَتِ الثِّقَةُ، ضَعُفَ التَّعَاوُنُ، مِمَّا يُقَوِّضُ الثِّقَةَ أَكْثَرَ",
+                "الثِّقَةُ وَالتَّعَاوُنُ لَا عَلَاقَةَ بَيْنَهُمَا عَلَى الْإِطْلَاقِ",
+                "التَّعَاوُنُ يَزْدَادُ دَائِمًا بِغَضِّ النَّظَرِ عَنِ الثِّقَةِ",
+                "لَا تَتَأَثَّرُ الثِّقَةُ بِأَيِّ شَيْءٍ"
+              ],
+              "answer": "كُلَّمَا تَرَاجَعَتِ الثِّقَةُ، ضَعُفَ التَّعَاوُنُ، مِمَّا يُقَوِّضُ الثِّقَةَ أَكْثَرَ"
+            },
+            {
+              "text": "Which phrase correctly expresses a secondary, less direct effect, \"an indirect consequence of this is...\"?",
+              "options": [
+                "وَمِنَ الْآثَارِ غَيْرِ الْمُبَاشِرَةِ لِهَذَا...",
+                "الْأَثَرُ الْمُبَاشِرُ الْوَحِيدُ لِهَذَا هُوَ...",
+                "لَا آثَارَ لِهَذَا عَلَى الْإِطْلَاقِ...",
+                "هَذَا لَا يُسَبِّبُ شَيْئًا أَبَدًا..."
+              ],
+              "answer": "وَمِنَ الْآثَارِ غَيْرِ الْمُبَاشِرَةِ لِهَذَا..."
+            },
+            {
+              "text": "Why is it important, in advanced writing, to distinguish correlation from causation?",
+              "options": [
+                "Because two things occurring together does not necessarily mean one causes the other, and conflating them weakens an argument",
+                "Because correlation and causation always mean exactly the same thing",
+                "Because causation is never relevant to argumentation",
+                "Because only correlation matters in formal writing"
+              ],
+              "answer": "Because two things occurring together does not necessarily mean one causes the other, and conflating them weakens an argument"
+            }
+          ]
+        },
+        {
+          "id": "stage13",
+          "title": "Al-Khitām al-Mu'aththir — The Powerful Conclusion",
+          "icon": "🏁",
+          "description": "Closing a piece of writing with impact, beyond mere restatement",
+          "kicker": "The Powerful Conclusion",
+          "questions": [
+            {
+              "text": "Which conclusion goes beyond restating the thesis by connecting the topic to a broader implication: \"This issue, then, is not just about policy — it is about the kind of society we choose to build\"?",
+              "options": [
+                "إِذَنْ، هَذِهِ الْقَضِيَّةُ لَيْسَتْ مُجَرَّدَ سِيَاسَةٍ، بَلْ هِيَ عَنْ نَوْعِ الْمُجْتَمَعِ الَّذِي نَخْتَارُ بِنَاءَهُ",
+                "هَذِهِ الْقَضِيَّةُ سِيَاسَةٌ فَقَط وَلَا شَيْءَ غَيْرَ ذَلِكَ",
+                "لَا عَلَاقَةَ بَيْنَ السِّيَاسَةِ وَالْمُجْتَمَعِ",
+                "لَنْ أَتَحَدَّثَ عَنِ الْمُجْتَمَعِ عَلَى الْإِطْلَاقِ"
+              ],
+              "answer": "إِذَنْ، هَذِهِ الْقَضِيَّةُ لَيْسَتْ مُجَرَّدَ سِيَاسَةٍ، بَلْ هِيَ عَنْ نَوْعِ الْمُجْتَمَعِ الَّذِي نَخْتَارُ بِنَاءَهُ"
+            },
+            {
+              "text": "A weak conclusion most commonly fails by:",
+              "options": [
+                "Merely repeating the introduction word-for-word with no new insight",
+                "Ending with a forward-looking or thought-provoking statement",
+                "Tying the argument back to its broader significance",
+                "Leaving the reader with a clear sense of resolution"
+              ],
+              "answer": "Merely repeating the introduction word-for-word with no new insight"
+            },
+            {
+              "text": "Which closing sentence uses a forward-looking call to reflection, \"The question now is not whether change is needed, but how soon we are willing to act\"?",
+              "options": [
+                "السُّؤَالُ الْآنَ لَيْسَ إِنْ كَانَ التَّغْيِيرُ ضَرُورِيًّا، بَلْ إِلَى أَيِّ مَدَى نَحْنُ مُسْتَعِدُّونَ لِلتَّحَرُّكِ سَرِيعًا",
+                "لَا سُؤَالَ يَسْتَحِقُّ طَرْحَهُ فِي هَذَا الْمَوْضُوعِ",
+                "التَّغْيِيرُ غَيْرُ ضَرُورِيٍّ عَلَى الْإِطْلَاقِ",
+                "لَنْ نَتَحَرَّكَ أَبَدًا مَهْمَا حَدَثَ"
+              ],
+              "answer": "السُّؤَالُ الْآنَ لَيْسَ إِنْ كَانَ التَّغْيِيرُ ضَرُورِيًّا، بَلْ إِلَى أَيِّ مَدَى نَحْنُ مُسْتَعِدُّونَ لِلتَّحَرُّكِ سَرِيعًا"
+            },
+            {
+              "text": "Which phrase effectively signals the final synthesis of an essay's ideas, \"taken together, these points demonstrate that...\"?",
+              "options": [
+                "وَإِذَا أَخَذْنَا هَذِهِ النِّقَاطَ مَعًا، فَإِنَّهَا تُبَيِّنُ أَنَّ...",
+                "هَذِهِ النِّقَاطُ لَا عَلَاقَةَ بَيْنَهَا إِطْلَاقًا",
+                "لَا يُمْكِنُ الْجَمْعُ بَيْنَ أَيِّ نِقَاطٍ",
+                "كُلُّ نُقْطَةٍ تُنَاقِضُ الْأُخْرَى تَمَامًا"
+              ],
+              "answer": "وَإِذَا أَخَذْنَا هَذِهِ النِّقَاطَ مَعًا، فَإِنَّهَا تُبَيِّنُ أَنَّ..."
+            },
+            {
+              "text": "Why should a powerful conclusion avoid introducing entirely new arguments?",
+              "options": [
+                "New arguments at that point cannot be supported with evidence and disrupt the essay's sense of closure",
+                "New arguments always strengthen a conclusion regardless of support",
+                "Conclusions are the only appropriate place for new evidence",
+                "It doesn't matter where arguments are introduced"
+              ],
+              "answer": "New arguments at that point cannot be supported with evidence and disrupt the essay's sense of closure"
+            }
+          ]
+        },
+        {
+          "id": "stage14",
+          "title": "An-Naqd al-Bannā' — Constructive Criticism",
+          "icon": "🛠️",
+          "description": "Giving critical feedback that is honest yet respectful and useful",
+          "kicker": "Constructive Criticism",
+          "questions": [
+            {
+              "text": "Which sentence delivers constructive criticism respectfully: \"The idea is promising, though the second section would benefit from clearer examples\"?",
+              "options": [
+                "الْفِكْرَةُ وَاعِدَةٌ، وَإِنْ كَانَ الْقِسْمُ الثَّانِي سَيَسْتَفِيدُ مِنْ أَمْثِلَةٍ أَوْضَحَ",
+                "هَذِهِ الْفِكْرَةُ سَيِّئَةٌ تَمَامًا وَلَا فَائِدَةَ مِنْهَا",
+                "لَا أَسْتَطِيعُ إِبْدَاءَ أَيِّ رَأْيٍ فِي هَذَا الْعَمَلِ",
+                "الْقِسْمُ الثَّانِي لَا يُقْرَأُ عَلَى الْإِطْلَاقِ"
+              ],
+              "answer": "الْفِكْرَةُ وَاعِدَةٌ، وَإِنْ كَانَ الْقِسْمُ الثَّانِي سَيَسْتَفِيدُ مِنْ أَمْثِلَةٍ أَوْضَحَ"
+            },
+            {
+              "text": "A well-balanced piece of constructive criticism typically:",
+              "options": [
+                "Pairs specific praise with specific, actionable suggestions for improvement",
+                "Focuses only on flaws with no acknowledgment of strengths",
+                "Avoids being specific to spare the person's feelings",
+                "Uses vague generalities like 'it's just not good'"
+              ],
+              "answer": "Pairs specific praise with specific, actionable suggestions for improvement"
+            },
+            {
+              "text": "Which phrase softens criticism while remaining clear, \"one area that could be strengthened is...\"?",
+              "options": [
+                "وَمِنَ الْجَوَانِبِ الَّتِي يُمْكِنُ تَعْزِيزُهَا...",
+                "هَذَا الْجَانِبُ فَاشِلٌ تَمَامًا وَبِلَا رَجْعَةٍ",
+                "لَا يُمْكِنُ تَحْسِينُ أَيِّ شَيْءٍ هُنَا",
+                "كُلُّ شَيْءٍ هُنَا مِثَالِيٌّ بِلَا اسْتِثْنَاءٍ"
+              ],
+              "answer": "وَمِنَ الْجَوَانِبِ الَّتِي يُمْكِنُ تَعْزِيزُهَا..."
+            },
+            {
+              "text": "Which sentence offers an actionable, specific suggestion rather than a vague complaint: \"Adding a brief summary at the start of each section would help readers follow the argument\"?",
+              "options": [
+                "إِضَافَةُ مُلَخَّصٍ مُوجَزٍ فِي بِدَايَةِ كُلِّ قِسْمٍ سَتُسَاعِدُ الْقُرَّاءَ عَلَى مُتَابَعَةِ الِاسْتِدْلَالِ",
+                "الْعَمَلُ غَيْرُ مَفْهُومٍ إِطْلَاقًا وَلَا حَلَّ لِذَلِكَ",
+                "لَا أَعْرِفُ مَا الَّذِي يَنْقُصُ هَذَا الْعَمَلَ",
+                "الْقُرَّاءُ لَنْ يَفْهَمُوا هَذَا الْعَمَلَ أَبَدًا"
+              ],
+              "answer": "إِضَافَةُ مُلَخَّصٍ مُوجَزٍ فِي بِدَايَةِ كُلِّ قِسْمٍ سَتُسَاعِدُ الْقُرَّاءَ عَلَى مُتَابَعَةِ الِاسْتِدْلَالِ"
+            },
+            {
+              "text": "Why is tone especially important when delivering criticism in formal or professional contexts?",
+              "options": [
+                "A respectful tone keeps the recipient receptive to the feedback rather than defensive",
+                "Tone has no effect on how feedback is received",
+                "Harsh tone always leads to faster improvement",
+                "Formal contexts require no consideration of tone at all"
+              ],
+              "answer": "A respectful tone keeps the recipient receptive to the feedback rather than defensive"
+            }
+          ]
+        },
+        {
+          "id": "stage15",
+          "title": "Al-Murāsalāt ar-Rasmiyyah al-Mutaqaddimah — Advanced Formal Correspondence",
+          "icon": "✉️",
+          "description": "Complex formal letters: complaints, applications, official requests",
+          "kicker": "Advanced Formal Correspondence",
+          "questions": [
+            {
+              "text": "Which opening is appropriate for a formal letter of complaint, \"I am writing to express my concern regarding...\"?",
+              "options": [
+                "أَكْتُبُ إِلَيْكُمْ لِأُعَبِّرَ عَنْ قَلَقِي بِخُصُوصِ...",
+                "يَا صَاحِبِي، عِنْدِي مُشْكِلَةٌ صَغِيرَةٌ...",
+                "مَرْحَبًا، كَيْفَ حَالُكَ الْيَوْمَ؟...",
+                "لَا شَيْءَ يُقْلِقُنِي عَلَى الْإِطْلَاقِ..."
+              ],
+              "answer": "أَكْتُبُ إِلَيْكُمْ لِأُعَبِّرَ عَنْ قَلَقِي بِخُصُوصِ..."
+            },
+            {
+              "text": "Which sentence formally requests corrective action in a complaint letter, \"I would appreciate it if this matter could be resolved promptly\"?",
+              "options": [
+                "سَأَكُونُ مُمْتَنًّا لَوْ أَمْكَنَ حَلُّ هَذِهِ الْمَسْأَلَةِ عَلَى وَجْهِ السُّرْعَةِ",
+                "لَا يُهِمُّنِي مَتَى تُحَلُّ هَذِهِ الْمَسْأَلَةُ",
+                "هَذِهِ الْمَسْأَلَةُ لَا تَسْتَحِقُّ الْحَلَّ",
+                "سَأَتَجَاهَلُ هَذِهِ الْمَسْأَلَةَ تَمَامًا"
+              ],
+              "answer": "سَأَكُونُ مُمْتَنًّا لَوْ أَمْكَنَ حَلُّ هَذِهِ الْمَسْأَلَةِ عَلَى وَجْهِ السُّرْعَةِ"
+            },
+            {
+              "text": "Which sentence is appropriate for a formal job application letter, \"I believe my experience and qualifications make me a strong candidate for this position\"?",
+              "options": [
+                "أَعْتَقِدُ أَنَّ خِبْرَتِي وَمُؤَهِّلَاتِي تَجْعَلُنِي مُرَشَّحًا قَوِيًّا لِهَذَا الْمَنْصِبِ",
+                "لَيْسَتْ لَدَيَّ أَيَّةُ خِبْرَةٍ فِي أَيِّ شَيْءٍ",
+                "لَا أَعْرِفُ لِمَاذَا أَتَقَدَّمُ لِهَذَا الْمَنْصِبِ",
+                "هَذَا الْمَنْصِبُ لَا يُهِمُّنِي عَلَى الْإِطْلَاقِ"
+              ],
+              "answer": "أَعْتَقِدُ أَنَّ خِبْرَتِي وَمُؤَهِّلَاتِي تَجْعَلُنِي مُرَشَّحًا قَوِيًّا لِهَذَا الْمَنْصِبِ"
+            },
+            {
+              "text": "Which formal closing appropriately precedes a signature in an official Arabic letter, \"Please accept my highest regards\"?",
+              "options": [
+                "وَتَفَضَّلُوا بِقَبُولِ فَائِقِ الِاحْتِرَامِ وَالتَّقْدِيرِ",
+                "إِلَى اللِّقَاءِ يَا صَاحِبِي",
+                "سَلَامِي لِلْجَمِيعِ يَا حَبِيبِي",
+                "هَذَا كُلُّ شَيْءٍ، وَدَاعًا"
+              ],
+              "answer": "وَتَفَضَّلُوا بِقَبُولِ فَائِقِ الِاحْتِرَامِ وَالتَّقْدِيرِ"
+            },
+            {
+              "text": "What distinguishes advanced formal correspondence from a basic formal letter?",
+              "options": [
+                "It handles more complex situations (complaints, applications, official requests) with nuanced justification and precise register",
+                "It uses casual greetings and abbreviations throughout",
+                "It avoids any structure or formal opening/closing",
+                "It is always shorter than a basic formal letter"
+              ],
+              "answer": "It handles more complex situations (complaints, applications, official requests) with nuanced justification and precise register"
+            }
+          ]
+        },
+        {
+          "id": "stage16",
+          "title": "At-Ta'bīr 'an al-Iḥtimāl wat-Taraddud — Expressing Probability & Hesitation",
+          "icon": "🤔",
+          "description": "Nuanced language for likelihood, doubt, and qualified certainty",
+          "kicker": "Probability & Hesitation",
+          "questions": [
+            {
+              "text": "Which sentence expresses a high degree of probability, \"it is highly likely that prices will rise next year\"?",
+              "options": [
+                "مِنَ الْمُرَجَّحِ جِدًّا أَنْ تَرْتَفِعَ الْأَسْعَارُ الْعَامَ الْمُقْبِلَ",
+                "مِنَ الْمُسْتَحِيلِ أَنْ تَرْتَفِعَ الْأَسْعَارُ أَبَدًا",
+                "الْأَسْعَارُ لَنْ تَتَغَيَّرَ عَلَى الْإِطْلَاقِ",
+                "لَا أَحَدَ يَعْرِفُ شَيْئًا عَنِ الْأَسْعَارِ"
+              ],
+              "answer": "مِنَ الْمُرَجَّحِ جِدًّا أَنْ تَرْتَفِعَ الْأَسْعَارُ الْعَامَ الْمُقْبِلَ"
+            },
+            {
+              "text": "Which phrase expresses cautious hesitation rather than firm certainty, \"it seems, though I cannot be entirely certain, that...\"?",
+              "options": [
+                "يَبْدُو، وَإِنْ كُنْتُ لَا أَجْزِمُ تَمَامًا، أَنَّ...",
+                "أَنَا مُتَأَكِّدٌ تَمَامًا وَبِلَا أَيِّ شَكٍّ أَنَّ...",
+                "مِنَ الْمُسْتَحِيلِ أَنْ يَكُونَ هَذَا صَحِيحًا...",
+                "لَا أَعْرِفُ وَلَنْ أُحَاوِلَ أَنْ أَعْرِفَ..."
+              ],
+              "answer": "يَبْدُو، وَإِنْ كُنْتُ لَا أَجْزِمُ تَمَامًا، أَنَّ..."
+            },
+            {
+              "text": "Which sentence expresses low probability, \"it is unlikely, though not impossible, that the plan will succeed\"?",
+              "options": [
+                "مِنَ غَيْرِ الْمُرَجَّحِ، وَإِنْ لَمْ يَكُنْ مُسْتَحِيلًا، أَنْ تَنْجَحَ الْخُطَّةُ",
+                "مِنَ الْمُؤَكَّدِ تَمَامًا أَنَّ الْخُطَّةَ سَتَنْجَحُ",
+                "الْخُطَّةُ نَاجِحَةٌ بِلَا أَيِّ شَكٍّ",
+                "لَا عَلَاقَةَ لِلْخُطَّةِ بِالنَّجَاحِ أَوِ الْفَشَلِ"
+              ],
+              "answer": "مِنَ غَيْرِ الْمُرَجَّحِ، وَإِنْ لَمْ يَكُنْ مُسْتَحِيلًا، أَنْ تَنْجَحَ الْخُطَّةُ"
+            },
+            {
+              "text": "Which modal expression correctly conveys a qualified obligation, \"it may be necessary to reconsider the approach\"?",
+              "options": [
+                "قَدْ يَكُونُ مِنَ الضَّرُورِيِّ إِعَادَةُ النَّظَرِ فِي النَّهْجِ",
+                "مِنَ الْمُسْتَحِيلِ إِعَادَةُ النَّظَرِ فِي أَيِّ شَيْءٍ",
+                "لَا حَاجَةَ لِإِعَادَةِ النَّظَرِ فِي شَيْءٍ عَلَى الْإِطْلَاقِ",
+                "النَّهْجُ الْحَالِيُّ مِثَالِيٌّ بِلَا أَيِّ عَيْبٍ"
+              ],
+              "answer": "قَدْ يَكُونُ مِنَ الضَّرُورِيِّ إِعَادَةُ النَّظَرِ فِي النَّهْجِ"
+            },
+            {
+              "text": "Why does advanced Arabic expression favor graded expressions of probability (e.g. 'highly likely', 'unlikely but possible') over blanket certainty or denial?",
+              "options": [
+                "Because they represent nuanced, honest positions more accurately than absolute claims",
+                "Because certainty is always the more sophisticated choice",
+                "Because graded expressions are only used in casual speech",
+                "Because Arabic lacks vocabulary for expressing certainty"
+              ],
+              "answer": "Because they represent nuanced, honest positions more accurately than absolute claims"
+            }
+          ]
+        },
+        {
+          "id": "stage17",
+          "title": "Al-Munāẓarah — Debate Expression",
+          "icon": "🗳️",
+          "description": "Language for structured debate: framing, rebuttal, and closing statements",
+          "kicker": "Debate Expression",
+          "questions": [
+            {
+              "text": "Which sentence formally states a debate position, \"This house believes that social media does more harm than good\"?",
+              "options": [
+                "يَرَى هَذَا الْمَجْلِسُ أَنَّ وَسَائِلَ التَّوَاصُلِ الِاجْتِمَاعِيِّ تُلْحِقُ ضَرَرًا أَكْبَرَ مِنْ نَفْعِهَا",
+                "وَسَائِلُ التَّوَاصُلِ لَا رَأْيَ فِيهَا لِأَحَدٍ",
+                "لَا نِقَاشَ يَسْتَحِقُّ هَذَا الْمَوْضُوعَ",
+                "هَذَا الْمَجْلِسُ لَا يَرَى شَيْئًا عَلَى الْإِطْلَاقِ"
+              ],
+              "answer": "يَرَى هَذَا الْمَجْلِسُ أَنَّ وَسَائِلَ التَّوَاصُلِ الِاجْتِمَاعِيِّ تُلْحِقُ ضَرَرًا أَكْبَرَ مِنْ نَفْعِهَا"
+            },
+            {
+              "text": "Which phrase is used to directly challenge an opponent's point in debate, \"I must take issue with my opponent's claim that...\"?",
+              "options": [
+                "لَا بُدَّ لِي أَنْ أَعْتَرِضَ عَلَى زَعْمِ خَصْمِي بِأَنَّ...",
+                "أُوَافِقُ خَصْمِي تَمَامًا فِي كُلِّ شَيْءٍ",
+                "لَا رَأْيَ لِي فِي كَلَامِ خَصْمِي",
+                "لَنْ أَرُدَّ عَلَى خَصْمِي أَبَدًا"
+              ],
+              "answer": "لَا بُدَّ لِي أَنْ أَعْتَرِضَ عَلَى زَعْمِ خَصْمِي بِأَنَّ..."
+            },
+            {
+              "text": "Which sentence functions as an effective closing statement in a debate, summarizing the strongest point: \"In conclusion, the evidence we have presented today leaves no doubt as to where the balance of argument lies\"?",
+              "options": [
+                "فِي الْخِتَامِ، لَا تَدَعُ الْأَدِلَّةُ الَّتِي قَدَّمْنَاهَا الْيَوْمَ مَجَالًا لِلشَّكِّ فِي أَيْنَ تَكْمُنُ كِفَّةُ الرَّاجِحِ",
+                "لَا أَدْرِي مَاذَا أَقُولُ فِي الْخِتَامِ",
+                "لَمْ نُقَدِّمْ أَيَّةَ أَدِلَّةٍ الْيَوْمَ",
+                "الْمَوْضُوعُ لَا يَسْتَحِقُّ أَيَّ خِتَامٍ"
+              ],
+              "answer": "فِي الْخِتَامِ، لَا تَدَعُ الْأَدِلَّةُ الَّتِي قَدَّمْنَاهَا الْيَوْمَ مَجَالًا لِلشَّكِّ فِي أَيْنَ تَكْمُنُ كِفَّةُ الرَّاجِحِ"
+            },
+            {
+              "text": "In formal debate, what is the primary purpose of a rebuttal round?",
+              "options": [
+                "To directly respond to and weaken the opposing team's specific arguments",
+                "To introduce entirely unrelated new topics",
+                "To repeat one's own opening statement verbatim",
+                "To concede the debate to the opposing side"
+              ],
+              "answer": "To directly respond to and weaken the opposing team's specific arguments"
+            },
+            {
+              "text": "Which phrase politely but firmly maintains one's position after a challenge, \"I stand by my original point, for the following reason...\"?",
+              "options": [
+                "أَتَمَسَّكُ بِمَوْقِفِي الْأَصْلِيِّ، لِلسَّبَبِ التَّالِي...",
+                "أَتَرَاجَعُ عَنْ رَأْيِي فَوْرًا بِلَا أَيِّ سَبَبٍ",
+                "لَا مَوْقِفَ لِي فِي هَذَا النِّقَاشِ",
+                "خَصْمِي عَلَى حَقٍّ تَمَامًا وَأَنَا مُخْطِئٌ"
+              ],
+              "answer": "أَتَمَسَّكُ بِمَوْقِفِي الْأَصْلِيِّ، لِلسَّبَبِ التَّالِي..."
+            }
+          ]
+        },
+        {
+          "id": "stage18",
+          "title": "Uslūb al-Kitābah al-Ṣaḥafiyyah — Journalistic Writing Style",
+          "icon": "📰",
+          "description": "News-style reporting: lede, inverted pyramid, and neutral tone",
+          "kicker": "Journalistic Writing Style",
+          "questions": [
+            {
+              "text": "Which sentence functions as an effective news lede, answering who/what/when/where concisely: \"City officials announced Monday a new plan to expand public transportation across the capital\"?",
+              "options": [
+                "أَعْلَنَ مَسْؤُولُو الْمَدِينَةِ يَوْمَ الِاثْنَيْنِ عَنْ خُطَّةٍ جَدِيدَةٍ لِتَوْسِيعِ النَّقْلِ الْعَامِّ فِي أَنْحَاءِ الْعَاصِمَةِ",
+                "شَيْءٌ مَا حَدَثَ فِي مَكَانٍ مَا فِي وَقْتٍ مَا",
+                "الْمَدِينَةُ لَدَيْهَا مَسْؤُولُونَ",
+                "لَا خَبَرَ جَدِيدًا الْيَوْمَ"
+              ],
+              "answer": "أَعْلَنَ مَسْؤُولُو الْمَدِينَةِ يَوْمَ الِاثْنَيْنِ عَنْ خُطَّةٍ جَدِيدَةٍ لِتَوْسِيعِ النَّقْلِ الْعَامِّ فِي أَنْحَاءِ الْعَاصِمَةِ"
+            },
+            {
+              "text": "The 'inverted pyramid' structure in journalism means:",
+              "options": [
+                "Presenting the most important information first, followed by supporting details in decreasing order of importance",
+                "Saving the most important information for the very last sentence",
+                "Writing in strict chronological order regardless of importance",
+                "Randomly ordering facts throughout the article"
+              ],
+              "answer": "Presenting the most important information first, followed by supporting details in decreasing order of importance"
+            },
+            {
+              "text": "Which sentence maintains neutral journalistic tone rather than inserting personal opinion: \"Officials stated that the project will be completed by next year\"?",
+              "options": [
+                "صَرَّحَ الْمَسْؤُولُونَ بِأَنَّ الْمَشْرُوعَ سَيَكْتَمِلُ بِحُلُولِ الْعَامِ الْمُقْبِلِ",
+                "أَعْتَقِدُ شَخْصِيًّا أَنَّ هَذَا الْمَشْرُوعَ سَيِّئٌ جِدًّا",
+                "هَذَا الْمَشْرُوعُ سَيَفْشَلُ حَتْمًا فِي رَأْيِي",
+                "لَا أُصَدِّقُ الْمَسْؤُولِينَ إِطْلَاقًا"
+              ],
+              "answer": "صَرَّحَ الْمَسْؤُولُونَ بِأَنَّ الْمَشْرُوعَ سَيَكْتَمِلُ بِحُلُولِ الْعَامِ الْمُقْبِلِ"
+            },
+            {
+              "text": "Which phrase correctly attributes a claim to its source, essential in journalistic writing, \"according to a statement released by the ministry\"?",
+              "options": [
+                "وَفْقًا لِبَيَانٍ صَادِرٍ عَنِ الْوِزَارَةِ",
+                "كَمَا أَعْتَقِدُ أَنَا شَخْصِيًّا",
+                "دُونَ أَيِّ مَصْدَرٍ مُحَدَّدٍ",
+                "سَمِعْتُ ذَلِكَ مِنْ شَخْصٍ مَا"
+              ],
+              "answer": "وَفْقًا لِبَيَانٍ صَادِرٍ عَنِ الْوِزَارَةِ"
+            },
+            {
+              "text": "Why do journalists avoid emotionally loaded language in straight news reporting?",
+              "options": [
+                "To maintain objectivity and let readers form their own judgments from the facts presented",
+                "Because emotional language is always factually inaccurate",
+                "Because readers dislike well-written articles",
+                "Because news articles must be as long as possible"
+              ],
+              "answer": "To maintain objectivity and let readers form their own judgments from the facts presented"
+            }
+          ]
+        },
+        {
+          "id": "stage19",
+          "title": "Muḥāḍarah Qaṣīrah — Short Lecture / Presentation",
+          "icon": "🎤",
+          "description": "Structuring and delivering a short informative presentation",
+          "kicker": "Short Lecture / Presentation",
+          "questions": [
+            {
+              "text": "Which sentence effectively opens a short lecture by stating its purpose, \"Today, I will explain the key stages of the water cycle\"?",
+              "options": [
+                "سَأَشْرَحُ الْيَوْمَ الْمَرَاحِلَ الرَّئِيسِيَّةَ لِدَوْرَةِ الْمَاءِ",
+                "الْمَاءُ شَيْءٌ نَشْرَبُهُ أَحْيَانًا",
+                "لَا مَوْضُوعَ لِمُحَاضَرَتِي الْيَوْمَ",
+                "لَنْ أَتَحَدَّثَ عَنْ أَيِّ شَيْءٍ مُحَدَّدٍ"
+              ],
+              "answer": "سَأَشْرَحُ الْيَوْمَ الْمَرَاحِلَ الرَّئِيسِيَّةَ لِدَوْرَةِ الْمَاءِ"
+            },
+            {
+              "text": "Which phrase signals a transition to the next point in a structured presentation, \"moving on to the second point...\"?",
+              "options": [
+                "وَانْتِقَالًا إِلَى النُّقْطَةِ الثَّانِيَةِ...",
+                "بِلَا أَيِّ نُقْطَةٍ ثَانِيَةٍ...",
+                "النُّقْطَةُ الْأُولَى هِيَ النُّقْطَةُ الْوَحِيدَةُ...",
+                "لَنْ أَنْتَقِلَ إِلَى أَيِّ نُقْطَةٍ أُخْرَى..."
+              ],
+              "answer": "وَانْتِقَالًا إِلَى النُّقْطَةِ الثَّانِيَةِ..."
+            },
+            {
+              "text": "Which sentence invites audience engagement appropriately during a presentation, \"Are there any questions before I move on?\"?",
+              "options": [
+                "هَلْ هُنَاكَ أَيَّةُ أَسْئِلَةٍ قَبْلَ أَنْ أَنْتَقِلَ؟",
+                "لَا أَسْمَحُ بِأَيِّ أَسْئِلَةٍ أَبَدًا",
+                "لَا أَحَدَ يُرِيدُ أَنْ يَسْأَلَ شَيْئًا",
+                "سَأَتَجَاهَلُ أَيَّ سُؤَالٍ يُطْرَحُ"
+              ],
+              "answer": "هَلْ هُنَاكَ أَيَّةُ أَسْئِلَةٍ قَبْلَ أَنْ أَنْتَقِلَ؟"
+            },
+            {
+              "text": "Which sentence summarizes key takeaways at the end of a presentation, \"To summarize, we have covered three main stages today\"?",
+              "options": [
+                "وَلِتَلْخِيصِ مَا سَبَقَ، تَنَاوَلْنَا الْيَوْمَ ثَلَاثَ مَرَاحِلَ رَئِيسِيَّةٍ",
+                "لَا شَيْءَ يَسْتَحِقُّ التَّلْخِيصَ الْيَوْمَ",
+                "لَمْ نَتَنَاوَلْ أَيَّ مَرَاحِلَ الْيَوْمَ",
+                "لَنْ أُلَخِّصَ أَيَّ شَيْءٍ"
+              ],
+              "answer": "وَلِتَلْخِيصِ مَا سَبَقَ، تَنَاوَلْنَا الْيَوْمَ ثَلَاثَ مَرَاحِلَ رَئِيسِيَّةٍ"
+            },
+            {
+              "text": "Why is signposting (explicit transitional language) especially important in a spoken presentation compared to written text?",
+              "options": [
+                "Listeners cannot re-read a spoken passage, so clear verbal cues help them track structure in real time",
+                "Signposting is only useful in written text, never speech",
+                "Spoken presentations should have no discernible structure",
+                "Audiences always remember every detail regardless of structure"
+              ],
+              "answer": "Listeners cannot re-read a spoken passage, so clear verbal cues help them track structure in real time"
+            }
+          ]
+        },
+        {
+          "id": "stage20",
+          "title": "Murāja'ah — Advanced Capstone Review",
+          "icon": "🏆",
+          "description": "The capstone review: argumentation, rebuttal, register, and synthesis combined",
+          "kicker": "Advanced Capstone Review",
+          "questions": [
+            {
+              "text": "Which passage best combines a thesis, evidence, and a concessive rebuttal on remote work: \"Remote work boosts productivity, as several studies confirm; critics warn of isolation, yet this can be mitigated through regular team check-ins\"?",
+              "options": [
+                "يُعَزِّزُ الْعَمَلُ عَنْ بُعْدٍ الْإِنْتَاجِيَّةَ، كَمَا تُؤَكِّدُ عِدَّةُ دِرَاسَاتٍ؛ وَيُحَذِّرُ الْمُنْتَقِدُونَ مِنَ الْعُزْلَةِ، غَيْرَ أَنَّ ذَلِكَ يُمْكِنُ تَخْفِيفُهُ عَبْرَ لِقَاءَاتٍ دَوْرِيَّةٍ لِلْفَرِيقِ",
+                "الْعَمَلُ عَنْ بُعْدٍ لَا فَائِدَةَ مِنْهُ عَلَى الْإِطْلَاقِ",
+                "لَا تُوجَدُ أَيَّةُ دِرَاسَاتٍ عَنِ الْعَمَلِ عَنْ بُعْدٍ",
+                "الْعُزْلَةُ لَا عَلَاقَةَ لَهَا بِالْعَمَلِ عَنْ بُعْدٍ"
+              ],
+              "answer": "يُعَزِّزُ الْعَمَلُ عَنْ بُعْدٍ الْإِنْتَاجِيَّةَ، كَمَا تُؤَكِّدُ عِدَّةُ دِرَاسَاتٍ؛ وَيُحَذِّرُ الْمُنْتَقِدُونَ مِنَ الْعُزْلَةِ، غَيْرَ أَنَّ ذَلِكَ يُمْكِنُ تَخْفِيفُهُ عَبْرَ لِقَاءَاتٍ دَوْرِيَّةٍ لِلْفَرِيقِ"
+            },
+            {
+              "text": "Which sentence demonstrates appropriate academic register while citing a source in a formal essay: \"As noted by several economists, inflation disproportionately affects lower-income households\"?",
+              "options": [
+                "كَمَا لَاحَظَ عَدَدٌ مِنَ الِاقْتِصَادِيِّينَ، فَإِنَّ التَّضَخُّمَ يُؤَثِّرُ بِشَكْلٍ غَيْرِ مُتَنَاسِبٍ عَلَى الْأُسَرِ ذَاتِ الدَّخْلِ الْمَحْدُودِ",
+                "التَّضَخُّمُ لَا يُؤَثِّرُ عَلَى أَحَدٍ إِطْلَاقًا",
+                "لَا اقْتِصَادِيَّ لَاحَظَ شَيْئًا عَنِ التَّضَخُّمِ",
+                "الْأُسَرُ ذَاتُ الدَّخْلِ الْمَحْدُودِ غَيْرُ مَوْجُودَةٍ"
+              ],
+              "answer": "كَمَا لَاحَظَ عَدَدٌ مِنَ الِاقْتِصَادِيِّينَ، فَإِنَّ التَّضَخُّمَ يُؤَثِّرُ بِشَكْلٍ غَيْرِ مُتَنَاسِبٍ عَلَى الْأُسَرِ ذَاتِ الدَّخْلِ الْمَحْدُودِ"
+            },
+            {
+              "text": "Which closing statement effectively synthesizes an essay's argument while connecting it to broader significance: \"Ultimately, how we address this challenge today will define the opportunities available to the next generation\"?",
+              "options": [
+                "فِي نِهَايَةِ الْمَطَافِ، فَإِنَّ كَيْفِيَّةَ تَعَامُلِنَا مَعَ هَذَا التَّحَدِّي الْيَوْمَ سَتُحَدِّدُ الْفُرَصَ الْمُتَاحَةَ لِلْجِيلِ الْقَادِمِ",
+                "هَذَا التَّحَدِّي لَا يَهُمُّ أَحَدًا عَلَى الْإِطْلَاقِ",
+                "لَا عَلَاقَةَ بَيْنَ الْيَوْمِ وَالْمُسْتَقْبَلِ",
+                "الْجِيلُ الْقَادِمُ لَنْ يَتَأَثَّرَ بِأَيِّ شَيْءٍ نَفْعَلُهُ"
+              ],
+              "answer": "فِي نِهَايَةِ الْمَطَافِ، فَإِنَّ كَيْفِيَّةَ تَعَامُلِنَا مَعَ هَذَا التَّحَدِّي الْيَوْمَ سَتُحَدِّدُ الْفُرَصَ الْمُتَاحَةَ لِلْجِيلِ الْقَادِمِ"
+            },
+            {
+              "text": "Which sentence shows a formal register shift appropriate for a ministerial speech versus a casual talk, \"It is with great honor that I address this distinguished assembly today\"?",
+              "options": [
+                "يَشْرُفُنِي عَظِيمَ الشَّرَفِ أَنْ أُخَاطِبَ هَذَا الْجَمْعَ الْمُوَقَّرَ الْيَوْمَ",
+                "يَا جَمَاعَة، إِزَّيُّكُم النَّهَارْدَة؟",
+                "أَهْلًا يَا شَبَابُ، عَامِلِينَ إِيه؟",
+                "مَرْحَبًا يَا صَحْبِي، كِيفَ الْحَالُ؟"
+              ],
+              "answer": "يَشْرُفُنِي عَظِيمَ الشَّرَفِ أَنْ أُخَاطِبَ هَذَا الْجَمْعَ الْمُوَقَّرَ الْيَوْمَ"
+            },
+            {
+              "text": "Across the Advanced level, what is the overarching skill progression compared to Intermediate?",
+              "options": [
+                "Moving from structured multi-sentence paragraphs to full argumentative essays, formal oratory, critical analysis, and precise academic/journalistic register",
+                "Simply repeating intermediate-level sentences with harder vocabulary",
+                "Abandoning structure entirely in favor of free association",
+                "Focusing only on memorizing isolated advanced words with no composition"
+              ],
+              "answer": "Moving from structured multi-sentence paragraphs to full argumentative essays, formal oratory, critical analysis, and precise academic/journalistic register"
+            },
+            {
+              "text": "Which sentence best demonstrates mastery of advanced connectors, register shift, and rebuttal together: \"Although some claim tradition should never change, history shows that societies which adapt thoughtfully — without abandoning their roots — are the ones that endure\"?",
+              "options": [
+                "عَلَى الرَّغْمِ مِنْ زَعْمِ الْبَعْضِ أَنَّ التَّقَالِيدَ يَنْبَغِي أَلَّا تَتَغَيَّرَ أَبَدًا، يُظْهِرُ التَّارِيخُ أَنَّ الْمُجْتَمَعَاتِ الَّتِي تَتَكَيَّفُ بِتَبَصُّرٍ، دُونَ التَّخَلِّي عَنْ جُذُورِهَا، هِيَ الَّتِي تَدُومُ",
+                "التَّقَالِيدُ لَا تَتَغَيَّرُ أَبَدًا وَلَا يَنْبَغِي أَنْ تَتَغَيَّرَ",
+                "التَّارِيخُ لَا يُعَلِّمُنَا شَيْئًا عَنِ الْمُجْتَمَعَاتِ",
+                "الْمُجْتَمَعَاتُ الَّتِي تَتَكَيَّفُ تَخْسَرُ جُذُورَهَا حَتْمًا"
+              ],
+              "answer": "عَلَى الرَّغْمِ مِنْ زَعْمِ الْبَعْضِ أَنَّ التَّقَالِيدَ يَنْبَغِي أَلَّا تَتَغَيَّرَ أَبَدًا، يُظْهِرُ التَّارِيخُ أَنَّ الْمُجْتَمَعَاتِ الَّتِي تَتَكَيَّفُ بِتَبَصُّرٍ، دُونَ التَّخَلِّي عَنْ جُذُورِهَا، هِيَ الَّتِي تَدُومُ"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
