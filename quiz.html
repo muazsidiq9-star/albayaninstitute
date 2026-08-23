@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz — Al-Bayan </title>
+<link rel="stylesheet" href="master.css">
+<link rel="stylesheet" href="quiz-style.css">
+</head>
+<body>
+
+<nav class="master-nav">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="Al-Bayan Logo">
+      <span>Al-Bayan</span>
+    </a>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" data-translate="Home">Home</a>
+      <a href="about.html" data-translate="About">About</a>
+      <a href="courses.html" data-translate="Courses">Courses</a>
+      <a href="register.html" data-translate="Register">Register</a>
+      <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
+<a href="quizzes.html" class="active" data-translate="Quizzes">Quizzes</a>
+      <a href="payment.html" data-translate="Payment">Payment</a>
+      <a href="schedule.html" data-translate="Schedule">Schedule</a>
+      <a href="contact.html" data-translate="Contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <!-- SETTINGS MENU — Sound, Haptics, Logout only. Overall Stats/Leaderboard
+       live on the quizzes hub, not here, since those are per-quiz-agnostic;
+       this page already has its own per-quiz "📊 My Stats" / "🏆 Leaderboard"
+       buttons above, so they're intentionally not duplicated here. -->
+  <div class="quiz-hub-more-wrap">
+    <button
+      type="button"
+      id="quiz-settings-btn"
+      class="quiz-hub-more-btn"
+      aria-haspopup="true"
+      aria-expanded="false"
+      aria-label="Settings"
+    >
+      ⚙️
+    </button>
+
+    <div class="quiz-hub-more-menu" id="quiz-settings-menu" hidden>
+      <button type="button" class="quiz-hub-more-item" id="quiz-sound-toggle" data-toggle="sound">🔊 Sound: On</button>
+      <button type="button" class="quiz-hub-more-item" id="quiz-haptics-toggle" data-toggle="haptics">📳 Haptics: On</button>
+      <div class="quiz-hub-more-divider" id="quiz-logout-divider" hidden></div>
+      <button type="button" class="quiz-hub-more-item quiz-hub-more-item-danger" id="quiz-logout-btn" hidden>🚪 Log Out</button>
+    </div>
+  </div>
+
+  <div class="quiz-app" id="quiz-root">
+
+    <!-- ============ SCREEN: WELCOME ============ -->
+    <div class="quiz-screen active" id="screen-welcome">
+      <div class="quiz-crest"><span id="quiz-crest-emoji">📘</span></div>
+      <div class="quiz-title-arabic" id="quiz-title-arabic"></div>
+      <h1 class="quiz-title" id="quiz-title-text">Loading quiz…</h1>
+      <p class="quiz-subtitle" id="quiz-subtitle-text"></p>
+      <div class="quiz-desc-box"><p id="quiz-desc-text"></p></div>
+
+      <!-- Logged-in player badge -->
+      <div class="quiz-player-badge" id="quiz-player-badge" style="display:none;">
+        <span class="quiz-avatar" id="quiz-welcome-avatar">🌸</span>
+        <div class="quiz-player-info">
+          <div class="quiz-player-name" id="quiz-welcome-name">Guest</div>
+          <div class="quiz-xp-bar-wrap"><div class="quiz-xp-bar-fill" id="quiz-xp-bar-fill"></div></div>
+          <div class="quiz-player-meta">
+  Level <span id="quiz-welcome-level">1</span>
+  · <span id="quiz-welcome-xp">0</span> XP
+  · ✨ <span id="quiz-welcome-star-points">0</span> Star Points
+</div>
+        </div>
+      </div>
+
+      <!-- Guest name input -->
+      <div class="quiz-name-field" id="quiz-name-field">
+        <label for="quiz-name-input">Your name</label>
+        <input type="text" id="quiz-name-input" placeholder="Enter your name" maxlength="30">
+      </div>
+
+      <div class="quiz-welcome-btns">
+        <button class="quiz-primary-btn" onclick="quizStartFromWelcome()">Start Quiz ➜</button>
+        <button class="quiz-secondary-btn" onclick="quizShowStats()" id="quiz-stats-btn" style="display:none;">📊 My Stats</button>
+        <button class="quiz-secondary-btn" onclick="quizShowLeaderboard()">🏆 Leaderboard</button>
+        <button class="quiz-secondary-btn" onclick="quizShowBadges()">🎖️ Badges</button>
+        <button class="quiz-secondary-btn" onclick="quizShowDaily()" id="quiz-daily-btn">🌟 Daily Challenge</button>
+        <button class="quiz-secondary-btn" onclick="quizCertificateAction()" id="quiz-certificate-btn" style="display:none;">🎓 Get Certificate</button>
+      </div>
+    </div>
+
+    <!-- ============ SCREEN: DIFFICULTY SELECT ============ -->
+    <div class="quiz-screen" id="screen-difficulties">
+      <div class="quiz-screen-header">
+        <button class="quiz-back-btn" onclick="quizGoToWelcome()">←</button>
+        <div class="quiz-bar">
+  <div class="who">
+    <span class="quiz-avatar"></span>
+    <span class="quiz-bar-name"></span>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:10px;">
+    <div class="stat">🏆 <span id="quiz-bar-total-stars">0</span></div>
+    <div class="stat">✨ <span id="quiz-bar-star-points">0</span></div>
+  </div>
+</div>
+      </div>
+      <h1 class="quiz-title" style="font-size:20px; margin-bottom:4px;">Choose Your Level</h1>
+      <p class="quiz-subtitle" style="margin-bottom:16px;">
+  Progress from Beginner to Advanced. Complete every stage to unlock the next level.
+</p>
+      <div class="quiz-difficulty-list" id="quiz-difficulty-list"></div>
+      <button class="quiz-endless-btn" onclick="quizStartEndless()">♾️ Endless Challenge — Mixed Questions, No End</button>
+    </div>
+
+    <!-- ============ SCREEN: ENDLESS MODE ============ -->
+    <div class="quiz-screen" id="screen-endless">
+      <div class="quiz-screen-header">
+        <button class="quiz-back-btn" onclick="quizExitEndless()">←</button>
+        <div class="quiz-bar">
+  <div class="who">
+    <span class="quiz-avatar"></span>
+    <span class="quiz-bar-name"></span>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:10px;">
+    <div class="stat">✨ <span id="quiz-endless-star-points">0</span></div>
+    <div class="quiz-hearts" id="quiz-endless-hearts">❤️❤️❤️</div>
+  </div>
+</div>
+      </div>
+      <div class="quiz-endless-hud">
+  <div class="quiz-endless-score">
+    Score: <span id="quiz-endless-score">0</span>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:8px;">
+    <div class="quiz-streak-badge">
+      🔥 <span id="quiz-endless-streak">0</span>
+    </div>
+
+    <button
+      type="button"
+      class="quiz-star-shop-open-btn"
+      onclick="quizShowStarShop()"
+      aria-label="Open Star Shop"
+    >
+      🛒
+    </button>
+  </div>
+</div>
+      <div class="quiz-question-card">
+        <div class="quiz-q-kicker" id="quiz-endless-kicker"></div>
+        <div class="quiz-q-text" id="quiz-endless-q-text">…</div>
+      </div>
+      <div class="quiz-options" id="quiz-endless-options"></div>
+      <div class="quiz-feedback" id="quiz-endless-feedback"></div>
+      <div class="quiz-xp-popup" id="quiz-endless-xp-popup"></div>
+      <button class="quiz-next-btn" id="quiz-endless-next-btn" onclick="quizEndlessNext()" disabled>Next ➜</button>
+    </div>
+
+    <!-- ============ SCREEN: ENDLESS RESULT ============ -->
+    <div class="quiz-screen" id="screen-endless-result">
+      <div class="quiz-screen-header">
+        <button class="quiz-back-btn" onclick="quizGoToDifficulties()">←</button>
+      </div>
+      <div class="quiz-result-card">
+        <div class="quiz-trophy" id="quiz-endless-result-trophy">💥</div>
+        <div class="quiz-result-title">Run Over!</div>
+        <div class="quiz-result-sub" id="quiz-endless-result-sub"></div>
+        <div class="quiz-score-line" id="quiz-endless-result-score"></div>
+        <div class="quiz-xp-gain" id="quiz-endless-xp-gain"></div>
+        <div class="quiz-btn-row">
+          <button class="quiz-primary-btn" onclick="quizStartEndless()">↻ Run Again</button>
+          <button class="quiz-secondary-btn" onclick="quizGoToDifficulties()">Done ✓</button>
+        </div>
+        <button class="quiz-share-btn" onclick="quizShareEndless()">📤 Share on WhatsApp</button>
+      </div>
+    </div>
+
+    <!-- ============ SCREEN: STAGE SELECT ============ -->
+    <div class="quiz-screen" id="screen-stages">
+      <div class="quiz-screen-header">
+        <button class="quiz-back-btn" onclick="quizGoToDifficulties()">←</button>
+        <div class="quiz-bar">
+          <div class="who"><span class="quiz-avatar"></span><span class="quiz-bar-name"></span></div>
+          <div class="stat">🏆 <span id="quiz-bar-diff-stars">0</span></div>
+        </div>
+      </div>
+      <div class="quiz-diff-header">
+        <span id="quiz-diff-icon">🌱</span>
+        <div>
+          <h1 class="quiz-title" style="font-size:18px; margin-bottom:2px;" id="quiz-diff-title">Beginner</h1>
+          <p class="quiz-subtitle" style="margin-bottom:0; font-size:12px;" id="quiz-diff-desc">Start your journey</p>
+        </div>
+      </div>
+      <div class="quiz-stage-list" id="quiz-stage-list"></div>
+      <button class="quiz-primary-btn" id="quiz-final-report-btn" style="display:none; margin-top:16px;" onclick="quizRenderFinalReport()">🎓 View Final Report</button>
+    </div>
+
+    <!-- ============ SCREEN: QUIZ ============ -->
+    <div class="quiz-screen" id="screen-quiz">
+      <div class="quiz-screen-header">
+        <button class="quiz-back-btn" onclick="quizExit()">←</button>
+        <div class="quiz-bar">
+          <div class="who"><span class="quiz-avatar"></span><span class="quiz-bar-name"></span></div>
+          <div class="quiz-streak-badge">🔥 <span id="quiz-streak-count">0</span></div>
+        </div>
+      </div>
+      <div class="quiz-progress-wrap">
+        <div class="quiz-progress-track"><div class="quiz-progress-fill" id="quiz-progress-fill"></div></div>
+        <div class="quiz-progress-meta">
+          <span id="quiz-progress-text">Question 1/10</span>
+          <span id="quiz-stage-label">Stage 1</span>
+        </div>
+      </div>
+      <div class="quiz-question-card">
+        <div class="quiz-q-kicker" id="quiz-q-kicker"></div>
+        <div class="quiz-q-text" id="quiz-q-text">…</div>
+      </div>
+      <div class="quiz-options" id="quiz-options"></div>
+      <div class="quiz-feedback" id="quiz-feedback"></div>
+      <div class="quiz-xp-popup" id="quiz-xp-popup"></div>
+      <button class="quiz-next-btn" id="quiz-next-btn" onclick="quizNextQuestion()" disabled>Next ➜</button>
+    </div>
+
+    <!-- ============ SCREEN: STAGE RESULT ============ -->
+    <div class="quiz-screen" id="screen-result">
+      <div class="quiz-screen-header">
+        <button class="quiz-back-btn" onclick="quizGoToStages()">←</button>
+      </div>
+      <div class="quiz-result-card">
+        <div class="quiz-trophy" id="quiz-result-trophy">🏆</div>
+        <div class="quiz-result-title" id="quiz-result-title">Great job!</div>
+        <div class="quiz-result-sub" id="quiz-result-sub"></div>
+        <div class="quiz-stars-row" id="quiz-result-stars"></div>
+        <span class="quiz-grade-badge" id="quiz-result-grade-badge"></span>
+        <div class="quiz-score-line" id="quiz-result-score"></div>
+        <div class="quiz-xp-gain" id="quiz-xp-gain"></div>
+        <div class="quiz-new-badges" id="quiz-new-badges"></div>
+        <div class="quiz-btn-row">
+          <button class="quiz-secondary-btn" onclick="quizRetryStage()">↻ Try again</button>
+          <button class="quiz-primary-btn" id="quiz-continue-btn" onclick="quizGoToStages()">Continue ➜</button>
+        </div>
+        <button class="quiz-share-btn" onclick="quizShareResult()">📤 Share on WhatsApp</button>
+        <div class="quiz-final-banner" id="quiz-final-banner"></div>
+      </div>
+    </div>
+
+    <!-- ============ SCREEN: FINAL REPORT ============ -->
+    <div class="quiz-screen" id="screen-final">
+      <div class="quiz-screen-header">
+        <button class="quiz-back-btn" onclick="quizGoToStages()">←</button>
+      </div>
+      <div class="quiz-result-card">
+        <div class="quiz-trophy" id="quiz-final-trophy">🎓</div>
+        <div class="quiz-result-title">Final Report</div>
+        <div class="quiz-result-sub" id="quiz-final-sub"></div>
+        <div class="quiz-big-score" id="quiz-final-score">0<span>/100</span></div>
+        <span class="quiz-grade-badge" id="quiz-final-grade-badge"></span>
+        <p class="quiz-grade-message" id="quiz-final-message"></p>
+        <div class="quiz-breakdown-list" id="quiz-final-breakdown"></div>
+        <div class="quiz-btn-row">
+          <button class="quiz-secondary-btn" onclick="quizGoToStages()">↻ Practice again</button>
+          <button class="quiz-primary-btn" onclick="quizGoToWelcome()">Done ✓</button>
+        </div>
+        <button class="quiz-share-btn" onclick="quizShareFinal()">📤 Share on WhatsApp</button>
+        <div class="quiz-final-banner" id="quiz-final-report-banner"></div>
+      </div>
+    </div>
+
+    <!-- ============ SCREEN: STATS ============ -->
+    <div class="quiz-screen" id="screen-stats">
+      <div class="quiz-screen-header">
+        <button class="quiz-back-btn" onclick="quizGoToWelcome()">←</button>
+      </div>
+      <div class="quiz-stats-card">
+        <div class="quiz-stats-header">
+          <span class="quiz-stats-avatar" id="stats-avatar">🌸</span>
+          <div>
+            <div class="quiz-stats-name" id="stats-name">Player</div>
+            <div class="quiz-stats-level">Level <span id="stats-level">1</span></div>
+          </div>
+          <!-- Clickable rewards trigger -->
+<div class="quiz-rewards-trigger" data-action="show-rewards" style="display:none;">
+  🎁 My Rewards
+</div>
+
+
+        </div>
+        <div class="quiz-xp-bar-wrap" style="margin: 12px 0;"><div class="quiz-xp-bar-fill" id="stats-xp-bar"></div></div>
+        <div class="quiz-stats-grid">
+          <div class="quiz-stat-box"><div class="quiz-stat-num" id="stat-total-xp">0</div><div class="quiz-stat-label">Total XP</div></div>
+          <div class="quiz-stat-box"><div class="quiz-stat-num" id="stat-quizzes">0</div><div class="quiz-stat-label">Quizzes Done</div></div>
+          <div class="quiz-stat-box"><div class="quiz-stat-num" id="stat-questions">0</div><div class="quiz-stat-label">Questions</div></div>
+          <div class="quiz-stat-box"><div class="quiz-stat-num" id="stat-accuracy">0%</div><div class="quiz-stat-label">Accuracy</div></div>
+          <div class="quiz-stat-box"><div class="quiz-stat-num" id="stat-best-streak">0</div><div class="quiz-stat-label">Best Streak</div></div>
+          <div class="quiz-stat-box"><div class="quiz-stat-num" id="stat-total-stars">0</div><div class="quiz-stat-label">Total Stars</div></div>
+          <div class="quiz-stat-box">
+  <div class="quiz-stat-num" id="stat-star-points">0</div>
+  <div class="quiz-stat-label">✨ Star Points</div>
+</div>
+
+<div id="quiz-course-progress"></div>
+        </div>
+        <h3 style="margin: 20px 0 10px; font-size: 15px;">Last 7 Days</h3>
+        <div class="quiz-chart" id="quiz-chart"></div>
+        <h3 style="margin: 20px 0 10px; font-size: 15px;">Recent Attempts</h3>
+        <div class="quiz-history-list" id="quiz-history-list"></div>
+      </div>
+    </div>
+
+    <!-- ============ SCREEN: LEADERBOARD ============ -->
+    <div class="quiz-screen" id="screen-leaderboard">
+      <div class="quiz-screen-header">
+        <button class="quiz-back-btn" onclick="quizGoToWelcome()">←</button>
+      </div>
+      <div class="quiz-result-card" style="padding: 22px 18px;">
+        <div class="quiz-trophy" style="font-size: 42px;">🏆</div>
+        <h1
+  class="quiz-title"
+  id="quiz-leaderboard-title"
+  style="font-size: 22px;"
+>
+  🏆 Leaderboard
+</h1>
+
+<p
+  class="quiz-subtitle"
+  id="quiz-leaderboard-subtitle"
+  style="margin-bottom: 14px;"
+>
+  Top performers in this quiz
+</p>
+        <div class="quiz-leaderboard-list" id="quiz-leaderboard-list"></div>
+        <div class="quiz-you-row" id="quiz-you-row" style="display:none;"></div>
+        <div class="quiz-leaderboard-note" id="quiz-lb-note">Keep playing to climb the ranks!</div>
+      </div>
+    </div>
+
+    <!-- ============ SCREEN: BADGES ============ -->
+    <div class="quiz-screen" id="screen-badges">
+      <div class="quiz-screen-header">
+        <button class="quiz-back-btn" onclick="quizGoToWelcome()">←</button>
+      </div>
+      <div class="quiz-result-card" style="padding: 22px 18px;">
+        <div class="quiz-trophy" style="font-size: 42px;">🎖️</div>
+        <h1 class="quiz-title" style="font-size: 22px;">Achievements</h1>
+        <p class="quiz-subtitle" style="margin-bottom: 14px;"><span id="badge-count">0</span> / <span id="badge-total">0</span> unlocked</p>
+        <div class="quiz-badge-grid" id="quiz-badge-grid"></div>
+      </div>
+    </div>
+    
+    <!-- Rewards Modal -->
+<div id="quiz-rewards-modal" class="quiz-modal">
+  <div class="quiz-modal-backdrop" onclick="quizCloseRewards()"></div>
+  <div class="quiz-modal-content">
+    <div class="quiz-modal-header">
+      <h2>🎁 My Rewards</h2>
+      <span id="quiz-rewards-count" class="quiz-rewards-count">0 rewards</span>
+      <button class="quiz-modal-close" onclick="quizCloseRewards()">✕</button>
+    </div>
+    <div id="quiz-rewards-modal-body" class="quiz-modal-body">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ================= STAR SHOP MODAL ================= -->
+<div id="quiz-star-shop-modal" class="quiz-modal">
+
+  <div
+    class="quiz-modal-backdrop"
+    onclick="quizCloseStarShop()"
+  ></div>
+
+  <div class="quiz-modal-content quiz-star-shop-modal-content">
+
+    <div class="quiz-modal-header">
+      <h2>✨ Star Shop</h2>
+
+      <button
+        class="quiz-modal-close"
+        onclick="quizCloseStarShop()"
+        aria-label="Close Star Shop"
+      >
+        ✕
+      </button>
+    </div>
+
+    <div class="quiz-modal-body">
+
+      <!-- Current balance -->
+      <div class="quiz-star-shop-balance-card">
+        <div class="quiz-star-shop-balance-label">
+          Your Star Points
+        </div>
+
+        <div class="quiz-star-shop-balance">
+          ✨ <span id="quiz-shop-star-points">0</span>
+        </div>
+      </div>
+
+      <p class="quiz-star-shop-description">
+        Use your Star Points to get extra lives in Endless Mode.
+      </p>
+
+      <!-- Shop items -->
+      <div class="quiz-star-shop-items">
+
+        <!-- +1 LIFE -->
+        <div class="quiz-star-shop-item">
+
+          <div class="quiz-shop-item-icon">
+            ❤️
+          </div>
+
+          <div class="quiz-shop-item-info">
+            <strong>+1 Life</strong>
+            <small>Get one additional Endless life</small>
+          </div>
+
+          <div class="quiz-shop-item-action">
+
+            <div class="quiz-shop-item-price">
+              ✨ 5
+            </div>
+
+            <button
+              type="button"
+              class="quiz-star-shop-buy-btn"
+              id="quiz-buy-life-btn"
+              disabled
+            >
+              Buy
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- +3 LIVES -->
+        <div class="quiz-star-shop-item">
+
+          <div class="quiz-shop-item-icon">
+            ❤️❤️❤️
+          </div>
+
+          <div class="quiz-shop-item-info">
+            <strong>Refill to 3 Lives</strong>
+            <small>Restore your lives to the maximum</small>
+          </div>
+
+          <div class="quiz-shop-item-action">
+
+            <div class="quiz-shop-item-price">
+              ✨ 12
+            </div>
+
+            <button
+              type="button"
+              class="quiz-star-shop-buy-btn"
+              id="quiz-buy-three-lives-btn"
+              disabled
+            >
+              Buy
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="quiz-star-shop-note">
+        ❤️ Maximum lives: 3
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= OUT OF LIVES MODAL ================= -->
+<div id="quiz-out-of-lives-modal" class="quiz-modal">
+
+  <div class="quiz-modal-backdrop"></div>
+
+  <div class="quiz-modal-content quiz-out-of-lives-content">
+
+    <div class="quiz-modal-header">
+      <h2>💔 Out of Lives</h2>
+
+      <button
+        class="quiz-modal-close"
+        onclick="quizEndOutOfLives()"
+        aria-label="End game"
+      >
+        ✕
+      </button>
+    </div>
+
+    <div class="quiz-modal-body">
+
+      <div class="quiz-out-of-lives-icon">
+        💔
+      </div>
+
+      <h3 class="quiz-out-of-lives-title">
+        You've used all your lives!
+      </h3>
+
+      <p class="quiz-out-of-lives-text">
+        Don't give up yet. You can use your Star Points to get another life and continue your Endless Challenge.
+      </p>
+
+      <div class="quiz-out-of-lives-balance">
+        ✨ <span id="quiz-out-of-lives-points">0</span> Star Points
+      </div>
+
+      <div class="quiz-out-of-lives-actions">
+
+        <button
+          type="button"
+          class="quiz-primary-btn"
+          id="quiz-out-of-lives-buy-btn"
+          onclick="quizBuyLifeFromOutOfLives()"
+        >
+          🛒 Get 1 Life · ✨5
+        </button>
+
+        <button
+          type="button"
+          class="quiz-secondary-btn"
+          onclick="quizEndOutOfLives()"
+        >
+          🏁 End Game
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+    <!-- ============ SCREEN: DAILY CHALLENGE ============ -->
+    <div class="quiz-screen" id="screen-daily">
+      <div class="quiz-screen-header">
+        <button class="quiz-back-btn" onclick="quizGoToWelcome()">←</button>
+        <div class="quiz-bar">
+          <div class="who"><span class="quiz-avatar"></span><span class="quiz-bar-name"></span></div>
+        </div>
+      </div>
+      <div class="quiz-daily-card">
+        <div class="quiz-daily-icon">🌟</div>
+        <h1 class="quiz-title" style="font-size: 20px;">Daily Challenge</h1>
+        <p class="quiz-subtitle" style="margin-bottom: 18px;">One question. Bonus XP. New challenge every day.</p>
+        <div id="quiz-daily-content">
+          <div class="quiz-daily-question-card" id="quiz-daily-question-card" style="display:none;">
+            <div class="quiz-q-kicker" id="daily-q-kicker"></div>
+            <div class="quiz-q-text" id="daily-q-text"></div>
+            <div class="quiz-options" id="daily-options"></div>
+            <div class="quiz-feedback" id="daily-feedback"></div>
+            <div class="quiz-xp-popup" id="daily-xp-popup"></div>
+          </div>
+          <div class="quiz-daily-done" id="quiz-daily-done" style="display:none;">
+            <div style="font-size: 48px; margin-bottom: 10px;">✅</div>
+            <div class="quiz-result-title">Already Completed!</div>
+            <p class="quiz-subtitle">Come back tomorrow for a new challenge.</p>
+            <div class="quiz-xp-gain" id="daily-xp-gain"></div>
+          </div>
+          <button class="quiz-primary-btn" id="quiz-daily-start-btn" onclick="quizStartDaily()">Start Challenge ➜</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p data-translate="Al-Bayan  Institute Online">Al-Bayan Institute Online</p>
+  <p><span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp; <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span></p>
+  <p id="footerCopyright"></p>
+  <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  <a href="refund-policy.html" data-translate="Refund Policy">Refund Policy</a>
+  <a href="terms.html" data-translate="Terms & Conditions">Terms & Conditions</a>
+  <a href="contact.html" data-translate="Contact">Contact</a>
+</footer>
+
+<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener"><img src="whatsapp-icon.png" alt="WhatsApp"></a>
+
+<script>
+  function toggleMenu() { document.getElementById('navLinks').classList.toggle('show'); }
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('navLinks'), hamburger = document.querySelector('.hamburger');
+    if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+  });
+</script>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  </script>
+  
+<script>window.QUIZ_PAGE_NO_TRANSLATE = true;</script>
+<script src="translate.js"></script>
+<script src="quiz-engine.js"></script>
+
+<!-- QUIZ SETTINGS MENU (Sound / Haptics / Logout) -->
+<script>
+(function () {
+  const trigger = document.getElementById("quiz-settings-btn");
+  const menu = document.getElementById("quiz-settings-menu");
+  if (!trigger || !menu) return;
+
+  // Same identity check quiz-engine.js itself uses on this page —
+  // sessionStorage, not the hub's localStorage "studentSession".
+  function isStudentLoggedInHere() {
+    return sessionStorage.getItem("role") === "student" && !!sessionStorage.getItem("matric");
+  }
+
+  function openMenu() {
+    menu.hidden = false;
+    trigger.setAttribute("aria-expanded", "true");
+  }
+  function closeMenu() {
+    menu.hidden = true;
+    trigger.setAttribute("aria-expanded", "false");
+  }
+
+  trigger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (menu.hidden) openMenu(); else closeMenu();
+  });
+
+  const SOUND_KEY = "quiz_sound_enabled";
+  const HAPTICS_KEY = "quiz_haptics_enabled";
+  const soundBtn = document.getElementById("quiz-sound-toggle");
+  const hapticsBtn = document.getElementById("quiz-haptics-toggle");
+
+  function syncToggleLabel(btn, key, icon, label) {
+    const enabled = localStorage.getItem(key) !== "false";
+    btn.textContent = `${icon} ${label}: ${enabled ? "On" : "Off"}`;
+  }
+  function syncAllToggleLabels() {
+    if (soundBtn) syncToggleLabel(soundBtn, SOUND_KEY, "🔊", "Sound");
+    if (hapticsBtn) syncToggleLabel(hapticsBtn, HAPTICS_KEY, "📳", "Haptics");
+  }
+  syncAllToggleLabels();
+
+  if (soundBtn) {
+    soundBtn.addEventListener("click", () => {
+      const enabled = localStorage.getItem(SOUND_KEY) !== "false";
+      localStorage.setItem(SOUND_KEY, enabled ? "false" : "true");
+      syncAllToggleLabels();
+    });
+  }
+  if (hapticsBtn) {
+    hapticsBtn.addEventListener("click", () => {
+      const enabled = localStorage.getItem(HAPTICS_KEY) !== "false";
+      localStorage.setItem(HAPTICS_KEY, enabled ? "false" : "true");
+      syncAllToggleLabels();
+    });
+  }
+
+  // Same self-contained fallback as the hub — swap for your real
+  // central logout if you have one, per the earlier note.
+  const logoutBtn = document.getElementById("quiz-logout-btn");
+  const logoutDivider = document.getElementById("quiz-logout-divider");
+  if (logoutBtn && isStudentLoggedInHere()) {
+    logoutBtn.hidden = false;
+    if (logoutDivider) logoutDivider.hidden = false;
+    logoutBtn.addEventListener("click", () => {
+      closeMenu();
+      if (!confirm("Log out of your student account?")) return;
+      localStorage.removeItem("studentSession");
+      sessionStorage.removeItem("role");
+      sessionStorage.removeItem("matric");
+      sessionStorage.removeItem("currentStudent");
+      location.href = "quizzes.html";
+    });
+  }
+
+  document.addEventListener("click", (e) => {
+    if (!menu.hidden && !menu.contains(e.target) && e.target !== trigger) closeMenu();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMenu();
+  });
+})();
+</script>
+</body>
+</html>

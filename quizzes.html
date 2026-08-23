@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quizzes — Al-Bayan </title>
+
+<link rel="stylesheet" href="master.css">
+<link rel="stylesheet" href="quiz-style.css">
+</head>
+<body>
+
+<!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
+<a href="quizzes.html" class="active" data-translate="Quizzes">Quizzes</a>
+        <a href="quizzes.html" class="active" data-translate="Quizzes">Quizzes</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="schedule.html" data-translate="Schedule">Schedule</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+<main>
+  <div class="quiz-app">
+    <div class="quiz-crest"><span>📚</span></div>
+    <h1 class="quiz-title">Practice Quizzes</h1>
+    <p class="quiz-subtitle">Pick a course to test yourself. Just for practice — results aren't graded.</p>
+
+    <!-- GUEST NUDGE BANNER (guests only, dismissible for the session) -->
+    <div class="quiz-guest-banner" id="guest-nudge-banner">
+      <span>👋 You're browsing as a guest — <a href="register.html">register</a> or <a href="login.html">log in</a> to save your progress, badges, and star points permanently!</span>
+      <button type="button" id="guest-banner-dismiss" aria-label="Dismiss">✕</button>
+    </div>
+
+    <!-- HUB MORE MENU (consolidates the 3 utility buttons below) -->
+    <div class="quiz-hub-more-wrap">
+      <button
+        type="button"
+        id="hub-more-btn"
+        class="quiz-hub-more-btn"
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-label="More options"
+      >
+        ⚙️
+      </button>
+
+      <div class="quiz-hub-more-menu" id="hub-more-menu" hidden>
+        <button type="button" class="quiz-hub-more-item" id="hub-continue-btn" hidden>▶️ Continue: …</button>
+        <div class="quiz-hub-more-divider" id="hub-continue-divider" hidden></div>
+        <button type="button" class="quiz-hub-more-item" data-proxy="global-stats-btn">📊 My Overall Statistics</button>
+        <button type="button" class="quiz-hub-more-item" data-proxy="overall-leaderboard-trigger">🏆 Overall Leaderboard</button>
+        <button type="button" class="quiz-hub-more-item" data-proxy="how-to-play-btn">ⓘ How to Play & Earn</button>
+        <div class="quiz-hub-more-divider"></div>
+        <button type="button" class="quiz-hub-more-item" id="hub-sound-toggle" data-toggle="sound">🔊 Sound: On</button>
+        <button type="button" class="quiz-hub-more-item" id="hub-haptics-toggle" data-toggle="haptics">📳 Haptics: On</button>
+        <div class="quiz-hub-more-divider" id="hub-logout-divider" hidden></div>
+        <button type="button" class="quiz-hub-more-item quiz-hub-more-item-danger" id="hub-logout-btn" hidden>🚪 Log Out</button>
+      </div>
+    </div>
+
+    <!-- Original triggers — kept for their existing wiring, hidden from view.
+         The "More" menu above proxies clicks to these. -->
+    <div class="quiz-hub-hidden-triggers">
+<button
+  type="button"
+  id="global-stats-btn"
+  class="quiz-global-stats-btn"
+>
+  📊 My Overall Statistics
+</button>
+
+<button
+  type="button"
+  id="overall-leaderboard-trigger"
+  class="quiz-overall-leaderboard-trigger"
+  onclick="window.openOverallLeaderboard()"
+>
+  🏆 Overall Leaderboard
+</button>
+
+<button
+  type="button"
+  id="how-to-play-btn"
+  class="quiz-how-to-play-btn"
+>
+  ⓘ How to Play & Earn
+</button>
+    </div>
+
+    <div class="quiz-stage-list" id="quiz-hub-list" style="margin-top: 10px;">
+      <p class="quiz-loading">Loading quizzes…</p>
+    </div>
+  </div>
+  
+  <!-- GLOBAL STATISTICS MODAL -->
+<div
+  id="global-stats-modal"
+  class="quiz-modal"
+  aria-hidden="true"
+>
+  <div
+    class="quiz-modal-overlay"
+    data-close-global-stats
+  ></div>
+
+  <div
+    class="quiz-modal-content quiz-global-stats-modal-content"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="global-stats-title"
+  >
+
+    <button
+      type="button"
+      class="quiz-modal-close"
+      id="global-stats-close"
+      aria-label="Close statistics"
+    >
+      ✕
+    </button>
+
+    <div class="quiz-global-stats-header">
+      <div class="quiz-global-stats-icon">
+        📊
+      </div>
+
+      <div>
+        <h2 id="global-stats-title">
+          Overall Statistics
+        </h2>
+
+        <p id="global-stats-name">
+          Student Statistics
+        </p>
+      </div>
+    </div>
+
+    <div
+      id="global-stats-body"
+      class="quiz-global-stats-body"
+    >
+      <div class="quiz-global-stats-loading">
+        Loading your overall statistics…
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= OVERALL LEADERBOARD MODAL ================= -->
+
+<div
+  id="overall-leaderboard-modal"
+  class="quiz-modal"
+  aria-hidden="true"
+>
+
+  <div
+    class="quiz-modal-overlay"
+    onclick="closeOverallLeaderboard()"
+  ></div>
+
+  <div
+    class="quiz-modal-content quiz-overall-leaderboard-modal-content"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="overall-leaderboard-title"
+  >
+
+    <button
+      type="button"
+      class="quiz-modal-close"
+      onclick="closeOverallLeaderboard()"
+      aria-label="Close"
+    >
+      ×
+    </button>
+
+    <div class="quiz-modal-header">
+
+      <h2
+        id="overall-leaderboard-title"
+        class="quiz-title"
+      >
+        🏆 Overall Leaderboard
+      </h2>
+
+      <p class="quiz-subtitle">
+        Top performers across all quizzes
+      </p>
+
+    </div>
+
+    <div
+      id="overall-leaderboard-list"
+      class="quiz-overall-leaderboard-list"
+    >
+      <div class="quiz-global-stats-loading">
+        Loading leaderboard…
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= HOW TO PLAY & EARN MODAL ================= -->
+
+<div
+  id="how-to-play-modal"
+  class="quiz-modal"
+  aria-hidden="true"
+>
+
+  <div
+    class="quiz-modal-overlay"
+    id="how-to-play-overlay"
+  ></div>
+
+  <div
+    class="quiz-modal-content"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="how-to-play-title"
+  >
+
+    <button
+      type="button"
+      class="quiz-modal-close"
+      id="how-to-play-close"
+      aria-label="Close"
+    >
+      ×
+    </button>
+
+    <div class="quiz-modal-header">
+      <h2 id="how-to-play-title" class="quiz-title">📘 How to Play & Earn</h2>
+      <p class="quiz-subtitle">A quick guide before you dive in</p>
+    </div>
+
+    <div class="quiz-modal-body">
+      <div class="quiz-htp-list">
+        <div class="quiz-htp-row quiz-htp-row-highlight">
+          <div class="quiz-htp-icon">✅</div>
+          <p>Answer questions correctly to earn <strong>XP</strong> and level up.</p>
+        </div>
+        <div class="quiz-htp-row quiz-htp-row-highlight">
+          <div class="quiz-htp-icon">⭐</div>
+          <p>Finish a stage with a high score to earn up to <strong>⭐⭐⭐</strong> — your best stars are always kept.</p>
+        </div>
+        <div class="quiz-htp-row quiz-htp-row-highlight">
+          <div class="quiz-htp-icon">✨</div>
+          <p>New personal-best stars earn <strong>Star Points</strong>, which you can spend in the shop for extra lives.</p>
+        </div>
+        <div class="quiz-htp-row quiz-htp-row-highlight">
+          <div class="quiz-htp-icon">♾️</div>
+          <p>Try <strong>Endless Mode</strong> for mixed questions with no end.</p>
+        </div>
+        <div class="quiz-htp-row quiz-htp-row-highlight">
+          <div class="quiz-htp-icon">🌟</div>
+          <p>Take on the <strong>Daily Challenge</strong> for a bonus question each day.</p>
+        </div>
+        <div class="quiz-htp-row quiz-htp-row-highlight">
+          <div class="quiz-htp-icon">🎖️</div>
+          <p>Collect tiered badges — <strong>🥉 Bronze → 🥈 Silver → 🥇 Gold → 💎 Platinum → 💠 Diamond</strong> — as your skills grow, and climb the leaderboard 🏆.</p>
+        </div>
+        <div class="quiz-htp-row quiz-htp-row-highlight">
+          <div class="quiz-htp-icon">👑</div>
+          <p>Get a <strong>perfect ⭐⭐⭐ on every stage of a full level</strong> and unlock a real <strong>Mastery reward</strong> — a genuine ₦ discount on your course fees, exclusively for registered students.</p>
+        </div>
+        
+        <div class="quiz-htp-row quiz-htp-row-highlight">
+  <div class="quiz-htp-icon">🎓</div>
+  <p>Complete <strong>every stage of a full course</strong> to unlock a <strong>Certificate of Achievement</strong> — exclusively for registered students.</p>
+</div>
+      </div>
+
+      <div class="quiz-guest-cta-box" id="how-to-play-guest-cta">
+        <p>👋 You're currently playing as a <strong>guest</strong>. Guest progress stays on this device only and won't transfer if you register later — register or log in now so your progress, badges, star points, and Mastery rewards are saved permanently and count on the leaderboard!</p>
+        <div class="quiz-guest-cta-btns">
+          <a href="register.html" class="quiz-guest-cta-register">Register</a>
+          <a href="login.html" class="quiz-guest-cta-login">Log In</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-modal-footer" id="how-to-play-footer">
+      <button type="button" id="how-to-play-continue-guest" class="quiz-guest-cta-continue">Continue as Guest</button>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<!-- FOOTER -->
+  <footer>
+  <p data-translate="Al-Bayan  Institute Online">Al-Bayan Institute Online</p>
+  <p>
+    <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+    <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+  </p>
+  <p id="footerCopyright"></p>
+  <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+  <a href="refund-policy.html" data-translate="Refund Policy">Refund Policy</a>
+  <a href="terms.html" data-translate="Terms & Conditions">Terms & Conditions</a>
+  <a href="contact.html" data-translate="Contact">Contact</a>
+</footer>
+
+<a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
+
+  <!-- SCRIPTS -->
+  <script>
+    
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
+    }
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+    });
+  </script>
+
+
+<script>
+  fetch("./quizzes/index.json")
+    .then((res) => res.json())
+    .then((quizzes) => {
+      window.__quizIndex = quizzes;
+      const list = document.getElementById("quiz-hub-list");
+      if (!quizzes.length) {
+        list.innerHTML = '<p class="quiz-loading">No quizzes available yet.</p>';
+        return;
+      }
+      list.innerHTML = "";
+      quizzes.forEach((q) => {
+        const card = document.createElement("a");
+        card.href = `quiz.html?id=${encodeURIComponent(q.id)}`;
+        card.className = "quiz-stage-card";
+        card.style.textDecoration = "none";
+        card.innerHTML = `
+          <div class="quiz-stage-icon">${q.icon || "📘"}</div>
+          <div class="quiz-stage-info">
+            <h3>${q.title}</h3>
+            <p>${q.subtitle || q.course || ""}</p>
+          </div>`;
+        list.appendChild(card);
+      });
+    })
+    .catch(() => {
+      document.getElementById("quiz-hub-list").innerHTML =
+        '<p class="quiz-error">Couldn\'t load the quiz list.</p>';
+    });
+</script>
+  <!-- SUPABASE CLIENT -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  </script>
+  <script>
+/* =========================================================
+   GLOBAL STATISTICS — QUIZZES HUB
+========================================================= */
+
+(function () {
+
+  const openBtn =
+    document.getElementById("global-stats-btn");
+
+  const modal =
+    document.getElementById("global-stats-modal");
+
+  const closeBtn =
+    document.getElementById("global-stats-close");
+
+  const body =
+    document.getElementById("global-stats-body");
+
+  const nameEl =
+    document.getElementById("global-stats-name");
+
+
+  if (!openBtn || !modal || !closeBtn || !body) {
+    console.warn(
+      "[GLOBAL STATS] Required elements not found."
+    );
+    return;
+  }
+
+
+  /* ================= STUDENT SESSION ================= */
+
+  function getStudentSession() {
+
+    try {
+
+      const raw =
+        localStorage.getItem("studentSession");
+
+      if (!raw) return null;
+
+      const session =
+        JSON.parse(raw);
+
+      if (
+        !session ||
+        !session.currentStudent
+      ) {
+        return null;
+      }
+
+      if (
+        session.expiresAt &&
+        Date.now() > session.expiresAt
+      ) {
+        localStorage.removeItem(
+          "studentSession"
+        );
+
+        return null;
+      }
+
+      return session;
+
+    } catch (err) {
+
+      console.error(
+        "[GLOBAL STATS] Invalid student session:",
+        err
+      );
+
+      return null;
+    }
+  }
+  
+    /* ================= QUIZ TITLES ================= */
+
+  async function getQuizTitles() {
+
+    try {
+
+      const response =
+        await fetch("./quizzes/index.json");
+
+      if (!response.ok) {
+        throw new Error(
+          "Failed to load quiz index"
+        );
+      }
+
+      const quizzes =
+        await response.json();
+
+      return quizzes || [];
+
+    } catch (err) {
+
+      console.error(
+        "[GLOBAL STATS] Failed to load quiz titles:",
+        err
+      );
+
+      return [];
+    }
+  }
+
+
+  /* ================= GLOBAL PLAYER DATA ================= */
+
+  async function fetchGlobalPlayerStats() {
+
+  const session = getStudentSession();
+
+  if (!session) return null;
+
+  const student = session.currentStudent;
+
+  const matric =
+    student.matric_number ||
+    session.matric;
+
+  if (!matric) return null;
+
+  try {
+
+    /* ================= PLAYER SUMMARY ================= */
+
+    const {
+      data: player,
+      error: playerError
+    } = await sb
+      .from("quiz_players")
+      .select(`
+        matric_number,
+        full_name,
+        total_xp,
+        level,
+        quizzes_completed,
+        total_correct,
+        total_questions,
+        best_streak,
+        star_points,
+        updated_at
+      `)
+      .eq("matric_number", matric)
+      .maybeSingle();
+
+    if (playerError) throw playerError;
+
+
+    /* ================= GLOBAL TOTAL STARS ================= */
+
+    const {
+      data: starRows,
+      error: starsError
+    } = await sb
+      .from("quiz_scores")
+      .select("stars")
+      .eq("matric_number", matric);
+
+    if (starsError) throw starsError;
+
+    const totalStars =
+      (starRows || []).reduce(
+        (total, row) =>
+          total + (Number(row.stars) || 0),
+        0
+      );
+
+
+    /* ================= GLOBAL LAST 7 DAYS ================= */
+
+    const days = [];
+
+    for (let i = 6; i >= 0; i--) {
+
+      const d = new Date();
+
+      d.setHours(0, 0, 0, 0);
+      d.setDate(d.getDate() - i);
+
+      days.push({
+        label: d.toLocaleDateString("en", {
+          weekday: "short"
+        }),
+
+        date: d.toDateString(),
+
+        count: 0
+      });
+    }
+
+
+    const startDate = new Date();
+
+    startDate.setHours(0, 0, 0, 0);
+    startDate.setDate(
+      startDate.getDate() - 6
+    );
+
+
+    const {
+      data: activityRows,
+      error: activityError
+    } = await sb
+      .from("quiz_scores")
+      .select("created_at")
+      .eq("matric_number", matric)
+      .gte(
+        "created_at",
+        startDate.toISOString()
+      );
+
+
+    if (activityError) {
+      throw activityError;
+    }
+
+
+    (activityRows || []).forEach(
+      (attempt) => {
+
+        const attemptDate =
+          new Date(
+            attempt.created_at
+          ).toDateString();
+
+        const day =
+          days.find(
+            (item) =>
+              item.date === attemptDate
+          );
+
+        if (day) {
+          day.count++;
+        }
+      }
+    );
+    
+        /* ================= GLOBAL RECENT ATTEMPTS ================= */
+
+    const {
+      data: recentAttempts,
+      error: recentError
+    } = await sb
+      .from("quiz_scores")
+      .select(`
+        id,
+        quiz_id,
+        score,
+        total_questions,
+        stars,
+        xp_gained,
+        created_at
+      `)
+      .eq("matric_number", matric)
+      .order("created_at", {
+        ascending: false
+      })
+      .limit(10);
+
+    if (recentError) {
+      throw recentError;
+    }
+
+
+    return {
+  ...(player || {}),
+  totalStars,
+  activity: days,
+  recentAttempts: recentAttempts || []
+};
+
+
+  } catch (err) {
+
+    console.error(
+      "[GLOBAL STATS] Failed to load player stats:",
+      err
+    );
+
+    return null;
+  }
+}
+
+
+  /* ================= OPEN ================= */
+
+  async function openGlobalStats() {
+
+    modal.classList.add("active");
+
+    modal.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+    document.body.style.overflow =
+      "hidden";
+
+
+    body.innerHTML = `
+      <div class="quiz-global-stats-loading">
+        Loading your overall statistics…
+      </div>
+    `;
+
+
+    const session =
+      getStudentSession();
+
+    if (
+      session &&
+      session.currentStudent
+    ) {
+
+      nameEl.textContent =
+        session.currentStudent.fullname ||
+        "Student Statistics";
+
+    } else {
+
+      nameEl.textContent =
+        "Student Statistics";
+    }
+
+
+    const stats =
+      await fetchGlobalPlayerStats();
+
+
+    if (!stats) {
+
+      body.innerHTML = `
+        <div class="quiz-global-stats-empty">
+          <div style="font-size:32px;">📊</div>
+
+          <strong>
+            Statistics unavailable
+          </strong>
+
+          <p>
+            We couldn't load your overall
+            statistics right now.
+          </p>
+        </div>
+      `;
+
+      return;
+    }
+
+
+    body.innerHTML = `
+  <div class="quiz-global-stats-grid">
+
+    <div class="quiz-global-stat-card">
+      <span class="quiz-global-stat-icon">⚡</span>
+
+      <strong>
+        ${stats.total_xp || 0}
+      </strong>
+
+      <small>Total XP</small>
+    </div>
+
+
+    <div class="quiz-global-stat-card">
+      <span class="quiz-global-stat-icon">🎯</span>
+
+      <strong>
+        ${stats.quizzes_completed || 0}
+      </strong>
+
+      <small>Quizzes Done</small>
+    </div>
+
+
+    <div class="quiz-global-stat-card">
+      <span class="quiz-global-stat-icon">❓</span>
+
+      <strong>
+        ${stats.total_questions || 0}
+      </strong>
+
+      <small>Questions</small>
+    </div>
+
+
+    <div class="quiz-global-stat-card">
+      <span class="quiz-global-stat-icon">🎯</span>
+
+      <strong>
+        ${
+          stats.total_questions > 0
+            ? Math.round(
+                (
+                  stats.total_correct /
+                  stats.total_questions
+                ) * 100
+              )
+            : 0
+        }%
+      </strong>
+
+      <small>Accuracy</small>
+    </div>
+
+
+    <div class="quiz-global-stat-card">
+      <span class="quiz-global-stat-icon">🔥</span>
+
+      <strong>
+        ${stats.best_streak || 0}
+      </strong>
+
+      <small>Best Streak</small>
+    </div>
+
+
+    <div class="quiz-global-stat-card">
+      <span class="quiz-global-stat-icon">⭐</span>
+
+      <strong>
+        ${stats.totalStars || 0}
+      </strong>
+
+      <small>Total Stars</small>
+    </div>
+
+
+    <div class="quiz-global-stat-card quiz-global-stat-card-wide">
+      <span class="quiz-global-stat-icon">✨</span>
+
+      <strong>
+        ${stats.star_points || 0}
+      </strong>
+
+      <small>Star Points</small>
+    </div>
+
+  </div>
+
+
+  <!-- GLOBAL ACTIVITY -->
+
+<div class="quiz-global-activity">
+
+  <div class="quiz-global-section-title">
+    <strong>📊 Last 7 Days</strong>
+
+    <span>
+      Quiz activity
+    </span>
+  </div>
+
+  <div
+    id="global-stats-chart"
+    class="quiz-global-chart"
+  ></div>
+
+</div>
+
+
+<!-- GLOBAL RECENT ACTIVITY -->
+
+<div class="quiz-global-recent">
+
+  <div class="quiz-global-section-title">
+    <strong>🕘 Recent Activity</strong>
+
+    <span>
+      Latest quiz attempts
+    </span>
+  </div>
+
+  <div
+    id="global-recent-activity"
+    class="quiz-global-recent-list"
+  >
+    <div class="quiz-global-stats-loading">
+      Loading recent activity…
+    </div>
+  </div>
+
+</div>
+`;
+
+/* ================= GLOBAL ACTIVITY CHART ================= */
+
+const chart =
+  document.getElementById(
+    "global-stats-chart"
+  );
+
+if (chart && stats.activity) {
+
+  chart.innerHTML = "";
+
+  const max =
+    Math.max(
+      ...stats.activity.map(
+        (day) => day.count
+      ),
+      1
+    );
+
+
+  stats.activity.forEach(
+    (day) => {
+
+      const item =
+        document.createElement("div");
+
+      item.className =
+        "quiz-global-chart-day";
+
+
+      const bar =
+        document.createElement("div");
+
+      bar.className =
+        "quiz-global-chart-bar";
+
+      bar.style.height =
+        `${Math.max(
+          (day.count / max) * 100,
+          day.count > 0 ? 8 : 0
+        )}%`;
+
+
+      bar.title =
+        `${day.label}: ${day.count} attempt${
+          day.count === 1 ? "" : "s"
+        }`;
+
+
+      const label =
+        document.createElement("span");
+
+      label.className =
+        "quiz-global-chart-label";
+
+      label.textContent =
+        day.label;
+
+
+      item.appendChild(bar);
+      item.appendChild(label);
+
+      chart.appendChild(item);
+    }
+  );
+}
+
+/* ================= GLOBAL RECENT ACTIVITY ================= */
+
+const recentEl =
+  document.getElementById(
+    "global-recent-activity"
+  );
+
+if (recentEl) {
+
+  const quizzes =
+    await getQuizTitles();
+
+  const quizMap =
+    new Map(
+      quizzes.map(
+        (quiz) => [
+          String(quiz.id),
+          quiz
+        ]
+      )
+    );
+
+
+  const attempts =
+    stats.recentAttempts || [];
+
+
+  if (!attempts.length) {
+
+    recentEl.innerHTML = `
+      <div class="quiz-global-recent-empty">
+        <span>📖</span>
+
+        <p>
+          No quiz activity yet.
+        </p>
+      </div>
+    `;
+
+  } else {
+
+    recentEl.innerHTML =
+      attempts.map(
+        (attempt) => {
+
+          const quiz =
+            quizMap.get(
+              String(attempt.quiz_id)
+            );
+
+
+          const title =
+            quiz?.title ||
+            attempt.quiz_id ||
+            "Quiz";
+
+
+          const score =
+            Number(
+              attempt.score || 0
+            );
+
+          const total =
+            Number(
+              attempt.total_questions || 0
+            );
+
+
+          const percentage =
+            total > 0
+              ? Math.round(
+                  (score / total) * 100
+                )
+              : 0;
+
+
+          const stars =
+            Number(
+              attempt.stars || 0
+            );
+
+
+          const xp =
+            Number(
+              attempt.xp_gained || 0
+            );
+
+
+          const date =
+            new Date(
+              attempt.created_at
+            );
+
+
+          const dateText =
+            date.toLocaleDateString(
+              "en-NG",
+              {
+                day: "numeric",
+                month: "short"
+              }
+            );
+
+
+          const timeText =
+            date.toLocaleTimeString(
+              "en-NG",
+              {
+                hour: "numeric",
+                minute: "2-digit"
+              }
+            );
+
+
+          return `
+            <div class="quiz-global-recent-item">
+
+              <div class="quiz-global-recent-icon">
+                ${quiz?.icon || "📘"}
+              </div>
+
+
+              <div class="quiz-global-recent-info">
+
+                <strong>
+                  ${title}
+                </strong>
+
+                <small>
+                  ${dateText} · ${timeText}
+                </small>
+
+              </div>
+
+
+              <div class="quiz-global-recent-result">
+
+                <strong>
+                  ${percentage}%
+                </strong>
+
+                <small>
+                  ⭐ ${stars} · +${xp} XP
+                </small>
+
+              </div>
+
+            </div>
+          `;
+        }
+      ).join("");
+
+  }
+}
+
+}
+
+
+  /* ================= CLOSE ================= */
+
+  function closeGlobalStats() {
+
+    modal.classList.remove("active");
+
+    modal.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    document.body.style.overflow =
+      "";
+  }
+
+
+  /* ================= EVENTS ================= */
+
+  openBtn.addEventListener(
+    "click",
+    openGlobalStats
+  );
+
+
+  closeBtn.addEventListener(
+    "click",
+    closeGlobalStats
+  );
+
+
+  /* Backdrop */
+
+  modal.addEventListener(
+    "click",
+    function (event) {
+
+      if (
+        event.target === modal ||
+        event.target.matches(
+          "[data-close-global-stats]"
+        )
+      ) {
+        closeGlobalStats();
+      }
+
+    }
+  );
+
+
+  /* Escape */
+
+  document.addEventListener(
+    "keydown",
+    function (event) {
+
+      if (
+        event.key === "Escape" &&
+        modal.classList.contains("active")
+      ) {
+        closeGlobalStats();
+      }
+
+    }
+  );
+
+
+})();
+</script>
+
+<script>
+/* =========================================================
+   OVERALL LEADERBOARD — QUIZZES HUB
+========================================================= */
+
+(function () {
+
+  const modal =
+    document.getElementById(
+      "overall-leaderboard-modal"
+    );
+
+  const list =
+    document.getElementById(
+      "overall-leaderboard-list"
+    );
+
+
+  if (!modal || !list) {
+    console.warn(
+      "[OVERALL LEADERBOARD] Required elements not found."
+    );
+    return;
+  }
+
+
+  /* ================= GET STUDENT SESSION ================= */
+
+  function getStudentSession() {
+
+    try {
+
+      const raw =
+        localStorage.getItem(
+          "studentSession"
+        );
+
+      if (!raw) return null;
+
+      const session =
+        JSON.parse(raw);
+
+      if (
+        !session ||
+        !session.currentStudent
+      ) {
+        return null;
+      }
+
+      return session;
+
+    } catch (err) {
+
+      console.error(
+        "[OVERALL LEADERBOARD] Session error:",
+        err
+      );
+
+      return null;
+    }
+  }
+
+
+  /* ================= LOAD GLOBAL LEADERBOARD ================= */
+
+  async function fetchOverallLeaderboard() {
+
+    if (!window.sb) {
+      console.error(
+        "[OVERALL LEADERBOARD] Supabase client unavailable."
+      );
+
+      return [];
+    }
+
+
+    try {
+
+      const {
+        data,
+        error
+      } = await window.sb
+        .from("quiz_players")
+        .select(`
+          matric_number,
+          full_name,
+          total_xp,
+          level,
+          quizzes_completed,
+          best_streak
+        `)
+        .order(
+          "total_xp",
+          {
+            ascending: false
+          }
+        )
+        .limit(20);
+
+
+      if (error) throw error;
+
+
+      return data || [];
+
+
+    } catch (err) {
+
+      console.error(
+        "[OVERALL LEADERBOARD] Failed to load:",
+        err
+      );
+
+      return [];
+    }
+  }
+
+
+  /* ================= OPEN ================= */
+
+  window.openOverallLeaderboard =
+    async function () {
+
+      modal.classList.add(
+  "active"
+);
+
+document.body.style.overflow =
+  "hidden";
+
+      modal.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+
+      list.innerHTML = `
+        <div class="quiz-global-stats-loading">
+          Loading leaderboard…
+        </div>
+      `;
+
+
+      const session =
+        getStudentSession();
+
+
+      const currentStudent =
+        session?.currentStudent;
+
+
+      const currentMatric =
+        currentStudent?.matric_number ||
+        session?.matric ||
+        null;
+
+
+      const entries =
+        await fetchOverallLeaderboard();
+
+
+      if (!entries.length) {
+
+        list.innerHTML = `
+          <p style="
+            text-align:center;
+            color:var(--text-muted);
+            padding:20px;
+          ">
+            No leaderboard data yet.
+          </p>
+        `;
+
+        return;
+      }
+
+
+      list.innerHTML = "";
+
+
+      entries.forEach(
+        (entry, index) => {
+
+          const rank =
+            index + 1;
+
+
+          const isYou =
+            currentMatric &&
+            entry.matric_number ===
+              currentMatric;
+
+
+          const row =
+            document.createElement(
+              "div"
+            );
+
+
+          row.className =
+            "quiz-overall-leaderboard-row" +
+            (
+              rank <= 3
+                ? ` top-${rank}`
+                : ""
+            ) +
+            (
+              isYou
+                ? " you"
+                : ""
+            );
+
+
+          row.innerHTML = `
+            <div
+              class="quiz-overall-leaderboard-rank"
+            >
+              ${rank}
+            </div>
+
+            <div
+              class="quiz-overall-leaderboard-avatar"
+            >
+              ${rank === 1
+                ? "🥇"
+                : rank === 2
+                ? "🥈"
+                : rank === 3
+                ? "🥉"
+                : "🏅"}
+            </div>
+
+            <div
+              class="quiz-overall-leaderboard-info"
+            >
+
+              <div
+                class="quiz-overall-leaderboard-name"
+              >
+                ${escapeOverallLeaderboardHtml(
+                  entry.full_name ||
+                  "Student"
+                )}
+
+                ${
+                  isYou
+                    ? " <strong>(You)</strong>"
+                    : ""
+                }
+              </div>
+
+              <div
+                class="quiz-overall-leaderboard-meta"
+              >
+                Level ${entry.level || 1}
+                · ${entry.quizzes_completed || 0}
+                quizzes
+              </div>
+
+            </div>
+
+            <div
+              class="quiz-overall-leaderboard-xp"
+            >
+              ${Number(entry.total_xp) || 0} XP
+            </div>
+          `;
+
+
+          list.appendChild(row);
+
+        }
+      );
+
+    };
+
+
+  /* ================= CLOSE ================= */
+
+  window.closeOverallLeaderboard =
+    function () {
+
+      modal.classList.remove(
+  "active"
+);
+
+document.body.style.overflow =
+  "";
+
+      modal.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+    };
+
+
+  /* ================= OUTSIDE CLICK ================= */
+
+  modal.addEventListener(
+  "click",
+  function (event) {
+
+    const content =
+      modal.querySelector(
+        ".quiz-modal-content"
+      );
+
+    if (
+      content &&
+      !content.contains(event.target)
+    ) {
+      closeOverallLeaderboard();
+    }
+
+  }
+);
+
+
+  /* ================= ESCAPE ================= */
+
+  document.addEventListener(
+    "keydown",
+    function (event) {
+
+      if (
+        event.key === "Escape" &&
+        modal.classList.contains("show")
+      ) {
+        closeOverallLeaderboard();
+      }
+
+    }
+  );
+
+
+  /* ================= HTML ESCAPE ================= */
+
+  function escapeOverallLeaderboardHtml(
+    text
+  ) {
+
+    const div =
+      document.createElement(
+        "div"
+      );
+
+    div.textContent =
+      text;
+
+    return div.innerHTML;
+
+  }
+
+
+})();
+</script>
+  <!-- HOW TO PLAY & GUEST NUDGE -->
+  <script>
+(function () {
+
+  // Mirrors the guest/student check used elsewhere on this page —
+  // duplicated here since that check lives inside its own closure.
+  function isGuestUser() {
+    try {
+      const raw = localStorage.getItem("studentSession");
+      if (!raw) return true;
+      const session = JSON.parse(raw);
+      if (!session || !session.currentStudent) return true;
+      if (session.expiresAt && Date.now() > session.expiresAt) return true;
+      return false;
+    } catch (e) {
+      return true;
+    }
+  }
+
+  const modal = document.getElementById("how-to-play-modal");
+  const openBtn = document.getElementById("how-to-play-btn");
+  const closeBtn = document.getElementById("how-to-play-close");
+  const overlay = document.getElementById("how-to-play-overlay");
+  const guestCta = document.getElementById("how-to-play-guest-cta");
+  const guestFooter = document.getElementById("how-to-play-footer");
+  const banner = document.getElementById("guest-nudge-banner");
+  const bannerDismiss = document.getElementById("guest-banner-dismiss");
+
+  if (!modal || !openBtn || !closeBtn) return;
+
+  function openModal() {
+    if (guestCta) guestCta.style.display = isGuestUser() ? "block" : "none";
+    if (guestFooter) guestFooter.style.display = isGuestUser() ? "flex" : "none";
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+  function closeModal() {
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  openBtn.addEventListener("click", openModal);
+  closeBtn.addEventListener("click", closeModal);
+  if (overlay) overlay.addEventListener("click", closeModal);
+
+  const continueGuestBtn = document.getElementById("how-to-play-continue-guest");
+  if (continueGuestBtn) {
+    continueGuestBtn.addEventListener("click", () => {
+      closeModal();
+      // They've already made their choice — don't nag with the banner too.
+      sessionStorage.setItem("quiz_guest_banner_dismissed", "1");
+      if (banner) banner.style.display = "none";
+    });
+  }
+
+  // Persistent (dismissible) guest banner — reappears next session.
+  if (banner && isGuestUser()) {
+    if (!sessionStorage.getItem("quiz_guest_banner_dismissed")) {
+      banner.style.display = "flex";
+    }
+    if (bannerDismiss) {
+      bannerDismiss.addEventListener("click", () => {
+        banner.style.display = "none";
+        sessionStorage.setItem("quiz_guest_banner_dismissed", "1");
+      });
+    }
+  }
+
+  // Auto-show "How to Play" once per session, for everyone.
+  if (!sessionStorage.getItem("quiz_seen_how_to_play")) {
+    sessionStorage.setItem("quiz_seen_how_to_play", "1");
+    openModal();
+  }
+
+})();
+  </script>
+
+  <!-- HUB MORE MENU -->
+  <script>
+(function () {
+  const trigger = document.getElementById("hub-more-btn");
+  const menu = document.getElementById("hub-more-menu");
+  if (!trigger || !menu) return;
+
+  function isGuestUser() {
+    try {
+      const raw = localStorage.getItem("studentSession");
+      if (!raw) return true;
+      const session = JSON.parse(raw);
+      if (!session || !session.currentStudent) return true;
+      if (session.expiresAt && Date.now() > session.expiresAt) return true;
+      return false;
+    } catch (e) {
+      return true;
+    }
+  }
+
+  function openMenu() {
+    menu.hidden = false;
+    trigger.setAttribute("aria-expanded", "true");
+  }
+  function closeMenu() {
+    menu.hidden = true;
+    trigger.setAttribute("aria-expanded", "false");
+  }
+
+  trigger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (menu.hidden) openMenu(); else closeMenu();
+  });
+
+  // Proxy items (Stats / Leaderboard / How to Play) — trigger the
+  // hidden original button, then close the menu.
+  menu.querySelectorAll(".quiz-hub-more-item[data-proxy]").forEach((item) => {
+    item.addEventListener("click", () => {
+      const targetId = item.getAttribute("data-proxy");
+      const target = document.getElementById(targetId);
+      closeMenu();
+      if (target) target.click();
+    });
+  });
+
+  // "Continue where you left off" — students: ask Supabase for their
+  // most recent quiz_scores row. Guests: read the localStorage marker
+  // quiz-engine.js writes on every welcome-screen visit. Either way,
+  // resolve a title against the quiz manifest (window.__quizIndex),
+  // waiting briefly if it hasn't finished loading yet.
+  const continueBtn = document.getElementById("hub-continue-btn");
+  const continueDivider = document.getElementById("hub-continue-divider");
+
+  function waitForQuizIndex(timeoutMs = 2000) {
+    return new Promise((resolve) => {
+      const start = Date.now();
+      (function poll() {
+        if (window.__quizIndex) return resolve(window.__quizIndex);
+        if (Date.now() - start > timeoutMs) return resolve(null);
+        setTimeout(poll, 100);
+      })();
+    });
+  }
+
+  function getStudentMatric() {
+    try {
+      const raw = localStorage.getItem("studentSession");
+      const session = raw ? JSON.parse(raw) : null;
+      const student = session && session.currentStudent;
+      return (student && student.matric_number) || (session && session.matric) || null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async function resolveLastPlayed() {
+    if (!isGuestUser() && window.sb) {
+      const matric = getStudentMatric();
+      if (matric) {
+        try {
+          const { data } = await window.sb
+            .from("quiz_scores")
+            .select("quiz_id, created_at")
+            .eq("matric_number", matric)
+            .order("created_at", { ascending: false })
+            .limit(1);
+          if (data && data[0]) return { quizId: data[0].quiz_id };
+        } catch (e) {}
+      }
+      return null;
+    }
+    try {
+      const raw = localStorage.getItem("quiz_last_played");
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      return parsed && parsed.quizId ? { quizId: parsed.quizId, title: parsed.title } : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  (async () => {
+    if (!continueBtn) return;
+    const last = await resolveLastPlayed();
+    if (!last || !last.quizId) return; // nothing to resume — leave hidden
+
+    const index = await waitForQuizIndex();
+    const match = index && index.find((q) => q.id === last.quizId);
+    const title = (match && match.title) || last.title || "your last quiz";
+
+    continueBtn.textContent = `▶️ Continue: ${title}`;
+    continueBtn.hidden = false;
+    if (continueDivider) continueDivider.hidden = false;
+    continueBtn.addEventListener("click", () => {
+      window.location.href = `quiz.html?id=${encodeURIComponent(last.quizId)}&resume=1`;
+    });
+  })();
+
+  // Toggle items (Sound / Haptics) — flip a localStorage preference
+  // that quiz-engine.js reads directly. Menu stays open so the
+  // person can flip more than one setting at once.
+  const SOUND_KEY = "quiz_sound_enabled";
+  const HAPTICS_KEY = "quiz_haptics_enabled";
+  const soundBtn = document.getElementById("hub-sound-toggle");
+  const hapticsBtn = document.getElementById("hub-haptics-toggle");
+
+  function syncToggleLabel(btn, key, icon, label) {
+    const enabled = localStorage.getItem(key) !== "false";
+    btn.textContent = `${icon} ${label}: ${enabled ? "On" : "Off"}`;
+  }
+  function syncAllToggleLabels() {
+    if (soundBtn) syncToggleLabel(soundBtn, SOUND_KEY, "🔊", "Sound");
+    if (hapticsBtn) syncToggleLabel(hapticsBtn, HAPTICS_KEY, "📳", "Haptics");
+  }
+  syncAllToggleLabels();
+
+  if (soundBtn) {
+    soundBtn.addEventListener("click", () => {
+      const enabled = localStorage.getItem(SOUND_KEY) !== "false";
+      localStorage.setItem(SOUND_KEY, enabled ? "false" : "true");
+      syncAllToggleLabels();
+    });
+  }
+  if (hapticsBtn) {
+    hapticsBtn.addEventListener("click", () => {
+      const enabled = localStorage.getItem(HAPTICS_KEY) !== "false";
+      localStorage.setItem(HAPTICS_KEY, enabled ? "false" : "true");
+      syncAllToggleLabels();
+    });
+  }
+
+  // Log Out — only shown for a genuinely logged-in student. Clears
+  // both identity mechanisms this codebase uses: the hub's own
+  // "studentSession" (localStorage) and quiz-engine.js's session
+  // keys (sessionStorage), so neither page is left half-logged-in.
+  // NOTE for Muaz: if you already have a central logout elsewhere
+  // (nav dropdown, auth helper, etc.) that does more than this
+  // (e.g. a Supabase signOut call), wire this button to call that
+  // instead — this is a self-contained fallback since I don't have
+  // that file in front of me.
+  const logoutBtn = document.getElementById("hub-logout-btn");
+  const logoutDivider = document.getElementById("hub-logout-divider");
+  if (logoutBtn && !isGuestUser()) {
+    logoutBtn.hidden = false;
+    if (logoutDivider) logoutDivider.hidden = false;
+    logoutBtn.addEventListener("click", () => {
+      closeMenu();
+      if (!confirm("Log out of your student account?")) return;
+      localStorage.removeItem("studentSession");
+      sessionStorage.removeItem("role");
+      sessionStorage.removeItem("matric");
+      sessionStorage.removeItem("currentStudent");
+      location.reload();
+    });
+  }
+
+  document.addEventListener("click", (e) => {
+    if (!menu.hidden && !menu.contains(e.target) && e.target !== trigger) closeMenu();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMenu();
+  });
+})();
+  </script>
+
+<script>window.QUIZ_PAGE_NO_TRANSLATE = true;</script>
+<script src="translate.js"></script>
+</body>
+</html>
