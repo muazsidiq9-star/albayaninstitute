@@ -3273,7 +3273,17 @@ NEW FILES START HERE
 "For multiple courses, separate with a comma": "للدورات المتعددة، افصل بفاصلة",
 "Please select at least one course before issuing.": "يرجى اختيار دورة واحدة على الأقل قبل الإصدار.",
 "Tick every course this certificate should cover — pick one for a single-course certificate, or several for a full-program certificate.": "حدد كل دورة يجب أن تغطيها هذه الشهادة — اختر واحدة لشهادة دورة واحدة، أو عدة دورات لشهادة برنامج كامل.",
-  // ===== DYNAMIC TEMPLATES ===== 
+"Batch": "الدفعة",
+"BATCH": "الدفعة",
+"Batch:": "الدفعة:",
+"Matric:": "الرقم الجامعي:",
+"📦 All Batches": "📦 جميع الدفعات",
+"All Batches": "جميع الدفعات",
+"Batch (Month/Year)": "الدفعة (الشهر/السنة)",
+"Month/": "الشهر/",
+"Auto-filled with current month. Change only if joining a different batch.": "يتم ملؤه تلقائيًا بالشهر الحالي. قم بتغييره فقط إذا كنت تنضم إلى دفعة مختلفة.",
+
+// ===== DYNAMIC TEMPLATES ===== 
 
 en: {
 

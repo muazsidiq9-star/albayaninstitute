@@ -62,6 +62,7 @@
         <div><span class="field-label">Email</span> <span class="field-value" id="email">—</span></div>
         <div><span class="field-label">Country</span> <span class="field-value" id="country">—</span></div>
         <div><span class="field-label">Level</span> <span class="field-value" id="level">—</span></div>
+        <div><span class="field-label">Batch</span> <span class="field-value" id="batch">—</span></div>
       </div>
     </div>
 
@@ -86,7 +87,7 @@
     </p>
 
     <p>
-      You have been admitted into the <strong><span id="level3">—</span></strong> programme. This admission confirms your eligibility to participate fully in the academic activities, lectures, assessments, and institutional engagements associated with your level.
+      You have been admitted into the <strong><span id="level3">—</span></strong> programme, <strong><span id="batch2">—</span></strong> batch. This admission confirms your eligibility to participate fully in the academic activities, lectures, assessments, and institutional engagements associated with your level.
     </p>
 
     <p>
@@ -194,7 +195,7 @@
 
     const { data, error } = await sb
       .from("students")
-      .select("fullname, email, matric_number, level_arabic, country, passport_url, admission_approved")
+      .select("fullname, email, matric_number, level_arabic, batch, country, passport_url, admission_approved")
       .eq("matric_number", matricNumber)
       .single();
 
@@ -219,6 +220,8 @@
     set("level",      data.level_arabic);
     set("level2",     data.level_arabic);
     set("level3",     data.level_arabic);
+    set("batch2",     data.batch);
+    set("batch",      data.batch);
     set("country",    data.country);
     set("nameInline", data.fullname);
     set("date",       new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }));

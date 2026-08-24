@@ -121,6 +121,16 @@
           </div>
         </div>
 
+        <div class="sp-info-row">
+          <div class="sp-info-icon" style="background:#f3e8ff; color:#7e22ce;">
+            <i class="fa-solid fa-calendar-days"></i>
+          </div>
+          <div class="sp-info-body">
+            <span class="sp-info-label" data-translate="Batch:">Batch:</span>
+            <span class="sp-info-value value batch"></span>
+          </div>
+        </div>
+
       </div>
 
       <!-- Edit button -->
@@ -208,6 +218,9 @@
         <label data-translate="Level">Level</label>
         <input type="text" id="editLevel" disabled>
 
+        <label data-translate="Batch">Batch</label>
+        <input type="text" id="editBatch" disabled>
+
         <label data-translate="Change Passport (optional)">Change Passport (optional)</label>
         <input type="file" id="editPassport" accept="image/*">
         <img id="passportEditPreview" class="sp-passport-preview">
@@ -287,9 +300,9 @@
       const matricNumber = sessionStorage.getItem("matric");
       if (!matricNumber) return;
       try {
-        const { data, error } = await sb
+       const { data, error } = await sb
           .from("students")
-          .select("fullname, email, whatsapp, matric_number, level_arabic, passport_url")
+          .select("fullname, email, whatsapp, matric_number, level_arabic, batch, passport_url")
           .eq("matric_number", matricNumber)
           .single();
         if (error) throw error;
@@ -305,6 +318,7 @@ const matricEl = document.querySelector('.value.matric');
 matricEl.textContent = data.matric_number || '';
 matricEl.setAttribute('dir', 'ltr');
         document.querySelector('.value.level').textContent = data.level_arabic || 'N/A';
+        document.querySelector('.value.batch').textContent = data.batch || 'N/A';
         const profilePic = document.getElementById('profilePic');
         profilePic.src = (data.passport_url && data.passport_url.trim() !== "")
           ? data.passport_url : "passport-placeholder.png";
@@ -322,6 +336,7 @@ matricEl.setAttribute('dir', 'ltr');
       document.getElementById("editEmail").value = document.querySelector(".value.email").textContent;
       document.getElementById("editWhatsapp").value = document.querySelector(".value.phone").textContent;
       document.getElementById("editLevel").value = document.querySelector(".value.level").textContent;
+      document.getElementById("editBatch").value = document.querySelector(".value.batch").textContent;
       document.getElementById("passportEditPreview").src = document.getElementById("profilePic").src;
     }
 

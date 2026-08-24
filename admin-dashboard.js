@@ -309,7 +309,7 @@ async function loadStudentsCache() {
 
   const { data, error } = await db
     .from("students")
-    .select("matric_number, fullname, level_arabic")
+    .select("matric_number, fullname, level_arabic, batch")
     .eq("deleted", false);
 
   if (error) {
@@ -531,6 +531,7 @@ async function loadStudents() {
         <td>${s.gender}</td>
         <td>${s.age}</td>
         <td>${s.level_arabic}</td>
+        <td>${s.batch || "—"}</td>
         <td>${t(s.status)}</td>
         <td>
           <span class="approval-status ${s.admission_approved ? 'approved' : 'not-approved'}">
@@ -558,7 +559,7 @@ async function loadStudents() {
     🗑️
   </button>
 </td>
-        <td><button class="btn btn-cert" onclick="openCertificateModal('${s.id}', '${s.matric_number}', '${s.fullname}', '${s.level_arabic}')">🎓 ${t("Issue")}</button></td>
+        <td><button class="btn btn-cert" onclick="openCertificateModal('${s.id}', '${s.matric_number}', '${s.fullname}', '${s.level_arabic}', '${s.batch || ""}')">🎓 ${t("Issue")}</button></td>
       `;
       tbody.appendChild(tr);
     });
@@ -571,7 +572,7 @@ async function loadStudents() {
 async function populateStudentSelects() {
   const { data } = await db
     .from("students")
-    .select("fullname, matric_number, level_arabic")
+    .select("fullname, matric_number, level_arabic, batch")
     .order("fullname");
 
   ["paymentStudent", "gradeStudent"].forEach(id => {
@@ -584,16 +585,18 @@ async function populateStudentSelects() {
       opt.value = s.matric_number;
       opt.textContent = `${s.fullname} (${s.matric_number})`;
       opt.dataset.level = s.level_arabic || "";
+      opt.dataset.batch = s.batch || "";
       select.appendChild(opt);
     });
   });
 }
 
-// Auto-fills a Level <select> from the level_arabic stashed on the chosen
-// student <option> (data-level). Wired via onchange on paymentStudent /
-// gradeStudent. Silently no-ops if the student has no level on file yet —
-// admin can still pick one manually.
-function autofillStudentLevel(studentSelectId, levelSelectId) {
+// Auto-fills a Level <select> (and optionally a Batch field) from the
+// level_arabic / batch stashed on the chosen student <option>
+// (data-level / data-batch). Wired via onchange on paymentStudent /
+// gradeStudent. Silently no-ops if the student has no level/batch on file
+// yet — admin can still pick one manually.
+function autofillStudentLevel(studentSelectId, levelSelectId, batchFieldId) {
   const studentSelect = document.getElementById(studentSelectId);
   const levelSelect = document.getElementById(levelSelectId);
   if (!studentSelect || !levelSelect) return;
@@ -601,6 +604,11 @@ function autofillStudentLevel(studentSelectId, levelSelectId) {
   const chosen = studentSelect.selectedOptions[0];
   const level = chosen?.dataset.level;
   if (level) levelSelect.value = level;
+
+  if (batchFieldId) {
+    const batchField = document.getElementById(batchFieldId);
+    if (batchField) batchField.value = chosen?.dataset.batch || "";
+  }
 }
 
 async function addStudent() {
@@ -615,6 +623,7 @@ async function addStudent() {
     const gender = document.getElementById("studentGender")?.value.trim();
     const age = document.getElementById("studentAge")?.value;
     const level_arabic = document.getElementById("studentLevel")?.value.trim();
+    const batch = document.getElementById("studentBatch")?.value.trim();
     const status = document.getElementById("studentStatus")?.value.trim();
     const admission_approved = document.getElementById("studentAdmission")?.value.trim();
     const passportFile = document.getElementById("studentPassport")?.files[0];
@@ -677,7 +686,7 @@ if (passportFile) {
     if (window.editingStudentId) {
       await db.from("students").update({
   fullname, email, whatsapp, country, gender, age,
-  level_arabic, status, admission_approved,
+  level_arabic, batch, status, admission_approved,
   ...(passport_url ? { passport_url, passport_path } : {})
 }).eq("id", window.editingStudentId);
 
@@ -691,7 +700,7 @@ if (passportFile) {
 
       await db.from("students").insert([{
   fullname, email, whatsapp, country, gender, age,
-  level_arabic, status, admission_approved,
+  level_arabic, batch, status, admission_approved,
   passport_url,
   passport_path
 }]);
@@ -725,6 +734,7 @@ async function editStudent(id) {
   document.getElementById("studentGender").value = s.gender;
   document.getElementById("studentAge").value = s.age;
   document.getElementById("studentLevel").value = s.level_arabic;
+  document.getElementById("studentBatch").value = s.batch || "";
   document.getElementById("studentStatus").value = s.status;
   document.getElementById("studentAdmission").value = s.admission_approved;
 
@@ -768,6 +778,7 @@ async function addPayment() {
   try {
     const matric_number = document.getElementById("paymentStudent")?.value;
     const level_arabic = document.getElementById("paymentLevel")?.value;
+    const batch = document.getElementById("paymentBatch")?.value;
     const amount = Number(document.getElementById("paymentAmount")?.value || 0);
     const currency = document.getElementById("paymentCurrency")?.value;
     const month = document.getElementById("paymentMonth")?.value;
@@ -782,14 +793,14 @@ async function addPayment() {
 
     if (window.editingPaymentId) {
       await db.from("payments")
-        .update({ level_arabic, amount, currency, month, payment_method, created_at, status })
+        .update({ level_arabic, batch, amount, currency, month, payment_method, created_at, status })
         .eq("id", window.editingPaymentId);
 
       showToast(t("Payment updated"));
       window.editingPaymentId = null;
     } else {
       await db.from("payments").insert([{
-        matric_number, level_arabic, amount, currency,
+        matric_number, level_arabic, batch, amount, currency,
         month, payment_method, created_at, status
       }]);
 
@@ -817,9 +828,9 @@ async function loadPayments() {
     .from("payments")
     .select(`
       id, receipt_url, matric_number, payer_name, payer_email,
-      level_arabic, amount, currency, month, payment_method,
+      level_arabic, batch, amount, currency, month, payment_method,
       status, created_at,
-      students!payments_student_fk(fullname, level_arabic)
+      students!payments_student_fk(fullname, level_arabic, batch)
     `)
     .eq("deleted", false)
     .order("created_at", { ascending: false });
@@ -847,6 +858,7 @@ async function loadPayments() {
         <td>${p.matric_number || "—"}</td>
         <td>${p.payer_email || "—"}</td>
         <td>${p.students?.level_arabic || p.level_arabic || "—"}</td>
+        <td>${p.students?.batch || p.batch || "—"}</td>
         <td>${currencies[p.currency]?.symbol || p.currency || ""}${Number(p.amount).toLocaleString()}</td>
         <td>${p.month}</td>
         <td>${p.payment_method}</td>
@@ -910,6 +922,7 @@ async function editPayment(id) {
 
   document.getElementById("paymentStudent").value = p.matric_number;
   document.getElementById("paymentLevel").value = p.level_arabic;
+  document.getElementById("paymentBatch").value = p.batch || "";
   document.getElementById("paymentAmount").value = p.amount;
   document.getElementById("paymentMonth").value = p.month;
   document.getElementById("paymentMethod").value = p.payment_method;
@@ -1089,6 +1102,7 @@ async function addGrade() {
     const course = document.getElementById("gradeCourse")?.value;
     const semester = document.getElementById("gradeSemester")?.selectedOptions[0].textContent;
     const level_arabic = document.getElementById("gradeLevel")?.value;
+    const batch = document.getElementById("gradeBatch")?.value;
     const a = Number(document.getElementById("gradeAssessment")?.value || 0);
     const b = Number(document.getElementById("gradeExams")?.value || 0);
     const total_score = a + b;
@@ -1104,7 +1118,7 @@ async function addGrade() {
     }
 
     const gradeData = {
-      matric_number, level_arabic, course, semester,
+      matric_number, level_arabic, batch, course, semester,
       assessment_score: a, exam_score: b, total_score, status, remark
     };
 
@@ -1161,6 +1175,7 @@ async function loadGrades() {
           <td>${student.fullname || ""}</td>
           <td>${g.matric_number}</td>
           <td>${student.level_arabic || ""}</td>
+          <td>${student.batch || ""}</td>
           <td>${g.course}</td>
           <td>${g.semester}</td>
           <td>${g.assessment_score}</td>
@@ -1212,6 +1227,7 @@ async function editGrade(id) {
     window.editingGradeId = id;
     document.getElementById("gradeStudent").value = g.matric_number;
     document.getElementById("gradeLevel").value = g.level_arabic;
+    document.getElementById("gradeBatch").value = g.batch || "";
     document.getElementById("gradeCourse").value = g.course;
     document.getElementById("gradeSemester").value = g.semester;
     document.getElementById("gradeAssessment").value = g.assessment_score;
@@ -1234,6 +1250,7 @@ async function addSchedule() {
 
   try {
     const level_arabic = document.getElementById("classLevel").value;
+    const batch = document.getElementById("classBatch").value;
     const course = document.getElementById("classCourse").value;
     const instructor = document.getElementById("Instructor").value;
     const class_date = document.getElementById("classDate").value;
@@ -1248,14 +1265,14 @@ async function addSchedule() {
 
     if (window.editingScheduleId) {
       await db.from("schedule")
-        .update({ level_arabic, course, instructor, class_date, class_time, meeting_link, status })
+        .update({ level_arabic, batch, course, instructor, class_date, class_time, meeting_link, status })
         .eq("id", window.editingScheduleId);
 
       showToast(t("Schedule updated"));
       window.editingScheduleId = null;
     } else {
       await db.from("schedule").insert([{
-        level_arabic, course, instructor, class_date, class_time, meeting_link, status
+        level_arabic, batch, course, instructor, class_date, class_time, meeting_link, status
       }]);
 
       const { data: students } = await db.from("students").select("matric_number");
@@ -1292,6 +1309,7 @@ async function loadSchedule() {
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${c.level_arabic}</td>
+          <td>${c.batch || "—"}</td>
           <td>${c.course}</td>
           <td>${c.instructor}</td>
           <td>${c.class_date}</td>
@@ -1320,6 +1338,7 @@ async function editSchedule(id) {
   if (error || !c) return;
 
   document.getElementById("classLevel").value = c.level_arabic;
+  document.getElementById("classBatch").value = c.batch || "";
   document.getElementById("classCourse").value = c.course;
   document.getElementById("Instructor").value = c.instructor;
   document.getElementById("classDate").value = c.class_date;
@@ -1344,6 +1363,7 @@ async function addAssessment() {
     const description = document.getElementById("assessmentDescription").value;
     const title = document.getElementById("assessmentTitle").value;
     const level_arabic = document.getElementById("assessmentLevel").value;
+    const batch = document.getElementById("assessmentBatch").value;
     const course = document.getElementById("assessmentCourse").value;
     const semester = document.getElementById("assessmentSemester").value;
     const type = document.getElementById("assessmentType").value;
@@ -1373,7 +1393,7 @@ async function addAssessment() {
 
     if (window.editingAssessmentId) {
       const { error } = await db.from("assessments").update({
-        description, title, level_arabic, course, semester, type,
+        description, title, level_arabic, batch, course, semester, type,
         max_score, duration_minutes: parseInt(duration_minutes),
         start_time: startUTC, end_time: endUTC,
         status, is_active: status === "active"
@@ -1384,7 +1404,7 @@ async function addAssessment() {
       window.editingAssessmentId = null;
     } else {
       const { error } = await db.from("assessments").insert([{
-        description, title, level_arabic, course, semester, type,
+        description, title, level_arabic, batch, course, semester, type,
         max_score, duration_minutes: parseInt(duration_minutes),
         start_time: startUTC, end_time: endUTC,
         status, is_active: status === "active"
@@ -1411,6 +1431,7 @@ async function editAssessment(id) {
   document.getElementById("assessmentDescription").value = a.description;
   document.getElementById("assessmentTitle").value = a.title;
   document.getElementById("assessmentLevel").value = a.level_arabic;
+  document.getElementById("assessmentBatch").value = a.batch || "";
   document.getElementById("assessmentCourse").value = a.course;
   document.getElementById("assessmentSemester").value = a.semester;
   document.getElementById("assessmentType").value = a.type;
@@ -1441,6 +1462,7 @@ async function loadAssessments() {
           <td>${a.description}</td>
           <td>${a.title}</td>
           <td>${a.level_arabic}</td>
+          <td>${a.batch || "—"}</td>
           <td>${a.course}</td>
           <td>${a.semester}</td>
           <td>${t(a.type)}</td>
@@ -1518,6 +1540,7 @@ async function loadTeachers() {
 async function addCourse() {
   const name = document.getElementById("courseName").value.trim();
   const level = document.getElementById("courseLevel").value;
+  const batch = document.getElementById("courseBatch").value.trim();
   const instructorSelect = document.getElementById("courseInstructor");
 
   const instructor_id = instructorSelect.value;
@@ -1536,6 +1559,7 @@ async function addCourse() {
   const payload = {
     course_name: name,
     level,
+    batch: batch || null, // blank = open to every batch at this level
     instructor_id,
     instructor: instructor_name // 👈 store name too
   };
@@ -1571,6 +1595,7 @@ async function addCourse() {
 
   document.getElementById("courseName").value = "";
   document.getElementById("courseLevel").value = "";
+  document.getElementById("courseBatch").value = "";
   document.getElementById("courseInstructor").value = "";
 
   loadCoursesAdmin();
@@ -1598,13 +1623,15 @@ async function loadCoursesAdmin() {
         <strong>${course.course_name}</strong>
         <span class="course-meta">
           ${course.level ? `${t("Level:")}: ${course.level}` : ""}
-          ${course.level && course.instructor ? " · " : ""}
+          ${course.level && course.batch ? " · " : ""}
+          ${course.batch ? `${t("Batch:")}: ${course.batch}` : ""}
+          ${(course.level || course.batch) && course.instructor ? " · " : ""}
           ${course.instructor ? `${t("Instructor:")}: ${course.instructor}` : ""}
         </span>
       </div>
       <div class="course-item-actions">
         <button class="btn btn-edit"
-          onclick="editCourse('${course.id}', '${course.course_name.replace(/'/g, "\\'")}', '${(course.level || "").replace(/'/g, "\\'")}', '${(course.instructor || "").replace(/'/g, "\\'")}')">
+          onclick="editCourse('${course.id}', '${course.course_name.replace(/'/g, "\\'")}', '${(course.level || "").replace(/'/g, "\\'")}', '${(course.instructor || "").replace(/'/g, "\\'")}', '${(course.batch || "").replace(/'/g, "\\'")}')">
           ${t("Edit")}
         </button>
         <button class="btn btn-delete" onclick="deleteCourse('${course.id}')">
@@ -2247,12 +2274,13 @@ window.addEventListener("load", () => {
 /* -------------------------------------------------------
    CERTIFICATES
 ------------------------------------------------------- */
-async function openCertificateModal(studentId, matric, fullname, level) {
+async function openCertificateModal(studentId, matric, fullname, level, batch) {
   document.getElementById("certStudentName").value = fullname;
   document.getElementById("certMatric").value = matric;
   document.getElementById("certLevel").value = level;
+  document.getElementById("certBatch").value = batch || "";
 
-  window.certStudentData = { studentId, matric, fullname, level };
+  window.certStudentData = { studentId, matric, fullname, level, batch };
 
   const courseList = document.getElementById("certCourseList");
   courseList.innerHTML = `<span>${t("Loading courses...")}</span>`;
@@ -2366,7 +2394,7 @@ function renderExistingCerts(certs) {
 }
 
 async function issueCertificate() {
-  const { matric, fullname, level } = window.certStudentData || {};
+  const { matric, fullname, level, batch } = window.certStudentData || {};
   const checkedCourses = Array.from(document.querySelectorAll(".certCourseCheckbox:checked"))
     .map(cb => cb.value)
     .sort(); // canonical order so duplicate-detection isn't fooled by checkbox click order
@@ -2400,6 +2428,7 @@ async function issueCertificate() {
     student_name: fullname,
     course_name: course_name,
     level: level,
+    batch: batch || null,
     issued_by: "Al-Bayan Arabic Institute Online",
     grade_note: grade_note,
     deleted: false
@@ -2429,9 +2458,9 @@ async function revokeCertificate(certId) {
   if (error) { alert(t("Failed to revoke certificate.")); return; }
 
   showToast(t("Certificate revoked."));
-  const { studentId, matric, fullname, level } = window.certStudentData;
+  const { studentId, matric, fullname, level, batch } = window.certStudentData;
   closeModal("certificateModal");
-  await openCertificateModal(studentId, matric, fullname, level);
+  await openCertificateModal(studentId, matric, fullname, level, batch);
 }
 
 async function restoreCertificate(certId) {
@@ -2442,9 +2471,9 @@ async function restoreCertificate(certId) {
   if (error) { alert(t("Failed to restore certificate.")); return; }
 
   showToast(t("Certificate restored ✅"));
-  const { studentId, matric, fullname, level } = window.certStudentData;
+  const { studentId, matric, fullname, level, batch } = window.certStudentData;
   closeModal("certificateModal");
-  await openCertificateModal(studentId, matric, fullname, level);
+  await openCertificateModal(studentId, matric, fullname, level, batch);
 }
 
 function editCertificate(certId, currentCourse, currentGradeNote) {
@@ -2508,8 +2537,8 @@ async function saveCertificateEdit(certId) {
   showToast(t("Certificate updated ✅"));
   document.getElementById("certEditForm")?.remove();
 
-  const { matric, fullname, level, studentId } = window.certStudentData;
-  await openCertificateModal(studentId, matric, fullname, level);
+  const { matric, fullname, level, studentId, batch } = window.certStudentData;
+  await openCertificateModal(studentId, matric, fullname, level, batch);
 }
 
 // Soft delete — moves the certificate to trash (hidden from views, but
@@ -2567,9 +2596,9 @@ window.permanentDeleteCertificate = permanentDeleteCertificate;
 // student's certificate modal (if open) and/or the registry tab table.
 async function refreshCertViews() {
   if (window.certStudentData) {
-    const { studentId, matric, fullname, level } = window.certStudentData;
+    const { studentId, matric, fullname, level, batch } = window.certStudentData;
     closeModal("certificateModal");
-    await openCertificateModal(studentId, matric, fullname, level);
+    await openCertificateModal(studentId, matric, fullname, level, batch);
   }
   if (typeof loadCertificatesRegistryData === "function") {
     loadCertificatesRegistryData();
@@ -2581,9 +2610,10 @@ async function refreshCertViews() {
    (Delete / Permanent Delete now handled by the generic
    softDelete()/permanentDelete() helpers — see DELETE ACTIONS section)
 ------------------------------------------------------- */
-function editCourse(id, currentName, currentLevel, currentInstructor) {
+function editCourse(id, currentName, currentLevel, currentInstructor, currentBatch) {
   document.getElementById("courseName").value = currentName;
   document.getElementById("courseLevel").value = currentLevel;
+  document.getElementById("courseBatch").value = currentBatch || "";
   document.getElementById("courseInstructor").value = currentInstructor;
 
   window.editingCourseId = id;
@@ -2824,7 +2854,7 @@ async function loadCertificatesRegistryData() {
   try {
     const { data, error } = await window.supabaseClient
       .from('certificates')
-      .select('id, matric_number, student_name, course_name, level, issued_by, issued_at, revoked, grade_note')
+      .select('id, matric_number, student_name, course_name, level, batch, issued_by, issued_at, revoked, grade_note')
       .eq('deleted', false)
       .order('issued_at', { ascending: false });
 
@@ -2833,12 +2863,12 @@ async function loadCertificatesRegistryData() {
 
     if (error) {
       console.error("Error reading certificates table:", error);
-      tbody.innerHTML = `<tr><td colspan="7" class="empty-row" style="color:red;">${t("Error loading certificate records.")}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" class="empty-row" style="color:red;">${t("Error loading certificate records.")}</td></tr>`;
       return;
     }
 
     if (!data || data.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="7" class="empty-row">${t("No certificates issued yet.")}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" class="empty-row">${t("No certificates issued yet.")}</td></tr>`;
       return;
     }
 
@@ -2853,6 +2883,7 @@ async function loadCertificatesRegistryData() {
           <td><code style="font-size:0.85rem;">${c.matric_number || "—"}</code></td>
           <td>${c.course_name || "—"}</td>
           <td><span class="badge badge-info">${c.level || "—"}</span></td>
+          <td>${c.batch || "—"}</td>
           <td>${statusBadge}</td>
           <td>${formattedDate}</td>
           <td>
@@ -2896,7 +2927,7 @@ const TRASH_CATEGORIES = {
     table: "students",
     orderCol: "fullname",
     ascending: true,
-    headers: () => [t("Photo"), t("Matric"), t("Name"), t("Email"), t("Country"), t("Level")],
+    headers: () => [t("Photo"), t("Matric"), t("Name"), t("Email"), t("Country"), t("Level"), t("Batch")],
     row: s => `
       <td><img src="${s.passport_url || 'passport-placeholder.png'}" class="passport-thumb" style="width:35px;height:35px;border-radius:50%;object-fit:cover;"></td>
       <td>${s.matric_number || "—"}</td>
@@ -2904,6 +2935,7 @@ const TRASH_CATEGORIES = {
       <td>${s.email || "—"}</td>
       <td>${s.country || "—"}</td>
       <td>${s.level_arabic || "—"}</td>
+      <td>${s.batch || "—"}</td>
     `,
     match: s => ({ id: s.id })
   },
@@ -2912,12 +2944,13 @@ const TRASH_CATEGORIES = {
     table: "payments",
     orderCol: "created_at",
     ascending: false,
-    headers: () => [t("Student Name"), t("Matric Number"), t("Amount"), t("Month")],
+    headers: () => [t("Student Name"), t("Matric Number"), t("Amount"), t("Month"), t("Batch")],
     row: p => `
       <td>${p.student_name || "—"}</td>
       <td>${p.matric_number || "—"}</td>
       <td>${p.amount != null ? Number(p.amount).toLocaleString() : "—"}</td>
       <td>${p.month || "—"}</td>
+      <td>${p.batch || "—"}</td>
     `,
     match: p => ({ id: p.id })
   },
@@ -2926,12 +2959,13 @@ const TRASH_CATEGORIES = {
     table: "grades",
     orderCol: "created_at",
     ascending: false,
-    headers: () => [t("Student Name"), t("Matric Number"), t("Course"), t("Semester")],
+    headers: () => [t("Student Name"), t("Matric Number"), t("Course"), t("Semester"), t("Batch")],
     row: g => `
       <td>${g.student_name || "—"}</td>
       <td>${g.matric_number || "—"}</td>
       <td>${g.course || "—"}</td>
       <td>${g.semester || "—"}</td>
+      <td>${g.batch || "—"}</td>
     `,
     match: g => ({ id: g.id })
   },
@@ -2940,10 +2974,11 @@ const TRASH_CATEGORIES = {
     table: "schedule",
     orderCol: "created_at",
     ascending: false,
-    headers: () => [t("Course"), t("Level"), t("Date"), t("Time")],
+    headers: () => [t("Course"), t("Level"), t("Batch"), t("Date"), t("Time")],
     row: c => `
       <td>${c.course || "—"}</td>
       <td>${c.level || "—"}</td>
+      <td>${c.batch || "—"}</td>
       <td>${c.date || "—"}</td>
       <td>${c.time || "—"}</td>
     `,
@@ -2954,11 +2989,12 @@ const TRASH_CATEGORIES = {
     table: "assessments",
     orderCol: "created_at",
     ascending: false,
-    headers: () => [t("Title"), t("Course"), t("Level"), t("Start Time")],
+    headers: () => [t("Title"), t("Course"), t("Level"), t("Batch"), t("Start Time")],
     row: a => `
       <td>${a.title || "—"}</td>
       <td>${a.course || "—"}</td>
       <td>${a.level || "—"}</td>
+      <td>${a.batch || "—"}</td>
       <td>${a.start_time || "—"}</td>
     `,
     match: a => ({ id: a.id })
@@ -2968,10 +3004,11 @@ const TRASH_CATEGORIES = {
     table: "courses",
     orderCol: "created_at",
     ascending: false,
-    headers: () => [t("Course Name"), t("Level"), t("Instructor")],
+    headers: () => [t("Course Name"), t("Level"), t("Batch"), t("Instructor")],
     row: c => `
       <td>${c.course_name || "—"}</td>
       <td>${c.level || "—"}</td>
+      <td>${c.batch || "—"}</td>
       <td>${c.instructor || "—"}</td>
     `,
     match: c => ({ id: c.id })
@@ -2981,10 +3018,11 @@ const TRASH_CATEGORIES = {
     table: "attendance_sessions",
     orderCol: "opens_at",
     ascending: false,
-    headers: () => [t("Title"), t("Level"), t("Opens"), t("Closes")],
+    headers: () => [t("Title"), t("Level"), t("Batch"), t("Opens"), t("Closes")],
     row: s => `
       <td>${s.title || "—"}</td>
       <td>${s.level || "—"}</td>
+      <td>${s.batch || "—"}</td>
       <td>${s.opens_at ? new Date(s.opens_at).toLocaleString() : "—"}</td>
       <td>${s.closes_at ? new Date(s.closes_at).toLocaleString() : "—"}</td>
     `,
@@ -3009,11 +3047,12 @@ const TRASH_CATEGORIES = {
     table: "certificates",
     orderCol: "issued_at",
     ascending: false,
-    headers: () => [t("Student Name"), t("Matric Number"), t("Course"), t("Date Issued")],
+    headers: () => [t("Student Name"), t("Matric Number"), t("Course"), t("Batch"), t("Date Issued")],
     row: c => `
       <td>${c.student_name || "—"}</td>
       <td>${c.matric_number || "—"}</td>
       <td>${c.course_name || "—"}</td>
+      <td>${c.batch || "—"}</td>
       <td>${c.issued_at ? new Date(c.issued_at).toLocaleDateString() : "—"}</td>
     `,
     match: c => ({ id: c.id })
@@ -3161,7 +3200,7 @@ async function loadAttendanceSessions() {
   const tbody = document.getElementById("attendance-sessions-body");
   if (!tbody) return;
 
-  tbody.innerHTML = `<tr><td colspan="7" class="empty-row">
+  tbody.innerHTML = `<tr><td colspan="8" class="empty-row">
     <i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading sessions...")}
   </td></tr>`;
 
@@ -3175,7 +3214,7 @@ async function loadAttendanceSessions() {
     if (error) throw error;
 
     if (!sessions || sessions.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="7" class="empty-row">${t("No attendance sessions yet")}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" class="empty-row">${t("No attendance sessions yet")}</td></tr>`;
       return;
     }
 
@@ -3195,6 +3234,7 @@ async function loadAttendanceSessions() {
       <tr>
         <td>${s.title}</td>
         <td><span class="badge badge-info">${t(s.level)}</span></td>
+        <td>${s.batch || "—"}</td>
         <td>${formatDate(s.opens_at)}</td>
         <td>${formatDate(s.closes_at)}</td>
         <td>
@@ -3232,7 +3272,7 @@ async function loadAttendanceSessions() {
 
   } catch (e) {
     console.error("loadAttendanceSessions error:", e);
-    tbody.innerHTML = `<tr><td colspan="7" class="empty-row" style="color:red;">${t("Failed to load attendance sessions.")}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8" class="empty-row" style="color:red;">${t("Failed to load attendance sessions.")}</td></tr>`;
   }
 }
 
@@ -3247,6 +3287,7 @@ async function addAttendanceSession() {
   try {
     const title = document.getElementById("attendanceTitle").value.trim();
     const level = document.getElementById("attendanceLevel").value;
+    const batch = document.getElementById("attendanceBatch").value.trim();
     const opensAtRaw = document.getElementById("attendanceOpensAt").value;
     const closesAtRaw = document.getElementById("attendanceClosesAt").value;
     const platformLink = document.getElementById("attendancePlatformLink").value.trim();
@@ -3274,7 +3315,7 @@ async function addAttendanceSession() {
 
     if (window.editingAttendanceSessionId) {
       const { error } = await db.from("attendance_sessions").update({
-        title, level, opens_at: opensAt, closes_at: closesAt,
+        title, level, batch, opens_at: opensAt, closes_at: closesAt,
         platform_link: platformLink || null
       }).eq("id", window.editingAttendanceSessionId);
 
@@ -3287,7 +3328,7 @@ async function addAttendanceSession() {
       const token = generateAttendanceToken();
 
       const { data, error } = await db.from("attendance_sessions").insert([{
-        title, level, opens_at: opensAt, closes_at: closesAt,
+        title, level, batch, opens_at: opensAt, closes_at: closesAt,
         platform_link: platformLink || null,
         attendance_token: token,
         is_active: true
@@ -3321,6 +3362,7 @@ async function editAttendanceSession(id) {
   document.getElementById("attendanceModalTitle").textContent = t("Edit Attendance Session");
   document.getElementById("attendanceTitle").value = s.title;
   document.getElementById("attendanceLevel").value = s.level;
+  document.getElementById("attendanceBatch").value = s.batch || "";
   document.getElementById("attendanceOpensAt").value = formatForInput(s.opens_at);
   document.getElementById("attendanceClosesAt").value = formatForInput(s.closes_at);
   document.getElementById("attendancePlatformLink").value = s.platform_link || "";

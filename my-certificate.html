@@ -534,7 +534,7 @@
       try {
         const { data: student, error: studentError } = await sb
           .from("students")
-          .select("fullname, matric_number, level_arabic")
+          .select("fullname, matric_number, level_arabic, batch")
           .eq("matric_number", matric)
           .single();
 
@@ -600,6 +600,8 @@
                       <span class="cert-meta-value">${student.fullname}</span>
                       <span class="cert-meta-label">Level</span>
                       <span class="cert-meta-value">${cert.level}</span>
+                      <span class="cert-meta-label">Batch</span>
+                      <span class="cert-meta-value">${student.batch || "—"}</span>
                       <span class="cert-meta-label">Issued by</span>
                       <span class="cert-meta-value">${cert.issued_by}</span>
                       <span class="cert-meta-label">Date</span>
@@ -614,12 +616,13 @@
                   </div>
                 </div>
                 <div class="cert-actions">
-                  <button class="btn-download" onclick="downloadCertificate(
+                <button class="btn-download" onclick="downloadCertificate(
                     '${cert.id}',
                     '${student.fullname.replace(/'/g, "\\'")}',
                     '${student.matric_number}',
                     '${cert.course_name.replace(/'/g, "\\'")}',
                     '${cert.level}',
+                    '${(student.batch || "").replace(/'/g, "\\'")}',
                     '${cert.issued_at}',
                     '${(cert.grade_note || "").replace(/'/g, "\\'")}'
                   )">
@@ -653,6 +656,142 @@
 
 
     /* ===========================
+       ARABIC TEXT SUPPORT FOR jsPDF
+       jsPDF's built-in fonts (Helvetica/Times/Courier) have zero Arabic
+       glyphs and no reshaping, so raw Arabic text renders blank/garbled.
+       This block: (1) lazy-loads an Arabic-capable TTF (Amiri, SIL OFL
+       licensed) the first time a certificate actually needs it, and
+       (2) reshapes Arabic runs into their correct joined letterforms
+       (Presentation Forms-B) and reverses them into visual RTL order so
+       jsPDF's left-to-right text() draws them correctly. Diacritics
+       (tashkeel) and tatweel are stripped — jsPDF can't composite combining
+       marks over a base letter, so they'd render as stray floating marks.
+       Course titles are plain letters, so this covers the real use case.
+    =========================== */
+    const ARABIC_FORMS = { // codepoint -> [isolated, final, initial, medial]; right-joining letters have null initial/medial
+      0x0621: [0xFE80, null,   null,   null  ], // hamza
+      0x0622: [0xFE81, 0xFE82, null,   null  ], // alef madda
+      0x0623: [0xFE83, 0xFE84, null,   null  ], // alef hamza above
+      0x0624: [0xFE85, 0xFE86, null,   null  ], // waw hamza above
+      0x0625: [0xFE87, 0xFE88, null,   null  ], // alef hamza below
+      0x0626: [0xFE89, 0xFE8A, 0xFE8B, 0xFE8C], // yeh hamza
+      0x0627: [0xFE8D, 0xFE8E, null,   null  ], // alef
+      0x0628: [0xFE8F, 0xFE90, 0xFE91, 0xFE92], // beh
+      0x0629: [0xFE93, 0xFE94, null,   null  ], // teh marbuta
+      0x062A: [0xFE95, 0xFE96, 0xFE97, 0xFE98], // teh
+      0x062B: [0xFE99, 0xFE9A, 0xFE9B, 0xFE9C], // theh
+      0x062C: [0xFE9D, 0xFE9E, 0xFE9F, 0xFEA0], // jeem
+      0x062D: [0xFEA1, 0xFEA2, 0xFEA3, 0xFEA4], // hah
+      0x062E: [0xFEA5, 0xFEA6, 0xFEA7, 0xFEA8], // khah
+      0x062F: [0xFEA9, 0xFEAA, null,   null  ], // dal
+      0x0630: [0xFEAB, 0xFEAC, null,   null  ], // thal
+      0x0631: [0xFEAD, 0xFEAE, null,   null  ], // reh
+      0x0632: [0xFEAF, 0xFEB0, null,   null  ], // zain
+      0x0633: [0xFEB1, 0xFEB2, 0xFEB3, 0xFEB4], // seen
+      0x0634: [0xFEB5, 0xFEB6, 0xFEB7, 0xFEB8], // sheen
+      0x0635: [0xFEB9, 0xFEBA, 0xFEBB, 0xFEBC], // sad
+      0x0636: [0xFEBD, 0xFEBE, 0xFEBF, 0xFEC0], // dad
+      0x0637: [0xFEC1, 0xFEC2, 0xFEC3, 0xFEC4], // tah
+      0x0638: [0xFEC5, 0xFEC6, 0xFEC7, 0xFEC8], // zah
+      0x0639: [0xFEC9, 0xFECA, 0xFECB, 0xFECC], // ain
+      0x063A: [0xFECD, 0xFECE, 0xFECF, 0xFED0], // ghain
+      0x0641: [0xFED1, 0xFED2, 0xFED3, 0xFED4], // feh
+      0x0642: [0xFED5, 0xFED6, 0xFED7, 0xFED8], // qaf
+      0x0643: [0xFED9, 0xFEDA, 0xFEDB, 0xFEDC], // kaf
+      0x0644: [0xFEDD, 0xFEDE, 0xFEDF, 0xFEE0], // lam
+      0x0645: [0xFEE1, 0xFEE2, 0xFEE3, 0xFEE4], // meem
+      0x0646: [0xFEE5, 0xFEE6, 0xFEE7, 0xFEE8], // noon
+      0x0647: [0xFEE9, 0xFEEA, 0xFEEB, 0xFEEC], // heh
+      0x0648: [0xFEED, 0xFEEE, null,   null  ], // waw
+      0x0649: [0xFEEF, 0xFEF0, null,   null  ], // alef maksura
+      0x064A: [0xFEF1, 0xFEF2, 0xFEF3, 0xFEF4]  // yeh
+    };
+    const LAM_ALEF_LIGATURES = { // alef variant after lam -> [isolated, final] ligature codepoint
+      0x0622: [0xFEF5, 0xFEF6],
+      0x0623: [0xFEF7, 0xFEF8],
+      0x0625: [0xFEF9, 0xFEFA],
+      0x0627: [0xFEFB, 0xFEFC]
+    };
+    const ARABIC_RANGE_RE = /[\u0600-\u06FF\u0750-\u077F]/;
+    function containsArabic(str) { return ARABIC_RANGE_RE.test(str || ""); }
+    function isDualJoining(cp) { const f = ARABIC_FORMS[cp]; return !!f && f[2] !== null; }
+
+    function shapeArabicRun(codepoints) {
+      const n = codepoints.length;
+      const shaped = [];
+      let i = 0;
+      while (i < n) {
+        const cp = codepoints[i];
+        if (cp === 0x0644 && i + 1 < n && LAM_ALEF_LIGATURES.hasOwnProperty(codepoints[i + 1])) {
+          const prevConnects = i > 0 && isDualJoining(codepoints[i - 1]);
+          const lig = LAM_ALEF_LIGATURES[codepoints[i + 1]];
+          shaped.push(prevConnects ? lig[1] : lig[0]);
+          i += 2;
+          continue;
+        }
+        const forms = ARABIC_FORMS[cp];
+        const prevConnects = i > 0 && isDualJoining(codepoints[i - 1]);
+        const nextConnects = isDualJoining(cp) && i + 1 < n && ARABIC_FORMS.hasOwnProperty(codepoints[i + 1]);
+        let form;
+        if (prevConnects && nextConnects) form = forms[3];
+        else if (prevConnects) form = forms[1];
+        else if (nextConnects) form = forms[2];
+        else form = forms[0];
+        shaped.push(form || forms[0]);
+        i++;
+      }
+      return shaped;
+    }
+
+    // Reshapes + RTL-reverses only the Arabic run(s) within a string; any
+    // Latin letters, digits, quotes, or spaces around them are left as-is.
+    function shapeArabicText(str) {
+      str = str.replace(/[\u064B-\u0652\u0670\u0640]/g, ""); // strip diacritics/tatweel
+      let result = "";
+      let i = 0;
+      const n = str.length;
+      while (i < n) {
+        const cp = str.codePointAt(i);
+        if (ARABIC_FORMS.hasOwnProperty(cp)) {
+          let j = i;
+          const run = [];
+          while (j < n && ARABIC_FORMS.hasOwnProperty(str.codePointAt(j))) {
+            run.push(str.codePointAt(j));
+            j++;
+          }
+          const shaped = shapeArabicRun(run);
+          shaped.reverse();
+          result += shaped.map(c => String.fromCharCode(c)).join("");
+          i = j;
+        } else {
+          result += str[i];
+          i++;
+        }
+      }
+      return result;
+    }
+
+    // Lazy-loads Amiri (SIL OFL licensed) as base64 the first time a
+    // certificate actually contains Arabic text, and caches it for reuse.
+    let arabicFontBase64Promise = null;
+    function loadArabicFontBase64() {
+      if (!arabicFontBase64Promise) {
+        arabicFontBase64Promise = fetch("https://raw.githubusercontent.com/google/fonts/main/ofl/amiri/Amiri-Regular.ttf")
+          .then(r => r.arrayBuffer())
+          .then(buf => {
+            const bytes = new Uint8Array(buf);
+            let binary = "";
+            const chunkSize = 0x8000;
+            for (let i = 0; i < bytes.length; i += chunkSize) {
+              binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunkSize));
+            }
+            return btoa(binary);
+          });
+      }
+      return arabicFontBase64Promise;
+    }
+
+    /* ===========================
        GENERATE CERTIFICATE PDF
        Positions are fitted to cert-bg.png. Single-course certificates render
        at the exact original coordinates below. Multi-course certificates
@@ -662,7 +801,7 @@
        overlaps. If courses still overflow with 4+ long names, shrink the
        course font size or widen maxCourseWidth below.
     =========================== */
-    async function downloadCertificate(certId, fullname, matricNumber, courseName, level, issuedAt, gradeNote) {
+    async function downloadCertificate(certId, fullname, matricNumber, courseName, level, batch, issuedAt, gradeNote) {
       const { jsPDF } = window.jspdf;
 
       const doc = new jsPDF({
@@ -708,13 +847,36 @@
 
       // COURSE LIST — one course keeps the original single-line wording;
       // several courses get quoted + comma-joined and wrap if too wide.
+      // Arabic course names are reshaped + rendered in an embedded Arabic
+      // font (Helvetica has no Arabic glyphs at all).
       const courses = courseName.split(",").map(c => c.trim()).filter(Boolean);
+      const hasArabicCourse = courses.some(containsArabic);
+
+      let arabicFontReady = false;
+      if (hasArabicCourse) {
+        try {
+          const fontBase64 = await loadArabicFontBase64();
+          doc.addFileToVFS("Amiri-Regular.ttf", fontBase64);
+          doc.addFont("Amiri-Regular.ttf", "Amiri", "normal");
+          arabicFontReady = true;
+        } catch (e) {
+          console.error("Arabic font load failed, course name(s) may not render correctly:", e);
+        }
+      }
+
+      const courseDisplayParts = courses.map(c =>
+        `"${containsArabic(c) ? shapeArabicText(c) : c}"`
+      );
       const courseLabel = courses.length > 1
-        ? `${courses.map(c => `"${c}"`).join(", ")} Courses`
-        : `"${courseName}" Course`;
+        ? `${courseDisplayParts.join(", ")} Courses`
+        : `${courseDisplayParts[0]} Course`;
 
       doc.setFontSize(18);
-      doc.setFont("helvetica", "bold");
+      if (hasArabicCourse && arabicFontReady) {
+        doc.setFont("Amiri", "normal"); // only the Regular weight is embedded
+      } else {
+        doc.setFont("helvetica", "bold");
+      }
       const maxCourseWidth = pageWidth - 200;
       const courseLines = doc.splitTextToSize(courseLabel, maxCourseWidth);
       const courseLineHeight = 22;
@@ -732,6 +894,14 @@
       doc.setFont("helvetica", "bold");
       doc.text(`Matric No: ${matricNumber}`, pageWidth / 2, 478 + extraShift, { align: "center" });
 
+            // BATCH
+      if (batch && batch.trim() !== "") {
+        doc.setTextColor(20, 20, 20);
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "bold");
+        doc.text(`Batch: ${batch}`, pageWidth / 2, 495 + extraShift, { align: "center" });
+      }
+      
       // GRADE NOTE
       const rawGrade = gradeNote && gradeNote.trim() !== "" ? gradeNote.trim() : null;
       if (rawGrade) {

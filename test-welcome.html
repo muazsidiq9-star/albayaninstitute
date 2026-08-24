@@ -184,11 +184,19 @@
     function fillExamInfo(exam, startTime, endTime) {
       skeleton.style.display = "none";
       const el = document.getElementById("examInfo");
-      el.innerHTML = `
+       el.innerHTML = `
         <div class="tw-info-grid">
+          <div class="tw-info-item">
+            <span class="tw-info-label"><i class="fa-solid fa-id-card"></i> ${t("Matric:")}</span>
+            <span class="tw-info-value">${matric}</span>
+          </div>
           <div class="tw-info-item">
             <span class="tw-info-label"><i class="fa-solid fa-layer-group"></i> ${t("Level:")}</span>
             <span class="tw-info-value">${exam.level_arabic}</span>
+          </div>
+          <div class="tw-info-item">
+            <span class="tw-info-label"><i class="fa-solid fa-users"></i> ${t("Batch:")}</span>
+            <span class="tw-info-value">${exam.batch || t("All Batches")}</span>
           </div>
           <div class="tw-info-item">
             <span class="tw-info-label"><i class="fa-solid fa-calendar-alt"></i> ${t("Semester:")}</span>
@@ -275,17 +283,27 @@
       try {
         const { data: student, error: studentErr } = await sb
           .from("students")
-          .select("level_arabic")
+          .select("level_arabic, batch")
           .eq("matric_number", matric)
           .single();
         if (studentErr) throw studentErr;
 
-        const { data: exams, error: examsErr } = await sb
+                // 1. Pull every exam for this student's level
+        const { data: allExams, error: examsErr } = await sb
           .from("assessments")
           .select("*")
           .eq("level_arabic", student.level_arabic)
           .order("start_time", { ascending: true });
+
         if (examsErr) throw examsErr;
+
+        // 2. Client-side gate: exam must match batch (or be open to all batches)
+        //    AND match matric (or be open to all matrics)
+        const exams = (allExams || []).filter(exam => {
+          const batchMatch  = !exam.batch  || exam.batch  === student.batch;
+          const matricMatch = !exam.matric_number || exam.matric_number === matric;
+          return batchMatch && matricMatch;
+        });
 
         if (!exams || exams.length === 0) {
           setBadge("none");

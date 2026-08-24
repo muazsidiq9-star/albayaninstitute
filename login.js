@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (selectedRole === "student") {
         const { data: student, error } = await supabase
           .from("students")
-          .select("matric_number, fullname, email, level_arabic, country, plan_type, password, password_changed")
+          .select("matric_number, fullname, email, level_arabic, batch, country, plan_type, password, password_changed")
           .eq("email", email)
           .single();
 
@@ -99,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
             fullname: student.fullname,
             email: student.email,
             level: student.level_arabic,
+            batch: student.batch,
             country: student.country,
             plan_type: student.plan_type
           })
@@ -113,6 +114,7 @@ const studentSession = {
     fullname: student.fullname,
     email: student.email,
     level: student.level_arabic,
+    batch: student.batch,
     country: student.country,
     plan_type: student.plan_type
   }),

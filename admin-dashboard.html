@@ -67,7 +67,7 @@
   ================================================ -->
   <header class="admin-hero">
     <video class="hero-video" autoplay muted loop playsinline>
-      <source src="background.mp4" type="video/mp4">
+      <source src="background-all.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -347,6 +347,7 @@
             <th data-translate="Gender">Gender</th>
             <th data-translate="Age">Age</th>
             <th data-translate="Level">Level</th>
+            <th data-translate="Batch">Batch</th>
             <th data-translate="Status">Status</th>
             <th data-translate="Admission">Admission</th>
             <th data-translate="Actions">Actions</th>
@@ -359,7 +360,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td colspan="16" class="empty-row" data-translate="No students yet">No students yet</td></tr>
+          <tr><td colspan="18" class="empty-row" data-translate="No students yet">No students yet</td></tr>
         </tbody>
       </table>
     </div>
@@ -391,6 +392,7 @@
             <th data-translate="Matric No.">Matric No.</th>
             <th data-translate="Email">Email</th>
             <th data-translate="Level">Level</th>
+            <th data-translate="Batch">Batch</th>
             <th data-translate="Amount">Amount</th>
             <th data-translate="Month">Month</th>
             <th data-translate="Method">Method</th>
@@ -402,7 +404,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td colspan="13" class="empty-row" data-translate="No payments yet">No payments yet</td></tr>
+          <tr><td colspan="14" class="empty-row" data-translate="No payments yet">No payments yet</td></tr>
         </tbody>
       </table>
     </div>
@@ -476,6 +478,7 @@
             <th data-translate="Student">Student</th>
             <th data-translate="Matric No.">Matric No.</th>
             <th data-translate="Level">Level</th>
+            <th data-translate="Batch">Batch</th>
             <th data-translate="Course">Course</th>
             <th data-translate="Semester">Semester</th>
             <th data-translate="Assessment">Assessment</th>
@@ -489,7 +492,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td colspan="13" class="empty-row" data-translate="No grades yet">No grades yet</td></tr>
+          <tr><td colspan="14" class="empty-row" data-translate="No grades yet">No grades yet</td></tr>
         </tbody>
       </table>
     </div>
@@ -519,6 +522,7 @@
         <thead>
           <tr>
             <th data-translate="Level">Level</th>
+            <th data-translate="Batch">Batch</th>
             <th data-translate="Course">Course</th>
             <th data-translate="Instructor">Instructor</th>
             <th data-translate="Date">Date</th>
@@ -530,7 +534,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td colspan="9" class="empty-row" data-translate="No classes yet">No classes yet</td></tr>
+          <tr><td colspan="10" class="empty-row" data-translate="No classes yet">No classes yet</td></tr>
         </tbody>
       </table>
     </div>
@@ -558,6 +562,7 @@
           <tr>
             <th data-translate="Title">Title</th>
             <th data-translate="Level">Level</th>
+            <th data-translate="Batch">Batch</th>
             <th data-translate="Opens">Opens</th>
             <th data-translate="Closes">Closes</th>
             <th data-translate="Present">Present</th>
@@ -566,7 +571,7 @@
           </tr>
         </thead>
         <tbody id="attendance-sessions-body">
-          <tr><td colspan="7" class="empty-row" data-translate="No attendance sessions yet">No attendance sessions yet</td></tr>
+          <tr><td colspan="8" class="empty-row" data-translate="No attendance sessions yet">No attendance sessions yet</td></tr>
         </tbody>
       </table>
     </div>
@@ -598,6 +603,7 @@
             <th data-translate="Description">Description</th>
             <th data-translate="Title">Title</th>
             <th data-translate="Level">Level</th>
+            <th data-translate="Batch">Batch</th>
             <th data-translate="Course">Course</th>
             <th data-translate="Semester">Semester</th>
             <th data-translate="Type">Type</th>
@@ -611,7 +617,7 @@
           </tr>
         </thead>
         <tbody id="assessments-body">
-          <tr><td colspan="13" class="empty-row" data-translate="No assessments yet">No assessments yet</td></tr>
+          <tr><td colspan="14" class="empty-row" data-translate="No assessments yet">No assessments yet</td></tr>
         </tbody>
       </table>
     </div>
@@ -644,6 +650,8 @@
         <select id="courseInstructor">
   <option value="">Select Instructor</option>
 </select>
+        <input type="text" id="courseBatch" placeholder="Batch (e.g. June 2026) — leave blank for all batches"
+               data-translate-placeholder="Batch (e.g. June 2026) — leave blank for all batches">
         <button class="btn btn-primary" id="addCourseBtn" onclick="addCourse()">
           <i class="fa-solid fa-plus"></i>
           <span data-translate="Add Course">Add Course</span>
@@ -867,6 +875,7 @@
               <th data-translate="Matric No.">Matric No.</th>
               <th data-translate="Course">Course</th>
               <th data-translate="Level">Level</th>
+              <th data-translate="Batch">Batch</th>
               <th data-translate="Status">Status</th>
               <th data-translate="Date Issued">Date Issued</th>
               <th data-translate="Actions">Actions</th>
@@ -874,7 +883,7 @@
           </thead>
           <tbody id="certRegistryTabBody">
             <tr>
-              <td colspan="7" class="empty-row" data-translate="Loading history logs...">Loading history logs...</td>
+              <td colspan="8" class="empty-row" data-translate="Loading history logs...">Loading history logs...</td>
             </tr>
           </tbody>
         </table>
@@ -975,12 +984,13 @@
               <th data-translate="Email">Email</th>
               <th data-translate="Country">Country</th>
               <th data-translate="Level">Level</th>
+              <th data-translate="Batch">Batch</th>
               <th data-translate="Actions">Actions</th>
             </tr>
           </thead>
           <tbody id="trashTabPanelBody">
             <tr>
-              <td colspan="7" class="empty-row" data-translate="Trash bin is empty.">Trash bin is empty.</td>
+              <td colspan="8" class="empty-row" data-translate="Trash bin is empty.">Trash bin is empty.</td>
             </tr>
           </tbody>
         </table>
@@ -1026,6 +1036,9 @@
           <option data-translate="Intermediate">Intermediate</option>
           <option data-translate="Advanced">Advanced</option>
         </select>
+        <label data-translate="Batch">Batch</label>
+        <input type="text" id="studentBatch" placeholder="e.g. June 2026"
+               data-translate-placeholder="e.g. June 2026">
         <label data-translate="Status">Status</label>
         <select id="studentStatus">
           <option value="active" data-translate="Active">Active</option>
@@ -1060,7 +1073,7 @@
       <h2 data-translate="Add Payment">Add Payment</h2>
       <div class="modal-grid">
         <label data-translate="Student">Student</label>
-        <select id="paymentStudent" onchange="autofillStudentLevel('paymentStudent','paymentLevel')">
+        <select id="paymentStudent" onchange="autofillStudentLevel('paymentStudent','paymentLevel','paymentBatch')">
           <option value="" data-translate="Select a student">Select a student</option>
         </select>
         <label data-translate="Level">Level</label>
@@ -1071,6 +1084,8 @@
           <option data-translate="Intermediate">Intermediate</option>
           <option data-translate="Advanced">Advanced</option>
         </select>
+        <label data-translate="Batch">Batch</label>
+        <input type="text" id="paymentBatch" placeholder="Batch" disabled>
         <label data-translate="Amount">Amount</label>
         <input type="number" id="paymentAmount" placeholder="Amount Paid"
                data-translate-placeholder="Amount Paid">
@@ -1134,7 +1149,7 @@
       <h2 data-translate="Add Grade">Add Grade</h2>
       <div class="modal-grid">
         <label data-translate="Student">Student</label>
-        <select id="gradeStudent" onchange="autofillStudentLevel('gradeStudent','gradeLevel')">
+        <select id="gradeStudent" onchange="autofillStudentLevel('gradeStudent','gradeLevel','gradeBatch')">
           <option value="" data-translate="Select a student">Select a student</option>
         </select>
         <input type="hidden" id="gradeStudentId">
@@ -1146,6 +1161,8 @@
           <option data-translate="Intermediate">Intermediate</option>
           <option data-translate="Advanced">Advanced</option>
         </select>
+        <label data-translate="Batch">Batch</label>
+        <input type="text" id="gradeBatch" placeholder="Batch" disabled>
         <label data-translate="Course">Course</label>
         <input type="text" id="gradeCourse" placeholder="Course Name"
                data-translate-placeholder="Course Name">
@@ -1205,6 +1222,9 @@
           <option data-translate="Intermediate">Intermediate</option>
           <option data-translate="Advanced">Advanced</option>
         </select>
+        <label data-translate="Batch">Batch</label>
+        <input type="text" id="classBatch" placeholder="e.g. June 2026"
+               data-translate-placeholder="e.g. June 2026">
         <label data-translate="Course">Course</label>
         <input type="text" id="classCourse" placeholder="Course Name"
                data-translate-placeholder="Course Name">
@@ -1256,6 +1276,9 @@
           <option data-translate="Intermediate">Intermediate</option>
           <option data-translate="Advanced">Advanced</option>
         </select>
+        <label data-translate="Batch">Batch</label>
+        <input type="text" id="attendanceBatch" placeholder="e.g. June 2026"
+               data-translate-placeholder="e.g. June 2026">
         <label data-translate="Opens At">Opens At</label>
         <input type="datetime-local" id="attendanceOpensAt">
         <label data-translate="Closes At">Closes At</label>
@@ -1334,6 +1357,9 @@
           <option data-translate="Intermediate">Intermediate</option>
           <option data-translate="Advanced">Advanced</option>
         </select>
+        <label data-translate="Batch">Batch</label>
+        <input type="text" id="assessmentBatch" placeholder="e.g. June 2026"
+               data-translate-placeholder="e.g. June 2026">
         <label data-translate="Course">Course</label>
         <input type="text" id="assessmentCourse" placeholder="Course Name"
                data-translate-placeholder="Course Name">
@@ -1394,6 +1420,8 @@
           <input type="text" id="certMatric" disabled>
           <label data-translate="Level">Level</label>
           <input type="text" id="certLevel" disabled>
+          <label data-translate="Batch">Batch</label>
+          <input type="text" id="certBatch" disabled>
           <label data-translate="Grade Note (optional)">Grade Note (optional)</label>
           <input type="text" id="certGradeNote"
                  placeholder="e.g. with a total score of 85%"

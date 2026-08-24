@@ -117,17 +117,25 @@
   <!-- ================================================
        TAB: MY COURSES
   ================================================ -->
-  <div class="tab-content active" id="tab-courses">
-    <div class="section-header">
-      <h2 data-translate="My Courses & Students">My Courses &amp; Students</h2>
+  <!-- ================================================
+     TAB: MY COURSES
+=============================================== -->
+<div class="tab-content active" id="tab-courses">
+  <div class="section-header">
+    <h2 data-translate="My Courses & Students">My Courses &amp; Students</h2>
+    <div class="filter-bar">
+      <select id="filterBatch" class="search-input filter-select">
+        <option value="" data-translate="All Batches">📦 All Batches</option>
+      </select>
       <input type="text" id="searchStudents" class="search-input"
              placeholder="🔍 Search students..."
              data-translate-placeholder="🔍 Search students...">
     </div>
-    <div id="coursesList">
-      <p class="empty-state" data-translate="Loading your courses...">Loading your courses...</p>
-    </div>
   </div>
+  <div id="coursesList">
+    <p class="empty-state" data-translate="Loading your courses...">Loading your courses...</p>
+  </div>
+</div>
 
   <!-- ================================================
        TAB: GRADES
@@ -163,6 +171,12 @@
             <input type="text" id="gradeLevelInput"
                    placeholder="Level"
                    data-translate-placeholder="Level" readonly>
+          </div>
+          <div class="grade-form-field">
+            <label data-translate="Batch">Batch</label>
+            <input type="text" id="gradeBatchInput"
+                   placeholder="Batch"
+                   data-translate-placeholder="Batch" readonly>
           </div>
           <div class="grade-form-field">
             <label data-translate="Semester">Semester</label>
@@ -238,6 +252,7 @@
             <tr>
               <th data-translate="Student">Student</th>
               <th data-translate="Matric">Matric</th>
+              <th data-translate="Batch">Batch</th>
               <th data-translate="Course">Course</th>
               <th data-translate="Semester">Semester</th>
               <th data-translate="Assessment">Assessment</th>

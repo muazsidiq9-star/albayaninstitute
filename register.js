@@ -23,6 +23,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const planPriceStrip = document.getElementById("planPriceStrip");
   const countrySelect = document.getElementById("country");
 
+    // ===========================
+  // Auto-populate Batch with current Month Year
+  // ===========================
+  const batchInput = document.getElementById("batch");
+  if (batchInput && !batchInput.value) {
+    const now = new Date();
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    batchInput.value = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+  }
+
   if (!form) return;
 
   // ===========================
@@ -134,6 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const country = formData.get("country")?.trim();
       const whatsapp = formData.get("whatsapp")?.trim();
       const levelArabic = formData.get("levelArabic");
+      const batch = formData.get("batch")?.trim() || null;
       const planType = formData.get("planType");
       const readQuran = formData.get("readQuran");
       const attendOnline = formData.get("attendOnline");
@@ -224,6 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
             country: country,
             whatsapp: whatsapp,
             level_arabic: levelArabic,
+            batch: batch,
             plan_type: planType,
             read_quran: readQuran,
             attend_online: attendOnline,
@@ -266,6 +281,7 @@ WhatsApp: ${whatsapp}
 Country: ${country}
 Level: ${levelArabic}
 Plan: ${planType}
+Batch: ${batch}
 Matric: ${data.matric_number}
 Passport: ${passportUrl || "Not uploaded"}
         `

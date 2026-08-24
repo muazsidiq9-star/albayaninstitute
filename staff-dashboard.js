@@ -123,6 +123,7 @@ async function loadMyCourses(teacherId) {
 
   let grandTotalStudents = 0;
   let allHTML = "";
+  let allBatches = new Set(); // Collect all unique batches
 
   for (const course of courses) {
     const { data: registrations, error: regError } = await db
@@ -145,29 +146,37 @@ async function loadMyCourses(teacherId) {
 
     if (matricNumbers.length === 0) {
       studentsHTML = `<tr>
-        <td colspan="5" class="empty-state">${t("No students enrolled yet")}</td>
+        <td colspan="7" class="empty-state">${t("No students enrolled yet")}</td>
       </tr>`;
     } else {
       const { data: students, error: studentsError } = await db
         .from("students")
-        .select("matric_number, fullname, email, level_arabic, country, status")
+        .select("matric_number, fullname, email, level_arabic, batch, country, status")
         .in("matric_number", matricNumbers)
         .eq("deleted", false);
 
       if (studentsError) {
         studentsHTML = `<tr>
-          <td colspan="5" class="empty-state" style="color:red;">
+          <td colspan="7" class="empty-state" style="color:red;">
             ${t("Failed to load courses.")}
           </td>
         </tr>`;
       } else {
         grandTotalStudents += (students || []).length;
+        
+        // Collect batches for filter
+        (students || []).forEach(s => {
+          if (s.batch) allBatches.add(s.batch);
+        });
+
         studentsHTML = (students || []).map(s => `
-          <tr class="student-row">
+          <tr class="student-row" data-batch="${s.batch || ''}">
             <td>${s.matric_number}</td>
             <td>${s.fullname}</td>
             <td>${s.email}</td>
             <td>${s.country || "—"}</td>
+            <td>${s.level_arabic || "—"}</td>
+            <td>${s.batch || "—"}</td>
             <td>
               <span class="status-badge
                 ${s.status === 'active' ? 'badge-active' : 'badge-inactive'}">
@@ -194,6 +203,8 @@ async function loadMyCourses(teacherId) {
                 <th>${t("Name")}</th>
                 <th>${t("Email")}</th>
                 <th>${t("Country")}</th>
+                <th>${t("Level")}</th>
+                <th>${t("Batch")}</th>
                 <th>${t("Status")}</th>
               </tr>
             </thead>
@@ -206,7 +217,63 @@ async function loadMyCourses(teacherId) {
 
   document.getElementById("totalStudents").textContent = grandTotalStudents;
   container.innerHTML = allHTML;
+  
+  // Populate batch filter dropdown
+  populateBatchFilter(allBatches);
+  
   enableSearch();
+  enableBatchFilter();
+}
+
+// ===========================
+// BATCH FILTER
+// ===========================
+function populateBatchFilter(batchSet) {
+  const select = document.getElementById("filterBatch");
+  if (!select) return;
+  
+  // Keep the "All Batches" option, clear the rest
+  select.innerHTML = `<option value="" data-translate="All Batches">📦 All Batches</option>`;
+  
+  // Sort batches alphabetically and add them
+  const sortedBatches = Array.from(batchSet).sort();
+  sortedBatches.forEach(batch => {
+    const option = document.createElement("option");
+    option.value = batch;
+    option.textContent = batch;
+    select.appendChild(option);
+  });
+}
+
+function enableBatchFilter() {
+  const select = document.getElementById("filterBatch");
+  const searchInput = document.getElementById("searchStudents");
+  if (!select) return;
+
+  select.addEventListener("change", () => {
+    applyCombinedFilters();
+  });
+
+  // Also wire search to use combined filter
+  if (searchInput) {
+    searchInput.removeEventListener("keyup", applyCombinedFilters);
+    searchInput.addEventListener("keyup", applyCombinedFilters);
+  }
+}
+
+function applyCombinedFilters() {
+  const batchValue = document.getElementById("filterBatch")?.value || "";
+  const searchValue = document.getElementById("searchStudents")?.value.toLowerCase() || "";
+
+  document.querySelectorAll(".student-row").forEach(row => {
+    const rowBatch = row.dataset.batch || "";
+    const rowText = row.textContent.toLowerCase();
+
+    const matchesBatch = !batchValue || rowBatch === batchValue;
+    const matchesSearch = !searchValue || rowText.includes(searchValue);
+
+    row.style.display = (matchesBatch && matchesSearch) ? "" : "none";
+  });
 }
 
 // ===========================
@@ -217,7 +284,7 @@ async function populateGradeForm() {
 
   const { data: students } = await db
     .from("students")
-    .select("matric_number, fullname, level_arabic")
+    .select("matric_number, fullname, level_arabic, batch")
     .in("matric_number", teacherData.studentMatrics)
     .eq("deleted", false)
     .order("fullname");
@@ -226,7 +293,8 @@ async function populateGradeForm() {
   studentSelect.innerHTML = `<option value="">${t("Select Student")}</option>` +
     (students || []).map(s =>
       `<option value="${s.matric_number}"
-        data-level="${s.level_arabic}">
+        data-level="${s.level_arabic}"
+        data-batch="${s.batch || ''}">
         ${s.fullname} (${s.matric_number})
       </option>`
     ).join("");
@@ -235,7 +303,9 @@ async function populateGradeForm() {
   studentSelect.addEventListener("change", () => {
     const selected = studentSelect.selectedOptions[0];
     const level = selected?.dataset.level || "";
+    const batch = selected?.dataset.batch || "";
     document.getElementById("gradeLevelInput").value = level;
+    document.getElementById("gradeBatchInput").value = batch;
   });
 
   const courseSelect = document.getElementById("gradeCourseSelect");
@@ -360,11 +430,15 @@ async function loadMyGrades() {
 
   const { data: students } = await db
     .from("students")
-    .select("matric_number, fullname")
+    .select("matric_number, fullname, batch")
     .in("matric_number", teacherData.studentMatrics);
 
   const nameMap = {};
-  (students || []).forEach(s => { nameMap[s.matric_number] = s.fullname; });
+  const batchMap = {};
+  (students || []).forEach(s => {
+    nameMap[s.matric_number] = s.fullname;
+    batchMap[s.matric_number] = s.batch;
+  });
 
   document.getElementById("totalGrades").textContent = grades.length;
 
@@ -372,6 +446,7 @@ async function loadMyGrades() {
     <tr class="grade-row">
       <td>${nameMap[g.matric_number] || "—"}</td>
       <td>${g.matric_number}</td>
+      <td>${batchMap[g.matric_number] || "—"}</td>
       <td>${g.course}</td>
       <td>${g.semester}</td>
       <td>${g.assessment_score}</td>

@@ -104,11 +104,12 @@ async function loadStats(matric, container) {
     // ===========================
     const { data: student } = await sb
       .from("students")
-      .select("level_arabic")
+      .select("level_arabic, batch")
       .eq("matric_number", matric)
       .single();
 
     const level = student?.level_arabic || t("Not assigned");
+    const batch = student?.batch || t("Not assigned");
 
     // ===========================
     // Current Month Name
@@ -227,7 +228,7 @@ if (totalOutstanding > 0) {
     // ===========================
     // Render UI
     // ===========================
-    container.innerHTML = `
+  container.innerHTML = `
   ${outstandingHTML}
 
   <div class="card">
@@ -238,29 +239,37 @@ if (totalOutstanding > 0) {
     </div>
   </div>
 
-      <div class="card">
-        <div class="icon">💳</div>
-        <div class="details">
-          <h3>${paymentStatus}</h3>
-          <p>${tmpl("month_payment", { month: monthName })}</p>
-        </div>
-      </div>
+  <div class="card">
+    <div class="icon">📅</div>
+    <div class="details">
+      <h3>${batch}</h3>
+      <p>Batch</p>
+    </div>
+  </div>
 
-      <div class="card">
-        <div class="icon">💰</div>
-        <div class="details">
-          <h3>₦${monthlyTotal.toLocaleString()}</h3>
-          <p>${tmpl("month_amount", { month: monthName })}</p>
-        </div>
-      </div>
+  <div class="card">
+    <div class="icon">💳</div>
+    <div class="details">
+      <h3>${paymentStatus}</h3>
+      <p>${tmpl("month_payment", { month: monthName })}</p>
+    </div>
+  </div>
 
-      <div class="card">
-        <div class="icon">📝</div>
-        <div class="details">
-          <h3>${latestGrade}</h3>
-          <p>Latest Grade</p>
-        </div>
-      </div>
+  <div class="card">
+    <div class="icon">💰</div>
+    <div class="details">
+      <h3>₦${monthlyTotal.toLocaleString()}</h3>
+      <p>${tmpl("month_amount", { month: monthName })}</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="icon">📝</div>
+    <div class="details">
+      <h3>${latestGrade}</h3>
+      <p>Latest Grade</p>
+    </div>
+  </div>
     `;
     if (window.reTranslate) reTranslate();
   } catch (err) {
