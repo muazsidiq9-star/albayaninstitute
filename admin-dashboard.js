@@ -249,6 +249,19 @@ function openModal(id) {
   const key = editMap[id];
   if (key) window[key] = null;
 
+  // Course dropdowns need live data from `courses` every time these
+  // modals open fresh (the edit* functions already load it for the
+  // edit case, but a brand-new "Add ..." click skips those).
+  if (id === "assessmentModal" && !window.editingAssessmentId) {
+    loadCoursesForAssessmentForm();
+  }
+  if (id === "gradeModal" && !window.editingGradeId) {
+    loadCoursesForGradeForm();
+  }
+  if (id === "scheduleModal" && !window.editingScheduleId) {
+    loadCoursesForScheduleForm();
+  }
+
   // Reset the "create" version of the attendance modal each time it's freshly opened
   if (id === "attendanceSessionModal" && !window.editingAttendanceSessionId) {
     const linkBox = document.getElementById("attendanceLinkBox");
@@ -1096,6 +1109,33 @@ function renderFees(data) {
 /* -------------------------------------------------------
    GRADES
 ------------------------------------------------------- */
+
+// Populates #gradeCourse from live `courses` data, same pattern as
+// loadCoursesForAssessmentForm(). Grades has no course_id column, so
+// the option value is the course name itself (what addGrade() saves).
+async function loadCoursesForGradeForm() {
+  const { data, error } = await db
+    .from("courses")
+    .select("id, course_name, level, batch")
+    .eq("deleted", false)
+    .order("course_name");
+
+  if (error) { console.error(error); return; }
+
+  const select = document.getElementById("gradeCourse");
+  if (!select) return;
+
+  select.innerHTML = `<option value="">${t("Select Course")}</option>`;
+
+  data.forEach(c => {
+    const option = document.createElement("option");
+    option.value = c.course_name;
+    option.textContent = `${c.course_name}${c.level ? " — " + c.level : ""}${c.batch ? " (" + c.batch + ")" : ""}`;
+    option.dataset.courseName = c.course_name;
+    select.appendChild(option);
+  });
+}
+
 async function addGrade() {
   try {
     const matric_number = document.getElementById("gradeStudent")?.value;
@@ -1225,10 +1265,26 @@ async function editGrade(id) {
     if (error || !g) return;
 
     window.editingGradeId = id;
+
+    // Course dropdown must be populated before we can select the right option
+    await loadCoursesForGradeForm();
+
     document.getElementById("gradeStudent").value = g.matric_number;
     document.getElementById("gradeLevel").value = g.level_arabic;
     document.getElementById("gradeBatch").value = g.batch || "";
-    document.getElementById("gradeCourse").value = g.course;
+
+    const gradeCourseSelect = document.getElementById("gradeCourse");
+    gradeCourseSelect.value = g.course;
+    if (gradeCourseSelect.value !== g.course && g.course) {
+      // Stored course name no longer matches a live course (renamed/deleted) —
+      // keep it selectable so editing doesn't silently discard the value.
+      const opt = document.createElement("option");
+      opt.value = g.course;
+      opt.textContent = `${g.course} (${t("no longer listed")})`;
+      gradeCourseSelect.appendChild(opt);
+      gradeCourseSelect.value = g.course;
+    }
+
     document.getElementById("gradeSemester").value = g.semester;
     document.getElementById("gradeAssessment").value = g.assessment_score;
     document.getElementById("gradeExams").value = g.exam_score;
@@ -1244,6 +1300,33 @@ async function editGrade(id) {
 /* -------------------------------------------------------
    SCHEDULE
 ------------------------------------------------------- */
+
+// Populates #classCourse from live `courses` data, same pattern as
+// loadCoursesForAssessmentForm(). Schedule has no course_id column, so
+// the option value is the course name itself (what addSchedule() saves).
+async function loadCoursesForScheduleForm() {
+  const { data, error } = await db
+    .from("courses")
+    .select("id, course_name, level, batch")
+    .eq("deleted", false)
+    .order("course_name");
+
+  if (error) { console.error(error); return; }
+
+  const select = document.getElementById("classCourse");
+  if (!select) return;
+
+  select.innerHTML = `<option value="">${t("Select Course")}</option>`;
+
+  data.forEach(c => {
+    const option = document.createElement("option");
+    option.value = c.course_name;
+    option.textContent = `${c.course_name}${c.level ? " — " + c.level : ""}${c.batch ? " (" + c.batch + ")" : ""}`;
+    option.dataset.courseName = c.course_name;
+    select.appendChild(option);
+  });
+}
+
 async function addSchedule() {
   const btn = document.getElementById("addScheduleBtn");
   setLoading(btn, true);
@@ -1337,9 +1420,24 @@ async function editSchedule(id) {
   const { data: c, error } = await db.from("schedule").select("*").eq("id", id).single();
   if (error || !c) return;
 
+  // Course dropdown must be populated before we can select the right option
+  await loadCoursesForScheduleForm();
+
   document.getElementById("classLevel").value = c.level_arabic;
   document.getElementById("classBatch").value = c.batch || "";
-  document.getElementById("classCourse").value = c.course;
+
+  const classCourseSelect = document.getElementById("classCourse");
+  classCourseSelect.value = c.course;
+  if (classCourseSelect.value !== c.course && c.course) {
+    // Stored course name no longer matches a live course (renamed/deleted) —
+    // keep it selectable so editing doesn't silently discard the value.
+    const opt = document.createElement("option");
+    opt.value = c.course;
+    opt.textContent = `${c.course} (${t("no longer listed")})`;
+    classCourseSelect.appendChild(opt);
+    classCourseSelect.value = c.course;
+  }
+
   document.getElementById("Instructor").value = c.instructor;
   document.getElementById("classDate").value = c.class_date;
   document.getElementById("classTime").value = c.class_time;
@@ -1355,6 +1453,27 @@ window.editingAssessmentId = null;
 /* -------------------------------------------------------
    ASSESSMENTS
 ------------------------------------------------------- */
+async function loadCoursesForAssessmentForm() {
+  const { data, error } = await db
+    .from("courses")
+    .select("id, course_name, level, batch")
+    .eq("deleted", false)
+    .order("course_name");
+
+  if (error) { console.error(error); return; }
+
+  const select = document.getElementById("assessmentCourse");
+  select.innerHTML = `<option value="">Select Course</option>`;
+
+  data.forEach(c => {
+    const option = document.createElement("option");
+    option.value = c.id; // course_id (uuid)
+    option.textContent = `${c.course_name}${c.level ? " — " + c.level : ""}${c.batch ? " (" + c.batch + ")" : ""}`;
+    option.dataset.courseName = c.course_name;
+    select.appendChild(option);
+  });
+}
+
 async function addAssessment() {
   const btn = document.getElementById("addAssessmentBtn");
   setLoading(btn, true);
@@ -1364,7 +1483,9 @@ async function addAssessment() {
     const title = document.getElementById("assessmentTitle").value;
     const level_arabic = document.getElementById("assessmentLevel").value;
     const batch = document.getElementById("assessmentBatch").value;
-    const course = document.getElementById("assessmentCourse").value;
+    const courseSelect = document.getElementById("assessmentCourse");
+    const course_id = courseSelect.value;
+    const course = courseSelect.selectedOptions[0]?.dataset.courseName || "";
     const semester = document.getElementById("assessmentSemester").value;
     const type = document.getElementById("assessmentType").value;
     const max_score = document.getElementById("assessmentScore").value;
@@ -1385,7 +1506,7 @@ async function addAssessment() {
     const endUTC = new Date(end_time).toISOString();
     const status = document.getElementById("assessmentStatus").value;
 
-    if (!description || !title || !level_arabic || !course || !semester || !type || !max_score || !duration_minutes || !start_time || !end_time || !status) {
+    if (!description || !title || !level_arabic || !course_id || !semester || !type || !max_score || !duration_minutes || !start_time || !end_time || !status) {
       alert(t("Fill all fields"));
       setLoading(btn, false);
       return;
@@ -1393,7 +1514,7 @@ async function addAssessment() {
 
     if (window.editingAssessmentId) {
       const { error } = await db.from("assessments").update({
-        description, title, level_arabic, batch, course, semester, type,
+        description, title, level_arabic, batch, course, course_id, semester, type,
         max_score, duration_minutes: parseInt(duration_minutes),
         start_time: startUTC, end_time: endUTC,
         status, is_active: status === "active"
@@ -1404,7 +1525,7 @@ async function addAssessment() {
       window.editingAssessmentId = null;
     } else {
       const { error } = await db.from("assessments").insert([{
-        description, title, level_arabic, batch, course, semester, type,
+        description, title, level_arabic, batch, course, course_id, semester, type,
         max_score, duration_minutes: parseInt(duration_minutes),
         start_time: startUTC, end_time: endUTC,
         status, is_active: status === "active"
@@ -1428,11 +1549,14 @@ async function editAssessment(id) {
   const { data: a, error } = await db.from("assessments").select("*").eq("id", id).single();
   if (error || !a) return;
 
+  // Course dropdown must be populated before we can select the right option
+  await loadCoursesForAssessmentForm();
+
   document.getElementById("assessmentDescription").value = a.description;
   document.getElementById("assessmentTitle").value = a.title;
   document.getElementById("assessmentLevel").value = a.level_arabic;
   document.getElementById("assessmentBatch").value = a.batch || "";
-  document.getElementById("assessmentCourse").value = a.course;
+  document.getElementById("assessmentCourse").value = a.course_id || "";
   document.getElementById("assessmentSemester").value = a.semester;
   document.getElementById("assessmentType").value = a.type;
   document.getElementById("assessmentScore").value = a.max_score;
@@ -1539,7 +1663,7 @@ async function loadTeachers() {
 
 async function addCourse() {
   const name = document.getElementById("courseName").value.trim();
-  const level = document.getElementById("courseLevel").value;
+  const levels = Array.from(document.querySelectorAll(".courseLevelCheckbox:checked")).map(cb => cb.value);
   const batch = document.getElementById("courseBatch").value.trim();
   const instructorSelect = document.getElementById("courseInstructor");
 
@@ -1551,6 +1675,11 @@ async function addCourse() {
     return;
   }
 
+  if (!levels.length) {
+    alert(t("Select at least one level"));
+    return;
+  }
+
   if (!instructor_id) {
     alert(t("Please select an instructor"));
     return;
@@ -1558,17 +1687,19 @@ async function addCourse() {
 
   const payload = {
     course_name: name,
-    level,
-    batch: batch || null, // blank = open to every batch at this level
+    level: levels[0], // kept for backward-compat display; course_levels is the real source of truth now
+    batch: batch || null, // blank = open to every batch at these levels
     instructor_id,
     instructor: instructor_name // 👈 store name too
   };
 
-  if (window.editingCourseId) {
+  let courseId = window.editingCourseId;
+
+  if (courseId) {
     const { error } = await db
       .from("courses")
       .update(payload)
-      .eq("id", window.editingCourseId);
+      .eq("id", courseId);
 
     if (error) {
       console.error(error);
@@ -1577,12 +1708,13 @@ async function addCourse() {
     }
 
     showToast(t("Course updated ✅"));
-    window.editingCourseId = null;
 
   } else {
-    const { error } = await db
+    const { data, error } = await db
       .from("courses")
-      .insert([payload]);
+      .insert([payload])
+      .select()
+      .single();
 
     if (error) {
       console.error(error);
@@ -1590,13 +1722,28 @@ async function addCourse() {
       return;
     }
 
+    courseId = data.id;
     showToast(t("Course added ✅"));
   }
 
+  // Sync course_levels: clear and re-insert the selected set
+  const { error: delErr } = await db.from("course_levels").delete().eq("course_id", courseId);
+  if (delErr) console.error("Level sync (delete) error:", delErr);
+
+  const { error: insErr } = await db
+    .from("course_levels")
+    .insert(levels.map(level => ({ course_id: courseId, level })));
+  if (insErr) console.error("Level sync (insert) error:", insErr);
+
+  window.editingCourseId = null;
+
   document.getElementById("courseName").value = "";
-  document.getElementById("courseLevel").value = "";
+  document.querySelectorAll(".courseLevelCheckbox").forEach(cb => cb.checked = false);
   document.getElementById("courseBatch").value = "";
   document.getElementById("courseInstructor").value = "";
+
+  const addBtn = document.querySelector("[onclick='addCourse()']");
+  if (addBtn) addBtn.innerHTML = `<i class="fa-solid fa-plus"></i> <span data-translate="Add Course">${t("Add Course")}</span>`;
 
   loadCoursesAdmin();
 }
@@ -1617,15 +1764,29 @@ async function loadCoursesAdmin() {
     return;
   }
 
-  container.innerHTML = data.map(course => `
+  const { data: levelRows, error: levelErr } = await db
+    .from("course_levels")
+    .select("course_id, level");
+
+  if (levelErr) console.error("Load course_levels error:", levelErr);
+
+  const levelsByCourse = {};
+  (levelRows || []).forEach(row => {
+    if (!levelsByCourse[row.course_id]) levelsByCourse[row.course_id] = [];
+    levelsByCourse[row.course_id].push(row.level);
+  });
+
+  container.innerHTML = data.map(course => {
+    const levels = levelsByCourse[course.id] || (course.level ? [course.level] : []);
+    return `
     <div class="course-item">
       <div>
         <strong>${course.course_name}</strong>
         <span class="course-meta">
-          ${course.level ? `${t("Level:")}: ${course.level}` : ""}
-          ${course.level && course.batch ? " · " : ""}
+          ${levels.length ? `${t("Levels:")}: ${levels.join(", ")}` : ""}
+          ${levels.length && course.batch ? " · " : ""}
           ${course.batch ? `${t("Batch:")}: ${course.batch}` : ""}
-          ${(course.level || course.batch) && course.instructor ? " · " : ""}
+          ${(levels.length || course.batch) && course.instructor ? " · " : ""}
           ${course.instructor ? `${t("Instructor:")}: ${course.instructor}` : ""}
         </span>
       </div>
@@ -1642,8 +1803,10 @@ async function loadCoursesAdmin() {
         </button>
       </div>
     </div>
-  `).join("");
+  `;
+  }).join("");
 }
+
 
 /* -------------------------------------------------------
    PASSWORDS
@@ -2610,16 +2773,33 @@ async function refreshCertViews() {
    (Delete / Permanent Delete now handled by the generic
    softDelete()/permanentDelete() helpers — see DELETE ACTIONS section)
 ------------------------------------------------------- */
-function editCourse(id, currentName, currentLevel, currentInstructor, currentBatch) {
+async function editCourse(id, currentName, currentLevel, currentInstructor, currentBatch) {
   document.getElementById("courseName").value = currentName;
-  document.getElementById("courseLevel").value = currentLevel;
   document.getElementById("courseBatch").value = currentBatch || "";
   document.getElementById("courseInstructor").value = currentInstructor;
+
+  document.querySelectorAll(".courseLevelCheckbox").forEach(cb => cb.checked = false);
+
+  const { data: levelRows, error } = await db
+    .from("course_levels")
+    .select("level")
+    .eq("course_id", id);
+
+  if (error) console.error("Load course levels error:", error);
+
+  const levels = (levelRows && levelRows.length)
+    ? levelRows.map(r => r.level)
+    : (currentLevel ? [currentLevel] : []); // fallback for courses not yet backfilled
+
+  levels.forEach(lvl => {
+    const cb = document.querySelector(`.courseLevelCheckbox[value="${lvl}"]`);
+    if (cb) cb.checked = true;
+  });
 
   window.editingCourseId = id;
 
   const btn = document.querySelector("[onclick='addCourse()']");
-  if (btn) btn.textContent = t("Update Course");
+  if (btn) btn.innerHTML = `<i class="fa-solid fa-pen"></i> <span>${t("Update Course")}</span>`;
 
   document.getElementById("courseName").scrollIntoView({ behavior: "smooth" });
 }

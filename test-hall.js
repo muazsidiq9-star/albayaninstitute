@@ -91,25 +91,52 @@ async function loadActiveAssessment() {
     const hasPaid = await checkFees();
     if (!hasPaid) return;
 
-    const studentLevel = currentStudent.level;
+    // test-welcome.html already resolved the correct assessment for this
+    // student's registered course and stored its id. Trust that instead of
+    // re-deriving "the" active assessment from level_arabic alone, which
+    // could pick an assessment belonging to a different course at the same level.
+    const examId = sessionStorage.getItem("examId");
 
-    let { data, error } = await supabaseClient
+    if (!examId) {
+        examTitle.textContent = "No assessment selected";
+        examMessage.textContent = "Please start your test/exam from the welcome page";
+        return;
+    }
+
+    let { data: assessment, error } = await supabaseClient
         .from('assessments')
-        .select('*')
+        .select('id, title, description, course_id, duration_minutes')
+        .eq('id', examId)
         .eq('is_active', true)
         .eq('status', 'active')
-        .eq('level_arabic', studentLevel)
-        .limit(1);
+        .single();
 
     console.log(currentStudent);
 
-    if (!data || data.length === 0) {
-    examTitle.textContent = "No active assessment";
-    examMessage.textContent = "Please check back later";
-    return;
-}
+    if (error || !assessment) {
+        examTitle.textContent = "No active assessment";
+        examMessage.textContent = "Please check back later";
+        return;
+    }
 
-    const assessment = data[0];
+    // Safety net: confirm this student is actually registered for the
+    // course this assessment belongs to, in case examId was tampered with
+    // or stale in sessionStorage.
+    if (assessment.course_id) {
+        const { data: reg, error: regErr } = await supabaseClient
+            .from('course_registrations')
+            .select('id')
+            .eq('matric_number', matricNumber)
+            .eq('course_id', assessment.course_id)
+            .limit(1);
+
+        if (regErr || !reg || reg.length === 0) {
+            examTitle.textContent = "Not Registered";
+            examMessage.textContent = "You are not registered for this course";
+            return;
+        }
+    }
+
     assessmentId = assessment.id;
 
     examTitle.textContent = assessment.title;

@@ -24,10 +24,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       .select(`
         id,
         courses (
+          id,
           course_name,
           instructor,
           level,
-          batch
+          batch,
+          course_levels ( level )
         )
       `)
       .eq("matric_number", matric);
@@ -45,13 +47,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     data.forEach(item => {
       const c = item.courses;
+      const levels = (c.course_levels || []).map(cl => cl.level);
+      const levelDisplay = levels.length ? levels.join(", ") : (c.level || "—");
+
       const card = document.createElement("div");
       card.className = "course-card";
 
       card.innerHTML = `
         <h3>${c.course_name}</h3>
         <p><strong>Instructor:</strong> ${c.instructor || "—"}</p>
-        <p><strong>Level:</strong> ${c.level || "—"}</p>
+        <p><strong>Level:</strong> ${levelDisplay}</p>
         <p><strong>Batch:</strong> ${c.batch || "All"}</p>
         <button class="view-schedule-btn" data-course="${c.course_name}">
           View Schedule

@@ -3,7 +3,7 @@
 // ============================================
 
 const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
-  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
 
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
@@ -13,7 +13,7 @@ const db = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 // ============================================
 
 document.addEventListener("DOMContentLoaded", () => {
-  checkAuth();   // 🔥 add this
+  checkAuth();
 });
 
 function checkAuth() {
@@ -35,19 +35,29 @@ function checkAuth() {
 
 async function loadTimetable(matric) {
   try {
-    // get student level first
-    const { data: student } = await db
-      .from("students")
-      .select("level_arabic")
-      .eq("matric_number", matric)
-      .single();
+    // 1. Which courses is this student actually registered for?
+    const { data: registrations, error: regErr } = await db
+      .from("course_registrations")
+      .select("course_id")
+      .eq("matric_number", matric);
 
-    if (!student) throw new Error("Student not found");
+    if (regErr) throw regErr;
 
+    const courseIds = (registrations || []).map(r => r.course_id).filter(Boolean);
+
+    if (!courseIds.length) {
+      renderTimetable([]);
+      return;
+    }
+
+    // 2. Pull assessments only for the courses this student registered for.
+    //    Each course row already encodes its own level/batch, so this alone
+    //    keeps Advanced and Intermediate exams from mixing, even if both
+    //    courses share the same name.
     const { data, error } = await db
       .from("assessments")
-      .select("*")
-      .eq("level_arabic", student.level_arabic) // 🔥 THIS IS THE KEY FIX
+      .select("id, title, description, course_id, type, duration_minutes, start_time, end_time, is_active, semester, course, status")
+      .in("course_id", courseIds)
       .order("start_time", { ascending: true });
 
     if (error) throw error;
@@ -121,7 +131,6 @@ function renderTimetable(data) {
     tr.innerHTML = `
       <td>${a.title} (${a.type})</td>
       <td>${a.course}</td>
-      <td>${a.level_arabic}</td>
       <td>${a.semester}</td>
       <td>${a.type}</td>
       <td>${formatDate(a.start_time)}</td>

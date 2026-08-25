@@ -35,28 +35,99 @@ async function initRegisterCourses() {
     const studentBatch = studentProfile.batch || "";
     console.log("👤 Student:", { matric, level: studentLevel, batch: studentBatch });
 
-    /* ── 2. Fetch ALL courses for this level ── */
-    const { data: allCourses, error: courseError } = await sb
-      .from("courses")
-      .select("*")
+    /* ── 2. Which courses are tagged for this student's level? ──
+       A course can now be tagged for multiple levels (e.g. Advanced AND
+       Intermediate sharing the same course), via course_levels. */
+    const { data: levelRows, error: levelError } = await sb
+      .from("course_levels")
+      .select("course_id")
       .eq("level", studentLevel);
 
-    if (courseError) {
-      console.error("❌ Courses error:", courseError);
+    if (levelError) {
+      console.error("❌ Course levels error:", levelError);
       container.innerHTML = `<p>Error loading courses.</p>`;
       return;
     }
 
-    /* ── 3. THREE-TIER FILTER (same as exam page) ── */
-    const courses = (allCourses || []).filter(course => {
-      const batchMatch  = !course.batch  || course.batch  === studentBatch;
-      const matricMatch = !course.matric_number || course.matric_number === matric;
-      return batchMatch && matricMatch;
+    const eligibleCourseIds = (levelRows || []).map(r => r.course_id);
+
+    let levelCourses = [];
+    if (eligibleCourseIds.length) {
+      const { data, error: courseError } = await sb
+        .from("courses")
+        .select("*")
+        .in("id", eligibleCourseIds)
+        .eq("deleted", false);
+
+      if (courseError) {
+        console.error("❌ Courses error:", courseError);
+        container.innerHTML = `<p>Error loading courses.</p>`;
+        return;
+      }
+      levelCourses = data || [];
+    }
+
+    const cohortCourses = levelCourses.filter(course => {
+      // blank/null batch on the course = open to every batch at these levels
+      return !course.batch || course.batch === studentBatch;
     });
 
-    console.log("📚 Filtered courses:", courses.length, courses);
+    /* ── 3. Fetch explicit overrides for this student (carryover, etc.) ──
+       These bypass level/batch entirely — an admin has to grant them
+       individually, so there's no risk of exposing a course to a whole
+       cohort by accident. */
+    const { data: overrides, error: overrideError } = await sb
+      .from("course_access_overrides")
+      .select("course_id")
+      .eq("matric_number", matric);
 
-    /* ── 4. What is already registered? ── */
+    if (overrideError) console.error("❌ Override fetch error:", overrideError);
+
+    const overrideIds = (overrides || []).map(o => o.course_id);
+    let overrideCourses = [];
+
+    if (overrideIds.length) {
+      const { data: overrideCourseRows, error: overrideCourseError } = await sb
+        .from("courses")
+        .select("*")
+        .in("id", overrideIds)
+        .eq("deleted", false);
+
+      if (overrideCourseError) console.error("❌ Override courses error:", overrideCourseError);
+      overrideCourses = overrideCourseRows || [];
+    }
+
+    /* ── 4. Merge, de-duped by course id ── */
+    const courseMap = new Map();
+    cohortCourses.forEach(c => courseMap.set(c.id, { ...c, isOverride: false }));
+    overrideCourses.forEach(c => {
+      if (!courseMap.has(c.id)) courseMap.set(c.id, { ...c, isOverride: true });
+    });
+    const courses = Array.from(courseMap.values());
+
+    console.log("📚 Cohort + override courses:", courses.length, courses);
+
+    /* ── 4b. Fetch each course's real tagged levels for display ──
+       course.level only ever holds the first level picked when the course
+       was created; course_levels is the accurate multi-level list. */
+    const allCourseIds = courses.map(c => c.id);
+    const levelsByCourse = {};
+
+    if (allCourseIds.length) {
+      const { data: allLevelRows, error: allLevelError } = await sb
+        .from("course_levels")
+        .select("course_id, level")
+        .in("course_id", allCourseIds);
+
+      if (allLevelError) console.error("❌ Course levels (display) error:", allLevelError);
+
+      (allLevelRows || []).forEach(row => {
+        if (!levelsByCourse[row.course_id]) levelsByCourse[row.course_id] = [];
+        levelsByCourse[row.course_id].push(row.level);
+      });
+    }
+
+    /* ── 5. What is already registered? ── */
     const { data: registered, error: regError } = await sb
       .from("course_registrations")
       .select("course_id")
@@ -67,7 +138,7 @@ async function initRegisterCourses() {
     const registeredIds = (registered || []).map(r => String(r.course_id));
     console.log("✅ Already registered:", registeredIds);
 
-    /* ── 5. Render ── */
+    /* ── 6. Render ── */
     if (!courses.length) {
       container.innerHTML = `<p>No courses available for your level/batch.</p>`;
       return;
@@ -75,10 +146,11 @@ async function initRegisterCourses() {
 
     container.innerHTML = courses.map((course, i) => {
       const isRegistered = registeredIds.includes(String(course.id));
+      const levels = levelsByCourse[course.id] || (course.level ? [course.level] : []);
       return `
         <div class="course-card visible" style="transition-delay:${i * 60}ms">
-          <h3>${course.course_name}</h3>
-          <p><strong>Level:</strong> ${course.level || "—"}</p>
+          <h3>${course.course_name}${course.isOverride ? ` <span class="course-override-badge" style="font-size:11px;font-weight:normal;color:#8a6d00;background:#fff3cd;padding:2px 8px;border-radius:10px;">Special Access</span>` : ""}</h3>
+          <p><strong>Level:</strong> ${levels.length ? levels.join(", ") : "—"}</p>
           <p><strong>Batch:</strong> ${course.batch || "All Batches"}</p>
           <p><strong>Instructor:</strong> ${course.instructor || "—"}</p>
           <button 

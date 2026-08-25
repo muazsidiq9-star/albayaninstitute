@@ -16,7 +16,7 @@
 
     body {
       font-family: "Segoe UI", Tahoma, sans-serif;
-      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      background: linear-gradient(135deg, #f0f5fd 0%, #dcebfc 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -39,14 +39,14 @@
     /* TOP ACCENT BAR */
     .card-accent {
       height: 6px;
-      background: linear-gradient(90deg, #16a34a, #4ade80);
+      background: linear-gradient(90deg, #1643a3, #4f46e5);
     }
 
     /* WATERMARK */
     .watermark {
       position: absolute;
       width: 55%;
-      opacity: 0.06;
+      opacity: 0.08;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -81,7 +81,7 @@
     .card-header h2 {
       font-size: 1rem;
       font-weight: 800;
-      color: #15803d;
+      color: #154080;
       margin-bottom: 4px;
     }
 
@@ -108,8 +108,8 @@
     .spinner {
       width: 36px;
       height: 36px;
-      border: 3px solid #dcfce7;
-      border-top-color: #16a34a;
+      border: 3px solid #dcebfc;
+      border-top-color: #1643a3;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
@@ -123,9 +123,9 @@
       gap: 10px;
       padding: 14px 16px;
       border-radius: 10px;
-      background: #dcfce7;
-      border: 1px solid #bbf7d0;
-      color: #15803d;
+      background: #dcebfc;
+      border: 1px solid #c7d2fe;
+      color: #1d4ed8;
       font-weight: 700;
       font-size: 1rem;
       margin-bottom: 20px;
@@ -168,7 +168,7 @@
     }
 
     .info-row i {
-      color: #16a34a;
+      color: #1643a3;
       font-size: 0.9rem;
       margin-top: 2px;
       flex-shrink: 0;
@@ -188,7 +188,7 @@
     .info-row .row-value {
       font-size: 0.92rem;
       font-weight: 600;
-      color: #1f2937;
+      color: #1f372c;
     }
 
     /* FOOTER */
@@ -202,7 +202,7 @@
       line-height: 1.6;
     }
 
-    .card-footer strong { color: #16a34a; }
+    .card-footer strong { color: #1643a3; }
 
     /* BACK LINK */
     .back-link {
@@ -212,7 +212,7 @@
       margin-top: 20px;
       font-size: 0.82rem;
       font-weight: 600;
-      color: #16a34a;
+      color: #1643a3;
       text-decoration: none;
     }
 
@@ -275,7 +275,7 @@
     async function verifyDocument(matric) {
       const { data, error } = await sb
         .from("students")
-        .select("fullname, matric_number, level_arabic, country")
+        .select("fullname, matric_number, level_arabic, batch, country")
         .eq("matric_number", matric)
         .single();
 

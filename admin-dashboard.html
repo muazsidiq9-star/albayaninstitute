@@ -640,13 +640,31 @@
       <div class="course-form">
         <input type="text" id="courseName" placeholder="Course Name"
                data-translate-placeholder="Course Name">
-        <select id="courseLevel">
+        <select id="courseLevel" style="display:none;">
   <option value="">Select Level</option>
   <option value="Preliminary">Preliminary</option>
   <option value="Beginner">Beginner</option>
   <option value="Intermediate">Intermediate</option>
   <option value="Advanced">Advanced</option>
 </select>
+        <div id="courseLevelGroup" style="display:flex;flex-wrap:wrap;gap:12px;padding:8px 0;">
+          <label style="display:flex;align-items:center;gap:5px;font-weight:normal;">
+            <input type="checkbox" class="courseLevelCheckbox" value="Preliminary">
+            <span data-translate="Preliminary">Preliminary</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:5px;font-weight:normal;">
+            <input type="checkbox" class="courseLevelCheckbox" value="Beginner">
+            <span data-translate="Beginner">Beginner</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:5px;font-weight:normal;">
+            <input type="checkbox" class="courseLevelCheckbox" value="Intermediate">
+            <span data-translate="Intermediate">Intermediate</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:5px;font-weight:normal;">
+            <input type="checkbox" class="courseLevelCheckbox" value="Advanced">
+            <span data-translate="Advanced">Advanced</span>
+          </label>
+        </div>
         <select id="courseInstructor">
   <option value="">Select Instructor</option>
 </select>
@@ -1164,8 +1182,9 @@
         <label data-translate="Batch">Batch</label>
         <input type="text" id="gradeBatch" placeholder="Batch" disabled>
         <label data-translate="Course">Course</label>
-        <input type="text" id="gradeCourse" placeholder="Course Name"
-               data-translate-placeholder="Course Name">
+        <select id="gradeCourse" required>
+          <option value="" data-translate="Select Course">Select Course</option>
+        </select>
         <label data-translate="Semester">Semester</label>
         <select id="gradeSemester" required>
           <option value="" data-translate="Select Semester">Select Semester</option>
@@ -1226,8 +1245,9 @@
         <input type="text" id="classBatch" placeholder="e.g. June 2026"
                data-translate-placeholder="e.g. June 2026">
         <label data-translate="Course">Course</label>
-        <input type="text" id="classCourse" placeholder="Course Name"
-               data-translate-placeholder="Course Name">
+        <select id="classCourse" required>
+          <option value="" data-translate="Select Course">Select Course</option>
+        </select>
         <label data-translate="Instructor">Instructor</label>
         <input type="text" id="Instructor" placeholder="Instructor Name"
                data-translate-placeholder="Instructor Name">
@@ -1361,8 +1381,9 @@
         <input type="text" id="assessmentBatch" placeholder="e.g. June 2026"
                data-translate-placeholder="e.g. June 2026">
         <label data-translate="Course">Course</label>
-        <input type="text" id="assessmentCourse" placeholder="Course Name"
-               data-translate-placeholder="Course Name">
+        <select id="assessmentCourse">
+          <option value="" data-translate="Select Course">Select Course</option>
+        </select>
         <label data-translate="Semester">Semester</label>
         <select id="assessmentSemester">
           <option value="" data-translate="Select Semester">Select Semester</option>

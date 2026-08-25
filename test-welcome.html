@@ -191,10 +191,6 @@
             <span class="tw-info-value">${matric}</span>
           </div>
           <div class="tw-info-item">
-            <span class="tw-info-label"><i class="fa-solid fa-layer-group"></i> ${t("Level:")}</span>
-            <span class="tw-info-value">${exam.level_arabic}</span>
-          </div>
-          <div class="tw-info-item">
             <span class="tw-info-label"><i class="fa-solid fa-users"></i> ${t("Batch:")}</span>
             <span class="tw-info-value">${exam.batch || t("All Batches")}</span>
           </div>
@@ -288,16 +284,37 @@
           .single();
         if (studentErr) throw studentErr;
 
-                // 1. Pull every exam for this student's level
+        // 1. Which courses is this student actually registered for?
+        const { data: registrations, error: regErr } = await sb
+          .from("course_registrations")
+          .select("course_id")
+          .eq("matric_number", matric);
+
+        if (regErr) throw regErr;
+
+        const courseIds = (registrations || []).map(r => r.course_id).filter(Boolean);
+
+        if (!courseIds.length) {
+          setBadge("none");
+          skeleton.style.display = "none";
+          examTitle.textContent = "No Test / Exam";
+          examMsg.textContent   = "You are not registered for any course yet";
+          return;
+        }
+
+        // 2. Pull exams only for the courses this student registered for.
+        //    Since each course row already encodes its own level/batch,
+        //    this alone keeps Advanced and Intermediate exams from mixing,
+        //    even if both courses share the same name.
         const { data: allExams, error: examsErr } = await sb
           .from("assessments")
-          .select("*")
-          .eq("level_arabic", student.level_arabic)
+          .select("id, course_id, type, duration_minutes, start_time, end_time, is_active, semester, course, status")
+          .in("course_id", courseIds)
           .order("start_time", { ascending: true });
 
         if (examsErr) throw examsErr;
 
-        // 2. Client-side gate: exam must match batch (or be open to all batches)
+        // 3. Client-side gate: exam must match batch (or be open to all batches)
         //    AND match matric (or be open to all matrics)
         const exams = (allExams || []).filter(exam => {
           const batchMatch  = !exam.batch  || exam.batch  === student.batch;
