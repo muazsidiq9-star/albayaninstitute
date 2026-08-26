@@ -3346,10 +3346,6 @@ NEW FILES START HERE
 "batch": "الدفعة",
 "All Levels": "جميع المستويات",
 "Upcoming": "قادم",
-"Preliminary ": "تمهيدي ",
-"Beginner ": "مبتدئ ",
-"Intermediate ": "متوسط ",
-"Advanced ": "متقدم ",
 
 // ===== DYNAMIC TEMPLATES ===== 
 

@@ -121,7 +121,7 @@ html, body {
   background: var(--card-color);
   max-width: 720px;
   width: calc(100% - 40px);
-  margin: -24px auto 0;       /* overlaps header — premium feel */
+  margin: 16px auto 0;        /* was -24px "overlap" — no longer valid now that the back button sits above this card */
   padding: 0;
   border-radius: 16px;
   box-shadow: 0 12px 40px rgba(0,0,0,0.12);
@@ -217,7 +217,7 @@ html, body {
 }
 
 @media (max-width: 600px) {
-  .exam-info { margin: -16px 16px 0; width: auto; }
+  .exam-info { margin: 16px 16px 0; width: auto; }
   .tw-info-grid { grid-template-columns: 1fr; }
   .tw-info-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--border-light); }
   .tw-info-item:last-child { border-bottom: none; }
