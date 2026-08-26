@@ -76,7 +76,7 @@
           <th>Semester</th>
           <th>Assessment</th>
           <th>Exam</th>
-          <th>Total Score (%)</th>
+          <th>Total Score</th>
           <th>Remark</th>
           <th>Status</th>
         </tr>
@@ -87,10 +87,17 @@
     </table>
     </div>
 
-    <div class="download-wrapper">
-      <button class="download-btn" onclick="downloadGradesPDF()">
+    <div class="download-wrapper" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+      <select id="semesterReportSelect" class="filter-select" style="min-width:160px;">
+        <!-- populated dynamically with this student's actual released semesters -->
+      </select>
+      <button class="download-btn" onclick="downloadSemesterReport()">
         <i class="fa-solid fa-file-arrow-down"></i>
-        <span data-translate="Download My Grades (PDF)">Download My Grades (PDF)</span>
+        <span data-translate="Download Semester Report (PDF)">Download Semester Report (PDF)</span>
+      </button>
+      <button class="download-btn" onclick="downloadFullTranscript()">
+        <i class="fa-solid fa-scroll"></i>
+        <span data-translate="Download Full Transcript (PDF)">Download Full Transcript (PDF)</span>
       </button>
     </div>
   </main>

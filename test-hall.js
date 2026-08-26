@@ -105,7 +105,7 @@ async function loadActiveAssessment() {
 
     let { data: assessment, error } = await supabaseClient
         .from('assessments')
-        .select('id, title, description, course_id, duration_minutes')
+        .select('*')
         .eq('id', examId)
         .eq('is_active', true)
         .eq('status', 'active')
@@ -121,11 +121,14 @@ async function loadActiveAssessment() {
 
     // Safety net: confirm this student is actually registered for the
     // course this assessment belongs to, in case examId was tampered with
-    // or stale in sessionStorage.
+    // or stale in sessionStorage. Also re-check level + batch using what
+    // was snapshotted onto the registration at the time they registered —
+    // never the student's current/live level or batch, which may have
+    // moved on since (e.g. after a level promotion).
     if (assessment.course_id) {
         const { data: reg, error: regErr } = await supabaseClient
             .from('course_registrations')
-            .select('id')
+            .select('id, level, batch')
             .eq('matric_number', matricNumber)
             .eq('course_id', assessment.course_id)
             .limit(1);
@@ -133,6 +136,17 @@ async function loadActiveAssessment() {
         if (regErr || !reg || reg.length === 0) {
             examTitle.textContent = "Not Registered";
             examMessage.textContent = "You are not registered for this course";
+            return;
+        }
+
+        const registeredLevel = reg[0].level;
+        const registeredBatch = reg[0].batch;
+        const levelMatch = !assessment.level_arabic || assessment.level_arabic === registeredLevel;
+        const batchMatch = !assessment.batch || assessment.batch === registeredBatch;
+
+        if (!levelMatch || !batchMatch) {
+            examTitle.textContent = "Not Available";
+            examMessage.textContent = "This exam is not available for your level/batch";
             return;
         }
     }

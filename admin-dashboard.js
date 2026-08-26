@@ -1481,7 +1481,7 @@ async function addAssessment() {
   try {
     const description = document.getElementById("assessmentDescription").value;
     const title = document.getElementById("assessmentTitle").value;
-    const level_arabic = document.getElementById("assessmentLevel").value;
+    const level_arabic = document.getElementById("assessmentLevel").value || null; // blank = open to every level registered for this course
     const batch = document.getElementById("assessmentBatch").value;
     const courseSelect = document.getElementById("assessmentCourse");
     const course_id = courseSelect.value;
@@ -1506,7 +1506,7 @@ async function addAssessment() {
     const endUTC = new Date(end_time).toISOString();
     const status = document.getElementById("assessmentStatus").value;
 
-    if (!description || !title || !level_arabic || !course_id || !semester || !type || !max_score || !duration_minutes || !start_time || !end_time || !status) {
+    if (!description || !title || !course_id || !semester || !type || !max_score || !duration_minutes || !start_time || !end_time || !status) {
       alert(t("Fill all fields"));
       setLoading(btn, false);
       return;
@@ -3458,6 +3458,317 @@ async function loadAttendanceSessions() {
 
 function escapeForAttr(str) {
   return String(str || "").replace(/'/g, "\\'");
+}
+
+/* -------------------------------------------------------
+   STUDENT REWARDS (finance-tied quiz badge discounts)
+   Read-only ledger + acknowledge/grant action.
+   Does NOT touch payments/pricing — purely a record for
+   the admin to know what to knock off a student's next payment.
+------------------------------------------------------- */
+let rewardsCache = [];
+
+async function loadStudentRewards() {
+  const tbody = document.getElementById("rewards-body");
+  if (!tbody) return;
+
+  tbody.innerHTML = `<tr><td colspan="8" class="empty-row">
+    <i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading rewards...")}
+  </td></tr>`;
+
+  try {
+    const { data: rewards, error } = await db
+      .from("student_rewards")
+      .select("*")
+      .eq("reward_type", "discount")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    if (!rewards || rewards.length === 0) {
+      rewardsCache = [];
+      tbody.innerHTML = `<tr><td colspan="8" class="empty-row">${t("No rewards yet")}</td></tr>`;
+      document.getElementById("rewardsSummaryBar").innerHTML = "";
+      return;
+    }
+
+    // Reuse the existing students cache instead of a duplicate query
+    const students = await loadStudentsCache();
+    const nameMap = {};
+    (students || []).forEach(s => { nameMap[s.matric_number] = s.fullname; });
+
+    rewardsCache = rewards.map(r => ({ ...r, student_name: nameMap[r.matric_number] || "" }));
+
+    renderRewardsTable();
+
+    enableTableSearch("searchRewards", "rewards-table");
+    window.reTranslate?.();
+
+    const filterEl = document.getElementById("rewardsStatusFilter");
+    if (filterEl && !filterEl.dataset.bound) {
+      filterEl.addEventListener("change", renderRewardsTable);
+      filterEl.dataset.bound = "true";
+    }
+
+  } catch (e) {
+    console.error("loadStudentRewards error:", e);
+    tbody.innerHTML = `<tr><td colspan="8" class="empty-row" style="color:red;">${t("Failed to load rewards.")}</td></tr>`;
+  }
+}
+
+function renderRewardsTable() {
+  const tbody = document.getElementById("rewards-body");
+  const summaryBar = document.getElementById("rewardsSummaryBar");
+  if (!tbody) return;
+
+  const filter = document.getElementById("rewardsStatusFilter")?.value || "active";
+
+  const filtered = rewardsCache.filter(r => {
+    if (filter === "active") return r.status === "unclaimed" || r.status === "pending";
+    if (filter === "all") return true;
+    return r.status === filter;
+  });
+
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="8" class="empty-row">${t("No rewards match this filter")}</td></tr>`;
+    if (summaryBar) summaryBar.innerHTML = "";
+    return;
+  }
+
+  // Quick summary of the amount currently sitting unclaimed/pending
+  const actionable = rewardsCache.filter(r => r.status === "unclaimed" || r.status === "pending");
+  const totalPending = actionable.reduce((sum, r) => sum + (parseFloat(r.reward_value) || 0), 0);
+  if (summaryBar) {
+    summaryBar.innerHTML = actionable.length
+      ? `<i class="fa-solid fa-circle-info"></i> ${t("₦")}${totalPending.toLocaleString()} ${t("in unclaimed/pending discounts across")} ${actionable.length} ${t("reward(s)")}`
+      : "";
+  }
+
+  tbody.innerHTML = filtered.map(r => {
+    const statusClass = r.status === "granted" ? "badge-success" : r.status === "pending" ? "badge-warning" : "badge-info";
+    const canGrant = r.status === "unclaimed" || r.status === "pending";
+    return `
+      <tr>
+        <td>${escapeForAttr(r.student_name) || "—"}<br><span style="color:#888;font-size:12px;">${r.matric_number}</span></td>
+        <td>${r.badge_name}</td>
+        <td>${r.tier}</td>
+        <td>₦${(parseFloat(r.reward_value) || 0).toLocaleString()}</td>
+        <td><span class="badge ${statusClass}">${t(r.status)}</span></td>
+        <td>${r.claimed_at ? formatDate(r.claimed_at) : "—"}</td>
+        <td>${r.approved_by ? `${r.approved_by}<br><span style="color:#888;font-size:12px;">${formatDate(r.approved_at)}</span>` : "—"}</td>
+        <td>
+          ${canGrant
+            ? `<button class="btn btn-save btn-small" onclick="grantStudentReward('${r.id}')">${t("Grant")}</button>`
+            : `<span style="color:#888;">${t("—")}</span>`}
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+async function grantStudentReward(id) {
+  const reward = rewardsCache.find(r => r.id === id);
+  if (!reward) return;
+
+  const confirmMsg = `${t("Grant")} ₦${(parseFloat(reward.reward_value) || 0).toLocaleString()} ${t("discount to")} ${reward.student_name || reward.matric_number}?`;
+  if (!confirm(confirmMsg)) return;
+
+  const adminName = sessionStorage.getItem("full_name") || "Admin";
+
+  try {
+    const { error } = await db
+      .from("student_rewards")
+      .update({
+        status: "granted",
+        approved_by: adminName,
+        approved_at: new Date().toISOString()
+      })
+      .eq("id", id);
+
+    if (error) throw error;
+
+    showToast(t("Reward granted ✅"));
+    loadStudentRewards();
+  } catch (e) {
+    console.error("grantStudentReward error:", e);
+    alert(t("Failed to grant reward"));
+  }
+}
+
+/* -------------------------------------------------------
+   CARRYOVER / INDIVIDUAL COURSE ACCESS
+   (course_access_overrides) — one-off exceptions only.
+   For a whole level/batch sharing a course by design, use
+   the course_levels checkboxes on the Courses tab instead.
+------------------------------------------------------- */
+let overridesCache = [];
+let overrideCoursesCache = [];
+
+async function loadCarryoverTab() {
+  await Promise.all([
+    populateOverrideStudentsList(),
+    populateOverrideCourseSelect()
+  ]);
+  await loadCourseOverrides();
+}
+
+async function populateOverrideStudentsList() {
+  const list = document.getElementById("overrideStudentsList");
+  if (!list) return;
+
+  const students = await loadStudentsCache();
+  list.innerHTML = (students || [])
+    .map(s => `<option value="${escapeForAttr(s.matric_number)}">${escapeForAttr(s.fullname || "")}</option>`)
+    .join("");
+}
+
+async function populateOverrideCourseSelect() {
+  const select = document.getElementById("overrideCourse");
+  if (!select) return;
+
+  const { data, error } = await db
+    .from("courses")
+    .select("id, course_name, level, batch")
+    .eq("deleted", false)
+    .order("course_name");
+
+  if (error) { console.error("Load courses (override) error:", error); return; }
+
+  overrideCoursesCache = data || [];
+
+  select.innerHTML = `<option value="">${t("Select Course")}</option>` +
+    overrideCoursesCache.map(c =>
+      `<option value="${c.id}">${escapeForAttr(c.course_name)}${c.level ? " — " + c.level : ""}${c.batch ? " (" + c.batch + ")" : ""}</option>`
+    ).join("");
+}
+
+async function loadCourseOverrides() {
+  const tbody = document.getElementById("overrides-body");
+  if (!tbody) return;
+
+  tbody.innerHTML = `<tr><td colspan="5" class="empty-row">
+    <i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading overrides...")}
+  </td></tr>`;
+
+  try {
+    const { data: overrides, error } = await db
+      .from("course_access_overrides")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    if (!overrides || overrides.length === 0) {
+      overridesCache = [];
+      tbody.innerHTML = `<tr><td colspan="5" class="empty-row">${t("No overrides yet")}</td></tr>`;
+      return;
+    }
+
+    const students = await loadStudentsCache();
+    const nameMap = {};
+    (students || []).forEach(s => { nameMap[s.matric_number] = s.fullname; });
+
+    const courseMap = {};
+    overrideCoursesCache.forEach(c => { courseMap[c.id] = c.course_name; });
+    // In case a course wasn't in the cached select list (deleted course, etc.)
+    const missingCourseIds = [...new Set(overrides.map(o => o.course_id))].filter(id => !courseMap[id]);
+    if (missingCourseIds.length) {
+      const { data: extraCourses } = await db.from("courses").select("id, course_name").in("id", missingCourseIds);
+      (extraCourses || []).forEach(c => { courseMap[c.id] = c.course_name; });
+    }
+
+    overridesCache = overrides;
+
+    tbody.innerHTML = overrides.map(o => `
+      <tr>
+        <td>${escapeForAttr(nameMap[o.matric_number]) || "—"}<br><span style="color:#888;font-size:12px;">${o.matric_number}</span></td>
+        <td>${courseMap[o.course_id] || "—"}</td>
+        <td>${o.reason || "—"}</td>
+        <td>${formatDate(o.created_at)}</td>
+        <td>
+          <button class="btn btn-delete btn-small" onclick="revokeCourseOverride('${o.id}')">
+            ${t("Revoke")}
+          </button>
+        </td>
+      </tr>
+    `).join("");
+
+  } catch (e) {
+    console.error("loadCourseOverrides error:", e);
+    tbody.innerHTML = `<tr><td colspan="5" class="empty-row" style="color:red;">${t("Failed to load overrides.")}</td></tr>`;
+  }
+}
+
+async function addCourseOverride() {
+  const btn = document.getElementById("addOverrideBtn");
+  const matricInput = document.getElementById("overrideMatric");
+  const courseSelect = document.getElementById("overrideCourse");
+  const reasonInput = document.getElementById("overrideReason");
+
+  const matric = matricInput.value.trim();
+  const course_id = courseSelect.value;
+  const reason = reasonInput.value.trim();
+
+  if (!matric) { alert(t("Enter the student's matric number")); return; }
+  if (!course_id) { alert(t("Select a course")); return; }
+
+  setLoading(btn, true);
+
+  try {
+    // Confirm the matric actually belongs to a real student before inserting
+    const students = await loadStudentsCache();
+    const studentExists = (students || []).some(s => s.matric_number === matric);
+    if (!studentExists) {
+      alert(t("No student found with that matric number"));
+      setLoading(btn, false);
+      return;
+    }
+
+    const { error } = await db
+      .from("course_access_overrides")
+      .insert([{ matric_number: matric, course_id, reason: reason || null }]);
+
+    if (error) {
+      if (error.code === "23505") {
+        alert(t("This student already has access to that course"));
+      } else {
+        console.error(error);
+        alert(t("Failed to grant access"));
+      }
+      setLoading(btn, false);
+      return;
+    }
+
+    showToast(t("Access granted ✅"));
+    matricInput.value = "";
+    courseSelect.value = "";
+    reasonInput.value = "";
+    loadCourseOverrides();
+  } catch (e) {
+    console.error("addCourseOverride error:", e);
+    alert(t("Failed to grant access"));
+  } finally {
+    setLoading(btn, false);
+  }
+}
+
+async function revokeCourseOverride(id) {
+  if (!confirm(t("Revoke this student's access to this course?"))) return;
+
+  try {
+    const { error } = await db
+      .from("course_access_overrides")
+      .delete()
+      .eq("id", id);
+
+    if (error) throw error;
+
+    showToast(t("Access revoked"));
+    loadCourseOverrides();
+  } catch (e) {
+    console.error("revokeCourseOverride error:", e);
+    alert(t("Failed to revoke access"));
+  }
 }
 
 async function addAttendanceSession() {

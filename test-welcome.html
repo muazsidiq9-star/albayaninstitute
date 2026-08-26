@@ -40,78 +40,125 @@
   ================================================ -->
   <div class="page-content">
 
-    <!-- HEADER BANNER -->
-    <header class="hall-header" style="background-image: url('background-main.jpg');">
-      <div class="hall-header-overlay"></div>
-      <div class="header-overlay">
-        <!-- Status badge — changes colour via JS-set class on #statusBadge -->
-        <div class="tw-status-badge" id="statusBadge">
-          <i class="fa-solid fa-clock tw-badge-icon" id="statusIcon"></i>
-          <span id="statusBadgeText"></span>
+    <!-- ================================================
+         SCREEN 1 — PRELOAD / SELECTION SCREEN
+         Shown by default. No status badge / exam-specific
+         header here — just a generic heading plus the list
+         of eligible assessments. Hidden once an assessment
+         is chosen (or skipped entirely if the student arrived
+         via a timetable button, which already counts as a
+         choice).
+    ================================================ -->
+    <div id="preloadScreen">
+      <header class="hall-header" style="background-image: url('background-main.jpg');">
+        <div class="hall-header-overlay"></div>
+        <div class="header-overlay">
+          <h1 data-translate="Your Assessments" data-no-translate="true">Your Assessments</h1>
+          <p data-translate="Select a test or exam below to view its details and begin." data-no-translate="true">
+            Select a test or exam below to view its details and begin.
+          </p>
         </div>
+      </header>
 
-        <h1 id="examTitle" data-no-translate="true">Loading Test/Exam...</h1>
-        <p id="examMessage" data-no-translate="true">
-          Please wait while we fetch your upcoming test/exam details
-        </p>
-      </div>
-    </header>
+      <section class="tw-preload-card" id="preloadSection">
+        <h3 class="tw-preload-title">
+          <i class="fa-solid fa-list-check"></i>
+          <span data-translate="Available Assessments">Available Assessments</span>
+        </h3>
+        <div class="tw-preload-list" id="preloadList"></div>
+      </section>
+    </div>
 
     <!-- ================================================
-         EXAM INFO CARD  (JS injects rows into #examInfo)
+         SCREEN 2 — DETAILS SCREEN
+         Hidden by default. Shown once an assessment has been
+         chosen, either via the preload list above or by
+         arriving here with a specific assessment already
+         selected (e.g. from the timetable).
     ================================================ -->
-    <section class="exam-info" id="examInfo">
-      <!-- Loading skeleton shown before JS fills content -->
-      <div class="tw-skeleton" id="examSkeleton">
-        <div class="tw-skel-row"></div>
-        <div class="tw-skel-row short"></div>
-        <div class="tw-skel-row"></div>
-        <div class="tw-skel-row short"></div>
-        <div class="tw-skel-row"></div>
-        <div class="tw-skel-row short"></div>
+    <div id="detailsScreen" style="display:none;">
+
+      <!-- HEADER BANNER -->
+      <header class="hall-header" style="background-image: url('background-main.jpg');">
+        <div class="hall-header-overlay"></div>
+        <div class="header-overlay">
+          <!-- Status badge — changes colour via JS-set class on #statusBadge -->
+          <div class="tw-status-badge" id="statusBadge">
+            <i class="fa-solid fa-clock tw-badge-icon" id="statusIcon"></i>
+            <span id="statusBadgeText"></span>
+          </div>
+
+          <h1 id="examTitle" data-no-translate="true">Loading Test/Exam...</h1>
+          <p id="examMessage" data-no-translate="true">
+            Please wait while we fetch your upcoming test/exam details
+          </p>
+        </div>
+      </header>
+
+      <!-- BACK TO LIST -->
+      <div class="tw-back-wrap">
+        <button type="button" class="tw-back-btn" id="backToListBtn" data-no-translate="true">
+          <i class="fa-solid fa-arrow-left"></i> Back to list
+        </button>
       </div>
-    </section>
 
-    <!-- RULES CARD -->
-    <div class="tw-rules-card">
-      <h3 class="tw-rules-title">
-        <i class="fa-solid fa-shield-halved"></i>
-        <span data-translate="Before You Begin">Before You Begin</span>
-      </h3>
-      <ul class="tw-rules-list">
-        <li>
-          <i class="fa-solid fa-check-circle"></i>
-          <span data-translate="Ensure you have a stable internet connection before starting.">
-            Ensure you have a stable internet connection before starting.
-          </span>
-        </li>
-        <li>
-          <i class="fa-solid fa-check-circle"></i>
-          <span data-translate="Do not refresh or close the page during the exam.">
-            Do not refresh or close the page during the exam.
-          </span>
-        </li>
-        <li>
-          <i class="fa-solid fa-check-circle"></i>
-          <span data-translate="Answer all questions before the timer runs out.">
-            Answer all questions before the timer runs out.
-          </span>
-        </li>
-        <li>
-          <i class="fa-solid fa-check-circle"></i>
-          <span data-translate="Each question can only be answered once. Review before submitting.">
-            Each question can only be answered once. Review before submitting.
-          </span>
-        </li>
-      </ul>
-    </div>
+      <!-- ================================================
+           EXAM INFO CARD  (JS injects rows into #examInfo)
+      ================================================ -->
+      <section class="exam-info" id="examInfo">
+        <!-- Loading skeleton shown before JS fills content -->
+        <div class="tw-skeleton" id="examSkeleton">
+          <div class="tw-skel-row"></div>
+          <div class="tw-skel-row short"></div>
+          <div class="tw-skel-row"></div>
+          <div class="tw-skel-row short"></div>
+          <div class="tw-skel-row"></div>
+          <div class="tw-skel-row short"></div>
+        </div>
+      </section>
 
-    <!-- ATTEMPT BUTTON -->
-    <div class="tw-btn-wrap">
-      <button id="attemptBtn" class="btn-primary" disabled data-no-translate="true">
-        Loading...
-      </button>
-    </div>
+      <!-- RULES CARD -->
+      <div class="tw-rules-card">
+        <h3 class="tw-rules-title">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span data-translate="Before You Begin">Before You Begin</span>
+        </h3>
+        <ul class="tw-rules-list">
+          <li>
+            <i class="fa-solid fa-check-circle"></i>
+            <span data-translate="Ensure you have a stable internet connection before starting.">
+              Ensure you have a stable internet connection before starting.
+            </span>
+          </li>
+          <li>
+            <i class="fa-solid fa-check-circle"></i>
+            <span data-translate="Do not refresh or close the page during the exam.">
+              Do not refresh or close the page during the exam.
+            </span>
+          </li>
+          <li>
+            <i class="fa-solid fa-check-circle"></i>
+            <span data-translate="Answer all questions before the timer runs out.">
+              Answer all questions before the timer runs out.
+            </span>
+          </li>
+          <li>
+            <i class="fa-solid fa-check-circle"></i>
+            <span data-translate="Each question can only be answered once. Review before submitting.">
+              Each question can only be answered once. Review before submitting.
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ATTEMPT BUTTON -->
+      <div class="tw-btn-wrap">
+        <button id="attemptBtn" class="btn-primary" disabled data-no-translate="true">
+          Loading...
+        </button>
+      </div>
+
+    </div><!-- end #detailsScreen -->
 
   </div><!-- end .page-content -->
 
@@ -162,6 +209,20 @@
     const badgeTxt  = document.getElementById("statusBadgeText");
     const badgeIcon = document.getElementById("statusIcon");
     const skeleton  = document.getElementById("examSkeleton");
+    const preloadScreen = document.getElementById("preloadScreen");
+    const detailsScreen = document.getElementById("detailsScreen");
+
+    /* ── Screen toggling ── */
+    function showPreloadScreen() {
+      preloadScreen.style.display = "";
+      detailsScreen.style.display = "none";
+    }
+    function showDetailsScreen() {
+      detailsScreen.style.display = "";
+      preloadScreen.style.display = "none";
+    }
+
+    document.getElementById("backToListBtn").addEventListener("click", showPreloadScreen);
 
     /* ── Set badge state ── */
     function setBadge(state) {
@@ -268,6 +329,116 @@
       btn.style.display = "inline-flex";
     }
 
+    /* ── Shared state for the preload list / selection ── */
+    let examsList = [];
+    let selectedExamId = null;
+
+    /* ── Render one exam into the hero + info card + wire its Attempt button ── */
+    function renderExam(exam, now) {
+      selectedExamId = exam.id;
+      sessionStorage.setItem("expectedAssessmentType", exam.type.toLowerCase());
+
+      const startTime = new Date(exam.start_time);
+      const endTime   = new Date(exam.end_time);
+
+      fillExamInfo(exam, startTime, endTime);
+      setExamReadyUI(exam, startTime, endTime, now);
+
+      const btn = document.getElementById("attemptBtn");
+      btn.onclick = async () => {
+        if (btn.disabled) return;
+        btn.disabled  = true;
+        btn.innerHTML = `<span class="spinner" data-no-translate="true"></span><span data-no-translate="true"> Loading...</span>`;
+        await new Promise(r => setTimeout(r, 100));
+        sessionStorage.setItem("examId", exam.id);
+        window.location.href = "test-hall.html";
+      };
+
+      highlightSelectedPreloadRow();
+    }
+
+    /* ── Called when a student clicks a row in the preload list ──
+       Does the same job the timetable's "Enter Exam" button does:
+       stores the id (so refresh/back-navigation keeps remembering it,
+       same rule as the timetable flow — only kept while still within
+       its time window) and re-renders the hero card in place, with no
+       page navigation needed. ── */
+    function selectAssessment(id) {
+      const candidate = examsList.find(e => String(e.id) === String(id));
+      if (!candidate) return;
+
+      const now = new Date();
+      renderExam(candidate, now);
+
+      if (new Date(candidate.end_time) >= now) {
+        localStorage.setItem("currentAssessmentId", candidate.id);
+      } else {
+        localStorage.removeItem("currentAssessmentId");
+      }
+
+      showDetailsScreen();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function highlightSelectedPreloadRow() {
+      document.querySelectorAll(".tw-preload-item").forEach(row => {
+        row.classList.toggle("is-selected", String(row.dataset.id) === String(selectedExamId));
+      });
+    }
+
+    /* ── Build the "Available Assessments" preload list ──
+       Shows every eligible Ongoing/Upcoming/Awaiting-Activation
+       assessment (Completed ones are left out — nothing actionable
+       there). Ongoing and Awaiting-Activation rows are clickable and
+       take the student to the details screen for that exact
+       assessment; pure Upcoming rows are shown for visibility only,
+       same convention as the timetable's own "Not yet" state. ── */
+    function renderPreloadList(exams) {
+      const list = document.getElementById("preloadList");
+      const now  = new Date();
+
+      const visible = exams.filter(e => new Date(e.end_time) >= now); // exclude completed
+
+      if (!visible.length) {
+        list.innerHTML = `<p class="tw-preload-empty" data-no-translate="true">
+          ${t("No assessments are currently available. Please check back later.")}
+        </p>`;
+        return;
+      }
+
+      list.innerHTML = visible.map(e => {
+        const start = new Date(e.start_time);
+        const end   = new Date(e.end_time);
+
+        const isOngoing = now >= start && now <= end && e.is_active === true;
+        const isWaiting = now >= start && now <= end && e.is_active === false;
+        // anything left over in `visible` at this point is a pure Upcoming row (start > now)
+
+        const level = e.level_arabic || t("All Levels");
+        const batch = e.batch || t("All Batches");
+
+        let action;
+        if (isOngoing) {
+          action = `<button class="tw-preload-btn" onclick="selectAssessment('${e.id}')">${t("View / Enter")}</button>`;
+        } else if (isWaiting) {
+          action = `<button class="tw-preload-btn" onclick="selectAssessment('${e.id}')">${t("View")}</button>`;
+        } else {
+          action = `<span class="tw-preload-muted">${t("Upcoming")}</span>`;
+        }
+
+        return `
+          <div class="tw-preload-item" data-id="${e.id}">
+            <div class="tw-preload-text">
+              <strong>${e.title} ${e.type}</strong> ${t("for")} ${level}, ${batch} ${t("batch")}
+            </div>
+            <div class="tw-preload-action">${action}</div>
+          </div>
+        `;
+      }).join("");
+
+      highlightSelectedPreloadRow();
+    }
+
     /* ── Main fetch ── */
     async function fetchUpcomingExam() {
       if (!matric) {
@@ -285,16 +456,29 @@
         if (studentErr) throw studentErr;
 
         // 1. Which courses is this student actually registered for?
+        //    Pull each registration's own snapshotted level + batch too —
+        //    a promotion changing the student's *current* level/batch must
+        //    never retroactively break matching for a course they registered
+        //    for back when they were at a different level/batch.
         const { data: registrations, error: regErr } = await sb
           .from("course_registrations")
-          .select("course_id")
+          .select("course_id, level, batch")
           .eq("matric_number", matric);
 
         if (regErr) throw regErr;
 
         const courseIds = (registrations || []).map(r => r.course_id).filter(Boolean);
+        const registeredLevelByCourse = {};
+        const registeredBatchByCourse = {};
+        (registrations || []).forEach(r => {
+          if (r.course_id) {
+            registeredLevelByCourse[r.course_id] = r.level;
+            registeredBatchByCourse[r.course_id] = r.batch;
+          }
+        });
 
         if (!courseIds.length) {
+          showDetailsScreen();
           setBadge("none");
           skeleton.style.display = "none";
           examTitle.textContent = "No Test / Exam";
@@ -308,21 +492,29 @@
         //    even if both courses share the same name.
         const { data: allExams, error: examsErr } = await sb
           .from("assessments")
-          .select("id, course_id, type, duration_minutes, start_time, end_time, is_active, semester, course, status")
+          .select("*")
           .in("course_id", courseIds)
           .order("start_time", { ascending: true });
 
         if (examsErr) throw examsErr;
 
-        // 3. Client-side gate: exam must match batch (or be open to all batches)
+        // 3. Client-side gate: exam must match the level AND batch this
+        //    student was registered under for that specific course (or be
+        //    open to all levels/batches, if left blank on the assessment)
         //    AND match matric (or be open to all matrics)
         const exams = (allExams || []).filter(exam => {
-          const batchMatch  = !exam.batch  || exam.batch  === student.batch;
+          const regLevel    = registeredLevelByCourse[exam.course_id];
+          const regBatch    = registeredBatchByCourse[exam.course_id];
+          const levelMatch  = !exam.level_arabic || exam.level_arabic === regLevel;
+          const batchMatch  = !exam.batch || exam.batch === regBatch;
           const matricMatch = !exam.matric_number || exam.matric_number === matric;
-          return batchMatch && matricMatch;
+          return levelMatch && batchMatch && matricMatch;
         });
 
+        examsList = exams;
+
         if (!exams || exams.length === 0) {
+          showDetailsScreen();
           setBadge("none");
           skeleton.style.display = "none";
           examTitle.textContent = "No Test / Exam";
@@ -330,41 +522,41 @@
           return;
         }
 
-        const now  = new Date();
-        const exam =
-          exams.find(e => new Date(e.start_time) <= now && new Date(e.end_time) >= now && e.is_active === true) ||
-          exams.find(e => new Date(e.start_time) > now) ||
-          exams.find(e => new Date(e.start_time) <= now && new Date(e.end_time) >= now && e.is_active === false) ||
-          null;
+        const now = new Date();
 
-        if (!exam) {
-          setBadge("none");
-          skeleton.style.display = "none";
-          examTitle.textContent = "No Active Test / Exam";
-          examMsg.textContent   = "Please check back later";
-          return;
+        // 4. Screen 1 (the preload list) is the default landing view. We only
+        //    skip straight to Screen 2 (the details screen) when the student
+        //    arrived here having already made a choice — either via a
+        //    timetable button, or an earlier click on this same page's
+        //    preload list — and that choice is still within its time window.
+        //    We forget the stored id once its window has actually ended, NOT
+        //    on every read, so refreshing / navigating back from test-hall
+        //    doesn't kick the student back to the list mid-session.
+        const requestedId = localStorage.getItem("currentAssessmentId");
+
+        let exam = null;
+        if (requestedId) {
+          const candidate = exams.find(e => String(e.id) === String(requestedId)) || null;
+
+          if (candidate && new Date(candidate.end_time) >= now) {
+            exam = candidate;
+          } else {
+            localStorage.removeItem("currentAssessmentId");
+          }
         }
 
-        sessionStorage.setItem("expectedAssessmentType", exam.type.toLowerCase());
+        renderPreloadList(exams);
 
-        const startTime = new Date(exam.start_time);
-        const endTime   = new Date(exam.end_time);
-
-        fillExamInfo(exam, startTime, endTime);
-        setExamReadyUI(exam, startTime, endTime, now);
-
-        const btn = document.getElementById("attemptBtn");
-        btn.onclick = async () => {
-          if (btn.disabled) return;
-          btn.disabled  = true;
-          btn.innerHTML = `<span class="spinner" data-no-translate="true"></span><span data-no-translate="true"> Loading...</span>`;
-          await new Promise(r => setTimeout(r, 100));
-          sessionStorage.setItem("examId", exam.id);
-          window.location.href = "test-hall.html";
-        };
+        if (exam) {
+          renderExam(exam, now);
+          showDetailsScreen();
+        } else {
+          showPreloadScreen();
+        }
 
       } catch (err) {
         console.error(err);
+        showDetailsScreen();
         setBadge("none");
         skeleton.style.display = "none";
         examTitle.textContent = "Error fetching exam";

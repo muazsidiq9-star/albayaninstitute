@@ -315,6 +315,21 @@
       });
     }, { threshold: 0.08 });
     document.querySelectorAll('.course-card').forEach(el => observer.observe(el));
+
+    /* "Enrol" buttons: send logged-in students straight to course
+       registration instead of the public sign-up form. Guests keep
+       the normal href="register.html" behavior untouched. */
+    document.querySelectorAll('.btn-register').forEach(link => {
+      link.addEventListener('click', function (e) {
+        const role   = sessionStorage.getItem('role');
+        const matric = sessionStorage.getItem('matric');
+        if (role === 'student' && matric) {
+          e.preventDefault();
+          window.location.href = 'register-courses.html';
+        }
+        // else: let the default navigation to register.html proceed
+      });
+    });
   </script>
   <script src="translate.js"></script>
 </body>

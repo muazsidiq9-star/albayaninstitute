@@ -201,10 +201,10 @@ async function initRegisterCourses() {
         } else {
           /* ── REGISTER ── */
           try {
-            console.log("➕ Inserting:", { matric, courseId });
+            console.log("➕ Inserting:", { matric, courseId, level: studentLevel, batch: studentBatch });
             const { data, error } = await sb
               .from("course_registrations")
-              .insert([{ matric_number: matric, course_id: courseId }])
+              .insert([{ matric_number: matric, course_id: courseId, level: studentLevel || null, batch: studentBatch || null }])
               .select();
 
             if (error) {
