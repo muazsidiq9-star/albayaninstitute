@@ -804,14 +804,22 @@ async function addPayment() {
       return;
     }
 
-    if (window.editingPaymentId) {
-      await db.from("payments")
+        if (window.editingPaymentId) {
+      const { data: updData, error: updError } = await db.from("payments")
         .update({ level_arabic, batch, amount, currency, month, payment_method, created_at, status })
-        .eq("id", window.editingPaymentId);
+        .eq("id", window.editingPaymentId)
+        .select();
+
+      if (updError) throw updError;
+      if (!updData || updData.length === 0) {
+        alert(t("Update blocked — check your Supabase RLS UPDATE policy for this table."));
+        return;
+      }
 
       showToast(t("Payment updated"));
       window.editingPaymentId = null;
-    } else {
+    }
+ else {
       await db.from("payments").insert([{
         matric_number, level_arabic, batch, amount, currency,
         month, payment_method, created_at, status
@@ -854,11 +862,6 @@ async function loadPayments() {
   if (!window.editingPaymentId) {
     tbody.innerHTML = "";
 
-    const currencies = {
-      NGN: { symbol: "₦" }, USD: { symbol: "$" },
-      EUR: { symbol: "€" }, GBP: { symbol: "£" }
-    };
-
     data?.forEach(p => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
@@ -872,7 +875,7 @@ async function loadPayments() {
         <td>${p.payer_email || "—"}</td>
         <td>${p.students?.level_arabic || p.level_arabic || "—"}</td>
         <td>${p.students?.batch || p.batch || "—"}</td>
-        <td>${currencies[p.currency]?.symbol || p.currency || ""}${Number(p.amount).toLocaleString()}</td>
+        <td>${formatMoney(p.amount, p.currency)}</td>
         <td>${p.month}</td>
         <td>${p.payment_method}</td>
         <td>${p.created_at?.split("T")[0] || "—"}</td>
@@ -1007,12 +1010,42 @@ async function loadStudentDropdown() {
       </option>
     `).join("")}
   `;
+
+  ensureFeeCurrencyField();
+}
+
+// The fee form's HTML only ever had an "amount" input with no currency
+// selector — inject one right next to it instead of touching every page
+// that might embed this form. Runs once; safe to call again (no-op).
+function ensureFeeCurrencyField() {
+  if (document.getElementById("feeCurrency")) return;
+
+  const amountInput = document.getElementById("amount");
+  if (!amountInput) return;
+
+  const label = document.createElement("label");
+  label.setAttribute("for", "feeCurrency");
+  label.setAttribute("data-translate", "Currency");
+  label.textContent = t("Currency");
+
+  const select = document.createElement("select");
+  select.id = "feeCurrency";
+  select.innerHTML = `
+    <option value="NGN">₦ NGN</option>
+    <option value="USD">$ USD</option>
+    <option value="EUR">€ EUR</option>
+    <option value="GBP">£ GBP</option>
+  `;
+
+  amountInput.insertAdjacentElement("afterend", select);
+  amountInput.insertAdjacentElement("afterend", label);
 }
 
 async function saveFee() {
   const matric = document.getElementById("studentSelect").value;
   const month = document.getElementById("month").value;
   const amount = document.getElementById("amount").value;
+  const currency = document.getElementById("feeCurrency")?.value || "NGN";
 
   if (!matric || !month || !amount) {
     alert(t("Fill all fields"));
@@ -1021,7 +1054,7 @@ async function saveFee() {
 
   const { error } = await db
     .from("student_fee_status")
-    .upsert({ matric_number: matric, month, amount_due: amount, status: "unpaid" });
+    .upsert({ matric_number: matric, month, amount_due: amount, currency, status: "unpaid" });
 
   if (error) {
     console.error(error);
@@ -1037,6 +1070,8 @@ function clearForm() {
   document.getElementById("studentSelect").value = "";
   document.getElementById("month").value = "";
   document.getElementById("amount").value = "";
+  const currencyField = document.getElementById("feeCurrency");
+  if (currencyField) currencyField.value = "NGN";
 }
 
 async function toggleStatus(matric, month, currentStatus) {
@@ -1082,7 +1117,7 @@ function renderFees(data) {
         <tr>
           <td>${row.matric_number}</td>
           <td>${row.month}</td>
-          <td>₦${Number(row.amount_due).toLocaleString()}</td>
+          <td>${formatMoney(row.amount_due, row.currency)}</td>
           <td class="status-${row.status}">
             ${row.status === "paid" ? t("✅ Paid") : t("❌ Unpaid")}
           </td>
@@ -3217,7 +3252,7 @@ const TRASH_CATEGORIES = {
     row: f => `
       <td>${f.matric_number || "—"}</td>
       <td>${f.month || "—"}</td>
-      <td>₦${Number(f.amount_due || 0).toLocaleString()}</td>
+      <td>${formatMoney(f.amount_due, f.currency)}</td>
       <td>${f.status === "paid" ? t("✅ Paid") : t("❌ Unpaid")}</td>
     `,
     match: f => ({ matric_number: f.matric_number, month: f.month })
@@ -3458,6 +3493,15 @@ async function loadAttendanceSessions() {
 
 function escapeForAttr(str) {
   return String(str || "").replace(/'/g, "\\'");
+}
+
+// Single source of truth for currency symbols — used by Payments, Fees,
+// and the trash bin, so "$59" / "₦25,000" render consistently everywhere.
+const CURRENCY_SYMBOLS = { NGN: "₦", USD: "$", EUR: "€", GBP: "£" };
+
+function formatMoney(amount, currency) {
+  const symbol = CURRENCY_SYMBOLS[currency] || currency || "₦";
+  return `${symbol}${Number(amount || 0).toLocaleString()}`;
 }
 
 /* -------------------------------------------------------

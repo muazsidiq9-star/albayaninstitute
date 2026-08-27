@@ -54,6 +54,80 @@ function shuffleArray(array) {
     return arr;
 }
 
+// ================= CURRENCY HELPERS =================
+// Mirrors the same helpers used on students-dashboard.js / student-payments.html
+const CURRENCY_SYMBOLS = { NGN: "₦", USD: "$", EUR: "€", GBP: "£" };
+
+function formatMoney(amount, currency) {
+  const symbol = CURRENCY_SYMBOLS[currency] || currency || "₦";
+  return `${symbol}${Number(amount || 0).toLocaleString()}`;
+}
+
+function formatGroupedTotals(rows, amountKey) {
+  const totals = {};
+  (rows || []).forEach(r => {
+    const cur = r.currency || "NGN";
+    totals[cur] = (totals[cur] || 0) + Number(r[amountKey] || 0);
+  });
+  const parts = Object.keys(totals).map(cur => formatMoney(totals[cur], cur));
+  return parts.length ? parts.join(" + ") : null;
+}
+
+// ================= OUTSTANDING PAYMENT MODAL =================
+async function showFeeDeniedModal() {
+  const modal = document.getElementById("feeDeniedModal");
+  if (!modal) return;
+
+  const messageEl  = document.getElementById("feeDeniedMessage");
+  const whatsappBtn = document.getElementById("feeDeniedWhatsapp");
+  const payBtn     = document.getElementById("feeDeniedPayBtn");
+  const closeBtn   = document.getElementById("closeFeeDeniedModal");
+
+  if (closeBtn) {
+    closeBtn.onclick = () => { modal.style.display = "none"; };
+  }
+
+  // Pull the real outstanding fee details so the modal shows an actual
+  // amount and month(s) instead of just a generic denial message
+  const { data: outstanding } = await supabaseClient
+    .from("student_fee_status")
+    .select("month, amount_due, currency")
+    .eq("matric_number", matricNumber)
+    .eq("status", "unpaid");
+
+  const months = [...new Set((outstanding || []).map(o => o.month))].join(", ");
+  const totalDisplay = formatGroupedTotals(outstanding, "amount_due");
+
+  if (messageEl) {
+    messageEl.innerHTML = totalDisplay
+      ? tmpl("outstanding_message", {
+          amount: `<span class="amount-red">${totalDisplay}</span>`,
+          months: `<b>${months || "a previous month"}</b>`
+        })
+      : t("You have an outstanding payment. Please contact the admin or complete your payment to access this exam.");
+  }
+
+  if (whatsappBtn) {
+    const waMessage = encodeURIComponent(
+      `Hello Sir/Madam, I'm trying to access an exam but it says I have an outstanding payment${months ? ` for ${months}` : ""}. Please can you assist me?`
+    );
+    whatsappBtn.href = `https://wa.me/2348105215518?text=${waMessage}`;
+  }
+
+  if (payBtn) {
+    payBtn.onclick = () => { window.location.href = "payment.html"; };
+  }
+
+  // Only pop the modal once the page has fully finished loading, per request —
+  // not immediately alongside the "Access Denied" header text
+  const reveal = () => { modal.style.display = "flex"; };
+  if (document.readyState === "complete") {
+    reveal();
+  } else {
+    window.addEventListener("load", reveal, { once: true });
+  }
+}
+
 // ================= CHECK FEES =================
 async function checkFees() {
     const monthNames = [
@@ -80,6 +154,8 @@ async function checkFees() {
     nextBtn.disabled = true;
     reviewBtn.disabled = true;
     finalSubmitBtn.disabled = true;
+
+    showFeeDeniedModal();
 
     return false;
 }

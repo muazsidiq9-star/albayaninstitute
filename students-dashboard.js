@@ -38,6 +38,28 @@ const DEV_BYPASS = false;
 
 const matric = sessionStorage.getItem("matric");
 
+// Shared currency formatting — mirrors the admin dashboard's helper so
+// amounts read as "$59" / "₦25,000", never a raw number with no symbol.
+const CURRENCY_SYMBOLS = { NGN: "₦", USD: "$", EUR: "€", GBP: "£" };
+
+function formatMoney(amount, currency) {
+  const symbol = CURRENCY_SYMBOLS[currency] || currency || "₦";
+  return `${symbol}${Number(amount || 0).toLocaleString()}`;
+}
+
+// Groups rows by currency and formats each total — a student should
+// almost always be in one currency, but this stays correct even if a
+// record was entered in a different one than usual.
+function formatGroupedTotals(rows, amountKey) {
+  const totals = {};
+  (rows || []).forEach(r => {
+    const cur = r.currency || "NGN";
+    totals[cur] = (totals[cur] || 0) + Number(r[amountKey] || 0);
+  });
+  const parts = Object.keys(totals).map(cur => formatMoney(totals[cur], cur));
+  return parts.length ? parts.join(" + ") : formatMoney(0, "NGN");
+}
+
 // ===========================
 // Students Dashboard JS
 // ===========================
@@ -122,23 +144,21 @@ async function loadStats(matric, container) {
     // ===========================
     const { data: monthlyPayments } = await sb
       .from("payments")
-      .select("amount")
+      .select("amount, currency")
       .eq("matric_number", matric)
       .eq("status", "paid")
       .eq("deleted", false)
       .eq("month", monthName);
 
     // ===========================
-    // Monthly Total
+    // Monthly Total (grouped by currency — correct even if mixed)
     // ===========================
-    const monthlyTotal = monthlyPayments?.length
-      ? monthlyPayments.reduce((sum, p) => sum + Number(p.amount), 0)
-      : 0;
+    const monthlyTotalDisplay = formatGroupedTotals(monthlyPayments, "amount");
 
     // ===========================
     // Payment Status
     // ===========================
-    const paymentStatus = monthlyTotal > 0 
+    const paymentStatus = monthlyPayments?.length > 0
   ? "✅ Paid" 
   : "❌ Unpaid";
 
@@ -160,31 +180,29 @@ async function loadStats(matric, container) {
 // ===========================
 const { data: outstanding } = await sb
   .from("student_fee_status")
-  .select("month, amount_due")
+  .select("month, amount_due, currency")
   .eq("matric_number", matric)
   .eq("status", "unpaid");
 
 // Remove duplicates (just in case)
 const uniqueMonths = [...new Set((outstanding || []).map(o => o.month))];
 
-const totalOutstanding = outstanding?.reduce(
-  (sum, item) => sum + Number(item.amount_due),
-  0
-) || 0;
+const hasOutstanding = (outstanding || []).length > 0;
+const outstandingDisplay = formatGroupedTotals(outstanding, "amount_due");
 
 const outstandingMonths = uniqueMonths.join(", ");
 
 // ===========================
 // REMINDER (DASHBOARD - ALWAYS ON LOGIN)
 // ===========================
-if (totalOutstanding > 0) {
+if (hasOutstanding) {
   const reminderText = document.getElementById("reminderText");
   const modal = document.getElementById("reminderModal");
   const whatsappBtn = document.getElementById("whatsappReminder");
 
   if (reminderText && modal && whatsappBtn) {
   reminderText.innerHTML = tmpl("payment_reminder", {
-    amount: `₦${totalOutstanding.toLocaleString()}`,
+    amount: outstandingDisplay,
     months: outstandingMonths
   });
   
@@ -192,7 +210,7 @@ if (totalOutstanding > 0) {
       `Hello Sir/Madam, Please I will complete my payment for ${outstandingMonths} soon in sha Allah.`
     );
 
-    whatsappBtn.href = `https://wa.me/2348105215518?text=${message}`;
+    whatsappBtn.href = `https://wa.me/2347054711066?text=${message}`;
 
     modal.classList.remove("hidden");
 
@@ -204,7 +222,7 @@ if (totalOutstanding > 0) {
 }
 
 
-  const outstandingHTML = totalOutstanding > 0
+  const outstandingHTML = hasOutstanding
   ? `
     <div class="fee-alert">
       <div class="fee-alert-icon">⚠️</div>
@@ -213,7 +231,7 @@ if (totalOutstanding > 0) {
         <strong>${tmpl("outstanding_payment")}</strong><br>
 
         ${tmpl("outstanding_message", {
-          amount: `<span class="amount-red">₦${totalOutstanding.toLocaleString()}</span>`,
+          amount: `<span class="amount-red">${outstandingDisplay}</span>`,
           months: `<b>${outstandingMonths}</b>`
         })}
       </div>
@@ -235,7 +253,7 @@ if (totalOutstanding > 0) {
     <div class="icon">🎓</div>
     <div class="details">
       <h3>${level}</h3>
-      <p>Arabic Level</p>
+      <p data-translate="Arabic Level">${t("Arabic Level")}</p>
     </div>
   </div>
 
@@ -243,7 +261,7 @@ if (totalOutstanding > 0) {
     <div class="icon">📅</div>
     <div class="details">
       <h3>${batch}</h3>
-      <p>Batch</p>
+      <p data-translate="Batch">${t("Batch")}</p>
     </div>
   </div>
 
@@ -258,7 +276,7 @@ if (totalOutstanding > 0) {
   <div class="card">
     <div class="icon">💰</div>
     <div class="details">
-      <h3>₦${monthlyTotal.toLocaleString()}</h3>
+      <h3>${monthlyTotalDisplay}</h3>
       <p>${tmpl("month_amount", { month: monthName })}</p>
     </div>
   </div>
@@ -267,7 +285,7 @@ if (totalOutstanding > 0) {
     <div class="icon">📝</div>
     <div class="details">
       <h3>${latestGrade}</h3>
-      <p>Latest Grade</p>
+      <p data-translate="Latest Grade">${t("Latest Grade")}</p>
     </div>
   </div>
     `;

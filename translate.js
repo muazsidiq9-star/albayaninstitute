@@ -3347,6 +3347,29 @@ NEW FILES START HERE
 "All Levels": "جميع المستويات",
 "Upcoming": "قادم",
 
+"This month is already confirmed as paid and can no longer be edited.": "تم تأكيد هذا الشهر كمدفوع ولا يمكن تحريره بعد الآن.",
+"You already have a payment on record for this month. Submitting will update it, not create a duplicate.": "لديك بالفعل دفعة مسجلة لهذا الشهر. الإرسال سيحدثها، وليس إنشاء نسخة مكررة.",
+"This month's payment has already been confirmed and can no longer be edited. Please contact the admin if there's an issue.": "تم تأكيد دفعة هذا الشهر ولا يمكن تحريرها بعد الآن. يرجى التواصل مع المسؤول إذا كان هناك مشكلة.",
+"Payment updated successfully. We will confirm shortly.": "تم تحديث الدفعة بنجاح. سنؤكد قريبًا.",
+"Payment updated 💰": "تم تحديث الدفعة 💰",
+
+"Access Denied": "تم رفض الوصول",
+"Contact Admin on WhatsApp": "تواصل مع المسؤول عبر واتساب",
+"Go to Payment": "الذهاب إلى الدفع",
+
+"You already have a payment on record for this month. We've filled in what you submitted before — just change whatever needs updating.":
+  "لديك بالفعل دفعة مسجلة لهذا الشهر. لقد قمنا بتعبئة ما قمت بإرساله سابقًا — فقط قم بتغيير ما يحتاج إلى تحديث.",
+
+"A receipt is already on file: ": "يوجد إيصال محفوظ لديك بالفعل: ",
+
+"view current receipt": "عرض الإيصال الحالي",
+
+"Only upload a new file if you want to replace it.": "قم برفع ملف جديد فقط إذا كنت ترغب في استبداله.",
+
+"Current receipt on file": "الإيصال المحفوظ حالياً",
+"A receipt is already on file. Click ❌ to remove it, or choose a new file to replace it.": "يوجد إيصال محفوظ بالفعل. اضغط على ❌ لإزالته، أو اختر ملفاً جديداً لاستبداله.",
+
+
 // ===== DYNAMIC TEMPLATES ===== 
 
 en: {

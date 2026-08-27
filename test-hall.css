@@ -683,3 +683,108 @@ label span {
   .completion-actions             { flex-direction: column; }
   #goDashboardBtn, #logoutBtn     { width: 100%; justify-content: center; }
 }
+
+/* ============================================================
+   OUTSTANDING PAYMENT MODAL
+   (JS targets #feeDeniedModal, shown via style.display = "flex")
+============================================================ */
+#feeDeniedModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+#feeDeniedModal .modal-content {
+  position: relative;
+  background: var(--card-color);
+  border-radius: 18px;
+  padding: 36px 28px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.22);
+  animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* Close button — JS targets #closeFeeDeniedModal */
+#closeFeeDeniedModal {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  z-index: 10;
+}
+
+#closeFeeDeniedModal:hover { background: #fca5a5; }
+
+/* Overrides the shared green .completion-icon with a warning tone
+   for this modal specifically */
+#feeDeniedModal .completion-icon {
+  background: #fee2e2;
+  box-shadow: 0 6px 20px rgba(185,28,28,0.2);
+}
+
+#feeDeniedModal h2 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-color);
+  margin-bottom: 12px;
+}
+
+#feeDeniedModal p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+
+#feeDeniedModal .completion-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 9px;
+  border: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, transform 0.15s;
+}
+
+/* WhatsApp button — wrapped in an <a>, so the button itself just
+   needs its brand color */
+#feeDeniedWhatsapp button {
+  background: #25D366;
+  color: #fff;
+}
+#feeDeniedWhatsapp button:hover { background: #1ebc59; transform: translateY(-1px); }
+
+#feeDeniedPayBtn {
+  background: var(--primary);
+  color: #fff;
+}
+#feeDeniedPayBtn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+@media (max-width: 480px) {
+  #feeDeniedModal .modal-content       { padding: 26px 18px; }
+  #feeDeniedModal .completion-actions  { flex-direction: column; }
+  #feeDeniedModal .completion-actions button { width: 100%; justify-content: center; }
+}

@@ -88,7 +88,7 @@
               <i class="fa-solid fa-money-bill-wave"></i>
             </div>
             <div class="stat-info">
-              <h3 id="monthlyAmount" data-no-translate="true">₦0</h3>
+              <h3 id="monthlyAmount" data-no-translate="true">—</h3>
               <p id="amountMonth" data-translate="Month Amount">Month Amount</p>
             </div>
           </div>
@@ -177,6 +177,24 @@
       }
     })();
 
+    /* Shared currency formatting — mirrors admin dashboard + students-dashboard.js */
+    const CURRENCY_SYMBOLS = { NGN: "₦", USD: "$", EUR: "€", GBP: "£" };
+
+    function formatMoney(amount, currency) {
+      const symbol = CURRENCY_SYMBOLS[currency] || currency || "₦";
+      return `${symbol}${Number(amount || 0).toLocaleString()}`;
+    }
+
+    function formatGroupedTotals(rows, amountKey) {
+      const totals = {};
+      (rows || []).forEach(r => {
+        const cur = r.currency || "NGN";
+        totals[cur] = (totals[cur] || 0) + Number(r[amountKey] || 0);
+      });
+      const parts = Object.keys(totals).map(cur => formatMoney(totals[cur], cur));
+      return parts.length ? parts.join(" + ") : formatMoney(0, "NGN");
+    }
+
     /* ===== LOAD PAYMENTS ===== */
     async function loadPayments() {
       const matric = sessionStorage.getItem("matric");
@@ -185,33 +203,34 @@
       try {
         const { data: payments, error } = await sb
           .from("payments")
-          .select("amount, month, status, created_at, id")
+          .select("amount, currency, month, status, created_at, id")
           .eq("matric_number", matric)
           .order("created_at", { ascending: false });
         if (error) throw error;
 
         const { data: outstanding } = await sb
           .from("student_fee_status")
-          .select("month, amount_due")
+          .select("month, amount_due, currency")
           .eq("matric_number", matric)
           .eq("status", "unpaid");
 
         const uniqueMonths     = [...new Set((outstanding || []).map(o => o.month))];
-        const totalOutstanding = (outstanding || []).reduce((sum, item) => sum + Number(item.amount_due), 0);
+        const hasOutstanding   = (outstanding || []).length > 0;
+        const outstandingDisplay = formatGroupedTotals(outstanding, "amount_due");
         const outstandingMonths = uniqueMonths.length > 2
           ? `${uniqueMonths.slice(0, 2).join(", ")} +${uniqueMonths.length - 2} more`
           : uniqueMonths.join(", ");
 
         /* Overdue alert */
         const alertContainer = document.getElementById("overdueAlertContainer");
-        if (totalOutstanding > 0) {
+        if (hasOutstanding) {
           alertContainer.innerHTML = `
             <div class="spm-fee-alert">
               <div class="spm-fee-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
               <div class="spm-fee-text">
                 <strong>${tmpl("outstanding_payment")}</strong>
                 <span>${tmpl("outstanding_message", {
-                  amount: `<span class="amount-red">₦${totalOutstanding.toLocaleString()}</span>`,
+                  amount: `<span class="amount-red">${outstandingDisplay}</span>`,
                   months: `<b>${outstandingMonths}</b>`
                 })}</span>
               </div>
@@ -228,12 +247,12 @@
         const now          = new Date();
         const monthName    = now.toLocaleString("default", { month: "long" });
         const monthlyPayments = payments?.filter(p => p.status === "paid" && p.month === monthName) || [];
-        const monthlyTotal = monthlyPayments.reduce((sum, p) => sum + Number(p.amount), 0);
+        const monthlyTotalDisplay = formatGroupedTotals(monthlyPayments, "amount");
         const lastPayment  = payments?.find(p => p.status === "paid");
         const lastPaidMonth = lastPayment?.month || null;
 
         let paymentStatus, subText;
-        if (monthlyTotal > 0) {
+        if (monthlyPayments.length > 0) {
           paymentStatus = tmpl("paid");
           subText       = tmpl("payment_month", { month: monthName });
         } else if (lastPaidMonth) {
@@ -246,7 +265,7 @@
 
         document.getElementById("paymentStatus").textContent  = paymentStatus;
         document.getElementById("paymentMonth").textContent   = subText;
-        document.getElementById("monthlyAmount").textContent  = "₦" + monthlyTotal.toLocaleString();
+        document.getElementById("monthlyAmount").textContent  = monthlyTotalDisplay;
         document.getElementById("amountMonth").textContent    = tmpl("month_amount", { month: monthName });
 
         /* History */
@@ -264,7 +283,7 @@
                   <span class="spm-history-month">${p.month.toUpperCase()}</span>
                   <span class="spm-history-badge ${p.status}">${t(p.status)}</span>
                 </div>
-                <div class="spm-history-amount">₦${Number(p.amount).toLocaleString()}</div>
+                <div class="spm-history-amount">${formatMoney(p.amount, p.currency)}</div>
                 <div class="spm-history-date">${new Date(p.created_at).toLocaleString()}</div>
               </div>
             </div>
@@ -502,7 +521,7 @@
 
         doc.setFontSize(22);
         doc.setTextColor(5, 21, 196);
-        doc.text(`₦${Number(payment.amount).toLocaleString()}`, ML + 12, amtY + 16);
+        doc.text(formatMoney(payment.amount, payment.currency), ML + 12, amtY + 16);
 
         /* Status badge — right side of amount row */
         const statusColor = payment.status === "paid"
@@ -545,7 +564,7 @@
         const sigY = msgY + 70;
 
         /* Signature */
-        const sign = new Image(); sign.src = "sign.png";
+        const sign = new Image(); sign.src = "bursar.png";
         await new Promise(resolve => {
           sign.onload  = () => { doc.addImage(sign, "PNG", ML, sigY, 150, 56); resolve(); };
           sign.onerror = resolve;
@@ -556,7 +575,7 @@
         doc.setFont("helvetica", "bold");
         doc.setFontSize(10);
         doc.setTextColor(63, 81, 181);
-        doc.text("Ustadh Muaz Abubakar Sidiq", ML, sigY + 76);
+        doc.text("Omodadi Fatima Ikpemosi", ML, sigY + 76);
 
         doc.setFont("helvetica", "normal");
         doc.setFontSize(8.5);

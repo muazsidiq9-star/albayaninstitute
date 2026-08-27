@@ -321,6 +321,11 @@
             <option value="Advanced" data-translate="Advanced">Advanced</option>
           </select>
         </div>
+        
+        <div class="form-group">
+        <label for="batch" data-translate="Batch">Batch</label>
+        <input type="text" id="batch">
+        </div>
 
         <div class="form-group">
           <label for="payment-method" data-translate="Payment Method (Bank)">Payment Method (Bank)</label>
@@ -398,18 +403,30 @@
           </select>
         </div>
 
-        <div class="form-group full">
+                <div class="form-group full">
           <label for="receipt" data-translate="Upload Receipt">Upload Receipt</label>
           <label for="receipt" class="receipt-upload-label">
             <i class="fa-solid fa-cloud-arrow-up"></i>
             <span id="receipt-label-text" data-translate="Click to choose receipt image">Click to choose receipt image</span>
           </label>
           <input type="file" id="receipt" accept="image/*" style="display:none;">
+
+          <!-- NEW: receipt preview + remove button -->
+          <div id="receipt-preview" class="receipt-preview" style="display:none;">
+            <div class="receipt-preview-inner">
+              <img id="receipt-preview-img" src="" alt="Receipt preview">
+              <button type="button" id="receipt-remove" class="receipt-remove" title="Remove receipt">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+            <span class="receipt-preview-name" id="receipt-preview-name"></span>
+          </div>
         </div>
+
 
       </div>
 
-      <button type="submit" class="submit-btn">
+        <button type="submit" class="submit-btn">
         <i class="fa-solid fa-paper-plane"></i>
         <span data-translate="Submit Payment">Submit Payment</span>
       </button>
@@ -458,13 +475,7 @@
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 2000);
       });
-    }
-
-    /* Receipt file label update */
-    document.getElementById('receipt').addEventListener('change', function () {
-      const label = document.getElementById('receipt-label-text');
-      label.textContent = this.files[0] ? this.files[0].name : 'Click to choose receipt image';
-    });
+    }    
 
     /* Scroll reveal */
     const observer = new IntersectionObserver((entries) => {

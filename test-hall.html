@@ -169,6 +169,36 @@
     <a href="contact.html" data-translate="Contact">Contact</a>
   </footer>
 
+  <!-- OUTSTANDING PAYMENT MODAL — shown after full page load when
+       checkFees() denies access. JS targets #feeDeniedModal,
+       #feeDeniedMessage, #feeDeniedWhatsapp, #feeDeniedPayBtn -->
+  <div id="feeDeniedModal" style="display:none;">
+    <div class="modal-content">
+      <button id="closeFeeDeniedModal" aria-label="Close">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="completion-icon" style="color:#b91c1c;">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <h2 data-translate="Access Denied">Access Denied</h2>
+      <p id="feeDeniedMessage" data-no-translate="true">
+        You have an outstanding payment. Please contact the admin or complete your payment to access this exam.
+      </p>
+      <div class="completion-actions">
+        <a id="feeDeniedWhatsapp" href="#" target="_blank" rel="noopener" style="text-decoration:none;">
+          <button type="button">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span data-translate="Contact Admin on WhatsApp">Contact Admin on WhatsApp</span>
+          </button>
+        </a>
+        <button id="feeDeniedPayBtn">
+          <i class="fa-solid fa-credit-card"></i>
+          <span data-translate="Go to Payment">Go to Payment</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
     <img src="whatsapp-icon.png" alt="WhatsApp">
   </a>
