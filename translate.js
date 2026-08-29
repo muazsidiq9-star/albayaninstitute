@@ -3369,7 +3369,14 @@ NEW FILES START HERE
 "Current receipt on file": "الإيصال المحفوظ حالياً",
 "A receipt is already on file. Click ❌ to remove it, or choose a new file to replace it.": "يوجد إيصال محفوظ بالفعل. اضغط على ❌ لإزالته، أو اختر ملفاً جديداً لاستبداله.",
 
-
+"Bulk Add Fee for Multiple Students": "إضافة رسوم جماعية لعدة طلاب",
+"Tick every student this fee applies to, then Save once — it's added to each of them with the same month, amount and currency.": "حدد كل طالب ينطبق عليه هذا الرسم، ثم احفظ مرة واحدة — سيتم إضافته لكل منهم بنفس الشهر والمبلغ والعملة.",
+"Loading students...": "جارٍ تحميل الطلاب...",
+"Add Fee to Selected Students": "إضافة رسم للطلاب المحددين",
+"No students match this filter": "لا يوجد طلاب يطابقون هذا الفلتر",
+"Select students": "اختر الطلاب",
+"Select All": "اختر الكل",
+"Selected": "المحددون",
 // ===== DYNAMIC TEMPLATES ===== 
 
 en: {

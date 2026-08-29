@@ -241,9 +241,38 @@ async function loadActiveAssessment() {
         .eq('is_final', true);
 
     if (finalCount === 0) {
-        const savedState = localStorage.getItem(
-            `exam_state_${assessmentId}_${matricNumber}`
-        );
+        // Record (or fetch) a server-side start time for this attempt. This is
+        // the source of truth a backend sweep job uses to auto-finalize/grade
+        // students whose time ran out but who never hit submit or closed the
+        // tab/lost power before any client-side handler could fire. Using
+        // ignoreDuplicates means a page refresh mid-exam does NOT reset the
+        // clock - the first-ever start time for this attempt always wins.
+        const { data: attemptRow } = await supabaseClient
+            .from('exam_attempts')
+            .upsert(
+                { matric_number: matricNumber, assessment_id: assessmentId },
+                { onConflict: 'matric_number,assessment_id', ignoreDuplicates: true }
+            )
+            .select('started_at')
+            .maybeSingle();
+
+        let serverStartedAt = attemptRow?.started_at
+            ? new Date(attemptRow.started_at).getTime()
+            : null;
+
+        // ignoreDuplicates upserts don't return the existing row, so on a
+        // refresh (row already exists) fetch the real started_at explicitly.
+        if (!serverStartedAt) {
+            const { data: existing } = await supabaseClient
+                .from('exam_attempts')
+                .select('started_at')
+                .eq('matric_number', matricNumber)
+                .eq('assessment_id', assessmentId)
+                .maybeSingle();
+            serverStartedAt = existing?.started_at
+                ? new Date(existing.started_at).getTime()
+                : Date.now();
+        }
 
         // ===== TIMER FIX =====
         // We no longer trust a stored "secondsRemaining" counter, because it is
@@ -251,21 +280,14 @@ async function loadActiveAssessment() {
         // Instead we store/restore an absolute end timestamp (examEndTime) and
         // always derive timeRemaining = examEndTime - now. This survives
         // refreshes, closed tabs, throttled background tabs, etc.
-        if (savedState) {
-            const state = JSON.parse(savedState);
-
-            if (state.examEndTime) {
-                examEndTime = state.examEndTime;
-                timeRemaining = Math.max(0, Math.round((examEndTime - Date.now()) / 1000));
-            } else {
-                // Backward compatibility with any state saved before this fix
-                timeRemaining = state.timeRemaining || durationMinutes * 60;
-                examEndTime = Date.now() + timeRemaining * 1000;
-            }
-        } else {
-            timeRemaining = durationMinutes * 60;
-            examEndTime = Date.now() + timeRemaining * 1000;
-        }
+        // The server-recorded start time is now the single source of truth
+        // for examEndTime, since a backend sweep job independently derives
+        // the same deadline from exam_attempts.started_at. Deriving it the
+        // same way here (rather than trusting a client-only timestamp) means
+        // the visible countdown and the server's auto-finalize deadline can
+        // never drift apart.
+        examEndTime = serverStartedAt + durationMinutes * 60 * 1000;
+        timeRemaining = Math.max(0, Math.round((examEndTime - Date.now()) / 1000));
 
         startTimer();
     } else {
@@ -638,9 +660,12 @@ function startTimer() {
 
             clearInterval(timerInterval);
 
-            alert("Time is up");
-
-            finalSubmit();
+            // Don't block on alert() before submitting - alert() pauses all JS
+            // execution until dismissed, so if the student has already walked
+            // away (which is exactly the scenario we're guarding against) the
+            // finalize/grade call would never even fire. Submit first, notify
+            // after.
+            finalSubmit('timeout');
 
             return;
         }
@@ -825,7 +850,12 @@ function showUnansweredConfirmModal(unansweredCount) {
 }
 
 // ================= FINAL SUBMIT =================
-async function finalSubmit() {
+// reason: 'manual' (student clicked submit) or 'timeout' (clock hit zero).
+// Both paths now call ONE combined RPC that flips is_final AND grades inside
+// a single database transaction - so a grading failure rolls the is_final
+// flip back too, instead of leaving answers stranded as "final" with no
+// score and no way to retry. See finalize_and_grade_assessment().
+async function finalSubmit(reason = 'manual') {
 
     if (testEnded) return;
 
@@ -840,54 +870,54 @@ async function finalSubmit() {
 
         await saveAnswer();
 
-        const unansweredQuestions = questions.filter(q => {
-            const ans = studentAnswers[q.id];
-            return !ans || ans.trim() === '';
-        });
+        if (reason === 'manual') {
 
-        if (unansweredQuestions.length > 0) {
+            const unansweredQuestions = questions.filter(q => {
+                const ans = studentAnswers[q.id];
+                return !ans || ans.trim() === '';
+            });
 
-            const proceedAnyway = await showUnansweredConfirmModal(unansweredQuestions.length);
+            if (unansweredQuestions.length > 0) {
 
-            if (!proceedAnyway) {
+                const proceedAnyway = await showUnansweredConfirmModal(unansweredQuestions.length);
 
-                reviewBtn.click();
+                if (!proceedAnyway) {
 
-                finalSubmitBtn.textContent = originalText;
-                finalSubmitBtn.disabled = false;
+                    reviewBtn.click();
 
-                return;
+                    finalSubmitBtn.textContent = originalText;
+                    finalSubmitBtn.disabled = false;
+
+                    return;
+                }
+                // proceedAnyway === true: fall through and submit despite gaps
             }
-            // proceedAnyway === true: fall through and submit despite gaps
         }
+        // reason === 'timeout': skip the unanswered-questions confirmation
+        // entirely - there's no "go back" option once time is up, and no one
+        // is necessarily even present to see the modal.
 
-        const { error: finalizeError } = await supabaseClient
-            .from('student_answers')
-            .update({ is_final: true })
-            .eq('matric_number', matricNumber)
-            .eq('assessment_id', assessmentId);
-
-        if (finalizeError) {
-            alert('Submission error');
-            console.error(finalizeError);
-            finalSubmitBtn.textContent = originalText;
-            finalSubmitBtn.disabled = false;
-            return;
-        }
-
-        const { data, error } = await supabaseClient.rpc(
-            'grade_student_assessment',
+        const { error } = await supabaseClient.rpc(
+            'finalize_and_grade_assessment',
             {
                 p_student_matric: matricNumber,
-                p_assessment_id: assessmentId
+                p_assessment_id: assessmentId,
+                p_reason: reason
             }
         );
 
         if (error) {
 
-            alert('Grading error');
+            // is_final was NOT committed (the RPC's transaction rolled back),
+            // so this is safely retryable - the student can hit submit again,
+            // and if they walk away instead, the server-side sweep job will
+            // pick this attempt up once its deadline passes.
+            alert(t('Something went wrong submitting your exam. Please try again.'));
 
-            console.error(error);
+            console.error('finalize_and_grade_assessment error:', error);
+
+            finalSubmitBtn.textContent = originalText;
+            finalSubmitBtn.disabled = false;
 
             return;
         }

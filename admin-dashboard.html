@@ -446,9 +446,12 @@
           </select>
           <input id="amount" type="number" placeholder="Amount"
                  data-translate-placeholder="Amount">
-          <button class="btn btn-save" onclick="saveFee()">
+          <button class="btn btn-save" id="saveFeeBtn" onclick="saveFee()">
             <i class="fa-solid fa-floppy-disk"></i>
-            <span data-translate="Save">Save</span>
+            <span id="saveFeeBtnText" data-translate="Save">Save</span>
+          </button>
+          <button class="btn btn-cancel" id="cancelFeeEditBtn" onclick="cancelFeeEdit()" style="display:none;">
+            <span data-translate="Cancel">Cancel</span>
           </button>
         </div>
         <button class="add-btn" onclick="openBulkFeeModal()" style="margin-top:10px;">

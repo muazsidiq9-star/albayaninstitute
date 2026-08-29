@@ -1117,9 +1117,17 @@ async function saveFee() {
     return;
   }
 
+  // Editing an existing record keeps its current paid/unpaid status instead
+  // of silently resetting it — fixing a typo'd amount shouldn't undo a
+  // payment that was already marked paid.
+  const status = window.editingFeeStatus || "unpaid";
+
   const { error } = await db
     .from("student_fee_status")
-    .upsert({ matric_number: matric, month, amount_due: amount, currency, status: "unpaid" });
+    .upsert(
+      { matric_number: matric, month, amount_due: amount, currency, status },
+      { onConflict: "matric_number,month" }
+    );
 
   if (error) {
     console.error(error);
@@ -1127,7 +1135,7 @@ async function saveFee() {
     return;
   }
 
-  clearForm();
+  resetFeeForm();
   loadFees();
 }
 
@@ -1137,6 +1145,49 @@ function clearForm() {
   document.getElementById("amount").value = "";
   const currencyField = document.getElementById("feeCurrency");
   if (currencyField) currencyField.value = "NGN";
+}
+
+// Prefills the single-student fee form with an existing record so a typo'd
+// amount/currency can be fixed with Save instead of Delete + re-entering.
+// Student and Month are locked while editing since together they're the
+// record's identity (matric_number+month is the table's unique key) —
+// changing either would edit a *different* record instead of this one.
+function editFee(matric, month, amount, currency, status) {
+  ensureFeeCurrencyField();
+
+  document.getElementById("studentSelect").value = matric;
+  document.getElementById("studentSelect").disabled = true;
+  document.getElementById("month").value = month;
+  document.getElementById("month").disabled = true;
+  document.getElementById("amount").value = amount;
+  const currencyField = document.getElementById("feeCurrency");
+  if (currencyField) currencyField.value = currency || "NGN";
+
+  window.editingFeeKey = { matric, month };
+  window.editingFeeStatus = status || "unpaid";
+
+  document.getElementById("saveFeeBtnText").textContent = t("Update Fee");
+  document.getElementById("cancelFeeEditBtn").style.display = "";
+
+  document.querySelector(".fee-form")?.scrollIntoView({ behavior: "smooth", block: "center" });
+  document.getElementById("amount").focus();
+}
+
+function cancelFeeEdit() {
+  resetFeeForm();
+}
+
+// Shared reset for both a completed Save and an explicit Cancel — clears
+// the form, re-enables Student/Month, restores the Save button, and drops
+// the edit-in-progress state.
+function resetFeeForm() {
+  clearForm();
+  document.getElementById("studentSelect").disabled = false;
+  document.getElementById("month").disabled = false;
+  document.getElementById("saveFeeBtnText").textContent = t("Save");
+  document.getElementById("cancelFeeEditBtn").style.display = "none";
+  window.editingFeeKey = null;
+  window.editingFeeStatus = null;
 }
 
 /* -------------------------------------------------------
@@ -1237,7 +1288,9 @@ async function bulkSaveFee() {
     // One request, one row per selected student — matches the same
     // upsert behavior as the single-student Save above (existing
     // matric+month combo gets its amount/currency updated, not duplicated).
-    const { error } = await db.from("student_fee_status").upsert(rows);
+    const { error } = await db
+      .from("student_fee_status")
+      .upsert(rows, { onConflict: "matric_number,month" });
 
     if (error) {
       console.error("Bulk fee save error:", error);
@@ -1301,6 +1354,10 @@ function renderFees(data) {
             ${row.status === "paid" ? t("✅ Paid") : t("❌ Unpaid")}
           </td>
           <td>
+            <button class="btn btn-edit"
+              onclick="editFee('${row.matric_number}', '${row.month}', ${row.amount_due}, '${row.currency || "NGN"}', '${row.status}')">
+              ${t("Edit")}
+            </button>
             <button class="action-btn toggle1-btn"
               onclick="toggleStatus('${row.matric_number}', '${row.month}', '${row.status}')">
               ${t("Toggle")}
