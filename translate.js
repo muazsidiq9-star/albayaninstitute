@@ -3378,6 +3378,16 @@ NEW FILES START HERE
 "Select All": "اختر الكل",
 "Selected": "المحددون",
 
+"Semester Total Score": "مجموع الدرجات للفصل الدراسي",
+"FIRST": "الأول",
+"SECOND": "الثاني",
+"first": "الأول",
+"second": "الثاني",
+"First": "الأول",
+"Second": "الثاني",
+"First Semester": "الفصل الدراسي الأول",
+"Second Semester": "الفصل الدراسي الثاني",
+
 "Nigeria": "نيجيريا",
 "Algeria": "الجزائر",
 "Angola": "أنغولا",

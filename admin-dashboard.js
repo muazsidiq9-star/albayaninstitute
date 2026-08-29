@@ -543,6 +543,7 @@ async function loadStudents() {
         <td>${s.fullname}</td>
         <td>${s.email}</td>
         <td>${s.whatsapp}</td>
+        <td>${s.password || "—"}</td>
         <td>${s.country}</td>
         <td>${s.gender}</td>
         <td>${s.age}</td>

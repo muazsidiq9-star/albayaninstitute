@@ -163,17 +163,34 @@ async function loadStats(matric, container) {
   : "❌ Unpaid";
 
     // ===========================
-    // Latest Grade
+    // Cumulative Semester Score (GP-style)
+    // Sums total_score across every released grade row that belongs
+    // to the student's most recent semester — same logic the grades
+    // page uses for its "TOTAL SCORE SUM" on the semester report PDF.
     // ===========================
     const { data: grades } = await sb
       .from("grades")
-      .select("total_score, created_at")
+      .select("total_score, semester, created_at")
       .eq("matric_number", matric)
       .eq("released", true)
-      .order("created_at", { ascending: false })
-      .limit(1);
+      .order("created_at", { ascending: false });
 
-    const latestGrade = grades?.length ? grades[0].total_score : "--";
+    let currentSemester = null;
+    let semesterTotal = "--";
+
+    if (grades && grades.length) {
+      // Newest-first order, so the first row's semester is the current one
+      currentSemester = grades[0].semester || null;
+
+      const semesterGrades = currentSemester
+        ? grades.filter(g => g.semester === currentSemester)
+        : [grades[0]];
+
+      const sum = semesterGrades.reduce(
+        (acc, g) => acc + (Number(g.total_score) || 0), 0
+      );
+      semesterTotal = sum.toFixed(2);
+    }
 
     // ===========================
 // Fetch Outstanding Fees
@@ -284,8 +301,8 @@ if (hasOutstanding) {
   <div class="card">
     <div class="icon">📝</div>
     <div class="details">
-      <h3>${latestGrade}</h3>
-      <p data-translate="Latest Grade">${t("Latest Grade")}</p>
+      <h3>${semesterTotal}</h3>
+      <p data-translate="Semester Total Score">${t("Semester Total Score")}${currentSemester ? " · " + currentSemester : ""}</p>
     </div>
   </div>
     `;
@@ -319,6 +336,41 @@ document.addEventListener("DOMContentLoaded", () => {
 // ===========================  
 // Load Notifications with dynamic border colors
 // ===========================  
+// ===========================
+// Unread Notification Badge
+// Tracks the last time the student opened the notifications dropdown
+// (localStorage timestamp) — any notification newer than that counts
+// as unread. Opening the dropdown marks everything as seen.
+// ===========================
+const NOTIF_LAST_SEEN_KEY = "notificationsLastSeenAt";
+
+function getNotifLastSeenAt() {
+  return Number(localStorage.getItem(NOTIF_LAST_SEEN_KEY) || 0);
+}
+
+function setNotifLastSeenAt(timestamp) {
+  localStorage.setItem(NOTIF_LAST_SEEN_KEY, String(timestamp));
+}
+
+function renderUnreadBadge(count) {
+  const bell = document.querySelector(".sd-notif-bell");
+  if (!bell) return;
+
+  let badge = bell.querySelector(".unread-badge");
+
+  if (count > 0) {
+    if (!badge) {
+      badge = document.createElement("span");
+      badge.className = "unread-badge";
+      bell.appendChild(badge);
+    }
+    badge.textContent = count > 9 ? "9+" : String(count);
+    badge.style.display = "flex";
+  } else if (badge) {
+    badge.style.display = "none";
+  }
+}
+
 function toggleNotifications() {
   const list = document.querySelector(".notifications-list");
   const arrow = document.querySelector(".dropdown-arrow");
@@ -327,6 +379,12 @@ function toggleNotifications() {
   const isOpen = list.style.display === "block";
   list.style.display = isOpen ? "none" : "block";
   arrow.classList.toggle("open", !isOpen);
+
+  // Mark everything as seen once the dropdown is opened
+  if (!isOpen) {
+    setNotifLastSeenAt(Date.now());
+    renderUnreadBadge(0);
+  }
 }
 
 function renderMessage(message) {
@@ -397,6 +455,13 @@ async function loadNotifications(matric) {
       (data || []).filter(
         n => !hidden.includes(n.created_at)
       );
+
+    // Unread badge: anything newer than the last time the dropdown was opened
+    const lastSeenAt = getNotifLastSeenAt();
+    const unreadCount = visibleNotifications.filter(
+      n => new Date(n.created_at).getTime() > lastSeenAt
+    ).length;
+    renderUnreadBadge(unreadCount);
 
     if (visibleNotifications.length === 0) {
       // Update sub-text only — preserve the header structure
