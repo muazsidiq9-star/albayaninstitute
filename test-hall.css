@@ -177,6 +177,16 @@ html, body {
 
 #progressBar { background: #60a5fa; }
 
+/* Question count / answered-remaining text under the progress bar */
+.progress-stats {
+  margin: 6px 0 0;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.55);
+}
+
 @keyframes flashRed {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.4; }
@@ -188,6 +198,7 @@ html, body {
   .hall-timer-box   { padding: 8px 14px; min-width: 90px; }
   #time             { font-size: 1.3rem; }
   .bar-label        { width: 46px; font-size: 0.62rem; }
+  .progress-stats   { font-size: 0.64rem; }
 }
 
 

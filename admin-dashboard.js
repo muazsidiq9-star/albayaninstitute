@@ -751,7 +751,18 @@ async function editStudent(id) {
   document.getElementById("studentName").value = s.fullname;
   document.getElementById("studentEmail").value = s.email;
   document.getElementById("studentWhatsApp").value = s.whatsapp;
-  document.getElementById("studentCountry").value = s.country;
+  const studentCountrySelect = document.getElementById("studentCountry");
+  studentCountrySelect.value = s.country;
+  if (studentCountrySelect.value !== s.country && s.country) {
+    // Old free-text country value doesn't match a dropdown option
+    // (different spelling/casing) — keep it selectable so editing
+    // doesn't silently discard it.
+    const opt = document.createElement("option");
+    opt.value = s.country;
+    opt.textContent = `${s.country} (${t("no longer listed")})`;
+    studentCountrySelect.appendChild(opt);
+    studentCountrySelect.value = s.country;
+  }
   document.getElementById("studentGender").value = s.gender;
   document.getElementById("studentAge").value = s.age;
   document.getElementById("studentLevel").value = s.level_arabic;
@@ -1096,10 +1107,83 @@ function ensureFeeCurrencyField() {
   const select = document.createElement("select");
   select.id = "feeCurrency";
   select.innerHTML = `
-    <option value="NGN">₦ NGN</option>
-    <option value="USD">$ USD</option>
-    <option value="EUR">€ EUR</option>
-    <option value="GBP">£ GBP</option>
+    <option value="NGN">₦ NGN - Nigerian Naira</option>
+    <optgroup label="Africa">
+      <option value="GHS">₵ GHS - Ghanaian Cedi</option>
+      <option value="ZAR">R ZAR - South African Rand</option>
+      <option value="KES">KSh KES - Kenyan Shilling</option>
+      <option value="UGX">USh UGX - Ugandan Shilling</option>
+      <option value="TZS">TSh TZS - Tanzanian Shilling</option>
+      <option value="ZMW">ZK ZMW - Zambian Kwacha</option>
+      <option value="ZWG">Z$ ZWG - Zimbabwean Gold (ZiG)</option>
+      <option value="EGP">E£ EGP - Egyptian Pound</option>
+      <option value="MAD">DH MAD - Moroccan Dirham</option>
+      <option value="DZD">DA DZD - Algerian Dinar</option>
+      <option value="TND">DT TND - Tunisian Dinar</option>
+      <option value="LYD">LD LYD - Libyan Dinar</option>
+      <option value="ETB">Br ETB - Ethiopian Birr</option>
+      <option value="RWF">FRw RWF - Rwandan Franc</option>
+      <option value="XOF">CFA XOF - West African CFA Franc</option>
+      <option value="XAF">FCFA XAF - Central African CFA Franc</option>
+      <option value="SLE">Le SLE - Sierra Leonean Leone</option>
+      <option value="LRD">L$ LRD - Liberian Dollar</option>
+      <option value="GMD">D GMD - Gambian Dalasi</option>
+      <option value="GNF">FG GNF - Guinean Franc</option>
+      <option value="MWK">MK MWK - Malawian Kwacha</option>
+      <option value="MZN">MT MZN - Mozambican Metical</option>
+      <option value="AOA">Kz AOA - Angolan Kwanza</option>
+      <option value="BWP">P BWP - Botswana Pula</option>
+      <option value="NAD">N$ NAD - Namibian Dollar</option>
+      <option value="SZL">E SZL - Eswatini Lilangeni</option>
+      <option value="LSL">L LSL - Lesotho Loti</option>
+      <option value="MUR">₨ MUR - Mauritian Rupee</option>
+      <option value="SCR">₨ SCR - Seychellois Rupee</option>
+      <option value="SOS">Sh SOS - Somali Shilling</option>
+      <option value="SDG">£ SDG - Sudanese Pound</option>
+      <option value="SSP">£ SSP - South Sudanese Pound</option>
+      <option value="DJF">Fdj DJF - Djiboutian Franc</option>
+      <option value="ERN">Nfk ERN - Eritrean Nakfa</option>
+      <option value="CVE">$ CVE - Cape Verdean Escudo</option>
+      <option value="KMF">CF KMF - Comorian Franc</option>
+      <option value="MGA">Ar MGA - Malagasy Ariary</option>
+      <option value="BIF">FBu BIF - Burundian Franc</option>
+      <option value="CDF">FC CDF - Congolese Franc</option>
+      <option value="STN">Db STN - São Tomé & Príncipe Dobra</option>
+      <option value="MRU">UM MRU - Mauritanian Ouguiya</option>
+    </optgroup>
+    <optgroup label="International">
+      <option value="USD">$ USD - US Dollar</option>
+      <option value="EUR">€ EUR - Euro</option>
+      <option value="GBP">£ GBP - British Pound</option>
+      <option value="CAD">C$ CAD - Canadian Dollar</option>
+      <option value="AUD">A$ AUD - Australian Dollar</option>
+      <option value="NZD">NZ$ NZD - New Zealand Dollar</option>
+      <option value="CHF">Fr CHF - Swiss Franc</option>
+      <option value="CNY">¥ CNY - Chinese Yuan</option>
+      <option value="JPY">¥ JPY - Japanese Yen</option>
+      <option value="INR">₹ INR - Indian Rupee</option>
+      <option value="PKR">₨ PKR - Pakistani Rupee</option>
+      <option value="BDT">৳ BDT - Bangladeshi Taka</option>
+      <option value="AED">د.إ AED - UAE Dirham</option>
+      <option value="SAR">﷼ SAR - Saudi Riyal</option>
+      <option value="QAR">﷼ QAR - Qatari Riyal</option>
+      <option value="TRY">₺ TRY - Turkish Lira</option>
+      <option value="ILS">₪ ILS - Israeli Shekel</option>
+      <option value="SGD">S$ SGD - Singapore Dollar</option>
+      <option value="MYR">RM MYR - Malaysian Ringgit</option>
+      <option value="IDR">Rp IDR - Indonesian Rupiah</option>
+      <option value="PHP">₱ PHP - Philippine Peso</option>
+      <option value="THB">฿ THB - Thai Baht</option>
+      <option value="VND">₫ VND - Vietnamese Dong</option>
+      <option value="KRW">₩ KRW - South Korean Won</option>
+      <option value="HKD">HK$ HKD - Hong Kong Dollar</option>
+      <option value="BRL">R$ BRL - Brazilian Real</option>
+      <option value="MXN">$ MXN - Mexican Peso</option>
+      <option value="SEK">kr SEK - Swedish Krona</option>
+      <option value="NOK">kr NOK - Norwegian Krone</option>
+      <option value="DKK">kr DKK - Danish Krone</option>
+      <option value="PLN">zł PLN - Polish Zloty</option>
+    </optgroup>
   `;
 
   amountInput.insertAdjacentElement("afterend", select);
@@ -3800,7 +3884,27 @@ function escapeForAttr(str) {
 
 // Single source of truth for currency symbols — used by Payments, Fees,
 // and the trash bin, so "$59" / "₦25,000" render consistently everywhere.
-const CURRENCY_SYMBOLS = { NGN: "₦", USD: "$", EUR: "€", GBP: "£" };
+// Symbol shown before the amount in formatMoney() below. Every currency in
+// the dropdowns above has an entry here so amounts always show a real
+// symbol instead of falling back to the bare currency code.
+const CURRENCY_SYMBOLS = {
+  NGN: "₦",
+  // Africa
+  GHS: "₵", ZAR: "R", KES: "KSh", UGX: "USh", TZS: "TSh", ZMW: "ZK",
+  ZWG: "Z$", EGP: "E£", MAD: "DH", DZD: "DA", TND: "DT", LYD: "LD",
+  ETB: "Br", RWF: "FRw", XOF: "CFA", XAF: "FCFA", SLE: "Le", LRD: "L$",
+  GMD: "D", GNF: "FG", MWK: "MK", MZN: "MT", AOA: "Kz", BWP: "P",
+  NAD: "N$", SZL: "E", LSL: "L", MUR: "₨", SCR: "₨", SOS: "Sh",
+  SDG: "£", SSP: "£", DJF: "Fdj", ERN: "Nfk", CVE: "$", KMF: "CF",
+  MGA: "Ar", BIF: "FBu", CDF: "FC", STN: "Db", MRU: "UM",
+  // International
+  USD: "$", EUR: "€", GBP: "£", CAD: "C$", AUD: "A$", NZD: "NZ$",
+  CHF: "Fr", CNY: "¥", JPY: "¥", INR: "₹", PKR: "₨", BDT: "৳",
+  AED: "د.إ", SAR: "﷼", QAR: "﷼", TRY: "₺", ILS: "₪", SGD: "S$",
+  MYR: "RM", IDR: "Rp", PHP: "₱", THB: "฿", VND: "₫", KRW: "₩",
+  HKD: "HK$", BRL: "R$", MXN: "$", SEK: "kr", NOK: "kr", DKK: "kr",
+  PLN: "zł"
+};
 
 function formatMoney(amount, currency) {
   const symbol = CURRENCY_SYMBOLS[currency] || currency || "₦";

@@ -902,10 +902,83 @@
         <input id="bulkFeeAmount" type="number" placeholder="Amount" data-translate-placeholder="Amount">
         <label data-translate="Currency">Currency</label>
         <select id="bulkFeeCurrency">
-          <option value="NGN">₦ NGN</option>
-          <option value="USD">$ USD</option>
-          <option value="EUR">€ EUR</option>
-          <option value="GBP">£ GBP</option>
+          <option value="NGN">₦ NGN - Nigerian Naira</option>
+          <optgroup label="Africa">
+            <option value="GHS">₵ GHS - Ghanaian Cedi</option>
+            <option value="ZAR">R ZAR - South African Rand</option>
+            <option value="KES">KSh KES - Kenyan Shilling</option>
+            <option value="UGX">USh UGX - Ugandan Shilling</option>
+            <option value="TZS">TSh TZS - Tanzanian Shilling</option>
+            <option value="ZMW">ZK ZMW - Zambian Kwacha</option>
+            <option value="ZWG">Z$ ZWG - Zimbabwean Gold (ZiG)</option>
+            <option value="EGP">E£ EGP - Egyptian Pound</option>
+            <option value="MAD">DH MAD - Moroccan Dirham</option>
+            <option value="DZD">DA DZD - Algerian Dinar</option>
+            <option value="TND">DT TND - Tunisian Dinar</option>
+            <option value="LYD">LD LYD - Libyan Dinar</option>
+            <option value="ETB">Br ETB - Ethiopian Birr</option>
+            <option value="RWF">FRw RWF - Rwandan Franc</option>
+            <option value="XOF">CFA XOF - West African CFA Franc</option>
+            <option value="XAF">FCFA XAF - Central African CFA Franc</option>
+            <option value="SLE">Le SLE - Sierra Leonean Leone</option>
+            <option value="LRD">L$ LRD - Liberian Dollar</option>
+            <option value="GMD">D GMD - Gambian Dalasi</option>
+            <option value="GNF">FG GNF - Guinean Franc</option>
+            <option value="MWK">MK MWK - Malawian Kwacha</option>
+            <option value="MZN">MT MZN - Mozambican Metical</option>
+            <option value="AOA">Kz AOA - Angolan Kwanza</option>
+            <option value="BWP">P BWP - Botswana Pula</option>
+            <option value="NAD">N$ NAD - Namibian Dollar</option>
+            <option value="SZL">E SZL - Eswatini Lilangeni</option>
+            <option value="LSL">L LSL - Lesotho Loti</option>
+            <option value="MUR">₨ MUR - Mauritian Rupee</option>
+            <option value="SCR">₨ SCR - Seychellois Rupee</option>
+            <option value="SOS">Sh SOS - Somali Shilling</option>
+            <option value="SDG">£ SDG - Sudanese Pound</option>
+            <option value="SSP">£ SSP - South Sudanese Pound</option>
+            <option value="DJF">Fdj DJF - Djiboutian Franc</option>
+            <option value="ERN">Nfk ERN - Eritrean Nakfa</option>
+            <option value="CVE">$ CVE - Cape Verdean Escudo</option>
+            <option value="KMF">CF KMF - Comorian Franc</option>
+            <option value="MGA">Ar MGA - Malagasy Ariary</option>
+            <option value="BIF">FBu BIF - Burundian Franc</option>
+            <option value="CDF">FC CDF - Congolese Franc</option>
+            <option value="STN">Db STN - São Tomé & Príncipe Dobra</option>
+            <option value="MRU">UM MRU - Mauritanian Ouguiya</option>
+          </optgroup>
+          <optgroup label="International">
+            <option value="USD">$ USD - US Dollar</option>
+            <option value="EUR">€ EUR - Euro</option>
+            <option value="GBP">£ GBP - British Pound</option>
+            <option value="CAD">C$ CAD - Canadian Dollar</option>
+            <option value="AUD">A$ AUD - Australian Dollar</option>
+            <option value="NZD">NZ$ NZD - New Zealand Dollar</option>
+            <option value="CHF">Fr CHF - Swiss Franc</option>
+            <option value="CNY">¥ CNY - Chinese Yuan</option>
+            <option value="JPY">¥ JPY - Japanese Yen</option>
+            <option value="INR">₹ INR - Indian Rupee</option>
+            <option value="PKR">₨ PKR - Pakistani Rupee</option>
+            <option value="BDT">৳ BDT - Bangladeshi Taka</option>
+            <option value="AED">د.إ AED - UAE Dirham</option>
+            <option value="SAR">﷼ SAR - Saudi Riyal</option>
+            <option value="QAR">﷼ QAR - Qatari Riyal</option>
+            <option value="TRY">₺ TRY - Turkish Lira</option>
+            <option value="ILS">₪ ILS - Israeli Shekel</option>
+            <option value="SGD">S$ SGD - Singapore Dollar</option>
+            <option value="MYR">RM MYR - Malaysian Ringgit</option>
+            <option value="IDR">Rp IDR - Indonesian Rupiah</option>
+            <option value="PHP">₱ PHP - Philippine Peso</option>
+            <option value="THB">฿ THB - Thai Baht</option>
+            <option value="VND">₫ VND - Vietnamese Dong</option>
+            <option value="KRW">₩ KRW - South Korean Won</option>
+            <option value="HKD">HK$ HKD - Hong Kong Dollar</option>
+            <option value="BRL">R$ BRL - Brazilian Real</option>
+            <option value="MXN">$ MXN - Mexican Peso</option>
+            <option value="SEK">kr SEK - Swedish Krona</option>
+            <option value="NOK">kr NOK - Norwegian Krone</option>
+            <option value="DKK">kr DKK - Danish Krone</option>
+            <option value="PLN">zł PLN - Polish Zloty</option>
+          </optgroup>
         </select>
       </div>
 
@@ -1229,8 +1302,120 @@
         <input type="tel" id="studentWhatsApp" placeholder="+234..."
                data-translate-placeholder="+234...">
         <label data-translate="Country">Country</label>
-        <input type="text" id="studentCountry" placeholder="Country"
-               data-translate-placeholder="Country">
+        <select id="studentCountry">
+          <option value="" data-translate="Select Country">Select Country</option>
+          <option value="Nigeria" data-translate="Nigeria">Nigeria</option>
+          <optgroup label="Africa">
+            <option value="Algeria" data-translate="Algeria">Algeria</option>
+            <option value="Angola" data-translate="Angola">Angola</option>
+            <option value="Benin" data-translate="Benin">Benin</option>
+            <option value="Botswana" data-translate="Botswana">Botswana</option>
+            <option value="Burkina Faso" data-translate="Burkina Faso">Burkina Faso</option>
+            <option value="Burundi" data-translate="Burundi">Burundi</option>
+            <option value="Cabo Verde" data-translate="Cabo Verde">Cabo Verde</option>
+            <option value="Cameroon" data-translate="Cameroon">Cameroon</option>
+            <option value="Central African Republic" data-translate="Central African Republic">Central African Republic</option>
+            <option value="Chad" data-translate="Chad">Chad</option>
+            <option value="Comoros" data-translate="Comoros">Comoros</option>
+            <option value="Congo (DRC)" data-translate="Congo (DRC)">Congo (DRC)</option>
+            <option value="Congo (Republic)" data-translate="Congo (Republic)">Congo (Republic)</option>
+            <option value="Djibouti" data-translate="Djibouti">Djibouti</option>
+            <option value="Egypt" data-translate="Egypt">Egypt</option>
+            <option value="Equatorial Guinea" data-translate="Equatorial Guinea">Equatorial Guinea</option>
+            <option value="Eritrea" data-translate="Eritrea">Eritrea</option>
+            <option value="Eswatini" data-translate="Eswatini">Eswatini</option>
+            <option value="Ethiopia" data-translate="Ethiopia">Ethiopia</option>
+            <option value="Gabon" data-translate="Gabon">Gabon</option>
+            <option value="Gambia" data-translate="Gambia">Gambia</option>
+            <option value="Ghana" data-translate="Ghana">Ghana</option>
+            <option value="Guinea" data-translate="Guinea">Guinea</option>
+            <option value="Guinea-Bissau" data-translate="Guinea-Bissau">Guinea-Bissau</option>
+            <option value="Ivory Coast" data-translate="Ivory Coast">Ivory Coast</option>
+            <option value="Kenya" data-translate="Kenya">Kenya</option>
+            <option value="Lesotho" data-translate="Lesotho">Lesotho</option>
+            <option value="Liberia" data-translate="Liberia">Liberia</option>
+            <option value="Libya" data-translate="Libya">Libya</option>
+            <option value="Madagascar" data-translate="Madagascar">Madagascar</option>
+            <option value="Malawi" data-translate="Malawi">Malawi</option>
+            <option value="Mali" data-translate="Mali">Mali</option>
+            <option value="Mauritania" data-translate="Mauritania">Mauritania</option>
+            <option value="Mauritius" data-translate="Mauritius">Mauritius</option>
+            <option value="Morocco" data-translate="Morocco">Morocco</option>
+            <option value="Mozambique" data-translate="Mozambique">Mozambique</option>
+            <option value="Namibia" data-translate="Namibia">Namibia</option>
+            <option value="Niger" data-translate="Niger">Niger</option>
+            <option value="Rwanda" data-translate="Rwanda">Rwanda</option>
+            <option value="São Tomé and Príncipe" data-translate="São Tomé and Príncipe">São Tomé and Príncipe</option>
+            <option value="Senegal" data-translate="Senegal">Senegal</option>
+            <option value="Seychelles" data-translate="Seychelles">Seychelles</option>
+            <option value="Sierra Leone" data-translate="Sierra Leone">Sierra Leone</option>
+            <option value="Somalia" data-translate="Somalia">Somalia</option>
+            <option value="South Africa" data-translate="South Africa">South Africa</option>
+            <option value="South Sudan" data-translate="South Sudan">South Sudan</option>
+            <option value="Sudan" data-translate="Sudan">Sudan</option>
+            <option value="Tanzania" data-translate="Tanzania">Tanzania</option>
+            <option value="Togo" data-translate="Togo">Togo</option>
+            <option value="Tunisia" data-translate="Tunisia">Tunisia</option>
+            <option value="Uganda" data-translate="Uganda">Uganda</option>
+            <option value="Zambia" data-translate="Zambia">Zambia</option>
+            <option value="Zimbabwe" data-translate="Zimbabwe">Zimbabwe</option>
+          </optgroup>
+          <optgroup label="International">
+            <option value="United States" data-translate="United States">United States</option>
+            <option value="United Kingdom" data-translate="United Kingdom">United Kingdom</option>
+            <option value="Canada" data-translate="Canada">Canada</option>
+            <option value="Australia" data-translate="Australia">Australia</option>
+            <option value="New Zealand" data-translate="New Zealand">New Zealand</option>
+            <option value="Ireland" data-translate="Ireland">Ireland</option>
+            <option value="Germany" data-translate="Germany">Germany</option>
+            <option value="France" data-translate="France">France</option>
+            <option value="Italy" data-translate="Italy">Italy</option>
+            <option value="Spain" data-translate="Spain">Spain</option>
+            <option value="Portugal" data-translate="Portugal">Portugal</option>
+            <option value="Netherlands" data-translate="Netherlands">Netherlands</option>
+            <option value="Belgium" data-translate="Belgium">Belgium</option>
+            <option value="Switzerland" data-translate="Switzerland">Switzerland</option>
+            <option value="Sweden" data-translate="Sweden">Sweden</option>
+            <option value="Norway" data-translate="Norway">Norway</option>
+            <option value="Denmark" data-translate="Denmark">Denmark</option>
+            <option value="Finland" data-translate="Finland">Finland</option>
+            <option value="Poland" data-translate="Poland">Poland</option>
+            <option value="Austria" data-translate="Austria">Austria</option>
+            <option value="Greece" data-translate="Greece">Greece</option>
+            <option value="Turkey" data-translate="Turkey">Turkey</option>
+            <option value="Saudi Arabia" data-translate="Saudi Arabia">Saudi Arabia</option>
+            <option value="United Arab Emirates" data-translate="United Arab Emirates">United Arab Emirates</option>
+            <option value="Qatar" data-translate="Qatar">Qatar</option>
+            <option value="Kuwait" data-translate="Kuwait">Kuwait</option>
+            <option value="Bahrain" data-translate="Bahrain">Bahrain</option>
+            <option value="Oman" data-translate="Oman">Oman</option>
+            <option value="Jordan" data-translate="Jordan">Jordan</option>
+            <option value="Lebanon" data-translate="Lebanon">Lebanon</option>
+            <option value="Iraq" data-translate="Iraq">Iraq</option>
+            <option value="Syria" data-translate="Syria">Syria</option>
+            <option value="Yemen" data-translate="Yemen">Yemen</option>
+            <option value="Palestine" data-translate="Palestine">Palestine</option>
+            <option value="Israel" data-translate="Israel">Israel</option>
+            <option value="Iran" data-translate="Iran">Iran</option>
+            <option value="Afghanistan" data-translate="Afghanistan">Afghanistan</option>
+            <option value="Pakistan" data-translate="Pakistan">Pakistan</option>
+            <option value="India" data-translate="India">India</option>
+            <option value="Bangladesh" data-translate="Bangladesh">Bangladesh</option>
+            <option value="Sri Lanka" data-translate="Sri Lanka">Sri Lanka</option>
+            <option value="China" data-translate="China">China</option>
+            <option value="Japan" data-translate="Japan">Japan</option>
+            <option value="South Korea" data-translate="South Korea">South Korea</option>
+            <option value="Malaysia" data-translate="Malaysia">Malaysia</option>
+            <option value="Indonesia" data-translate="Indonesia">Indonesia</option>
+            <option value="Singapore" data-translate="Singapore">Singapore</option>
+            <option value="Philippines" data-translate="Philippines">Philippines</option>
+            <option value="Thailand" data-translate="Thailand">Thailand</option>
+            <option value="Vietnam" data-translate="Vietnam">Vietnam</option>
+            <option value="Brazil" data-translate="Brazil">Brazil</option>
+            <option value="Mexico" data-translate="Mexico">Mexico</option>
+            <option value="Argentina" data-translate="Argentina">Argentina</option>
+          </optgroup>
+        </select>
         <label data-translate="Gender">Gender</label>
         <input type="text" id="studentGender" placeholder="Gender"
                data-translate-placeholder="Gender">
@@ -1303,20 +1488,82 @@
         <label data-translate="Currency">Currency</label>
         <select id="paymentCurrency" required>
           <option value="NGN">₦ NGN - Nigerian Naira</option>
-          <option value="USD">$ USD - US Dollar</option>
-          <option value="EUR">€ EUR - Euro</option>
-          <option value="GBP">£ GBP - British Pound</option>
-          <option value="GHS">₵ GHS - Ghanaian Cedi</option>
-          <option value="XOF">CFA XOF - West African CFA Franc</option>
-          <option value="XAF">CFA XAF - Central African CFA Franc</option>
-          <option value="ZAR">R ZAR - South African Rand</option>
-          <option value="KES">KSh KES - Kenyan Shilling</option>
-          <option value="EGP">£ EGP - Egyptian Pound</option>
-          <option value="MAD">MAD - Moroccan Dirham</option>
-          <option value="AED">د.إ AED - UAE Dirham</option>
-          <option value="SAR">﷼ SAR - Saudi Riyal</option>
-          <option value="CAD">$ CAD - Canadian Dollar</option>
-          <option value="AUD">$ AUD - Australian Dollar</option>
+          <optgroup label="Africa">
+            <option value="GHS">₵ GHS - Ghanaian Cedi</option>
+            <option value="ZAR">R ZAR - South African Rand</option>
+            <option value="KES">KSh KES - Kenyan Shilling</option>
+            <option value="UGX">USh UGX - Ugandan Shilling</option>
+            <option value="TZS">TSh TZS - Tanzanian Shilling</option>
+            <option value="ZMW">ZK ZMW - Zambian Kwacha</option>
+            <option value="ZWG">Z$ ZWG - Zimbabwean Gold (ZiG)</option>
+            <option value="EGP">E£ EGP - Egyptian Pound</option>
+            <option value="MAD">DH MAD - Moroccan Dirham</option>
+            <option value="DZD">DA DZD - Algerian Dinar</option>
+            <option value="TND">DT TND - Tunisian Dinar</option>
+            <option value="LYD">LD LYD - Libyan Dinar</option>
+            <option value="ETB">Br ETB - Ethiopian Birr</option>
+            <option value="RWF">FRw RWF - Rwandan Franc</option>
+            <option value="XOF">CFA XOF - West African CFA Franc</option>
+            <option value="XAF">FCFA XAF - Central African CFA Franc</option>
+            <option value="SLE">Le SLE - Sierra Leonean Leone</option>
+            <option value="LRD">L$ LRD - Liberian Dollar</option>
+            <option value="GMD">D GMD - Gambian Dalasi</option>
+            <option value="GNF">FG GNF - Guinean Franc</option>
+            <option value="MWK">MK MWK - Malawian Kwacha</option>
+            <option value="MZN">MT MZN - Mozambican Metical</option>
+            <option value="AOA">Kz AOA - Angolan Kwanza</option>
+            <option value="BWP">P BWP - Botswana Pula</option>
+            <option value="NAD">N$ NAD - Namibian Dollar</option>
+            <option value="SZL">E SZL - Eswatini Lilangeni</option>
+            <option value="LSL">L LSL - Lesotho Loti</option>
+            <option value="MUR">₨ MUR - Mauritian Rupee</option>
+            <option value="SCR">₨ SCR - Seychellois Rupee</option>
+            <option value="SOS">Sh SOS - Somali Shilling</option>
+            <option value="SDG">£ SDG - Sudanese Pound</option>
+            <option value="SSP">£ SSP - South Sudanese Pound</option>
+            <option value="DJF">Fdj DJF - Djiboutian Franc</option>
+            <option value="ERN">Nfk ERN - Eritrean Nakfa</option>
+            <option value="CVE">$ CVE - Cape Verdean Escudo</option>
+            <option value="KMF">CF KMF - Comorian Franc</option>
+            <option value="MGA">Ar MGA - Malagasy Ariary</option>
+            <option value="BIF">FBu BIF - Burundian Franc</option>
+            <option value="CDF">FC CDF - Congolese Franc</option>
+            <option value="STN">Db STN - São Tomé & Príncipe Dobra</option>
+            <option value="MRU">UM MRU - Mauritanian Ouguiya</option>
+          </optgroup>
+          <optgroup label="International">
+            <option value="USD">$ USD - US Dollar</option>
+            <option value="EUR">€ EUR - Euro</option>
+            <option value="GBP">£ GBP - British Pound</option>
+            <option value="CAD">C$ CAD - Canadian Dollar</option>
+            <option value="AUD">A$ AUD - Australian Dollar</option>
+            <option value="NZD">NZ$ NZD - New Zealand Dollar</option>
+            <option value="CHF">Fr CHF - Swiss Franc</option>
+            <option value="CNY">¥ CNY - Chinese Yuan</option>
+            <option value="JPY">¥ JPY - Japanese Yen</option>
+            <option value="INR">₹ INR - Indian Rupee</option>
+            <option value="PKR">₨ PKR - Pakistani Rupee</option>
+            <option value="BDT">৳ BDT - Bangladeshi Taka</option>
+            <option value="AED">د.إ AED - UAE Dirham</option>
+            <option value="SAR">﷼ SAR - Saudi Riyal</option>
+            <option value="QAR">﷼ QAR - Qatari Riyal</option>
+            <option value="TRY">₺ TRY - Turkish Lira</option>
+            <option value="ILS">₪ ILS - Israeli Shekel</option>
+            <option value="SGD">S$ SGD - Singapore Dollar</option>
+            <option value="MYR">RM MYR - Malaysian Ringgit</option>
+            <option value="IDR">Rp IDR - Indonesian Rupiah</option>
+            <option value="PHP">₱ PHP - Philippine Peso</option>
+            <option value="THB">฿ THB - Thai Baht</option>
+            <option value="VND">₫ VND - Vietnamese Dong</option>
+            <option value="KRW">₩ KRW - South Korean Won</option>
+            <option value="HKD">HK$ HKD - Hong Kong Dollar</option>
+            <option value="BRL">R$ BRL - Brazilian Real</option>
+            <option value="MXN">$ MXN - Mexican Peso</option>
+            <option value="SEK">kr SEK - Swedish Krona</option>
+            <option value="NOK">kr NOK - Norwegian Krone</option>
+            <option value="DKK">kr DKK - Danish Krone</option>
+            <option value="PLN">zł PLN - Polish Zloty</option>
+          </optgroup>
         </select>
         <label data-translate="Month">Month</label>
         <select id="paymentMonth" required>

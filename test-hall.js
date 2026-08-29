@@ -28,6 +28,7 @@ const reviewModal = document.getElementById('reviewModal');
 const reviewList = document.getElementById('reviewList');
 const finalSubmitBtn = document.getElementById('finalSubmitBtn');
 const progressBar = document.getElementById('progressBar');
+const progressStats = document.getElementById('progressStats');
 const countdownBar = document.getElementById('countdownBar');
 const timeDisplay = document.getElementById('time');
 const timeWarning = document.getElementById('timeWarning');
@@ -538,6 +539,18 @@ function updateProgressBar() {
     const percent = ((currentIndex + 1) / questions.length) * 100;
 
     progressBar.style.width = `${percent}%`;
+
+    const total = questions.length;
+    const answered = questions.filter(q => {
+        const a = studentAnswers[q.id];
+        return a !== undefined && a !== null && String(a).trim() !== '';
+    }).length;
+    const remaining = total - answered;
+
+    if (progressStats) {
+        progressStats.textContent =
+            `Question ${currentIndex + 1} of ${total} · ${answered} answered, ${remaining} left`;
+    }
 }
 
 prevBtn.addEventListener('click', async () => {
