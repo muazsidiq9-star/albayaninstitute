@@ -451,6 +451,10 @@
             <span data-translate="Save">Save</span>
           </button>
         </div>
+        <button class="add-btn" onclick="openBulkFeeModal()" style="margin-top:10px;">
+          <i class="fa-solid fa-users"></i>
+          <span data-translate="Bulk Add for Multiple Students">Bulk Add for Multiple Students</span>
+        </button>
       </div>
       <input id="search" class="search-box"
              placeholder="🔍 Search by matric..."
@@ -872,6 +876,79 @@
 
 
   <!-- ================================================
+       BULK FEE ENTRY MODAL — one submit, many students,
+       same month/amount/currency. The single-student form
+       above stays untouched for one-off entries.
+  ================================================ -->
+  <div class="modal" id="bulkFeeModal">
+    <div class="modal-content modal-large">
+      <button class="btn btn-close" onclick="closeModal('bulkFeeModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 data-translate="Bulk Add Fee for Multiple Students">Bulk Add Fee for Multiple Students</h2>
+      <div class="modal-grid">
+        <label data-translate="Month">Month</label>
+        <select id="bulkFeeMonth">
+          <option value="" data-translate="Select Month">Select Month</option>
+          <option>January</option><option>February</option><option>March</option>
+          <option>April</option><option>May</option><option>June</option>
+          <option>July</option><option>August</option><option>September</option>
+          <option>October</option><option>November</option><option>December</option>
+        </select>
+        <label data-translate="Amount">Amount</label>
+        <input id="bulkFeeAmount" type="number" placeholder="Amount" data-translate-placeholder="Amount">
+        <label data-translate="Currency">Currency</label>
+        <select id="bulkFeeCurrency">
+          <option value="NGN">₦ NGN</option>
+          <option value="USD">$ USD</option>
+          <option value="EUR">€ EUR</option>
+          <option value="GBP">£ GBP</option>
+        </select>
+      </div>
+
+      <label data-translate="Students">Students</label>
+      <input type="text" id="bulkFeeSearch" class="search-input"
+             placeholder="🔍 Search by name or matric..."
+             data-translate-placeholder="🔍 Search by name or matric..."
+             oninput="filterBulkFeeStudents()" style="width:100%; margin:6px 0;">
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <span id="bulkFeeSelectedCount">0 <span data-translate="selected">selected</span></span>
+        <span>
+          <button type="button" class="btn btn-edit" onclick="toggleAllBulkFeeStudents(true)">
+            <span data-translate="Select All">Select All</span>
+          </button>
+          <button type="button" class="btn btn-edit" onclick="toggleAllBulkFeeStudents(false)">
+            <span data-translate="Clear">Clear</span>
+          </button>
+        </span>
+      </div>
+
+      <div id="bulkFeeStudentList" class="cert-course-checklist"
+           style="display:flex; flex-direction:column; gap:6px; padding:10px;
+                  border:1px solid var(--border-color); border-radius:6px; max-height:280px; overflow-y:auto;">
+        <span data-translate="Loading students...">Loading students...</span>
+      </div>
+
+      <p style="font-size:0.85rem; opacity:0.75; margin:8px 0 0;"
+         data-translate="Tick every student this fee applies to, then Save once — it's added to each of them with the same month, amount and currency.">
+        Tick every student this fee applies to, then Save once — it's added to each of them with the same month, amount and currency.
+      </p>
+
+      <div class="modal-actions">
+        <button id="bulkFeeSaveBtn" class="btn btn-save" onclick="bulkSaveFee()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span data-translate="Add Fee to Selected Students">Add Fee to Selected Students</span>
+        </button>
+        <button class="btn btn-cancel" onclick="closeModal('bulkFeeModal')">
+          <span data-translate="Cancel">Cancel</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================================================
        CERTIFICATES SECTION (tab-certificates)
   ================================================ -->
   <div class="dash-tab-panel" id="tab-certificates" style="display:none;">
@@ -1202,9 +1279,11 @@
       <h2 data-translate="Add Payment">Add Payment</h2>
       <div class="modal-grid">
         <label data-translate="Student">Student</label>
-        <select id="paymentStudent" onchange="autofillStudentLevel('paymentStudent','paymentLevel','paymentBatch')">
+        <select id="paymentStudent" onchange="autofillStudentLevel('paymentStudent','paymentLevel','paymentBatch','paymentEmail')">
           <option value="" data-translate="Select a student">Select a student</option>
         </select>
+        <label data-translate="Email">Email</label>
+        <input type="email" id="paymentEmail" placeholder="Email" disabled>
         <label data-translate="Level">Level</label>
         <select id="paymentLevel" required>
           <option value="" data-translate="Select Level">Select Level</option>
@@ -1360,8 +1439,9 @@
           <option value="" data-translate="Select Course">Select Course</option>
         </select>
         <label data-translate="Instructor">Instructor</label>
-        <input type="text" id="Instructor" placeholder="Instructor Name"
-               data-translate-placeholder="Instructor Name">
+        <select id="Instructor" required>
+          <option value="" data-translate="Select Instructor">Select Instructor</option>
+        </select>
         <label data-translate="Date">Date</label>
         <input type="date" id="classDate">
         <label data-translate="Time">Time</label>
@@ -1638,16 +1718,11 @@
       if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
     });
 
-    function openModal(id) {
-      document.getElementById(id).classList.add('show');
-    }
-    function closeModal(id) {
-      const modal = document.getElementById(id);
-      if (!modal) return;
-      modal.classList.remove('show');
-      // Clear stale certificate student context when certificate modal is closed
-      if (id === 'certificateModal') window.certStudentData = null;
-    }
+    // openModal()/closeModal() live in admin-dashboard.js (loaded at the
+    // bottom of this page) — that version also resets stale edit state,
+    // re-enables disabled fields, and preloads course dropdowns. This file
+    // used to carry a stripped-down duplicate here; removed so there's a
+    // single source of truth regardless of future script load order.
 
     // ===========================
     // DASHBOARD TAB SYSTEM

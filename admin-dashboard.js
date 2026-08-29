@@ -260,6 +260,7 @@ function openModal(id) {
   }
   if (id === "scheduleModal" && !window.editingScheduleId) {
     loadCoursesForScheduleForm();
+    loadTeachersForScheduleForm();
   }
 
   // Reset the "create" version of the attendance modal each time it's freshly opened
@@ -522,6 +523,8 @@ async function loadStudents() {
     .eq("deleted", false)
     .order("created_at", { ascending: false });
 
+  window.studentsRowCache = data || [];
+
   const tbody = document.querySelector("#students-table tbody");
   if (!tbody) return;
 
@@ -585,7 +588,7 @@ async function loadStudents() {
 async function populateStudentSelects() {
   const { data } = await db
     .from("students")
-    .select("fullname, matric_number, level_arabic, batch")
+    .select("fullname, matric_number, level_arabic, batch, email")
     .order("fullname");
 
   ["paymentStudent", "gradeStudent"].forEach(id => {
@@ -599,17 +602,18 @@ async function populateStudentSelects() {
       opt.textContent = `${s.fullname} (${s.matric_number})`;
       opt.dataset.level = s.level_arabic || "";
       opt.dataset.batch = s.batch || "";
+      opt.dataset.email = s.email || "";
       select.appendChild(opt);
     });
   });
 }
 
-// Auto-fills a Level <select> (and optionally a Batch field) from the
-// level_arabic / batch stashed on the chosen student <option>
-// (data-level / data-batch). Wired via onchange on paymentStudent /
-// gradeStudent. Silently no-ops if the student has no level/batch on file
-// yet — admin can still pick one manually.
-function autofillStudentLevel(studentSelectId, levelSelectId, batchFieldId) {
+// Auto-fills a Level <select> (and optionally Batch / Email fields) from
+// the level_arabic / batch / email stashed on the chosen student <option>
+// (data-level / data-batch / data-email). Wired via onchange on
+// paymentStudent / gradeStudent. Silently no-ops if the student has no
+// level/batch/email on file yet — admin can still fill it in manually.
+function autofillStudentLevel(studentSelectId, levelSelectId, batchFieldId, emailFieldId) {
   const studentSelect = document.getElementById(studentSelectId);
   const levelSelect = document.getElementById(levelSelectId);
   if (!studentSelect || !levelSelect) return;
@@ -621,6 +625,11 @@ function autofillStudentLevel(studentSelectId, levelSelectId, batchFieldId) {
   if (batchFieldId) {
     const batchField = document.getElementById(batchFieldId);
     if (batchField) batchField.value = chosen?.dataset.batch || "";
+  }
+
+  if (emailFieldId) {
+    const emailField = document.getElementById(emailFieldId);
+    if (emailField) emailField.value = chosen?.dataset.email || "";
   }
 }
 
@@ -732,11 +741,10 @@ if (passportFile) {
 }
 
 async function editStudent(id) {
-  const { data: s, error } = await db
-    .from("students")
-    .select("*")
-    .eq("id", id)
-    .single();
+  const cached = (window.studentsRowCache || []).find(x => x.id === id);
+  const { data: s, error } = cached
+    ? { data: cached, error: null }
+    : await db.from("students").select("*").eq("id", id).single();
 
   if (error || !s) return;
 
@@ -790,6 +798,7 @@ async function addPayment() {
 
   try {
     const matric_number = document.getElementById("paymentStudent")?.value;
+    const payer_email = document.getElementById("paymentEmail")?.value.trim() || null;
     const level_arabic = document.getElementById("paymentLevel")?.value;
     const batch = document.getElementById("paymentBatch")?.value;
     const amount = Number(document.getElementById("paymentAmount")?.value || 0);
@@ -797,7 +806,7 @@ async function addPayment() {
     const month = document.getElementById("paymentMonth")?.value;
     const payment_method = document.getElementById("paymentMethod")?.value;
     const created_at = document.getElementById("paymentDate")?.value || null;
-    const status = document.getElementById("paymentStatus")?.value || "Pending";
+    const status = document.getElementById("paymentStatus")?.value || "pending";
 
     if (!matric_number || !amount || !currency || !month || !payment_method) {
       alert(t("Fill all required fields"));
@@ -806,7 +815,7 @@ async function addPayment() {
 
         if (window.editingPaymentId) {
       const { data: updData, error: updError } = await db.from("payments")
-        .update({ level_arabic, batch, amount, currency, month, payment_method, created_at, status })
+        .update({ payer_email, level_arabic, batch, amount, currency, month, payment_method, created_at, status })
         .eq("id", window.editingPaymentId)
         .select();
 
@@ -821,7 +830,7 @@ async function addPayment() {
     }
  else {
       await db.from("payments").insert([{
-        matric_number, level_arabic, batch, amount, currency,
+        matric_number, payer_email, level_arabic, batch, amount, currency,
         month, payment_method, created_at, status
       }]);
 
@@ -855,6 +864,8 @@ async function loadPayments() {
     `)
     .eq("deleted", false)
     .order("created_at", { ascending: false });
+
+  window.paymentsRowCache = data || [];
 
   const tbody = document.querySelector("#payments-table tbody");
   if (!tbody) return;
@@ -928,18 +939,70 @@ async function markPaid(btn, id, matric, amount, month) {
   }
 }
 
+// One-time cleanup utility for payments recorded before the email field
+// existed. Finds payments with no payer_email, looks each student up by
+// matric_number, and fills in their current email on file. Run once from
+// the browser console on this page: backfillPaymentEmails()
+async function backfillPaymentEmails() {
+  try {
+    const { data: payments, error: pErr } = await db
+      .from("payments")
+      .select("id, matric_number")
+      .is("payer_email", null);
+    if (pErr) throw pErr;
+
+    if (!payments || payments.length === 0) {
+      console.log("No payments were missing an email.");
+      return;
+    }
+
+    const { data: students, error: sErr } = await db
+      .from("students")
+      .select("matric_number, email");
+    if (sErr) throw sErr;
+
+    const emailByMatric = {};
+    students?.forEach(s => { emailByMatric[s.matric_number] = s.email; });
+
+    let updated = 0, skipped = 0;
+    for (const p of payments) {
+      const email = emailByMatric[p.matric_number];
+      if (!email) { skipped++; continue; }
+
+      const { error: updErr } = await db
+        .from("payments")
+        .update({ payer_email: email })
+        .eq("id", p.id);
+
+      if (updErr) {
+        console.error(`Failed to update payment ${p.id}:`, updErr);
+      } else {
+        updated++;
+      }
+    }
+
+    console.log(`Backfill done. Updated: ${updated}. Skipped (no student email on file): ${skipped}.`);
+    if (typeof loadPayments === "function") loadPayments();
+  } catch (e) {
+    console.error("Backfill payment emails error:", e);
+  }
+}
+window.backfillPaymentEmails = backfillPaymentEmails;
+
 async function editPayment(id) {
-  const { data: p } = await db
-    .from("payments")
-    .select("*")
-    .eq("id", id)
-    .single();
+  const cached = (window.paymentsRowCache || []).find(x => x.id === id);
+  const { data: p } = cached
+    ? { data: cached }
+    : await db.from("payments").select("*").eq("id", id).single();
   if (!p) return;
 
   document.getElementById("paymentStudent").value = p.matric_number;
+  const chosenOpt = document.getElementById("paymentStudent")?.selectedOptions[0];
+  document.getElementById("paymentEmail").value = p.payer_email || chosenOpt?.dataset.email || "";
   document.getElementById("paymentLevel").value = p.level_arabic;
   document.getElementById("paymentBatch").value = p.batch || "";
   document.getElementById("paymentAmount").value = p.amount;
+  document.getElementById("paymentCurrency").value = p.currency || "NGN";
   document.getElementById("paymentMonth").value = p.month;
   document.getElementById("paymentMethod").value = p.payment_method;
   document.getElementById("paymentStatus").value = p.status;
@@ -1000,6 +1063,8 @@ async function loadStudentDropdown() {
     .order("fullname", { ascending: true });
 
   if (error) { console.error(error); return; }
+
+  window.feeStudentsCache = data || [];
 
   const select = document.getElementById("studentSelect");
   select.innerHTML = `
@@ -1072,6 +1137,120 @@ function clearForm() {
   document.getElementById("amount").value = "";
   const currencyField = document.getElementById("feeCurrency");
   if (currencyField) currencyField.value = "NGN";
+}
+
+/* -------------------------------------------------------
+   BULK FEE ENTRY — same student_fee_status table as the
+   single-student form above, but one Save writes a row for
+   every checked student in one request. The single-student
+   flow above is untouched for one-off entries.
+------------------------------------------------------- */
+
+async function openBulkFeeModal() {
+  document.getElementById("bulkFeeMonth").value = "";
+  document.getElementById("bulkFeeAmount").value = "";
+  document.getElementById("bulkFeeCurrency").value = "NGN";
+  document.getElementById("bulkFeeSearch").value = "";
+
+  const list = document.getElementById("bulkFeeStudentList");
+  list.innerHTML = `<span data-translate="Loading students...">${t("Loading students...")}</span>`;
+
+  openModal("bulkFeeModal");
+
+  let students = window.feeStudentsCache;
+  if (!students || students.length === 0) {
+    const { data, error } = await db
+      .from("students")
+      .select("matric_number, fullname")
+      .order("fullname", { ascending: true });
+    if (error) { console.error(error); list.innerHTML = `<span>${t("Failed to load students.")}</span>`; return; }
+    students = data || [];
+    window.feeStudentsCache = students;
+  }
+
+  if (students.length === 0) {
+    list.innerHTML = `<span>${t("No students found")}</span>`;
+    return;
+  }
+
+  list.innerHTML = students.map((s, i) => `
+    <label class="bulkFeeStudentRow" data-search="${(s.fullname + " " + s.matric_number).toLowerCase()}"
+           style="display:flex; align-items:center; gap:8px; font-weight:400; cursor:pointer;">
+      <input type="checkbox" class="bulkFeeStudentCheckbox" value="${s.matric_number}"
+             id="bulkFeeCb${i}" onchange="updateBulkFeeSelectedCount()">
+      <span>${s.fullname} (${s.matric_number})</span>
+    </label>
+  `).join("");
+
+  updateBulkFeeSelectedCount();
+}
+
+function filterBulkFeeStudents() {
+  const query = document.getElementById("bulkFeeSearch").value.trim().toLowerCase();
+  document.querySelectorAll(".bulkFeeStudentRow").forEach(row => {
+    row.style.display = row.dataset.search.includes(query) ? "flex" : "none";
+  });
+}
+
+function toggleAllBulkFeeStudents(checked) {
+  // Only affects rows currently visible under the search filter, so
+  // "Select All" after a search only selects the matching students.
+  document.querySelectorAll(".bulkFeeStudentRow").forEach(row => {
+    if (row.style.display === "none") return;
+    const cb = row.querySelector(".bulkFeeStudentCheckbox");
+    if (cb) cb.checked = checked;
+  });
+  updateBulkFeeSelectedCount();
+}
+
+function updateBulkFeeSelectedCount() {
+  const n = document.querySelectorAll(".bulkFeeStudentCheckbox:checked").length;
+  const el = document.getElementById("bulkFeeSelectedCount");
+  if (el) el.textContent = `${n} ${t("selected")}`;
+}
+
+async function bulkSaveFee() {
+  const month = document.getElementById("bulkFeeMonth").value;
+  const amount = document.getElementById("bulkFeeAmount").value;
+  const currency = document.getElementById("bulkFeeCurrency")?.value || "NGN";
+
+  const matrics = Array.from(document.querySelectorAll(".bulkFeeStudentCheckbox:checked"))
+    .map(cb => cb.value);
+
+  if (!month || !amount) {
+    alert(t("Fill all fields"));
+    return;
+  }
+  if (matrics.length === 0) {
+    alert(t("Select at least one student"));
+    return;
+  }
+
+  const btn = document.getElementById("bulkFeeSaveBtn");
+  setLoading(btn, true);
+
+  try {
+    const rows = matrics.map(matric_number => ({
+      matric_number, month, amount_due: amount, currency, status: "unpaid"
+    }));
+
+    // One request, one row per selected student — matches the same
+    // upsert behavior as the single-student Save above (existing
+    // matric+month combo gets its amount/currency updated, not duplicated).
+    const { error } = await db.from("student_fee_status").upsert(rows);
+
+    if (error) {
+      console.error("Bulk fee save error:", error);
+      alert(t("Error saving") + ": " + (error.message || t("See console.")));
+      return;
+    }
+
+    closeModal("bulkFeeModal");
+    loadFees();
+    showToast(`${t("Fee added for")} ${matrics.length} ${t("student(s)")}`);
+  } finally {
+    setLoading(btn, false);
+  }
 }
 
 async function toggleStatus(matric, month, currentStatus) {
@@ -1218,8 +1397,8 @@ async function addGrade() {
     closeModal("gradeModal");
     await loadGrades();
   } catch (e) {
-    console.error("Add/Edit grade error:", e);
-    alert(t("Failed to save grade. See console."));
+    console.error("Add/Edit grade error:", e?.message || e?.details || e?.hint || e);
+    alert(t("Failed to save grade") + ": " + (e?.message || e?.details || t("See console.")));
   } finally {
     setLoading(document.getElementById("addGradeBtn"), false);
   }
@@ -1231,11 +1410,13 @@ async function loadGrades() {
 
     const { data: grades, error } = await db
       .from("grades")
-      .select("id, matric_number, course, semester, assessment_score, exam_score, total_score, status, remark, released, created_at")
+      .select("id, matric_number, level_arabic, batch, course, semester, assessment_score, exam_score, total_score, status, remark, released, created_at")
       .eq("deleted", false)
       .order("created_at", { ascending: false });
 
     if (error) throw error;
+
+    window.gradesRowCache = grades || [];
 
     const tbody = document.querySelector("#grades-table tbody");
     if (!tbody) return;
@@ -1296,17 +1477,25 @@ function enableGradeAutoTotal() {
 
 async function editGrade(id) {
   try {
-    const { data: g, error } = await db.from("grades").select("*").eq("id", id).single();
+    const cached = (window.gradesRowCache || []).find(x => x.id === id);
+    const { data: g, error } = cached
+      ? { data: cached, error: null }
+      : await db.from("grades").select("*").eq("id", id).single();
     if (error || !g) return;
 
     window.editingGradeId = id;
 
-    // Course dropdown must be populated before we can select the right option
-    await loadCoursesForGradeForm();
+    // Show the modal right away — same as "Add Grade" — instead of making
+    // the user wait on the course-dropdown fetch below before anything
+    // appears. Fields (including the course select) fill in a moment later.
+    document.getElementById("gradeModal").classList.add("show");
 
     document.getElementById("gradeStudent").value = g.matric_number;
     document.getElementById("gradeLevel").value = g.level_arabic;
     document.getElementById("gradeBatch").value = g.batch || "";
+
+    // Course dropdown must be populated before we can select the right option
+    await loadCoursesForGradeForm();
 
     const gradeCourseSelect = document.getElementById("gradeCourse");
     gradeCourseSelect.value = g.course;
@@ -1326,7 +1515,6 @@ async function editGrade(id) {
     document.getElementById("gradeTotal").value = g.total_score;
     document.getElementById("gradeStatus").value = g.status;
     document.getElementById("gradeRemark").value = g.remark;
-    document.getElementById("gradeModal").classList.add("show");
   } catch (e) {
     console.error("Edit grade error:", e);
   }
@@ -1358,6 +1546,34 @@ async function loadCoursesForScheduleForm() {
     option.value = c.course_name;
     option.textContent = `${c.course_name}${c.level ? " — " + c.level : ""}${c.batch ? " (" + c.batch + ")" : ""}`;
     option.dataset.courseName = c.course_name;
+    select.appendChild(option);
+  });
+}
+
+// Populates the schedule modal's Instructor <select> from staff on file
+// (profiles where role = teacher) — same source as the Courses tab's
+// instructor dropdown, so names are picked, not retyped. The `schedule`
+// table only ever stored the instructor's plain name (no instructor_id
+// column), so the option value here is the name itself, same as before —
+// this doesn't require a schema change or touch any existing row.
+async function loadTeachersForScheduleForm() {
+  const { data, error } = await db
+    .from("profiles")
+    .select("id, full_name")
+    .eq("role", "teacher")
+    .order("full_name");
+
+  if (error) { console.error(error); return; }
+
+  const select = document.getElementById("Instructor");
+  if (!select) return;
+
+  select.innerHTML = `<option value="">${t("Select Instructor")}</option>`;
+
+  data.forEach(teacher => {
+    const option = document.createElement("option");
+    option.value = teacher.full_name;
+    option.textContent = teacher.full_name;
     select.appendChild(option);
   });
 }
@@ -1418,6 +1634,7 @@ async function addSchedule() {
 async function loadSchedule() {
   try {
     const { data } = await db.from("schedule").select("*").eq("deleted", false).order("class_date");
+    window.scheduleRowCache = data || [];
     const tbody = document.querySelector("#schedule-table tbody");
     if (!tbody) return;
 
@@ -1452,14 +1669,23 @@ async function loadSchedule() {
 }
 
 async function editSchedule(id) {
-  const { data: c, error } = await db.from("schedule").select("*").eq("id", id).single();
+  const cached = (window.scheduleRowCache || []).find(x => x.id === id);
+  const { data: c, error } = cached
+    ? { data: cached, error: null }
+    : await db.from("schedule").select("*").eq("id", id).single();
   if (error || !c) return;
 
-  // Course dropdown must be populated before we can select the right option
-  await loadCoursesForScheduleForm();
+  window.editingScheduleId = id;
+
+  // Show the modal right away instead of waiting on the course-dropdown
+  // fetch below — same behavior as "Add Class".
+  document.getElementById("scheduleModal").classList.add("show");
 
   document.getElementById("classLevel").value = c.level_arabic;
   document.getElementById("classBatch").value = c.batch || "";
+
+  // Course/Instructor dropdowns must be populated before we can select the right option
+  await Promise.all([loadCoursesForScheduleForm(), loadTeachersForScheduleForm()]);
 
   const classCourseSelect = document.getElementById("classCourse");
   classCourseSelect.value = c.course;
@@ -1473,14 +1699,22 @@ async function editSchedule(id) {
     classCourseSelect.value = c.course;
   }
 
-  document.getElementById("Instructor").value = c.instructor;
+  const instructorSelect = document.getElementById("Instructor");
+  instructorSelect.value = c.instructor;
+  if (instructorSelect.value !== c.instructor && c.instructor) {
+    // Stored instructor name no longer matches current staff (renamed/left) —
+    // keep it selectable so editing doesn't silently discard the value.
+    const opt = document.createElement("option");
+    opt.value = c.instructor;
+    opt.textContent = `${c.instructor} (${t("no longer listed")})`;
+    instructorSelect.appendChild(opt);
+    instructorSelect.value = c.instructor;
+  }
+
   document.getElementById("classDate").value = c.class_date;
   document.getElementById("classTime").value = c.class_time;
   document.getElementById("classLink").value = c.meeting_link;
   document.getElementById("classStatus").value = c.status;
-
-  window.editingScheduleId = id;
-  document.getElementById("scheduleModal").classList.add("show");
 }
 
 window.editingAssessmentId = null;
@@ -1581,17 +1815,22 @@ async function addAssessment() {
 }
 
 async function editAssessment(id) {
-  const { data: a, error } = await db.from("assessments").select("*").eq("id", id).single();
+  const cached = (window.assessmentsRowCache || []).find(x => x.id === id);
+  const { data: a, error } = cached
+    ? { data: cached, error: null }
+    : await db.from("assessments").select("*").eq("id", id).single();
   if (error || !a) return;
 
-  // Course dropdown must be populated before we can select the right option
-  await loadCoursesForAssessmentForm();
+  window.editingAssessmentId = id;
+
+  // Show the modal right away instead of waiting on the course-dropdown
+  // fetch below — same behavior as "Add Assessment".
+  document.getElementById("assessmentModal").classList.add("show");
 
   document.getElementById("assessmentDescription").value = a.description;
   document.getElementById("assessmentTitle").value = a.title;
   document.getElementById("assessmentLevel").value = a.level_arabic;
   document.getElementById("assessmentBatch").value = a.batch || "";
-  document.getElementById("assessmentCourse").value = a.course_id || "";
   document.getElementById("assessmentSemester").value = a.semester;
   document.getElementById("assessmentType").value = a.type;
   document.getElementById("assessmentScore").value = a.max_score;
@@ -1599,8 +1838,10 @@ async function editAssessment(id) {
   document.getElementById("assessmentStart").value = a.start_time ? formatForInput(a.start_time) : "";
   document.getElementById("assessmentEnd").value = a.end_time ? formatForInput(a.end_time) : "";
   document.getElementById("assessmentStatus").value = a.status;
-  window.editingAssessmentId = id;
-  document.getElementById("assessmentModal").classList.add("show");
+
+  // Course dropdown must be populated before we can select the right option
+  await loadCoursesForAssessmentForm();
+  document.getElementById("assessmentCourse").value = a.course_id || "";
 }
 
 function isAssessmentExpired(a) {
@@ -1610,6 +1851,7 @@ function isAssessmentExpired(a) {
 async function loadAssessments() {
   try {
     const { data } = await db.from("assessments").select("*").eq("deleted", false).order("start_time");
+    window.assessmentsRowCache = data || [];
     const tbody = document.querySelector("#assessments-table tbody");
     if (!tbody) return;
 
@@ -2483,6 +2725,11 @@ async function openCertificateModal(studentId, matric, fullname, level, batch) {
   const courseList = document.getElementById("certCourseList");
   courseList.innerHTML = `<span>${t("Loading courses...")}</span>`;
 
+  // Show the modal right away with the loading placeholder above, instead
+  // of making the user wait on up to three sequential fetches below before
+  // anything appears.
+  openModal("certificateModal");
+
   const { data: existing } = await db
     .from("certificates")
     .select("id, course_name, grade_note, revoked")
@@ -2497,7 +2744,6 @@ async function openCertificateModal(studentId, matric, fullname, level, batch) {
   if (error || !registrations || registrations.length === 0) {
     courseList.innerHTML = `<span>${t("No courses found")}</span>`;
     renderExistingCerts(existing || []);
-    openModal("certificateModal");
     return;
   }
 
@@ -2511,7 +2757,6 @@ async function openCertificateModal(studentId, matric, fullname, level, batch) {
   if (coursesError || !courses) {
     courseList.innerHTML = `<span>${t("Failed to load courses.")}</span>`;
     renderExistingCerts(existing || []);
-    openModal("certificateModal");
     return;
   }
 
@@ -2525,7 +2770,6 @@ async function openCertificateModal(studentId, matric, fullname, level, batch) {
   `).join("");
 
   renderExistingCerts(existing || []);
-  openModal("certificateModal");
 }
 
 function renderExistingCerts(certs) {
@@ -3428,6 +3672,8 @@ async function loadAttendanceSessions() {
 
     if (error) throw error;
 
+    window.attendanceSessionsRowCache = sessions || [];
+
     if (!sessions || sessions.length === 0) {
       tbody.innerHTML = `<tr><td colspan="8" class="empty-row">${t("No attendance sessions yet")}</td></tr>`;
       return;
@@ -3891,7 +4137,10 @@ async function addAttendanceSession() {
 }
 
 async function editAttendanceSession(id) {
-  const { data: s, error } = await db.from("attendance_sessions").select("*").eq("id", id).single();
+  const cached = (window.attendanceSessionsRowCache || []).find(x => x.id === id);
+  const { data: s, error } = cached
+    ? { data: cached, error: null }
+    : await db.from("attendance_sessions").select("*").eq("id", id).single();
   if (error || !s) return;
 
   document.getElementById("attendanceModalTitle").textContent = t("Edit Attendance Session");
@@ -4198,6 +4447,14 @@ function vlOpenAddVideo() {
 }
 
 async function vlEditVideo(id) {
+  vlEditVideoId = id;
+  document.getElementById("vl-modal-heading").textContent = "Edit Video";
+
+  // Show the modal right away — same as "Add Video" — instead of making
+  // the user wait on the fetches below before anything appears. Fields
+  // fill in a moment later.
+  openModal("videoLibModal");
+
   // videos.id is bigint so pass as number, not string
   const { data: v, error } = await db
     .from("videos")
@@ -4205,10 +4462,11 @@ async function vlEditVideo(id) {
     .eq("id", id)
     .single();
 
-  if (error || !v) { showToast("Could not load video.", "error"); return; }
-
-  vlEditVideoId = id;
-  document.getElementById("vl-modal-heading").textContent = "Edit Video";
+  if (error || !v) {
+    showToast("Could not load video.", "error");
+    closeModal("videoLibModal");
+    return;
+  }
 
   // Set course, load books for that course, then set the book
   document.getElementById("vl-modal-course").value = v.books?.course_id || "";
@@ -4219,8 +4477,6 @@ async function vlEditVideo(id) {
   document.getElementById("vl-modal-month").value         = v.month || "";
   document.getElementById("vl-modal-youtube").value       = v.youtube_link || "";
   document.getElementById("vl-modal-telegram").value      = v.telegram_link || "";
-
-  openModal("videoLibModal");
 }
 
 async function vlSaveVideo() {
