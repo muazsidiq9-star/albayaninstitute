@@ -944,7 +944,7 @@ async function finalSubmit(reason = 'manual') {
     }
 }
 
-finalSubmitBtn.addEventListener('click', finalSubmit);
+finalSubmitBtn.addEventListener('click', () => finalSubmit('manual'));
 
 function endTestSession() {
 
