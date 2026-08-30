@@ -164,13 +164,16 @@ async function loadStats(matric, container) {
 
     // ===========================
     // Cumulative Semester Score (GP-style)
-    // Sums total_score across every released grade row that belongs
-    // to the student's most recent semester — same logic the grades
+    // Sums total_score across every released grade row that belongs to the
+    // student's most recent (level, semester) pair -- same logic the grades
     // page uses for its "TOTAL SCORE SUM" on the semester report PDF.
+    // IMPORTANT: semester alone ("First"/"Second") repeats at every level,
+    // so it must be matched together with level_arabic, or this silently
+    // sums the same-named semester across two different levels.
     // ===========================
     const { data: grades } = await sb
       .from("grades")
-      .select("total_score, semester, created_at")
+      .select("total_score, semester, level_arabic, created_at")
       .eq("matric_number", matric)
       .eq("released", true)
       .order("created_at", { ascending: false });
@@ -179,12 +182,15 @@ async function loadStats(matric, container) {
     let semesterTotal = "--";
 
     if (grades && grades.length) {
-      // Newest-first order, so the first row's semester is the current one
-      currentSemester = grades[0].semester || null;
+      // Newest-first order, so the first row's (level, semester) pair is
+      // the current one.
+      const latest = grades[0];
+      currentSemester = latest.semester || null;
+      const currentLevel = latest.level_arabic || null;
 
       const semesterGrades = currentSemester
-        ? grades.filter(g => g.semester === currentSemester)
-        : [grades[0]];
+        ? grades.filter(g => g.semester === currentSemester && g.level_arabic === currentLevel)
+        : [latest];
 
       const sum = semesterGrades.reduce(
         (acc, g) => acc + (Number(g.total_score) || 0), 0

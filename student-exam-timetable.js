@@ -43,24 +43,91 @@ async function loadTimetable(matric) {
 
     if (regErr) throw regErr;
 
-    const courseIds = (registrations || []).map(r => r.course_id).filter(Boolean);
+    const registeredCourseIds = (registrations || []).map(r => r.course_id).filter(Boolean);
 
-    if (!courseIds.length) {
+    // 1b. Course-level bypass (course_access_overrides): courses this
+    //     student was granted access to directly, without a normal
+    //     registration row (e.g. carryover/transfer).
+    const { data: courseOverrides, error: courseOverrideErr } = await db
+      .from("course_access_overrides")
+      .select("course_id")
+      .eq("matric_number", matric);
+
+    if (courseOverrideErr) throw courseOverrideErr;
+
+    const overrideCourseIds = (courseOverrides || []).map(o => o.course_id).filter(Boolean);
+    const courseIds = [...new Set([...registeredCourseIds, ...overrideCourseIds])];
+
+    // 1c. Per-assessment restriction (assessment_access_overrides): this
+    //     student's own individually-granted assessment ids (e.g. a
+    //     resit/makeup), which may belong to a course outside the lists
+    //     above entirely.
+    const { data: myAssessmentOverrides, error: myOverrideErr } = await db
+      .from("assessment_access_overrides")
+      .select("assessment_id")
+      .eq("matric_number", matric);
+
+    if (myOverrideErr) throw myOverrideErr;
+
+    const myOverrideAssessmentIds = (myAssessmentOverrides || []).map(o => o.assessment_id);
+    const myOverrideSet = new Set(myOverrideAssessmentIds);
+
+    if (!courseIds.length && !myOverrideAssessmentIds.length) {
       renderTimetable([]);
       return;
     }
 
-    // 2. Pull assessments only for the courses this student registered for.
-    //    Each course row already encodes its own level/batch, so this alone
-    //    keeps Advanced and Intermediate exams from mixing, even if both
-    //    courses share the same name.
-    const { data, error } = await db
-      .from("assessments")
-      .select("id, title, description, course_id, type, duration_minutes, start_time, end_time, is_active, semester, course, status")
-      .in("course_id", courseIds)
-      .order("start_time", { ascending: true });
+    // 2. Pull assessments for the courses this student registered for or
+    //    was bypassed into, PLUS any individually-granted assessment ids
+    //    that fall outside those courses entirely. Each course row already
+    //    encodes its own level/batch, so this alone keeps Advanced and
+    //    Intermediate exams from mixing, even if both courses share the
+    //    same name.
+    const selectCols = "id, title, description, course_id, type, duration_minutes, start_time, end_time, is_active, semester, course, status";
 
-    if (error) throw error;
+    let courseExams = [];
+    if (courseIds.length) {
+      const { data: ce, error: ceErr } = await db
+        .from("assessments")
+        .select(selectCols)
+        .in("course_id", courseIds)
+        .order("start_time", { ascending: true });
+      if (ceErr) throw ceErr;
+      courseExams = ce || [];
+    }
+
+    let extraExams = [];
+    if (myOverrideAssessmentIds.length) {
+      const { data: ee, error: eeErr } = await db
+        .from("assessments")
+        .select(selectCols)
+        .in("id", myOverrideAssessmentIds);
+      if (eeErr) throw eeErr;
+      extraExams = ee || [];
+    }
+
+    const examMap = {};
+    [...courseExams, ...extraExams].forEach(a => { examMap[a.id] = a; });
+    const allExams = Object.values(examMap);
+
+    // 2b. Find which of these are in "restricted mode" at all (ANY row in
+    //     assessment_access_overrides) so a resit meant for one student
+    //     doesn't show up on a classmate's timetable just because they
+    //     happen to be registered for the same course.
+    const allExamIds = allExams.map(a => a.id);
+    const restrictedIdSet = new Set();
+    if (allExamIds.length) {
+      const { data: restrictionRows, error: restrictionErr } = await db
+        .from("assessment_access_overrides")
+        .select("assessment_id")
+        .in("assessment_id", allExamIds);
+      if (restrictionErr) throw restrictionErr;
+      (restrictionRows || []).forEach(r => restrictedIdSet.add(r.assessment_id));
+    }
+
+    const data = allExams
+      .filter(a => !restrictedIdSet.has(a.id) || myOverrideSet.has(a.id))
+      .sort((a, b) => new Date(a.start_time) - new Date(b.start_time));
 
     renderTimetable(data);
 

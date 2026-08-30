@@ -1610,7 +1610,7 @@
       <h2 data-translate="Add Grade">Add Grade</h2>
       <div class="modal-grid">
         <label data-translate="Student">Student</label>
-        <select id="gradeStudent" onchange="autofillStudentLevel('gradeStudent','gradeLevel','gradeBatch')">
+        <select id="gradeStudent" onchange="autofillStudentLevel('gradeStudent','gradeLevel','gradeBatch'); autofillGradeLevelBatch()">
           <option value="" data-translate="Select a student">Select a student</option>
         </select>
         <input type="hidden" id="gradeStudentId">
@@ -1624,8 +1624,9 @@
         </select>
         <label data-translate="Batch">Batch</label>
         <input type="text" id="gradeBatch" placeholder="Batch" disabled>
+        <p id="gradeLevelBatchWarning" style="display:none;grid-column:1/-1;margin:-8px 0 4px;color:#b45309;font-size:12.5px;"></p>
         <label data-translate="Course">Course</label>
-        <select id="gradeCourse" required>
+        <select id="gradeCourse" required onchange="autofillGradeLevelBatch()">
           <option value="" data-translate="Select Course">Select Course</option>
         </select>
         <label data-translate="Semester">Semester</label>

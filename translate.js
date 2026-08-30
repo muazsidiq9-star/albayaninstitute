@@ -3513,6 +3513,7 @@ NEW FILES START HERE
 "Removed": "تمت الإزالة",
 "Student added ✅": "تمت إضافة الطالب ✅",
 "This student is already on the list": "هذا الطالب موجود بالفعل في القائمة",
+"No registration found for this course — using student's current level/batch. Please verify.": "لم يتم العثور على تسجيل لهذا المقرر — يتم استخدام مستوى الطالب ودفعته الحالية. يرجى التحقق.",
 
 // ===== DYNAMIC TEMPLATES ===== 
 

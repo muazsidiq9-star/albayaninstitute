@@ -26,7 +26,7 @@ async function loadStudentGrades() {
     const matric = sessionStorage.getItem("matric");
     const { data, error } = await db
       .from("grades")
-      .select("matric_number, level_arabic, course, semester, assessment_score, exam_score, total_score, remark, status, created_at")
+      .select("matric_number, level_arabic, batch, course, semester, assessment_score, exam_score, total_score, remark, status, created_at")
       .eq("matric_number", matric)
       .eq("released", true)
       .order("created_at", { ascending: false });
@@ -49,7 +49,7 @@ function renderGrades(grades) {
   if (grades.length === 0) {
     gradesBody.innerHTML = `
       <tr>
-        <td colspan="9" style="text-align:center; padding:28px; color:var(--text-muted);">
+        <td colspan="10" style="text-align:center; padding:28px; color:var(--text-muted);">
           ${t("No grades found")}
         </td>
       </tr>`;
@@ -62,6 +62,7 @@ function renderGrades(grades) {
       <tr>
         <td>${g.matric_number || "--"}</td>
         <td>${g.level_arabic  || "--"}</td>
+        <td>${g.batch         || "--"}</td>
         <td>${g.course        || "--"}</td>
         <td>${g.semester      || "--"}</td>
         <td>${g.assessment_score ?? "--"}</td>
@@ -449,7 +450,7 @@ async function downloadSemesterReport() {
 
     const { data: grades, error } = await sb
       .from("grades")
-      .select("matric_number, level_arabic, course, semester, assessment_score, exam_score, total_score, remark, status")
+      .select("matric_number, level_arabic, batch, course, semester, assessment_score, exam_score, total_score, remark, status")
       .eq("matric_number", matric)
       .eq("released", true)
       .eq("semester", chosenSemester);

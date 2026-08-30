@@ -1487,8 +1487,55 @@ async function loadCoursesForGradeForm() {
     option.value = c.course_name;
     option.textContent = `${c.course_name}${c.level ? " — " + c.level : ""}${c.batch ? " (" + c.batch + ")" : ""}`;
     option.dataset.courseName = c.course_name;
+    option.dataset.courseId = c.id;
     select.appendChild(option);
   });
+}
+
+// Once BOTH a student and a course are chosen in the grade form, look up
+// that exact (matric_number, course_id) pair in course_registrations and
+// use ITS level/batch — the snapshot from when they actually registered
+// for that course — rather than the student's current global level/batch,
+// which may have moved on since (e.g. after a promotion). Falls back to
+// the student's current level/batch with a visible note if no matching
+// registration exists (e.g. legacy data, or a course added after the fact).
+async function autofillGradeLevelBatch() {
+  const studentSelect = document.getElementById("gradeStudent");
+  const courseSelect = document.getElementById("gradeCourse");
+  const levelSelect = document.getElementById("gradeLevel");
+  const batchField = document.getElementById("gradeBatch");
+  const warning = document.getElementById("gradeLevelBatchWarning");
+  if (!studentSelect || !courseSelect || !levelSelect || !batchField) return;
+
+  const matric = studentSelect.value;
+  const courseId = courseSelect.selectedOptions[0]?.dataset.courseId;
+
+  if (warning) warning.style.display = "none";
+  if (!matric || !courseId) return;
+
+  try {
+    const { data: reg, error } = await db
+      .from("course_registrations")
+      .select("level, batch")
+      .eq("matric_number", matric)
+      .eq("course_id", courseId)
+      .limit(1);
+
+    if (error) throw error;
+
+    if (reg && reg.length > 0) {
+      levelSelect.value = reg[0].level || "";
+      batchField.value = reg[0].batch || "";
+    } else if (warning) {
+      // No registration on file for this exact course — student's current
+      // level/batch (already set by autofillStudentLevel) is being used as
+      // a fallback, but flag it so the admin can double-check/correct it.
+      warning.textContent = t("No registration found for this course — using student's current level/batch. Please verify.");
+      warning.style.display = "block";
+    }
+  } catch (e) {
+    console.error("autofillGradeLevelBatch error:", e);
+  }
 }
 
 async function addGrade() {
