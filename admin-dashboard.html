@@ -174,7 +174,7 @@
     </button>
     <button class="dash-tab" data-tab="tab-carryover" onclick="switchDashTab('tab-carryover', this)">
       <i class="fa-solid fa-right-left"></i>
-      <span data-translate="Carryover Access">Carryover Access</span>
+      <span data-translate="Course Bypass">Course Bypass</span>
     </button>
     <button class="dash-tab" data-tab="tab-deleted" onclick="switchDashTab('tab-deleted', this)">
       <i class="fa-solid fa-trash"></i>
@@ -351,7 +351,6 @@
             <th data-translate="Name">Name</th>
             <th data-translate="Email">Email</th>
             <th data-translate="WhatsApp">WhatsApp</th>
-            <th data-translate="Password">Password</th>
             <th data-translate="Country">Country</th>
             <th data-translate="Gender">Gender</th>
             <th data-translate="Age">Age</th>
@@ -1184,21 +1183,24 @@
   </div><!-- /tab-rewards -->
 
   <!-- ================================================
-       CARRYOVER / INDIVIDUAL COURSE ACCESS (tab-carryover)
-       Grants a single student access to a course outside
+       COURSE REGISTRATION BYPASS (tab-carryover)
+       Grants a single student access to an entire course outside
        their normal level/batch (course_access_overrides).
-       Does not affect the cohort-wide course_levels tagging.
+       Does not affect the cohort-wide course_levels tagging, and
+       does not restrict access to a specific assessment — for
+       that, use assessment_access_overrides via the "Access"
+       button on the Assessments tab instead.
   ================================================ -->
   <div class="dash-tab-panel" id="tab-carryover" style="display:none;">
   <section class="dash-section">
     <div class="section-header">
-      <h2 data-translate="Carryover / Individual Course Access">Carryover / Individual Course Access</h2>
+      <h2 data-translate="Course Registration Bypass">Course Registration Bypass</h2>
     </div>
-    <p style="color:#666;font-size:14px;margin:0 0 16px;" data-translate="Carryover helper text">
-      Grant one specific student access to a course they wouldn't normally see, without opening it to their whole level or batch.
+    <p style="color:#666;font-size:14px;margin:0 0 16px;" data-translate="Grant one specific student access to an entire course they aren't registered for (or whose level/batch doesn't match) — e.g. carryover, transfer, or a manual exception. This does not control individual assessments; use the "Access" button on a specific assessment in the Assessments tab to restrict just one assessment to specific students (e.g. resits or late sits).">
+      Grant one specific student access to an entire course they aren't registered for (or whose level/batch doesn't match) — e.g. carryover, transfer, or a manual exception. This does not control individual assessments; use the "Access" button on a specific assessment in the Assessments tab to restrict just one assessment to specific students (e.g. resits or late sits).
     </p>
 
-    <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:end;margin-bottom:20px;">
+    <div class="override-form">
       <div>
         <label data-translate="Student (Matric Number)">Student (Matric Number)</label>
         <input type="text" id="overrideMatric" list="overrideStudentsList" placeholder="e.g. AB/2024/001"
@@ -1863,6 +1865,52 @@
         <button class="btn btn-cancel" onclick="closeModal('assessmentModal')">
           <span data-translate="Cancel">Cancel</span>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================
+       ASSESSMENT ACCESS MODAL (assessment_access_overrides)
+       Restrict one specific assessment to only the listed
+       matric numbers, regardless of registration/level/batch.
+       Empty list = normal behavior (everyone eligible sees it).
+  ================================================ -->
+  <div class="modal" id="assessmentAccessModal">
+    <div class="modal-content">
+      <button class="btn btn-close" onclick="closeModal('assessmentAccessModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 data-translate="Manage Access">Manage Access</h2>
+      <p id="assessmentAccessSubtitle" style="color:#666;font-size:13px;margin:-10px 0 14px;"></p>
+      <p style="color:#666;font-size:13px;margin:0 0 16px;" data-translate="Add a student's matric number to restrict this assessment to only the students listed below — everyone else, even if normally eligible by level/batch, will not see it. Leave the list empty for normal behavior (open to everyone eligible).">
+        Add a student's matric number to restrict this assessment to only the students listed below — everyone else, even if normally eligible by level/batch, will not see it. Leave the list empty for normal behavior (open to everyone eligible).
+      </p>
+
+      <div class="override-form" style="grid-template-columns:1fr auto;">
+        <div>
+          <label data-translate="Student (Matric Number)">Student (Matric Number)</label>
+          <input type="text" id="assessmentAccessMatric" list="overrideStudentsList" placeholder="e.g. AB/2024/001"
+                 data-translate-placeholder="e.g. AB/2024/001">
+        </div>
+        <button class="add-btn" id="addAssessmentAccessBtn" onclick="addAssessmentAccess()">
+          <i class="fa-solid fa-plus"></i>
+          <span data-translate="Add">Add</span>
+        </button>
+      </div>
+
+      <div class="table-container">
+        <table id="assessment-access-table">
+          <thead>
+            <tr>
+              <th data-translate="Student">Student</th>
+              <th data-translate="Granted On">Granted On</th>
+              <th data-translate="Actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="assessment-access-body">
+            <tr><td colspan="3" class="empty-row" data-translate="No restrictions — open to everyone eligible">No restrictions — open to everyone eligible</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

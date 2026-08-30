@@ -196,13 +196,54 @@ async function loadActiveAssessment() {
         return;
     }
 
+    // Per-assessment restriction: if this specific assessment has ANY rows
+    // in assessment_access_overrides, it's in "restricted mode" — only the
+    // matric numbers listed there may access it, full stop, regardless of
+    // registration, level, batch, or the course-level bypass below. If it
+    // has zero rows (the normal case), nothing changes here; it falls
+    // through to the usual registration/level/batch + course bypass checks.
+    // Use this for resits/makeups: create a separate assessment row with
+    // its own time window, then list only the specific student(s) here.
+    const { data: assessmentRestriction } = await supabaseClient
+        .from('assessment_access_overrides')
+        .select('matric_number')
+        .eq('assessment_id', assessment.id);
+
+    if (assessmentRestriction && assessmentRestriction.length > 0) {
+        const isListed = assessmentRestriction.some(r => r.matric_number === matricNumber);
+        if (!isListed) {
+            examTitle.textContent = "Not Available";
+            examMessage.textContent = "This assessment is not available for you";
+            return;
+        }
+        // Listed student: skip straight past registration/level/batch/course
+        // bypass checks below — being on this list is sufficient on its own.
+    } else {
+
+    // Carryover / individual access override: if this student has been
+    // explicitly granted access to this assessment's course (via the admin
+    // "Course Registration Bypass" tab, course_access_overrides table), let
+    // them in regardless of registration, level, or batch. Everyone else
+    // still goes through the normal registration + level/batch gate below.
+    let hasOverride = false;
+    if (assessment.course_id) {
+        const { data: override } = await supabaseClient
+            .from('course_access_overrides')
+            .select('id')
+            .eq('matric_number', matricNumber)
+            .eq('course_id', assessment.course_id)
+            .limit(1);
+
+        hasOverride = !!(override && override.length > 0);
+    }
+
     // Safety net: confirm this student is actually registered for the
     // course this assessment belongs to, in case examId was tampered with
     // or stale in sessionStorage. Also re-check level + batch using what
     // was snapshotted onto the registration at the time they registered —
     // never the student's current/live level or batch, which may have
     // moved on since (e.g. after a level promotion).
-    if (assessment.course_id) {
+    if (assessment.course_id && !hasOverride) {
         const { data: reg, error: regErr } = await supabaseClient
             .from('course_registrations')
             .select('id, level, batch')
@@ -227,6 +268,8 @@ async function loadActiveAssessment() {
             return;
         }
     }
+
+    } // end normal (non-restricted) access path
 
     assessmentId = assessment.id;
 

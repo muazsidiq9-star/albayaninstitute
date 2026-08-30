@@ -543,7 +543,6 @@ async function loadStudents() {
         <td>${s.fullname}</td>
         <td>${s.email}</td>
         <td>${s.whatsapp}</td>
-        <td>${s.password || "—"}</td>
         <td>${s.country}</td>
         <td>${s.gender}</td>
         <td>${s.age}</td>
@@ -2027,6 +2026,7 @@ async function loadAssessments() {
           <td>
             <div class="table-row-actions">
               <button class="btn btn-edit" onclick="editAssessment('${a.id}')">${t("Edit")}</button>
+              <button class="btn btn-access" onclick="openAssessmentAccessModal('${a.id}', '${escapeForAttr(a.title)}')">${t("Access")}</button>
               <button class="btn btn-delete" onclick="deleteAssessment('${a.id}')">${t("Delete")}</button>
               <button class="btn btn-danger btn-icon-only" onclick="permanentDeleteAssessment('${a.id}')" title="${t('Permanently Delete')}">🗑️</button>
             </div>
@@ -4048,10 +4048,12 @@ async function grantStudentReward(id) {
 }
 
 /* -------------------------------------------------------
-   CARRYOVER / INDIVIDUAL COURSE ACCESS
-   (course_access_overrides) — one-off exceptions only.
-   For a whole level/batch sharing a course by design, use
-   the course_levels checkboxes on the Courses tab instead.
+   COURSE REGISTRATION BYPASS
+   (course_access_overrides) — grants access to an entire
+   course outside normal registration/level/batch. One-off
+   exceptions only (e.g. carryover, transfer). For a whole
+   level/batch sharing a course by design, use the
+   course_levels checkboxes on the Courses tab instead.
 ------------------------------------------------------- */
 let overridesCache = [];
 let overrideCoursesCache = [];
@@ -4220,6 +4222,136 @@ async function revokeCourseOverride(id) {
   } catch (e) {
     console.error("revokeCourseOverride error:", e);
     alert(t("Failed to revoke access"));
+  }
+}
+
+/* -------------------------------------------------------
+   PER-ASSESSMENT ACCESS RESTRICTION
+   (assessment_access_overrides) — restricts ONE specific
+   assessment to only the matric numbers listed here.
+   Empty list = normal behavior (open to everyone eligible
+   by registration + level/batch, as usual). Use this for
+   resits/makeups: create a separate assessment row, then
+   list only the specific student(s) who should see it.
+------------------------------------------------------- */
+let currentAssessmentAccessId = null;
+
+function openAssessmentAccessModal(assessmentId, assessmentTitle) {
+  currentAssessmentAccessId = assessmentId;
+  const subtitle = document.getElementById("assessmentAccessSubtitle");
+  if (subtitle) subtitle.textContent = assessmentTitle ? `"${assessmentTitle}"` : "";
+
+  document.getElementById("assessmentAccessMatric").value = "";
+  openModal("assessmentAccessModal");
+  populateOverrideStudentsList(); // reuse the same datalist as the course-access tab
+  loadAssessmentAccessList();
+}
+
+async function loadAssessmentAccessList() {
+  const tbody = document.getElementById("assessment-access-body");
+  if (!tbody || !currentAssessmentAccessId) return;
+
+  tbody.innerHTML = `<tr><td colspan="3" class="empty-row">
+    <i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading...")}
+  </td></tr>`;
+
+  try {
+    const { data: rows, error } = await db
+      .from("assessment_access_overrides")
+      .select("*")
+      .eq("assessment_id", currentAssessmentAccessId)
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    if (!rows || rows.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="3" class="empty-row" data-translate="No restrictions — open to everyone eligible">${t("No restrictions — open to everyone eligible")}</td></tr>`;
+      return;
+    }
+
+    const students = await loadStudentsCache();
+    const nameMap = {};
+    (students || []).forEach(s => { nameMap[s.matric_number] = s.fullname; });
+
+    tbody.innerHTML = rows.map(r => `
+      <tr>
+        <td>${escapeForAttr(nameMap[r.matric_number]) || "—"}<br><span style="color:#888;font-size:12px;">${r.matric_number}</span></td>
+        <td>${formatDate(r.created_at)}</td>
+        <td>
+          <button class="btn btn-delete btn-small" onclick="revokeAssessmentAccess('${r.id}')">
+            ${t("Revoke")}
+          </button>
+        </td>
+      </tr>
+    `).join("");
+
+  } catch (e) {
+    console.error("loadAssessmentAccessList error:", e);
+    tbody.innerHTML = `<tr><td colspan="3" class="empty-row" style="color:red;">${t("Failed to load list.")}</td></tr>`;
+  }
+}
+
+async function addAssessmentAccess() {
+  const btn = document.getElementById("addAssessmentAccessBtn");
+  const matricInput = document.getElementById("assessmentAccessMatric");
+  const matric = matricInput.value.trim();
+
+  if (!matric) { alert(t("Enter the student's matric number")); return; }
+  if (!currentAssessmentAccessId) return;
+
+  setLoading(btn, true);
+
+  try {
+    const students = await loadStudentsCache();
+    const studentExists = (students || []).some(s => s.matric_number === matric);
+    if (!studentExists) {
+      alert(t("No student found with that matric number"));
+      setLoading(btn, false);
+      return;
+    }
+
+    const { error } = await db
+      .from("assessment_access_overrides")
+      .insert([{ matric_number: matric, assessment_id: currentAssessmentAccessId }]);
+
+    if (error) {
+      if (error.code === "23505") {
+        alert(t("This student is already on the list"));
+      } else {
+        console.error(error);
+        alert(t("Failed to add student"));
+      }
+      setLoading(btn, false);
+      return;
+    }
+
+    showToast(t("Student added ✅"));
+    matricInput.value = "";
+    loadAssessmentAccessList();
+  } catch (e) {
+    console.error("addAssessmentAccess error:", e);
+    alert(t("Failed to add student"));
+  } finally {
+    setLoading(btn, false);
+  }
+}
+
+async function revokeAssessmentAccess(id) {
+  if (!confirm(t("Remove this student from the list?"))) return;
+
+  try {
+    const { error } = await db
+      .from("assessment_access_overrides")
+      .delete()
+      .eq("id", id);
+
+    if (error) throw error;
+
+    showToast(t("Removed"));
+    loadAssessmentAccessList();
+  } catch (e) {
+    console.error("revokeAssessmentAccess error:", e);
+    alert(t("Failed to remove student"));
   }
 }
 

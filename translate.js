@@ -3377,7 +3377,9 @@ NEW FILES START HERE
 "Select students": "اختر الطلاب",
 "Select All": "اختر الكل",
 "Selected": "المحددون",
-
+"Select country": "اختر الدولة",
+"Select Country": "اختر الدولة",
+"Select": "اختر",
 "Semester Total Score": "مجموع الدرجات للفصل الدراسي",
 "FIRST": "الأول",
 "SECOND": "الثاني",
@@ -3495,6 +3497,22 @@ NEW FILES START HERE
 "Brazil": "البرازيل",
 "Mexico": "المكسيك",
 "Argentina": "الأرجنتين",
+
+"Add": "إضافة",
+"Add a student's matric number to restrict this assessment to only the students listed below — everyone else, even if normally eligible by level/batch, will not see it. Leave the list empty for normal behavior (open to everyone eligible).": "أضف الرقم الجامعي للطالب لتقييد هذا الاختبار على الطلاب المدرجين أدناه فقط — لن يتمكن أي شخص آخر من رؤيته حتى لو كان مؤهلاً عادةً حسب المستوى أو الدفعة. اترك القائمة فارغة للسلوك الطبيعي (متاح لجميع المؤهلين).",
+"Course Bypass": "تجاوز التسجيل",
+"Course Registration Bypass": "تجاوز تسجيل المقرر",
+"Grant one specific student access to an entire course they aren't registered for (or whose level/batch doesn't match) — e.g. carryover, transfer, or a manual exception. This does not control individual assessments; use the \"Access\" button on a specific assessment in the Assessments tab to restrict just one assessment to specific students (e.g. resits or late sits).": "امنح طالبًا معينًا صلاحية الوصول إلى مقرر كامل غير مسجل فيه (أو لا يتطابق مستواه أو دفعته معه) — مثل الرسوب، النقل، أو استثناء يدوي. هذا لا يتحكم في اختبار معين بذاته؛ استخدم زر \"الوصول\" الخاص باختبار محدد في تبويب الاختبارات لتقييد اختبار واحد فقط على طلاب معينين (مثل إعادة الاختبار أو من فاتهم الموعد).",
+"Manage Access": "إدارة الوصول",
+"No restrictions — open to everyone eligible": "لا توجد قيود — متاح لجميع المؤهلين",
+"Access": "الوصول",
+"Failed to add student": "فشل في إضافة الطالب",
+"Failed to load list.": "فشل في تحميل القائمة.",
+"Failed to remove student": "فشل في إزالة الطالب",
+"Remove this student from the list?": "هل تريد إزالة هذا الطالب من القائمة؟",
+"Removed": "تمت الإزالة",
+"Student added ✅": "تمت إضافة الطالب ✅",
+"This student is already on the list": "هذا الطالب موجود بالفعل في القائمة",
 
 // ===== DYNAMIC TEMPLATES ===== 
 

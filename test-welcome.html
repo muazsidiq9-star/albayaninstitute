@@ -467,7 +467,7 @@
 
         if (regErr) throw regErr;
 
-        const courseIds = (registrations || []).map(r => r.course_id).filter(Boolean);
+        const registeredCourseIds = (registrations || []).map(r => r.course_id).filter(Boolean);
         const registeredLevelByCourse = {};
         const registeredBatchByCourse = {};
         (registrations || []).forEach(r => {
@@ -476,6 +476,23 @@
             registeredBatchByCourse[r.course_id] = r.batch;
           }
         });
+
+        // 1b. Course-level bypass (course_access_overrides): courses this
+        //     student was granted access to directly, without a normal
+        //     registration row (e.g. carryover/transfer). These must be
+        //     included in the fetch below too, or their assessments never
+        //     even get pulled from the DB in the first place.
+        const { data: courseOverrides, error: courseOverrideErr } = await sb
+          .from("course_access_overrides")
+          .select("course_id")
+          .eq("matric_number", matric);
+
+        if (courseOverrideErr) throw courseOverrideErr;
+
+        const overrideCourseIds = (courseOverrides || []).map(o => o.course_id).filter(Boolean);
+        const courseOverrideSet = new Set(overrideCourseIds);
+
+        const courseIds = [...new Set([...registeredCourseIds, ...overrideCourseIds])];
 
         if (!courseIds.length) {
           showDetailsScreen();
@@ -486,11 +503,25 @@
           return;
         }
 
-        // 2. Pull exams only for the courses this student registered for.
-        //    Since each course row already encodes its own level/batch,
-        //    this alone keeps Advanced and Intermediate exams from mixing,
-        //    even if both courses share the same name.
-        const { data: allExams, error: examsErr } = await sb
+        // 1c. Per-assessment restriction (assessment_access_overrides): this
+        //     student's own individually-granted assessment ids (e.g. a
+        //     resit/makeup). These must be fetched directly by id, since
+        //     the assessment's course may not be one this student is
+        //     registered for (or bypassed) at all.
+        const { data: myAssessmentOverrides, error: myOverrideErr } = await sb
+          .from("assessment_access_overrides")
+          .select("assessment_id")
+          .eq("matric_number", matric);
+
+        if (myOverrideErr) throw myOverrideErr;
+
+        const myOverrideAssessmentIds = (myAssessmentOverrides || []).map(o => o.assessment_id);
+        const myOverrideSet = new Set(myOverrideAssessmentIds);
+
+        // 2. Pull exams for the courses this student is registered for or
+        //    bypassed into, PLUS any individually-granted assessment ids
+        //    that fall outside those courses entirely.
+        const { data: courseExams, error: examsErr } = await sb
           .from("assessments")
           .select("*")
           .in("course_id", courseIds)
@@ -498,17 +529,56 @@
 
         if (examsErr) throw examsErr;
 
-        // 3. Client-side gate: exam must match the level AND batch this
-        //    student was registered under for that specific course (or be
-        //    open to all levels/batches, if left blank on the assessment)
-        //    AND match matric (or be open to all matrics)
-        const exams = (allExams || []).filter(exam => {
-          const regLevel    = registeredLevelByCourse[exam.course_id];
-          const regBatch    = registeredBatchByCourse[exam.course_id];
-          const levelMatch  = !exam.level_arabic || exam.level_arabic === regLevel;
-          const batchMatch  = !exam.batch || exam.batch === regBatch;
-          const matricMatch = !exam.matric_number || exam.matric_number === matric;
-          return levelMatch && batchMatch && matricMatch;
+        let extraExams = [];
+        if (myOverrideAssessmentIds.length) {
+          const { data: extra, error: extraErr } = await sb
+            .from("assessments")
+            .select("*")
+            .in("id", myOverrideAssessmentIds);
+          if (extraErr) throw extraErr;
+          extraExams = extra || [];
+        }
+
+        const examMap = {};
+        [...(courseExams || []), ...extraExams].forEach(e => { examMap[e.id] = e; });
+        const allExams = Object.values(examMap);
+
+        // 2b. Of all exams pulled above, find which ones are in "restricted
+        //     mode" at all (ANY row in assessment_access_overrides) -- this
+        //     needs to be known for every exam here, not just this
+        //     student's own, so a restricted resit can be correctly hidden
+        //     from classmates who would otherwise match by registration/level/batch.
+        const allExamIds = allExams.map(e => e.id);
+        const restrictedIdSet = new Set();
+        if (allExamIds.length) {
+          const { data: restrictionRows, error: restrictionErr } = await sb
+            .from("assessment_access_overrides")
+            .select("assessment_id")
+            .in("assessment_id", allExamIds);
+          if (restrictionErr) throw restrictionErr;
+          (restrictionRows || []).forEach(r => restrictedIdSet.add(r.assessment_id));
+        }
+
+        // 3. Client-side gate, same three-tier precedence as test-hall.js:
+        //    (a) per-assessment restriction wins outright -- only listed
+        //        matrics see it, no matter what;
+        //    (b) course-level bypass skips registration/level/batch;
+        //    (c) otherwise, normal level + batch match against this
+        //        student's registration for that specific course.
+        const exams = allExams.filter(exam => {
+          if (restrictedIdSet.has(exam.id)) {
+            return myOverrideSet.has(exam.id);
+          }
+
+          if (exam.course_id && courseOverrideSet.has(exam.course_id)) {
+            return true;
+          }
+
+          const regLevel   = registeredLevelByCourse[exam.course_id];
+          const regBatch   = registeredBatchByCourse[exam.course_id];
+          const levelMatch = !exam.level_arabic || exam.level_arabic === regLevel;
+          const batchMatch = !exam.batch || exam.batch === regBatch;
+          return levelMatch && batchMatch;
         });
 
         examsList = exams;
