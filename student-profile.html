@@ -461,11 +461,16 @@ matricEl.setAttribute('dir', 'ltr');
         if (newPass !== confirmPass) return alert(t("New passwords do not match."));
         if (newPass.length < 6) return alert(t("Password must be at least 6 characters"));
         try {
-          const { data: studentData, error: fetchError } = await sb.from('students').select('password').eq('matric_number', matric).single();
-          if (fetchError || !studentData) return alert(t("Error fetching data."));
-          const { error: updateError } = await sb.from('students').update({ password: newPass, password_changed: true }).eq('matric_number', matric);
-          if (updateError) {
-            passwordMessage.textContent = t("Error updating password.");
+          const { data: success, error: rpcError } = await sb.rpc('change_student_password', {
+            p_matric: matric,
+            p_current_password: current,
+            p_new_password: newPass
+          });
+
+          if (rpcError || !success) {
+            passwordMessage.textContent = rpcError?.message?.includes('incorrect')
+              ? t("Current password is incorrect.")
+              : t("Error updating password.");
             passwordMessage.style.color = "red";
           } else {
             passwordMessage.textContent = t("Password changed successfully!");

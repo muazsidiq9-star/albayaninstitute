@@ -65,7 +65,7 @@ if (form) {
       const { data: student, error: fetchError } =
         await sb
           .from("students")
-          .select("*")
+          .select("matric_number")
           .eq("email", email)
           .single();
 

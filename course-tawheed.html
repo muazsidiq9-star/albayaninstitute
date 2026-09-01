@@ -81,7 +81,7 @@
       </span>
     </div>
 
-    <a href="register-courses.html" class="course-enrol-btn">
+    <a href="register-courses.html" class="course-enrol-btn btn-register">
       <span data-translate="Enroll Now">Enroll Now</span>
       <i class="fa-solid fa-arrow-right"></i>
     </a>
@@ -179,7 +179,7 @@
       </p>
     </div>
 
-    <a href="register-courses.html" class="cta-btn pulse">
+    <a href="register.html" class="cta-btn pulse btn-register">
       <span data-translate="Register Now">Register Now</span>
       <i class="fa-solid fa-arrow-right"></i>
     </a>
@@ -232,6 +232,21 @@ const observer = new IntersectionObserver(entries=>{
 },{threshold:0.2});
 
 document.querySelectorAll(".fade-in").forEach(el=>observer.observe(el));
+
+/* "Enrol"/"Register" buttons: send logged-in students straight to course
+   registration instead of the public sign-up form. Guests keep
+   the normal href="register.html" behavior untouched. */
+document.querySelectorAll('.btn-register').forEach(link => {
+  link.addEventListener('click', function (e) {
+    const role   = sessionStorage.getItem('role');
+    const matric = sessionStorage.getItem('matric');
+    if (role === 'student' && matric) {
+      e.preventDefault();
+      window.location.href = 'register-courses.html';
+    }
+    // else: let the default navigation to register.html proceed
+  });
+});
 </script>
 
 <script src="translate.js"></script>

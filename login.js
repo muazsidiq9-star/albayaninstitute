@@ -68,23 +68,12 @@ document.addEventListener("DOMContentLoaded", () => {
       // STUDENT LOGIN (CUSTOM SYSTEM)
       // ===========================
       if (selectedRole === "student") {
-        const { data: student, error } = await supabase
-          .from("students")
-          .select("matric_number, fullname, email, level_arabic, batch, country, plan_type, password, password_changed")
-          .eq("email", email)
-          .single();
+        const { data: matches, error } = await supabase
+          .rpc("verify_student_login", { p_email: email, p_password: password });
+
+        const student = matches && matches.length > 0 ? matches[0] : null;
 
         if (error || !student) {
-          alert(t("Invalid login credentials"));
-          return;
-        }
-
-        let passwordValid =
-          student.password_changed
-            ? student.password === password
-            : student.matric_number === password;
-
-        if (!passwordValid) {
           alert(t("Invalid login credentials"));
           return;
         }

@@ -337,7 +337,7 @@ async function loadStudentsCache() {
 function applyRolePermissions(role) {
   const permissions = {
     registrar: ["students", "payments", "student_fee_status", "courses", "course_registrations"],
-    bursar: ["payments", "student_fee_status"],
+    bursar: ["students", "payments", "student_fee_status"],
     h_o_d: ["students", "courses", "course_registrations", "grades", "schedule", "assessments"],
     mudeer: ["students", "payments", "student_fee_status", "courses", "course_registrations", "grades", "schedule", "assessments"],
     assistant_mudeer: ["students", "payments", "student_fee_status", "courses", "course_registrations", "grades", "schedule", "assessments"]
@@ -367,7 +367,7 @@ function applyActionRestrictions(role) {
     assistant_mudeer: ["all"],
     h_o_d: ["students", "courses", "course_registrations", "grades", "schedule", "assessments"],
     registrar: ["students", "payments", "student_fee_status", "courses", "course_registrations"],
-    bursar: ["payments", "student_fee_status"]
+    bursar: ["students", "payments", "student_fee_status"]
   };
 
   window.canDo = (section) => {
@@ -456,6 +456,37 @@ document.addEventListener("DOMContentLoaded", () => {
 /* -------------------------------------------------------
    STATS
 ------------------------------------------------------- */
+/* -------------------------------------------------------
+   STATS VISIBILITY TOGGLE
+   Same idea as a bank app's balance eye icon: mask the figures
+   with dots until the admin taps to reveal, so numbers aren't
+   readable by anyone glancing at the screen. Preference is
+   remembered across reloads via localStorage.
+------------------------------------------------------- */
+const STATS_HIDDEN_KEY = "adminStatsHidden";
+
+function applyStatsVisibility() {
+  const hidden = localStorage.getItem(STATS_HIDDEN_KEY) === "true";
+
+  ["totalStudents", "totalPayments", "totalAmountPaid"].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el || el.dataset.value === undefined) return;
+    el.textContent = hidden ? "••••" : el.dataset.value;
+  });
+
+  const icon = document.getElementById("statsToggleIcon");
+  if (icon) {
+    icon.classList.toggle("fa-eye", !hidden);
+    icon.classList.toggle("fa-eye-slash", hidden);
+  }
+}
+
+function toggleStatsVisibility() {
+  const hidden = localStorage.getItem(STATS_HIDDEN_KEY) === "true";
+  localStorage.setItem(STATS_HIDDEN_KEY, (!hidden).toString());
+  applyStatsVisibility();
+}
+
 async function loadStats(role) {
   try {
     const { count: studentCount, error: sErr } = await db
@@ -463,15 +494,22 @@ async function loadStats(role) {
       .select("*", { count: "exact", head: true });
 
     if (!sErr) {
-      document.getElementById("totalStudents").textContent = studentCount || 0;
+      const el = document.getElementById("totalStudents");
+      el.dataset.value = studentCount || 0;
+      el.textContent = el.dataset.value;
     }
 
     // ❌ BLOCK payment stats for restricted roles
     const canViewPayments = ["mudeer", "assistant_mudeer", "bursar", "registrar"].includes(role);
 
     if (!canViewPayments) {
-      document.getElementById("totalPayments").textContent = "—";
-      document.getElementById("totalAmountPaid").textContent = "—";
+      const pEl = document.getElementById("totalPayments");
+      const aEl = document.getElementById("totalAmountPaid");
+      pEl.dataset.value = "—";
+      aEl.dataset.value = "—";
+      pEl.textContent = "—";
+      aEl.textContent = "—";
+      applyStatsVisibility();
       return;
     }
 
@@ -496,7 +534,9 @@ async function loadStats(role) {
       .select("amount, currency");
 
     if (!pErr && payments) {
-      document.getElementById("totalPayments").textContent = payments.length;
+      const pEl = document.getElementById("totalPayments");
+      pEl.dataset.value = payments.length;
+      pEl.textContent = pEl.dataset.value;
 
       const totalNGN = payments.reduce((sum, p) => {
         const currency = p.currency || "NGN";
@@ -504,9 +544,12 @@ async function loadStats(role) {
         return sum + (Number(p.amount || 0) * rate);
       }, 0);
 
-      document.getElementById("totalAmountPaid").textContent =
-        "₦" + Math.round(totalNGN).toLocaleString();
+      const aEl = document.getElementById("totalAmountPaid");
+      aEl.dataset.value = "₦" + Math.round(totalNGN).toLocaleString();
+      aEl.textContent = aEl.dataset.value;
     }
+
+    applyStatsVisibility();
 
   } catch (e) {
     console.error("Stats error:", e);
@@ -1618,8 +1661,8 @@ async function loadGrades() {
         tr.innerHTML = `
           <td>${student.fullname || ""}</td>
           <td>${g.matric_number}</td>
-          <td>${student.level_arabic || ""}</td>
-          <td>${student.batch || ""}</td>
+          <td>${g.level_arabic || ""}</td>
+          <td>${g.batch || ""}</td>
           <td>${g.course}</td>
           <td>${g.semester}</td>
           <td>${g.assessment_score}</td>

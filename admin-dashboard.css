@@ -185,12 +185,46 @@ body {
    STATS STRIP
 ============================================================ */
 .stats {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   max-width: 900px;
   margin: 32px auto;
   padding: 0 20px;
+}
+
+.stats-toggle-btn {
+  position: absolute;
+  top: -30px;
+  right: 20px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--border-light);
+  background: var(--card-color);
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.stats-toggle-btn:hover {
+  background: var(--primary-xlight);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 600px) {
+  .stats-toggle-btn {
+    top: -26px;
+    right: 12px;
+    width: 30px;
+    height: 30px;
+    font-size: 0.82rem;
+  }
 }
 
 .stat-card {

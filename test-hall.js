@@ -112,7 +112,7 @@ async function showFeeDeniedModal() {
     const waMessage = encodeURIComponent(
       `Hello Sir/Madam, I'm trying to access an exam but it says I have an outstanding payment${months ? ` for ${months}` : ""}. Please can you assist me?`
     );
-    whatsappBtn.href = `https://wa.me/2348105215518?text=${waMessage}`;
+    whatsappBtn.href = `https://wa.me/2347054711066?text=${waMessage}`;
   }
 
   if (payBtn) {

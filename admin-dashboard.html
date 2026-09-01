@@ -83,7 +83,11 @@
   <!-- ================================================
        STATS STRIP
   ================================================ -->
-  <section class="stats">
+  <section class="stats" id="statsStrip">
+    <button class="stats-toggle-btn" id="statsToggleBtn" onclick="toggleStatsVisibility()"
+            title="Show/Hide figures" data-translate-title="Show/Hide figures">
+      <i class="fa-solid fa-eye" id="statsToggleIcon"></i>
+    </button>
     <div class="stat-card">
       <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
       <div class="stat-info">
@@ -352,6 +356,7 @@
             <th data-translate="Email">Email</th>
             <th data-translate="WhatsApp">WhatsApp</th>
             <th data-translate="Country">Country</th>
+            <th data-translate="Password">Password</th>
             <th data-translate="Gender">Gender</th>
             <th data-translate="Age">Age</th>
             <th data-translate="Level">Level</th>
@@ -2033,7 +2038,7 @@
   assistant_mudeer: ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-grades","tab-schedule","tab-attendance","tab-rewards","tab-carryover","tab-assessments","tab-courses","tab-videos","tab-certificates","tab-passwords","tab-deleted"],
   registrar:        ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-attendance","tab-carryover","tab-courses","tab-videos"],
       h_o_d:           ["tab-profile","tab-mypayments","tab-students","tab-grades","tab-schedule","tab-attendance","tab-courses","tab-passwords"],
-      bursar:           ["tab-profile","tab-mypayments","tab-payments","tab-fees","tab-rewards"]
+      bursar:           ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-rewards"]
     };
 
     function initDashTabs() {
