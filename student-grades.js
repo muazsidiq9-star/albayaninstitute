@@ -7,6 +7,66 @@ const filterSelect = document.getElementById("gradesFilter");
 let allGrades = [];
 
 /* --------------------------------
+   LEVEL / SEMESTER FILTER STATE
+   The table no longer dumps every grade the student has ever
+   received. It opens scoped to their current level + current
+   semester (read off their most recently added grade record,
+   since allGrades is fetched newest-first), and the student
+   moves the tabs deliberately to look at older results.
+--------------------------------- */
+const LEVEL_ORDER    = ["Preliminary", "Beginner", "Intermediate", "Advanced"];
+const SEMESTER_ORDER = ["First", "Second"];
+
+let selectedLevel    = null;
+let selectedSemester = null;
+let historyMode      = false; // true = "show everything", tabs ignored
+
+function sortByCanonicalOrder(values, order) {
+  const known   = order.filter(o => values.includes(o));
+  const unknown = values.filter(v => !order.includes(v)).sort();
+  return [...known, ...unknown];
+}
+
+/* --------------------------------
+   CASING/WHITESPACE-SAFE NORMALIZATION
+   Grades get typed in by hand on the admin side, so "First",
+   "first", " First " etc. all end up meaning the same thing.
+   Snap anything that loosely matches a canonical Level/Semester
+   value onto that exact canonical spelling — for filtering AND
+   for display — so a stray lowercase entry can never silently
+   fall through a tab or an exact-match query again. Anything that
+   doesn't match a known value is left alone (trimmed only), so
+   it never disappears — it just won't sort into the "known" group.
+--------------------------------- */
+function canonicalize(raw, order) {
+  if (!raw) return raw;
+  const trimmed = String(raw).trim();
+  const match = order.find(o => o.toLowerCase() === trimmed.toLowerCase());
+  return match || trimmed;
+}
+
+/* Whole-phrase lookup for "<Semester> Semester" labels.
+   Word order isn't the same across languages (Arabic puts the
+   ordinal after the noun: "الفصل الأول", not "الأول الفصل الدراسي"),
+   so this asks the dict for the full phrase as one key rather than
+   gluing two separately-translated words together. Falls back to
+   the glued form only if the whole-phrase key isn't in the dict yet. */
+function semesterLabel(sem) {
+  if (!sem) return "--";
+  const phrase = `${sem} Semester`;
+  const translated = t(phrase);
+  return translated !== phrase ? translated : `${t(sem)} ${t("Semester")}`;
+}
+
+function normalizeGradeRow(g) {
+  return {
+    ...g,
+    level_arabic: canonicalize(g.level_arabic, LEVEL_ORDER),
+    semester: canonicalize(g.semester, SEMESTER_ORDER)
+  };
+}
+
+/* --------------------------------
    STUDENT GUARD
 --------------------------------- */
 (function () {
@@ -32,11 +92,150 @@ async function loadStudentGrades() {
       .order("created_at", { ascending: false });
 
     if (error) throw error;
-    allGrades = data || [];
-    renderGrades(allGrades);
-    populateSemesterSelect();
+    allGrades = (data || []).map(normalizeGradeRow);
+    initFilterPanel();
   } catch (err) {
     console.error("Load grades error:", err);
+  }
+}
+
+/* --------------------------------
+   FILTER PANEL — level tabs, semester tabs, history toggle
+   allGrades is ordered newest-first, so allGrades[0] is the
+   student's most recently recorded grade — that's what defines
+   "current level" and "current semester" on first load.
+--------------------------------- */
+function initFilterPanel() {
+  const historyBtn = document.getElementById("historyToggleBtn");
+
+  if (!allGrades.length) {
+    selectedLevel = null;
+    selectedSemester = null;
+    renderLevelTabs();
+    renderSemesterTabs();
+    updateContextLabel();
+    renderGrades([]);
+    if (historyBtn) historyBtn.style.display = "none";
+    return;
+  }
+
+  selectedLevel    = allGrades[0].level_arabic || null;
+  selectedSemester = allGrades[0].semester || null;
+  historyMode      = false;
+  if (historyBtn) historyBtn.style.display = "";
+
+  renderLevelTabs();
+  renderSemesterTabs();
+  applyFilters();
+}
+
+document.getElementById("historyToggleBtn")?.addEventListener("click", toggleHistoryMode);
+
+function toggleHistoryMode() {
+  historyMode = !historyMode;
+  const label = document.getElementById("historyToggleLabel");
+  const levelTabs = document.getElementById("levelTabs");
+  const semesterTabs = document.getElementById("semesterTabs");
+
+  if (historyMode) {
+    if (label) label.textContent = t("Back to current semester");
+    levelTabs?.classList.add("gf-tabs-dimmed");
+    semesterTabs?.classList.add("gf-tabs-dimmed");
+  } else {
+    if (label) label.textContent = t("Show full grade history");
+    levelTabs?.classList.remove("gf-tabs-dimmed");
+    semesterTabs?.classList.remove("gf-tabs-dimmed");
+    // Jump back to the student's actual current level/semester
+    selectedLevel    = allGrades[0]?.level_arabic || null;
+    selectedSemester = allGrades[0]?.semester || null;
+    renderLevelTabs();
+    renderSemesterTabs();
+  }
+  applyFilters();
+}
+
+function renderLevelTabs() {
+  const wrap = document.getElementById("levelTabs");
+  if (!wrap) return;
+
+  const levelsPresent = sortByCanonicalOrder(
+    [...new Set(allGrades.map(g => g.level_arabic).filter(Boolean))],
+    LEVEL_ORDER
+  );
+
+  // Tabs are ALWAYS clickable — "no data yet" just gets a muted look,
+  // it never blocks the student from checking. Only the history-mode
+  // dimming (a separate CSS class on the wrapper) disables interaction.
+  wrap.innerHTML = LEVEL_ORDER.map(level => {
+    const has = levelsPresent.includes(level);
+    const active = level === selectedLevel;
+    return `<button type="button"
+      class="gf-tab ${active ? "gf-tab-active" : ""} ${has ? "" : "gf-tab-muted"}"
+      data-level="${level}">${t(level)}</button>`;
+  }).join("");
+
+  wrap.querySelectorAll(".gf-tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (historyMode) return;
+      selectedLevel = btn.dataset.level;
+      // default to that level's own most recent semester, if it has one
+      const levelGrades = allGrades.filter(g => g.level_arabic === selectedLevel);
+      selectedSemester = levelGrades[0]?.semester || "First";
+      renderLevelTabs();
+      renderSemesterTabs();
+      applyFilters();
+    });
+  });
+}
+
+function renderSemesterTabs() {
+  const wrap = document.getElementById("semesterTabs");
+  if (!wrap) return;
+
+  const semestersPresent = sortByCanonicalOrder(
+    [...new Set(
+      allGrades.filter(g => g.level_arabic === selectedLevel).map(g => g.semester).filter(Boolean)
+    )],
+    SEMESTER_ORDER
+  );
+
+  const semButtons = SEMESTER_ORDER.map(sem => {
+    const has = semestersPresent.includes(sem);
+    const active = sem === selectedSemester;
+    return `<button type="button"
+      class="gf-tab ${active ? "gf-tab-active" : ""} ${has ? "" : "gf-tab-muted"}"
+      data-semester="${sem}">${semesterLabel(sem)}</button>`;
+  }).join("");
+
+  const allActive = selectedSemester === "ALL";
+  const allButton = `<button type="button"
+    class="gf-tab gf-tab-all ${allActive ? "gf-tab-active" : ""} ${semestersPresent.length < 2 ? "gf-tab-muted" : ""}"
+    data-semester="ALL">${t("All Semesters")}</button>`;
+
+  wrap.innerHTML = `<div class="gf-tabs-sem-row">${semButtons}</div>${allButton}`;
+
+  wrap.querySelectorAll(".gf-tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (historyMode) return;
+      selectedSemester = btn.dataset.semester;
+      renderSemesterTabs();
+      applyFilters();
+    });
+  });
+}
+
+function updateContextLabel() {
+  const label = document.getElementById("gfContextLabel");
+  if (!label) return;
+
+  if (!allGrades.length) {
+    label.textContent = t("No grades released yet");
+  } else if (historyMode) {
+    label.textContent = t("Full grade history");
+  } else if (selectedSemester === "ALL") {
+    label.textContent = `${t(selectedLevel) || "--"} · ${t("All Semesters")}`;
+  } else {
+    label.textContent = `${t(selectedLevel) || "--"} · ${semesterLabel(selectedSemester)}`;
   }
 }
 
@@ -47,10 +246,13 @@ function renderGrades(grades) {
   gradesBody.innerHTML = "";
 
   if (grades.length === 0) {
+    const hint = (!historyMode && allGrades.length)
+      ? `<br><span style="font-size:0.8rem;">${t("Try \"Show full grade history\" above")}</span>`
+      : "";
     gradesBody.innerHTML = `
       <tr>
         <td colspan="10" style="text-align:center; padding:28px; color:var(--text-muted);">
-          ${t("No grades found")}
+          ${t("No grades found")}${hint}
         </td>
       </tr>`;
     return;
@@ -72,6 +274,14 @@ function renderGrades(grades) {
         <td><span class="sg-badge ${status}">${translateStatus(g.status)}</span></td>
       </tr>`;
   });
+
+  // Rows above are freshly injected raw (English) DOM, so translate.js's
+  // one-time pass on language toggle never touches them. Re-run it here
+  // so every re-render (search, tabs, remark filter) keeps whatever
+  // language is currently active instead of silently reverting to English.
+  if (typeof translate === "function" && typeof currentLang !== "undefined") {
+    translate(currentLang);
+  }
 }
 
 function translateStatus(status) {
@@ -87,16 +297,26 @@ function applyFilters() {
   const text   = searchInput.value.toLowerCase();
   const filter = filterSelect.value;
 
-  let filtered = allGrades.filter(g =>
+  let filtered = allGrades;
+
+  if (!historyMode) {
+    filtered = filtered.filter(g => g.level_arabic === selectedLevel);
+    if (selectedSemester !== "ALL") {
+      filtered = filtered.filter(g => g.semester === selectedSemester);
+    }
+  }
+
+  filtered = filtered.filter(g =>
     (g.course || "").toLowerCase().includes(text)
   );
 
   if (filter !== "all") {
     filtered = filtered.filter(g =>
-      (g.status || "").toLowerCase() === filter
+      (g.remark || "").toLowerCase() === filter
     );
   }
 
+  updateContextLabel();
   renderGrades(filtered);
 }
 
@@ -104,26 +324,64 @@ searchInput.addEventListener("input",  applyFilters);
 filterSelect.addEventListener("change", applyFilters);
 
 /* --------------------------------
-   SEMESTER PICKER (for the per-semester report)
-   allGrades is already ordered newest-first, so the first
-   occurrence of each semester in that order is the most recent.
+   SEMESTER REPORT MODAL (for the per-semester PDF download)
+   Lists unique Level + Semester combos the student actually has
+   released grades for — kept level-aware so picking "Second"
+   under Beginner can never pull in a different level's "Second"
+   semester scores into the same report.
 --------------------------------- */
-function populateSemesterSelect() {
-  const select = document.getElementById("semesterReportSelect");
-  if (!select) return;
+function populateSemesterReportOptions() {
+  const wrap = document.getElementById("semesterReportOptions");
+  if (!wrap) return;
 
-  const semesters = [];
+  const seen = new Set();
+  const combos = [];
   allGrades.forEach(g => {
-    if (g.semester && !semesters.includes(g.semester)) semesters.push(g.semester);
+    if (!g.level_arabic || !g.semester) return;
+    const key = `${g.level_arabic}||${g.semester}`;
+    if (!seen.has(key)) {
+      seen.add(key);
+      combos.push({ level: g.level_arabic, semester: g.semester });
+    }
   });
 
-  if (!semesters.length) {
-    select.innerHTML = `<option value="">${t("No semesters available")}</option>`;
+  // Order by canonical level, then canonical semester, newest-first within that
+  const orderedLevels = sortByCanonicalOrder([...new Set(combos.map(c => c.level))], LEVEL_ORDER);
+  combos.sort((a, b) => {
+    const lv = orderedLevels.indexOf(a.level) - orderedLevels.indexOf(b.level);
+    if (lv !== 0) return lv;
+    return SEMESTER_ORDER.indexOf(a.semester) - SEMESTER_ORDER.indexOf(b.semester);
+  });
+
+  if (!combos.length) {
+    wrap.innerHTML = `<div class="sr-modal-empty">${t("No semesters available yet")}</div>`;
     return;
   }
 
-  select.innerHTML = semesters.map(s => `<option value="${s}">${s}</option>`).join("");
+  wrap.innerHTML = combos.map(c => `
+    <button type="button" class="sr-modal-option"
+      onclick="downloadSemesterReport('${c.level}', '${c.semester}')">
+      <span>${t(c.level)} — ${semesterLabel(c.semester)}</span>
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  `).join("");
 }
+
+function openSemesterReportModal() {
+  const modal = document.getElementById("semesterReportModal");
+  if (!modal) return;
+  populateSemesterReportOptions();
+  modal.hidden = false;
+}
+
+function closeSemesterReportModal() {
+  const modal = document.getElementById("semesterReportModal");
+  if (modal) modal.hidden = true;
+}
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeSemesterReportModal();
+});
 
 /* ── Shared layout helpers (same ones used by the receipt PDF) ── */
 function pdfDrawHRule(doc, y, leftX, rightX, color = [180, 151, 42]) {
@@ -440,23 +698,24 @@ async function drawClosingAndSignature(doc, pw, ph, ML, MR, startY, { matric, re
    by the grades_unique_student_course constraint — no cross-
    semester duplication possible here.
 --------------------------------- */
-async function downloadSemesterReport() {
+async function downloadSemesterReport(chosenLevel, chosenSemester) {
   try {
-    const matric = sessionStorage.getItem("matric");
-    const semesterSelect = document.getElementById("semesterReportSelect");
-    const chosenSemester = semesterSelect?.value;
+    closeSemesterReportModal();
 
-    if (!chosenSemester) { alert(t("No semester available to report on.")); return; }
+    const matric = sessionStorage.getItem("matric");
+    if (!chosenLevel || !chosenSemester) { alert(t("No semester available to report on.")); return; }
 
     const { data: grades, error } = await sb
       .from("grades")
       .select("matric_number, level_arabic, batch, course, semester, assessment_score, exam_score, total_score, remark, status")
       .eq("matric_number", matric)
       .eq("released", true)
-      .eq("semester", chosenSemester);
+      .ilike("level_arabic", chosenLevel)
+      .ilike("semester", chosenSemester);
 
     if (error) throw error;
     if (!grades || grades.length === 0) { alert(t("No grades to download.")); return; }
+    const normalizedGrades = grades.map(normalizeGradeRow);
 
     const { data: student, error: studentErr } = await sb
       .from("students").select("fullname").eq("matric_number", matric).single();
@@ -472,7 +731,7 @@ async function downloadSemesterReport() {
     const reportId   = `GR-${matric}-${Date.now().toString().slice(-6)}`;
     const dateIssued  = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 
-    const levels = [...new Set(grades.map(g => g.level_arabic).filter(Boolean))];
+    const levels = [...new Set(normalizedGrades.map(g => g.level_arabic).filter(Boolean))];
     const levelDisplay = levels.length <= 1 ? (levels[0] || "-") : levels.join(", ");
 
     let gy = await renderPdfHeader(doc, pw, ph, ML, MR, {
@@ -487,7 +746,7 @@ async function downloadSemesterReport() {
     const tableStartY = tableLabelY + 20;
 
     let totalSum = 0;
-    const tableData = grades.map(g => {
+    const tableData = normalizedGrades.map(g => {
       totalSum += Number(g.total_score) || 0;
       return [
         g.level_arabic || "-",
@@ -524,13 +783,13 @@ async function downloadSemesterReport() {
 
     finalY = drawResultsSummary(doc, pw, ph, ML, MR, finalY, {
       totalSum,
-      totalCourses: grades.length, // safe here — one row per course within a single semester
-      avgScore: totalSum / grades.length
+      totalCourses: normalizedGrades.length, // safe here — one row per course within a single semester
+      avgScore: totalSum / normalizedGrades.length
     });
 
     await drawClosingAndSignature(doc, pw, ph, ML, MR, finalY, { matric, reportId, totalSum, student });
 
-    doc.save(`Grades_${matric}_${chosenSemester.replace(/\s+/g, "_")}.pdf`);
+    doc.save(`Grades_${matric}_${chosenLevel.replace(/\s+/g, "_")}_${chosenSemester.replace(/\s+/g, "_")}.pdf`);
 
   } catch (err) {
     console.error("Semester report PDF error:", err);
@@ -539,18 +798,13 @@ async function downloadSemesterReport() {
 }
 
 /* --------------------------------
-   CANONICAL ORDERING for the transcript's level/semester sections.
-   Anything not in these lists falls back to the end, alphabetically,
-   so an unexpected value never breaks the report — it just sorts last.
+   NOTE: LEVEL_ORDER, SEMESTER_ORDER and sortByCanonicalOrder used
+   below (for the transcript's level/semester sections) are declared
+   once near the top of this file, alongside the table's own
+   level/semester filter state. Anything not in those lists falls
+   back to the end, alphabetically, so an unexpected value never
+   breaks the report — it just sorts last.
 --------------------------------- */
-const LEVEL_ORDER    = ["Preliminary", "Beginner", "Intermediate", "Advanced"];
-const SEMESTER_ORDER = ["First", "Second"];
-
-function sortByCanonicalOrder(values, order) {
-  const known   = order.filter(o => values.includes(o));
-  const unknown = values.filter(v => !order.includes(v)).sort();
-  return [...known, ...unknown];
-}
 
 /* --------------------------------
    REPORT 2: FULL TRANSCRIPT
@@ -570,6 +824,7 @@ async function downloadFullTranscript() {
 
     if (error) throw error;
     if (!grades || grades.length === 0) { alert(t("No grades to download.")); return; }
+    const normalizedGrades = grades.map(normalizeGradeRow);
 
     const { data: student, error: studentErr } = await sb
       .from("students").select("fullname").eq("matric_number", matric).single();
@@ -599,7 +854,7 @@ async function downloadFullTranscript() {
        two separate cells here, never merged or averaged together. */
     const levelMap = {}; // level -> { courseOrder: [], courses: { courseName: { First: score, Second: score } } }
 
-    grades.forEach(g => {
+    normalizedGrades.forEach(g => {
       const level    = g.level_arabic || "-";
       const course   = g.course || "-";
       const semester = g.semester || "-";
@@ -713,8 +968,8 @@ async function downloadFullTranscript() {
     // Cumulative summary across the whole academic history —
     // counts every grade record, not unique course names
     let totalSum = 0;
-    grades.forEach(g => { totalSum += Number(g.total_score) || 0; });
-    const totalCourseResults = grades.length;
+    normalizedGrades.forEach(g => { totalSum += Number(g.total_score) || 0; });
+    const totalCourseResults = normalizedGrades.length;
     const avgScore = totalSum / totalCourseResults;
 
     cursorY = drawResultsSummary(doc, pw, ph, ML, MR, cursorY, {

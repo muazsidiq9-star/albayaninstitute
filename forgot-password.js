@@ -65,7 +65,7 @@ if (form) {
       const { data: student, error: fetchError } =
         await sb
           .from("students")
-          .select("matric_number")
+          .select("matric_number, email")
           .eq("email", email)
           .single();
 
@@ -110,7 +110,7 @@ if (form) {
             title:
               t("Password Reset"),
             message:
-              `${t("Your temporary password is:")} ${tempPassword}`,
+              t("Your password was just reset. If this wasn't you, contact admin immediately."),
             created_at:
               new Date().toISOString()
           }

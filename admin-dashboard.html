@@ -356,7 +356,6 @@
             <th data-translate="Email">Email</th>
             <th data-translate="WhatsApp">WhatsApp</th>
             <th data-translate="Country">Country</th>
-            <th data-translate="Password">Password</th>
             <th data-translate="Gender">Gender</th>
             <th data-translate="Age">Age</th>
             <th data-translate="Level">Level</th>
@@ -1038,8 +1037,8 @@
       <h2 data-translate="Certificates">Certificates</h2>
     </div>
     <div class="card" style="max-width:700px; margin:0 auto; padding:24px 20px;">
-      <p style="color:var(--text-muted); font-size:0.9rem;" data-translate="Open a student record and click Issue Certificate to generate.">
-        Open a student record and click Issue Certificate to generate.
+      <p style="color:var(--text-muted); font-size:0.9rem;" data-translate="Open a student record and click Issue Certificate to generate — choose Per-Level or Full Programme in the modal that opens.">
+        Open a student record and click Issue Certificate to generate — choose Per-Level or Full Programme in the modal that opens.
       </p>
     </div>
   </section>
@@ -1051,12 +1050,24 @@
                placeholder="🔍 Search certificates history..." 
                data-translate-placeholder="🔍 Search certificates history...">
       </div>
+      <div class="cert-registry-filters">
+        <button class="cert-filter-chip active" data-registry-filter="all" onclick="filterCertRegistry('all', this)">
+          <span data-translate="All">All</span>
+        </button>
+        <button class="cert-filter-chip" data-registry-filter="level" onclick="filterCertRegistry('level', this)">
+          <span data-translate="Per-Level">Per-Level</span>
+        </button>
+        <button class="cert-filter-chip" data-registry-filter="programme" onclick="filterCertRegistry('programme', this)">
+          <span data-translate="Full Programme">Full Programme</span>
+        </button>
+      </div>
       <div class="table-container">
         <table id="cert-registry-table">
           <thead>
             <tr>
               <th data-translate="Student Name">Student Name</th>
               <th data-translate="Matric No.">Matric No.</th>
+              <th data-translate="Type">Type</th>
               <th data-translate="Course">Course</th>
               <th data-translate="Level">Level</th>
               <th data-translate="Batch">Batch</th>
@@ -1067,7 +1078,7 @@
           </thead>
           <tbody id="certRegistryTabBody">
             <tr>
-              <td colspan="8" class="empty-row" data-translate="Loading history logs...">Loading history logs...</td>
+              <td colspan="9" class="empty-row" data-translate="Loading history logs...">Loading history logs...</td>
             </tr>
           </tbody>
         </table>
@@ -1930,6 +1941,18 @@
       <!-- Sticky form top — stays fixed while cert table below scrolls -->
       <div class="cert-modal-form">
         <h2 data-translate="Issue Certificate">Issue Certificate</h2>
+
+        <div class="cert-type-tabs">
+          <button class="cert-type-tab active" data-cert-tab="level" onclick="switchCertModalTab('level')" type="button">
+            <i class="fa-solid fa-layer-group"></i>
+            <span data-translate="Per-Level Certificate">Per-Level Certificate</span>
+          </button>
+          <button class="cert-type-tab" data-cert-tab="programme" onclick="switchCertModalTab('programme')" type="button">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span data-translate="Full Programme Certificate">Full Programme Certificate</span>
+          </button>
+        </div>
+
         <div class="modal-grid">
           <label data-translate="Student Name">Student Name</label>
           <input type="text" id="certStudentName" disabled>
@@ -1939,21 +1962,53 @@
           <input type="text" id="certLevel" disabled>
           <label data-translate="Batch">Batch</label>
           <input type="text" id="certBatch" disabled>
-          <label data-translate="Grade Note (optional)">Grade Note (optional)</label>
-          <input type="text" id="certGradeNote"
-                 placeholder="e.g. with a total score of 85%"
-                 data-translate-placeholder="e.g. with a total score of 85%">
-          <label data-translate="Course(s)">Course(s)</label>
-          <div id="certCourseList" class="cert-course-checklist"
-               style="display:flex; flex-direction:column; gap:6px; padding:10px;
-                      border:1px solid var(--border-color); border-radius:6px; max-height:160px; overflow-y:auto;">
-            <span data-translate="Loading courses...">Loading courses...</span>
-          </div>
         </div>
-        <p class="cert-multi-course-hint" style="font-size:0.85rem; opacity:0.75; margin:-8px 0 0;"
-           data-translate="Tick every course this certificate should cover — pick one for a single-course certificate, or several for a full-program certificate.">
-          Tick every course this certificate should cover — pick one for a single-course certificate, or several for a full-program certificate.
-        </p>
+
+        <!-- PER-LEVEL PANEL -->
+        <div id="certLevelPanel" class="cert-type-panel active">
+          <div class="modal-grid">
+            <label data-translate="Grade Note (optional)">Grade Note (optional)</label>
+            <input type="text" id="certGradeNote"
+                   placeholder="e.g. with a total score of 85%"
+                   data-translate-placeholder="e.g. with a total score of 85%">
+            <label data-translate="Programme Track(s)">Programme Track(s)</label>
+            <div id="certCourseList" class="cert-course-checklist"
+                 style="display:flex; flex-direction:column; gap:6px; padding:10px;
+                        border:1px solid var(--border-color); border-radius:6px;">
+              <label style="display:flex; align-items:center; gap:8px; font-weight:400; cursor:pointer;">
+                <input type="checkbox" class="certCourseCheckbox" value="Arabic" id="certCourseCbArabic">
+                <span data-translate="Arabic">Arabic</span>
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; font-weight:400; cursor:pointer;">
+                <input type="checkbox" class="certCourseCheckbox" value="Islamic" id="certCourseCbIslamic">
+                <span data-translate="Islamic">Islamic</span>
+              </label>
+            </div>
+          </div>
+          <p class="cert-multi-course-hint" style="font-size:0.85rem; opacity:0.75; margin:-8px 0 0;"
+             data-translate="Tick Arabic and/or Islamic to record which track(s) this level's certificate covers.">
+            Tick Arabic and/or Islamic to record which track(s) this level's certificate covers.
+          </p>
+        </div>
+
+        <!-- FULL PROGRAMME PANEL -->
+        <div id="certProgrammePanel" class="cert-type-panel">
+          <div class="modal-grid">
+            <label data-translate="Programme Name">Programme Name</label>
+            <input type="text" id="certProgrammeName"
+                   value="Arabic and Islamic Studies"
+                   placeholder="e.g. Arabic and Islamic Studies">
+            <label data-translate="Grade Note (optional)">Grade Note (optional)</label>
+            <input type="text" id="certProgrammeGradeNote"
+                   placeholder="e.g. with Distinction"
+                   data-translate-placeholder="e.g. with Distinction">
+          </div>
+          <p class="cert-multi-course-hint" style="font-size:0.85rem; opacity:0.75; margin:-8px 0 0;"
+             data-translate="Issued once a student has completed every level of the programme, not just one.">
+            Issued once a student has completed every level of the programme, not just one.
+          </p>
+        </div>
+
         <div class="modal-actions">
           <button class="btn btn-save" onclick="issueCertificate()">
             <i class="fa-solid fa-certificate"></i>

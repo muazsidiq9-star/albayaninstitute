@@ -126,6 +126,67 @@
       white-space: nowrap;
     }
 
+    /* ── TYPE TABS ───────────────────────────────── */
+    .cert-type-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .cert-type-tab {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 16px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-color, #e5e7eb);
+      background: var(--card-color, #fff);
+      color: var(--text-muted, #888);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cert-type-tab:hover {
+      border-color: var(--cert-green);
+      color: var(--cert-green);
+    }
+
+    .cert-type-tab.active {
+      background: linear-gradient(135deg, var(--cert-green), var(--cert-green-mid));
+      border-color: var(--cert-green);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0,66,17,0.2);
+    }
+
+    .cert-type-tab .cert-tab-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.08);
+      font-size: 0.72rem;
+    }
+
+    .cert-type-tab.active .cert-tab-count {
+      background: rgba(255,255,255,0.25);
+    }
+
+    .cert-tab-panel { display: none; }
+    .cert-tab-panel.active { display: block; }
+
+    @media (max-width: 480px) {
+      .cert-type-tabs { flex-direction: column; }
+    }
+
     /* ── CERTIFICATE CARD ────────────────────────── */
     .cert-card {
       position: relative;
@@ -461,12 +522,26 @@
   <!-- MAIN -->
   <main>
     <div class="cert-page">
+      <div id="certTabs" class="cert-type-tabs" style="display:none;">
+        <button class="cert-type-tab active" data-tab="level" onclick="switchCertTab('level')">
+          <i class="fas fa-layer-group"></i> <span data-translate="Per-Level Certificates">Per-Level Certificates</span>
+          <span class="cert-tab-count" id="levelTabCount">0</span>
+        </button>
+        <button class="cert-type-tab" data-tab="programme" onclick="switchCertTab('programme')">
+          <i class="fas fa-graduation-cap"></i> <span data-translate="Full Programme Certificate">Full Programme Certificate</span>
+          <span class="cert-tab-count" id="programmeTabCount">0</span>
+        </button>
+      </div>
+
       <div id="certContainer">
         <div class="cert-loading">
           <i class="fas fa-spinner fa-spin"></i>
           <p>Loading your certificates...</p>
         </div>
       </div>
+
+      <div id="levelCertPanel" class="cert-tab-panel active"></div>
+      <div id="programmeCertPanel" class="cert-tab-panel"></div>
     </div>
   </main>
 
@@ -527,9 +602,174 @@
 
     const matric = sessionStorage.getItem("matric");
 
+    /* ── TAB SWITCHING ── */
+    function switchCertTab(tab) {
+      document.querySelectorAll(".cert-type-tab").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.tab === tab);
+      });
+      document.getElementById("levelCertPanel").classList.toggle("active", tab === "level");
+      document.getElementById("programmeCertPanel").classList.toggle("active", tab === "programme");
+    }
+
+    function noCertBlock(title, lines) {
+      return `
+        <div class="no-cert">
+          <div class="no-cert-icon-wrap">
+            <i class="fas fa-certificate"></i>
+          </div>
+          <h3>${t(title)}</h3>
+          <p>${lines.map(l => t(l)).join("<br>")}</p>
+        </div>
+      `;
+    }
+
+    function countStripHtml(count, label) {
+      return `
+        <div class="cert-count-strip">
+          <span class="cert-count-line" style="flex:1;height:1px;background:var(--border-color,#ddd);"></span>
+          <span class="cert-count-label">${count} ${label}${count !== 1 ? "s" : ""} Awarded</span>
+          <span class="cert-count-line" style="flex:1;height:1px;background:var(--border-color,#ddd);"></span>
+        </div>
+      `;
+    }
+
+    // Short, display-friendly stand-in for the full certificate UUID —
+    // "AB-2C0FD6" instead of the full "4313c961-...-2c0fd6". Purely a
+    // display transform: the full ID is unchanged everywhere else (DB,
+    // certificate link, etc.), so nothing else needs to know about this.
+    function shortCertId(id) {
+      if (!id) return "";
+      const hex = id.replace(/-/g, "");
+      return "AB-" + hex.slice(-6).toUpperCase();
+    }
+
+    function renderLevelCard(cert, student) {
+      const formattedDate = new Date(cert.issued_at).toLocaleDateString("en-GB", {
+        day: "numeric", month: "long", year: "numeric"
+      });
+      const gradeHtml = cert.grade_note
+        ? `<span class="cert-grade-note">
+            ${cert.grade_note.toLowerCase().startsWith("with")
+              ? cert.grade_note
+              : "with a total score of " + cert.grade_note}
+           </span>`
+        : "";
+
+      return `
+        <div class="cert-card">
+          <div class="cert-card-inner">
+            <div class="cert-info">
+              <div class="cert-icon-wrap">🎓</div>
+              <div class="cert-details">
+                <div class="cert-course-name">${cert.course_name}</div>
+                <div class="cert-meta-grid">
+                  <span class="cert-meta-label">Student</span>
+                  <span class="cert-meta-value">${student.fullname}</span>
+                  <span class="cert-meta-label">Level</span>
+                  <span class="cert-meta-value">${cert.level}</span>
+                  <span class="cert-meta-label">Batch</span>
+                  <span class="cert-meta-value">${student.batch || "—"}</span>
+                  <span class="cert-meta-label">Issued by</span>
+                  <span class="cert-meta-value">${cert.issued_by}</span>
+                  <span class="cert-meta-label">Date</span>
+                  <span class="cert-meta-value">${formattedDate}</span>
+                </div>
+                ${gradeHtml}
+                <br>
+                <span class="cert-status-badge">
+                  <i class="fas fa-check-circle" style="font-size:0.7rem;"></i>
+                  Certificate of Completion
+                </span>
+              </div>
+            </div>
+            <div class="cert-actions">
+            <button class="btn-download" onclick="downloadCertificate(
+                '${cert.id}',
+                '${student.fullname.replace(/'/g, "\\'")}',
+                '${student.matric_number}',
+                '${cert.course_name.replace(/'/g, "\\'")}',
+                '${cert.level}',
+                '${(student.batch || "").replace(/'/g, "\\'")}',
+                '${cert.issued_at}',
+                '${(cert.grade_note || "").replace(/'/g, "\\'")}'
+              )">
+                <i class="fas fa-download"></i> Download PDF
+              </button>
+            </div>
+          </div>
+          <div class="cert-card-footer">
+            <span>Certificate ID</span>
+            <code>${shortCertId(cert.id)}</code>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderProgrammeCard(cert, student) {
+      const formattedDate = new Date(cert.issued_at).toLocaleDateString("en-GB", {
+        day: "numeric", month: "long", year: "numeric"
+      });
+      const gradeHtml = cert.grade_note
+        ? `<span class="cert-grade-note">
+            ${cert.grade_note.toLowerCase().startsWith("with")
+              ? cert.grade_note
+              : "with " + cert.grade_note}
+           </span>`
+        : "";
+
+      return `
+        <div class="cert-card">
+          <div class="cert-card-inner">
+            <div class="cert-info">
+              <div class="cert-icon-wrap">🎓</div>
+              <div class="cert-details">
+                <div class="cert-course-name">${cert.course_name}</div>
+                <div class="cert-meta-grid">
+                  <span class="cert-meta-label">Student</span>
+                  <span class="cert-meta-value">${student.fullname}</span>
+                  <span class="cert-meta-label">Batch</span>
+                  <span class="cert-meta-value">${student.batch || "—"}</span>
+                  <span class="cert-meta-label">Issued by</span>
+                  <span class="cert-meta-value">${cert.issued_by}</span>
+                  <span class="cert-meta-label">Date</span>
+                  <span class="cert-meta-value">${formattedDate}</span>
+                </div>
+                ${gradeHtml}
+                <br>
+                <span class="cert-status-badge">
+                  <i class="fas fa-check-circle" style="font-size:0.7rem;"></i>
+                  ${t("Full Programme Completion")}
+                </span>
+              </div>
+            </div>
+            <div class="cert-actions">
+            <button class="btn-download" onclick="downloadFullProgrammeCertificate(
+                '${cert.id}',
+                '${student.fullname.replace(/'/g, "\\'")}',
+                '${student.matric_number}',
+                '${cert.course_name.replace(/'/g, "\\'")}',
+                '${(student.batch || "").replace(/'/g, "\\'")}',
+                '${cert.issued_at}',
+                '${(cert.grade_note || "").replace(/'/g, "\\'")}'
+              )">
+                <i class="fas fa-download"></i> Download PDF
+              </button>
+            </div>
+          </div>
+          <div class="cert-card-footer">
+            <span>Certificate ID</span>
+            <code>${shortCertId(cert.id)}</code>
+          </div>
+        </div>
+      `;
+    }
+
     /* ── LOAD CERTIFICATES ── */
     document.addEventListener("DOMContentLoaded", async () => {
-      const container = document.getElementById("certContainer");
+      const container       = document.getElementById("certContainer");
+      const tabs             = document.getElementById("certTabs");
+      const levelPanel       = document.getElementById("levelCertPanel");
+      const programmePanel   = document.getElementById("programmeCertPanel");
 
       try {
         const { data: student, error: studentError } = await sb
@@ -550,95 +790,40 @@
 
         if (certError) throw certError;
 
+        // Certs are always fetched together, then split client-side by
+        // cert_type ('level' | 'programme') into the two tab panels below.
+        const levelCerts     = (certs || []).filter(c => c.cert_type !== "programme");
+        const programmeCerts = (certs || []).filter(c => c.cert_type === "programme");
+
         if (!certs || certs.length === 0) {
-          container.innerHTML = `
-            <div class="no-cert">
-              <div class="no-cert-icon-wrap">
-                <i class="fas fa-certificate"></i>
-              </div>
-              <h3>${t("No Certificates Yet")}</h3>
-              <p>
-                ${t("You haven't been issued any certificates yet.")}<br>
-                ${t("Complete your courses to earn a certificate.")}
-              </p>
-            </div>
-          `;
+          container.innerHTML = noCertBlock("No Certificates Yet", [
+            "You haven't been issued any certificates yet.",
+            "Complete your courses to earn a certificate."
+          ]);
           return;
         }
 
-        /* Count strip */
-        const countStrip = `
-          <div class="cert-count-strip">
-            <span class="cert-count-line" style="flex:1;height:1px;background:var(--border-color,#ddd);"></span>
-            <span class="cert-count-label">${certs.length} Certificate${certs.length !== 1 ? "s" : ""} Awarded</span>
-            <span class="cert-count-line" style="flex:1;height:1px;background:var(--border-color,#ddd);"></span>
-          </div>
-        `;
+        // Loading placeholder no longer needed once we have data —
+        // the tabs + panels take over from here.
+        container.innerHTML = "";
+        tabs.style.display = "flex";
 
-        const cards = certs.map(cert => {
-          const formattedDate = new Date(cert.issued_at).toLocaleDateString("en-GB", {
-            day: "numeric", month: "long", year: "numeric"
-          });
+        document.getElementById("levelTabCount").textContent = levelCerts.length;
+        document.getElementById("programmeTabCount").textContent = programmeCerts.length;
 
-          const gradeHtml = cert.grade_note
-            ? `<span class="cert-grade-note">
-                ${cert.grade_note.toLowerCase().startsWith("with")
-                  ? cert.grade_note
-                  : "with a total score of " + cert.grade_note}
-               </span>`
-            : "";
+        levelPanel.innerHTML = levelCerts.length
+          ? countStripHtml(levelCerts.length, "Certificate") + levelCerts.map(c => renderLevelCard(c, student)).join("")
+          : noCertBlock("No Per-Level Certificates Yet", [
+              "You haven't been issued a per-level certificate yet.",
+              "Complete a level to earn one."
+            ]);
 
-          return `
-            <div class="cert-card">
-              <div class="cert-card-inner">
-                <div class="cert-info">
-                  <div class="cert-icon-wrap">🎓</div>
-                  <div class="cert-details">
-                    <div class="cert-course-name">${cert.course_name}</div>
-                    <div class="cert-meta-grid">
-                      <span class="cert-meta-label">Student</span>
-                      <span class="cert-meta-value">${student.fullname}</span>
-                      <span class="cert-meta-label">Level</span>
-                      <span class="cert-meta-value">${cert.level}</span>
-                      <span class="cert-meta-label">Batch</span>
-                      <span class="cert-meta-value">${student.batch || "—"}</span>
-                      <span class="cert-meta-label">Issued by</span>
-                      <span class="cert-meta-value">${cert.issued_by}</span>
-                      <span class="cert-meta-label">Date</span>
-                      <span class="cert-meta-value">${formattedDate}</span>
-                    </div>
-                    ${gradeHtml}
-                    <br>
-                    <span class="cert-status-badge">
-                      <i class="fas fa-check-circle" style="font-size:0.7rem;"></i>
-                      Certificate of Completion
-                    </span>
-                  </div>
-                </div>
-                <div class="cert-actions">
-                <button class="btn-download" onclick="downloadCertificate(
-                    '${cert.id}',
-                    '${student.fullname.replace(/'/g, "\\'")}',
-                    '${student.matric_number}',
-                    '${cert.course_name.replace(/'/g, "\\'")}',
-                    '${cert.level}',
-                    '${(student.batch || "").replace(/'/g, "\\'")}',
-                    '${cert.issued_at}',
-                    '${(cert.grade_note || "").replace(/'/g, "\\'")}'
-                  )">
-                    <i class="fas fa-download"></i> Download PDF
-                  </button>
-                </div>
-              </div>
-              <div class="cert-card-footer">
-                <span>Certificate ID</span>
-                <code>${cert.id}</code>
-              </div>
-            </div>
-          `;
-        }).join("");
-
-        container.innerHTML = countStrip + cards;
+        programmePanel.innerHTML = programmeCerts.length
+          ? countStripHtml(programmeCerts.length, "Certificate") + programmeCerts.map(c => renderProgrammeCard(c, student)).join("")
+          : noCertBlock("Full Programme Certificate Not Yet Issued", [
+              "This certificate is awarded once you complete the entire learning programme.",
+              "Keep going — it's issued automatically by the institute once all levels are done."
+            ]);
 
       } catch (err) {
         console.error("Certificate load error:", err);
@@ -745,6 +930,8 @@
 
     // Reshapes + RTL-reverses only the Arabic run(s) within a string; any
     // Latin letters, digits, quotes, or spaces around them are left as-is.
+    // Runs extend across single embedded spaces (so a whole Arabic phrase
+    // reverses as one right-to-left unit, not word-by-word in typed order).
     function shapeArabicText(str) {
       str = str.replace(/[\u064B-\u0652\u0670\u0640]/g, ""); // strip diacritics/tatweel
       let result = "";
@@ -753,15 +940,38 @@
       while (i < n) {
         const cp = str.codePointAt(i);
         if (ARABIC_FORMS.hasOwnProperty(cp)) {
+          // Extend the run through Arabic letters and single spaces that are
+          // themselves followed by more Arabic (so multi-word phrases are
+          // captured as one run).
           let j = i;
-          const run = [];
-          while (j < n && ARABIC_FORMS.hasOwnProperty(str.codePointAt(j))) {
-            run.push(str.codePointAt(j));
-            j++;
+          const runChars = []; // codepoint, or -1 to mark a space
+          while (j < n) {
+            const c = str.codePointAt(j);
+            if (ARABIC_FORMS.hasOwnProperty(c)) {
+              runChars.push(c);
+              j++;
+            } else if (c === 32 && j + 1 < n && ARABIC_FORMS.hasOwnProperty(str.codePointAt(j + 1))) {
+              runChars.push(-1);
+              j++;
+            } else {
+              break;
+            }
           }
-          const shaped = shapeArabicRun(run);
-          shaped.reverse();
-          result += shaped.map(c => String.fromCharCode(c)).join("");
+          // Shape each word (a sub-run split at the space markers) on its
+          // own, so joining forms never bleed across a word boundary.
+          const shapedRun = [];
+          let k = 0;
+          while (k < runChars.length) {
+            if (runChars[k] === -1) { shapedRun.push(-1); k++; continue; }
+            let m = k;
+            const sub = [];
+            while (m < runChars.length && runChars[m] !== -1) { sub.push(runChars[m]); m++; }
+            shapedRun.push(...shapeArabicRun(sub));
+            k = m;
+          }
+          // Reverse the whole run (letters + spaces) into visual RTL order.
+          shapedRun.reverse();
+          result += shapedRun.map(c => (c === -1 ? " " : String.fromCharCode(c))).join("");
           i = j;
         } else {
           result += str[i];
@@ -771,12 +981,14 @@
       return result;
     }
 
-    // Lazy-loads Amiri (SIL OFL licensed) as base64 the first time a
-    // certificate actually contains Arabic text, and caches it for reuse.
-    let arabicFontBase64Promise = null;
-    function loadArabicFontBase64() {
-      if (!arabicFontBase64Promise) {
-        arabicFontBase64Promise = fetch("https://raw.githubusercontent.com/google/fonts/main/ofl/amiri/Amiri-Regular.ttf")
+    // Lazy-loads a Google Font TTF as base64, caching each URL's result so
+    // repeat certificate downloads don't re-fetch. Used for Amiri (Arabic
+    // shaping) and for the decorative script title font on the diploma-style
+    // full-programme certificate.
+    const _fontBase64Cache = {};
+    function loadGoogleFontBase64(url) {
+      if (!_fontBase64Cache[url]) {
+        _fontBase64Cache[url] = fetch(url)
           .then(r => r.arrayBuffer())
           .then(buf => {
             const bytes = new Uint8Array(buf);
@@ -788,7 +1000,42 @@
             return btoa(binary);
           });
       }
-      return arabicFontBase64Promise;
+      return _fontBase64Cache[url];
+    }
+    function loadArabicFontBase64() {
+      return loadGoogleFontBase64("https://raw.githubusercontent.com/google/fonts/main/ofl/amiri/Amiri-Regular.ttf");
+    }
+    function loadScriptFontBase64() {
+      return loadGoogleFontBase64("https://raw.githubusercontent.com/google/fonts/main/ofl/greatvibes/GreatVibes-Regular.ttf");
+    }
+
+    /* ===========================
+       WAX-SEAL MEDALLION (drawn entirely with vector shapes, no image asset)
+       Mimics a diploma-style embossed seal: a scalloped gold rosette with a
+       darker ring and a monogram in the middle. Colors passed in so it can
+       match whatever palette the certificate uses.
+    =========================== */
+    function drawSealMedallion(doc, cx, cy, R, mainColor, darkColor, monogramTop, monogramBottom) {
+      const petals = 22;
+      doc.setFillColor(...mainColor);
+      for (let i = 0; i < petals; i++) {
+        const angle = (i / petals) * Math.PI * 2;
+        const px = cx + R * 0.8 * Math.cos(angle);
+        const py = cy + R * 0.8 * Math.sin(angle);
+        doc.circle(px, py, R * 0.22, "F");
+      }
+      doc.circle(cx, cy, R * 0.7, "F");
+      doc.setDrawColor(...darkColor);
+      doc.setLineWidth(1.3);
+      doc.circle(cx, cy, R * 0.7, "S");
+      doc.circle(cx, cy, R * 0.52, "S");
+      doc.setTextColor(255, 255, 255);
+      doc.setFont("times", "bolditalic");
+      doc.setFontSize(R * 0.3);
+      doc.text(monogramTop, cx, cy + R * 0.08, { align: "center" });
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(R * 0.1);
+      doc.text(monogramBottom, cx, cy + R * 0.28, { align: "center" });
     }
 
     /* ===========================
@@ -867,9 +1114,7 @@
       const courseDisplayParts = courses.map(c =>
         `"${containsArabic(c) ? shapeArabicText(c) : c}"`
       );
-      const courseLabel = courses.length > 1
-        ? `${courseDisplayParts.join(", ")} Courses`
-        : `${courseDisplayParts[0]} Course`;
+      const courseLabel = `${courseDisplayParts.join(" and ")} Programme`;
 
       doc.setFontSize(18);
       if (hasArabicCourse && arabicFontReady) {
@@ -934,11 +1179,293 @@
       doc.setFontSize(11);
       doc.setTextColor(40, 40, 40);
       doc.setFont("helvetica", "bold");
-      doc.text(`Certificate Id: ${certId}`, pageWidth / 2, pageHeight - 50, { align: "center" });
+      doc.text(`Certificate Id: ${shortCertId(certId)}`, pageWidth / 2, pageHeight - 50, { align: "center" });
 
       // SAVE — comma-joined multi-course names get sanitized into a safe filename
       const safeCourseSlug = courseName.replace(/[^a-z0-9]+/gi, "_").replace(/^_+|_+$/g, "").slice(0, 60);
       doc.save(`Certificate_${matricNumber}_${safeCourseSlug}.pdf`);
+    }
+
+    /* ===========================
+       ARABIC TEXT RASTERIZATION FOR jsPDF (canvas-based)
+       The hand-mapped Arabic presentation-forms shaper above still comes
+       out wrong for the institute-name phrase — hand-rolled joining logic
+       is genuinely hard to get pixel-perfect. This sidesteps it: load an
+       Arabic-capable font into the browser, draw the text onto an
+       offscreen canvas with RTL direction, and embed the result as a PNG.
+       The browser's own text-shaping engine handles the joining/ligatures
+       correctly, instead of a hand-rolled one.
+    =========================== */
+    let _amiriFontLoadPromise = null;
+    function ensureAmiriFont() {
+      if (!_amiriFontLoadPromise) {
+        const font = new FontFace(
+          "Amiri",
+          "url(https://raw.githubusercontent.com/google/fonts/main/ofl/amiri/Amiri-Regular.ttf)"
+        );
+        _amiriFontLoadPromise = font.load().then(loaded => {
+          document.fonts.add(loaded);
+          return loaded;
+        });
+      }
+      return _amiriFontLoadPromise;
+    }
+
+    async function rasterizeArabicText(text, { fontSize = 24, color = "#1a1a2e" } = {}) {
+      await ensureAmiriFont();
+      const scale = 4; // supersample so the raster stays crisp once embedded in the PDF
+      const probe = document.createElement("canvas").getContext("2d");
+      probe.font = `${fontSize * scale}px Amiri`;
+      const textWidth = probe.measureText(text).width;
+
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.ceil(textWidth + fontSize * scale);
+      canvas.height = Math.ceil(fontSize * scale * 1.7);
+      const ctx = canvas.getContext("2d");
+      ctx.font = `${fontSize * scale}px Amiri`;
+      ctx.direction = "rtl";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = color;
+      ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+
+      return {
+        dataUrl: canvas.toDataURL("image/png"),
+        width: canvas.width / scale,
+        height: canvas.height / scale
+      };
+    }
+
+    /* ===========================
+       GENERATE FULL PROGRAMME CERTIFICATE PDF
+       Portrait A4, drawn entirely in code (no background template image):
+       parchment fill, double blue/gold border, logo seal, formal diploma-
+       style wording. Uses canvas-rasterized Arabic (see above) for the
+       institute-name subtitle.
+    =========================== */
+    async function downloadFullProgrammeCertificate(certId, fullname, matricNumber, programmeName, batch, issuedAt, gradeNote) {
+      const { jsPDF } = window.jspdf;
+
+      const doc = new jsPDF({
+        orientation: "portrait",
+        unit: "pt",
+        format: "a4"
+      });
+
+      const pageWidth  = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const centerX    = pageWidth / 2;
+
+      const BLUE     = [5, 21, 196];
+      const GOLD     = [184, 151, 42];
+      const RED      = [178, 30, 30];
+      const RED_DARK = [110, 15, 15];
+      const INK      = [35, 35, 45];
+
+      // PARCHMENT BACKGROUND — plain gold/cream fill, then a very faint
+      // tint overlay for a slightly aged-paper depth (no image asset used).
+      doc.setFillColor(247, 240, 221);
+      doc.rect(0, 0, pageWidth, pageHeight, "F");
+      try {
+        doc.setGState(new doc.GState({ opacity: 0.05 }));
+        doc.setFillColor(120, 90, 30);
+        doc.rect(0, 0, pageWidth, pageHeight, "F");
+        doc.setGState(new doc.GState({ opacity: 1 }));
+      } catch (e) { /* GState unsupported on this jsPDF build — plain fill still applies */ }
+
+      // DOUBLE BORDER — blue outer, gold inner
+      doc.setDrawColor(...BLUE);
+      doc.setLineWidth(3);
+      doc.rect(30, 30, pageWidth - 60, pageHeight - 60);
+      doc.setDrawColor(...GOLD);
+      doc.setLineWidth(1);
+      doc.rect(40, 40, pageWidth - 80, pageHeight - 80);
+
+      // Running vertical cursor — every block below advances it, so nothing
+      // has to be hand-repositioned when text above it wraps to more lines.
+      let cursorY = 65;
+
+      // SEAL / LOGO — top center, bigger and bolder than before
+      const logoSize = 92;
+      const logo = new Image();
+      logo.src = "logo.png";
+      await new Promise(resolve => {
+        logo.onload  = () => { doc.addImage(logo, "PNG", centerX - logoSize / 2, cursorY, logoSize, logoSize); resolve(); };
+        logo.onerror = resolve;
+      });
+      cursorY += logoSize + 26;
+
+      // ARABIC TRANSLATION OF THE INSTITUTE NAME — sits above the English
+      // name, mirroring the reference diploma's Arabic-then-English header.
+      // Rasterized via canvas (see above) instead of the hand-rolled
+      // shaper, which was still rendering this phrase incorrectly.
+      try {
+        const arabicName = await rasterizeArabicText("معهد البيان للدراسات العربية", { fontSize: 16, color: "#232323" });
+        doc.addImage(arabicName.dataUrl, "PNG", centerX - arabicName.width / 2, cursorY - arabicName.height * 0.72, arabicName.width, arabicName.height);
+        cursorY += arabicName.height * 0.34 + 18;
+      } catch (e) {
+        console.error("Arabic institute-name rasterization failed:", e);
+      }
+
+      // INSTITUTE NAME — bigger and bolder
+      doc.setTextColor(...BLUE);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(19);
+      doc.text("AL-BAYAN ARABIC INSTITUTE", centerX, cursorY, { align: "center" });
+      cursorY += 48;
+
+      // TITLE — embedded cursive script font, in red like the reference
+      // diploma (falls back to bold italic serif if the font fails to load).
+      let scriptReady = false;
+      try {
+        const scriptBase64 = await loadScriptFontBase64();
+        doc.addFileToVFS("GreatVibes-Regular.ttf", scriptBase64);
+        doc.addFont("GreatVibes-Regular.ttf", "GreatVibes", "normal");
+        scriptReady = true;
+      } catch (e) {
+        console.error("Script font load failed, falling back to serif:", e);
+      }
+      doc.setTextColor(...RED);
+      if (scriptReady) {
+        doc.setFont("GreatVibes", "normal");
+        doc.setFontSize(50);
+      } else {
+        doc.setFont("times", "bolditalic");
+        doc.setFontSize(32);
+      }
+      doc.text("Certificate of Completion", centerX, cursorY, { align: "center" });
+      cursorY += 16;
+
+      // Decorative rule under title
+      doc.setDrawColor(...GOLD);
+      doc.setLineWidth(1.2);
+      doc.line(centerX - 70, cursorY, centerX + 70, cursorY);
+      cursorY += 34;
+
+      // "This is to certify that"
+      doc.setFont("times", "italic");
+      doc.setFontSize(14);
+      doc.setTextColor(...INK);
+      doc.text("This is to certify that", centerX, cursorY, { align: "center" });
+      cursorY += 44;
+
+      // STUDENT NAME + underline
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(30);
+      doc.setTextColor(...BLUE);
+      doc.text(fullname, centerX, cursorY, { align: "center" });
+      const nameW = doc.getTextWidth(fullname);
+      doc.setDrawColor(...BLUE);
+      doc.setLineWidth(1.4);
+      doc.line(centerX - nameW / 2 - 18, cursorY + 8, centerX + nameW / 2 + 18, cursorY + 8);
+      cursorY += 58;
+
+      // FULL DIPLOMA-STYLE PARAGRAPH — no mention of "passing" assessments:
+      // not every student finishes with Distinction or even Credit, so a
+      // pass/fail claim here would be inaccurate for some of them. This
+      // just certifies that the programme and its conditions were completed.
+      doc.setFont("times", "normal");
+      doc.setFontSize(13.5);
+      doc.setTextColor(...INK);
+      const paragraphText = "Having diligently pursued the prescribed course of study and fulfilled every condition set by the Institute, is hereby recognized as having successfully completed the Full Learning Programme in";
+      const maxParaWidth = pageWidth - 170;
+      const paraLines = doc.splitTextToSize(paragraphText, maxParaWidth);
+      const paraLineHeight = 19;
+      paraLines.forEach((line, i) => {
+        doc.text(line, centerX, cursorY + i * paraLineHeight, { align: "center" });
+      });
+      cursorY += paraLines.length * paraLineHeight + 26;
+
+      // PROGRAMME NAME (wraps if long; everything below shifts down accordingly)
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(18);
+      doc.setTextColor(...BLUE);
+      const maxWidth = pageWidth - 170;
+      const programmeLines = doc.splitTextToSize(`"${programmeName}"`, maxWidth);
+      const lineHeight = 23;
+      programmeLines.forEach((line, i) => {
+        doc.text(line, centerX, cursorY + i * lineHeight, { align: "center" });
+      });
+      cursorY += programmeLines.length * lineHeight + 30;
+
+      // GRADE / REMARK — "with" stays a small fixed line; the remark itself
+      // (Distinction / Credit / Merit / etc.) is bold, larger, and a
+      // different color so it actually stands out, and no longer gets
+      // padded into a "with a total score of ..." phrase that only made
+      // sense for a numeric score, not a remark word.
+      const rawGrade = gradeNote && gradeNote.trim() !== "" ? gradeNote.trim() : null;
+      if (rawGrade) {
+        const remark = rawGrade.replace(/^with\s+(a\s+total\s+score\s+of\s+)?/i, "").trim();
+        doc.setFont("times", "italic");
+        doc.setFontSize(13);
+        doc.setTextColor(...INK);
+        doc.text("with", centerX, cursorY, { align: "center" });
+        cursorY += 23;
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(21);
+        doc.setTextColor(...RED);
+        doc.text(remark, centerX, cursorY, { align: "center" });
+        cursorY += 34;
+      }
+
+      // MATRIC + BATCH
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(11);
+      doc.setTextColor(80, 80, 80);
+      const matricBatchLine = batch && batch.trim() !== ""
+        ? `Matric No: ${matricNumber}   |   Batch: ${batch}`
+        : `Matric No: ${matricNumber}`;
+      doc.text(matricBatchLine, centerX, cursorY, { align: "center" });
+      cursorY += 22;
+
+      // DATE (left) + DIRECTOR SIGNATURE (right) — pinned near the bottom,
+      // with a much tighter floor than before so the gap after matric/batch
+      // doesn't balloon into empty space when the content above is short.
+      const formattedDate = new Date(issuedAt).toLocaleDateString("en-GB", {
+        day: "numeric", month: "long", year: "numeric"
+      });
+      const sigY = Math.max(pageHeight - 145, cursorY + 65);
+
+      // RED SEAL MEDALLION — drawn in code (no image asset), centered
+      // between the date and signature, sitting just above their shared
+      // baseline — exactly where the reference diploma's red stamp sits.
+      const sealRadius = 32;
+      drawSealMedallion(doc, centerX, sigY - sealRadius - 4, sealRadius, RED, RED_DARK, "AB", "INSTITUTE");
+
+      doc.setDrawColor(...INK);
+      doc.setLineWidth(0.8);
+
+      doc.line(100, sigY, 250, sigY);
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(11);
+      doc.setTextColor(...INK);
+      doc.text(formattedDate, 175, sigY - 8, { align: "center" });
+      doc.text("Date", 175, sigY + 16, { align: "center" });
+
+      doc.line(pageWidth - 250, sigY, pageWidth - 100, sigY);
+
+      // Signature image, sat just above the signature line — bigger than
+      // before so it reads clearly at this size.
+      const sign = new Image();
+      sign.src = "stamp.png";
+      await new Promise(resolve => {
+        sign.onload  = () => { doc.addImage(sign, "PNG", pageWidth - 245, sigY - 70, 140, 56); resolve(); };
+        sign.onerror = resolve;
+      });
+
+      doc.text("Mustafa Omodadi", pageWidth - 175, sigY + 16, { align: "center" });
+      doc.setFont("helvetica", "bold");
+      doc.text("Director", pageWidth - 175, sigY + 30, { align: "center" });
+
+      // CERTIFICATE ID — anchored to bottom edge
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(10);
+      doc.setTextColor(60, 60, 60);
+      doc.text(`Certificate Id: ${shortCertId(certId)}`, centerX, pageHeight - 55, { align: "center" });
+
+      // SAVE
+      const safeProgrammeSlug = programmeName.replace(/[^a-z0-9]+/gi, "_").replace(/^_+|_+$/g, "").slice(0, 60);
+      doc.save(`ProgrammeCertificate_${matricNumber}_${safeProgrammeSlug}.pdf`);
     }
   </script>
 

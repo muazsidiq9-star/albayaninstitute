@@ -137,6 +137,9 @@ const DICT = {
 "Pass": "ناجح",
 "Average": "متوسط",
 "Fail": "راسب",
+"pass": "ناجح",
+"average": "متوسط",
+"fail": "راسب",
 
 "Add Class": "إضافة حصة",
 "Instructor Name": "اسم المدرس",
@@ -145,7 +148,9 @@ const DICT = {
 "Scheduled": "مجدولة",
 "Completed": "مكتملة",
 "Cancelled": "ملغاة",
-
+"scheduled": "مجدولة",
+"completed": "مكتملة",
+"cancelled": "ملغاة",
 "Semester Work": "أعمال الفصل",
 "Emails": "الرسائل",
 
@@ -2245,6 +2250,7 @@ NEW FILES START HERE
 "Date":          "التاريخ",
 "Mark":          "تحديد",
 
+
 // TABLE HEADERS — GRADES
 
 "Course":        "الدورة",
@@ -3042,6 +3048,8 @@ NEW FILES START HERE
   "🔍 ابحث عن الكتب (مثل: النحو، التفسير، الصرف...)",
 "All Categories": "كل التصنيفات",
 "Madinah":  "المدينة",
+"Madinah Arabic Reader":  "دروس اللغةالعربية",
+"Madinah Arabic Reader Book":  "دروس اللغةالعربية",
 "Tafseer":  "التفسير",
 "Hadeeth":  "الحديث",
 "Nahw":     "النحو",
@@ -3514,6 +3522,93 @@ NEW FILES START HERE
 "Student added ✅": "تمت إضافة الطالب ✅",
 "This student is already on the list": "هذا الطالب موجود بالفعل في القائمة",
 "No registration found for this course — using student's current level/batch. Please verify.": "لم يتم العثور على تسجيل لهذا المقرر — يتم استخدام مستوى الطالب ودفعته الحالية. يرجى التحقق.",
+
+/* ============================================================
+   NEW DICT ENTRIES — Certificate System Rework
+   Add these key/value pairs into your existing translate.js DICT
+   object. Keys are the exact English strings used in
+   data-translate="" attributes and t("...") calls — must match
+   verbatim, including punctuation, for the lookup to work.
+   ============================================================ */
+
+/* ---- my-certificate.html (student-facing) ---- */
+"Per-Level Certificates": "شهادات المستوى",
+"Full Programme Certificate": "شهادة إتمام البرنامج الكامل",
+"No Per-Level Certificates Yet": "لا توجد شهادات مستوى بعد",
+"You haven't been issued a per-level certificate yet.": "لم يتم إصدار شهادة مستوى لك بعد.",
+"Complete a level to earn one.": "أكمل مستوى للحصول على واحدة.",
+"Full Programme Certificate Not Yet Issued": "لم تصدر شهادة البرنامج الكامل بعد",
+"This certificate is awarded once you complete the entire learning programme.": "تُمنح هذه الشهادة عند إكمال البرنامج التعليمي بأكمله.",
+"Keep going — it's issued automatically by the institute once all levels are done.": "واصل التقدم — تُصدرها المؤسسة تلقائيًا بعد إتمام جميع المستويات.",
+"Full Programme Completion": "إتمام البرنامج الكامل",
+
+/* ---- admin-dashboard.html / admin-dashboard.js (staff-facing) ---- */
+"Open a student record and click Issue Certificate to generate — choose Per-Level or Full Programme in the modal that opens.":
+  "افتح سجل الطالب واضغط على «إصدار شهادة» لإنشائها — اختر «حسب المستوى» أو «البرنامج الكامل» في النافذة التي تظهر.",
+"All": "الكل",
+"Per-Level": "حسب المستوى",
+"Full Programme": "البرنامج الكامل",
+"Type": "النوع",
+"Per-Level Certificate": "شهادة حسب المستوى",
+"Programme Track(s)": "مسار(ات) البرنامج",
+"Arabic": "العربية",
+"Islamic": "الإسلامية",
+"Tick Arabic and/or Islamic to record which track(s) this level's certificate covers.":
+  "ضع علامة على العربية و/أو الإسلامية لتحديد المسار (المسارات) التي تغطيها شهادة هذا المستوى.",
+"Programme Name": "اسم البرنامج",
+"Issued once a student has completed every level of the programme, not just one.":
+  "تُصدر بعد إتمام الطالب لجميع مستويات البرنامج، وليس مستوى واحدًا فقط.",
+"An active Full Programme certificate already exists for this student.":
+  "توجد بالفعل شهادة برنامج كامل سارية لهذا الطالب.",
+"Full Programme certificate issued to": "تم إصدار شهادة البرنامج الكامل إلى",
+"Please enter a programme name before issuing.": "يرجى إدخال اسم البرنامج قبل الإصدار.",
+"Please select at least one track (Arabic and/or Islamic) before issuing.":
+  "يرجى اختيار مسار واحد على الأقل (العربية و/أو الإسلامية) قبل الإصدار.",
+"Programme": "برنامج",
+
+"Showing": "عرض",
+"Semester": "الفصل الدراسي",
+"All Semesters": "جميع الفصول الدراسية",
+"Back to current semester": "العودة إلى الفصل الحالي",
+"Show full grade history": "عرض السجل الكامل للدرجات",
+"Full grade history": "السجل الكامل للدرجات",
+"No grades released yet": "لم يتم نشر أي درجات بعد",
+"Try \"Show full grade history\" above": "جرّب \"عرض السجل الكامل للدرجات\" أعلاه",
+"No semesters available yet": "لا توجد فصول دراسية متاحة بعد",
+"Download Semester Report": "تحميل تقرير الفصل الدراسي",
+"Choose which semester you'd like as a PDF": "اختر الفصل الدراسي الذي تريد تحميله كملف PDF",
+"All Remarks": "جميع الملاحظات",
+"Pass": "ناجح",
+"Average": "متوسط",
+"Fail": "راسب",
+"No grades found": "لم يتم العثور على درجات",
+"No semester available to report on.": "لا يوجد فصل دراسي متاح لإصدار تقرير عنه.",
+"No grades to download.": "لا توجد درجات للتحميل.",
+"Error downloading PDF. See console for details.": "حدث خطأ أثناء تحميل ملف PDF. يرجى مراجعة وحدة التحكم لمزيد من التفاصيل.",
+"Preliminary": "تمهيدي",
+"Beginner": "مبتدئ",
+"Intermediate": "المتوسط",
+"Advanced": "متقدم",
+"First": "الأول",
+"Second": "الثاني",
+
+"No receipt":     "لا يوجد إيصال",
+"null":           "فارغ",
+"No file":        "لا يوجد ملف",
+"No file uploaded": "لم يتم رفع أي ملف",
+"Basic Arabic": "العربية الأساسية",
+"Intermediate Arabic": "العربية المتوسطة",
+"Advanced Arabic": "العربية المتقدمة",
+"Basic Islamic Studies": "الدراسات الإسلامية الأساسية",
+"Intermediate Islamic Studies": "الدراسات الإسلامية المتوسطة",
+"Advanced Islamic Studies": "الدراسات الإسلامية المتقدمة",
+"Beginner Arabic": "العربية للمبتدئين",
+"Basic Tafseer": "تفسير أساسي",
+"Intermediate Tafseer": "تفسير متوسط",
+"Advanced Tafseer": "تفسير متقدم",
+
+"Arabic and Islamic Studies": "العربية والدراسات الإسلامية",
+"Arabic, Islamic": "العربية والدراسات الإسلامية",
 
 // ===== DYNAMIC TEMPLATES ===== 
 

@@ -59,13 +59,15 @@ function setLevel(selectId, rawValue) {
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const { data: { user }, error: authError } = await db.auth.getUser();
+    const { data: { session }, error: sessionError } = await db.auth.getSession();
 
-    if (authError || !user) {
+    if (sessionError || !session || !session.user) {
       console.warn("Not authorized");
       window.location.href = "login.html";
       return;
     }
+
+    const user = session.user;
 
     const SESSION_TIMEOUT = 1000 * 60 * 60 * 6;
     const loginTime = localStorage.getItem("loginTime");
@@ -337,7 +339,7 @@ async function loadStudentsCache() {
 function applyRolePermissions(role) {
   const permissions = {
     registrar: ["students", "payments", "student_fee_status", "courses", "course_registrations"],
-    bursar: ["students", "payments", "student_fee_status"],
+    bursar: ["payments", "student_fee_status"],
     h_o_d: ["students", "courses", "course_registrations", "grades", "schedule", "assessments"],
     mudeer: ["students", "payments", "student_fee_status", "courses", "course_registrations", "grades", "schedule", "assessments"],
     assistant_mudeer: ["students", "payments", "student_fee_status", "courses", "course_registrations", "grades", "schedule", "assessments"]
@@ -367,7 +369,7 @@ function applyActionRestrictions(role) {
     assistant_mudeer: ["all"],
     h_o_d: ["students", "courses", "course_registrations", "grades", "schedule", "assessments"],
     registrar: ["students", "payments", "student_fee_status", "courses", "course_registrations"],
-    bursar: ["students", "payments", "student_fee_status"]
+    bursar: ["payments", "student_fee_status"]
   };
 
   window.canDo = (section) => {
@@ -1352,11 +1354,13 @@ async function openBulkFeeModal() {
   }
 
   list.innerHTML = students.map((s, i) => `
-    <label class="bulkFeeStudentRow" data-search="${(s.fullname + " " + s.matric_number).toLowerCase()}"
-           style="display:flex; align-items:center; gap:8px; font-weight:400; cursor:pointer;">
+    <label class="bulkFeeStudentRow" data-search="${(s.fullname + " " + s.matric_number).toLowerCase()}">
       <input type="checkbox" class="bulkFeeStudentCheckbox" value="${s.matric_number}"
              id="bulkFeeCb${i}" onchange="updateBulkFeeSelectedCount()">
-      <span>${s.fullname} (${s.matric_number})</span>
+      <span class="bulkFeeStudentInfo">
+        <span class="bulkFeeStudentName">${s.fullname}</span>
+        <span class="bulkFeeStudentMatric">${s.matric_number}</span>
+      </span>
     </label>
   `).join("");
 
@@ -2421,7 +2425,10 @@ async function softDelete({ table, id, match, reloadFn, label, extraReload }) {
   reloadFn();
   if (typeof extraReload === "function") extraReload();
 
-  setTimeout(() => { window.lastDeleted = null; }, 10000);
+  // Undo stays available for 60s -- long enough to notice a mistake and
+  // react, without pretending to be a full undo history (it only ever
+  // remembers the single most recent delete either way).
+  setTimeout(() => { window.lastDeleted = null; }, 60000);
 }
 
 window.deleteStudent = id =>
@@ -2952,57 +2959,44 @@ async function openCertificateModal(studentId, matric, fullname, level, batch) {
   document.getElementById("certLevel").value = level;
   document.getElementById("certBatch").value = batch || "";
 
+  // Reset to the Per-Level tab, clear both track checkboxes, and clear the
+  // Programme fields each time the modal opens, so a leftover state from
+  // the last student doesn't carry over.
+  switchCertModalTab("level");
+  document.getElementById("certGradeNote").value = "";
+  document.querySelectorAll(".certCourseCheckbox").forEach(cb => cb.checked = false);
+  const programmeNameInput = document.getElementById("certProgrammeName");
+  if (programmeNameInput) programmeNameInput.value = "Arabic and Islamic Studies";
+  const programmeGradeInput = document.getElementById("certProgrammeGradeNote");
+  if (programmeGradeInput) programmeGradeInput.value = "";
+
   window.certStudentData = { studentId, matric, fullname, level, batch };
 
-  const courseList = document.getElementById("certCourseList");
-  courseList.innerHTML = `<span>${t("Loading courses...")}</span>`;
-
-  // Show the modal right away with the loading placeholder above, instead
-  // of making the user wait on up to three sequential fetches below before
-  // anything appears.
+  // Show the modal right away — the track checkboxes are static HTML, no
+  // fetch needed for them anymore. Only the certs-history list below still
+  // needs a Supabase round trip.
   openModal("certificateModal");
 
   const { data: existing } = await db
     .from("certificates")
-    .select("id, course_name, grade_note, revoked")
+    .select("id, course_name, grade_note, revoked, cert_type")
     .eq("matric_number", matric)
     .eq("deleted", false);
 
-  const { data: registrations, error } = await db
-    .from("course_registrations")
-    .select("course_id")
-    .eq("matric_number", matric);
-
-  if (error || !registrations || registrations.length === 0) {
-    courseList.innerHTML = `<span>${t("No courses found")}</span>`;
-    renderExistingCerts(existing || []);
-    return;
-  }
-
-  const courseIds = registrations.map(r => r.course_id);
-
-  const { data: courses, error: coursesError } = await db
-    .from("courses")
-    .select("id, course_name")
-    .in("id", courseIds);
-
-  if (coursesError || !courses) {
-    courseList.innerHTML = `<span>${t("Failed to load courses.")}</span>`;
-    renderExistingCerts(existing || []);
-    return;
-  }
-
-  // Checkbox per registered course — tick one for a single-course certificate,
-  // or several to issue one certificate covering a full program.
-  courseList.innerHTML = courses.map((c, i) => `
-    <label style="display:flex; align-items:center; gap:8px; font-weight:400; cursor:pointer;">
-      <input type="checkbox" class="certCourseCheckbox" value="${c.course_name.replace(/"/g, "&quot;")}" id="certCourseCb${i}">
-      <span>${c.course_name}</span>
-    </label>
-  `).join("");
-
   renderExistingCerts(existing || []);
 }
+
+// Toggles which certificate-type panel is shown inside the Issue
+// Certificate modal (Per-Level vs Full Programme), without affecting the
+// shared student-info fields or the certs-history list below it.
+function switchCertModalTab(tab) {
+  document.querySelectorAll("#certificateModal .cert-type-tab").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.certTab === tab);
+  });
+  document.getElementById("certLevelPanel").classList.toggle("active", tab === "level");
+  document.getElementById("certProgrammePanel").classList.toggle("active", tab === "programme");
+}
+window.switchCertModalTab = switchCertModalTab;
 
 function renderExistingCerts(certs) {
   const old = document.getElementById("existingCertsList");
@@ -3020,6 +3014,7 @@ function renderExistingCerts(certs) {
       <table class="cert-history-table">
         <thead>
           <tr>
+            <th>${t("Type")}</th>
             <th>${t("Course")}</th>
             <th>${t("Grade Note")}</th>
             <th>${t("Status")}</th>
@@ -3029,6 +3024,10 @@ function renderExistingCerts(certs) {
         <tbody>
           ${certs.map(c => `
             <tr>
+              <td>${c.cert_type === "programme"
+                  ? `<span class="badge badge-type-programme" style="font-size:0.75rem;">${t("Programme")}</span>`
+                  : `<span class="badge badge-info" style="font-size:0.75rem;">${t("Level")}</span>`
+                }</td>
               <td>${c.course_name}</td>
               <td class="cert-grade-note">${c.grade_note || "—"}</td>
               <td>
@@ -3067,7 +3066,18 @@ function renderExistingCerts(certs) {
   container.appendChild(div);
 }
 
+// Entry point for the "Issue Certificate" button — dispatches to the
+// Per-Level or Full Programme flow based on whichever tab is active.
 async function issueCertificate() {
+  const activeTab = document.querySelector("#certificateModal .cert-type-tab.active")?.dataset.certTab || "level";
+  if (activeTab === "programme") {
+    await issueFullProgrammeCertificate();
+  } else {
+    await issueLevelCertificate();
+  }
+}
+
+async function issueLevelCertificate() {
   const { matric, fullname, level, batch } = window.certStudentData || {};
   const checkedCourses = Array.from(document.querySelectorAll(".certCourseCheckbox:checked"))
     .map(cb => cb.value)
@@ -3075,7 +3085,7 @@ async function issueCertificate() {
   const course_name = checkedCourses.join(", ");
 
   if (!matric || !fullname || !level || checkedCourses.length === 0) {
-    alert(t("Please select at least one course before issuing."));
+    alert(t("Please select at least one track (Arabic and/or Islamic) before issuing."));
     return;
   }
 
@@ -3083,6 +3093,7 @@ async function issueCertificate() {
     .from("certificates")
     .select("id, course_name, revoked")
     .eq("matric_number", matric)
+    .eq("cert_type", "level")
     .eq("deleted", false);
 
   const alreadyIssued = (freshCerts || []).find(
@@ -3105,6 +3116,7 @@ async function issueCertificate() {
     batch: batch || null,
     issued_by: "Al-Bayan Arabic Institute Online",
     grade_note: grade_note,
+    cert_type: "level",
     deleted: false
   }]);
 
@@ -3122,6 +3134,61 @@ async function issueCertificate() {
 
   closeModal("certificateModal");
   showToast(`${t("Certificate issued to")} ${fullname} ✅`);
+}
+
+async function issueFullProgrammeCertificate() {
+  const { matric, fullname, batch } = window.certStudentData || {};
+  const programme_name = document.getElementById("certProgrammeName")?.value.trim();
+
+  if (!matric || !fullname || !programme_name) {
+    alert(t("Please enter a programme name before issuing."));
+    return;
+  }
+
+  // At most one active Full Programme certificate per student — it's a
+  // one-time award, unlike per-level certs which can stack up.
+  const { data: freshCerts } = await db
+    .from("certificates")
+    .select("id, revoked")
+    .eq("matric_number", matric)
+    .eq("cert_type", "programme")
+    .eq("deleted", false);
+
+  const alreadyIssued = (freshCerts || []).find(c => !c.revoked);
+
+  if (alreadyIssued) {
+    alert(t("An active Full Programme certificate already exists for this student."));
+    return;
+  }
+
+  const grade_note = document.getElementById("certProgrammeGradeNote")?.value.trim() || "";
+
+  const { error } = await db.from("certificates").insert([{
+    matric_number: matric,
+    student_name: fullname,
+    course_name: programme_name,
+    level: "Full Programme",
+    batch: batch || null,
+    issued_by: "Al-Bayan Arabic Institute Online",
+    grade_note: grade_note,
+    cert_type: "programme",
+    deleted: false
+  }]);
+
+  if (error) {
+    console.error("Programme certificate insert error:", error);
+    alert(t("Failed to issue certificate. See console."));
+    return;
+  }
+
+  await sendNotification(
+    matric,
+    t("Certificate Issued"),
+    JSON.stringify({ key: "CERTIFICATE_ISSUED", data: { course: programme_name } })
+  );
+
+  closeModal("certificateModal");
+  showToast(`${t("Full Programme certificate issued to")} ${fullname} ✅`);
 }
 
 async function revokeCertificate(certId) {
@@ -3545,7 +3612,7 @@ async function loadCertificatesRegistryData() {
   try {
     const { data, error } = await window.supabaseClient
       .from('certificates')
-      .select('id, matric_number, student_name, course_name, level, batch, issued_by, issued_at, revoked, grade_note')
+      .select('id, matric_number, student_name, course_name, level, batch, issued_by, issued_at, revoked, grade_note, cert_type')
       .eq('deleted', false)
       .order('issued_at', { ascending: false });
 
@@ -3554,42 +3621,16 @@ async function loadCertificatesRegistryData() {
 
     if (error) {
       console.error("Error reading certificates table:", error);
-      tbody.innerHTML = `<tr><td colspan="8" class="empty-row" style="color:red;">${t("Error loading certificate records.")}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="9" class="empty-row" style="color:red;">${t("Error loading certificate records.")}</td></tr>`;
       return;
     }
 
-    if (!data || data.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="8" class="empty-row">${t("No certificates issued yet.")}</td></tr>`;
-      return;
-    }
+    // Cached full set so filter-chip clicks re-render instantly without
+    // a fresh round trip to Supabase.
+    window.certRegistryData = data || [];
 
-    tbody.innerHTML = data.map(c => {
-      const formattedDate = c.issued_at ? new Date(c.issued_at).toLocaleDateString() : "—";
-      const statusBadge = c.revoked
-        ? `<span class="badge badge-danger" style="font-size:0.75rem;">${t("Revoked")}</span>`
-        : `<span class="badge badge-success" style="font-size:0.75rem;">${t("Active")}</span>`;
-      return `
-        <tr>
-          <td><strong>${c.student_name || "—"}</strong></td>
-          <td><code style="font-size:0.85rem;">${c.matric_number || "—"}</code></td>
-          <td>${c.course_name || "—"}</td>
-          <td><span class="badge badge-info">${c.level || "—"}</span></td>
-          <td>${c.batch || "—"}</td>
-          <td>${statusBadge}</td>
-          <td>${formattedDate}</td>
-          <td>
-            <div class="table-row-actions">
-              <button class="btn btn-delete btn-icon-only" onclick="deleteCertificate('${c.id}')" title="${t('Move to Trash')}">
-                🚮
-              </button>
-              <button class="btn btn-danger btn-icon-only" onclick="permanentDeleteCertificate('${c.id}')" title="${t('Permanently Delete')}">
-                🗑️
-              </button>
-            </div>
-          </td>
-        </tr>
-      `;
-    }).join("");
+    const activeChip = document.querySelector(".cert-filter-chip.active");
+    renderCertRegistryRows(activeChip?.dataset.registryFilter || "all");
 
     enableTableSearch("searchCertRegistry", "cert-registry-table");
     window.reTranslate?.();
@@ -3597,6 +3638,62 @@ async function loadCertificatesRegistryData() {
     console.error("Cert dashboard view render failure:", err);
   }
 }
+
+// Renders the registry table body from the cached data, filtered by
+// cert_type ("all" | "level" | "programme").
+function renderCertRegistryRows(filter) {
+  const tbody = document.getElementById("certRegistryTabBody");
+  if (!tbody) return;
+
+  const all = window.certRegistryData || [];
+  const data = filter === "all" ? all : all.filter(c => (c.cert_type || "level") === filter);
+
+  if (data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="9" class="empty-row">${t("No certificates issued yet.")}</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = data.map(c => {
+    const formattedDate = c.issued_at ? new Date(c.issued_at).toLocaleDateString() : "—";
+    const statusBadge = c.revoked
+      ? `<span class="badge badge-danger" style="font-size:0.75rem;">${t("Revoked")}</span>`
+      : `<span class="badge badge-success" style="font-size:0.75rem;">${t("Active")}</span>`;
+    const typeBadge = c.cert_type === "programme"
+      ? `<span class="badge badge-type-programme" style="font-size:0.75rem;">${t("Programme")}</span>`
+      : `<span class="badge badge-info" style="font-size:0.75rem;">${t("Level")}</span>`;
+    return `
+      <tr>
+        <td><strong>${c.student_name || "—"}</strong></td>
+        <td><code style="font-size:0.85rem;">${c.matric_number || "—"}</code></td>
+        <td>${typeBadge}</td>
+        <td>${c.course_name || "—"}</td>
+        <td><span class="badge badge-info">${c.level || "—"}</span></td>
+        <td>${c.batch || "—"}</td>
+        <td>${statusBadge}</td>
+        <td>${formattedDate}</td>
+        <td>
+          <div class="table-row-actions">
+            <button class="btn btn-delete btn-icon-only" onclick="deleteCertificate('${c.id}')" title="${t('Move to Trash')}">
+              🚮
+            </button>
+            <button class="btn btn-danger btn-icon-only" onclick="permanentDeleteCertificate('${c.id}')" title="${t('Permanently Delete')}">
+              🗑️
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+// Filter-chip click handler — All / Per-Level / Full Programme, above the
+// Issued Certificates History table.
+function filterCertRegistry(filter, btnEl) {
+  document.querySelectorAll(".cert-filter-chip").forEach(chip => chip.classList.remove("active"));
+  btnEl.classList.add("active");
+  renderCertRegistryRows(filter);
+}
+window.filterCertRegistry = filterCertRegistry;
 
 // Bind it to the window scope so your switchDashTab handles it instantly
 window.fetchAndRenderCertRegistry = loadCertificatesRegistryData;

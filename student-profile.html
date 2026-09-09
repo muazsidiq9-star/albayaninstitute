@@ -461,24 +461,29 @@ matricEl.setAttribute('dir', 'ltr');
         if (newPass !== confirmPass) return alert(t("New passwords do not match."));
         if (newPass.length < 6) return alert(t("Password must be at least 6 characters"));
         try {
-          const { data: success, error: rpcError } = await sb.rpc('change_student_password', {
+          const { data: success, error } = await sb.rpc('change_student_password', {
             p_matric: matric,
             p_current_password: current,
             p_new_password: newPass
           });
 
-          if (rpcError || !success) {
-            passwordMessage.textContent = rpcError?.message?.includes('incorrect')
-              ? t("Current password is incorrect.")
-              : t("Error updating password.");
+          if (error) {
+            passwordMessage.textContent = t("Something went wrong.");
             passwordMessage.style.color = "red";
-          } else {
-            passwordMessage.textContent = t("Password changed successfully!");
-            passwordMessage.style.color = "green";
-            document.getElementById('currentPassword').value = '';
-            document.getElementById('newPassword').value = '';
-            document.getElementById('confirmPassword').value = '';
+            return;
           }
+
+          if (!success) {
+            passwordMessage.textContent = t("Current password is incorrect.");
+            passwordMessage.style.color = "red";
+            return;
+          }
+
+          passwordMessage.textContent = t("Password changed successfully!");
+          passwordMessage.style.color = "green";
+          document.getElementById('currentPassword').value = '';
+          document.getElementById('newPassword').value = '';
+          document.getElementById('confirmPassword').value = '';
         } catch (err) {
           passwordMessage.textContent = t("Something went wrong.");
           passwordMessage.style.color = "red";

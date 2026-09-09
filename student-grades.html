@@ -56,14 +56,30 @@
 
  <!-- MAIN CONTENT -->
   <main class="grades-section">
-    <div class="grades-controls">
-      <input type="text" id="gradesSearch" class="search-input" placeholder="Search by course...">
-      <select id="gradesFilter" class="filter-select">
-        <option value="all">All</option>
-        <option value="pass">Pass</option>
-        <option value="average">Average</option>
-        <option value="fail">Fail</option>
-      </select>
+    <div class="grades-filter-panel">
+      <div class="gf-context">
+        <i class="fa-solid fa-layer-group"></i>
+        <span data-translate="Showing">Showing</span>:
+        <strong id="gfContextLabel">—</strong>
+      </div>
+
+      <div class="gf-tabs" id="levelTabs" role="tablist" aria-label="Level"></div>
+      <div class="gf-tabs gf-tabs-sem" id="semesterTabs" role="tablist" aria-label="Semester"></div>
+
+      <div class="gf-row">
+        <input type="text" id="gradesSearch" class="search-input" placeholder="Search by course...">
+        <select id="gradesFilter" class="filter-select">
+          <option value="all" data-translate="All Remarks">All Remarks</option>
+          <option value="pass" data-translate="Pass">Pass</option>
+          <option value="average" data-translate="Average">Average</option>
+          <option value="fail" data-translate="Fail">Fail</option>
+        </select>
+      </div>
+
+      <button type="button" id="historyToggleBtn" class="gf-history-toggle">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span id="historyToggleLabel" data-translate="Show full grade history">Show full grade history</span>
+      </button>
     </div>
     
     <div class="table-wrapper">
@@ -89,10 +105,7 @@
     </div>
 
     <div class="download-wrapper" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
-      <select id="semesterReportSelect" class="filter-select" style="min-width:160px;">
-        <!-- populated dynamically with this student's actual released semesters -->
-      </select>
-      <button class="download-btn" onclick="downloadSemesterReport()">
+      <button class="download-btn" onclick="openSemesterReportModal()">
         <i class="fa-solid fa-file-arrow-down"></i>
         <span data-translate="Download Semester Report (PDF)">Download Semester Report (PDF)</span>
       </button>
@@ -102,6 +115,24 @@
       </button>
     </div>
   </main>
+
+  <!-- SEMESTER REPORT PICKER (bottom-sheet modal, separate from the table filters above) -->
+  <div id="semesterReportModal" class="sr-modal-overlay" hidden onclick="if(event.target===this) closeSemesterReportModal()">
+    <div class="sr-modal">
+      <div class="sr-modal-handle"></div>
+      <button type="button" class="sr-modal-close" onclick="closeSemesterReportModal()" aria-label="Close">&times;</button>
+      <h3 class="sr-modal-title">
+        <i class="fa-solid fa-file-arrow-down"></i>
+        <span data-translate="Download Semester Report">Download Semester Report</span>
+      </h3>
+      <p class="sr-modal-sub" data-translate="Choose which semester you'd like as a PDF">
+        Choose which semester you'd like as a PDF
+      </p>
+      <div id="semesterReportOptions" class="sr-modal-options">
+        <!-- populated dynamically with this student's actual released level/semester combos -->
+      </div>
+    </div>
+  </div>
 
   <!-- FOOTER -->
 <footer>

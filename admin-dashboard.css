@@ -206,7 +206,7 @@ body {
   border-radius: 50%;
   border: 1px solid var(--border-light);
   background: var(--card-color);
-  color: var(--text-color);
+  color: var(--primary);
   cursor: pointer;
   font-size: 0.9rem;
   transition: background 0.2s, transform 0.2s;
@@ -1076,6 +1076,54 @@ input:checked + .slider:before { transform: translateX(22px); }
   }
 }
 
+/* ------------------------------------------------------
+   BULK FEE STUDENT CHECKLIST
+   Checkbox stays pinned top-left regardless of how many
+   lines the name wraps to; name + matric sit in their own
+   clean column instead of one run-on wrapped string.
+   ------------------------------------------------------ */
+.bulkFeeStudentRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 8px 6px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.bulkFeeStudentRow:hover {
+  background: var(--primary-xlight);
+}
+
+.bulkFeeStudentRow input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.bulkFeeStudentInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.bulkFeeStudentName {
+  font-size: 0.92rem;
+  color: var(--text-color);
+  word-break: break-word;
+}
+
+.bulkFeeStudentMatric {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
 .section-divider {
   margin: 20px 0;
   border: none;
@@ -1634,6 +1682,92 @@ input:checked + .slider:before { transform: translateX(22px); }
   background: var(--card-color);
   border-radius: 14px 14px 0 0;
   position: relative;
+}
+
+/* CERTIFICATE TYPE TABS — inside the Issue Certificate modal, and
+   reused for the filter chips on the Certificates tab registry. */
+.cert-type-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.cert-type-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-light);
+  background: var(--surface-color);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.cert-type-tab:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.cert-type-tab.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.cert-type-panel { display: none; }
+.cert-type-panel.active { display: block; }
+
+@media (max-width: 480px) {
+  .cert-type-tabs { flex-direction: column; }
+}
+
+/* Registry filter chips — All / Per-Level / Programme, above the
+   Issued Certificates History table on the Certificates tab. */
+.cert-registry-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.cert-filter-chip {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border-light);
+  background: var(--surface-color);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.cert-filter-chip:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.cert-filter-chip.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* Type badge — distinguishes Programme rows from ordinary Level badges */
+.badge-type-programme {
+  background: #efe4c6;
+  color: #7a5c10;
+}
+
+[data-theme="dark"] .badge-type-programme {
+  background: #3a2f14;
+  color: #e8c97a;
 }
 
 /* Give the close button space since padding moved */

@@ -292,21 +292,238 @@ html, body { overflow-x: hidden; }
   .sg-search  { font-size: 0.85rem; }
 }
 
-/* ================= CONTROLS ================= */
-.grades-controls {
+/* ================= FILTER PANEL ================= */
+.grades-filter-panel {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 10px;
-  margin: 20px 0;
+  margin: 20px 0 14px;
+  padding: 16px;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  background: var(--surface-color);
+}
+
+.gf-context {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-bottom: 2px;
+}
+
+.gf-context i { color: var(--primary-dark); }
+
+.gf-context strong {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* Level / Semester tabs — the guided, progressive filter step */
+.gf-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.gf-tab {
+  flex: 1 1 auto;
+  min-width: 80px;
+  text-align: center;
+  padding: 9px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--card-color);
+  color: var(--text-color);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.gf-tab:hover:not(.gf-tab-active) {
+  border-color: var(--primary-dark);
+}
+
+.gf-tab-active {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+  color: #fff;
+}
+
+/* "No data here yet" — still fully clickable, just visually quieter
+   so the student's eye is drawn to tabs that actually have content */
+.gf-tab-muted {
+  color: var(--text-muted);
+  border-style: dashed;
+}
+
+.gf-tab-muted.gf-tab-active {
+  color: #fff;
+  border-style: solid;
+}
+
+.gf-tabs-sem {
+  flex-direction: column;
+}
+
+.gf-tabs-sem-row {
+  display: flex;
+  gap: 8px;
+}
+
+.gf-tabs-sem-row .gf-tab {
+  flex: 1 1 0;
+}
+
+.gf-tab-all {
+  width: 100%;
+}
+
+.gf-tabs-dimmed {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Search + remark, side by side, 2-up */
+.gf-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
 .search-input, .filter-select {
   padding: 10px 12px;
   border-radius: 6px;
   border: 1px solid var(--border-color);
-  min-width: 150px;
-  flex: 1;
+  width: 100%;
+}
+
+.gf-history-toggle {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--primary-dark);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 2px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.gf-history-toggle:hover { 
+  opacity: 0.75;
+  background: var(--primary);
+  color: var(--primary-xlight);
+ }
+/* ================= SEMESTER REPORT MODAL ================= */
+.sr-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 12, 30, 0.55);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.sr-modal-overlay[hidden] { display: none; }
+
+.sr-modal {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: var(--card-color, #fff);
+  border-radius: 18px 18px 0 0;
+  padding: 10px 20px 26px;
+  box-shadow: 0 -8px 30px rgba(0,0,0,0.25);
+  animation: srSlideUp 0.22s ease-out;
+}
+
+@keyframes srSlideUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+.sr-modal-handle {
+  width: 40px;
+  height: 4px;
+  background: var(--border-color);
+  border-radius: 3px;
+  margin: 6px auto 14px;
+}
+
+.sr-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.sr-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary-dark);
+  font-size: 1.05rem;
+  margin: 0 0 4px;
+}
+
+.sr-modal-sub {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin: 0 0 16px;
+}
+
+.sr-modal-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.sr-modal-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 13px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--surface-color);
+  color: var(--text-color);
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+}
+
+.sr-modal-option:hover {
+  border-color: var(--primary-dark);
+  background: var(--card-color);
+}
+
+.sr-modal-option i {
+  color: var(--primary-dark);
+}
+
+.sr-modal-empty {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  text-align: center;
+  padding: 12px 0;
 }
 
 /* ================= TABLE WRAPPER (KEY FIX) ================= */
@@ -383,16 +600,18 @@ html, body { overflow-x: hidden; }
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
-  .grades-controls {
-    flex-direction: column;
-  }
-
   .grades-table {
     min-width: 750px;
   }
 
   .page-header.grades-header {
     height: 220px;
+  }
+}
+
+@media (max-width: 420px) {
+  .gf-row {
+    grid-template-columns: 1fr;
   }
 }
 
