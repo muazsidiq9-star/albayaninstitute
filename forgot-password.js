@@ -62,14 +62,12 @@ if (form) {
         return;
       }
 
-      const { data: student, error: fetchError } =
-        await sb
-          .from("students")
-          .select("matric_number, email")
-          .eq("email", email)
-          .single();
+      const { data: rows, error: resetError } =
+        await sb.rpc("reset_student_password_by_email", { p_email: email });
 
-      if (fetchError || !student) {
+      const result = rows && rows.length > 0 ? rows[0] : null;
+
+      if (resetError || !result) {
 
         showError(
           t("No student found with this email.")
@@ -78,28 +76,8 @@ if (form) {
         return;
       }
 
-      const tempPassword =
-        Math.random()
-          .toString(36)
-          .slice(-8);
-
-      const { error: updateError } =
-        await sb
-          .from("students")
-          .update({
-            password: tempPassword,
-            password_changed: true
-          })
-          .eq("email", email);
-
-      if (updateError) {
-
-        showError(
-          t("Failed to reset password. Try again later.")
-        );
-
-        return;
-      }
+      const tempPassword = result.temp_password;
+      const student = { matric_number: result.matric_number };
 
       await sb
         .from("notifications")

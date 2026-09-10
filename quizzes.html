@@ -62,10 +62,15 @@
         <div class="quiz-hub-more-divider" id="hub-continue-divider" hidden></div>
         <button type="button" class="quiz-hub-more-item" data-proxy="global-stats-btn">📊 My Overall Statistics</button>
         <button type="button" class="quiz-hub-more-item" data-proxy="overall-leaderboard-trigger">🏆 Overall Leaderboard</button>
+        <button type="button" class="quiz-hub-more-item" id="hub-badges-btn">🎖️ My Badges</button>
         <button type="button" class="quiz-hub-more-item" data-proxy="how-to-play-btn">ⓘ How to Play & Earn</button>
         <div class="quiz-hub-more-divider"></div>
         <button type="button" class="quiz-hub-more-item" id="hub-sound-toggle" data-toggle="sound">🔊 Sound: On</button>
         <button type="button" class="quiz-hub-more-item" id="hub-haptics-toggle" data-toggle="haptics">📳 Haptics: On</button>
+        <div class="quiz-hub-more-divider"></div>
+        <button type="button" class="quiz-hub-more-item" id="hub-feedback-btn">📩 Send Feedback</button>
+        <div class="quiz-hub-more-divider" id="hub-clear-guest-divider" hidden></div>
+        <button type="button" class="quiz-hub-more-item quiz-hub-more-item-danger" id="hub-clear-guest-btn" hidden>🧹 Clear Guest Progress</button>
         <div class="quiz-hub-more-divider" id="hub-logout-divider" hidden></div>
         <button type="button" class="quiz-hub-more-item quiz-hub-more-item-danger" id="hub-logout-btn" hidden>🚪 Log Out</button>
       </div>
@@ -202,6 +207,11 @@
         Top performers across all quizzes
       </p>
 
+    </div>
+
+    <div class="quiz-lb-filter-toggle" id="overall-lb-filter-toggle">
+      <button type="button" class="quiz-lb-filter-btn active" id="overall-lb-filter-all" onclick="quizSetOverallLeaderboardFilter(false)">All Students</button>
+      <button type="button" class="quiz-lb-filter-btn" id="overall-lb-filter-class" onclick="quizSetOverallLeaderboardFilter(true)">My Class</button>
     </div>
 
     <div
@@ -1181,6 +1191,8 @@ if (recentEl) {
     return;
   }
 
+  let filterClass = false;
+
 
   /* ================= GET STUDENT SESSION ================= */
 
@@ -1221,7 +1233,7 @@ if (recentEl) {
 
   /* ================= LOAD GLOBAL LEADERBOARD ================= */
 
-  async function fetchOverallLeaderboard() {
+  async function fetchOverallLeaderboard(useClassFilter, currentMatric) {
 
     if (!window.sb) {
       console.error(
@@ -1234,10 +1246,7 @@ if (recentEl) {
 
     try {
 
-      const {
-        data,
-        error
-      } = await window.sb
+      let query = window.sb
         .from("quiz_players")
         .select(`
           matric_number,
@@ -1245,8 +1254,31 @@ if (recentEl) {
           total_xp,
           level,
           quizzes_completed,
-          best_streak
-        `)
+          best_streak,
+          batch,
+          level_arabic
+        `);
+
+      if (useClassFilter && currentMatric) {
+        const { data: meRow, error: meError } = await window.sb
+          .from("quiz_players")
+          .select("batch, level_arabic")
+          .eq("matric_number", currentMatric)
+          .maybeSingle();
+
+        if (meError) throw meError;
+
+        if (meRow?.batch && meRow?.level_arabic) {
+          query = query
+            .eq("batch", meRow.batch)
+            .eq("level_arabic", meRow.level_arabic);
+        }
+      }
+
+      const {
+        data,
+        error
+      } = await query
         .order(
           "total_xp",
           {
@@ -1291,6 +1323,26 @@ document.body.style.overflow =
         "false"
       );
 
+      filterClass = false;
+      const allBtn = document.getElementById("overall-lb-filter-all");
+      const classBtn = document.getElementById("overall-lb-filter-class");
+      if (allBtn) allBtn.classList.add("active");
+      if (classBtn) classBtn.classList.remove("active");
+
+      await renderOverallLeaderboardList();
+    };
+
+  window.quizSetOverallLeaderboardFilter =
+    async function (useClass) {
+      filterClass = useClass;
+      const allBtn = document.getElementById("overall-lb-filter-all");
+      const classBtn = document.getElementById("overall-lb-filter-class");
+      if (allBtn) allBtn.classList.toggle("active", !useClass);
+      if (classBtn) classBtn.classList.toggle("active", useClass);
+      await renderOverallLeaderboardList();
+    };
+
+  async function renderOverallLeaderboardList() {
 
       list.innerHTML = `
         <div class="quiz-global-stats-loading">
@@ -1314,7 +1366,7 @@ document.body.style.overflow =
 
 
       const entries =
-        await fetchOverallLeaderboard();
+        await fetchOverallLeaderboard(filterClass, currentMatric);
 
 
       if (!entries.length) {
@@ -1325,7 +1377,11 @@ document.body.style.overflow =
             color:var(--text-muted);
             padding:20px;
           ">
-            No leaderboard data yet.
+            ${
+              filterClass
+                ? "No ranked students from your class yet."
+                : "No leaderboard data yet."
+            }
           </p>
         `;
 
@@ -1430,7 +1486,7 @@ document.body.style.overflow =
         }
       );
 
-    };
+  }
 
 
   /* ================= CLOSE ================= */
@@ -1709,6 +1765,75 @@ document.body.style.overflow =
       window.location.href = `quiz.html?id=${encodeURIComponent(last.quizId)}&resume=1`;
     });
   })();
+
+  // "My Badges" — badges are global to the student (stored on
+  // quiz_players), not per-quiz, so quiz.html's existing badges
+  // screen already shows the complete correct list no matter which
+  // quiz id we land on. Reuses "last played" if we have one, else
+  // falls back to the first quiz in the manifest.
+  const badgesBtn = document.getElementById("hub-badges-btn");
+  if (badgesBtn) {
+    badgesBtn.addEventListener("click", async () => {
+      closeMenu();
+      const last = await resolveLastPlayed();
+      let targetId = last && last.quizId;
+      if (!targetId) {
+        const index = await waitForQuizIndex();
+        targetId = index && index[0] && index[0].id;
+      }
+      if (!targetId) {
+        alert("No quizzes available yet.");
+        return;
+      }
+      window.location.href = `quiz.html?id=${encodeURIComponent(targetId)}&openBadges=1`;
+    });
+  }
+
+  // "Send Feedback" — reuses the same WhatsApp number as the
+  // floating contact button elsewhere on this site, pre-filled
+  // with a starter message (and the student's name if we know it,
+  // just for context — never sent anywhere but this WhatsApp chat).
+  const feedbackBtn = document.getElementById("hub-feedback-btn");
+  if (feedbackBtn) {
+    feedbackBtn.addEventListener("click", () => {
+      closeMenu();
+      let name = "";
+      try {
+        const raw = localStorage.getItem("studentSession");
+        const session = raw ? JSON.parse(raw) : null;
+        const student = session && session.currentStudent;
+        name = (student && student.fullname) || getStudentMatric() || "";
+      } catch (e) {
+        name = getStudentMatric() || "";
+      }
+      const greeting = name ? `Hi, I'm ${name}. ` : "Hi, ";
+      const message = `${greeting}I have some feedback about the Al-Bayan quiz app: `;
+      window.open(`https://wa.me/2348125219561?text=${encodeURIComponent(message)}`, "_blank", "noopener");
+    });
+  }
+
+  // "Clear Guest Progress" — guest-only. Every localStorage key this
+  // codebase writes for guest progress starts with "quiz_" (the
+  // global XP/leaderboard bucket, every per-quiz stars/best/records
+  // bucket, and the "last played" marker) — EXCEPT the two device
+  // preferences below, which are kept since they're app settings,
+  // not progress.
+  const KEEP_KEYS = new Set(["quiz_sound_enabled", "quiz_haptics_enabled"]);
+  const clearGuestBtn = document.getElementById("hub-clear-guest-btn");
+  const clearGuestDivider = document.getElementById("hub-clear-guest-divider");
+  if (clearGuestBtn && isGuestUser()) {
+    clearGuestBtn.hidden = false;
+    if (clearGuestDivider) clearGuestDivider.hidden = false;
+    clearGuestBtn.addEventListener("click", () => {
+      closeMenu();
+      if (!confirm("Clear all guest progress on this device? XP, stars, badges, and history for every quiz will be permanently erased. This can't be undone.")) return;
+      Object.keys(localStorage)
+        .filter((key) => key.startsWith("quiz_") && !KEEP_KEYS.has(key))
+        .forEach((key) => localStorage.removeItem(key));
+      alert("Guest progress cleared.");
+      location.reload();
+    });
+  }
 
   // Toggle items (Sound / Haptics) — flip a localStorage preference
   // that quiz-engine.js reads directly. Menu stays open so the

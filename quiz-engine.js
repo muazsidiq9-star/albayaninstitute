@@ -39,6 +39,13 @@ const studentData = (() => {
     dailyQuestion: null, dailyLocked: false,
     newSimpleBadges: [], newTieredBadges: [],
     endless: null,
+    hintUsedThisQuestion: false,
+    speedMode: false, speedTimeLeft: 0, speedTimerId: null,
+    leaderboardFilter: false,
+    matchPairs: [], matchSelected: null, matchMistakes: 0,
+    matchMatchedCount: 0, matchStartTime: 0,
+    reviewMode: false,
+    pendingChallenge: null, activeChallenge: null, resultMode: null,
     // In-memory data cache used ONLY for logged-in students.
     // Never written to localStorage — hydrated once from Supabase
     // at init() and persisted back to Supabase on every change.
@@ -236,6 +243,27 @@ const HALL_OF_FAME = [
     while (total + xpForLevel(level) <= xp) { total += xpForLevel(level); level++; }
     return { level, current: xp - total, needed: xpForLevel(level) };
   }
+  /* ================= LEVEL-UP CELEBRATION ================= *
+   * Compares XP before/after an award. If the student crossed a
+   * level boundary, plays the existing victory sound/haptic/confetti
+   * and shows a short banner. Call this any place xpData.xp is
+   * increased, right after setXPData() has persisted the new value. */
+  function celebrateLevelUp(oldXP, newXP) {
+    const oldLevel = getLevel(oldXP).level;
+    const newLevel = getLevel(newXP).level;
+    if (newLevel <= oldLevel) return;
+    playVictorySound();
+    hapticVictory();
+    launchConfetti();
+    const banner = document.getElementById("quiz-levelup-banner");
+    if (!banner) return;
+    const numEl = document.getElementById("quiz-levelup-level-num");
+    if (numEl) numEl.textContent = newLevel;
+    banner.classList.add("show");
+    clearTimeout(banner._hideTimer);
+    banner._hideTimer = setTimeout(() => banner.classList.remove("show"), 2600);
+  }
+
   function shuffle(arr) {
     const a = arr.slice();
     for (let i = a.length - 1; i > 0; i--) {
@@ -307,8 +335,9 @@ const HALL_OF_FAME = [
   let persistTimer = null;
   function ensureQuizBucket(quizId) {
     if (!state.cache.quizzes[quizId]) {
-      state.cache.quizzes[quizId] = { stars: {}, best: {}, records: [], endlessHigh: 0 };
+      state.cache.quizzes[quizId] = { stars: {}, best: {}, records: [], endlessHigh: 0, wrong: {} };
     }
+    if (!state.cache.quizzes[quizId].wrong) state.cache.quizzes[quizId].wrong = {};
     return state.cache.quizzes[quizId];
   }
   function getEndlessHigh() {
@@ -472,6 +501,54 @@ const HALL_OF_FAME = [
       return;
     }
     localStorage.setItem(storageKey("records"), JSON.stringify(records));
+  }
+
+  /* ================= REVIEW MISTAKES ================= *
+   * Tracks questions missed during the normal stage quiz, keyed by a
+   * stable hash of the question text (quiz content has no question
+   * IDs). Stored in the same per-quiz bucket as stars/best/records —
+   * quiz_players.local_data for students, localStorage for guests —
+   * so no new table is needed. Only the main stage quiz feeds this
+   * (not Endless/Speed/Matching — those are bonus modes, not the
+   * primary learning path this is meant to reinforce). */
+  function hashQuestionText(text) {
+    let hash = 0;
+    const str = String(text || "");
+    for (let i = 0; i < str.length; i++) {
+      hash = (hash * 31 + str.charCodeAt(i)) | 0;
+    }
+    return "q" + Math.abs(hash);
+  }
+  function getWrongAnswers() {
+    if (isStudentLoggedIn) return { ...ensureQuizBucket(state.quizId).wrong };
+    return JSON.parse(localStorage.getItem(storageKey("wrong")) || "null") || {};
+  }
+  function setWrongAnswers(wrong) {
+    if (isStudentLoggedIn) {
+      ensureQuizBucket(state.quizId).wrong = wrong;
+      persistStudentCache();
+      return;
+    }
+    localStorage.setItem(storageKey("wrong"), JSON.stringify(wrong));
+  }
+  function recordQuestionMissed(q) {
+    if (!q || !q.text) return;
+    const wrong = getWrongAnswers();
+    const key = hashQuestionText(q.text);
+    const existing = wrong[key];
+    wrong[key] = {
+      text: q.text, options: q.options, answer: q.answer, kicker: q.kicker || "",
+      missCount: (existing?.missCount || 0) + 1, lastMissedAt: new Date().toISOString(),
+    };
+    setWrongAnswers(wrong);
+  }
+  function recordQuestionCorrected(q) {
+    if (!q || !q.text) return;
+    const wrong = getWrongAnswers();
+    const key = hashQuestionText(q.text);
+    if (!wrong[key]) return; // wasn't tracked as missed — nothing to clear
+    delete wrong[key];
+    setWrongAnswers(wrong);
   }
   function getXPData() {
     if (isStudentLoggedIn) return { ...state.cache.global };
@@ -755,6 +832,30 @@ const newDailyDate =
     });
 
 
+    /* ================= CLASS INFO (batch + level) ================= *
+     * Denormalized onto quiz_players so the leaderboard can filter by
+     * "My Class" (batch + level) without ever reading OTHER students'
+     * rows in `students` — only our own row, which own-row RLS allows.
+     * Skipped once it's already been backfilled for this student. */
+
+    let batchToSave = existing?.batch || null;
+    let levelToSave = existing?.level_arabic || null;
+
+    if (!batchToSave || !levelToSave) {
+      const { data: ownStudentRow, error: ownStudentError } = await sb
+        .from("students")
+        .select("batch, level_arabic")
+        .eq("matric_number", state.matric)
+        .maybeSingle();
+
+      if (ownStudentError) {
+        console.error("[SUPABASE] Failed to read own batch/level:", ownStudentError);
+      } else if (ownStudentRow) {
+        batchToSave = ownStudentRow.batch || batchToSave;
+        levelToSave = ownStudentRow.level_arabic || levelToSave;
+      }
+    }
+
     /* ================= UPDATE PLAYER ================= */
 
     const { error: playerUpsertError } = await sb
@@ -773,6 +874,8 @@ const newDailyDate =
           best_streak: newBestStreak,
           daily_count: newDailyCount,
           daily_date: newDailyDate,
+          batch: batchToSave,
+          level_arabic: levelToSave,
           updated_at: new Date().toISOString(),
         },
         {
@@ -895,7 +998,7 @@ const newDailyDate =
 
   /* ================= CURRENT QUIZ LEADERBOARD ================= */
 
-async function fetchSupabaseLeaderboard() {
+async function fetchSupabaseLeaderboard(filterBatch = false) {
   const sb = getSupabase();
 
   if (!sb || !state.quizId) return null;
@@ -968,30 +1071,58 @@ student.streak = Math.max(
     });
 
     /*
-     * Load names from quiz_players.
-     * quiz_scores contains the performance history,
-     * while quiz_players contains the student's display name.
+     * Load names + class info from quiz_players.
+     * quiz_scores contains the performance history, while quiz_players
+     * contains the student's display name AND (denormalized) their
+     * batch + level_arabic — so "My Class" filtering never has to
+     * touch other students' rows in `students` at all.
      */
     const matricNumbers = Object.keys(students);
 
     const { data: players, error: playersError } = await sb
       .from("quiz_players")
-      .select("matric_number, full_name")
-      .in("matric_number", matricNumbers);
+      .select("matric_number, full_name, batch, level_arabic")
+      .in("matric_number", [...new Set([...matricNumbers, state.matric])]);
 
     if (playersError) throw playersError;
 
     const names = {};
+    const classInfo = {};
 
     (players || []).forEach((player) => {
       names[player.matric_number] =
         player.full_name || player.matric_number;
+      classInfo[player.matric_number] = {
+        batch: player.batch || null,
+        level: player.level_arabic || null,
+      };
     });
+
+    /*
+     * Optional "My Class" filter = same batch AND same level
+     * (e.g. "March · Beginner" vs "March · Advanced" — one batch can
+     * run several levels at once, so batch alone isn't a real class).
+     * If we don't yet know the current student's own batch/level
+     * (their quiz_players row hasn't self-healed those columns yet —
+     * see syncScoreToSupabase), we quietly fall back to showing everyone.
+     */
+    let studentsToShow = Object.values(students);
+
+    if (filterBatch) {
+      const myClass = classInfo[state.matric];
+
+      if (myClass && myClass.batch && myClass.level) {
+        studentsToShow = studentsToShow.filter((s) => {
+          const c = classInfo[s.matric];
+          return c && c.batch === myClass.batch && c.level === myClass.level;
+        });
+      }
+    }
 
     /*
      * Convert grouped students into leaderboard entries.
      */
-    const entries = Object.values(students)
+    const entries = studentsToShow
       .map((student) => ({
         ...student,
 
@@ -1661,6 +1792,35 @@ state.quiz.difficulties.forEach((d) => {
 
 setStars(stars);
 
+    // "Challenge a Friend" — a shared link carries ?challenge=<uuid>.
+    // Load who challenged them and what to beat, then show it on the
+    // welcome screen (guests don't need to log in to accept — the
+    // challenge link works the same as normal guest play).
+    if (params.get("challenge")) {
+      try {
+        const sb = getSupabase();
+        if (sb) {
+          const { data: challenge, error } = await sb
+            .from("quiz_challenges")
+            .select("*")
+            .eq("id", params.get("challenge"))
+            .maybeSingle();
+          if (!error && challenge && challenge.status === "pending") {
+            state.pendingChallenge = challenge;
+          }
+        }
+      } catch (err) {
+        console.error("[CHALLENGE] Failed to load:", err);
+      }
+    }
+
+    if (state.pendingChallenge) {
+      if (!isStudentLoggedIn && !state.player) {
+        const savedName = localStorage.getItem(globalKey("player_name"));
+        if (savedName) state.player = savedName;
+      }
+    }
+
     // "Continue where you left off" — the hub links here with ?resume=1.
     // Jump straight into the first unlocked, not-yet-completed stage
     // instead of showing the welcome screen. Guests need their saved
@@ -1686,8 +1846,28 @@ setStars(stars);
       // the normal welcome screen below.
     }
 
+    // "My Badges" shortcut — the hub links here with ?openBadges=1.
+    // Badges are global to the student (quiz_players.badges), not
+    // tied to this specific quiz, so any quiz id works as the entry
+    // point — we just need the player identified enough to render
+    // their name/avatar behind the badges screen.
+    if (params.get("openBadges") === "1") {
+      if (!isStudentLoggedIn && !state.player) {
+        const savedName = localStorage.getItem(globalKey("player_name"));
+        if (savedName) state.player = savedName;
+      }
+      if (!state.avatar) {
+        state.avatar = AVATARS[((state.player || "").length + (state.matric?.length || 0)) % AVATARS.length];
+      }
+      document.querySelectorAll(".quiz-avatar").forEach((el) => (el.textContent = state.avatar));
+      document.querySelectorAll(".quiz-bar-name").forEach((el) => (el.textContent = state.player || "Guest"));
+      quizShowBadges();
+      return;
+    }
+
 renderWelcome();
 showScreen("screen-welcome");
+renderChallengeBanner();
 }
 
   // First unlocked stage without a recorded best score — the natural
@@ -2027,9 +2207,59 @@ showScreen("screen-welcome");
     if (!state.avatar) state.avatar = AVATARS[(state.player.length + (state.matric?.length || 0)) % AVATARS.length];
     document.querySelectorAll(".quiz-avatar").forEach((el) => (el.textContent = state.avatar));
     document.querySelectorAll(".quiz-bar-name").forEach((el) => (el.textContent = state.player));
+
+    // Accepting a challenge — jump straight into the exact same stage
+    // the challenger played, skipping normal difficulty/stage browsing.
+    if (state.pendingChallenge) {
+      const challenge = state.pendingChallenge;
+      state.pendingChallenge = null;
+      const targetDiff = state.quiz.difficulties.find((d) => d.id === challenge.difficulty_id);
+      const targetStage = targetDiff && targetDiff.stages.find((s) => s.id === challenge.stage_id);
+      if (targetDiff && targetStage) {
+        state.activeChallenge = challenge;
+        startDifficulty(challenge.difficulty_id);
+        startStage(challenge.stage_id);
+        return;
+      }
+      alert("This challenge's stage isn't available anymore — the quiz content may have changed.");
+    }
+
     renderDifficultyList();
     showScreen("screen-difficulties");
   };
+
+  function renderChallengeBanner() {
+    const banner = document.getElementById("quiz-challenge-banner");
+    if (!banner) return;
+    if (!state.pendingChallenge) { banner.style.display = "none"; return; }
+    const c = state.pendingChallenge;
+    const textEl = document.getElementById("quiz-challenge-banner-text");
+    if (textEl) {
+      textEl.textContent =
+        `⚔️ ${c.challenger_name} challenged you! They scored ${c.challenger_score}/${c.challenger_total} — think you can beat it?`;
+    }
+    banner.style.display = "block";
+    const primaryBtn = document.querySelector(".quiz-welcome-btns .quiz-primary-btn");
+    if (primaryBtn) primaryBtn.textContent = "Accept Challenge ⚔️";
+
+    // Genuinely no session found (not even after the localStorage bridge
+    // in quiz.html) — offer to log in instead of playing as a guest, so
+    // their challenge result and XP land on their real account.
+    // login.js reads sessionStorage.postLoginRedirect (the same mechanism
+    // it already uses for attendance links) — NOT a ?redirect= query
+    // param — so we set that before navigating, rather than appending
+    // anything to the URL.
+    const loginLink = document.getElementById("quiz-challenge-login-link");
+    if (loginLink && !isStudentLoggedIn) {
+      loginLink.style.display = "inline-block";
+      loginLink.href = "login.html";
+      loginLink.onclick = function () {
+        try { sessionStorage.setItem("postLoginRedirect", window.location.href); }
+        catch (e) { console.error("[CHALLENGE] Failed to set postLoginRedirect:", e); }
+        // default navigation to href="login.html" proceeds normally
+      };
+    }
+  }
 
   /* ================= DIFFICULTIES ================= */
   function renderDifficultyList() {
@@ -2076,6 +2306,24 @@ const completed = diffStars === diffMax && diffMax > 0;
     });
     document.getElementById("quiz-bar-total-stars").textContent = `${totalStars}/${maxStars}`;
     updateStarPointsUI();
+    updateBestStreakChip();
+    updateReviewButton();
+  }
+
+  function updateReviewButton() {
+    const btn = document.getElementById("quiz-review-btn");
+    const countEl = document.getElementById("quiz-review-count");
+    if (!btn) return;
+    const count = Object.keys(getWrongAnswers()).length;
+    if (countEl) countEl.textContent = count;
+    btn.style.display = count > 0 ? "block" : "none";
+  }
+
+  async function updateBestStreakChip() {
+    const chip = document.getElementById("quiz-bar-best-streak");
+    if (!chip) return;
+    const stats = await fetchSupabasePlayerStats();
+    chip.textContent = stats ? (stats.bestStreak || 0) : 0;
   }
 
   window.quizGoToWelcome = function () { renderWelcome(); showScreen("screen-welcome"); };
@@ -2122,8 +2370,16 @@ const completed = diffStars === diffMax && diffMax > 0;
     state.currentStage = stage; state.qIndex = 0; state.score = 0; state.streak = 0;
     state.bestStreak = 0; state.xpGained = 0; state.newSimpleBadges = []; state.newTieredBadges = [];
     state.questions = shuffle(stage.questions); state.stageStartTime = Date.now();
+    state.speedMode = false;
+    state.reviewMode = false;
     incrementRetryCount(`${state.quizId}:${state.currentDifficulty.id}:${stage.id}`);
     document.getElementById("quiz-stage-label").textContent = stage.title;
+    // Restore normal stage controls in case a previous Speed Round/Review overrode them.
+    document.getElementById("quiz-next-btn").onclick = window.quizNextQuestion;
+    const quizBackBtn = document.querySelector("#screen-quiz .quiz-back-btn");
+    if (quizBackBtn) quizBackBtn.onclick = window.quizExit;
+    const timerTrack = document.getElementById("quiz-speed-timer-track");
+    if (timerTrack) timerTrack.style.display = "none";
     showScreen("screen-quiz"); renderQuestion();
   }
 
@@ -2131,12 +2387,13 @@ const completed = diffStars === diffMax && diffMax > 0;
 
   function renderQuestion() {
     state.locked = false;
+    state.hintUsedThisQuestion = false;
     const total = state.questions.length;
     const q = state.questions[state.qIndex];
     document.getElementById("quiz-progress-text").textContent = `Question ${state.qIndex + 1}/${total}`;
     document.getElementById("quiz-progress-fill").style.width = `${(state.qIndex / total) * 100}%`;
     document.getElementById("quiz-streak-count").textContent = state.streak;
-    document.getElementById("quiz-q-kicker").textContent = q.kicker || state.currentStage.kicker || "";
+    document.getElementById("quiz-q-kicker").textContent = q.kicker || state.currentStage?.kicker || (state.reviewMode ? "🔁 Review" : "");
     document.getElementById("quiz-q-text").innerHTML = q.text;
     document.getElementById("quiz-feedback").textContent = "";
     const optWrap = document.getElementById("quiz-options");
@@ -2148,6 +2405,545 @@ const completed = diffStars === diffMax && diffMax > 0;
       optWrap.appendChild(btn);
     });
     document.getElementById("quiz-next-btn").disabled = true;
+    // 50/50 hint only makes sense with at least 3 wrong options to trim from.
+    const hintBtn = document.getElementById("quiz-hint-btn");
+    if (hintBtn) {
+      hintBtn.style.display = q.options.length >= 4 ? "inline-flex" : "none";
+      hintBtn.disabled = false;
+    }
+  }
+
+  const HINT_COST = 5;
+  window.quizUseHint = async function () {
+    if (state.locked || state.hintUsedThisQuestion || state.speedMode) return;
+    const xpData = getXPData();
+    if ((xpData.starPoints || 0) < HINT_COST) {
+      alert(`You need ${HINT_COST} ✨ Star Points to use a hint.`);
+      return;
+    }
+    const hintBtn = document.getElementById("quiz-hint-btn");
+    if (hintBtn) hintBtn.disabled = true;
+    const newBalance = await spendStarPoints(HINT_COST);
+    if (newBalance === null) {
+      alert("Couldn't use the hint right now — please try again.");
+      if (hintBtn) hintBtn.disabled = false;
+      return;
+    }
+    state.hintUsedThisQuestion = true;
+    const q = state.questions[state.qIndex];
+    const wrongButtons = Array.from(
+      document.querySelectorAll("#quiz-options .quiz-option-btn")
+    ).filter((b) => b.innerHTML !== q.answer && !b.disabled);
+    shuffle(wrongButtons).slice(0, 2).forEach((b) => {
+      b.disabled = true;
+      b.classList.add("eliminated");
+    });
+    if (hintBtn) hintBtn.style.display = "none";
+  };
+
+  /* ================= SPEED ROUND =================
+     A timed mixed-question mode: pulls questions from across every
+     difficulty/stage (like the Daily Challenge does), gives the
+     student a fixed number of seconds per question, and pays out a
+     time bonus on top of normal XP. Reuses the #screen-quiz markup,
+     so the back/next button handlers are swapped in on entry and
+     restored to normal stage behavior by startStage(). It does NOT
+     touch stars/best-score tracking — those are per-stage concepts
+     and Speed Round mixes stages together. */
+  const SPEED_ROUND_QUESTION_COUNT = 15;
+  const SPEED_ROUND_SECONDS = 10;
+
+  window.quizStartSpeedRound = function () {
+    const allQuestions = [];
+    state.quiz.difficulties.forEach((d) => {
+      d.stages.forEach((s) => {
+        s.questions.forEach((q) => allQuestions.push(q));
+      });
+    });
+    if (!allQuestions.length) return;
+
+    state.speedMode = true;
+    state.questions = shuffle(allQuestions).slice(0, SPEED_ROUND_QUESTION_COUNT);
+    state.qIndex = 0; state.score = 0; state.streak = 0; state.bestStreak = 0;
+    state.xpGained = 0; state.stageStartTime = Date.now();
+
+    document.getElementById("quiz-stage-label").textContent = "⚡ Speed Round";
+    document.getElementById("quiz-next-btn").onclick = window.quizSpeedNext;
+    const quizBackBtn = document.querySelector("#screen-quiz .quiz-back-btn");
+    if (quizBackBtn) quizBackBtn.onclick = window.quizExitSpeedRound;
+    const hintBtn = document.getElementById("quiz-hint-btn");
+    if (hintBtn) hintBtn.style.display = "none"; // hints are disabled during Speed Round
+    const timerTrack = document.getElementById("quiz-speed-timer-track");
+    if (timerTrack) timerTrack.style.display = "block";
+
+    showScreen("screen-quiz");
+    renderSpeedQuestion();
+  };
+
+  window.quizExitSpeedRound = function () {
+    if (!confirm("End this Speed Round now? Your progress in this run won't be saved.")) return;
+    clearSpeedTimer();
+    state.speedMode = false;
+    quizGoToDifficulties();
+  };
+
+  function renderSpeedQuestion() {
+    state.locked = false;
+    const total = state.questions.length;
+    const q = state.questions[state.qIndex];
+    document.getElementById("quiz-progress-text").textContent = `⚡ ${state.qIndex + 1}/${total}`;
+    document.getElementById("quiz-progress-fill").style.width = `${(state.qIndex / total) * 100}%`;
+    document.getElementById("quiz-streak-count").textContent = state.streak;
+    document.getElementById("quiz-q-kicker").textContent = "Speed Round";
+    document.getElementById("quiz-q-text").innerHTML = q.text;
+    document.getElementById("quiz-feedback").textContent = "";
+    const optWrap = document.getElementById("quiz-options");
+    optWrap.innerHTML = "";
+    shuffle(q.options).forEach((opt) => {
+      const btn = document.createElement("button");
+      btn.className = "quiz-option-btn"; btn.innerHTML = opt;
+      btn.onclick = () => selectSpeedAnswer(btn, opt, q.answer);
+      optWrap.appendChild(btn);
+    });
+    document.getElementById("quiz-next-btn").disabled = true;
+    startSpeedTimer();
+  }
+
+  function startSpeedTimer() {
+    clearSpeedTimer();
+    state.speedTimeLeft = SPEED_ROUND_SECONDS;
+    const bar = document.getElementById("quiz-speed-timer-fill");
+    if (bar) bar.style.width = "100%";
+    state.speedTimerId = setInterval(() => {
+      state.speedTimeLeft = Math.max(0, state.speedTimeLeft - 0.1);
+      if (bar) bar.style.width = `${(state.speedTimeLeft / SPEED_ROUND_SECONDS) * 100}%`;
+      if (state.speedTimeLeft <= 0) {
+        clearSpeedTimer();
+        if (!state.locked) speedTimeUp();
+      }
+    }, 100);
+  }
+
+  function clearSpeedTimer() {
+    if (state.speedTimerId) {
+      clearInterval(state.speedTimerId);
+      state.speedTimerId = null;
+    }
+  }
+
+  function speedTimeUp() {
+    if (state.locked) return;
+    state.locked = true;
+    const q = state.questions[state.qIndex];
+    document.querySelectorAll("#quiz-options .quiz-option-btn").forEach((b) => {
+      b.disabled = true;
+      if (b.innerHTML === q.answer) b.classList.add("correct");
+    });
+    playWrongSound(); hapticWrong();
+    state.streak = 0;
+    document.getElementById("quiz-feedback").textContent = "⏱️ Time's up!";
+    document.getElementById("quiz-streak-count").textContent = state.streak;
+    document.getElementById("quiz-next-btn").disabled = false;
+  }
+
+  function selectSpeedAnswer(btn, chosen, answer) {
+    if (state.locked) return;
+    state.locked = true;
+    clearSpeedTimer();
+    const buttons = document.querySelectorAll("#quiz-options .quiz-option-btn");
+    const isCorrect = chosen === answer;
+    playAnswerFeedback(isCorrect);
+    buttons.forEach((b) => { b.disabled = true; if (b.innerHTML === answer) b.classList.add("correct"); });
+    const fb = document.getElementById("quiz-feedback");
+    if (isCorrect) {
+      btn.classList.add("correct");
+      state.score++; state.streak++; state.bestStreak = Math.max(state.bestStreak, state.streak);
+      const streakBonus = state.streak >= 5 ? 5 : state.streak >= 3 ? 2 : 0;
+      const speedBonus = Math.round(state.speedTimeLeft); // faster answers earn more
+      const qXP = 10 + streakBonus + speedBonus;
+      state.xpGained += qXP;
+      showXPPopup(`+${qXP} XP ⚡`);
+      const praises = ["MashaAllah! 🌟", "Lightning fast! ⚡", "You got it! 💫", "Well done! ✨"];
+      fb.textContent = praises[Math.floor(Math.random() * praises.length)];
+    } else {
+      btn.classList.add("wrong"); state.streak = 0;
+      fb.textContent = "Not quite — the correct answer is highlighted.";
+    }
+    document.getElementById("quiz-streak-count").textContent = state.streak;
+    document.getElementById("quiz-next-btn").disabled = false;
+  }
+
+  window.quizSpeedNext = async function () {
+    state.qIndex++;
+    if (state.qIndex >= state.questions.length) {
+      await finishSpeedRound();
+    } else {
+      renderSpeedQuestion();
+    }
+  };
+
+  async function finishSpeedRound() {
+    state.resultMode = "speed";
+    clearSpeedTimer();
+    const total = state.questions.length;
+    const pctFrac = total ? state.score / total : 0;
+    const pct100 = Math.round(pctFrac * 100);
+    const totalXP = state.xpGained;
+    const duration = Math.floor((Date.now() - state.stageStartTime) / 1000);
+
+    const xpData = getXPData();
+    const oldXPForLevelUp = xpData.xp;
+    xpData.xp += totalXP;
+    setXPData(xpData);
+    celebrateLevelUp(oldXPForLevelUp, xpData.xp);
+
+    const { newSimple, newTiered } = checkBadges();
+    state.newSimpleBadges = newSimple;
+    state.newTieredBadges = newTiered;
+
+    addRecord({
+      quiz: state.quiz.title, difficulty: "Speed Round", stage: "Speed Round",
+      score: state.score, total, stars: 0, xp: totalXP, duration
+    });
+
+    syncStageToBackend({
+      diff: { id: "speed" }, stage: { id: `speed-${Date.now()}` },
+      score: state.score, total, stars: 0, totalXP,
+      bestStreak: state.bestStreak, newSimple, newTiered, newMastery: [],
+      starPointsEarned: 0
+    });
+
+    const grade = getGrade(pct100);
+    document.getElementById("quiz-progress-fill").style.width = "100%";
+    const timerTrack = document.getElementById("quiz-speed-timer-track");
+    if (timerTrack) timerTrack.style.display = "none";
+
+    document.getElementById("quiz-result-stars").textContent =
+      "⚡".repeat(Math.min(3, Math.max(0, Math.ceil(pctFrac * 3))));
+    document.getElementById("quiz-result-score").textContent =
+      `${state.player} scored ${state.score}/${total} (${pct100}/100) · Best streak 🔥${state.bestStreak}`;
+
+    const badge = document.getElementById("quiz-result-grade-badge");
+    badge.textContent = `${grade.emoji} ${grade.label}`;
+    badge.className = "quiz-grade-badge " + grade.cls;
+
+    document.getElementById("quiz-result-title").textContent = "⚡ Speed Round complete!";
+    document.getElementById("quiz-result-trophy").textContent = pct100 >= 80 ? "🏆" : "⚡";
+    document.getElementById("quiz-result-sub").textContent = "Speed Round";
+    document.getElementById("quiz-xp-gain").textContent = `+${totalXP} XP earned!`;
+
+    renderNewBadgesDisplay(newSimple, newTiered, []);
+
+    document.getElementById("quiz-final-banner").textContent = "";
+    const continueBtn = document.getElementById("quiz-continue-btn");
+    continueBtn.textContent = "Continue ➜";
+    continueBtn.onclick = window.quizGoToDifficulties;
+
+    if (pctFrac >= 0.8) launchConfetti();
+    state.speedMode = false;
+    showScreen("screen-result");
+  }
+
+  /* ================= MATCHING GAME =================
+     Tap-to-match mode: picks N questions from across every
+     difficulty/stage (deduped by answer so no two right-side tiles
+     read the same), scrambles the questions into a left column and
+     the answers into a right column, and has the student tap one
+     from each side to pair them up. Reuses #screen-result to show
+     the finish, same as Speed Round. No stars/best-score tracking —
+     same reasoning as Speed Round, it mixes stages together. */
+  const MATCH_PAIR_COUNT = 6;
+
+  window.quizStartMatchingGame = function () {
+    const allQuestions = [];
+    state.quiz.difficulties.forEach((d) => {
+      d.stages.forEach((s) => {
+        s.questions.forEach((q) => allQuestions.push(q));
+      });
+    });
+
+    const seenAnswers = new Set();
+    const unique = shuffle(allQuestions).filter((q) => {
+      if (!q.text || !q.answer || seenAnswers.has(q.answer)) return false;
+      seenAnswers.add(q.answer);
+      return true;
+    });
+
+    if (unique.length < 3) {
+      alert("Not enough unique questions for a matching round yet.");
+      return;
+    }
+
+    const pairCount = Math.min(MATCH_PAIR_COUNT, unique.length);
+    const chosen = unique.slice(0, pairCount);
+
+    state.matchPairs = chosen.map((q, i) => ({ id: `p${i}`, text: q.text, answer: q.answer }));
+    state.matchSelected = null;
+    state.matchMistakes = 0;
+    state.matchMatchedCount = 0;
+    state.matchStartTime = Date.now();
+
+    document.getElementById("quiz-match-mistakes").textContent = "0";
+    document.getElementById("quiz-match-progress").textContent = `0/${pairCount} matched`;
+
+    showScreen("screen-match");
+    renderMatchGrid();
+  };
+
+  window.quizExitMatch = function () {
+    if (state.matchMatchedCount > 0 && state.matchMatchedCount < state.matchPairs.length) {
+      if (!confirm("Leave this Matching Game? Your progress in this round won't be saved.")) return;
+    }
+    quizGoToDifficulties();
+  };
+
+  function renderMatchGrid() {
+    const grid = document.getElementById("quiz-match-grid");
+    grid.innerHTML = "";
+
+    const leftCol = document.createElement("div");
+    leftCol.className = "quiz-match-col";
+    const rightCol = document.createElement("div");
+    rightCol.className = "quiz-match-col";
+
+    const leftItems = shuffle(state.matchPairs.map((p) => ({ id: p.id, label: p.text, side: "left" })));
+    const rightItems = shuffle(state.matchPairs.map((p) => ({ id: p.id, label: p.answer, side: "right" })));
+
+    leftItems.forEach((item) => leftCol.appendChild(buildMatchTile(item)));
+    rightItems.forEach((item) => rightCol.appendChild(buildMatchTile(item)));
+
+    grid.appendChild(leftCol);
+    grid.appendChild(rightCol);
+  }
+
+  function buildMatchTile(item) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "quiz-match-tile";
+    btn.innerHTML = item.label;
+    btn.onclick = () => onMatchTileClick(btn, item);
+    return btn;
+  }
+
+  function onMatchTileClick(tile, item) {
+    if (tile.classList.contains("matched")) return;
+
+    if (!state.matchSelected) {
+      state.matchSelected = { tile, item };
+      tile.classList.add("selected");
+      return;
+    }
+
+    if (state.matchSelected.tile === tile) {
+      tile.classList.remove("selected");
+      state.matchSelected = null;
+      return;
+    }
+
+    if (state.matchSelected.item.side === item.side) {
+      state.matchSelected.tile.classList.remove("selected");
+      state.matchSelected = { tile, item };
+      tile.classList.add("selected");
+      return;
+    }
+
+    const prev = state.matchSelected;
+    const isMatch = prev.item.id === item.id;
+
+    if (isMatch) {
+      prev.tile.classList.remove("selected");
+      prev.tile.classList.add("matched");
+      tile.classList.add("matched");
+      state.matchSelected = null;
+      state.matchMatchedCount++;
+      playAnswerFeedback(true);
+
+      document.getElementById("quiz-match-progress").textContent =
+        `${state.matchMatchedCount}/${state.matchPairs.length} matched`;
+
+      if (state.matchMatchedCount >= state.matchPairs.length) {
+        finishMatchingGame();
+      }
+    } else {
+      prev.tile.classList.remove("selected");
+      prev.tile.classList.add("wrong");
+      tile.classList.add("wrong");
+      state.matchMistakes++;
+      playWrongSound(); hapticWrong();
+
+      document.getElementById("quiz-match-mistakes").textContent = state.matchMistakes;
+
+      const wrongTiles = [prev.tile, tile];
+      state.matchSelected = null;
+      setTimeout(() => {
+        wrongTiles.forEach((t) => t.classList.remove("wrong"));
+      }, 500);
+    }
+  }
+
+  async function finishMatchingGame() {
+    state.resultMode = "match";
+    const pairCount = state.matchPairs.length;
+    const duration = Math.floor((Date.now() - state.matchStartTime) / 1000);
+    const rawXP = pairCount * 10 - state.matchMistakes * 2;
+    const speedBonus = duration <= 30 ? 15 : duration <= 60 ? 8 : 0;
+    const totalXP = Math.max(10, rawXP) + speedBonus;
+
+    const xpData = getXPData();
+    const oldXPForLevelUp = xpData.xp;
+    xpData.xp += totalXP;
+    setXPData(xpData);
+    celebrateLevelUp(oldXPForLevelUp, xpData.xp);
+
+    const { newSimple, newTiered } = checkBadges();
+
+    addRecord({
+      quiz: state.quiz.title, difficulty: "Matching Game", stage: "Matching Game",
+      score: pairCount, total: pairCount, stars: 0, xp: totalXP, duration
+    });
+
+    syncStageToBackend({
+      diff: { id: "match" }, stage: { id: `match-${Date.now()}` },
+      score: pairCount, total: pairCount, stars: 0, totalXP,
+      bestStreak: 0, newSimple, newTiered, newMastery: [],
+      starPointsEarned: 0
+    });
+
+    const pct100 = Math.max(
+      0,
+      Math.round(((pairCount - state.matchMistakes) / pairCount) * 100)
+    );
+    const grade = getGrade(pct100);
+
+    document.getElementById("quiz-result-stars").textContent =
+      "🧩".repeat(state.matchMistakes === 0 ? 3 : state.matchMistakes <= 2 ? 2 : 1);
+    document.getElementById("quiz-result-score").textContent =
+      `${state.player} matched all ${pairCount} pairs · ${state.matchMistakes} mistake${state.matchMistakes === 1 ? "" : "s"} · ${duration}s`;
+
+    const badge = document.getElementById("quiz-result-grade-badge");
+    badge.textContent = `${grade.emoji} ${grade.label}`;
+    badge.className = "quiz-grade-badge " + grade.cls;
+
+    document.getElementById("quiz-result-title").textContent = "🧩 Matching Game complete!";
+    document.getElementById("quiz-result-trophy").textContent = state.matchMistakes === 0 ? "🏆" : "🧩";
+    document.getElementById("quiz-result-sub").textContent = "Matching Game";
+    document.getElementById("quiz-xp-gain").textContent = `+${totalXP} XP earned!`;
+
+    renderNewBadgesDisplay(newSimple, newTiered, []);
+
+    document.getElementById("quiz-final-banner").textContent = "";
+    const continueBtn = document.getElementById("quiz-continue-btn");
+    continueBtn.textContent = "Continue ➜";
+    continueBtn.onclick = window.quizGoToDifficulties;
+
+    if (state.matchMistakes === 0) launchConfetti();
+    showScreen("screen-result");
+  }
+
+  /* ================= REVIEW MISTAKES =================
+     Pulls every question currently tracked in this quiz's "wrong"
+     bucket (see getWrongAnswers above) and runs them through the
+     exact same renderQuestion()/selectAnswer() flow as the normal
+     stage quiz — a question only leaves the pool once answered
+     correctly again, in review or otherwise. No stars/best-score
+     tracking, same reasoning as Speed Round/Matching Game. */
+  window.quizStartReview = function () {
+    const entries = Object.values(getWrongAnswers());
+    if (!entries.length) {
+      alert("No mistakes to review right now — nice work! 🎉");
+      return;
+    }
+
+    state.reviewMode = true;
+    state.currentStage = null;
+    state.currentDifficulty = null;
+    state.questions = shuffle(entries);
+    state.qIndex = 0; state.score = 0; state.streak = 0; state.bestStreak = 0;
+    state.xpGained = 0; state.stageStartTime = Date.now();
+
+    document.getElementById("quiz-stage-label").textContent = "🔁 Review Mistakes";
+    document.getElementById("quiz-next-btn").onclick = window.quizReviewNext;
+    const quizBackBtn = document.querySelector("#screen-quiz .quiz-back-btn");
+    if (quizBackBtn) quizBackBtn.onclick = window.quizExitReview;
+    const hintBtn = document.getElementById("quiz-hint-btn");
+    if (hintBtn) hintBtn.style.display = "none"; // no hints — the whole point is to actually recall it
+    const timerTrack = document.getElementById("quiz-speed-timer-track");
+    if (timerTrack) timerTrack.style.display = "none";
+
+    showScreen("screen-quiz");
+    renderQuestion();
+  };
+
+  window.quizExitReview = function () {
+    state.reviewMode = false;
+    quizGoToDifficulties();
+  };
+
+  window.quizReviewNext = async function () {
+    state.qIndex++;
+    if (state.qIndex >= state.questions.length) {
+      await finishReview();
+    } else {
+      renderQuestion();
+    }
+  };
+
+  async function finishReview() {
+    state.resultMode = "review";
+    const total = state.questions.length;
+    const pct100 = total ? Math.round((state.score / total) * 100) : 0;
+    const totalXP = state.xpGained;
+    const duration = Math.floor((Date.now() - state.stageStartTime) / 1000);
+
+    const xpData = getXPData();
+    const oldXPForLevelUp = xpData.xp;
+    xpData.xp += totalXP;
+    setXPData(xpData);
+    celebrateLevelUp(oldXPForLevelUp, xpData.xp);
+
+    const { newSimple, newTiered } = checkBadges();
+
+    addRecord({
+      quiz: state.quiz.title, difficulty: "Review Mistakes", stage: "Review Mistakes",
+      score: state.score, total, stars: 0, xp: totalXP, duration
+    });
+
+    syncStageToBackend({
+      diff: { id: "review" }, stage: { id: `review-${Date.now()}` },
+      score: state.score, total, stars: 0, totalXP,
+      bestStreak: state.bestStreak, newSimple, newTiered, newMastery: [],
+      starPointsEarned: 0
+    });
+
+    const grade = getGrade(pct100);
+    const remaining = Object.keys(getWrongAnswers()).length;
+
+    document.getElementById("quiz-result-stars").textContent =
+      "🔁".repeat(Math.min(3, Math.max(0, Math.ceil((state.score / Math.max(1, total)) * 3))));
+    document.getElementById("quiz-result-score").textContent =
+      `${state.player} reviewed ${total} question${total === 1 ? "" : "s"} — got ${state.score} right · ${remaining} still to master`;
+
+    const badge = document.getElementById("quiz-result-grade-badge");
+    badge.textContent = `${grade.emoji} ${grade.label}`;
+    badge.className = "quiz-grade-badge " + grade.cls;
+
+    document.getElementById("quiz-result-title").textContent = "🔁 Review complete!";
+    document.getElementById("quiz-result-trophy").textContent = remaining === 0 ? "🏆" : "🔁";
+    document.getElementById("quiz-result-sub").textContent = "Review Mistakes";
+    document.getElementById("quiz-xp-gain").textContent = `+${totalXP} XP earned!`;
+
+    renderNewBadgesDisplay(newSimple, newTiered, []);
+
+    document.getElementById("quiz-final-banner").textContent =
+      remaining === 0 ? "🎉 You've cleared every tracked mistake in this quiz!" : "";
+
+    const continueBtn = document.getElementById("quiz-continue-btn");
+    continueBtn.textContent = "Continue ➜";
+    continueBtn.onclick = window.quizGoToDifficulties;
+
+    if (remaining === 0) launchConfetti();
+    state.reviewMode = false;
+    showScreen("screen-result");
   }
 
   /* ================= SOUND & HAPTICS ================= */
@@ -2249,6 +3045,7 @@ const completed = diffStars === diffMax && diffMax > 0;
     state.locked = true;
     const buttons = document.querySelectorAll(".quiz-option-btn");
     const isCorrect = chosen === answer;
+    const q = state.questions[state.qIndex];
     playAnswerFeedback(isCorrect);
     buttons.forEach((b) => { b.disabled = true; if (b.innerHTML === answer) b.classList.add("correct"); });
     const fb = document.getElementById("quiz-feedback");
@@ -2258,9 +3055,11 @@ const completed = diffStars === diffMax && diffMax > 0;
       fb.textContent = praises[Math.floor(Math.random() * praises.length)];
       const streakBonus = state.streak >= 5 ? 5 : state.streak >= 3 ? 2 : 0;
       const qXP = 10 + streakBonus; state.xpGained += qXP; showXPPopup(`+${qXP} XP`);
+      recordQuestionCorrected(q);
     } else {
       btn.classList.add("wrong"); state.streak = 0;
       fb.textContent = "Not quite — the correct answer is highlighted.";
+      recordQuestionMissed(q);
     }
     document.getElementById("quiz-streak-count").textContent = state.streak;
     document.getElementById("quiz-next-btn").disabled = false;
@@ -2534,8 +3333,10 @@ window.quizBuyLifeFromOutOfLives = async function () {
     if (isNewHigh) setEndlessHigh(e.score);
 
     const xpData = getXPData();
+    const oldXPForLevelUp = xpData.xp;
     xpData.xp += e.xpGained;
     setXPData(xpData);
+    celebrateLevelUp(oldXPForLevelUp, xpData.xp);
 
     addRecord({ quiz: state.quiz.title, difficulty: "Endless", stage: "Endless Run", score: e.score, total: e.questionsAnswered, stars: 0, xp: e.xpGained, duration });
 
@@ -2762,7 +3563,47 @@ if (!allStagesPerfect) return;
     updateStarPointsUI();
   }
 
+  function renderNewBadgesDisplay(newSimple, newTiered, newMastery = []) {
+    const nbContainer = document.getElementById("quiz-new-badges");
+    nbContainer.innerHTML = "";
+
+    newSimple.forEach((id) => {
+      const def = SIMPLE_BADGES.find((b) => b.id === id);
+      if (!def) return;
+
+      const span = document.createElement("span");
+      span.className = "quiz-new-badge";
+      span.style.borderColor = "#15803d";
+      span.style.background = "#15803d22";
+      span.textContent = `${def.icon} ${def.name}`;
+
+      nbContainer.appendChild(span);
+    });
+
+    newTiered.forEach((t) => {
+      const span = document.createElement("span");
+      span.className = "quiz-new-badge";
+      span.style.borderColor = TIER_COLORS[t.label];
+      span.style.background = TIER_COLORS[t.label] + "22";
+      span.textContent = `${t.label} ${t.badgeName}`;
+
+      nbContainer.appendChild(span);
+    });
+
+    newMastery.forEach((m) => {
+      const span = document.createElement("span");
+      span.className = "quiz-new-badge";
+      span.style.borderColor = TIER_COLORS.Mastery;
+      span.style.background = TIER_COLORS.Mastery + "22";
+      span.textContent =
+        `👑 ${m.diffLabel} Mastery · ₦${m.amount.toLocaleString()} reward`;
+
+      nbContainer.appendChild(span);
+    });
+  }
+
   async function finishStage() {
+  state.resultMode = "stage";
   const stage = state.currentStage;
   const diff = state.currentDifficulty;
   const total = state.questions.length;
@@ -2824,6 +3665,7 @@ if (stars > previousStars) {
 
   /* ================= XP / DAILY DATA ================= */
 
+  const oldXPForLevelUp = xpData.xp;
   xpData.xp += totalXP;
 
   if (state.dailyQuestion) {
@@ -2832,6 +3674,7 @@ if (stars > previousStars) {
   }
 
   setXPData(xpData);
+  celebrateLevelUp(oldXPForLevelUp, xpData.xp);
 
   /* ================= BADGES & MASTERY ================= */
 
@@ -2907,42 +3750,7 @@ if (stars > previousStars) {
 
 document.getElementById("quiz-xp-gain").textContent = starPointMessage;
 
-  const nbContainer = document.getElementById("quiz-new-badges");
-  nbContainer.innerHTML = "";
-
-  newSimple.forEach((id) => {
-    const def = SIMPLE_BADGES.find((b) => b.id === id);
-    if (!def) return;
-
-    const span = document.createElement("span");
-    span.className = "quiz-new-badge";
-    span.style.borderColor = "#15803d";
-    span.style.background = "#15803d22";
-    span.textContent = `${def.icon} ${def.name}`;
-
-    nbContainer.appendChild(span);
-  });
-
-  newTiered.forEach((t) => {
-    const span = document.createElement("span");
-    span.className = "quiz-new-badge";
-    span.style.borderColor = TIER_COLORS[t.label];
-    span.style.background = TIER_COLORS[t.label] + "22";
-    span.textContent = `${t.label} ${t.badgeName}`;
-
-    nbContainer.appendChild(span);
-  });
-
-  newMastery.forEach((m) => {
-    const span = document.createElement("span");
-    span.className = "quiz-new-badge";
-    span.style.borderColor = TIER_COLORS.Mastery;
-    span.style.background = TIER_COLORS.Mastery + "22";
-    span.textContent =
-      `👑 ${m.diffLabel} Mastery · ₦${m.amount.toLocaleString()} reward`;
-
-    nbContainer.appendChild(span);
-  });
+  renderNewBadgesDisplay(newSimple, newTiered, newMastery);
 
   const banner = document.getElementById("quiz-final-banner");
   const continueBtn = document.getElementById("quiz-continue-btn");
@@ -2965,6 +3773,41 @@ document.getElementById("quiz-xp-gain").textContent = starPointMessage;
     banner.textContent = "";
     continueBtn.textContent = "Continue ➜";
     continueBtn.onclick = window.quizGoToStages;
+  }
+
+  // "Challenge a Friend" — if this stage run was started by accepting
+  // a challenge link, write the result back onto that same row and
+  // show a win/lose/tie comparison (overrides the banner above, since
+  // this is the more relevant message right now).
+  if (state.activeChallenge) {
+    const challenge = state.activeChallenge;
+    state.activeChallenge = null;
+    const sb = getSupabase();
+    if (sb) {
+      try {
+        const { error } = await sb.from("quiz_challenges")
+          .update({
+            opponent_matric: state.matric || null,
+            opponent_name: state.player,
+            opponent_score: state.score,
+            opponent_total: total,
+            status: "completed",
+            completed_at: new Date().toISOString(),
+          })
+          .eq("id", challenge.id);
+        if (error) console.error("[CHALLENGE] Failed to record result:", error);
+      } catch (err) {
+        console.error("[CHALLENGE] Unexpected error recording result:", err);
+      }
+    }
+
+    const won = state.score > challenge.challenger_score;
+    const tied = state.score === challenge.challenger_score;
+    banner.textContent = won
+      ? `🏆 You beat ${challenge.challenger_name}! ${state.score}/${total} vs their ${challenge.challenger_score}/${challenge.challenger_total}.`
+      : tied
+        ? `🤝 It's a tie with ${challenge.challenger_name}! Both scored ${state.score}/${total}.`
+        : `💪 ${challenge.challenger_name} scored ${challenge.challenger_score}/${challenge.challenger_total} — you got ${state.score}/${total}. Rematch?`;
   }
 
   if (stars >= 2) launchConfetti();
@@ -3697,9 +4540,22 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* ================= LEADERBOARD ================= */
+window.quizSetLeaderboardFilter = function (useBatch) {
+  state.leaderboardFilter = useBatch;
+  const allBtn = document.getElementById("quiz-lb-filter-all");
+  const batchBtn = document.getElementById("quiz-lb-filter-batch");
+  if (allBtn) allBtn.classList.toggle("active", !useBatch);
+  if (batchBtn) batchBtn.classList.toggle("active", useBatch);
+  renderLeaderboardScreen();
+};
+
 window.quizShowLeaderboard = async function () {
 
   showScreen("screen-leaderboard");
+  await renderLeaderboardScreen();
+};
+
+async function renderLeaderboardScreen() {
 
   const list =
     document.getElementById(
@@ -3756,7 +4612,7 @@ window.quizShowLeaderboard = async function () {
   let entries = [];
 
   const sbEntries =
-    await fetchSupabaseLeaderboard();
+    await fetchSupabaseLeaderboard(state.leaderboardFilter);
 
 
   if (
@@ -3766,14 +4622,17 @@ window.quizShowLeaderboard = async function () {
 
     entries = sbEntries;
 
-    note.textContent =
-      "Live rankings from all students";
+    note.textContent = state.leaderboardFilter
+      ? "Live rankings from your class"
+      : "Live rankings from all students";
 
   } else {
 
     note.textContent =
       isStudentLoggedIn
-        ? "Connecting to leaderboard... if this persists, check your internet."
+        ? (state.leaderboardFilter
+            ? "No ranked attempts from your class yet."
+            : "Connecting to leaderboard... if this persists, check your internet.")
         : "Log in to see the live leaderboard and compete with other students!";
 
     entries = [];
@@ -3828,20 +4687,12 @@ window.quizShowLeaderboard = async function () {
     `;
 
 
-    if (entry.isYou) {
-
-      youRow.appendChild(
-        row.cloneNode(true)
-      );
-
-      youRow.style.display =
-        "block";
-
-    } else {
-
-      list.appendChild(row);
-
-    }
+    /*
+     * Add the row to the main list in rank order. "You" is already
+     * highlighted via the .you CSS class at its correct position —
+     * no separate duplicate row needed at the bottom.
+     */
+    list.appendChild(row);
 
   });
 
@@ -4047,12 +4898,14 @@ setStars(starsMap);
 
 const xpData = getXPData();
 
+const oldXPForLevelUp = xpData.xp;
 xpData.xp += xp;
 
 xpData.dailyCount = (xpData.dailyCount || 0) + 1;
 xpData.dailyDate = new Date().toDateString();
 
 setXPData(xpData);
+celebrateLevelUp(oldXPForLevelUp, xpData.xp);
 
     /* ================= BADGES ================= */
 
@@ -4160,16 +5013,70 @@ updateStarPointsUI();
 }
 
   /* ================= SHARE ================= */
-  window.quizShareResult = function () {
-    const stage = state.currentStage;
-    const diff = state.currentDifficulty;
-    const text = `🕌 *Al-Bayan Quiz*\n\nI just scored *${state.score}/${state.questions.length}* on *${stage.title}* (${diff.label})!\n\nCan you beat my score? Try it here:\n${window.location.origin}/quiz.html?id=${state.quizId}`;
+  window.quizShareResult = async function () {
+    // A genuine stage completion (not Speed Round/Matching/Review, and
+    // not itself the result of accepting someone else's challenge —
+    // state.currentStage/currentDifficulty are only set for the real
+    // stage-quiz flow) becomes a real, trackable Challenge-a-Friend link.
+    if (state.resultMode === "stage" && state.currentStage && state.currentDifficulty) {
+      await quizShareStageChallenge();
+      return;
+    }
+
+    // Every other mode (Speed Round, Matching Game, Review Mistakes) —
+    // generic share, reading straight off the already-populated result
+    // screen text so it's accurate regardless of mode.
+    const title = document.getElementById("quiz-result-title")?.textContent || "Al-Bayan Quiz";
+    const scoreLine = document.getElementById("quiz-result-score")?.textContent || "";
+    const text = `🕌 *Al-Bayan Quiz*\n\n${title}\n${scoreLine}\n\nTry it here:\n${window.location.origin}/quiz.html?id=${state.quizId}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
 
     const xpData = getXPData();
     xpData.shareCount = (xpData.shareCount || 0) + 1;
     setXPData(xpData);
   };
+
+  async function quizShareStageChallenge() {
+    const stage = state.currentStage;
+    const diff = state.currentDifficulty;
+    const sb = getSupabase();
+    let challengeId = null;
+
+    if (sb) {
+      try {
+        const { data, error } = await sb.from("quiz_challenges")
+          .insert({
+            quiz_id: state.quizId,
+            difficulty_id: diff.id,
+            stage_id: stage.id,
+            challenger_matric: state.matric || null,
+            challenger_name: state.player,
+            challenger_score: state.score,
+            challenger_total: state.questions.length,
+          })
+          .select("id")
+          .single();
+        if (error) console.error("[CHALLENGE] Failed to create:", error);
+        else if (data) challengeId = data.id;
+      } catch (err) {
+        console.error("[CHALLENGE] Unexpected error creating challenge:", err);
+      }
+    }
+
+    const link = challengeId
+      ? `${window.location.origin}/quiz.html?id=${state.quizId}&challenge=${challengeId}`
+      : `${window.location.origin}/quiz.html?id=${state.quizId}`;
+
+    const text = challengeId
+      ? `🕌 *Al-Bayan Quiz Challenge!* ⚔️\n\nI just scored *${state.score}/${state.questions.length}* on *${stage.title}* (${diff.label})!\n\nThink you can beat me? Accept my challenge:\n${link}`
+      : `🕌 *Al-Bayan Quiz*\n\nI just scored *${state.score}/${state.questions.length}* on *${stage.title}* (${diff.label})!\n\nCan you beat my score? Try it here:\n${link}`;
+
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
+
+    const xpData = getXPData();
+    xpData.shareCount = (xpData.shareCount || 0) + 1;
+    setXPData(xpData);
+  }
 
   window.quizShareFinal = function () {
     const diff = state.currentDifficulty;

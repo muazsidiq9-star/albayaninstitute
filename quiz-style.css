@@ -2260,3 +2260,241 @@ h1.quiz-title { font-size: 24px; font-weight: 800; color: var(--text-color); tex
 
 .quiz-hub-more-item-danger { color: #d13a3a; }
 .quiz-hub-more-item-danger:hover { background: rgba(209, 58, 58, 0.1); }
+
+/* ============================================================
+   NEW GAMIFICATION FEATURES
+   Speed Round, 50/50 Hint Power-up, Level-Up Celebration
+============================================================ */
+
+/* ---------- Speed Round entry button ---------- */
+.quiz-speedround-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  color: #1a1000;
+  border: none;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 14.5px;
+  cursor: pointer;
+  transition: transform .15s;
+}
+.quiz-speedround-btn:hover { transform: translateY(-2px); }
+
+/* ---------- Speed Round countdown bar ---------- */
+.quiz-speed-timer-track {
+  width: 100%;
+  height: 8px;
+  background: var(--border-light);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 6px 0 4px;
+}
+.quiz-speed-timer-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #f59e0b, #ef4444);
+  border-radius: 10px;
+  transition: width .1s linear;
+}
+
+/* ---------- 50/50 Hint button ---------- */
+.quiz-hint-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0 12px;
+  padding: 8px 14px;
+  background: var(--primary-xlight);
+  color: var(--primary-dark);
+  border: 1.5px solid var(--primary);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform .12s, opacity .15s;
+}
+.quiz-hint-btn:hover:not(:disabled) { transform: translateY(-1px); }
+.quiz-hint-btn:disabled { opacity: .45; cursor: default; }
+.quiz-hint-cost { font-weight: 800; }
+
+/* Options eliminated by the 50/50 hint */
+.quiz-option-btn.eliminated {
+  opacity: .35;
+  text-decoration: line-through;
+}
+
+/* ---------- Level-Up celebration banner ---------- */
+.quiz-levelup-banner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(.85);
+  z-index: 9999;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: #fff;
+  padding: 28px 34px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(0,0,0,.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
+}
+.quiz-levelup-banner.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  animation: quizLevelUpPulse 1.4s ease-in-out;
+}
+.quiz-levelup-emoji { font-size: 32px; margin-bottom: 6px; }
+.quiz-levelup-title { font-size: 22px; font-weight: 900; margin-bottom: 4px; }
+.quiz-levelup-level { font-size: 15px; font-weight: 600; opacity: .95; }
+@keyframes quizLevelUpPulse {
+  0% { transform: translate(-50%, -50%) scale(.85); }
+  30% { transform: translate(-50%, -50%) scale(1.08); }
+  50% { transform: translate(-50%, -50%) scale(1); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* ---------- Class (batch) leaderboard toggle ---------- */
+.quiz-lb-filter-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  background: var(--border-light);
+  padding: 4px;
+  border-radius: 999px;
+}
+.quiz-lb-filter-btn {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-secondary, #555);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.quiz-lb-filter-btn.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ---------- Matching Game entry button ---------- */
+.quiz-matching-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 14.5px;
+  cursor: pointer;
+  transition: transform .15s;
+}
+.quiz-matching-btn:hover { transform: translateY(-2px); }
+
+/* ---------- Matching Game grid ---------- */
+.quiz-match-grid {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.quiz-match-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.quiz-match-tile {
+  min-height: 56px;
+  padding: 10px 9px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border-light);
+  background: var(--card-color);
+  color: var(--text-color);
+  font-size: 12px;
+  line-height: 1.35;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  word-break: break-word;
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: inherit;
+  transition: transform .1s, background .15s, border-color .15s, opacity .2s, color .15s;
+}
+.quiz-match-tile:hover { transform: translateY(-1px); border-color: var(--primary); }
+.quiz-match-tile.selected {
+  border-color: var(--primary);
+  background: var(--primary-xlight);
+  color: var(--primary-dark);
+}
+.quiz-match-tile.matched {
+  border-color: #15803d;
+  background: #15803d22;
+  color: #15803d;
+  opacity: .6;
+  cursor: default;
+  pointer-events: none;
+}
+.quiz-match-tile.wrong {
+  border-color: #d13a3a;
+  background: #d13a3a22;
+  color: #d13a3a;
+  animation: quizMatchShake .3s;
+}
+@keyframes quizMatchShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* ---------- Review Mistakes entry button ---------- */
+.quiz-review-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 14.5px;
+  cursor: pointer;
+  transition: transform .15s;
+}
+.quiz-review-btn:hover { transform: translateY(-2px); }
+
+/* ---------- Challenge-a-Friend banner (welcome screen) ---------- */
+.quiz-challenge-banner {
+  background: linear-gradient(135deg, #f59e0b22, #ef444422);
+  border: 1.5px solid #f59e0b;
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.quiz-challenge-banner p {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.quiz-challenge-login-link {
+  display: block;
+  margin-top: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  text-decoration: underline;
+}

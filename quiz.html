@@ -65,6 +65,12 @@
       <p class="quiz-subtitle" id="quiz-subtitle-text"></p>
       <div class="quiz-desc-box"><p id="quiz-desc-text"></p></div>
 
+      <!-- Challenge-a-Friend banner (shown when arriving via a ?challenge= link) -->
+      <div class="quiz-challenge-banner" id="quiz-challenge-banner" style="display:none;">
+        <p id="quiz-challenge-banner-text"></p>
+        <a href="#" class="quiz-challenge-login-link" id="quiz-challenge-login-link" style="display:none;">Have an account? Log in instead →</a>
+      </div>
+
       <!-- Logged-in player badge -->
       <div class="quiz-player-badge" id="quiz-player-badge" style="display:none;">
         <span class="quiz-avatar" id="quiz-welcome-avatar">🌸</span>
@@ -108,6 +114,7 @@
   <div style="display:flex; align-items:center; gap:10px;">
     <div class="stat">🏆 <span id="quiz-bar-total-stars">0</span></div>
     <div class="stat">✨ <span id="quiz-bar-star-points">0</span></div>
+    <div class="stat">🔥 <span id="quiz-bar-best-streak">0</span></div>
   </div>
 </div>
       </div>
@@ -117,6 +124,9 @@
 </p>
       <div class="quiz-difficulty-list" id="quiz-difficulty-list"></div>
       <button class="quiz-endless-btn" onclick="quizStartEndless()">♾️ Endless Challenge — Mixed Questions, No End</button>
+      <button class="quiz-speedround-btn" onclick="quizStartSpeedRound()">⚡ Speed Round — 15 Questions, Beat the Clock</button>
+      <button class="quiz-matching-btn" onclick="quizStartMatchingGame()">🧩 Matching Game — Match Question to Answer</button>
+      <button class="quiz-review-btn" id="quiz-review-btn" onclick="quizStartReview()" style="display:none;">🔁 Review Mistakes (<span id="quiz-review-count">0</span>)</button>
     </div>
 
     <!-- ============ SCREEN: ENDLESS MODE ============ -->
@@ -220,14 +230,32 @@
           <span id="quiz-stage-label">Stage 1</span>
         </div>
       </div>
+      <div class="quiz-speed-timer-track" id="quiz-speed-timer-track" style="display:none;">
+        <div class="quiz-speed-timer-fill" id="quiz-speed-timer-fill"></div>
+      </div>
       <div class="quiz-question-card">
         <div class="quiz-q-kicker" id="quiz-q-kicker"></div>
         <div class="quiz-q-text" id="quiz-q-text">…</div>
       </div>
+      <button class="quiz-hint-btn" id="quiz-hint-btn" onclick="quizUseHint()">🔍 50/50 <span class="quiz-hint-cost">✨5</span></button>
       <div class="quiz-options" id="quiz-options"></div>
       <div class="quiz-feedback" id="quiz-feedback"></div>
       <div class="quiz-xp-popup" id="quiz-xp-popup"></div>
       <button class="quiz-next-btn" id="quiz-next-btn" onclick="quizNextQuestion()" disabled>Next ➜</button>
+    </div>
+
+    <!-- ============ SCREEN: MATCHING GAME ============ -->
+    <div class="quiz-screen" id="screen-match">
+      <div class="quiz-screen-header">
+        <button class="quiz-back-btn" onclick="quizExitMatch()">←</button>
+        <div class="quiz-bar">
+          <div class="who"><span class="quiz-avatar"></span><span class="quiz-bar-name"></span></div>
+          <div class="stat">❌ <span id="quiz-match-mistakes">0</span></div>
+        </div>
+      </div>
+      <h1 class="quiz-title" style="font-size:18px; margin-bottom:2px;">🧩 Matching Game</h1>
+      <p class="quiz-subtitle" style="margin-bottom:12px;" id="quiz-match-progress">Tap a question, then its matching answer</p>
+      <div class="quiz-match-grid" id="quiz-match-grid"></div>
     </div>
 
     <!-- ============ SCREEN: STAGE RESULT ============ -->
@@ -338,6 +366,10 @@
 >
   Top performers in this quiz
 </p>
+        <div class="quiz-lb-filter-toggle" id="quiz-lb-filter-toggle">
+          <button type="button" class="quiz-lb-filter-btn active" id="quiz-lb-filter-all" onclick="quizSetLeaderboardFilter(false)">All Students</button>
+          <button type="button" class="quiz-lb-filter-btn" id="quiz-lb-filter-batch" onclick="quizSetLeaderboardFilter(true)">My Class</button>
+        </div>
         <div class="quiz-leaderboard-list" id="quiz-leaderboard-list"></div>
         <div class="quiz-you-row" id="quiz-you-row" style="display:none;"></div>
         <div class="quiz-leaderboard-note" id="quiz-lb-note">Keep playing to climb the ranks!</div>
@@ -586,6 +618,12 @@
       </div>
     </div>
 
+    <div class="quiz-levelup-banner" id="quiz-levelup-banner">
+      <div class="quiz-levelup-emoji">🎉⬆️🎉</div>
+      <div class="quiz-levelup-title">Level Up!</div>
+      <div class="quiz-levelup-level">You reached Level <span id="quiz-levelup-level-num">2</span></div>
+    </div>
+
   </div>
 </main>
 
@@ -619,6 +657,38 @@
   
 <script>window.QUIZ_PAGE_NO_TRANSLATE = true;</script>
 <script src="translate.js"></script>
+<script>
+  // Bridge the hub's localStorage-based session ("studentSession") into
+  // the sessionStorage keys quiz-engine.js actually reads. sessionStorage
+  // is per-tab, so without this, a logged-in student opening a link in a
+  // NEW tab (exactly what happens tapping a challenge link from WhatsApp,
+  // or opening the hub in a second tab) would show up as a guest even
+  // though they're genuinely logged in elsewhere. Runs before
+  // quiz-engine.js loads since it reads sessionStorage synchronously.
+  //
+  // Matches login.js's exact shape: studentSession.currentStudent is
+  // ALREADY a JSON string (login.js does JSON.stringify(...) on it
+  // before ever putting it in the session object) — copy it as-is,
+  // don't re-stringify, or JSON.parse(sessionStorage.currentStudent)
+  // elsewhere breaks. Also honors expiresAt (14-day session), same as
+  // the hub's own isGuestUser()/getStudentSession() checks.
+  (function () {
+    if (sessionStorage.getItem("role") === "student" && sessionStorage.getItem("matric")) return;
+    try {
+      const raw = localStorage.getItem("studentSession");
+      if (!raw) return;
+      const session = JSON.parse(raw);
+      if (session.expiresAt && Date.now() > session.expiresAt) return; // expired — treat as guest
+      const matric = session.matric;
+      if (!matric) return;
+      sessionStorage.setItem("role", "student");
+      sessionStorage.setItem("matric", matric);
+      if (session.currentStudent) sessionStorage.setItem("currentStudent", session.currentStudent);
+    } catch (e) {
+      console.error("[SESSION BRIDGE] Failed to hydrate from studentSession:", e);
+    }
+  })();
+</script>
 <script src="quiz-engine.js"></script>
 
 <!-- QUIZ SETTINGS MENU (Sound / Haptics / Logout) -->
