@@ -1,0 +1,3588 @@
+{
+  "id": "tafseer-foundations",
+  "title": "Tafseer Foundations",
+  "titleArabic": "أساسيات التفسير",
+  "subtitle": "Understanding the meanings of Al-Isti'adhah, Al-Basmalah, Al-Fatihah, and the short Surahs of Juz Amma (Al-Asr to An-Nas)",
+  "icon": "📖",
+  "description": "A three-level journey through the Tafseer of the short Surahs of Juz Amma — from the opening of the Qur'an (Al-Isti'adhah, Al-Basmalah, Al-Fatihah) through the stories and lessons of the final Surahs, to a deeper reflection on Tawhid, protection, and faith.",
+  "difficulties": [
+    {
+      "id": "beginner",
+      "label": "Beginner",
+      "icon": "🌱",
+      "description": "Opening the Qur'an — Isti'adhah, Basmalah, Al-Fatihah, Al-'Asr & Al-Humazah",
+      "stages": [
+        {
+          "id": "stage1",
+          "title": "Al-Isti'adhah (I) — Meaning & Purpose",
+          "icon": "🤲",
+          "description": "What seeking refuge before recitation means and why it matters",
+          "kicker": "Seeking Refuge",
+          "questions": [
+            {
+              "text": "What is the meaning of الاستعاذة؟",
+              "options": [
+                "Seeking protection from Allah",
+                "Beginning a Surah",
+                "Praising Allah",
+                "Making du'a only"
+              ],
+              "answer": "Seeking protection from Allah"
+            },
+            {
+              "text": "From what do we specifically seek refuge when starting to recite the Qur'an?",
+              "options": [
+                "From Shaytan, the accursed devil",
+                "From other people",
+                "From hunger",
+                "From forgetfulness only"
+              ],
+              "answer": "From Shaytan, the accursed devil"
+            },
+            {
+              "text": "معنى الاستعاذة هو:",
+              "options": [
+                "نطلب الحماية من الله",
+                "نشكر الله",
+                "نستغفر الله",
+                "نحمد الناس"
+              ],
+              "answer": "نطلب الحماية من الله"
+            },
+            {
+              "text": "Why is Isti'adhah legislated before reciting the Qur'an?",
+              "options": [
+                "To protect the heart from Shaytan's whispers that could distract from reflecting on the Qur'an",
+                "To end the recitation properly",
+                "To praise the reciter's voice",
+                "To ask Allah for provision"
+              ],
+              "answer": "To protect the heart from Shaytan's whispers that could distract from reflecting on the Qur'an"
+            },
+            {
+              "text": "Is Al-Isti'adhah considered part of the actual text of the Qur'an?",
+              "options": [
+                "No, it is a supplication recited before starting recitation, not part of the Mushaf text",
+                "Yes, it is the first verse of every surah",
+                "Yes, but only in Al-Fatihah",
+                "No, it is only recited after finishing"
+              ],
+              "answer": "No, it is a supplication recited before starting recitation, not part of the Mushaf text"
+            }
+          ]
+        },
+        {
+          "id": "stage2",
+          "title": "Al-Isti'adhah (II) — The Wording",
+          "icon": "🗣",
+          "description": "Understanding أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ word by word",
+          "kicker": "A'udhu Billah",
+          "questions": [
+            {
+              "text": "What does \"أَعُوذُ\" mean?",
+              "options": [
+                "I seek refuge / I seek protection",
+                "I praise",
+                "I thank",
+                "I remember"
+              ],
+              "answer": "I seek refuge / I seek protection"
+            },
+            {
+              "text": "\"بِاللَّهِ\" tells us with whom we take refuge. Who is that?",
+              "options": [
+                "Allah alone",
+                "The angels",
+                "The Prophet ﷺ",
+                "One's parents"
+              ],
+              "answer": "Allah alone"
+            },
+            {
+              "text": "What does \"الشيطان\" refer to?",
+              "options": [
+                "Shaytan / the devil (Iblis and his party)",
+                "A type of jinn that helps people",
+                "A disobedient human",
+                "An angel of punishment"
+              ],
+              "answer": "Shaytan / the devil (Iblis and his party)"
+            },
+            {
+              "text": "معنى كلمة \"الرجيم\" هو:",
+              "options": [
+                "القوي",
+                "الغني",
+                "المطرود من رحمة الله",
+                "العادل"
+              ],
+              "answer": "المطرود من رحمة الله"
+            },
+            {
+              "text": "Put together, \"أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ\" means:",
+              "options": [
+                "I seek refuge in Allah from Shaytan, the accursed/expelled one",
+                "I praise Allah, the Most Merciful",
+                "I ask Allah for guidance on the straight path",
+                "I thank Allah for His blessings"
+              ],
+              "answer": "I seek refuge in Allah from Shaytan, the accursed/expelled one"
+            }
+          ]
+        },
+        {
+          "id": "stage3",
+          "title": "Al-Isti'adhah (III) — Rulings & Lessons",
+          "icon": "📜",
+          "description": "When Isti'adhah is legislated, and the lessons it teaches the heart",
+          "kicker": "Rulings and Lessons",
+          "questions": [
+            {
+              "text": "What is the ruling on saying Isti'adhah before reciting the Qur'an, according to the majority of scholars?",
+              "options": [
+                "Recommended (Mustahabb), not obligatory",
+                "Obligatory (Wajib) in every case",
+                "Forbidden outside of prayer",
+                "Only for reciters, never for listeners"
+              ],
+              "answer": "Recommended (Mustahabb), not obligatory"
+            },
+            {
+              "text": "Which verse commands seeking refuge before recitation?",
+              "options": [
+                "Surah An-Nahl 16:98",
+                "Surah Al-Fatihah 1:1",
+                "Surah Al-Baqarah 2:1",
+                "Surah An-Nas 114:1"
+              ],
+              "answer": "Surah An-Nahl 16:98"
+            },
+            {
+              "text": "الاستعاذة تُقال أيضا في أوقات أخرى مثل:",
+              "options": [
+                "الغضب والخوف والوسوسة",
+                "الأكل فقط",
+                "النوم فقط",
+                "الخروج من المنزل فقط"
+              ],
+              "answer": "الغضب والخوف والوسوسة"
+            },
+            {
+              "text": "What is a key lesson from beginning recitation with Isti'adhah?",
+              "options": [
+                "We acknowledge our weakness and need for Allah's protection before engaging in worship",
+                "We show off our knowledge of Arabic",
+                "We remind Shaytan of his fate",
+                "We complete an obligatory pillar of prayer"
+              ],
+              "answer": "We acknowledge our weakness and need for Allah's protection before engaging in worship"
+            },
+            {
+              "text": "True or False: Isti'adhah shows that Shaytan actively tries to prevent people from benefiting from the Qur'an.",
+              "options": [
+                "True",
+                "False"
+              ],
+              "answer": "True"
+            }
+          ]
+        },
+        {
+          "id": "stage4",
+          "title": "Al-Basmalah (I) — Meaning & Occurrence",
+          "icon": "✨",
+          "description": "What Bismillah means and where it appears in the Qur'an",
+          "kicker": "Bismillah",
+          "questions": [
+            {
+              "text": "What does \"بِسْمِ اللَّهِ\" mean?",
+              "options": [
+                "In the name of Allah",
+                "Praise be to Allah",
+                "I seek refuge in Allah",
+                "Glory be to Allah"
+              ],
+              "answer": "In the name of Allah"
+            },
+            {
+              "text": "The Basmalah appears at the start of every surah except one. Which surah does not begin with it?",
+              "options": [
+                "At-Tawbah (Surah 9)",
+                "Al-Baqarah (Surah 2)",
+                "Al-Ikhlas (Surah 112)",
+                "An-Nas (Surah 114)"
+              ],
+              "answer": "At-Tawbah (Surah 9)"
+            },
+            {
+              "text": "معنى البسملة هو:",
+              "options": [
+                "نبدأ عملنا باسم الله طلبا للبركة والإعانة",
+                "نطلب المغفرة من الله",
+                "نحمد الله على نعمه",
+                "نستعيذ بالله من الشيطان"
+              ],
+              "answer": "نبدأ عملنا باسم الله طلبا للبركة والإعانة"
+            },
+            {
+              "text": "Why do Muslims say Bismillah before actions like eating?",
+              "options": [
+                "To seek Allah's blessing and help, and to remember Him at the start of any deed",
+                "Because it is a pillar of Islam",
+                "To replace the obligatory prayer",
+                "Because it is only a cultural custom"
+              ],
+              "answer": "To seek Allah's blessing and help, and to remember Him at the start of any deed"
+            },
+            {
+              "text": "The Basmalah is also found inside a surah's body (not just its opening) in one place. Which surah?",
+              "options": [
+                "An-Naml (Surah 27)",
+                "Al-Kahf (Surah 18)",
+                "Maryam (Surah 19)",
+                "Yusuf (Surah 12)"
+              ],
+              "answer": "An-Naml (Surah 27)"
+            }
+          ]
+        },
+        {
+          "id": "stage5",
+          "title": "Al-Basmalah (II) — Allah, Ar-Rahman, Ar-Rahim",
+          "icon": "🌿",
+          "description": "Understanding the three names of Allah gathered in one verse",
+          "kicker": "Three Names, One Verse",
+          "questions": [
+            {
+              "text": "\"اللَّهُ\" is:",
+              "options": [
+                "The proper name of the One true God, unique to Him alone",
+                "A general word meaning 'a god'",
+                "A title given only to angels",
+                "A name used for idols"
+              ],
+              "answer": "The proper name of the One true God, unique to Him alone"
+            },
+            {
+              "text": "\"الرَّحْمَٰنُ\" refers to:",
+              "options": [
+                "Allah's all-encompassing mercy that covers all of creation",
+                "Allah's mercy reserved only for the believers",
+                "Allah's power to punish",
+                "Allah's knowledge of the unseen"
+              ],
+              "answer": "Allah's all-encompassing mercy that covers all of creation"
+            },
+            {
+              "text": "\"الرَّحِيمُ\" refers to:",
+              "options": [
+                "Allah's special mercy reserved for the believers, especially in the Hereafter",
+                "Allah's mercy toward animals only",
+                "A mercy limited to this world only",
+                "A name exclusive to the angels"
+              ],
+              "answer": "Allah's special mercy reserved for the believers, especially in the Hereafter"
+            },
+            {
+              "text": "ما الفرق بين الرحمن والرحيم؟",
+              "options": [
+                "الرحمن رحمته لكل الخلق، والرحيم رحمته خاصة بالمؤمنين",
+                "لا فرق بينهما إطلاقا",
+                "الرحمن للدنيا والرحيم للحيوانات",
+                "الرحيم أعظم من الرحمن في كل شيء"
+              ],
+              "answer": "الرحمن رحمته لكل الخلق، والرحيم رحمته خاصة بالمؤمنين"
+            },
+            {
+              "text": "Both Ar-Rahman and Ar-Rahim come from which root?",
+              "options": [
+                "رحم (mercy)",
+                "حمد (praise)",
+                "عبد (worship)",
+                "ملك (ownership)"
+              ],
+              "answer": "رحم (mercy)"
+            }
+          ]
+        },
+        {
+          "id": "stage6",
+          "title": "Al-Basmalah (III) — Rulings & Lessons",
+          "icon": "📜",
+          "description": "The virtue of starting affairs with Allah's name, and its scholarly status in Al-Fatihah",
+          "kicker": "Rulings and Lessons",
+          "questions": [
+            {
+              "text": "What is the ruling on saying Bismillah before eating?",
+              "options": [
+                "Recommended and emphasized",
+                "Obligatory like the five daily prayers",
+                "Forbidden while eating with others",
+                "Only required on Fridays"
+              ],
+              "answer": "Recommended and emphasized"
+            },
+            {
+              "text": "According to hadith, what may happen if a person eats without saying Bismillah?",
+              "options": [
+                "Shaytan may share in that food with him",
+                "The food loses all nutritional value",
+                "He must repeat his ablution",
+                "Nothing changes at all"
+              ],
+              "answer": "Shaytan may share in that food with him"
+            },
+            {
+              "text": "البسملة تدل على:",
+              "options": [
+                "الاستعانة بالله والتبرك باسمه",
+                "الاستغناء عن الدعاء",
+                "إنهاء العمل بنجاح",
+                "التوبة من الذنوب"
+              ],
+              "answer": "الاستعانة بالله والتبرك باسمه"
+            },
+            {
+              "text": "The Basmalah combines two of Allah's names of mercy back-to-back. What does this teach us?",
+              "options": [
+                "Allah's mercy should be our first hope when beginning any matter",
+                "Mercy is less important than justice",
+                "Only prophets deserve Allah's mercy",
+                "Mercy applies only after death"
+              ],
+              "answer": "Allah's mercy should be our first hope when beginning any matter"
+            },
+            {
+              "text": "Is the Basmalah counted as the first verse of Al-Fatihah by all scholars?",
+              "options": [
+                "No — scholars differ, though all agree it is legislated to be recited",
+                "Yes, unanimously, without any difference of opinion",
+                "No, and no scholar considers it part of the Qur'an at all",
+                "Yes, but only in the Hanafi school"
+              ],
+              "answer": "No — scholars differ, though all agree it is legislated to be recited"
+            }
+          ]
+        },
+        {
+          "id": "stage7",
+          "title": "Al-Fatihah (I) — Names & Virtues",
+          "icon": "📖",
+          "description": "Why Al-Fatihah is called Umm al-Kitab and why every prayer needs it",
+          "kicker": "The Mother of the Book",
+          "questions": [
+            {
+              "text": "Why is Al-Fatihah called \"Umm al-Kitab\" (Mother of the Book)?",
+              "options": [
+                "Because it contains the essential themes of the entire Qur'an in summary",
+                "Because it was the first surah revealed chronologically",
+                "Because it is the longest surah",
+                "Because it has no virtue over other surahs"
+              ],
+              "answer": "Because it contains the essential themes of the entire Qur'an in summary"
+            },
+            {
+              "text": "Al-Fatihah is also called \"As-Sab' al-Mathani\", meaning:",
+              "options": [
+                "The seven oft-repeated verses",
+                "The seven heavens",
+                "The seven names of Allah",
+                "The seven pillars of faith"
+              ],
+              "answer": "The seven oft-repeated verses"
+            },
+            {
+              "text": "How many times, at minimum, does a Muslim recite Al-Fatihah each day through the five prayers?",
+              "options": [
+                "At least 17 times",
+                "Exactly 5 times",
+                "At least 33 times",
+                "Only once a day"
+              ],
+              "answer": "At least 17 times"
+            },
+            {
+              "text": "True or False: No prayer is valid without reciting Al-Fatihah, according to authentic hadith.",
+              "options": [
+                "True",
+                "False"
+              ],
+              "answer": "True"
+            },
+            {
+              "text": "كم عدد آيات سورة الفاتحة؟",
+              "options": [
+                "سبع آيات",
+                "خمس آيات",
+                "عشر آيات",
+                "ثلاث آيات"
+              ],
+              "answer": "سبع آيات"
+            }
+          ]
+        },
+        {
+          "id": "stage8",
+          "title": "Al-Fatihah (II) — Praise & Lordship",
+          "icon": "🙏",
+          "description": "Unpacking Al-Hamdu Lillahi Rabbil 'Alameen",
+          "kicker": "Praise and Lordship",
+          "questions": [
+            {
+              "text": "\"الْحَمْدُ لِلَّهِ\" means:",
+              "options": [
+                "All praise belongs to Allah alone",
+                "Glory be to Allah",
+                "I seek refuge in Allah",
+                "Allah is the Greatest"
+              ],
+              "answer": "All praise belongs to Allah alone"
+            },
+            {
+              "text": "Why does Al-Hamd (praise) belong to Allah exclusively?",
+              "options": [
+                "Because He alone is perfect in His attributes and deserving of praise for all He has created and bestowed",
+                "Because no one else exists in creation",
+                "Because praise is only a linguistic formality",
+                "Because angels demand it"
+              ],
+              "answer": "Because He alone is perfect in His attributes and deserving of praise for all He has created and bestowed"
+            },
+            {
+              "text": "\"رَبِّ الْعَالَمِينَ\" means:",
+              "options": [
+                "Lord of all the worlds (all of creation)",
+                "King of the Arabs only",
+                "Lord of the angels only",
+                "Owner of the Ka'bah only"
+              ],
+              "answer": "Lord of all the worlds (all of creation)"
+            },
+            {
+              "text": "معنى \"العالمين\":",
+              "options": [
+                "كل ما سوى الله من المخلوقات",
+                "الملائكة فقط",
+                "الإنس فقط",
+                "السماوات فقط"
+              ],
+              "answer": "كل ما سوى الله من المخلوقات"
+            },
+            {
+              "text": "What does calling Allah \"Rabb\" (Lord) here primarily establish?",
+              "options": [
+                "Tawhid ar-Rububiyyah — that Allah alone creates, owns, and sustains everything",
+                "That Allah shares His lordship with the angels",
+                "That Allah only sustains the believers",
+                "That 'Rabb' is a title reserved for kings"
+              ],
+              "answer": "Tawhid ar-Rububiyyah — that Allah alone creates, owns, and sustains everything"
+            }
+          ]
+        },
+        {
+          "id": "stage9",
+          "title": "Al-Fatihah (III) — Mercy & the Day of Judgment",
+          "icon": "⚖",
+          "description": "Understanding Ar-Rahman Ar-Rahim, Maliki Yawmid-Din",
+          "kicker": "Mercy and Judgment",
+          "questions": [
+            {
+              "text": "Why are \"Ar-Rahman\" and \"Ar-Rahim\" repeated here, after already appearing in the Basmalah?",
+              "options": [
+                "To emphasize Allah's vast mercy right after mentioning His Lordship, balancing awe with hope",
+                "Because of a copying mistake preserved in recitation",
+                "To fill out the verse count to seven",
+                "Because the Basmalah is not really part of the surah at all"
+              ],
+              "answer": "To emphasize Allah's vast mercy right after mentioning His Lordship, balancing awe with hope"
+            },
+            {
+              "text": "\"مَالِكِ يَوْمِ الدِّينِ\" means:",
+              "options": [
+                "Master/Owner of the Day of Judgment",
+                "King of this worldly life",
+                "Owner of the Ka'bah",
+                "Lord of the angels"
+              ],
+              "answer": "Master/Owner of the Day of Judgment"
+            },
+            {
+              "text": "\"يَوْمِ الدِّينِ\" refers to:",
+              "options": [
+                "The Day of Recompense/Judgment",
+                "The day of the Hijrah",
+                "The day Adam was created",
+                "Friday, specifically"
+              ],
+              "answer": "The Day of Recompense/Judgment"
+            },
+            {
+              "text": "Some qira'at (readings) render this word as \"مَلِكِ\" instead of \"مَالِكِ\". What is the difference?",
+              "options": [
+                "Malik means 'King,' while Maalik means 'Owner/Master' — both readings are authentic and their meanings complement each other",
+                "Malik is incorrect and was never a valid reading",
+                "They are spelled the same with no difference at all",
+                "Maalik refers to angels while Malik refers to Allah"
+              ],
+              "answer": "Malik means 'King,' while Maalik means 'Owner/Master' — both readings are authentic and their meanings complement each other"
+            },
+            {
+              "text": "Why mention the Day of Judgment right after Ar-Rahman and Ar-Rahim?",
+              "options": [
+                "To balance hope in Allah's mercy with awareness of accountability",
+                "To scare the reciter away from worship",
+                "Because mercy and judgment are unrelated topics",
+                "To end the surah's praise section abruptly"
+              ],
+              "answer": "To balance hope in Allah's mercy with awareness of accountability"
+            }
+          ]
+        },
+        {
+          "id": "stage10",
+          "title": "Al-Fatihah (IV) — Worship & Seeking Help",
+          "icon": "🕋",
+          "description": "Iyyaka na'budu wa iyyaka nasta'in — the turning point of the surah",
+          "kicker": "Worship and Reliance",
+          "questions": [
+            {
+              "text": "\"إِيَّاكَ نَعْبُدُ\" means:",
+              "options": [
+                "You alone we worship",
+                "You alone we praise",
+                "You alone we fear",
+                "You alone we obey blindly"
+              ],
+              "answer": "You alone we worship"
+            },
+            {
+              "text": "\"وَإِيَّاكَ نَسْتَعِينُ\" means:",
+              "options": [
+                "And You alone we ask for help",
+                "And You alone we thank",
+                "And You alone we remember",
+                "And You alone we follow"
+              ],
+              "answer": "And You alone we ask for help"
+            },
+            {
+              "text": "Why does \"نَعْبُدُ\" (worship) come before \"نَسْتَعِينُ\" (seeking help)?",
+              "options": [
+                "Because worship is the goal and seeking help is the means to accomplish it, so the goal is mentioned first",
+                "Because seeking help is more important than worship",
+                "There is no reason; the order is arbitrary",
+                "Because Arabic grammar requires verbs before objects"
+              ],
+              "answer": "Because worship is the goal and seeking help is the means to accomplish it, so the goal is mentioned first"
+            },
+            {
+              "text": "This ayah marks a shift in the surah's address, from speaking about Allah to speaking directly to Him. What is this called?",
+              "options": [
+                "Iltifat (a shift in address)",
+                "Isti'adhah",
+                "Tafsir bil-Ma'thur",
+                "Naskh"
+              ],
+              "answer": "Iltifat (a shift in address)"
+            },
+            {
+              "text": "What does this ayah teach about worship and reliance on Allah (tawakkul)?",
+              "options": [
+                "True worship cannot be achieved without seeking Allah's help, and we should rely on no one else for it",
+                "Worship and seeking help are two unrelated acts",
+                "Only prophets need to seek Allah's help",
+                "Seeking help from Allah replaces the need to worship Him"
+              ],
+              "answer": "True worship cannot be achieved without seeking Allah's help, and we should rely on no one else for it"
+            }
+          ]
+        },
+        {
+          "id": "stage11",
+          "title": "Al-Fatihah (V) — The Straight Path",
+          "icon": "🧭",
+          "description": "Ihdinas-Siratal Mustaqim and the three groups of people mentioned",
+          "kicker": "The Straight Path",
+          "questions": [
+            {
+              "text": "\"اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ\" means:",
+              "options": [
+                "Guide us to the straight path",
+                "Protect us from the Fire",
+                "Forgive us our sins",
+                "Grant us provision"
+              ],
+              "answer": "Guide us to the straight path"
+            },
+            {
+              "text": "\"صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ\" refers to:",
+              "options": [
+                "The path of those Allah has favored (the prophets, the truthful, the martyrs, the righteous)",
+                "The path of the wealthy",
+                "The path of the earlier nations only",
+                "The path of the angels alone"
+              ],
+              "answer": "The path of those Allah has favored (the prophets, the truthful, the martyrs, the righteous)"
+            },
+            {
+              "text": "\"غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ\" is most commonly explained by commentators as referring to:",
+              "options": [
+                "Those who knew the truth but rejected it deliberately",
+                "Those who never received any revelation",
+                "The angels who disobeyed Allah",
+                "The idol-worshippers of Makkah specifically"
+              ],
+              "answer": "Those who knew the truth but rejected it deliberately"
+            },
+            {
+              "text": "\"وَلَا الضَّالِّينَ\" is most commonly explained by commentators as referring to:",
+              "options": [
+                "Those who worship or act without knowledge, going astray",
+                "Those who follow the straight path perfectly",
+                "The prophets and messengers",
+                "Those who never sinned"
+              ],
+              "answer": "Those who worship or act without knowledge, going astray"
+            },
+            {
+              "text": "Why do we ask for guidance to the Straight Path even though we are already believers?",
+              "options": [
+                "Because we need Allah's constant guidance to remain firm and increase in it every moment of our lives",
+                "Because the request is only symbolic and has no real meaning",
+                "Because believers are exempt from ever going astray",
+                "Because this du'a is only for new Muslims"
+              ],
+              "answer": "Because we need Allah's constant guidance to remain firm and increase in it every moment of our lives"
+            }
+          ]
+        },
+        {
+          "id": "stage12",
+          "title": "Al-Fatihah (VI) — Structure & Lessons",
+          "icon": "🌟",
+          "description": "How Al-Fatihah is divided, and its overall message",
+          "kicker": "The Big Picture",
+          "questions": [
+            {
+              "text": "A hadith qudsi describes Al-Fatihah as divided between Allah and His servant. What is this division?",
+              "options": [
+                "The first half (praise of Allah) is for Allah, and the second half (asking for guidance) is for the servant",
+                "The first half is for men and the second for women",
+                "It is divided equally between the five daily prayers",
+                "It has no such division; this is a misconception"
+              ],
+              "answer": "The first half (praise of Allah) is for Allah, and the second half (asking for guidance) is for the servant"
+            },
+            {
+              "text": "What are the three main sections of Al-Fatihah?",
+              "options": [
+                "Praise of Allah, then a declaration of worship & reliance, then a supplication for guidance",
+                "History, law, and prophecy",
+                "Creation, judgment, and paradise",
+                "Warning, promise, and story"
+              ],
+              "answer": "Praise of Allah, then a declaration of worship & reliance, then a supplication for guidance"
+            },
+            {
+              "text": "Why is Al-Fatihah recited in every rak'ah rather than just once in the prayer?",
+              "options": [
+                "Because it summarizes the purpose of the entire prayer and life itself",
+                "Because it is the shortest surah in the Qur'an",
+                "Because the other surahs cannot be repeated",
+                "Because it was revealed multiple times"
+              ],
+              "answer": "Because it summarizes the purpose of the entire prayer and life itself"
+            },
+            {
+              "text": "What balance does Al-Fatihah teach every believer to maintain?",
+              "options": [
+                "A balance between hope in Allah's mercy and fear of the Day of Judgment",
+                "A balance between wealth and poverty",
+                "A balance between speech and silence",
+                "A balance between fasting and eating"
+              ],
+              "answer": "A balance between hope in Allah's mercy and fear of the Day of Judgment"
+            },
+            {
+              "text": "In one sentence, what is the overall theme of Surah Al-Fatihah?",
+              "options": [
+                "It is a complete supplication teaching the servant how to praise Allah and ask Him for the straight path",
+                "It is mainly a historical narrative about past nations",
+                "It is a set of legal rulings on inheritance",
+                "It is a description of Paradise and Hellfire"
+              ],
+              "answer": "It is a complete supplication teaching the servant how to praise Allah and ask Him for the straight path"
+            }
+          ]
+        },
+        {
+          "id": "stage13",
+          "title": "Al-'Asr (I) — The Oath by Time",
+          "icon": "⏳",
+          "description": "Why Allah swears by time, and the default state of mankind",
+          "kicker": "The Oath and the Loss",
+          "questions": [
+            {
+              "text": "\"وَالْعَصْرِ\" — Allah swears by what?",
+              "options": [
+                "Time / the passing of time",
+                "The sun",
+                "The night",
+                "The Ka'bah"
+              ],
+              "answer": "Time / the passing of time"
+            },
+            {
+              "text": "Why does Allah swear by time in this surah?",
+              "options": [
+                "To draw attention to its value and how central it is to human loss or gain",
+                "Because time is worshipped in Islam",
+                "Because it has no real significance",
+                "To indicate the surah is very long"
+              ],
+              "answer": "To draw attention to its value and how central it is to human loss or gain"
+            },
+            {
+              "text": "\"إِنَّ الْإِنْسَانَ لَفِي خُسْرٍ\" means:",
+              "options": [
+                "Indeed, mankind is in loss",
+                "Indeed, mankind is successful",
+                "Indeed, mankind is asleep",
+                "Indeed, mankind is patient"
+              ],
+              "answer": "Indeed, mankind is in loss"
+            },
+            {
+              "text": "What is the general default state of every human being according to this surah, unless an exception applies?",
+              "options": [
+                "A state of loss (khusr)",
+                "A state of guaranteed success",
+                "A state of wealth",
+                "A state of knowledge"
+              ],
+              "answer": "A state of loss (khusr)"
+            },
+            {
+              "text": "Imam Ash-Shafi'i famously said about this surah that:",
+              "options": [
+                "If people only reflected on it, it would be sufficient for them",
+                "It was the first surah ever revealed",
+                "It should be recited only in Ramadan",
+                "It replaces the need for Al-Fatihah in prayer"
+              ],
+              "answer": "If people only reflected on it, it would be sufficient for them"
+            }
+          ]
+        },
+        {
+          "id": "stage14",
+          "title": "Al-'Asr (II) — The Four Conditions",
+          "icon": "🤝",
+          "description": "The four things that save a person from loss",
+          "kicker": "Conditions for Salvation",
+          "questions": [
+            {
+              "text": "What is the first condition for salvation mentioned in Surah Al-'Asr?",
+              "options": [
+                "Iman (faith/belief)",
+                "Wealth",
+                "Knowledge of Arabic",
+                "Physical strength"
+              ],
+              "answer": "Iman (faith/belief)"
+            },
+            {
+              "text": "The second condition, \"وَعَمِلُوا الصَّالِحَاتِ\", means:",
+              "options": [
+                "And did righteous deeds",
+                "And spoke the truth",
+                "And remained silent",
+                "And traveled far"
+              ],
+              "answer": "And did righteous deeds"
+            },
+            {
+              "text": "\"وَتَوَاصَوْا بِالْحَقِّ\" means:",
+              "options": [
+                "And advised/enjoined one another to the truth",
+                "And competed with one another in wealth",
+                "And argued with one another",
+                "And avoided one another"
+              ],
+              "answer": "And advised/enjoined one another to the truth"
+            },
+            {
+              "text": "The fourth condition, \"وَتَوَاصَوْا بِالصَّبْرِ\", means:",
+              "options": [
+                "And advised/enjoined one another to patience",
+                "And advised one another to haste",
+                "And advised one another to silence",
+                "And advised one another to wealth"
+              ],
+              "answer": "And advised/enjoined one another to patience"
+            },
+            {
+              "text": "ما هي الشروط الأربعة للنجاة من الخسران في سورة العصر؟",
+              "options": [
+                "الإيمان، والعمل الصالح، والتواصي بالحق، والتواصي بالصبر",
+                "الصلاة والصيام والحج والزكاة",
+                "العلم والمال والصحة والوقت",
+                "الصبر والشكر والتوبة والدعاء"
+              ],
+              "answer": "الإيمان، والعمل الصالح، والتواصي بالحق، والتواصي بالصبر"
+            }
+          ]
+        },
+        {
+          "id": "stage15",
+          "title": "Al-'Asr (III) — Lessons",
+          "icon": "💡",
+          "description": "Why all four conditions must come together, and what this teaches about time",
+          "kicker": "Lessons for Life",
+          "questions": [
+            {
+              "text": "Why must belief (Iman) come before righteous deeds in the surah's order?",
+              "options": [
+                "Because correct belief is the foundation upon which acceptable deeds are built",
+                "Because deeds have no relation to belief at all",
+                "Because righteous deeds are impossible for believers",
+                "Because the order has no meaning"
+              ],
+              "answer": "Because correct belief is the foundation upon which acceptable deeds are built"
+            },
+            {
+              "text": "Why does advising others to truth and patience matter for salvation, not just personal deeds?",
+              "options": [
+                "Because a complete believer helps others as well as reforming themselves",
+                "Because it is easier than doing good deeds oneself",
+                "Because it replaces the need for personal righteousness",
+                "Because it is only recommended, never important"
+              ],
+              "answer": "Because a complete believer helps others as well as reforming themselves"
+            },
+            {
+              "text": "What does \"patience\" (Sabr) refer to in this surah's context?",
+              "options": [
+                "Patience in obeying Allah, avoiding sin, and enduring hardship while calling to the truth",
+                "Patience only in financial matters",
+                "Patience only during fasting",
+                "Patience only with family members"
+              ],
+              "answer": "Patience in obeying Allah, avoiding sin, and enduring hardship while calling to the truth"
+            },
+            {
+              "text": "What overall lesson does Surah Al-'Asr teach about time?",
+              "options": [
+                "Time is a precious asset that, if not used in faith and good deeds, results in loss",
+                "Time has no real value in Islam",
+                "Time should only be spent working for wealth",
+                "Time is only relevant to the wealthy"
+              ],
+              "answer": "Time is a precious asset that, if not used in faith and good deeds, results in loss"
+            },
+            {
+              "text": "True or False: Simply having faith without good deeds is enough to be saved from loss according to this surah.",
+              "options": [
+                "False",
+                "True"
+              ],
+              "answer": "False"
+            }
+          ]
+        },
+        {
+          "id": "stage16",
+          "title": "Al-Humazah (I) — The Mocker & Backbiter",
+          "icon": "🗣",
+          "description": "The meaning of Humazah and Lumazah, and the occasion of revelation",
+          "kicker": "The Mocker and the Backbiter",
+          "questions": [
+            {
+              "text": "\"وَيْلٌ لِكُلِّ هُمَزَةٍ لُمَزَةٍ\" — what does \"الهمزة\" mean?",
+              "options": [
+                "One who mocks/slanders people, whether to their face or behind their backs",
+                "One who is extremely generous",
+                "One who prays a lot",
+                "One who travels frequently"
+              ],
+              "answer": "One who mocks/slanders people, whether to their face or behind their backs"
+            },
+            {
+              "text": "\"اللمزة\" specifically emphasizes:",
+              "options": [
+                "Slandering/defaming people, often behind their backs, through words",
+                "Giving charity secretly",
+                "Reciting the Qur'an beautifully",
+                "Helping the poor"
+              ],
+              "answer": "Slandering/defaming people, often behind their backs, through words"
+            },
+            {
+              "text": "\"وَيْلٌ\" at the start of the surah expresses:",
+              "options": [
+                "A severe warning/threat",
+                "A simple greeting",
+                "A statement of joy",
+                "A question"
+              ],
+              "answer": "A severe warning/threat"
+            },
+            {
+              "text": "According to tafsir, this surah was revealed concerning people who:",
+              "options": [
+                "Mocked and slandered others, especially the poor, while boasting about their own wealth",
+                "Fought in the Battle of Badr",
+                "Migrated to Madinah",
+                "Built the Ka'bah"
+              ],
+              "answer": "Mocked and slandered others, especially the poor, while boasting about their own wealth"
+            },
+            {
+              "text": "Why does the surah combine \"backbiting\" and \"love of wealth\" as connected sins?",
+              "options": [
+                "Because arrogance from wealth often leads a person to look down on and mock others",
+                "Because they are entirely unrelated topics placed together randomly",
+                "Because wealthy people never sin in other ways",
+                "Because backbiting always leads to wealth"
+              ],
+              "answer": "Because arrogance from wealth often leads a person to look down on and mock others"
+            }
+          ]
+        },
+        {
+          "id": "stage17",
+          "title": "Al-Humazah (II) — Love of Wealth",
+          "icon": "💰",
+          "description": "The mistaken belief that wealth grants permanence",
+          "kicker": "Counting Wealth",
+          "questions": [
+            {
+              "text": "\"الَّذِي جَمَعَ مَالًا وَعَدَّدَهُ\" describes someone who:",
+              "options": [
+                "Collected wealth and kept counting/hoarding it",
+                "Gave away his wealth in charity",
+                "Lost all his wealth",
+                "Refused to work for wealth"
+              ],
+              "answer": "Collected wealth and kept counting/hoarding it"
+            },
+            {
+              "text": "\"يَحْسَبُ أَنَّ مَالَهُ أَخْلَدَهُ\" means this person thinks:",
+              "options": [
+                "His wealth will make him live forever (immortal)",
+                "His wealth will be inherited justly",
+                "His wealth will be taken away soon",
+                "His wealth belongs to Allah"
+              ],
+              "answer": "His wealth will make him live forever (immortal)"
+            },
+            {
+              "text": "What is the core mistaken belief being condemned in this ayah?",
+              "options": [
+                "That wealth can grant permanence or protect one from death and accountability",
+                "That wealth should always be shared with the poor",
+                "That wealth is inherently evil",
+                "That wealth cannot be earned honestly"
+              ],
+              "answer": "That wealth can grant permanence or protect one from death and accountability"
+            },
+            {
+              "text": "What attitude toward wealth does this surah warn against?",
+              "options": [
+                "Obsessively hoarding and counting wealth while forgetting Allah and the Hereafter",
+                "Spending wealth on one's family",
+                "Saving wealth for emergencies",
+                "Earning wealth through honest work"
+              ],
+              "answer": "Obsessively hoarding and counting wealth while forgetting Allah and the Hereafter"
+            },
+            {
+              "text": "يحسب أن ماله أخلده - ما الخطأ في هذا الاعتقاد؟",
+              "options": [
+                "لا شيء يخلد الإنسان في الدنيا، والمال لا ينفعه يوم القيامة",
+                "المال يخلد صاحبه فعلا",
+                "لا خطأ في هذا الاعتقاد",
+                "هذا اعتقاد صحيح عند جميع الناس"
+              ],
+              "answer": "لا شيء يخلد الإنسان في الدنيا، والمال لا ينفعه يوم القيامة"
+            }
+          ]
+        },
+        {
+          "id": "stage18",
+          "title": "Al-Humazah (III) — Al-Hutamah",
+          "icon": "🔥",
+          "description": "The Crusher — a name of the Hellfire and its severity",
+          "kicker": "Al-Hutamah, the Crusher",
+          "questions": [
+            {
+              "text": "\"كَلَّا لَيُنْبَذَنَّ فِي الْحُطَمَةِ\" — what does \"الحطمة\" mean?",
+              "options": [
+                "The Crusher, a name of the Hellfire that crushes/breaks whatever is thrown into it",
+                "A garden in Paradise",
+                "A mountain in Makkah",
+                "A river on Earth"
+              ],
+              "answer": "The Crusher, a name of the Hellfire that crushes/breaks whatever is thrown into it"
+            },
+            {
+              "text": "\"وَمَا أَدْرَاكَ مَا الْحُطَمَةُ\" is a rhetorical device used in the Qur'an to:",
+              "options": [
+                "Emphasize the terrifying, indescribable nature of what follows",
+                "Simplify a difficult concept",
+                "Introduce a joke",
+                "Confuse the listener intentionally"
+              ],
+              "answer": "Emphasize the terrifying, indescribable nature of what follows"
+            },
+            {
+              "text": "\"نَارُ اللَّهِ الْمُوقَدَةُ\" describes the Hutamah as:",
+              "options": [
+                "Allah's kindled Fire",
+                "A fire made by men",
+                "A fire that eventually goes out",
+                "A cool, comfortable fire"
+              ],
+              "answer": "Allah's kindled Fire"
+            },
+            {
+              "text": "What does calling it \"نار الله\" (Allah's Fire) emphasize?",
+              "options": [
+                "Its immense severity, since it is attributed directly to Allah's power",
+                "That it is a minor punishment",
+                "That it only affects animals",
+                "That it is symbolic, not real"
+              ],
+              "answer": "Its immense severity, since it is attributed directly to Allah's power"
+            },
+            {
+              "text": "How is this consequence connected to the sin described earlier in the surah?",
+              "options": [
+                "It is the punishment for those who mocked others and were arrogant due to their wealth",
+                "It is unrelated to the earlier verses",
+                "It is a reward for patience",
+                "It only applies to prophets who disobeyed"
+              ],
+              "answer": "It is the punishment for those who mocked others and were arrogant due to their wealth"
+            }
+          ]
+        },
+        {
+          "id": "stage19",
+          "title": "Al-Humazah (IV) — Reaching the Hearts",
+          "icon": "🧱",
+          "description": "The vivid imagery of the Fire closing in on those who are punished",
+          "kicker": "Sealed and Extended",
+          "questions": [
+            {
+              "text": "\"الَّتِي تَطَّلِعُ عَلَى الْأَفْئِدَةِ\" means the Fire:",
+              "options": [
+                "Rises up and reaches over the hearts",
+                "Stays far below the earth",
+                "Only touches the skin",
+                "Never actually reaches anyone"
+              ],
+              "answer": "Rises up and reaches over the hearts"
+            },
+            {
+              "text": "Why does the ayah specifically mention the fire reaching the \"hearts\" (al-af'idah)?",
+              "options": [
+                "Because the heart is the seat of one's true feelings and intentions, where the arrogance and love of wealth originated",
+                "Because the heart is physically the strongest organ",
+                "Because the ayah is only describing biology",
+                "Because it has no particular significance"
+              ],
+              "answer": "Because the heart is the seat of one's true feelings and intentions, where the arrogance and love of wealth originated"
+            },
+            {
+              "text": "\"إِنَّهَا عَلَيْهِمْ مُؤْصَدَةٌ\" means the Fire will be:",
+              "options": [
+                "Closed/sealed shut over them",
+                "Open on all sides",
+                "Cool and comfortable",
+                "Temporary and brief"
+              ],
+              "answer": "Closed/sealed shut over them"
+            },
+            {
+              "text": "\"فِي عَمَدٍ مُمَدَّدَةٍ\" describes:",
+              "options": [
+                "Extended columns/pillars, further sealing/trapping them",
+                "Gardens with flowing rivers",
+                "Tall trees for shade",
+                "Roads leading out of the Fire"
+              ],
+              "answer": "Extended columns/pillars, further sealing/trapping them"
+            },
+            {
+              "text": "What is the overall picture painted in the final ayat of Al-Humazah?",
+              "options": [
+                "Complete entrapment with no escape, as punishment for the arrogance shown in life",
+                "A temporary punishment followed by quick release",
+                "A description of worldly wealth",
+                "A depiction of Paradise's blessings"
+              ],
+              "answer": "Complete entrapment with no escape, as punishment for the arrogance shown in life"
+            }
+          ]
+        },
+        {
+          "id": "stage20",
+          "title": "Al-Humazah (V) — Lessons",
+          "icon": "💡",
+          "description": "What this surah teaches about the tongue, wealth, and the heart",
+          "kicker": "Guarding Tongue and Wealth",
+          "questions": [
+            {
+              "text": "What are the two major sins condemned throughout Surah Al-Humazah?",
+              "options": [
+                "Backbiting/slandering others, and obsessive love & hoarding of wealth",
+                "Lying and stealing",
+                "Pride and laziness",
+                "Disbelief and idol worship"
+              ],
+              "answer": "Backbiting/slandering others, and obsessive love & hoarding of wealth"
+            },
+            {
+              "text": "What does this surah teach about the purpose of wealth?",
+              "options": [
+                "Wealth is not a means of eternal security; it should be used responsibly, not hoarded arrogantly",
+                "Wealth should never be earned",
+                "Wealth automatically corrupts anyone who has it",
+                "Wealth guarantees a person's salvation"
+              ],
+              "answer": "Wealth is not a means of eternal security; it should be used responsibly, not hoarded arrogantly"
+            },
+            {
+              "text": "How can a believer protect themselves from the sin of humzah/lumzah?",
+              "options": [
+                "By guarding the tongue, avoiding mockery/backbiting, and having good manners with all people",
+                "By avoiding all social interaction entirely",
+                "By only speaking to the wealthy",
+                "By never earning any wealth"
+              ],
+              "answer": "By guarding the tongue, avoiding mockery/backbiting, and having good manners with all people"
+            },
+            {
+              "text": "How does the vivid imagery of the Hutamah connect to the surah's opening warning?",
+              "options": [
+                "It shows the real consequence awaiting those who habitually mock and hoard wealth, matching the crime to the punishment",
+                "It has no relation to the opening verses",
+                "It only describes a natural disaster",
+                "It describes a reward for the wealthy"
+              ],
+              "answer": "It shows the real consequence awaiting those who habitually mock and hoard wealth, matching the crime to the punishment"
+            },
+            {
+              "text": "True or False: Surah Al-Humazah only condemns wealthy people in general, without pointing to any specific behavior.",
+              "options": [
+                "False",
+                "True"
+              ],
+              "answer": "False"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intermediate",
+      "label": "Intermediate",
+      "icon": "🌿",
+      "description": "Stories and character — Al-Fil, Quraysh, Al-Ma'un, Al-Kawthar & Al-Kafirun",
+      "stages": [
+        {
+          "id": "stage1",
+          "title": "Al-Fil (I) — The Year of the Elephant",
+          "icon": "🐘",
+          "description": "The story of Abraha's march on the Ka'bah",
+          "kicker": "The Year of the Elephant",
+          "questions": [
+            {
+              "text": "What historical event does Surah Al-Fil refer to?",
+              "options": [
+                "Abraha's attempt to destroy the Ka'bah with an army that included elephants",
+                "The Battle of Badr",
+                "The migration to Madinah",
+                "The building of the Ka'bah by Ibrahim"
+              ],
+              "answer": "Abraha's attempt to destroy the Ka'bah with an army that included elephants"
+            },
+            {
+              "text": "In what year, relative to the Prophet's ﷺ birth, did the Year of the Elephant occur?",
+              "options": [
+                "The same year the Prophet ﷺ was born (or shortly before)",
+                "Ten years after the Prophet's ﷺ birth",
+                "During the Prophet's ﷺ old age",
+                "A century before Islam"
+              ],
+              "answer": "The same year the Prophet ﷺ was born (or shortly before)"
+            },
+            {
+              "text": "Why did Abraha march towards Makkah?",
+              "options": [
+                "To destroy the Ka'bah, after building a grand church in Yemen that failed to divert Arab pilgrims",
+                "To trade with Quraysh",
+                "To convert to the religion of the Arabs",
+                "To visit relatives"
+              ],
+              "answer": "To destroy the Ka'bah, after building a grand church in Yemen that failed to divert Arab pilgrims"
+            },
+            {
+              "text": "\"أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ\" — what does this opening rhetorical question do?",
+              "options": [
+                "It draws attention to a well-known event as a sign of Allah's power",
+                "It asks the Prophet ﷺ a question he cannot answer",
+                "It denies that the event ever happened",
+                "It introduces a legal ruling"
+              ],
+              "answer": "It draws attention to a well-known event as a sign of Allah's power"
+            },
+            {
+              "text": "مَن هو أبرهة؟",
+              "options": [
+                "قائد جيش أراد هدم الكعبة ومعه الفيلة",
+                "أحد الصحابة",
+                "ملك من ملوك مكة",
+                "أحد أنبياء بني إسرائيل"
+              ],
+              "answer": "قائد جيش أراد هدم الكعبة ومعه الفيلة"
+            }
+          ]
+        },
+        {
+          "id": "stage2",
+          "title": "Al-Fil (II) — Allah Foils Their Plan",
+          "icon": "🛡",
+          "description": "How Allah made the plot of the People of the Elephant fail",
+          "kicker": "Their Plan Goes Astray",
+          "questions": [
+            {
+              "text": "\"أَصْحَابِ الْفِيلِ\" refers to:",
+              "options": [
+                "The People/Companions of the Elephant (Abraha's army)",
+                "The people of Madinah",
+                "The tribe of Quraysh",
+                "The angels sent to help the Prophet ﷺ"
+              ],
+              "answer": "The People/Companions of the Elephant (Abraha's army)"
+            },
+            {
+              "text": "\"أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ\" means Allah:",
+              "options": [
+                "Made their plan go astray/into ruin, causing it to fail completely",
+                "Rewarded their plan with success",
+                "Ignored their plan entirely",
+                "Delayed their plan for years"
+              ],
+              "answer": "Made their plan go astray/into ruin, causing it to fail completely"
+            },
+            {
+              "text": "What is emphasized by beginning the surah with a rhetorical question about something well known?",
+              "options": [
+                "The certainty and undeniable nature of this sign of Allah's power",
+                "That the event is only a legend",
+                "That no one had heard of this event before",
+                "That the event is unimportant"
+              ],
+              "answer": "The certainty and undeniable nature of this sign of Allah's power"
+            },
+            {
+              "text": "What general lesson does this opening teach about those who oppose Allah's sacred symbols?",
+              "options": [
+                "Their plots ultimately fail no matter how powerful they seem",
+                "They always succeed in the end",
+                "Allah never intervenes in worldly affairs",
+                "Only prophets are protected from such plots"
+              ],
+              "answer": "Their plots ultimately fail no matter how powerful they seem"
+            },
+            {
+              "text": "ماذا فعل الله بكيد أصحاب الفيل؟",
+              "options": [
+                "جعله في تضليل، أي أبطله وأفشله",
+                "قبله ونصرهم",
+                "أجّله إلى وقت آخر",
+                "لم يتدخل فيه"
+              ],
+              "answer": "جعله في تضليل، أي أبطله وأفشله"
+            }
+          ]
+        },
+        {
+          "id": "stage3",
+          "title": "Al-Fil (III) — The Ababil Birds",
+          "icon": "🐦",
+          "description": "Allah's small but decisive means of destroying a mighty army",
+          "kicker": "Flocks of Birds",
+          "questions": [
+            {
+              "text": "\"طَيْرًا أَبَابِيلَ\" refers to:",
+              "options": [
+                "Flocks of birds sent by Allah against Abraha's army",
+                "A type of storm cloud",
+                "A group of angels in human form",
+                "A tribe that helped Quraysh"
+              ],
+              "answer": "Flocks of birds sent by Allah against Abraha's army"
+            },
+            {
+              "text": "\"تَرْمِيهِمْ بِحِجَارَةٍ مِنْ سِجِّيلٍ\" means the birds threw at them:",
+              "options": [
+                "Stones of baked clay",
+                "Arrows of fire",
+                "Handfuls of sand",
+                "Pieces of wood"
+              ],
+              "answer": "Stones of baked clay"
+            },
+            {
+              "text": "What miraculous element does this event show about Allah's support for the sacred House?",
+              "options": [
+                "Allah defended the Ka'bah using a small, seemingly weak means (birds) against a mighty army",
+                "Allah needed the help of the Quraysh army",
+                "Allah used a natural disease outbreak only",
+                "Allah allowed the Ka'bah to be destroyed first"
+              ],
+              "answer": "Allah defended the Ka'bah using a small, seemingly weak means (birds) against a mighty army"
+            },
+            {
+              "text": "من الذي أرسل الطير الأبابيل؟",
+              "options": [
+                "الله سبحانه وتعالى",
+                "أهل مكة",
+                "أبرهة نفسه",
+                "جبريل عليه السلام وحده بدون أمر"
+              ],
+              "answer": "الله سبحانه وتعالى"
+            },
+            {
+              "text": "Why is it significant that Allah used something as small as birds and stones rather than a human army?",
+              "options": [
+                "It shows His absolute power — He needs no conventional means to defeat the mightiest forces",
+                "It shows that Allah's power is limited to small creatures",
+                "It shows the birds were naturally stronger than elephants",
+                "It has no particular significance"
+              ],
+              "answer": "It shows His absolute power — He needs no conventional means to defeat the mightiest forces"
+            }
+          ]
+        },
+        {
+          "id": "stage4",
+          "title": "Al-Fil (IV) — Like Eaten Straw",
+          "icon": "🌾",
+          "description": "The complete devastation of Abraha's army",
+          "kicker": "Eaten Straw",
+          "questions": [
+            {
+              "text": "\"فَجَعَلَهُمْ كَعَصْفٍ مَأْكُولٍ\" means Allah made them like:",
+              "options": [
+                "Straw/chaff that has been eaten (completely devastated)",
+                "A garden in full bloom",
+                "Fresh green crops",
+                "A calm sea"
+              ],
+              "answer": "Straw/chaff that has been eaten (completely devastated)"
+            },
+            {
+              "text": "What does this simile emphasize about the fate of Abraha's army?",
+              "options": [
+                "Total destruction, as if they were consumed and left as worthless remains",
+                "A partial and temporary setback",
+                "Their eventual victory over Makkah",
+                "Their peaceful retreat"
+              ],
+              "answer": "Total destruction, as if they were consumed and left as worthless remains"
+            },
+            {
+              "text": "عصف مأكول - لماذا شُبِّه الجيش بهذا؟",
+              "options": [
+                "للدلالة على شدة الهلاك والدمار الذي أصابهم",
+                "للدلالة على قوتهم الباقية",
+                "للدلالة على نجاتهم",
+                "لا علاقة لهذا التشبيه بمصيرهم"
+              ],
+              "answer": "للدلالة على شدة الهلاك والدمار الذي أصابهم"
+            },
+            {
+              "text": "What does this ending teach about the outcome for those who transgress against Allah's sanctities?",
+              "options": [
+                "Complete ruin and humiliation, regardless of their apparent strength",
+                "Eventual forgiveness without consequence",
+                "A delayed punishment in the next life only",
+                "No punishment at all in most cases"
+              ],
+              "answer": "Complete ruin and humiliation, regardless of their apparent strength"
+            },
+            {
+              "text": "How does the brevity of this surah's destruction narrative (only 5 ayat) reflect the ease of Allah's power?",
+              "options": [
+                "It shows that for Allah, destroying even a mighty army takes no great effort",
+                "It shows the event was insignificant",
+                "It shows the story is incomplete",
+                "It shows Allah struggled to defeat them"
+              ],
+              "answer": "It shows that for Allah, destroying even a mighty army takes no great effort"
+            }
+          ]
+        },
+        {
+          "id": "stage5",
+          "title": "Al-Fil (V) — Lessons",
+          "icon": "💡",
+          "description": "What this surah teaches about Allah's protection of His sacred House",
+          "kicker": "Allah Protects His House",
+          "questions": [
+            {
+              "text": "What is the primary lesson of Surah Al-Fil regarding the Ka'bah?",
+              "options": [
+                "Allah Himself protects His sacred House, no matter how powerful the aggressor",
+                "The Ka'bah was left undefended by Allah",
+                "The Ka'bah was destroyed and later rebuilt",
+                "The Ka'bah has no special status in Islam"
+              ],
+              "answer": "Allah Himself protects His sacred House, no matter how powerful the aggressor"
+            },
+            {
+              "text": "How does this surah connect historically to the Prophet's ﷺ birth?",
+              "options": [
+                "It occurred the same year, showing Allah's providence was already preparing the way for the final Messenger",
+                "It occurred a thousand years before the Prophet ﷺ",
+                "It has no connection to his birth at all",
+                "It occurred after his death"
+              ],
+              "answer": "It occurred the same year, showing Allah's providence was already preparing the way for the final Messenger"
+            },
+            {
+              "text": "What does this surah teach about relying on worldly power versus Allah's support?",
+              "options": [
+                "Worldly power (armies, elephants) is nothing next to Allah's decree",
+                "Worldly power always defeats divine intervention",
+                "Allah only supports the wealthy",
+                "Worldly power is irrelevant to faith entirely"
+              ],
+              "answer": "Worldly power (armies, elephants) is nothing next to Allah's decree"
+            },
+            {
+              "text": "Why is this surah often mentioned alongside Surah Quraysh?",
+              "options": [
+                "Because Quraysh's safety and trade were a direct blessing that followed from Allah's protection of the Ka'bah",
+                "Because they share the exact same wording",
+                "Because they were revealed on the same day for unrelated reasons",
+                "Because both mention Abraha by name"
+              ],
+              "answer": "Because Quraysh's safety and trade were a direct blessing that followed from Allah's protection of the Ka'bah"
+            },
+            {
+              "text": "True or False: Abraha succeeded in partially damaging the Ka'bah before being stopped.",
+              "options": [
+                "False",
+                "True"
+              ],
+              "answer": "False"
+            }
+          ]
+        },
+        {
+          "id": "stage6",
+          "title": "Surah Quraysh (I) — Ilaf & the Link to Al-Fil",
+          "icon": "🐪",
+          "description": "The meaning of Ilaf and how this surah connects to Al-Fil",
+          "kicker": "The Blessing of Ilaf",
+          "questions": [
+            {
+              "text": "\"لِإِيلَافِ قُرَيْشٍ\" — what does \"الإيلاف\" mean?",
+              "options": [
+                "Familiarity/security, referring to the secure arrangement Quraysh had for their trade journeys",
+                "A type of trade good",
+                "A name for the Ka'bah",
+                "A tribal war"
+              ],
+              "answer": "Familiarity/security, referring to the secure arrangement Quraysh had for their trade journeys"
+            },
+            {
+              "text": "Why do many scholars link Surah Quraysh directly to Surah Al-Fil?",
+              "options": [
+                "Because the outcome of Al-Fil (Allah's protection of the Ka'bah) is what allowed Quraysh to remain secure and continue their trade",
+                "Because they were revealed to different prophets",
+                "Because they describe unrelated historical events",
+                "Because Quraysh is mentioned by name in Al-Fil"
+              ],
+              "answer": "Because the outcome of Al-Fil (Allah's protection of the Ka'bah) is what allowed Quraysh to remain secure and continue their trade"
+            },
+            {
+              "text": "What tribe is specifically referred to in this surah?",
+              "options": [
+                "Quraysh, the tribe of the Prophet ﷺ and custodians of the Ka'bah",
+                "The tribe of Thaqif",
+                "The tribe of Aws",
+                "The tribe of Khazraj"
+              ],
+              "answer": "Quraysh, the tribe of the Prophet ﷺ and custodians of the Ka'bah"
+            },
+            {
+              "text": "What broader meaning does \"Ilaf\" carry beyond travel?",
+              "options": [
+                "A sense of being accustomed to/settled into safety and routine, granted by Allah",
+                "A type of financial debt",
+                "A form of tribal punishment",
+                "A ritual sacrifice"
+              ],
+              "answer": "A sense of being accustomed to/settled into safety and routine, granted by Allah"
+            },
+            {
+              "text": "لماذا سميت السورة باسم \"قريش\"؟",
+              "options": [
+                "لأنها تتحدث عن نعمة الله على قبيلة قريش بالإيلاف والأمن",
+                "لأن قريشا نزلت عليهم أول آية في القرآن",
+                "لأنها أطول سورة تخص قبيلة",
+                "لا سبب معروف لهذه التسمية"
+              ],
+              "answer": "لأنها تتحدث عن نعمة الله على قبيلة قريش بالإيلاف والأمن"
+            }
+          ]
+        },
+        {
+          "id": "stage7",
+          "title": "Surah Quraysh (II) — The Two Journeys",
+          "icon": "🧭",
+          "description": "The winter and summer trade caravans of Quraysh",
+          "kicker": "Winter and Summer",
+          "questions": [
+            {
+              "text": "\"رِحْلَةَ الشِّتَاءِ وَالصَّيْفِ\" refers to:",
+              "options": [
+                "Quraysh's two annual trade caravans, one in winter and one in summer",
+                "Two pilgrimages made every year",
+                "Two battles fought by Quraysh",
+                "Two migrations of the Prophet ﷺ"
+              ],
+              "answer": "Quraysh's two annual trade caravans, one in winter and one in summer"
+            },
+            {
+              "text": "Why were these trade journeys significant for Quraysh?",
+              "options": [
+                "They were the backbone of their economy and prosperity, made possible by the safety Allah granted them",
+                "They were purely religious pilgrimages with no economic value",
+                "They were forced upon them by foreign rulers",
+                "They had no real importance to their daily life"
+              ],
+              "answer": "They were the backbone of their economy and prosperity, made possible by the safety Allah granted them"
+            },
+            {
+              "text": "رحلة الشتاء كانت إلى أين؟",
+              "options": [
+                "اليمن",
+                "الشام",
+                "العراق",
+                "مصر"
+              ],
+              "answer": "اليمن"
+            },
+            {
+              "text": "رحلة الصيف كانت إلى أين؟",
+              "options": [
+                "الشام",
+                "اليمن",
+                "الحبشة",
+                "فارس"
+              ],
+              "answer": "الشام"
+            },
+            {
+              "text": "What does Allah want Quraysh, and us, to reflect on by mentioning these journeys?",
+              "options": [
+                "That their safety and provision were blessings from Allah, deserving gratitude and worship",
+                "That trade is more important than worship",
+                "That travel itself is a form of worship",
+                "That Quraysh earned their safety through military strength alone"
+              ],
+              "answer": "That their safety and provision were blessings from Allah, deserving gratitude and worship"
+            }
+          ]
+        },
+        {
+          "id": "stage8",
+          "title": "Surah Quraysh (III) — The Command to Worship",
+          "icon": "🕋",
+          "description": "Responding to Allah's favors with sincere worship",
+          "kicker": "Favors of Food and Security",
+          "questions": [
+            {
+              "text": "\"فَلْيَعْبُدُوا رَبَّ هَٰذَا الْبَيْتِ\" means:",
+              "options": [
+                "So let them worship the Lord of this House (the Ka'bah)",
+                "So let them visit this House once a year",
+                "So let them rebuild this House",
+                "So let them trade near this House"
+              ],
+              "answer": "So let them worship the Lord of this House (the Ka'bah)"
+            },
+            {
+              "text": "What two specific favors are mentioned in the final ayah?",
+              "options": [
+                "Feeding them against hunger, and securing them from fear",
+                "Giving them wealth and giving them children",
+                "Granting them victory and granting them land",
+                "Teaching them writing and teaching them trade"
+              ],
+              "answer": "Feeding them against hunger, and securing them from fear"
+            },
+            {
+              "text": "\"أَطْعَمَهُمْ مِنْ جُوعٍ وَآمَنَهُمْ مِنْ خَوْفٍ\" — what does this teach about the response owed for blessings?",
+              "options": [
+                "Gratitude to Allah expressed through worship, since He is the true source of provision and security",
+                "That no gratitude is required for worldly blessings",
+                "That gratitude should be shown only to other people",
+                "That security and food are unrelated to Allah's favor"
+              ],
+              "answer": "Gratitude to Allah expressed through worship, since He is the true source of provision and security"
+            },
+            {
+              "text": "What is the overall theme connecting Surah Al-Fil and Surah Quraysh together?",
+              "options": [
+                "Allah's protection of the Ka'bah in Al-Fil led directly to the safety and prosperity described in Quraysh",
+                "They describe two completely unrelated tribes",
+                "Al-Fil promises punishment while Quraysh promises reward for the same people, unrelated to each other",
+                "They were both revealed after the Hijrah"
+              ],
+              "answer": "Allah's protection of the Ka'bah in Al-Fil led directly to the safety and prosperity described in Quraysh"
+            },
+            {
+              "text": "True or False: The surah commands Quraysh to worship the Ka'bah building itself.",
+              "options": [
+                "False — it commands worship of the Lord of the House, not the House itself",
+                "True — the Ka'bah itself is to be worshipped"
+              ],
+              "answer": "False — it commands worship of the Lord of the House, not the House itself"
+            }
+          ]
+        },
+        {
+          "id": "stage9",
+          "title": "Al-Ma'un (I) — Denying the Judgment",
+          "icon": "🤲",
+          "description": "Who is the one who denies the Day of Recompense?",
+          "kicker": "Denying the Judgment",
+          "questions": [
+            {
+              "text": "\"أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ\" — what does \"الدين\" mean here?",
+              "options": [
+                "The Judgment/Recompense (the Day of Reckoning)",
+                "The religion of Islam only",
+                "A financial debt",
+                "A type of worship ritual"
+              ],
+              "answer": "The Judgment/Recompense (the Day of Reckoning)"
+            },
+            {
+              "text": "What does \"يكذب بالدين\" describe?",
+              "options": [
+                "Someone who denies/disbelieves in the Day of Judgment",
+                "Someone who prays five times a day",
+                "Someone who gives charity secretly",
+                "Someone who fasts voluntarily"
+              ],
+              "answer": "Someone who denies/disbelieves in the Day of Judgment"
+            },
+            {
+              "text": "How does the surah answer its own opening question about who this denier is?",
+              "options": [
+                "It describes him through his actions: harshness to the orphan and neglect of feeding the poor",
+                "It names a specific person directly",
+                "It says the denier cannot be identified",
+                "It describes him as someone who prays too much"
+              ],
+              "answer": "It describes him through his actions: harshness to the orphan and neglect of feeding the poor"
+            },
+            {
+              "text": "Why is it significant that disbelief in the Hereafter is defined through actions rather than statements?",
+              "options": [
+                "It shows that true faith in the Judgment naturally produces compassion; lack of compassion reveals a defective belief",
+                "It shows that actions have no connection to belief",
+                "It shows that only verbal declarations matter in Islam",
+                "It shows that good deeds are irrelevant to faith"
+              ],
+              "answer": "It shows that true faith in the Judgment naturally produces compassion; lack of compassion reveals a defective belief"
+            },
+            {
+              "text": "من هو \"المكذب بالدين\" كما وصفته السورة؟",
+              "options": [
+                "من يقسو على اليتيم ولا يحض على طعام المسكين",
+                "من يصلي في المسجد دائما",
+                "من يصوم رمضان كل عام",
+                "من يحج بيت الله الحرام"
+              ],
+              "answer": "من يقسو على اليتيم ولا يحض على طعام المسكين"
+            }
+          ]
+        },
+        {
+          "id": "stage10",
+          "title": "Al-Ma'un (II) — Harshness to the Orphan",
+          "icon": "💔",
+          "description": "The two actions that reveal a hardened heart",
+          "kicker": "The Orphan and the Poor",
+          "questions": [
+            {
+              "text": "\"فَذَٰلِكَ الَّذِي يَدُعُّ الْيَتِيمَ\" means he:",
+              "options": [
+                "Repels/pushes away the orphan harshly",
+                "Adopts the orphan kindly",
+                "Feeds the orphan generously",
+                "Teaches the orphan to read"
+              ],
+              "answer": "Repels/pushes away the orphan harshly"
+            },
+            {
+              "text": "\"وَلَا يَحُضُّ عَلَىٰ طَعَامِ الْمِسْكِينِ\" means he:",
+              "options": [
+                "Does not encourage/urge feeding the poor",
+                "Personally feeds every poor person he meets",
+                "Forces others to fast",
+                "Gives all his wealth to the poor"
+              ],
+              "answer": "Does not encourage/urge feeding the poor"
+            },
+            {
+              "text": "Why does the ayah say \"does not urge\" rather than simply \"does not feed\"?",
+              "options": [
+                "To show that even failing to encourage others toward this good deed is blameworthy, not just personally withholding",
+                "Because feeding the poor is not actually required in Islam",
+                "Because urging others is worse than feeding them personally",
+                "Because the wording has no particular significance"
+              ],
+              "answer": "To show that even failing to encourage others toward this good deed is blameworthy, not just personally withholding"
+            },
+            {
+              "text": "What does harshness toward orphans reveal about a person's heart, according to this surah?",
+              "options": [
+                "A lack of true faith and mercy, since caring for the vulnerable is a sign of real belief",
+                "Nothing significant about their faith",
+                "That they are simply following cultural norms",
+                "That they are protecting their own wealth wisely"
+              ],
+              "answer": "A lack of true faith and mercy, since caring for the vulnerable is a sign of real belief"
+            },
+            {
+              "text": "يدع اليتيم - ماذا تعني هذه الكلمة؟",
+              "options": [
+                "يدفعه ويطرده بجفاء وقسوة",
+                "يحتضنه برفق",
+                "يعلمه القرآن",
+                "يزوره كل يوم"
+              ],
+              "answer": "يدفعه ويطرده بجفاء وقسوة"
+            }
+          ]
+        },
+        {
+          "id": "stage11",
+          "title": "Al-Ma'un (III) — Woe to the Praying Ones",
+          "icon": "⚠",
+          "description": "A surprising warning aimed at those who pray",
+          "kicker": "Heedless in Prayer",
+          "questions": [
+            {
+              "text": "\"فَوَيْلٌ لِلْمُصَلِّينَ\" — surprisingly, this warning is directed at:",
+              "options": [
+                "Those who pray, but with a specific fault clarified in the next ayah",
+                "Those who never pray at all",
+                "The disbelievers of Makkah only",
+                "The angels who record deeds"
+              ],
+              "answer": "Those who pray, but with a specific fault clarified in the next ayah"
+            },
+            {
+              "text": "\"الَّذِينَ هُمْ عَنْ صَلَاتِهِمْ سَاهُونَ\" means they are:",
+              "options": [
+                "Heedless/neglectful of their prayer",
+                "Extremely devoted to their prayer",
+                "Praying too many voluntary prayers",
+                "Unable to pray due to illness"
+              ],
+              "answer": "Heedless/neglectful of their prayer"
+            },
+            {
+              "text": "Does \"sahoon\" (heedlessness) here mean forgetting a prayer occasionally by honest mistake?",
+              "options": [
+                "No — most scholars explain it as chronic negligence, such as delaying prayers or performing them without any real concern",
+                "Yes, it refers only to a single honest mistake",
+                "Yes, and it carries no real blame at all",
+                "It refers to being distracted by beautiful recitation"
+              ],
+              "answer": "No — most scholars explain it as chronic negligence, such as delaying prayers or performing them without any real concern"
+            },
+            {
+              "text": "Why is this warning so severe, given that the people described do pray?",
+              "options": [
+                "Because it shows that outward ritual without sincerity, care, or consistency does not fulfill the true purpose of prayer",
+                "Because praying is itself considered a sin in this context",
+                "Because they should have prayed even more times per day",
+                "Because the warning is not actually severe at all"
+              ],
+              "answer": "Because it shows that outward ritual without sincerity, care, or consistency does not fulfill the true purpose of prayer"
+            },
+            {
+              "text": "ما معنى \"ساهون\" عن الصلاة؟",
+              "options": [
+                "غافلون عنها، لا يبالون بأدائها في وقتها أو بخشوعها",
+                "حريصون عليها جدا",
+                "يؤدونها في أول وقتها دائما",
+                "يصلونها بخشوع تام"
+              ],
+              "answer": "غافلون عنها، لا يبالون بأدائها في وقتها أو بخشوعها"
+            }
+          ]
+        },
+        {
+          "id": "stage12",
+          "title": "Al-Ma'un (IV) — Showing Off",
+          "icon": "🎭",
+          "description": "The danger of Riya' — performing worship to be seen",
+          "kicker": "Riya'",
+          "questions": [
+            {
+              "text": "\"الَّذِينَ هُمْ يُرَاءُونَ\" describes people who:",
+              "options": [
+                "Show off, performing good deeds to be seen by others rather than sincerely for Allah",
+                "Hide their good deeds completely from everyone",
+                "Perform deeds only in secret",
+                "Never perform any good deeds at all"
+              ],
+              "answer": "Show off, performing good deeds to be seen by others rather than sincerely for Allah"
+            },
+            {
+              "text": "How does riya' (showing off) relate to the earlier description of neglecting prayer?",
+              "options": [
+                "Both reveal a lack of true sincerity — one is careless in private, the other only performs to be seen in public",
+                "They are completely unrelated behaviors",
+                "Riya' is actually praised in this surah",
+                "Only one of the two behaviors is condemned"
+              ],
+              "answer": "Both reveal a lack of true sincerity — one is careless in private, the other only performs to be seen in public"
+            },
+            {
+              "text": "Why is riya' considered dangerous in Islam?",
+              "options": [
+                "It can nullify the reward of good deeds since sincerity (ikhlas) to Allah alone is a condition for acceptance",
+                "It has no effect on the reward of deeds",
+                "It is only a minor social faux pas",
+                "It only affects deeds done in the mosque"
+              ],
+              "answer": "It can nullify the reward of good deeds since sincerity (ikhlas) to Allah alone is a condition for acceptance"
+            },
+            {
+              "text": "يراءون - ما معناها؟",
+              "options": [
+                "يفعلون العبادة ليراهم الناس لا ابتغاء وجه الله",
+                "يفعلون العبادة سرا دون أن يعلم بها أحد",
+                "يتركون العبادة كليا",
+                "يخلصون العبادة لله وحده"
+              ],
+              "answer": "يفعلون العبادة ليراهم الناس لا ابتغاء وجه الله"
+            },
+            {
+              "text": "What contrast does the surah draw between someone who denies the Judgment through actions and someone who prays but shows off?",
+              "options": [
+                "Both share the same underlying flaw: lack of genuine concern for Allah and the Hereafter, despite outward differences",
+                "There is no connection between the two at all",
+                "The one who shows off is actually praised in comparison",
+                "Only the denier is blamed; the one showing off is excused"
+              ],
+              "answer": "Both share the same underlying flaw: lack of genuine concern for Allah and the Hereafter, despite outward differences"
+            }
+          ]
+        },
+        {
+          "id": "stage13",
+          "title": "Al-Ma'un (V) — Withholding Small Kindnesses",
+          "icon": "🌟",
+          "description": "The final verse, and the overall lesson of the surah",
+          "kicker": "Al-Ma'un — Small Kindnesses",
+          "questions": [
+            {
+              "text": "\"وَيَمْنَعُونَ الْمَاعُونَ\" means they:",
+              "options": [
+                "Withhold even small, simple items of assistance from others",
+                "Give away all their wealth freely",
+                "Refuse to eat with others",
+                "Always lend their belongings generously"
+              ],
+              "answer": "Withhold even small, simple items of assistance from others"
+            },
+            {
+              "text": "What is \"al-Ma'un\" generally explained as?",
+              "options": [
+                "Small everyday items or acts of help neighbors commonly lend one another, or basic assistance in general",
+                "A large sum of charity money",
+                "A specific type of prayer",
+                "A pilgrimage ritual"
+              ],
+              "answer": "Small everyday items or acts of help neighbors commonly lend one another, or basic assistance in general"
+            },
+            {
+              "text": "Why does the surah end on withholding something so small?",
+              "options": [
+                "To show the depth of a stingy, uncaring heart — if someone won't even give small easy kindnesses, their claim to faith is hollow",
+                "Because small matters are the most important part of religion",
+                "Because it has no real significance",
+                "Because it contradicts everything said earlier in the surah"
+              ],
+              "answer": "To show the depth of a stingy, uncaring heart — if someone won't even give small easy kindnesses, their claim to faith is hollow"
+            },
+            {
+              "text": "What is the central theme uniting the entire Surah Al-Ma'un?",
+              "options": [
+                "True faith in the Hereafter must show itself through sincere worship and genuine compassion toward others",
+                "Wealth is forbidden in Islam",
+                "Only formal prayer matters, not compassion",
+                "The Hereafter has no connection to worldly behavior"
+              ],
+              "answer": "True faith in the Hereafter must show itself through sincere worship and genuine compassion toward others"
+            },
+            {
+              "text": "What practical lesson can a believer take from this surah in daily life?",
+              "options": [
+                "To care for orphans and the poor, pray with sincerity and attentiveness, and be generous even in small matters",
+                "To avoid praying in congregation",
+                "To focus only on personal wealth accumulation",
+                "To avoid helping others to prevent showing off"
+              ],
+              "answer": "To care for orphans and the poor, pray with sincerity and attentiveness, and be generous even in small matters"
+            }
+          ]
+        },
+        {
+          "id": "stage14",
+          "title": "Al-Kawthar (I) — Abundant Good",
+          "icon": "💧",
+          "description": "The meaning of Al-Kawthar and why the surah was revealed",
+          "kicker": "The River of Paradise",
+          "questions": [
+            {
+              "text": "\"إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ\" — what does \"الكوثر\" mean?",
+              "options": [
+                "Abundant good; most commonly explained as a river/fountain in Paradise given to the Prophet ﷺ",
+                "A type of prayer performed only at night",
+                "A tribal alliance",
+                "A famous well in Madinah"
+              ],
+              "answer": "Abundant good; most commonly explained as a river/fountain in Paradise given to the Prophet ﷺ"
+            },
+            {
+              "text": "Why was this surah revealed?",
+              "options": [
+                "As comfort to the Prophet ﷺ after some disbelievers mocked him for having no surviving sons, calling him 'abtar'",
+                "To command the Hajj rituals",
+                "To warn against a specific enemy tribe",
+                "To describe the Day of Judgment in detail"
+              ],
+              "answer": "As comfort to the Prophet ﷺ after some disbelievers mocked him for having no surviving sons, calling him 'abtar'"
+            },
+            {
+              "text": "What does \"Al-Kawthar\" also represent beyond the specific river, according to some scholars?",
+              "options": [
+                "All the abundant good Allah gave the Prophet ﷺ, including prophethood, honor, and his intercession",
+                "Only his wealth in this world",
+                "Only his tribal status",
+                "Only his physical strength"
+              ],
+              "answer": "All the abundant good Allah gave the Prophet ﷺ, including prophethood, honor, and his intercession"
+            },
+            {
+              "text": "من الذي أعطى النبي ﷺ الكوثر؟",
+              "options": [
+                "الله سبحانه وتعالى",
+                "جبريل عليه السلام من عنده",
+                "أحد الصحابة",
+                "أهل مكة"
+              ],
+              "answer": "الله سبحانه وتعالى"
+            },
+            {
+              "text": "What does the surah's opening word \"إِنَّا\" (We) emphasize?",
+              "options": [
+                "The majesty and certainty of the gift, given directly and emphatically by Allah",
+                "That the gift is uncertain and conditional",
+                "That the gift comes from multiple sources",
+                "That the gift was small and insignificant"
+              ],
+              "answer": "The majesty and certainty of the gift, given directly and emphatically by Allah"
+            }
+          ]
+        },
+        {
+          "id": "stage15",
+          "title": "Al-Kawthar (II) — Prayer & Sacrifice",
+          "icon": "🕌",
+          "description": "The grateful response commanded after receiving Al-Kawthar",
+          "kicker": "Salah and Sacrifice",
+          "questions": [
+            {
+              "text": "\"فَصَلِّ لِرَبِّكَ وَانْحَرْ\" — what two acts of worship are commanded here?",
+              "options": [
+                "Prayer (Salah) and sacrifice (Nahr)",
+                "Fasting and charity",
+                "Hajj and Umrah",
+                "Reciting Qur'an and giving da'wah"
+              ],
+              "answer": "Prayer (Salah) and sacrifice (Nahr)"
+            },
+            {
+              "text": "Why are these two acts commanded as a response to receiving Al-Kawthar?",
+              "options": [
+                "As a form of gratitude — responding to Allah's abundant blessing with sincere worship directed to Him alone",
+                "Because they are unrelated obligations mentioned by coincidence",
+                "Because they replace the need for any other worship",
+                "Because they were only meant for a single occasion"
+              ],
+              "answer": "As a form of gratitude — responding to Allah's abundant blessing with sincere worship directed to Him alone"
+            },
+            {
+              "text": "What is significant about pairing prayer (a physical act of worship) with sacrifice (an act often tied to wealth)?",
+              "options": [
+                "It combines devotion of both body and wealth as complete gratitude to Allah",
+                "It shows that only wealthy people can properly worship Allah",
+                "It shows prayer and sacrifice contradict each other",
+                "It has no particular significance"
+              ],
+              "answer": "It combines devotion of both body and wealth as complete gratitude to Allah"
+            },
+            {
+              "text": "صلِّ لربك وانحر - لمن يكون النحر (الذبح)؟",
+              "options": [
+                "لله وحده لا لغيره",
+                "للأصنام كما كان يفعل المشركون",
+                "لأي جهة يريدها الإنسان",
+                "لا يشترط توجيهه لأحد"
+              ],
+              "answer": "لله وحده لا لغيره"
+            },
+            {
+              "text": "What does this ayah teach about the connection between blessings and worship?",
+              "options": [
+                "True gratitude for Allah's blessings should be expressed through dedicated worship directed only to Him",
+                "Blessings have no connection to how one worships",
+                "Worship should decrease as blessings increase",
+                "Gratitude should be shown to people, never to Allah"
+              ],
+              "answer": "True gratitude for Allah's blessings should be expressed through dedicated worship directed only to Him"
+            }
+          ]
+        },
+        {
+          "id": "stage16",
+          "title": "Al-Kawthar (III) — The One Who Is Cut Off",
+          "icon": "✂",
+          "description": "How history proved the mockers wrong",
+          "kicker": "Al-Abtar",
+          "questions": [
+            {
+              "text": "\"إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ\" means:",
+              "options": [
+                "Indeed, it is your enemy/hater who is cut off, without lasting legacy",
+                "Indeed, you yourself are cut off",
+                "Indeed, your enemy will be forgiven",
+                "Indeed, your enemy will become wealthy"
+              ],
+              "answer": "Indeed, it is your enemy/hater who is cut off, without lasting legacy"
+            },
+            {
+              "text": "Who was this ayah originally addressing?",
+              "options": [
+                "Those who mocked the Prophet ﷺ for lacking male heirs, implying his message would die out with him",
+                "The believers of Madinah",
+                "The angels who record deeds",
+                "A specific king of Persia"
+              ],
+              "answer": "Those who mocked the Prophet ﷺ for lacking male heirs, implying his message would die out with him"
+            },
+            {
+              "text": "How did history prove this ayah true?",
+              "options": [
+                "The Prophet's ﷺ message, legacy, and Ummah flourished and spread worldwide, while his mockers' names and legacies faded",
+                "The Prophet's ﷺ message disappeared within a generation",
+                "Neither side left any historical legacy",
+                "The mockers' descendants ruled the Muslim world"
+              ],
+              "answer": "The Prophet's ﷺ message, legacy, and Ummah flourished and spread worldwide, while his mockers' names and legacies faded"
+            },
+            {
+              "text": "الأبتر - من هو حقيقة كما بينت السورة؟",
+              "options": [
+                "عدو النبي ﷺ ومن يبغضه، لا النبي نفسه",
+                "النبي ﷺ نفسه",
+                "أبو بكر الصديق",
+                "جميع أهل مكة بلا استثناء"
+              ],
+              "answer": "عدو النبي ﷺ ومن يبغضه، لا النبي نفسه"
+            },
+            {
+              "text": "What is the overall lesson of Surah Al-Kawthar regarding worldly mockery of the righteous?",
+              "options": [
+                "Allah defends and honors His close servants, and their true legacy endures despite the taunts of their enemies",
+                "Mockery always succeeds in damaging a person's legacy",
+                "Allah is indifferent to how His servants are treated",
+                "Legacy is determined by wealth alone"
+              ],
+              "answer": "Allah defends and honors His close servants, and their true legacy endures despite the taunts of their enemies"
+            }
+          ]
+        },
+        {
+          "id": "stage17",
+          "title": "Al-Kafirun (I) — Occasion of Revelation",
+          "icon": "🚫",
+          "description": "The compromise offered to the Prophet ﷺ, and his firm rejection",
+          "kicker": "No Compromise",
+          "questions": [
+            {
+              "text": "What compromise did the disbelievers of Quraysh offer the Prophet ﷺ, prompting this surah?",
+              "options": [
+                "That he worship their gods for a year in exchange for them worshipping Allah for a year",
+                "That he leave Makkah peacefully forever",
+                "That he marry into their tribe",
+                "That he stop preaching only in public"
+              ],
+              "answer": "That he worship their gods for a year in exchange for them worshipping Allah for a year"
+            },
+            {
+              "text": "What was the Prophet's ﷺ response, as reflected in this surah?",
+              "options": [
+                "A firm and complete rejection of any compromise in worship",
+                "A partial agreement to their terms",
+                "Silence and no response at all",
+                "A request for more time to decide"
+              ],
+              "answer": "A firm and complete rejection of any compromise in worship"
+            },
+            {
+              "text": "What core principle does this surah establish about matters of faith?",
+              "options": [
+                "There can be no mixing or compromise between Tawhid and shirk",
+                "All forms of worship are equally acceptable",
+                "Compromise is always the best solution in religion",
+                "Faith should adapt to social pressure"
+              ],
+              "answer": "There can be no mixing or compromise between Tawhid and shirk"
+            },
+            {
+              "text": "لماذا نزلت سورة الكافرون؟",
+              "options": [
+                "ردا على عرض كفار قريش بالمهادنة في العبادة مع النبي ﷺ",
+                "بمناسبة فتح مكة",
+                "بمناسبة غزوة بدر",
+                "بمناسبة وفاة أبي طالب"
+              ],
+              "answer": "ردا على عرض كفار قريش بالمهادنة في العبادة مع النبي ﷺ"
+            },
+            {
+              "text": "This surah is sometimes traditionally called \"Al-Muqashqishah,\" meaning:",
+              "options": [
+                "The one that cleanses/frees one from shirk",
+                "The one that describes Paradise",
+                "The one revealed at night",
+                "The one about trade journeys"
+              ],
+              "answer": "The one that cleanses/frees one from shirk"
+            }
+          ]
+        },
+        {
+          "id": "stage18",
+          "title": "Al-Kafirun (II) — No Worship in Common",
+          "icon": "🙅",
+          "description": "The opening declaration of complete separation in worship",
+          "kicker": "Not What You Worship",
+          "questions": [
+            {
+              "text": "\"قُلْ يَا أَيُّهَا الْكَافِرُونَ\" begins with a command to the Prophet ﷺ to:",
+              "options": [
+                "Say/declare directly to the disbelievers",
+                "Remain silent before the disbelievers",
+                "Write a letter to the disbelievers",
+                "Ask the angels to intervene"
+              ],
+              "answer": "Say/declare directly to the disbelievers"
+            },
+            {
+              "text": "\"لَا أَعْبُدُ مَا تَعْبُدُونَ\" means:",
+              "options": [
+                "I do not worship what you worship",
+                "I worship exactly what you worship",
+                "I will worship your gods for one year",
+                "I do not worship at all"
+              ],
+              "answer": "I do not worship what you worship"
+            },
+            {
+              "text": "\"وَلَا أَنْتُمْ عَابِدُونَ مَا أَعْبُدُ\" means:",
+              "options": [
+                "Nor do you worship what I worship",
+                "You worship exactly what I worship",
+                "You will soon worship what I worship",
+                "Neither of us worships anything"
+              ],
+              "answer": "Nor do you worship what I worship"
+            },
+            {
+              "text": "What is being firmly established in these opening declarations?",
+              "options": [
+                "A clear, total distinction between the worship of the believer and that of the disbeliever, with no overlap",
+                "That both sides actually worship the same god under different names",
+                "That worship does not matter in the end",
+                "That the Prophet ﷺ was open to changing his practice"
+              ],
+              "answer": "A clear, total distinction between the worship of the believer and that of the disbeliever, with no overlap"
+            },
+            {
+              "text": "لا أعبد ما تعبدون - ماذا تدل هذه الجملة؟",
+              "options": [
+                "البراءة التامة من عبادة الأصنام",
+                "الموافقة على عبادة الأصنام مؤقتا",
+                "الشك في التوحيد",
+                "طلب المهادنة مع الكفار"
+              ],
+              "answer": "البراءة التامة من عبادة الأصنام"
+            }
+          ]
+        },
+        {
+          "id": "stage19",
+          "title": "Al-Kafirun (III) — Repetition for Emphasis",
+          "icon": "🔁",
+          "description": "Why the surah restates its rejection a second time",
+          "kicker": "Emphasis Through Repetition",
+          "questions": [
+            {
+              "text": "Ayaat 4-5 repeat similar meanings to ayaat 2-3. Why does the surah repeat itself?",
+              "options": [
+                "For strong emphasis, to remove any doubt of compromise both in the past and future",
+                "By accidental scribal error",
+                "Because the first statement was considered invalid",
+                "To make the surah longer for recitation purposes only"
+              ],
+              "answer": "For strong emphasis, to remove any doubt of compromise both in the past and future"
+            },
+            {
+              "text": "What does the repeated denial teach about firmness in faith?",
+              "options": [
+                "A believer's rejection of falsehood should be firm, clear, and unwavering — not open to negotiation",
+                "A believer should always seek middle ground on matters of creed",
+                "Repetition shows weakness in one's argument",
+                "Firmness in faith is unnecessary"
+              ],
+              "answer": "A believer's rejection of falsehood should be firm, clear, and unwavering — not open to negotiation"
+            },
+            {
+              "text": "ولا أنا عابد ما عبدتم - ماذا تكرر هذه الآية؟",
+              "options": [
+                "تأكيد البراءة من عبادة الأصنام مرة أخرى",
+                "الموافقة على عبادة الأصنام",
+                "طلب الصلح مع الكفار",
+                "التراجع عن الدعوة"
+              ],
+              "answer": "تأكيد البراءة من عبادة الأصنام مرة أخرى"
+            },
+            {
+              "text": "Why might repetition be a particularly powerful rhetorical tool in this surah?",
+              "options": [
+                "Repetition reinforces the message with unmistakable clarity and finality, leaving no room for compromise",
+                "Repetition confuses the listener intentionally",
+                "Repetition is a sign of uncertainty in the message",
+                "Repetition weakens the emphasis of the message"
+              ],
+              "answer": "Repetition reinforces the message with unmistakable clarity and finality, leaving no room for compromise"
+            },
+            {
+              "text": "What subtle nuance do many commentators note about the phrasing used in the repeated verses compared to the first set?",
+              "options": [
+                "A slight difference emphasizing the settled, habitual nature of each side's worship, reinforcing permanence of the separation",
+                "There is absolutely no linguistic difference of any kind between them",
+                "The repeated verses are grammatically incorrect",
+                "The repeated verses refer to a different group of people entirely"
+              ],
+              "answer": "A slight difference emphasizing the settled, habitual nature of each side's worship, reinforcing permanence of the separation"
+            }
+          ]
+        },
+        {
+          "id": "stage20",
+          "title": "Al-Kafirun (IV) — Lakum Deenukum & Lessons",
+          "icon": "🕊",
+          "description": "The closing verse and its meaning for coexistence without compromise",
+          "kicker": "For You Your Religion",
+          "questions": [
+            {
+              "text": "\"لَكُمْ دِينُكُمْ وَلِيَ دِينِ\" means:",
+              "options": [
+                "For you is your religion, and for me is my religion",
+                "Your religion and mine are identical",
+                "You must abandon your religion immediately",
+                "Religion does not matter at all"
+              ],
+              "answer": "For you is your religion, and for me is my religion"
+            },
+            {
+              "text": "Does this final ayah mean Islam accepts all religions as equally valid paths to truth?",
+              "options": [
+                "No — it establishes peaceful coexistence and non-compulsion in belief, not equal validity",
+                "Yes, it declares all religions equally true",
+                "Yes, it cancels the concept of Tawhid entirely",
+                "It has no relevance to interfaith relations at all"
+              ],
+              "answer": "No — it establishes peaceful coexistence and non-compulsion in belief, not equal validity"
+            },
+            {
+              "text": "What principle from Islamic teaching does this ayah support?",
+              "options": [
+                "'There is no compulsion in religion' — freedom of belief, without forcing conversion",
+                "That force should always be used to convert others",
+                "That religion is a private matter of no consequence",
+                "That all forms of worship must eventually be unified"
+              ],
+              "answer": "'There is no compulsion in religion' — freedom of belief, without forcing conversion"
+            },
+            {
+              "text": "What is the overall lesson of Surah Al-Kafirun regarding Tawhid and compromise?",
+              "options": [
+                "A believer must never compromise the core of their faith for worldly gain or social pressure, while still dealing justly and peacefully with others",
+                "A believer should compromise their faith whenever it is socially convenient",
+                "Tawhid is negotiable in certain circumstances",
+                "Peaceful coexistence requires abandoning one's own beliefs"
+              ],
+              "answer": "A believer must never compromise the core of their faith for worldly gain or social pressure, while still dealing justly and peacefully with others"
+            },
+            {
+              "text": "True or False: This surah teaches that Muslims should never interact peacefully with non-Muslims.",
+              "options": [
+                "False",
+                "True"
+              ],
+              "answer": "False"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "advanced",
+      "label": "Advanced",
+      "icon": "🌳",
+      "description": "Victory, Tawhid & protection — An-Nasr, Al-Masad, Al-Ikhlas, Al-Falaq, An-Nas & review",
+      "stages": [
+        {
+          "id": "stage1",
+          "title": "An-Nasr (I) — Victory and a Sign",
+          "icon": "🏆",
+          "description": "The Conquest of Makkah and what it signaled to the Prophet ﷺ",
+          "kicker": "The Conquest of Makkah",
+          "questions": [
+            {
+              "text": "\"إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ\" — what historical event does \"al-Fath\" primarily refer to?",
+              "options": [
+                "The Conquest of Makkah (Fath Makkah)",
+                "The Battle of Uhud",
+                "The Treaty of Hudaybiyyah",
+                "The Farewell Pilgrimage"
+              ],
+              "answer": "The Conquest of Makkah (Fath Makkah)"
+            },
+            {
+              "text": "This surah is traditionally understood by many companions, like Ibn 'Abbas, as a sign of what?",
+              "options": [
+                "The nearing of the Prophet's ﷺ death, informing him his mission was complete",
+                "The start of the Prophet's ﷺ mission",
+                "An upcoming military defeat",
+                "The revelation of the first verse of the Qur'an"
+              ],
+              "answer": "The nearing of the Prophet's ﷺ death, informing him his mission was complete"
+            },
+            {
+              "text": "What does it mean that this surah signals completion of the message rather than just military victory?",
+              "options": [
+                "It shows that the ultimate goal was the spread of Islam and people entering it, which had now been achieved widely",
+                "It shows the Prophet ﷺ had failed in his mission",
+                "It shows the message was only meant for Makkah",
+                "It shows military conquest was the sole purpose of his mission"
+              ],
+              "answer": "It shows that the ultimate goal was the spread of Islam and people entering it, which had now been achieved widely"
+            },
+            {
+              "text": "متى نزلت سورة النصر تقريبا؟",
+              "options": [
+                "بعد فتح مكة، قرب نهاية حياة النبي ﷺ",
+                "في بداية الدعوة بمكة",
+                "بعد غزوة بدر مباشرة",
+                "قبل الهجرة إلى المدينة"
+              ],
+              "answer": "بعد فتح مكة، قرب نهاية حياة النبي ﷺ"
+            },
+            {
+              "text": "How did Umar ibn al-Khattab (RA) reportedly understand this surah when asked among the companions?",
+              "options": [
+                "As an indication of the Prophet's ﷺ approaching death and the completion of his mission",
+                "As a command to fight more battles",
+                "As permission to leave Makkah",
+                "As a description of Paradise"
+              ],
+              "answer": "As an indication of the Prophet's ﷺ approaching death and the completion of his mission"
+            }
+          ]
+        },
+        {
+          "id": "stage2",
+          "title": "An-Nasr (II) — Multitudes Enter Islam",
+          "icon": "🕊",
+          "description": "The fruit of decades of patient da'wah",
+          "kicker": "People in Multitudes",
+          "questions": [
+            {
+              "text": "\"وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا\" means people entered Islam:",
+              "options": [
+                "In multitudes/crowds (groups after groups)",
+                "One person at a time, very rarely",
+                "Only after the Prophet's ﷺ death",
+                "Through forced conversion"
+              ],
+              "answer": "In multitudes/crowds (groups after groups)"
+            },
+            {
+              "text": "Before the Conquest of Makkah, how did people typically enter Islam, in contrast to \"afwaja\"?",
+              "options": [
+                "Individually or in small numbers, often facing hardship",
+                "Always in massive tribal groups",
+                "Only through royal decree",
+                "Through inheritance from their parents automatically"
+              ],
+              "answer": "Individually or in small numbers, often facing hardship"
+            },
+            {
+              "text": "What changed after the Conquest of Makkah that led to mass conversions?",
+              "options": [
+                "The removal of the main political/tribal obstacle (Quraysh's dominance) opened the way for entire tribes to accept Islam freely",
+                "A new prophet was sent to convince them",
+                "Trade routes were closed, forcing people to convert",
+                "The Ka'bah was destroyed and rebuilt as a mosque"
+              ],
+              "answer": "The removal of the main political/tribal obstacle (Quraysh's dominance) opened the way for entire tribes to accept Islam freely"
+            },
+            {
+              "text": "أفواجا - ماذا تعني هذه الكلمة؟",
+              "options": [
+                "جماعات كثيرة متتابعة",
+                "شخص واحد فقط",
+                "عدد قليل جدا",
+                "قبيلة واحدة فقط"
+              ],
+              "answer": "جماعات كثيرة متتابعة"
+            },
+            {
+              "text": "What does this ayah show about the fruit of the Prophet's ﷺ decades of struggle?",
+              "options": [
+                "The patient effort of dawah finally led to widespread, large-scale acceptance of the truth",
+                "His efforts ultimately failed to convince anyone",
+                "Only his close family ever accepted Islam",
+                "Mass conversion happened without any prior effort"
+              ],
+              "answer": "The patient effort of dawah finally led to widespread, large-scale acceptance of the truth"
+            }
+          ]
+        },
+        {
+          "id": "stage3",
+          "title": "An-Nasr (III) — Glorify & Seek Forgiveness",
+          "icon": "🙏",
+          "description": "How a believer should respond to success and victory",
+          "kicker": "Tasbih and Istighfar",
+          "questions": [
+            {
+              "text": "\"فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ\" commands the Prophet ﷺ to do what upon witnessing this victory?",
+              "options": [
+                "Glorify Allah with praise, and seek His forgiveness",
+                "Celebrate publicly with feasting",
+                "Punish his former enemies harshly",
+                "Retire from preaching immediately"
+              ],
+              "answer": "Glorify Allah with praise, and seek His forgiveness"
+            },
+            {
+              "text": "Why command seeking forgiveness (istighfar) at the peak of success and victory?",
+              "options": [
+                "To teach humility — success is never a moment for pride but for gratitude and returning to Allah",
+                "Because the Prophet ﷺ had committed a major sin",
+                "Because victory itself is a form of wrongdoing",
+                "Because istighfar has no real connection to success"
+              ],
+              "answer": "To teach humility — success is never a moment for pride but for gratitude and returning to Allah"
+            },
+            {
+              "text": "\"إِنَّهُ كَانَ تَوَّابًا\" describes Allah as:",
+              "options": [
+                "The One who constantly accepts repentance",
+                "The One who never forgives",
+                "The One who only forgives prophets",
+                "The One who delays forgiveness for years"
+              ],
+              "answer": "The One who constantly accepts repentance"
+            },
+            {
+              "text": "فسبح بحمد ربك واستغفره - ما الدرس المستفاد عند النصر؟",
+              "options": [
+                "شكر الله والتواضع له والإكثار من الاستغفار",
+                "الافتخار بالنصر أمام الناس",
+                "نسيان الله بعد تحقيق النجاح",
+                "الانتقام من كل من عارضه سابقا"
+              ],
+              "answer": "شكر الله والتواضع له والإكثار من الاستغفار"
+            },
+            {
+              "text": "What overall lesson does Surah An-Nasr give believers about handling success?",
+              "options": [
+                "To respond to victory and blessings with humility, gratitude, and turning back to Allah, not arrogance",
+                "To take full personal credit for any success achieved",
+                "To stop worshipping once success is achieved",
+                "To view success as a sign that no more effort is needed"
+              ],
+              "answer": "To respond to victory and blessings with humility, gratitude, and turning back to Allah, not arrogance"
+            }
+          ]
+        },
+        {
+          "id": "stage4",
+          "title": "Al-Masad (I) — Abu Lahab at Safa",
+          "icon": "🪵",
+          "description": "The incident that prompted this surah's revelation",
+          "kicker": "Ruin Be Upon Him",
+          "questions": [
+            {
+              "text": "What incident prompted the revelation of Surah Al-Masad?",
+              "options": [
+                "Abu Lahab publicly mocking and rejecting the Prophet ﷺ after he called his family to Islam from Mount Safa",
+                "Abu Lahab accepting Islam secretly",
+                "Abu Lahab's death in battle",
+                "Abu Lahab's migration to Madinah"
+              ],
+              "answer": "Abu Lahab publicly mocking and rejecting the Prophet ﷺ after he called his family to Islam from Mount Safa"
+            },
+            {
+              "text": "\"تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ\" means:",
+              "options": [
+                "May the hands of Abu Lahab perish, and he has perished",
+                "May the hands of Abu Lahab be blessed",
+                "Abu Lahab will be forgiven",
+                "Abu Lahab will find great wealth"
+              ],
+              "answer": "May the hands of Abu Lahab perish, and he has perished"
+            },
+            {
+              "text": "Who was Abu Lahab in relation to the Prophet ﷺ?",
+              "options": [
+                "His paternal uncle, and one of his fiercest enemies",
+                "His maternal uncle who supported him",
+                "A companion who later became a scholar",
+                "A ruler of Yemen"
+              ],
+              "answer": "His paternal uncle, and one of his fiercest enemies"
+            },
+            {
+              "text": "أبو لهب - لماذا سمي بهذا اللقب، بحسب أشهر الأقوال؟",
+              "options": [
+                "لاحمرار وجهه وإشراقه (لهب = شعلة نار)",
+                "لأنه كان تاجرا للحطب",
+                "لأنه كان يحب النار في بيته",
+                "لأنه كان يعمل حدادا"
+              ],
+              "answer": "لاحمرار وجهه وإشراقه (لهب = شعلة نار)"
+            },
+            {
+              "text": "This is one of the few surahs that names a specific individual condemned by name. What does this show about revelation?",
+              "options": [
+                "Allah's knowledge of the unseen is absolute — declaring Abu Lahab's fate as a disbeliever even before his death confirmed it",
+                "It shows the Qur'an was written by the Prophet ﷺ based on personal grievances",
+                "It shows every enemy of the Prophet ﷺ is named in the Qur'an",
+                "It has no particular significance"
+              ],
+              "answer": "Allah's knowledge of the unseen is absolute — declaring Abu Lahab's fate as a disbeliever even before his death confirmed it"
+            }
+          ]
+        },
+        {
+          "id": "stage5",
+          "title": "Al-Masad (II) — Wealth Won't Avail Him",
+          "icon": "💸",
+          "description": "The refutation of relying on wealth and status",
+          "kicker": "Wealth Without Benefit",
+          "questions": [
+            {
+              "text": "\"مَا أَغْنَىٰ عَنْهُ مَالُهُ وَمَا كَسَبَ\" means:",
+              "options": [
+                "His wealth and what he earned did not avail/benefit him at all",
+                "His wealth saved him from every hardship",
+                "He gave away all his wealth in charity",
+                "His wealth was taken by force"
+              ],
+              "answer": "His wealth and what he earned did not avail/benefit him at all"
+            },
+            {
+              "text": "What specific idea about wealth and status does this ayah refute, similar to Al-Humazah?",
+              "options": [
+                "That wealth and worldly achievements can save a person from Allah's punishment or grant them immunity",
+                "That wealth should never be earned honestly",
+                "That poverty is always better than wealth",
+                "That wealth has no connection to a person's actions at all"
+              ],
+              "answer": "That wealth and worldly achievements can save a person from Allah's punishment or grant them immunity"
+            },
+            {
+              "text": "What might \"وَمَا كَسَبَ\" (what he earned) refer to besides his wealth, according to some tafsir?",
+              "options": [
+                "His children/offspring, who he saw as further support and status",
+                "His farmland only",
+                "His weapons only",
+                "His trade caravans only"
+              ],
+              "answer": "His children/offspring, who he saw as further support and status"
+            },
+            {
+              "text": "ما أغنى عنه ماله - ما الدرس هنا؟",
+              "options": [
+                "أن المال لا ينفع صاحبه أمام عذاب الله إذا كفر",
+                "أن المال ينفع صاحبه دائما مهما فعل",
+                "أن الفقر أفضل من العمل بأي حال",
+                "أن كسب المال محرم في الإسلام"
+              ],
+              "answer": "أن المال لا ينفع صاحبه أمام عذاب الله إذا كفر"
+            },
+            {
+              "text": "How does this ayah connect to Abu Lahab's public status and pride in Makkah?",
+              "options": [
+                "It shows that despite his wealth and prestige, none of it protected him from the consequences of rejecting the truth",
+                "It shows his wealth eventually saved him",
+                "It shows he had no wealth or status at all",
+                "It has no connection to his social standing"
+              ],
+              "answer": "It shows that despite his wealth and prestige, none of it protected him from the consequences of rejecting the truth"
+            }
+          ]
+        },
+        {
+          "id": "stage6",
+          "title": "Al-Masad (III) — The Fire & His Wife",
+          "icon": "🔥",
+          "description": "The punishment awaiting Abu Lahab and his wife's role",
+          "kicker": "The Firewood Carrier",
+          "questions": [
+            {
+              "text": "\"سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ\" means he will:",
+              "options": [
+                "Burn in a flaming fire",
+                "Be rewarded with Paradise",
+                "Be forgiven completely",
+                "Live a long, peaceful life"
+              ],
+              "answer": "Burn in a flaming fire"
+            },
+            {
+              "text": "\"وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ\" describes Abu Lahab's wife as:",
+              "options": [
+                "The carrier of firewood",
+                "A generous woman",
+                "A believer who repented",
+                "A poet of Quraysh"
+              ],
+              "answer": "The carrier of firewood"
+            },
+            {
+              "text": "What is the metaphorical meaning of \"carrier of firewood\" according to most commentators?",
+              "options": [
+                "A reference to her spreading slander/gossip and stirring enmity against the Prophet ﷺ, in addition to literally placing thorns on his path",
+                "A reference to her working as a professional wood seller",
+                "A reference to her cooking skills",
+                "A reference to her wealth in property"
+              ],
+              "answer": "A reference to her spreading slander/gossip and stirring enmity against the Prophet ﷺ, in addition to literally placing thorns on his path"
+            },
+            {
+              "text": "Who was Abu Lahab's wife, historically?",
+              "options": [
+                "Umm Jamil (Arwa bint Harb), sister of Abu Sufyan",
+                "Khadijah bint Khuwaylid",
+                "Hind bint Utbah",
+                "Fatimah bint Al-Khattab"
+              ],
+              "answer": "Umm Jamil (Arwa bint Harb), sister of Abu Sufyan"
+            },
+            {
+              "text": "حمالة الحطب - ماذا يرمز هذا الوصف؟",
+              "options": [
+                "نقل الغيبة والنميمة والإفساد بين الناس",
+                "بيع الحطب في السوق",
+                "جمع الحطب لأجل الفقراء",
+                "الزراعة في مكة"
+              ],
+              "answer": "نقل الغيبة والنميمة والإفساد بين الناس"
+            }
+          ]
+        },
+        {
+          "id": "stage7",
+          "title": "Al-Masad (IV) — The Rope & Lessons",
+          "icon": "🪢",
+          "description": "Divine justice fitting the punishment to the deed",
+          "kicker": "A Fitting Punishment",
+          "questions": [
+            {
+              "text": "\"فِي جِيدِهَا حَبْلٌ مِنْ مَسَدٍ\" means around her neck will be:",
+              "options": [
+                "A rope of twisted palm fiber",
+                "A necklace of gold",
+                "A garland of flowers",
+                "Nothing at all"
+              ],
+              "answer": "A rope of twisted palm fiber"
+            },
+            {
+              "text": "What is the significance of this specific, humiliating punishment for her?",
+              "options": [
+                "It fits her crime — carrying 'loads' of slander against the Prophet ﷺ — showing divine justice matching punishment to deed",
+                "It is completely unrelated to her actions in life",
+                "It shows she will be rewarded instead",
+                "It is a punishment reserved only for men"
+              ],
+              "answer": "It fits her crime — carrying 'loads' of slander against the Prophet ﷺ — showing divine justice matching punishment to deed"
+            },
+            {
+              "text": "What is the overall lesson of Surah Al-Masad about opposing the truth?",
+              "options": [
+                "Fierce, prideful opposition to Allah's Messenger, even from close family, leads to disgrace and severe punishment regardless of wealth or status",
+                "Family members can never truly oppose a prophet",
+                "Wealth always protects a person from consequences",
+                "Opposition to the truth is always eventually forgiven"
+              ],
+              "answer": "Fierce, prideful opposition to Allah's Messenger, even from close family, leads to disgrace and severe punishment regardless of wealth or status"
+            },
+            {
+              "text": "How does the fact that this surah was revealed while Abu Lahab was still alive strengthen its miraculous nature?",
+              "options": [
+                "It publicly and specifically foretold his fate as a disbeliever, and he never disproved it by even pretending to accept Islam",
+                "It has no miraculous element since anyone could predict such a thing",
+                "Abu Lahab quickly proved the surah false by converting",
+                "The surah was only revealed after his death"
+              ],
+              "answer": "It publicly and specifically foretold his fate as a disbeliever, and he never disproved it by even pretending to accept Islam"
+            },
+            {
+              "text": "True or False: Abu Lahab's family relation to the Prophet ﷺ gave him any special exemption from this warning.",
+              "options": [
+                "False",
+                "True"
+              ],
+              "answer": "False"
+            }
+          ]
+        },
+        {
+          "id": "stage8",
+          "title": "Al-Ikhlas (I) — Virtue & Context",
+          "icon": "☝",
+          "description": "Why this short surah equals a third of the Qur'an",
+          "kicker": "A Third of the Qur'an",
+          "questions": [
+            {
+              "text": "Surah Al-Ikhlas is described in hadith as being equal to what portion of the Qur'an?",
+              "options": [
+                "One-third of the Qur'an",
+                "One-tenth of the Qur'an",
+                "The entire Qur'an",
+                "One-half of the Qur'an"
+              ],
+              "answer": "One-third of the Qur'an"
+            },
+            {
+              "text": "What prompted the revelation of this surah, according to many narrations?",
+              "options": [
+                "The disbelievers/Jews asking the Prophet ﷺ to describe the lineage/nature of his Lord",
+                "A dispute over inheritance law",
+                "A question about the Hajj rituals",
+                "A request to describe Paradise"
+              ],
+              "answer": "The disbelievers/Jews asking the Prophet ﷺ to describe the lineage/nature of his Lord"
+            },
+            {
+              "text": "What does \"Al-Ikhlas\" mean, and why is the surah named this?",
+              "options": [
+                "Sincerity/purity; because it purifies one's belief in Allah's absolute Oneness, free from any partners or resemblance",
+                "Sincerity in prayer times only",
+                "A term for charity given in secret",
+                "A name unrelated to its content"
+              ],
+              "answer": "Sincerity/purity; because it purifies one's belief in Allah's absolute Oneness, free from any partners or resemblance"
+            },
+            {
+              "text": "لماذا سميت سورة الإخلاص بهذا الاسم؟",
+              "options": [
+                "لأنها تخلص وتنقي عقيدة التوحيد من الشرك",
+                "لأنها نزلت في يوم الجمعة",
+                "لأنها تتحدث عن الإخلاص في العمل فقط",
+                "لا سبب معروف لهذه التسمية"
+              ],
+              "answer": "لأنها تخلص وتنقي عقيدة التوحيد من الشرك"
+            },
+            {
+              "text": "How many ayat does Surah Al-Ikhlas contain?",
+              "options": [
+                "Four",
+                "Seven",
+                "Ten",
+                "Two"
+              ],
+              "answer": "Four"
+            }
+          ]
+        },
+        {
+          "id": "stage9",
+          "title": "Al-Ikhlas (II) — Allahu Ahad",
+          "icon": "1⃣",
+          "description": "The absolute, indivisible uniqueness of Allah",
+          "kicker": "The One",
+          "questions": [
+            {
+              "text": "\"قُلْ هُوَ اللَّهُ أَحَدٌ\" means:",
+              "options": [
+                "Say: He is Allah, the One (Unique)",
+                "Say: He is Allah, the Merciful",
+                "Say: He is Allah, the Creator",
+                "Say: He is Allah, the Forgiving"
+              ],
+              "answer": "Say: He is Allah, the One (Unique)"
+            },
+            {
+              "text": "What is the difference in meaning between \"Ahad\" (used here) and \"Wahid\" (also meaning 'one')?",
+              "options": [
+                "'Ahad' emphasizes absolute, indivisible uniqueness with no like or partner in any respect, more emphatic than a simple numerical 'one'",
+                "There is no difference at all between the two words",
+                "'Wahid' is more emphatic than 'Ahad'",
+                "'Ahad' means 'first' while 'Wahid' means 'unique'"
+              ],
+              "answer": "'Ahad' emphasizes absolute, indivisible uniqueness with no like or partner in any respect, more emphatic than a simple numerical 'one'"
+            },
+            {
+              "text": "What core belief (Tawhid) does this first ayah establish?",
+              "options": [
+                "That Allah is singularly One in His Essence, Names, Attributes, and Actions — with nothing comparable to Him",
+                "That Allah shares His essence with the angels",
+                "That Allah has multiple equal partners",
+                "That Allah's Oneness applies only to His actions, not His essence"
+              ],
+              "answer": "That Allah is singularly One in His Essence, Names, Attributes, and Actions — with nothing comparable to Him"
+            },
+            {
+              "text": "أحد - لماذا لم تستخدم كلمة \"واحد\" هنا؟",
+              "options": [
+                "لأن \"أحد\" أبلغ في نفي المثيل والشريك عن الله",
+                "لأن \"واحد\" كلمة غير عربية",
+                "لأن \"أحد\" أقصر في اللفظ فقط",
+                "لا فرق بين الكلمتين إطلاقا"
+              ],
+              "answer": "لأن \"أحد\" أبلغ في نفي المثيل والشريك عن الله"
+            },
+            {
+              "text": "Why is affirming Allah's absolute Oneness the very first and central point of this surah?",
+              "options": [
+                "Because Tawhid is the foundation of the entire Islamic creed, upon which everything else is built",
+                "Because it is the easiest concept to explain",
+                "Because it has no real connection to the rest of the surah",
+                "Because it was simply the order in which it was revealed, with no deeper reason"
+              ],
+              "answer": "Because Tawhid is the foundation of the entire Islamic creed, upon which everything else is built"
+            }
+          ]
+        },
+        {
+          "id": "stage10",
+          "title": "Al-Ikhlas (III) — As-Samad",
+          "icon": "🎯",
+          "description": "The One depended upon by all, needing none",
+          "kicker": "The Self-Sufficient Master",
+          "questions": [
+            {
+              "text": "\"اللَّهُ الصَّمَدُ\" — what does \"As-Samad\" mean?",
+              "options": [
+                "The One who is depended upon by all creation for their needs, while He needs nothing from anyone",
+                "The One who created only the heavens",
+                "The One who forgives all sins automatically",
+                "The One who is hidden from creation"
+              ],
+              "answer": "The One who is depended upon by all creation for their needs, while He needs nothing from anyone"
+            },
+            {
+              "text": "What does calling Allah \"As-Samad\" tell us about His relationship with His creation?",
+              "options": [
+                "Everything in creation is in constant need of Him, while He is free of any need whatsoever",
+                "Allah is dependent on His creation for sustenance",
+                "Allah and His creation are mutually dependent",
+                "As-Samad has no bearing on Allah's relationship with creation"
+              ],
+              "answer": "Everything in creation is in constant need of Him, while He is free of any need whatsoever"
+            },
+            {
+              "text": "How does As-Samad relate to Allah's perfection in all His attributes?",
+              "options": [
+                "Since He is the ultimate refuge for all needs, He must be perfect and complete in knowledge, power, mercy, and every attribute",
+                "It shows Allah is imperfect in some attributes",
+                "It is unrelated to His other attributes",
+                "It only refers to His physical strength"
+              ],
+              "answer": "Since He is the ultimate refuge for all needs, He must be perfect and complete in knowledge, power, mercy, and every attribute"
+            },
+            {
+              "text": "الصمد - ماذا يعني بالنسبة لحاجتنا نحن؟",
+              "options": [
+                "أننا محتاجون إليه في كل شيء، وهو الغني عن كل شيء",
+                "أننا مستغنون عنه تماما",
+                "أن الله محتاج إلينا كما نحتاج إليه",
+                "لا علاقة لهذا الاسم بحاجتنا"
+              ],
+              "answer": "أننا محتاجون إليه في كل شيء، وهو الغني عن كل شيء"
+            },
+            {
+              "text": "Why is \"As-Samad\" placed directly after \"Ahad\" in the surah's structure?",
+              "options": [
+                "After establishing His absolute uniqueness, this ayah shows the practical implication — everyone depends on this One, Unique God alone",
+                "There is no logical connection between the two ayat",
+                "As-Samad contradicts the meaning of Ahad",
+                "The order is purely coincidental with no purpose"
+              ],
+              "answer": "After establishing His absolute uniqueness, this ayah shows the practical implication — everyone depends on this One, Unique God alone"
+            }
+          ]
+        },
+        {
+          "id": "stage11",
+          "title": "Al-Ikhlas (IV) — No Begetting, No Equal",
+          "icon": "🚫",
+          "description": "The final refutation of every form of shirk in Allah's essence",
+          "kicker": "None Comparable to Him",
+          "questions": [
+            {
+              "text": "\"لَمْ يَلِدْ وَلَمْ يُولَدْ\" means:",
+              "options": [
+                "He begets not, nor was He begotten",
+                "He begets many, and was begotten once",
+                "He has one child only",
+                "He was created from light"
+              ],
+              "answer": "He begets not, nor was He begotten"
+            },
+            {
+              "text": "What false beliefs does this ayah directly refute?",
+              "options": [
+                "Beliefs that Allah has offspring, such as claims about a divine son, or that He was born from something/someone",
+                "Beliefs about the Day of Judgment",
+                "Beliefs about angels having wings",
+                "Beliefs about the creation of Adam"
+              ],
+              "answer": "Beliefs that Allah has offspring, such as claims about a divine son, or that He was born from something/someone"
+            },
+            {
+              "text": "\"وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ\" means:",
+              "options": [
+                "And there is none comparable/equal to Him",
+                "And He has many equals among creation",
+                "And His equal is found among the angels",
+                "And no one can worship Him properly"
+              ],
+              "answer": "And there is none comparable/equal to Him"
+            },
+            {
+              "text": "How do these final two points connect back to \"Ahad\" (the One) at the surah's start?",
+              "options": [
+                "They provide concrete proof of His uniqueness — no offspring, no origin, and no equal, all confirming He is truly One in every sense",
+                "They contradict the meaning of Ahad established earlier",
+                "They are unrelated statements added at random",
+                "They apply only to created beings, not to Allah"
+              ],
+              "answer": "They provide concrete proof of His uniqueness — no offspring, no origin, and no equal, all confirming He is truly One in every sense"
+            },
+            {
+              "text": "What is the overall summary teaching of Surah Al-Ikhlas?",
+              "options": [
+                "A complete, concise declaration of pure monotheism, refuting every form of shirk in Allah's Essence, attributes, and standing",
+                "A description of the Day of Judgment",
+                "A set of legal rulings for trade",
+                "A historical account of past nations"
+              ],
+              "answer": "A complete, concise declaration of pure monotheism, refuting every form of shirk in Allah's Essence, attributes, and standing"
+            }
+          ]
+        },
+        {
+          "id": "stage12",
+          "title": "Al-Falaq (I) — Lord of the Daybreak",
+          "icon": "🌅",
+          "description": "Seeking refuge with the One who splits darkness into light",
+          "kicker": "Rabb Al-Falaq",
+          "questions": [
+            {
+              "text": "\"قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ\" — what does \"Al-Falaq\" mean?",
+              "options": [
+                "The daybreak/dawn (the splitting of darkness by light)",
+                "A mountain in Makkah",
+                "A specific type of tree",
+                "A river in Paradise"
+              ],
+              "answer": "The daybreak/dawn (the splitting of darkness by light)"
+            },
+            {
+              "text": "Why is Allah specifically described as \"Lord of the Daybreak\" when seeking refuge in this surah?",
+              "options": [
+                "Because just as He splits the darkness of night with light every day, He is capable of removing the darkness/harm of any evil sought refuge from",
+                "Because daybreak has no particular connection to seeking refuge",
+                "Because the surah is only about astronomy",
+                "Because daybreak is when evil is strongest"
+              ],
+              "answer": "Because just as He splits the darkness of night with light every day, He is capable of removing the darkness/harm of any evil sought refuge from"
+            },
+            {
+              "text": "What kind of surah is Al-Falaq classified as, along with An-Nas?",
+              "options": [
+                "A Surah of seeking refuge/protection (Al-Mu'awwidhatayn)",
+                "A Surah of legal rulings",
+                "A Surah of stories about past nations",
+                "A Surah about the Hajj"
+              ],
+              "answer": "A Surah of seeking refuge/protection (Al-Mu'awwidhatayn)"
+            },
+            {
+              "text": "الفلق - ماذا يعني هذا الاسم؟",
+              "options": [
+                "الصبح أو انشقاق الظلام عن النور",
+                "الليل الحالك الظلام",
+                "اسم جبل في مكة",
+                "اسم نهر في الجنة"
+              ],
+              "answer": "الصبح أو انشقاق الظلام عن النور"
+            },
+            {
+              "text": "What is the general purpose of Surah Al-Falaq?",
+              "options": [
+                "To teach the believer to seek Allah's protection from specific categories of evil",
+                "To describe the creation of the heavens",
+                "To narrate the story of a past prophet",
+                "To establish rulings on fasting"
+              ],
+              "answer": "To teach the believer to seek Allah's protection from specific categories of evil"
+            }
+          ]
+        },
+        {
+          "id": "stage13",
+          "title": "Al-Falaq (II) — Evil of What He Created",
+          "icon": "🌍",
+          "description": "The broadest category of protection sought in this surah",
+          "kicker": "The Evil of Creation",
+          "questions": [
+            {
+              "text": "\"مِنْ شَرِّ مَا خَلَقَ\" means seeking refuge from:",
+              "options": [
+                "The evil of whatever He (Allah) has created",
+                "The evil of Allah Himself",
+                "The evil of one specific animal only",
+                "The evil found only in the sea"
+              ],
+              "answer": "The evil of whatever He (Allah) has created"
+            },
+            {
+              "text": "Why is this phrase considered comprehensive, covering the broadest category of evil in the surah?",
+              "options": [
+                "Because it includes any harmful creation whatsoever — humans, animals, jinn, or anything else that could bring harm",
+                "Because it refers only to a single specific enemy",
+                "Because it excludes human beings from any possibility of harm",
+                "Because it applies only to natural disasters"
+              ],
+              "answer": "Because it includes any harmful creation whatsoever — humans, animals, jinn, or anything else that could bring harm"
+            },
+            {
+              "text": "من شر ما خلق - هل هذا يشمل كل المخلوقات المؤذية؟",
+              "options": [
+                "نعم، فهو عام يشمل كل شر يصدر من المخلوقات",
+                "لا، يقتصر على الحيوانات المفترسة فقط",
+                "لا، يقتصر على الجن فقط",
+                "لا، يقتصر على الإنس فقط"
+              ],
+              "answer": "نعم، فهو عام يشمل كل شر يصدر من المخلوقات"
+            },
+            {
+              "text": "Why does the surah start with this general phrase before mentioning specific evils in later ayat?",
+              "options": [
+                "To first establish broad protection, then highlight specific dangerous categories worth special mention",
+                "Because the specific evils mentioned later are unrelated to creation entirely",
+                "Because the general phrase is actually a mistake in ordering",
+                "Because the specific evils are less dangerous than the general one"
+              ],
+              "answer": "To first establish broad protection, then highlight specific dangerous categories worth special mention"
+            },
+            {
+              "text": "What does seeking refuge from \"the evil of what He created\" teach about Allah's control over creation?",
+              "options": [
+                "That Allah alone has full control and power over all of His creation, both good and harmful",
+                "That Allah has no control over harmful creatures",
+                "That creation acts independently of Allah's will",
+                "That evil exists outside of Allah's knowledge"
+              ],
+              "answer": "That Allah alone has full control and power over all of His creation, both good and harmful"
+            }
+          ]
+        },
+        {
+          "id": "stage14",
+          "title": "Al-Falaq (III) — Evil of Darkness",
+          "icon": "🌑",
+          "description": "Seeking refuge from the night when it settles",
+          "kicker": "Ghasiqin Idha Waqab",
+          "questions": [
+            {
+              "text": "\"وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ\" refers to the evil of:",
+              "options": [
+                "The night/darkness when it settles/spreads",
+                "The bright light of midday",
+                "The heat of summer",
+                "The sound of thunder"
+              ],
+              "answer": "The night/darkness when it settles/spreads"
+            },
+            {
+              "text": "Why is nightfall specifically singled out as a time associated with potential evil?",
+              "options": [
+                "Because harmful creatures, thieves, and evil actions are traditionally more active or hidden under the cover of darkness",
+                "Because nighttime has no spiritual significance at all",
+                "Because it is the safest time of day",
+                "Because the Qur'an never mentions daytime dangers"
+              ],
+              "answer": "Because harmful creatures, thieves, and evil actions are traditionally more active or hidden under the cover of darkness"
+            },
+            {
+              "text": "غاسق إذا وقب - ماذا يعني هذا الوصف؟",
+              "options": [
+                "الليل إذا اشتد ظلامه وانتشر",
+                "الصبح إذا أشرق",
+                "الشمس إذا ارتفعت",
+                "الرياح إذا هبت"
+              ],
+              "answer": "الليل إذا اشتد ظلامه وانتشر"
+            },
+            {
+              "text": "How does this ayah's mention of darkness connect back to the surah's opening description of Allah as 'Lord of the Daybreak'?",
+              "options": [
+                "It contrasts the darkness/evil being sought refuge from with the light/relief that Allah, as Lord of Daybreak, can bring",
+                "It has no connection to the opening at all",
+                "It shows that Allah has no power over darkness",
+                "It shows darkness is more powerful than daybreak in this surah"
+              ],
+              "answer": "It contrasts the darkness/evil being sought refuge from with the light/relief that Allah, as Lord of Daybreak, can bring"
+            },
+            {
+              "text": "What lesson can be drawn about being cautious and remembering Allah especially at night?",
+              "options": [
+                "Nighttime deserves extra mindfulness and remembrance of Allah due to its association with potential harm",
+                "Nighttime requires no special caution or remembrance at all",
+                "Remembrance of Allah is unnecessary once the sun sets",
+                "Night is only relevant to farmers, with no spiritual lesson"
+              ],
+              "answer": "Nighttime deserves extra mindfulness and remembrance of Allah due to its association with potential harm"
+            }
+          ]
+        },
+        {
+          "id": "stage15",
+          "title": "Al-Falaq (IV) — Knot-Blowers & The Envier",
+          "icon": "🪢",
+          "description": "The final two evils named specifically in the surah",
+          "kicker": "Sorcery and Envy",
+          "questions": [
+            {
+              "text": "\"وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ\" refers to the evil of:",
+              "options": [
+                "Those who blow on knots (practicing magic/sorcery)",
+                "Those who tie ropes for building",
+                "Those who sew clothing",
+                "Those who fish using nets"
+              ],
+              "answer": "Those who blow on knots (practicing magic/sorcery)"
+            },
+            {
+              "text": "\"وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ\" refers to the evil of:",
+              "options": [
+                "An envier when he envies",
+                "A generous person when he gives",
+                "A traveler when he journeys",
+                "A teacher when he instructs"
+              ],
+              "answer": "An envier when he envies"
+            },
+            {
+              "text": "Why is \"when he envies\" — specifically the act, not just the feeling — mentioned?",
+              "options": [
+                "Because envy itself is a natural human feeling, but acting upon it to harm another is what's dangerous",
+                "Because feeling envy is impossible for human beings",
+                "Because acting on envy is always harmless",
+                "Because the phrase refers only to feeling envious, not acting on it"
+              ],
+              "answer": "Because envy itself is a natural human feeling, but acting upon it to harm another is what's dangerous"
+            },
+            {
+              "text": "النفاثات في العقد - إلى ماذا تشير؟",
+              "options": [
+                "إلى ممارسة السحر بالنفث في العقد",
+                "إلى صناعة الحبال العادية",
+                "إلى تعليم الخياطة",
+                "إلى بناء البيوت"
+              ],
+              "answer": "إلى ممارسة السحر بالنفث في العقد"
+            },
+            {
+              "text": "What is the overall structure of the four categories of evil listed in Surah Al-Falaq?",
+              "options": [
+                "General evil of creation, evil of darkness, evil of magic/sorcery, and evil of envy — moving from broad to specific dangers",
+                "All four categories describe the exact same evil repeated four times",
+                "The four categories are unrelated to each other with no logical order",
+                "They describe four different prophets"
+              ],
+              "answer": "General evil of creation, evil of darkness, evil of magic/sorcery, and evil of envy — moving from broad to specific dangers"
+            }
+          ]
+        },
+        {
+          "id": "stage16",
+          "title": "An-Nas (I) — Three Attributes Invoked",
+          "icon": "👑",
+          "description": "Rabb, Malik, and Ilah of mankind",
+          "kicker": "Lord, King, God",
+          "questions": [
+            {
+              "text": "\"قُلْ أَعُوذُ بِرَبِّ النَّاسِ\" — the first attribute of Allah invoked is:",
+              "options": [
+                "Rabb (Lord) of mankind",
+                "Malik (King) of mankind",
+                "Ilah (God) of mankind",
+                "Rahman (Merciful) of mankind"
+              ],
+              "answer": "Rabb (Lord) of mankind"
+            },
+            {
+              "text": "\"مَلِكِ النَّاسِ\" — the second attribute invoked is:",
+              "options": [
+                "Malik (King/Sovereign) of mankind",
+                "Rabb (Lord) of mankind",
+                "Ilah (God) of mankind",
+                "Khaliq (Creator) of mankind"
+              ],
+              "answer": "Malik (King/Sovereign) of mankind"
+            },
+            {
+              "text": "\"إِلَٰهِ النَّاسِ\" — the third attribute invoked is:",
+              "options": [
+                "Ilah (God/the One deserving worship) of mankind",
+                "Rabb (Lord) of mankind",
+                "Malik (King) of mankind",
+                "Samad (Self-Sufficient) of mankind"
+              ],
+              "answer": "Ilah (God/the One deserving worship) of mankind"
+            },
+            {
+              "text": "Why does the surah build up through Rabb, then Malik, then Ilah in that specific order?",
+              "options": [
+                "It moves from Lordship (creation & sustenance), to Sovereignty (authority & rule), to Divinity (the right to be worshipped) — an increasingly powerful basis for seeking refuge",
+                "The order has no particular significance and is random",
+                "It moves from the least powerful attribute to a lesser one",
+                "It repeats the same meaning three times with no progression"
+              ],
+              "answer": "It moves from Lordship (creation & sustenance), to Sovereignty (authority & rule), to Divinity (the right to be worshipped) — an increasingly powerful basis for seeking refuge"
+            },
+            {
+              "text": "رب الناس، ملك الناس، إله الناس - ما الحكمة من ذكر هذه الصفات الثلاث؟",
+              "options": [
+                "لبيان أن من يستعاذ به يجب أن يكون ربا ومالكا ومعبودا بحق",
+                "لأنها أسماء لثلاثة آلهة مختلفة",
+                "لأنها صفات خاصة بالملائكة فقط",
+                "لا حكمة معروفة لذكرها"
+              ],
+              "answer": "لبيان أن من يستعاذ به يجب أن يكون ربا ومالكا ومعبودا بحق"
+            }
+          ]
+        },
+        {
+          "id": "stage17",
+          "title": "An-Nas (II) — The Retreating Whisperer",
+          "icon": "👤",
+          "description": "Al-Waswas Al-Khannas — the one who hides at remembrance of Allah",
+          "kicker": "Al-Khannas",
+          "questions": [
+            {
+              "text": "\"مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ\" refers to the evil of:",
+              "options": [
+                "The whisperer who withdraws/retreats (commonly understood as Shaytan)",
+                "A loud, open enemy",
+                "A wild animal",
+                "A natural disaster"
+              ],
+              "answer": "The whisperer who withdraws/retreats (commonly understood as Shaytan)"
+            },
+            {
+              "text": "What does \"Al-Khannas\" specifically describe about this whisperer?",
+              "options": [
+                "That he retreats and hides whenever Allah is remembered, but returns to whisper again when one is heedless",
+                "That he never leaves a person alone under any circumstance",
+                "That he only appears once in a person's lifetime",
+                "That he is visible to the human eye"
+              ],
+              "answer": "That he retreats and hides whenever Allah is remembered, but returns to whisper again when one is heedless"
+            },
+            {
+              "text": "الوسواس الخناس - لماذا سمي بـ\"الخناس\"؟",
+              "options": [
+                "لأنه يختفي وينسحب عند ذكر الله ويعود عند الغفلة",
+                "لأنه يظهر فقط في الليل",
+                "لأنه كائن مرئي بالعين",
+                "لأنه يهرب من النور فقط"
+              ],
+              "answer": "لأنه يختفي وينسحب عند ذكر الله ويعود عند الغفلة"
+            },
+            {
+              "text": "What practical lesson does understanding 'Al-Khannas' give a believer?",
+              "options": [
+                "That regularly remembering Allah (dhikr) is one's main defense, since the whisperer retreats specifically at that remembrance",
+                "That there is no practical defense against this whisperer",
+                "That physical strength alone can defeat this whisperer",
+                "That avoiding people entirely is the only defense"
+              ],
+              "answer": "That regularly remembering Allah (dhikr) is one's main defense, since the whisperer retreats specifically at that remembrance"
+            },
+            {
+              "text": "Is this whisperer limited only to an unseen entity (Shaytan), according to the surah's continuation?",
+              "options": [
+                "No — the following ayah clarifies the whispering comes from among both jinn and mankind",
+                "Yes, it refers exclusively to Shaytan with no other source",
+                "Yes, it refers exclusively to angels",
+                "The surah does not clarify this at all"
+              ],
+              "answer": "No — the following ayah clarifies the whispering comes from among both jinn and mankind"
+            }
+          ]
+        },
+        {
+          "id": "stage18",
+          "title": "An-Nas (III) — From Jinn and Men",
+          "icon": "🧑🤝🧑",
+          "description": "The whispering that can come from either source",
+          "kicker": "Two Sources of Whispering",
+          "questions": [
+            {
+              "text": "\"الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ\" means this whisperer:",
+              "options": [
+                "Whispers into the chests/hearts of people",
+                "Speaks openly and loudly to people",
+                "Only whispers to animals",
+                "Whispers only during sleep"
+              ],
+              "answer": "Whispers into the chests/hearts of people"
+            },
+            {
+              "text": "\"مِنَ الْجِنَّةِ وَالنَّاسِ\" clarifies that this whispering can come from:",
+              "options": [
+                "Both jinn and human beings",
+                "Angels only",
+                "Animals only",
+                "The Prophet ﷺ himself"
+              ],
+              "answer": "Both jinn and human beings"
+            },
+            {
+              "text": "How can a human being act as a 'whisperer' in the same sense as Shaytan?",
+              "options": [
+                "By tempting, misguiding, or planting evil suggestions in others' hearts, similar to how Shaytan whispers evil",
+                "Humans cannot ever act this way; only Shaytan can",
+                "By simply speaking any words at all to another person",
+                "By performing acts of worship in public"
+              ],
+              "answer": "By tempting, misguiding, or planting evil suggestions in others' hearts, similar to how Shaytan whispers evil"
+            },
+            {
+              "text": "من الجنة والناس - ما الدرس المستفاد من ذكر الإنس هنا؟",
+              "options": [
+                "أن بعض البشر قد يكونون سببا في الوسوسة والإغواء كما يفعل الشيطان",
+                "أن الإنس لا يمكن أن يوسوسوا إطلاقا",
+                "أن هذا يخص الجن فقط دون الإنس",
+                "لا علاقة لذكر الإنس بموضوع السورة"
+              ],
+              "answer": "أن بعض البشر قد يكونون سببا في الوسوسة والإغواء كما يفعل الشيطان"
+            },
+            {
+              "text": "Why is it fitting that the very last ayah of the Qur'an ends by broadening the source of evil to include mankind as well as jinn?",
+              "options": [
+                "It gives a complete, comprehensive warning covering every possible source of whispered evil a person may face",
+                "It suggests that jinn are no longer a real threat",
+                "It contradicts everything mentioned earlier in the surah",
+                "It has no particular significance for the Qur'an's closing"
+              ],
+              "answer": "It gives a complete, comprehensive warning covering every possible source of whispered evil a person may face"
+            }
+          ]
+        },
+        {
+          "id": "stage19",
+          "title": "An-Nas (IV) — Closing Review: Al-Mu'awwidhatayn",
+          "icon": "🛡",
+          "description": "How Al-Falaq and An-Nas function together, closing the circle of this course",
+          "kicker": "The Two Surahs of Refuge",
+          "questions": [
+            {
+              "text": "What do Surah Al-Falaq and Surah An-Nas have in common in their function?",
+              "options": [
+                "Both are surahs specifically for seeking Allah's protection (Al-Mu'awwidhatayn), recommended for daily protection",
+                "Both are legal rulings on marriage",
+                "Both describe the story of Prophet Musa",
+                "Both were revealed in Madinah after the Hijrah only"
+              ],
+              "answer": "Both are surahs specifically for seeking Allah's protection (Al-Mu'awwidhatayn), recommended for daily protection"
+            },
+            {
+              "text": "What did the Prophet ﷺ recommend reciting these two surahs (along with Al-Ikhlas) for, according to hadith?",
+              "options": [
+                "Protection, often recited three times morning and evening, and before sleeping while blowing into the hands and wiping the body",
+                "Only for reciting during the Hajj",
+                "Only for funerals",
+                "Only once in a lifetime"
+              ],
+              "answer": "Protection, often recited three times morning and evening, and before sleeping while blowing into the hands and wiping the body"
+            },
+            {
+              "text": "How does the whole journey of this course — from Al-Isti'adhah to An-Nas — form a complete circle?",
+              "options": [
+                "It begins by teaching how to seek refuge in Allah before reciting the Qur'an, and ends with the most detailed surahs specifically about seeking refuge from evil",
+                "It has no thematic connection from beginning to end",
+                "It begins and ends with the same exact surah",
+                "The beginning and end are about completely unrelated topics with no design"
+              ],
+              "answer": "It begins by teaching how to seek refuge in Allah before reciting the Qur'an, and ends with the most detailed surahs specifically about seeking refuge from evil"
+            },
+            {
+              "text": "What is the shared root meaning between \"أَعُوذُ\" in Al-Isti'adhah and the refrain in Al-Falaq/An-Nas?",
+              "options": [
+                "The concept of seeking protection/refuge (from the root ع-و-ذ)",
+                "The concept of praising Allah",
+                "The concept of seeking forgiveness",
+                "The concept of giving charity"
+              ],
+              "answer": "The concept of seeking protection/refuge (from the root ع-و-ذ)"
+            },
+            {
+              "text": "What is one major lesson that ties together the short Surahs of Juz Amma studied in this course?",
+              "options": [
+                "That true success comes from sincere Tawhid, righteous character, and constant reliance on and protection from Allah in every affair of life",
+                "That wealth is the ultimate measure of success in this life",
+                "That only ritual worship matters, with no connection to character",
+                "That these surahs have no unifying theme at all"
+              ],
+              "answer": "That true success comes from sincere Tawhid, righteous character, and constant reliance on and protection from Allah in every affair of life"
+            }
+          ]
+        },
+        {
+          "id": "stage20",
+          "title": "Murāja'ah — Capstone Review",
+          "icon": "🎓",
+          "description": "A final review across every surah studied in this course",
+          "kicker": "Capstone Review",
+          "questions": [
+            {
+              "text": "Which surah's central theme is the four conditions for salvation: faith, righteous deeds, advising to truth, and advising to patience?",
+              "options": [
+                "Surah Al-'Asr",
+                "Surah Al-Kawthar",
+                "Surah Al-Fil",
+                "Surah An-Nasr"
+              ],
+              "answer": "Surah Al-'Asr"
+            },
+            {
+              "text": "Which surah describes the fate of Abraha's army as being made 'like eaten straw'?",
+              "options": [
+                "Surah Al-Fil",
+                "Surah Quraysh",
+                "Surah Al-Masad",
+                "Surah Al-Kafirun"
+              ],
+              "answer": "Surah Al-Fil"
+            },
+            {
+              "text": "Which surah connects gratitude for Allah's blessings with the commands to pray and offer sacrifice?",
+              "options": [
+                "Surah Al-Kawthar",
+                "Surah Al-Ikhlas",
+                "Surah Al-Humazah",
+                "Surah Al-Falaq"
+              ],
+              "answer": "Surah Al-Kawthar"
+            },
+            {
+              "text": "Which surah firmly declares no compromise in worship between the believer and disbeliever, ending with 'Lakum deenukum wa liya deen'?",
+              "options": [
+                "Surah Al-Kafirun",
+                "Surah Al-Ma'un",
+                "Surah An-Nas",
+                "Surah Al-Masad"
+              ],
+              "answer": "Surah Al-Kafirun"
+            },
+            {
+              "text": "Which surah is considered equal to one-third of the Qur'an due to its pure declaration of Tawhid?",
+              "options": [
+                "Surah Al-Ikhlas",
+                "Surah Al-Fatihah",
+                "Surah An-Nasr",
+                "Surah Quraysh"
+              ],
+              "answer": "Surah Al-Ikhlas"
+            },
+            {
+              "text": "Which two surahs together are known as Al-Mu'awwidhatayn (the two surahs of seeking refuge)?",
+              "options": [
+                "Surah Al-Falaq and Surah An-Nas",
+                "Surah Al-Fatihah and Surah Al-Ikhlas",
+                "Surah Al-Kawthar and Surah Al-Kafirun",
+                "Surah Al-'Asr and Surah Al-Humazah"
+              ],
+              "answer": "Surah Al-Falaq and Surah An-Nas"
+            },
+            {
+              "text": "Which surah was revealed as a direct warning to a named individual, the Prophet's ﷺ own uncle?",
+              "options": [
+                "Surah Al-Masad",
+                "Surah An-Nasr",
+                "Surah Al-Fil",
+                "Surah Al-Ma'un"
+              ],
+              "answer": "Surah Al-Masad"
+            },
+            {
+              "text": "Which behavior do Surah Al-Humazah and Surah Al-Ma'un both, in different ways, warn against?",
+              "options": [
+                "Harming others through cruelty, mockery, or neglecting compassion",
+                "Traveling for trade",
+                "Reciting the Qur'an aloud",
+                "Building places of worship"
+              ],
+              "answer": "Harming others through cruelty, mockery, or neglecting compassion"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

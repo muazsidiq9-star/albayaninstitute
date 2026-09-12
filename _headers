@@ -1,0 +1,26 @@
+# Netlify _headers file — controls caching for deployed assets.
+#
+# Problem this fixes: quiz-engine.js / quiz-style.css / *.html are
+# referenced by static filenames, so browsers can keep serving an
+# OLD cached copy after a new deploy. Since JS and schema changes
+# have been shipped together throughout this project, a stale cached
+# quiz-engine.js running against the current live Supabase schema
+# causes exactly the kind of partial breakage (name shows, XP/Star
+# Points don't) that clearing site data or logging out "fixes" —
+# because both force a fresh fetch of everything.
+#
+# max-age=0, must-revalidate tells the browser: always check with
+# the server before using your cached copy. If the file hasn't
+# changed, the server replies 304 and the browser reuses what it has
+# (fast, no re-download). If it HAS changed, the browser gets the
+# new version immediately — no manual cache-busting query strings to
+# remember on every deploy.
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/*.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/*.css
+  Cache-Control: public, max-age=0, must-revalidate

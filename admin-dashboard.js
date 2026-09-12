@@ -1115,7 +1115,7 @@ async function loadFees() {
 async function loadStudentDropdown() {
   const { data, error } = await db
     .from("students")
-    .select("matric_number, fullname")
+    .select("matric_number, fullname, country, level_arabic")
     .order("fullname", { ascending: true });
 
   if (error) { console.error(error); return; }
@@ -1331,6 +1331,8 @@ async function openBulkFeeModal() {
   document.getElementById("bulkFeeAmount").value = "";
   document.getElementById("bulkFeeCurrency").value = "NGN";
   document.getElementById("bulkFeeSearch").value = "";
+  document.getElementById("bulkFeeCountryFilter").value = "";
+  document.getElementById("bulkFeeLevelFilter").value = "";
 
   const list = document.getElementById("bulkFeeStudentList");
   list.innerHTML = `<span data-translate="Loading students...">${t("Loading students...")}</span>`;
@@ -1341,7 +1343,7 @@ async function openBulkFeeModal() {
   if (!students || students.length === 0) {
     const { data, error } = await db
       .from("students")
-      .select("matric_number, fullname")
+      .select("matric_number, fullname, country, level_arabic")
       .order("fullname", { ascending: true });
     if (error) { console.error(error); list.innerHTML = `<span>${t("Failed to load students.")}</span>`; return; }
     students = data || [];
@@ -1354,7 +1356,8 @@ async function openBulkFeeModal() {
   }
 
   list.innerHTML = students.map((s, i) => `
-    <label class="bulkFeeStudentRow" data-search="${(s.fullname + " " + s.matric_number).toLowerCase()}">
+    <label class="bulkFeeStudentRow" data-search="${(s.fullname + " " + s.matric_number).toLowerCase()}"
+           data-country="${s.country || ""}" data-level="${s.level_arabic || ""}">
       <input type="checkbox" class="bulkFeeStudentCheckbox" value="${s.matric_number}"
              id="bulkFeeCb${i}" onchange="updateBulkFeeSelectedCount()">
       <span class="bulkFeeStudentInfo">
@@ -1367,10 +1370,19 @@ async function openBulkFeeModal() {
   updateBulkFeeSelectedCount();
 }
 
+// Search text + Country + Level all narrow the same list together (AND,
+// not OR) — pick a country, then a level, then fine-tune with the name/
+// matric search if needed. Any filter left on "All" is ignored.
 function filterBulkFeeStudents() {
   const query = document.getElementById("bulkFeeSearch").value.trim().toLowerCase();
+  const country = document.getElementById("bulkFeeCountryFilter").value;
+  const level = document.getElementById("bulkFeeLevelFilter").value;
+
   document.querySelectorAll(".bulkFeeStudentRow").forEach(row => {
-    row.style.display = row.dataset.search.includes(query) ? "flex" : "none";
+    const matchesSearch = row.dataset.search.includes(query);
+    const matchesCountry = !country || row.dataset.country === country;
+    const matchesLevel = !level || row.dataset.level === level;
+    row.style.display = (matchesSearch && matchesCountry && matchesLevel) ? "flex" : "none";
   });
 }
 

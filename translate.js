@@ -3609,6 +3609,9 @@ NEW FILES START HERE
 
 "Arabic and Islamic Studies": "العربية والدراسات الإسلامية",
 "Arabic, Islamic": "العربية والدراسات الإسلامية",
+"All Countries": "جميع الدول",
+"Selected ": "محدد ",
+"Clear": "مسح",
 
 // ===== DYNAMIC TEMPLATES ===== 
 

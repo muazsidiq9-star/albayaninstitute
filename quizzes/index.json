@@ -6,6 +6,16 @@
     "icon": "🕌",
     "course": "Qur'an Memorisation"
   },
+
+  
+  {
+    "id": "tafseer-foundations",
+    "title": "Tafseer Foundations",
+    "titleArabic": "أساسيات التفسير",
+    "subtitle": "Understanding the meanings of Al-Isti'adhah, Al-Basmalah, Al-Fatihah, and the short Surahs of Juz Amma (Al-Asr to An-Nas)",
+    "icon": "📖",
+    "course": "Tafseer Al-Qur'an (Tafseer Essentials)"
+  },
   
   {
     "id": "tabir-expression",
