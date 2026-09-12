@@ -229,6 +229,15 @@ html, body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Wraps the question text + flag toggle button — JS targets .question-header-row */
+.question-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+}
+
 /* Question text — JS targets .question-text */
 .question-text {
   direction: auto;
@@ -240,6 +249,44 @@ html, body {
   margin-bottom: 20px;
   line-height: 1.75;
   color: var(--text-color);
+}
+
+/* Flag-for-review toggle — JS targets #flagQuestionBtn / .flag-toggle-btn */
+.flag-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  background: var(--surface-color);
+  color: var(--text-muted);
+  border: 1.5px solid var(--border-color);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+
+.flag-toggle-btn:hover {
+  border-color: #f59e0b;
+  color: #f59e0b;
+  transform: translateY(-1px);
+}
+
+.flag-toggle-btn.flagged {
+  background: #fffbeb;
+  border-color: #f59e0b;
+  color: #b45309;
+}
+
+.flag-toggle-btn i { font-size: 0.9rem; }
+
+@media (max-width: 768px) {
+  .question-header-row { flex-direction: column; align-items: stretch; }
+  .flag-toggle-btn      { align-self: flex-start; }
 }
 
 .question-text * { direction: auto; unicode-bidi: plaintext; text-align: start; }
@@ -506,6 +553,20 @@ label span {
   text-align: left;
   direction: auto;
   unicode-bidi: plaintext;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Flagged item in the review list — JS adds .flagged-item to the <li> */
+#reviewList li.flagged-item {
+  border-color: #f59e0b;
+  background: #fffbeb;
+}
+
+.review-flag-icon {
+  color: #f59e0b;
+  font-size: 0.85rem;
 }
 
 #reviewList .answer {

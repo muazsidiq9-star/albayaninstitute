@@ -38,6 +38,7 @@ let assessmentId = null;
 let questions = [];
 let currentIndex = 0;
 let studentAnswers = {};
+let flaggedQuestions = {}; // question.id -> true, for "come back to this" markers
 let durationMinutes = 0;
 let timeRemaining = 0;
 let examEndTime = null; // absolute epoch ms timestamp - source of truth for the countdown
@@ -165,14 +166,65 @@ async function checkFees() {
 }    
 
 async function loadActiveAssessment() {
-    const hasPaid = await checkFees();
-    if (!hasPaid) return;
-
     // test-welcome.html already resolved the correct assessment for this
     // student's registered course and stored its id. Trust that instead of
     // re-deriving "the" active assessment from level_arabic alone, which
     // could pick an assessment belonging to a different course at the same level.
     const examId = sessionStorage.getItem("examId");
+
+    // Fetch the assessment (if any) and both override tables up front —
+    // before the fee check — so a carryover/grant-access student can be
+    // recognized and exempted from the current-month payment gate. Both
+    // override tables are only ever written to from admin-dashboard's
+    // Carryover / Per-Assessment Access tabs, so this exemption can never
+    // be triggered by the student themselves.
+    let assessment = null;
+    let assessmentRestriction = null;
+    let hasOverride = false;
+
+    if (examId) {
+        const { data: fetchedAssessment } = await supabaseClient
+            .from('assessments')
+            .select('*')
+            .eq('id', examId)
+            .eq('is_active', true)
+            .eq('status', 'active')
+            .single();
+        assessment = fetchedAssessment || null;
+
+        const { data: restriction } = await supabaseClient
+            .from('assessment_access_overrides')
+            .select('matric_number')
+            .eq('assessment_id', examId);
+        assessmentRestriction = restriction;
+
+        if (assessment && assessment.course_id) {
+            const { data: override } = await supabaseClient
+                .from('course_access_overrides')
+                .select('id')
+                .eq('matric_number', matricNumber)
+                .eq('course_id', assessment.course_id)
+                .limit(1);
+
+            hasOverride = !!(override && override.length > 0);
+        }
+    }
+
+    const isListedForThisAssessment = !!(
+        assessmentRestriction &&
+        assessmentRestriction.length > 0 &&
+        assessmentRestriction.some(r => r.matric_number === matricNumber)
+    );
+
+    // Fee exemption: either explicitly listed for this specific assessment,
+    // or holding a carryover/course-access override for its course. Anyone
+    // else still has to clear the normal current-month payment check.
+    const feeExempt = isListedForThisAssessment || hasOverride;
+
+    if (!feeExempt) {
+        const hasPaid = await checkFees();
+        if (!hasPaid) return;
+    }
 
     if (!examId) {
         examTitle.textContent = "No assessment selected";
@@ -180,17 +232,9 @@ async function loadActiveAssessment() {
         return;
     }
 
-    let { data: assessment, error } = await supabaseClient
-        .from('assessments')
-        .select('*')
-        .eq('id', examId)
-        .eq('is_active', true)
-        .eq('status', 'active')
-        .single();
-
     console.log(currentStudent);
 
-    if (error || !assessment) {
+    if (!assessment) {
         examTitle.textContent = "No active assessment";
         examMessage.textContent = "Please check back later";
         return;
@@ -204,14 +248,8 @@ async function loadActiveAssessment() {
     // through to the usual registration/level/batch + course bypass checks.
     // Use this for resits/makeups: create a separate assessment row with
     // its own time window, then list only the specific student(s) here.
-    const { data: assessmentRestriction } = await supabaseClient
-        .from('assessment_access_overrides')
-        .select('matric_number')
-        .eq('assessment_id', assessment.id);
-
     if (assessmentRestriction && assessmentRestriction.length > 0) {
-        const isListed = assessmentRestriction.some(r => r.matric_number === matricNumber);
-        if (!isListed) {
+        if (!isListedForThisAssessment) {
             examTitle.textContent = "Not Available";
             examMessage.textContent = "This assessment is not available for you";
             return;
@@ -225,17 +263,7 @@ async function loadActiveAssessment() {
     // "Course Registration Bypass" tab, course_access_overrides table), let
     // them in regardless of registration, level, or batch. Everyone else
     // still goes through the normal registration + level/batch gate below.
-    let hasOverride = false;
-    if (assessment.course_id) {
-        const { data: override } = await supabaseClient
-            .from('course_access_overrides')
-            .select('id')
-            .eq('matric_number', matricNumber)
-            .eq('course_id', assessment.course_id)
-            .limit(1);
-
-        hasOverride = !!(override && override.length > 0);
-    }
+    // (hasOverride was already computed above, alongside the fee check.)
 
     // Safety net: confirm this student is actually registered for the
     // course this assessment belongs to, in case examId was tampered with
@@ -397,6 +425,7 @@ finalSubmitBtn.disabled = true;
 
         currentIndex = state.currentIndex || 0;
         studentAnswers = state.studentAnswers || {};
+        flaggedQuestions = state.flaggedQuestions || {};
 
         // Keep timeRemaining/examEndTime in sync with what loadActiveAssessment already
         // computed from the real clock. We do NOT overwrite examEndTime with a stale
@@ -424,6 +453,7 @@ finalSubmitBtn.disabled = true;
 
         currentIndex = 0;
         studentAnswers = {};
+        flaggedQuestions = {};
     }
 
     renderQuestionWithProgress();
@@ -441,16 +471,31 @@ function renderQuestion() {
     const hasArabicQuestion =
         /[\u0600-\u06FF]/.test(q.question_text);
 
+    const isFlagged = !!flaggedQuestions[q.id];
+
     questionsContainer.innerHTML = `
-        <div class="question-text"
-             data-no-translate="true"
-             dir="${hasArabicQuestion ? 'rtl' : 'ltr'}"
-             style="
-                text-align:${hasArabicQuestion ? 'right' : 'left'};
-             ">
-            ${currentIndex + 1}. ${q.question_text}
+        <div class="question-header-row">
+            <div class="question-text"
+                 data-no-translate="true"
+                 dir="${hasArabicQuestion ? 'rtl' : 'ltr'}"
+                 style="
+                    text-align:${hasArabicQuestion ? 'right' : 'left'};
+                 ">
+                ${currentIndex + 1}. ${q.question_text}
+            </div>
+            <button type="button"
+                    id="flagQuestionBtn"
+                    class="flag-toggle-btn${isFlagged ? ' flagged' : ''}"
+                    aria-pressed="${isFlagged}"
+                    data-no-translate="true">
+                <i class="fa-solid fa-flag"></i>
+                <span>${isFlagged ? t('Flagged') : t('Flag')}</span>
+            </button>
         </div>
     `;
+
+    const flagBtn = document.getElementById('flagQuestionBtn');
+    flagBtn.addEventListener('click', () => toggleFlag(q.id));
 
     // ================= MCQ =================
     if (q.question_type === 'mcq') {
@@ -564,6 +609,34 @@ function renderQuestion() {
 
     }
 }
+
+// ================= FLAG FOR REVIEW =================
+// Purely a personal "come back to this" marker for the student's own
+// navigation - not graded, not sent anywhere but localStorage via
+// saveExamState(), same as currentIndex/timeRemaining.
+function toggleFlag(questionId) {
+    if (flaggedQuestions[questionId]) {
+        delete flaggedQuestions[questionId];
+    } else {
+        flaggedQuestions[questionId] = true;
+    }
+
+    saveExamState();
+
+    const isFlagged = !!flaggedQuestions[questionId];
+    const flagBtn = document.getElementById('flagQuestionBtn');
+
+    if (flagBtn) {
+        flagBtn.classList.toggle('flagged', isFlagged);
+        flagBtn.setAttribute('aria-pressed', isFlagged);
+
+        const label = flagBtn.querySelector('span');
+        if (label) label.textContent = isFlagged ? t('Flagged') : t('Flag');
+    }
+
+    updateProgressBar();
+}
+
 // ================= NAVIGATION ==============
 function renderQuestionWithProgress() {
     renderQuestion();
@@ -589,10 +662,12 @@ function updateProgressBar() {
         return a !== undefined && a !== null && String(a).trim() !== '';
     }).length;
     const remaining = total - answered;
+    const flaggedCount = Object.keys(flaggedQuestions).length;
 
     if (progressStats) {
         progressStats.textContent =
-            `Question ${currentIndex + 1} of ${total} · ${answered} answered, ${remaining} left`;
+            `Question ${currentIndex + 1} of ${total} · ${answered} answered, ${remaining} left` +
+            (flaggedCount > 0 ? ` · ${flaggedCount} flagged` : '');
     }
 }
 
@@ -671,6 +746,7 @@ function saveExamState() {
         timeRemaining,
         examEndTime,
         studentAnswers,
+        flaggedQuestions,
         questionsOrder: questions.map(q => q.id)
     };
 
@@ -787,11 +863,17 @@ reviewBtn.addEventListener('click', async () => {
         const answerText =
     studentAnswers[q.id] || `[❌ Not answered]`;
 
+        const isFlagged = !!flaggedQuestions[q.id];
+
         li.dataset.index = idx;
         li.style.cursor = 'pointer';
+        if (isFlagged) li.classList.add('flagged-item');
 
         li.innerHTML = `
-          <div class="question">${idx + 1}. ${q.question_text}</div>
+          <div class="question">
+            ${idx + 1}. ${q.question_text}
+            ${isFlagged ? `<i class="fa-solid fa-flag review-flag-icon" title="${t('Flagged for review')}"></i>` : ''}
+          </div>
           <div class="answer">${answerText}</div>
         `;
 
