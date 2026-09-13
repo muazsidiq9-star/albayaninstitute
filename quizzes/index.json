@@ -2,6 +2,7 @@
   {
     "id": "quran",
     "title": "Qur'an Challenge",
+    "titleArabic": "تحدي القرآن",
     "subtitle": "Qur'an Memorization — Al-Fatihah to An-Nas",
     "icon": "🕌",
     "course": "Qur'an Memorisation"
@@ -12,14 +13,24 @@
     "id": "tafseer-foundations",
     "title": "Tafseer Foundations",
     "titleArabic": "أساسيات التفسير",
-    "subtitle": "Understanding the meanings of Al-Isti'adhah, Al-Basmalah, Al-Fatihah, and the short Surahs of Juz Amma (Al-Asr to An-Nas)",
+    "subtitle": "Understanding the meanings of Al-Isti'adhah, Al-Basmalah, Al-Fatihah, and Al-Asr to An-Nas",
     "icon": "📖",
     "course": "Tafseer Al-Qur'an (Tafseer Essentials)"
+  },
+
+  {
+  "id": "arabic-essentials",
+  "title": "Arabic Essentials",
+  "titleArabic": "أساسيات اللغة العربية",
+  "subtitle": "General Arabic language skills — from Madinah Arabic Reader Books 1-2",
+  "icon": "🎙️",
+  "course": "Arabic Essentials"
   },
   
   {
     "id": "tabir-expression",
     "title": "Arabic Expression",
+    "titleArabic": "التعبير",
     "subtitle": "Build skill in written and spoken Arabic self-expression",
     "icon": "🗣️",
     "course": "Arabic Expression (Ta'bir')"
@@ -28,6 +39,7 @@
   {
     "id": "nahw-foundations",
     "title": "Nahw Foundations",
+    "titleArabic": "أساسيات النحو",
     "subtitle": "Master the rules of Arabic sentence structure",
     "icon": "🖋️",
     "course": "Arabic Grammar (Nahw)"

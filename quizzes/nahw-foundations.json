@@ -24,8 +24,8 @@
               "options": [
                 "Three (Ism, Fi'l, Ḥarf)",
                 "Two (Noun, Verb)",
-                "Four",
-                "Five"
+                "Four (Ism, Fi'l, Ḥarf, Adjective)",
+                "Five (Ism, Fi'l, Ḥarf, Adjective, Pronoun)"
               ],
               "answer": "Three (Ism, Fi'l, Ḥarf)"
             },
@@ -35,7 +35,7 @@
                 "A noun — a word referring to a person, place, thing, or idea",
                 "A verb showing action",
                 "A particle with only grammatical meaning",
-                "A number"
+                "A number — a word showing quantity"
               ],
               "answer": "A noun — a word referring to a person, place, thing, or idea"
             },
@@ -43,9 +43,9 @@
               "text": "What is Al-Fi'l?",
               "options": [
                 "A verb — a word expressing an action tied to a time",
-                "A noun",
-                "A particle",
-                "A pronoun"
+                "A noun — a word referring to a person, place, thing, or idea",
+                "A particle — a word with only grammatical meaning",
+                "A pronoun — a word replacing a noun"
               ],
               "answer": "A verb — a word expressing an action tied to a time"
             },
@@ -53,9 +53,9 @@
               "text": "What is Al-Ḥarf?",
               "options": [
                 "A particle — has no independent meaning except with other words",
-                "A type of noun",
-                "A type of verb",
-                "A number"
+                "A type of noun — a word referring to a person, place, thing, or idea",
+                "A type of verb — a word expressing an action tied to a time",
+                "A number — a word showing quantity"
               ],
               "answer": "A particle — has no independent meaning except with other words"
             },
@@ -161,9 +161,9 @@
               "text": "Tā' at-Ta'nīth as-Sākinah (the resting feminine tā', e.g. ذَهَبَتْ) attaching to a word is a sign that the word is...",
               "options": [
                 "A Fi'l al-Māḍī (past-tense verb)",
-                "An Ism",
-                "A Ḥarf",
-                "A pronoun"
+                "An Ism (noun)",
+                "A Ḥarf (particle)",
+                "A pronoun replacing a noun"
               ],
               "answer": "A Fi'l al-Māḍī (past-tense verb)"
             },
@@ -171,9 +171,9 @@
               "text": "Sīn at-Tanfīs (the future sīn, e.g. سَيَذْهَبُ) attaching to a word shows it is a...",
               "options": [
                 "Fi'l al-Muḍāri' (present/future verb)",
-                "Ism",
-                "Ḥarf",
-                "Muḍāf"
+                "Ism (noun)",
+                "Ḥarf (particle)",
+                "Muḍāf Ilayh (possessed noun)"
               ],
               "answer": "Fi'l al-Muḍāri' (present/future verb)"
             },
@@ -299,7 +299,7 @@
               "text": "Are Asmā' al-Ishārah (demonstratives) Mu'rab or Mabnī?",
               "options": [
                 "Mabnī (their ending does not change)",
-                "Fully Mu'rab",
+                "Fully Mu'rab (their ending changes with case)",
                 "Neither",
                 "Only Mu'rab in the dual"
               ],
@@ -554,8 +554,8 @@
               "text": "What is Al-Mufrad?",
               "options": [
                 "Singular — referring to one",
-                "Referring to two",
-                "Referring to three or more",
+                "Dual — referring to two",
+                "Plural — referring to three or more",
                 "A verb form"
               ],
               "answer": "Singular — referring to one"
@@ -564,8 +564,8 @@
               "text": "What is Al-Muthannā?",
               "options": [
                 "Dual — referring to exactly two",
-                "Referring to one",
-                "Referring to plural",
+                "Singular — referring to one",
+                "Plural — referring to three or more",
                 "A type of pronoun"
               ],
               "answer": "Dual — referring to exactly two"
@@ -574,8 +574,8 @@
               "text": "What is Al-Jam'?",
               "options": [
                 "Plural — referring to three or more",
-                "Referring to exactly two",
-                "Referring to one",
+                "Dual — referring to exactly two",
+                "Singular — referring to one",
                 "A verb tense"
               ],
               "answer": "Plural — referring to three or more"
@@ -595,8 +595,8 @@
               "options": [
                 "Three — Singular, Dual, Plural",
                 "Two — Singular, Plural",
-                "Four",
-                "Five"
+                "Four — Singular, Dual, Plural, Collective",
+                "Five — Singular, Dual, Plural, Collective, Mass"
               ],
               "answer": "Three — Singular, Dual, Plural"
             }
@@ -613,9 +613,9 @@
               "text": "How is Al-Muthannā formed when Marfū' (from a singular noun)?",
               "options": [
                 "Adding ـَانِ to the end",
-                "Adding ـَيْنِ",
-                "Adding ونَ",
-                "Adding ات"
+                "Adding ـَيْنِ to the end",
+                "Adding ونَ to the end",
+                "Adding ات to the end"
               ],
               "answer": "Adding ـَانِ to the end"
             },
@@ -634,7 +634,7 @@
               "options": [
                 "Marfū', shown by the ـَانِ ending",
                 "Manṣūb, shown by ـَيْنِ",
-                "Majrūr",
+                "Majrūr, shown by ـَيْنِ",
                 "Mabnī with no case"
               ],
               "answer": "Marfū', shown by the ـَانِ ending"
@@ -673,8 +673,8 @@
               "options": [
                 "Formed by adding ونَ or ينَ to a masculine singular",
                 "Formed by changing internal vowels",
-                "Formed by adding ات",
-                "Formed by adding ـَانِ"
+                "Formed by adding ات to a feminine singular",
+                "Formed by adding ـَانِ or ـَيْنِ"
               ],
               "answer": "Formed by adding ونَ or ينَ to a masculine singular"
             },
@@ -771,8 +771,8 @@
               "text": "Compared to Jam' Sālim, is Jam' Taksīr more or less common in Arabic?",
               "options": [
                 "More common — most Arabic plurals are actually broken plurals",
-                "Less common",
-                "Equally rare",
+                "Less common — most plurals are sound plurals",
+                "Equally rare as Jam' Sālim",
                 "It doesn't exist in Classical Arabic"
               ],
               "answer": "More common — most Arabic plurals are actually broken plurals"
@@ -790,9 +790,9 @@
               "text": "What is Al-I'rāb?",
               "options": [
                 "The change in a word's ending based on its grammatical role in the sentence",
-                "A type of verb",
-                "A type of noun",
-                "The plural system"
+                "The change in a word's meaning based on context",
+                "The change in a word's root letters based on tense",
+                "The change in a word's gender based on the subject"
               ],
               "answer": "The change in a word's ending based on its grammatical role in the sentence"
             },
@@ -908,8 +908,8 @@
               "text": "What is Al-Mubtada?",
               "options": [
                 "The subject of a nominal sentence (Jumlah Ismiyyah), usually first and definite",
-                "The object of a verb",
-                "The predicate",
+                "The object of a verb (Jumlah Fi'liyyah)",
+                "The predicate of a nominal sentence (Jumlah Ismiyyah)",
                 "A preposition"
               ],
               "answer": "The subject of a nominal sentence (Jumlah Ismiyyah), usually first and definite"
@@ -918,9 +918,9 @@
               "text": "What is Al-Khabar?",
               "options": [
                 "The predicate — it completes the meaning about the Mubtada",
-                "The subject",
-                "A type of verb",
-                "A particle"
+                "The subject of a nominal sentence (Jumlah Ismiyyah)",
+                "A type of verb (usually past tense)",
+                "A particle that connects two nouns"
               ],
               "answer": "The predicate — it completes the meaning about the Mubtada"
             },
@@ -987,8 +987,8 @@
               "text": "زَيْدٌ يَكْتُبُ (\"Zayd is writing\") — what is يَكْتُبُ here?",
               "options": [
                 "Khabar Jumlah Fi'liyyah (a verbal-sentence predicate)",
-                "Khabar Mufrad",
-                "Al-Mubtada",
+                "Khabar Mufrad (single-word predicate)",
+                "Al-Mubtada (Zayd) only, with no Khabar role",
                 "Al-Fā'il only, with no Khabar role"
               ],
               "answer": "Khabar Jumlah Fi'liyyah (a verbal-sentence predicate)"
@@ -1007,7 +1007,7 @@
               "text": "In الْكِتَابُ عَلَى الطَّاوِلَةِ (\"The book is on the table\"), what serves as the Khabar?",
               "options": [
                 "عَلَى الطَّاوِلَةِ (the Jār-Majrūr, Khabar Shibh Jumlah)",
-                "الْكِتَابُ",
+                "الْكِتَابُ (the Mubtada, no Khabar)",
                 "الطَّاوِلَةِ alone",
                 "There is no Khabar here"
               ],
@@ -1046,9 +1046,9 @@
               "text": "What does ثُمَّ (thumma) mean as a conjunction?",
               "options": [
                 "\"then\" (with a pause/delay)",
-                "\"and\"",
-                "\"or\"",
-                "\"but\""
+                "\"and\" (immediately, no delay)",
+                "\"or\" (immediately, no delay)",
+                "\"but\" (with a pause/delay)"
               ],
               "answer": "\"then\" (with a pause/delay)"
             },
@@ -1056,8 +1056,8 @@
               "text": "What does فَ (fa) mean as a conjunction, and how does it differ from ثُمَّ?",
               "options": [
                 "\"then\" (immediately, no delay)",
-                "\"or\"",
-                "\"but\"",
+                "\"or\" (immediately, no delay)",
+                "\"but\" (with a pause/delay)",
                 "\"and\", identical to وَ in every way"
               ],
               "answer": "\"then\" (immediately, no delay)"
@@ -1125,9 +1125,9 @@
               "text": "What is a Ḥarf al-Jarr, in the simplest sense?",
               "options": [
                 "A short particle that connects to a noun to show a relationship like place, direction, or means",
-                "A type of verb",
-                "A type of pronoun",
-                "A plural marker"
+                "A type of verb that connects to a noun",
+                "A type of pronoun that shows possession",
+                "A plural marker for nouns"
               ],
               "answer": "A short particle that connects to a noun to show a relationship like place, direction, or means"
             }
@@ -1408,9 +1408,9 @@
               "text": "What is Al-Maf'ūl Bih?",
               "options": [
                 "The direct object — receives the action of the verb, Manṣūb",
-                "The subject",
-                "The predicate",
-                "A preposition"
+                "The subject — does the action, Marfū'",
+                "The predicate — completes the meaning of the subject",
+                "A preposition that connects two nouns"
               ],
               "answer": "The direct object — receives the action of the verb, Manṣūb"
             },
@@ -1466,22 +1466,22 @@
             {
               "text": "What is Al-Fi'l al-Lāzim?",
               "options": [
-                "An intransitive verb — does not take a direct object",
+                "An intransitive verb",
                 "A transitive verb",
                 "A passive verb",
                 "A command verb"
               ],
-              "answer": "An intransitive verb — does not take a direct object"
+              "answer": "An intransitive verb"
             },
             {
               "text": "What is Al-Fi'l al-Muta'addī?",
               "options": [
-                "A transitive verb — takes a direct object",
+                "A transitive verb",
                 "An intransitive verb",
                 "A passive-only verb",
                 "A verb with no meaning"
               ],
-              "answer": "A transitive verb — takes a direct object"
+              "answer": "A transitive verb"
             },
             {
               "text": "ذَهَبَ زَيْدٌ إِلَى الْمَسْجِدِ — is ذَهَبَ Lāzim or Muta'addī, given it needs إِلَى to connect to a place?",
@@ -1811,12 +1811,12 @@
             {
               "text": "بِزَيْدٍ وَخَالِدٍ — what is the i'rāb of both, and why?",
               "options": [
-                "Both Majrūr, since they follow the Ḥarf al-Jarr بِ",
+                "Both Majrūr",
                 "Both Marfū'",
                 "Both Manṣūb",
                 "Mabnī"
               ],
-              "answer": "Both Majrūr, since they follow the Ḥarf al-Jarr بِ"
+              "answer": "Both Majrūr"
             },
             {
               "text": "Can more than two items be coordinated in a single chain with وَ?",

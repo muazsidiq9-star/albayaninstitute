@@ -1,0 +1,874 @@
+{
+  "id": "arabic-essentials",
+  "title": "Arabic Essentials",
+  "titleArabic": "أساسيات اللغة العربية",
+  "subtitle": "General Arabic language skills — from Madinah Arabic Reader Books 1-2",
+  "icon": "🎙️",
+  "description": "A full progressive Arabic language course covering vocabulary, sentence building, and practical grammar — from first words to fluent everyday expression from Madinah Arabic Reader Books 1-2.",
+  "difficulties": [
+    {
+      "id": "beginner",
+      "label": "Beginner",
+      "icon": "🌱",
+      "description": "First words and building blocks — greetings, gender, plurals, pronouns, and simple sentences",
+      "stages": [
+        {
+          "id": "stage1",
+          "title": "Greetings & Basic Vocabulary",
+          "icon": "👋",
+          "description": "Everyday greetings and polite expressions",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "\"السلام عليكم\" is a greeting meaning:", "options": ["Peace be upon you", "Good morning", "Thank you", "Goodbye"], "answer": "Peace be upon you"},
+            {"text": "\"شكراً\" means:", "options": ["Thank you", "Please", "Sorry", "Welcome"], "answer": "Thank you"},
+            {"text": "\"من فضلك\" means:", "options": ["Please", "Thank you", "Sorry", "Goodbye"], "answer": "Please"},
+            {"text": "\"مع السلامة\" is used when:", "options": ["Saying goodbye", "Greeting someone", "Apologizing", "Asking a question"], "answer": "Saying goodbye"},
+            {"text": "\"نعم\" and \"لا\" mean:", "options": ["Yes and No", "Hello and Goodbye", "Please and Thanks", "Big and Small"], "answer": "Yes and No"}
+          ]
+        },
+        {
+          "id": "stage2",
+          "title": "The Definite Article (ال)",
+          "icon": "🏷️",
+          "description": "Making a noun definite with ال",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "Which word is definite?", "options": ["كتاب", "الكتاب", "قلم", "بيت"], "answer": "الكتاب"},
+            {"text": "The letters ال added to a noun make it:", "options": ["Indefinite", "Definite", "Plural", "Feminine"], "answer": "Definite"},
+            {"text": "Which is indefinite?", "options": ["الولد", "ولد", "البيت", "القلم"], "answer": "ولد"},
+            {"text": "\"بيتٌ\" without ال is:", "options": ["Definite", "Indefinite", "Plural", "Dual"], "answer": "Indefinite"},
+            {"text": "Choose the definite form of \"قلم\":", "options": ["قلمة", "القلم", "أقلام", "قلمان"], "answer": "القلم"}
+          ]
+        },
+        {
+          "id": "stage3",
+          "title": "Masculine & Feminine Nouns",
+          "icon": "⚥",
+          "description": "Recognizing gender in Arabic nouns",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "Which word is feminine?", "options": ["ولد", "رجل", "بنت", "طالب"], "answer": "بنت"},
+            {"text": "Which word is masculine?", "options": ["مدرسة", "سيارة", "بنت", "رجل"], "answer": "رجل"},
+            {"text": "Most feminine nouns end with which letter?", "options": ["ة", "و", "ي", "ن"], "answer": "ة"},
+            {"text": "\"معلمة\" is the feminine of:", "options": ["معلم", "طالب", "ولد", "رجل"], "answer": "معلم"},
+            {"text": "Which is a feminine noun?", "options": ["كتاب", "قلم", "سيارة", "باب"], "answer": "سيارة"}
+          ]
+        },
+        {
+          "id": "stage4",
+          "title": "Singular, Dual & Plural Nouns",
+          "icon": "🔢",
+          "description": "Telling one, two, and many apart",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "\"كتاب\" (one book) is:", "options": ["Singular", "Dual", "Plural", "Feminine"], "answer": "Singular"},
+            {"text": "\"كتابان\" (two books) is:", "options": ["Singular", "Dual", "Plural", "Feminine"], "answer": "Dual"},
+            {"text": "\"كتب\" (books) is:", "options": ["Singular", "Dual", "Plural", "Masculine only"], "answer": "Plural"},
+            {"text": "Which word is plural?", "options": ["ولد", "طلاب", "بنت", "قلم"], "answer": "طلاب"},
+            {"text": "Which word is dual?", "options": ["كتاب", "كتابان", "كتب", "كاتب"], "answer": "كتابان"}
+          ]
+        },
+        {
+          "id": "stage5",
+          "title": "Personal Pronouns",
+          "icon": "🙋",
+          "description": "هو، هي، أنا، نحن، أنتَ، أنتِ",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "\"هو\" means:", "options": ["He", "She", "I", "We"], "answer": "He"},
+            {"text": "\"هي\" means:", "options": ["He", "She", "I", "We"], "answer": "She"},
+            {"text": "\"أنا\" means:", "options": ["I", "You", "He", "We"], "answer": "I"},
+            {"text": "\"نحن\" means:", "options": ["We", "I", "You", "They"], "answer": "We"},
+            {"text": "\"أنتَ\" is used to address:", "options": ["A male", "A female", "A group", "An object"], "answer": "A male"}
+          ]
+        },
+        {
+          "id": "stage6",
+          "title": "Nominal Sentences — Subject & Predicate",
+          "icon": "🧩",
+          "description": "مبتدأ (subject) and خبر (predicate)",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "In a nominal sentence, the subject is called:", "options": ["فعل", "مبتدأ", "فاعل", "حرف"], "answer": "مبتدأ"},
+            {"text": "The predicate of a nominal sentence is called:", "options": ["خبر", "مبتدأ", "مفعول", "حرف"], "answer": "خبر"},
+            {"text": "\"الولدُ نشيطٌ\" - \"نشيطٌ\" is the:", "options": ["مبتدأ", "خبر", "فعل", "حرف"], "answer": "خبر"},
+            {"text": "Choose the correct predicate: \"البيتُ ____\"", "options": ["كبيرٌ", "كتب", "ذهب", "يكتب"], "answer": "كبيرٌ"},
+            {"text": "Which is a nominal sentence?", "options": ["القلمُ جديدٌ", "ذهب الولد", "يكتب الطالب", "جلس المعلم"], "answer": "القلمُ جديدٌ"}
+          ]
+        },
+        {
+          "id": "stage7",
+          "title": "Simple Adjectives & Agreement",
+          "icon": "🎨",
+          "description": "Describing nouns and matching gender",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "Adjectives in Arabic usually come:", "options": ["Before the noun", "After the noun", "Only at the start of a sentence", "Only at the end"], "answer": "After the noun"},
+            {"text": "\"بيتٌ كبيرٌ\" - the adjective agrees with بيت in:", "options": ["Gender only", "Number only", "Both gender and number", "Neither"], "answer": "Both gender and number"},
+            {"text": "Choose the correct adjective for a feminine noun: \"سيارة ____\"", "options": ["جميلة", "جميل", "جميلون", "جميلات"], "answer": "جميلة"},
+            {"text": "\"طويل\" means:", "options": ["Tall/Long", "Short", "Small", "Big"], "answer": "Tall/Long"},
+            {"text": "\"جديد\" means:", "options": ["New", "Old", "Big", "Small"], "answer": "New"}
+          ]
+        },
+        {
+          "id": "stage8",
+          "title": "Family Vocabulary",
+          "icon": "👨‍👩‍👧",
+          "description": "Words for family members",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "\"أب\" means:", "options": ["Father", "Mother", "Brother", "Sister"], "answer": "Father"},
+            {"text": "\"أم\" means:", "options": ["Mother", "Father", "Sister", "Brother"], "answer": "Mother"},
+            {"text": "\"أخ\" means:", "options": ["Brother", "Sister", "Son", "Daughter"], "answer": "Brother"},
+            {"text": "\"أخت\" means:", "options": ["Sister", "Brother", "Mother", "Aunt"], "answer": "Sister"},
+            {"text": "\"ابن\" means:", "options": ["Son", "Daughter", "Father", "Uncle"], "answer": "Son"}
+          ]
+        },
+        {
+          "id": "stage9",
+          "title": "Numbers 1–10",
+          "icon": "🔟",
+          "description": "Counting from one to ten",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "\"واحد\" means:", "options": ["One", "Two", "Three", "Ten"], "answer": "One"},
+            {"text": "\"خمسة\" means:", "options": ["Five", "Four", "Six", "Seven"], "answer": "Five"},
+            {"text": "\"عشرة\" means:", "options": ["Ten", "Nine", "Eight", "One"], "answer": "Ten"},
+            {"text": "\"ثلاثة\" means:", "options": ["Three", "Two", "Four", "Five"], "answer": "Three"},
+            {"text": "\"سبعة\" means:", "options": ["Seven", "Six", "Eight", "Nine"], "answer": "Seven"}
+          ]
+        },
+        {
+          "id": "stage10",
+          "title": "Colors",
+          "icon": "🌈",
+          "description": "Naming colors in Arabic",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "\"أحمر\" means:", "options": ["Red", "Blue", "Green", "Yellow"], "answer": "Red"},
+            {"text": "\"أزرق\" means:", "options": ["Blue", "Red", "Black", "White"], "answer": "Blue"},
+            {"text": "\"أخضر\" means:", "options": ["Green", "Yellow", "Red", "Blue"], "answer": "Green"},
+            {"text": "\"أسود\" means:", "options": ["Black", "White", "Red", "Green"], "answer": "Black"},
+            {"text": "\"أبيض\" means:", "options": ["White", "Black", "Blue", "Yellow"], "answer": "White"}
+          ]
+        },
+        {
+          "id": "stage11",
+          "title": "Days of the Week",
+          "icon": "📅",
+          "description": "The names of the seven days",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "\"يوم الجمعة\" is:", "options": ["Friday", "Saturday", "Sunday", "Monday"], "answer": "Friday"},
+            {"text": "\"يوم السبت\" is:", "options": ["Saturday", "Sunday", "Friday", "Thursday"], "answer": "Saturday"},
+            {"text": "\"يوم الأحد\" is:", "options": ["Sunday", "Monday", "Saturday", "Friday"], "answer": "Sunday"},
+            {"text": "\"يوم الاثنين\" is:", "options": ["Monday", "Tuesday", "Sunday", "Wednesday"], "answer": "Monday"},
+            {"text": "How many days are in a week?", "options": ["5", "6", "7", "8"], "answer": "7"}
+          ]
+        },
+        {
+          "id": "stage12",
+          "title": "Question Words — من، ما، أين",
+          "icon": "❓",
+          "description": "Asking who, what, and where",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "\"من؟\" means:", "options": ["Who?", "What?", "Where?", "When?"], "answer": "Who?"},
+            {"text": "\"ما؟\" means:", "options": ["What?", "Who?", "Where?", "How?"], "answer": "What?"},
+            {"text": "\"أين؟\" means:", "options": ["Where?", "When?", "Why?", "Who?"], "answer": "Where?"},
+            {"text": "\"من هذا؟\" is asking about:", "options": ["A person's identity", "A place", "A time", "A reason"], "answer": "A person's identity"},
+            {"text": "\"أين البيت؟\" is asking about:", "options": ["The location of the house", "The owner of the house", "The size of the house", "The color of the house"], "answer": "The location of the house"}
+          ]
+        },
+        {
+          "id": "stage13",
+          "title": "Prepositions — في، على، من، إلى",
+          "icon": "📍",
+          "description": "In, on, from, to",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "\"في\" means:", "options": ["In", "On", "From", "To"], "answer": "In"},
+            {"text": "\"على\" means:", "options": ["On", "In", "From", "To"], "answer": "On"},
+            {"text": "\"من\" means:", "options": ["From", "To", "In", "On"], "answer": "From"},
+            {"text": "\"إلى\" means:", "options": ["To", "From", "In", "On"], "answer": "To"},
+            {"text": "\"الكتاب على الطاولة\" means:", "options": ["The book is on the table", "The book is in the table", "The book is from the table", "The book is under the table"], "answer": "The book is on the table"}
+          ]
+        },
+        {
+          "id": "stage14",
+          "title": "Common Verbs — Present Tense",
+          "icon": "⏱️",
+          "description": "He writes, he reads, he goes",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "\"يكتب\" means:", "options": ["He writes", "He wrote", "Write! (command)", "Writing (noun)"], "answer": "He writes"},
+            {"text": "\"يقرأ\" means:", "options": ["He reads", "He read", "Read! (command)", "Reading (noun)"], "answer": "He reads"},
+            {"text": "\"يذهب\" means:", "options": ["He goes", "He went", "Go! (command)", "Going (noun)"], "answer": "He goes"},
+            {"text": "\"تكتب\" (with تـ) can mean:", "options": ["She writes / you (m) write", "He writes", "They write", "We write"], "answer": "She writes / you (m) write"},
+            {"text": "Present tense verbs in Arabic usually begin with:", "options": ["A prefix like ي or ت", "A suffix only", "No change at all", "Only ال"], "answer": "A prefix like ي or ت"}
+          ]
+        },
+        {
+          "id": "stage15",
+          "title": "Common Verbs — Past Tense",
+          "icon": "🕰️",
+          "description": "He wrote, he went, he read",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "\"كتب\" means:", "options": ["He wrote", "He writes", "Write! (command)", "Writing"], "answer": "He wrote"},
+            {"text": "\"ذهب\" means:", "options": ["He went", "He goes", "Go! (command)", "Going"], "answer": "He went"},
+            {"text": "\"قرأ\" means:", "options": ["He read", "He reads", "Read! (command)", "Reading"], "answer": "He read"},
+            {"text": "\"كتبتُ\" means:", "options": ["I wrote", "He wrote", "You wrote", "They wrote"], "answer": "I wrote"},
+            {"text": "Past tense verbs typically end with which vowel in their basic form?", "options": ["فتحة", "ضمة", "كسرة", "سكون"], "answer": "فتحة"}
+          ]
+        },
+        {
+          "id": "stage16",
+          "title": "Household & School Vocabulary",
+          "icon": "🏠",
+          "description": "Everyday objects at home and school",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "\"باب\" means:", "options": ["Door", "Window", "Wall", "Roof"], "answer": "Door"},
+            {"text": "\"شباك\" means:", "options": ["Window", "Door", "Table", "Chair"], "answer": "Window"},
+            {"text": "\"مكتب\" means:", "options": ["Desk/Office", "Chair", "Book", "Bag"], "answer": "Desk/Office"},
+            {"text": "\"حقيبة\" means:", "options": ["Bag", "Pen", "Book", "Table"], "answer": "Bag"},
+            {"text": "\"سبورة\" means:", "options": ["Whiteboard/Blackboard", "Desk", "Chair", "Door"], "answer": "Whiteboard/Blackboard"}
+          ]
+        },
+        {
+          "id": "stage17",
+          "title": "Simple Verbal Sentences",
+          "icon": "🏃",
+          "description": "Verb, subject, and object in a basic sentence",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "A verbal sentence begins with a:", "options": ["Noun", "Verb", "Preposition", "Particle"], "answer": "Verb"},
+            {"text": "\"ذهب الولدُ\" - \"ذهب\" is the:", "options": ["فعل (verb)", "فاعل (subject)", "مفعول به (object)", "خبر"], "answer": "فعل (verb)"},
+            {"text": "\"ذهب الولدُ\" - \"الولدُ\" is the:", "options": ["فعل (verb)", "فاعل (subject)", "مفعول به (object)", "خبر"], "answer": "فاعل (subject)"},
+            {"text": "Which is a verbal sentence?", "options": ["كتب الطالبُ", "الطالبُ مجتهدٌ", "البيتُ كبيرٌ", "القلمُ جديدٌ"], "answer": "كتب الطالبُ"},
+            {"text": "In \"قرأ الولدُ الكتابَ\", \"الكتابَ\" is the:", "options": ["فاعل", "مفعول به (object)", "مبتدأ", "خبر"], "answer": "مفعول به (object)"}
+          ]
+        },
+        {
+          "id": "stage18",
+          "title": "Yes/No Questions with هل",
+          "icon": "🤔",
+          "description": "Asking and answering yes/no questions",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "\"هل\" is used to:", "options": ["Ask a yes/no question", "Give a command", "Negate a sentence", "Show possession"], "answer": "Ask a yes/no question"},
+            {"text": "\"هل أنت طالب؟\" means:", "options": ["Are you a student?", "You are a student.", "I am a student.", "He is a student."], "answer": "Are you a student?"},
+            {"text": "A natural answer to a هل question is:", "options": ["نعم or لا", "من or ما", "هذا or ذلك", "في or على"], "answer": "نعم or لا"},
+            {"text": "\"هل ذهبتَ إلى المدرسة؟\" is asking:", "options": ["Did you go to school?", "Where is the school?", "What is the school?", "Who went to school?"], "answer": "Did you go to school?"},
+            {"text": "Which sentence is a yes/no question?", "options": ["هل هذا كتابك؟", "أين كتابك؟", "ما اسمك؟", "من أنت؟"], "answer": "هل هذا كتابك؟"}
+          ]
+        },
+        {
+          "id": "stage19",
+          "title": "Demonstrative Pronouns — هذا / هذه",
+          "icon": "👉",
+          "description": "Pointing to something nearby",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "\"هذا\" means:", "options": ["This (masculine)", "This (feminine)", "These", "That"], "answer": "This (masculine)"},
+            {"text": "\"هذه\" means:", "options": ["This (feminine)", "This (masculine)", "These", "That"], "answer": "This (feminine)"},
+            {"text": "\"هذا كتابٌ\" means:", "options": ["This is a book", "This is a car", "These are books", "That is a book"], "answer": "This is a book"},
+            {"text": "\"هذه سيارةٌ\" means:", "options": ["This is a car", "This is a book", "These are cars", "That is a car"], "answer": "This is a car"},
+            {"text": "Choose correctly: \"____ قلمٌ\" (pointing to a pen)", "options": ["هذا", "هذه", "هؤلاء", "ذلك"], "answer": "هذا"}
+          ]
+        },
+        {
+          "id": "stage20",
+          "title": "Basic Possession — لي، لك، له",
+          "icon": "🔑",
+          "description": "Expressing \"mine\", \"yours\", and \"his/hers\"",
+          "kicker": "First Words",
+          "questions": [
+            {"text": "\"هذا الكتابُ لي\" means:", "options": ["This book is mine", "This book is yours", "This book is his", "This book is hers"], "answer": "This book is mine"},
+            {"text": "\"لك\" means:", "options": ["For/to you", "For/to me", "For/to him", "For/to her"], "answer": "For/to you"},
+            {"text": "\"له\" means:", "options": ["For/to him", "For/to her", "For/to you", "For/to me"], "answer": "For/to him"},
+            {"text": "\"لها\" means:", "options": ["For/to her", "For/to him", "For/to me", "For/to you"], "answer": "For/to her"},
+            {"text": "\"هذا بيتُ محمدٍ\" shows possession by:", "options": ["Adding the owner's name after the noun", "Using a preposition only", "Using a verb", "Using an adjective"], "answer": "Adding the owner's name after the noun"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intermediate",
+      "label": "Intermediate",
+      "icon": "🌿",
+      "description": "Building fuller sentences — extended plurals, pronouns, tenses, and everyday topics",
+      "stages": [
+        {
+          "id": "stage1",
+          "title": "Sound Masculine & Feminine Plurals",
+          "icon": "👥",
+          "description": "Regular plural patterns for people",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "جمع المذكر السالم is formed by adding:", "options": ["ون / ين", "ات", "ة", "An internal pattern change"], "answer": "ون / ين"},
+            {"text": "\"معلمون\" is:", "options": ["Sound masculine plural", "Sound feminine plural", "Broken plural", "Dual"], "answer": "Sound masculine plural"},
+            {"text": "جمع المؤنث السالم is formed by adding:", "options": ["ات", "ون", "ين", "ة"], "answer": "ات"},
+            {"text": "\"مسلمات\" is the plural of:", "options": ["مسلمة", "مسلم", "مسلمون", "مسلمين"], "answer": "مسلمة"},
+            {"text": "Which is a sound feminine plural?", "options": ["طالبات", "طلاب", "رجال", "أقلام"], "answer": "طالبات"}
+          ]
+        },
+        {
+          "id": "stage2",
+          "title": "Broken Plurals",
+          "icon": "🧱",
+          "description": "Plurals formed by changing the word's internal pattern",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "\"كتب\" is the broken plural of:", "options": ["كتاب", "كاتب", "كتابة", "مكتوب"], "answer": "كتاب"},
+            {"text": "\"رجال\" is the plural of:", "options": ["رجل", "امرأة", "ولد", "بنت"], "answer": "رجل"},
+            {"text": "Broken plurals are formed by:", "options": ["Changing the internal pattern of the word", "Adding ون only", "Adding ات only", "Adding a prefix only"], "answer": "Changing the internal pattern of the word"},
+            {"text": "\"أقلام\" is the plural of:", "options": ["قلم", "كتاب", "بيت", "باب"], "answer": "قلم"},
+            {"text": "\"بيوت\" is the plural of:", "options": ["بيت", "باب", "كتاب", "قلم"], "answer": "بيت"}
+          ]
+        },
+        {
+          "id": "stage3",
+          "title": "Dual Nouns (المثنى)",
+          "icon": "✌️",
+          "description": "Talking about exactly two of something",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "The dual is formed by adding:", "options": ["ان / ين", "ون / ين", "ات", "ة"], "answer": "ان / ين"},
+            {"text": "\"طالبان\" means:", "options": ["Two students (m)", "Students (m plural)", "One student", "Two students (f)"], "answer": "Two students (m)"},
+            {"text": "\"كتابان\" means:", "options": ["Two books", "Books", "One book", "Three books"], "answer": "Two books"},
+            {"text": "Choose the dual of \"بيت\":", "options": ["بيتان", "بيوت", "بيتات", "بيتون"], "answer": "بيتان"},
+            {"text": "\"معلمتان\" means:", "options": ["Two female teachers", "Two male teachers", "Female teachers (plural)", "One female teacher"], "answer": "Two female teachers"}
+          ]
+        },
+        {
+          "id": "stage4",
+          "title": "Extended Pronouns",
+          "icon": "👨‍👩‍👧‍👦",
+          "description": "هم، هن، أنتما، أنتن، أنتم",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "\"هم\" means:", "options": ["They (masculine)", "They (feminine)", "We", "You (plural)"], "answer": "They (masculine)"},
+            {"text": "\"هن\" means:", "options": ["They (feminine)", "They (masculine)", "We", "You"], "answer": "They (feminine)"},
+            {"text": "\"أنتما\" means:", "options": ["You two", "You (plural masculine)", "You (plural feminine)", "You (singular)"], "answer": "You two"},
+            {"text": "\"أنتن\" means:", "options": ["You (plural feminine)", "You (plural masculine)", "You two", "They (feminine)"], "answer": "You (plural feminine)"},
+            {"text": "\"أنتم\" means:", "options": ["You (plural masculine)", "You (plural feminine)", "You two", "They"], "answer": "You (plural masculine)"}
+          ]
+        },
+        {
+          "id": "stage5",
+          "title": "Verbal Sentences — Subject & Object",
+          "icon": "🎯",
+          "description": "Identifying فاعل and مفعول به in fuller sentences",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "In \"كتب الطالبُ الدرسَ\", the subject (فاعل) is:", "options": ["الطالبُ", "الدرسَ", "كتب", "كلاهما"], "answer": "الطالبُ"},
+            {"text": "In the same sentence, the object (مفعول به) is:", "options": ["الدرسَ", "الطالبُ", "كتب", "لا شيء"], "answer": "الدرسَ"},
+            {"text": "The subject of a verb in Arabic is usually:", "options": ["مرفوع (nominative)", "منصوب (accusative)", "مجرور (genitive)", "مجزوم"], "answer": "مرفوع (nominative)"},
+            {"text": "The object of a verb in Arabic is usually:", "options": ["منصوب (accusative)", "مرفوع (nominative)", "مجرور (genitive)", "مجزوم"], "answer": "منصوب (accusative)"},
+            {"text": "In \"قرأت الطالبةُ الكتابَ\", who is doing the reading?", "options": ["الطالبةُ", "الكتابَ", "قرأت", "لا أحد"], "answer": "الطالبةُ"}
+          ]
+        },
+        {
+          "id": "stage6",
+          "title": "Active & Passive Voice",
+          "icon": "🔄",
+          "description": "Who did the action vs. who received it",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "\"كتب الطالبُ الدرسَ\" is:", "options": ["Active voice", "Passive voice", "A question", "A command"], "answer": "Active voice"},
+            {"text": "\"كُتِبَ الدرسُ\" is:", "options": ["Passive voice", "Active voice", "A question", "A command"], "answer": "Passive voice"},
+            {"text": "In passive voice, the doer of the action is:", "options": ["Not mentioned", "Always mentioned", "The object", "The adjective"], "answer": "Not mentioned"},
+            {"text": "Which sentence is passive?", "options": ["كُتِبَ الدرسُ", "كتب الطالبُ الدرسَ", "قرأ المعلمُ الكتابَ", "ذهب الولدُ"], "answer": "كُتِبَ الدرسُ"},
+            {"text": "In passive voice, the object of the original sentence becomes the:", "options": ["Subject (نائب الفاعل)", "Verb", "Adjective", "Preposition"], "answer": "Subject (نائب الفاعل)"}
+          ]
+        },
+        {
+          "id": "stage7",
+          "title": "Negation of Verbs — لا، لم، لن، ما",
+          "icon": "🚫",
+          "description": "Different ways to say \"not\" in Arabic",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "\"لا\" before a present tense verb generally means:", "options": ["Do not / does not (general negation)", "Did not", "Will not", "Never"], "answer": "Do not / does not (general negation)"},
+            {"text": "\"لم\" negates:", "options": ["Past meaning, using a present tense verb form", "Future meaning", "Commands only", "Nothing"], "answer": "Past meaning, using a present tense verb form"},
+            {"text": "\"لن\" negates:", "options": ["The future (\"will not\")", "The past", "The present only", "Commands"], "answer": "The future (\"will not\")"},
+            {"text": "\"ما\" can be used to negate:", "options": ["A past tense verb", "Only nouns", "Only adjectives", "Only questions"], "answer": "A past tense verb"},
+            {"text": "\"لم يذهب الولدُ\" means:", "options": ["The boy did not go", "The boy will not go", "The boy is not going", "The boy went"], "answer": "The boy did not go"}
+          ]
+        },
+        {
+          "id": "stage8",
+          "title": "The Five Verbs (الأفعال الخمسة)",
+          "icon": "5️⃣",
+          "description": "Present tense verbs with dual/plural subject pronouns",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "الأفعال الخمسة are present tense verbs attached to:", "options": ["Dual and plural subject pronouns (ان، ون، ين)", "Singular pronouns only", "Past tense only", "Commands only"], "answer": "Dual and plural subject pronouns (ان، ون، ين)"},
+            {"text": "\"يذهبان\" is an example of:", "options": ["الأفعال الخمسة", "A singular verb", "A past tense verb", "A command"], "answer": "الأفعال الخمسة"},
+            {"text": "\"يكتبون\" is an example of:", "options": ["الأفعال الخمسة", "A singular present verb", "A past tense verb", "An adjective"], "answer": "الأفعال الخمسة"},
+            {"text": "\"تذهبين\" (to a female) is an example of:", "options": ["الأفعال الخمسة", "A masculine verb", "A past tense verb", "A command"], "answer": "الأفعال الخمسة"},
+            {"text": "Which of these is NOT part of الأفعال الخمسة؟", "options": ["يكتبُ", "يذهبان", "تكتبون", "تذهبين"], "answer": "يكتبُ"}
+          ]
+        },
+        {
+          "id": "stage9",
+          "title": "Question Words — متى، كيف، لماذا، كم",
+          "icon": "🧐",
+          "description": "Asking when, how, why, and how much",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "\"متى؟\" means:", "options": ["When?", "How?", "Why?", "How much?"], "answer": "When?"},
+            {"text": "\"كيف؟\" means:", "options": ["How?", "When?", "Why?", "Who?"], "answer": "How?"},
+            {"text": "\"لماذا؟\" means:", "options": ["Why?", "When?", "How?", "Where?"], "answer": "Why?"},
+            {"text": "\"كم؟\" means:", "options": ["How much/many?", "When?", "Why?", "Where?"], "answer": "How much/many?"},
+            {"text": "\"كيف حالك؟\" is a common phrase meaning:", "options": ["How are you?", "Where are you?", "What is your name?", "When did you come?"], "answer": "How are you?"}
+          ]
+        },
+        {
+          "id": "stage10",
+          "title": "Time Expressions",
+          "icon": "⏰",
+          "description": "Today, yesterday, tomorrow, and now",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "\"اليوم\" means:", "options": ["Today", "Yesterday", "Tomorrow", "Tonight"], "answer": "Today"},
+            {"text": "\"أمس\" means:", "options": ["Yesterday", "Today", "Tomorrow", "Now"], "answer": "Yesterday"},
+            {"text": "\"غداً\" means:", "options": ["Tomorrow", "Yesterday", "Today", "Now"], "answer": "Tomorrow"},
+            {"text": "\"الآن\" means:", "options": ["Now", "Later", "Before", "After"], "answer": "Now"},
+            {"text": "\"الصباح\" means:", "options": ["Morning", "Evening", "Night", "Afternoon"], "answer": "Morning"}
+          ]
+        },
+        {
+          "id": "stage11",
+          "title": "Places & Directions Vocabulary",
+          "icon": "🧭",
+          "description": "Mosque, market, hospital, left and right",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "\"المسجد\" means:", "options": ["Mosque", "School", "Market", "Hospital"], "answer": "Mosque"},
+            {"text": "\"السوق\" means:", "options": ["Market", "Mosque", "Hospital", "Park"], "answer": "Market"},
+            {"text": "\"المستشفى\" means:", "options": ["Hospital", "School", "Mosque", "Market"], "answer": "Hospital"},
+            {"text": "\"يمين\" means:", "options": ["Right", "Left", "Straight", "Behind"], "answer": "Right"},
+            {"text": "\"يسار\" means:", "options": ["Left", "Right", "Straight", "In front"], "answer": "Left"}
+          ]
+        },
+        {
+          "id": "stage12",
+          "title": "Professions Vocabulary",
+          "icon": "👷",
+          "description": "Doctor, engineer, farmer, driver",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "\"طبيب\" means:", "options": ["Doctor", "Teacher", "Engineer", "Farmer"], "answer": "Doctor"},
+            {"text": "\"مهندس\" means:", "options": ["Engineer", "Doctor", "Teacher", "Driver"], "answer": "Engineer"},
+            {"text": "\"فلاح\" means:", "options": ["Farmer", "Doctor", "Teacher", "Driver"], "answer": "Farmer"},
+            {"text": "\"سائق\" means:", "options": ["Driver", "Doctor", "Farmer", "Engineer"], "answer": "Driver"},
+            {"text": "\"طالب\" means:", "options": ["Student", "Teacher", "Doctor", "Engineer"], "answer": "Student"}
+          ]
+        },
+        {
+          "id": "stage13",
+          "title": "Food & Drink Vocabulary",
+          "icon": "🍞",
+          "description": "Bread, water, meat, fruit, and tea",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "\"خبز\" means:", "options": ["Bread", "Water", "Rice", "Meat"], "answer": "Bread"},
+            {"text": "\"ماء\" means:", "options": ["Water", "Milk", "Juice", "Tea"], "answer": "Water"},
+            {"text": "\"لحم\" means:", "options": ["Meat", "Bread", "Rice", "Fruit"], "answer": "Meat"},
+            {"text": "\"فاكهة\" means:", "options": ["Fruit", "Vegetable", "Meat", "Bread"], "answer": "Fruit"},
+            {"text": "\"شاي\" means:", "options": ["Tea", "Coffee", "Water", "Milk"], "answer": "Tea"}
+          ]
+        },
+        {
+          "id": "stage14",
+          "title": "Weather Vocabulary",
+          "icon": "☀️",
+          "description": "Hot, cold, rain, wind, and sun",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "\"الجو حار\" means:", "options": ["The weather is hot", "The weather is cold", "The weather is nice", "The weather is rainy"], "answer": "The weather is hot"},
+            {"text": "\"بارد\" means:", "options": ["Cold", "Hot", "Warm", "Windy"], "answer": "Cold"},
+            {"text": "\"تمطر\" means:", "options": ["It rains", "It snows", "It is sunny", "It is windy"], "answer": "It rains"},
+            {"text": "\"الشمس\" means:", "options": ["The sun", "The moon", "The star", "The sky"], "answer": "The sun"},
+            {"text": "\"الرياح\" means:", "options": ["The wind", "The rain", "The snow", "The cloud"], "answer": "The wind"}
+          ]
+        },
+        {
+          "id": "stage15",
+          "title": "Idafah — Possessive Construction",
+          "icon": "🔗",
+          "description": "الإضافة: joining two nouns to show possession",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "الإضافة is used to show:", "options": ["Possession between two nouns", "A question", "A negation", "A command"], "answer": "Possession between two nouns"},
+            {"text": "In الإضافة, the first noun (المضاف) never takes:", "options": ["ال or tanween", "A verb", "An adjective", "A pronoun"], "answer": "ال or tanween"},
+            {"text": "\"كتابُ الطالبِ\" means:", "options": ["The student's book", "The student is a book", "The book is a student", "A book and a student"], "answer": "The student's book"},
+            {"text": "In \"بابُ البيتِ\", the second noun (المضاف إليه) is in which case?", "options": ["مجرور (genitive)", "مرفوع (nominative)", "منصوب (accusative)", "مجزوم"], "answer": "مجرور (genitive)"},
+            {"text": "\"قلمُ المعلمةِ\" means:", "options": ["The teacher's (f) pen", "The teacher's (m) pen", "A pen and a teacher", "The pen is a teacher"], "answer": "The teacher's (f) pen"}
+          ]
+        },
+        {
+          "id": "stage16",
+          "title": "Comparative Adjectives (أفعل التفضيل)",
+          "icon": "📏",
+          "description": "Bigger, taller, more beautiful",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "\"أكبر\" means:", "options": ["Bigger", "Big", "Biggest", "Small"], "answer": "Bigger"},
+            {"text": "\"أطول\" means:", "options": ["Taller", "Tall", "Short", "Shorter"], "answer": "Taller"},
+            {"text": "The pattern أفعل is generally used to form:", "options": ["Comparative and superlative adjectives", "Plurals", "Past tense verbs", "Question words"], "answer": "Comparative and superlative adjectives"},
+            {"text": "\"هذا البيتُ أكبرُ من ذلك البيتِ\" means:", "options": ["This house is bigger than that house", "This house is smaller than that house", "This house is as big as that house", "That house is bigger"], "answer": "This house is bigger than that house"},
+            {"text": "\"أجمل\" means:", "options": ["More beautiful", "Beautiful", "Ugly", "Less beautiful"], "answer": "More beautiful"}
+          ]
+        },
+        {
+          "id": "stage17",
+          "title": "Demonstrative Pronouns — ذلك / تلك / أولئك",
+          "icon": "👈",
+          "description": "Pointing to something far away",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "\"ذلك\" means:", "options": ["That (masculine, far)", "This (masculine)", "That (feminine)", "These"], "answer": "That (masculine, far)"},
+            {"text": "\"تلك\" means:", "options": ["That (feminine, far)", "This (feminine)", "That (masculine)", "Those (plural)"], "answer": "That (feminine, far)"},
+            {"text": "\"أولئك\" means:", "options": ["Those (plural, far)", "This", "These", "That"], "answer": "Those (plural, far)"},
+            {"text": "Choose correctly: \"____ رجلٌ\" (pointing to a man far away)", "options": ["هذا", "ذلك", "هذه", "تلك"], "answer": "ذلك"},
+            {"text": "\"أولئك معلمون\" means:", "options": ["Those are teachers", "This is a teacher", "These are teachers", "That is a teacher"], "answer": "Those are teachers"}
+          ]
+        },
+        {
+          "id": "stage18",
+          "title": "Command Form (فعل الأمر)",
+          "icon": "📢",
+          "description": "Giving instructions and commands",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "فعل الأمر is used to:", "options": ["Give a command", "State a past action", "Ask a question", "Negate an action"], "answer": "Give a command"},
+            {"text": "\"اكتبْ\" means:", "options": ["Write! (command to a male)", "He writes", "He wrote", "Writing"], "answer": "Write! (command to a male)"},
+            {"text": "\"اذهبْ\" means:", "options": ["Go! (command)", "He goes", "He went", "Going"], "answer": "Go! (command)"},
+            {"text": "\"اقرئي\" is a command directed to:", "options": ["A female", "A male", "A group of males", "Two people"], "answer": "A female"},
+            {"text": "Command verbs in Arabic are generally formed from:", "options": ["The present tense verb, with the prefix removed and adjusted", "The past tense verb directly", "A noun", "An adjective"], "answer": "The present tense verb, with the prefix removed and adjusted"}
+          ]
+        },
+        {
+          "id": "stage19",
+          "title": "Numbers 11–100",
+          "icon": "💯",
+          "description": "Eleven through one hundred",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "\"أحد عشر\" means:", "options": ["Eleven", "Ten", "Twelve", "One"], "answer": "Eleven"},
+            {"text": "\"عشرون\" means:", "options": ["Twenty", "Ten", "Twelve", "Two"], "answer": "Twenty"},
+            {"text": "\"ثلاثون\" means:", "options": ["Thirty", "Three", "Thirteen", "Thirty-one"], "answer": "Thirty"},
+            {"text": "\"مئة\" means:", "options": ["One hundred", "Ten", "Thousand", "Fifty"], "answer": "One hundred"},
+            {"text": "\"خمسون\" means:", "options": ["Fifty", "Fifteen", "Five", "Fifty-one"], "answer": "Fifty"}
+          ]
+        },
+        {
+          "id": "stage20",
+          "title": "Describing Daily Routine",
+          "icon": "🗓️",
+          "description": "Waking up, going to school, eating, sleeping",
+          "kicker": "Building Sentences",
+          "questions": [
+            {"text": "\"أستيقظ في الصباح\" means:", "options": ["I wake up in the morning", "I sleep at night", "I eat lunch", "I go to school"], "answer": "I wake up in the morning"},
+            {"text": "\"أذهب إلى المدرسة\" means:", "options": ["I go to school", "I go home", "I go to the market", "I go to sleep"], "answer": "I go to school"},
+            {"text": "\"آكل الطعام\" means:", "options": ["I eat food", "I drink water", "I read a book", "I write a letter"], "answer": "I eat food"},
+            {"text": "\"أنام في الليل\" means:", "options": ["I sleep at night", "I wake up at night", "I eat at night", "I study at night"], "answer": "I sleep at night"},
+            {"text": "\"أدرس دروسي\" means:", "options": ["I study my lessons", "I play games", "I watch TV", "I cook food"], "answer": "I study my lessons"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "advanced",
+      "label": "Advanced",
+      "icon": "🌳",
+      "description": "Full sentence mastery — relative clauses, conditionals, connectors, and real-world Arabic",
+      "stages": [
+        {
+          "id": "stage1",
+          "title": "Relative Pronouns — الذي، التي، الذين، اللاتي",
+          "icon": "🔗",
+          "description": "Connecting a noun to a description clause",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "الطالبُ الذي نجحَ مجتهدٌ - الذي is used because it refers to something:", "options": ["مفرد مذكر", "مفرد مؤنث", "جمع مذكر", "جمع مؤنث"], "answer": "مفرد مذكر"},
+            {"text": "الطالبةُ التي نجحتْ مجتهدةٌ - التي is used because it refers to something:", "options": ["مفرد مذكر", "مفرد مؤنث", "جمع مذكر", "جمع مؤنث"], "answer": "مفرد مؤنث"},
+            {"text": "الطلابُ الذين نجحوا مجتهدونَ - الذين is used for:", "options": ["مفرد مذكر", "جمع مذكر عاقل", "جمع مؤنث", "مثنى"], "answer": "جمع مذكر عاقل"},
+            {"text": "الطالباتُ اللاتي نجحنَ مجتهداتٌ - اللاتي is used for:", "options": ["مفرد مؤنث", "جمع مذكر", "جمع مؤنث عاقل", "مثنى مؤنث"], "answer": "جمع مؤنث عاقل"},
+            {"text": "Choose the correct relative pronoun: الولدُ ____ يذهبُ إلى المدرسةِ مجتهدٌ", "options": ["الذي", "التي", "الذين", "اللاتي"], "answer": "الذي"}
+          ]
+        },
+        {
+          "id": "stage2",
+          "title": "Conditional Sentences — إذا، لو",
+          "icon": "🔀",
+          "description": "Real and hypothetical \"if\" sentences",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"إذا\" is used to introduce:", "options": ["A real/possible condition", "An impossible condition", "A question", "A command"], "answer": "A real/possible condition"},
+            {"text": "\"لو\" is often used for:", "options": ["A hypothetical/unlikely condition", "A real condition", "A command", "A greeting"], "answer": "A hypothetical/unlikely condition"},
+            {"text": "\"إذا درستَ، تنجحُ\" means:", "options": ["If you study, you will succeed", "If you study, you failed", "You studied and succeeded", "You did not study"], "answer": "If you study, you will succeed"},
+            {"text": "\"لو كنتُ غنياً لسافرتُ\" means:", "options": ["If I were rich, I would travel", "I am rich and I traveled", "I was rich", "I will be rich"], "answer": "If I were rich, I would travel"},
+            {"text": "The verb after إذا is typically in which tense?", "options": ["Past tense (referring to future meaning)", "Present tense only", "Command form only", "No verb needed"], "answer": "Past tense (referring to future meaning)"}
+          ]
+        },
+        {
+          "id": "stage3",
+          "title": "Connecting Sentences — و، ف، ثم، لكن",
+          "icon": "🧷",
+          "description": "And, then, but — linking ideas together",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"و\" means:", "options": ["And", "But", "Then", "Or"], "answer": "And"},
+            {"text": "\"لكن\" means:", "options": ["But", "And", "Then", "Because"], "answer": "But"},
+            {"text": "\"ثم\" means:", "options": ["Then", "And", "But", "Because"], "answer": "Then"},
+            {"text": "\"ذهب إلى السوق و اشترى خبزاً\" means:", "options": ["He went to the market and bought bread", "He went to the market but did not buy bread", "He bought bread then went to the market", "He did not go to the market"], "answer": "He went to the market and bought bread"},
+            {"text": "\"درستُ لكن لم أنجح\" means:", "options": ["I studied but did not succeed", "I studied and succeeded", "I did not study", "I will study"], "answer": "I studied but did not succeed"}
+          ]
+        },
+        {
+          "id": "stage4",
+          "title": "Expressing Purpose & Cause — لِـ، لأن، حتى",
+          "icon": "🎯",
+          "description": "Explaining why and for what purpose",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"لِـ\" before a verb often expresses:", "options": ["Purpose (\"in order to\")", "Negation", "A question", "A command"], "answer": "Purpose (\"in order to\")"},
+            {"text": "\"لأن\" means:", "options": ["Because", "But", "And", "Then"], "answer": "Because"},
+            {"text": "\"حتى\" can mean:", "options": ["Until / so that", "Never", "Sometimes", "Rarely"], "answer": "Until / so that"},
+            {"text": "\"ذهبتُ إلى المدرسة لأتعلم\" means:", "options": ["I went to school to learn", "I went to school because I learned", "I did not go to school", "I will go to school"], "answer": "I went to school to learn"},
+            {"text": "\"لم يذهب لأنه مريضٌ\" means:", "options": ["He did not go because he is sick", "He went because he is sick", "He is not sick", "He will go tomorrow"], "answer": "He did not go because he is sick"}
+          ]
+        },
+        {
+          "id": "stage5",
+          "title": "Emphasis Particles — إنّ، أنّ",
+          "icon": "❗",
+          "description": "Adding emphasis to nominal sentences",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"إنّ\" is used to:", "options": ["Add emphasis to a nominal sentence", "Negate a sentence", "Ask a question", "Give a command"], "answer": "Add emphasis to a nominal sentence"},
+            {"text": "After \"إنّ\", the subject is in which case?", "options": ["منصوب (accusative)", "مرفوع (nominative)", "مجرور (genitive)", "مجزوم"], "answer": "منصوب (accusative)"},
+            {"text": "\"إنّ اللهَ غفورٌ رحيمٌ\" - \"اللهَ\" here is:", "options": ["منصوب, اسم إنّ", "مرفوع, فاعل", "مجرور, مضاف إليه", "مجزوم"], "answer": "منصوب, اسم إنّ"},
+            {"text": "\"أنّ\" is typically used:", "options": ["Within a sentence to introduce a clause", "Only at the very start of speech", "To ask a question", "To give a command"], "answer": "Within a sentence to introduce a clause"},
+            {"text": "\"أعلم أنّ الدرسَ مفيدٌ\" means:", "options": ["I know that the lesson is beneficial", "I do not know the lesson", "The lesson is not beneficial", "I forgot the lesson"], "answer": "I know that the lesson is beneficial"}
+          ]
+        },
+        {
+          "id": "stage6",
+          "title": "Exception — إلا",
+          "icon": "➖",
+          "description": "Expressing \"except\" in a sentence",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"إلا\" is used to express:", "options": ["Exception (\"except\")", "Addition", "Negation of the whole sentence", "A question"], "answer": "Exception (\"except\")"},
+            {"text": "\"حضر الطلابُ إلا واحداً\" means:", "options": ["All the students came except one", "No students came", "Only one student came", "All students came"], "answer": "All the students came except one"},
+            {"text": "\"ما نجح إلا المجتهدُ\" means:", "options": ["Only the diligent one succeeded", "No one succeeded", "Everyone succeeded", "The diligent one failed"], "answer": "Only the diligent one succeeded"},
+            {"text": "The noun after \"إلا\" in a complete affirmative sentence is usually:", "options": ["منصوب (accusative)", "مرفوع (nominative)", "مجرور (genitive)", "مجزوم"], "answer": "منصوب (accusative)"},
+            {"text": "\"ما في الفصلِ إلا طالبٌ واحدٌ\" means:", "options": ["There is only one student in the class", "There are many students", "There are no students", "There are two students"], "answer": "There is only one student in the class"}
+          ]
+        },
+        {
+          "id": "stage7",
+          "title": "Passive Voice — Advanced Usage",
+          "icon": "🔁",
+          "description": "How the verb changes form in the passive",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "In passive voice, the internal vowels of the verb typically:", "options": ["Change (e.g., كَتَبَ becomes كُتِبَ)", "Stay exactly the same", "Disappear completely", "Double"], "answer": "Change (e.g., كَتَبَ becomes كُتِبَ)"},
+            {"text": "\"فُتِحَ البابُ\" means:", "options": ["The door was opened", "Someone opened the door (active)", "The door opens itself", "The door will be opened"], "answer": "The door was opened"},
+            {"text": "Passive voice is often used when:", "options": ["The doer is unknown or unimportant to mention", "The doer must always be named", "It's a command", "It's a question"], "answer": "The doer is unknown or unimportant to mention"},
+            {"text": "\"نائب الفاعل\" refers to:", "options": ["The noun that replaces the subject in a passive sentence", "The verb itself", "The object in an active sentence", "A preposition"], "answer": "The noun that replaces the subject in a passive sentence"},
+            {"text": "\"كُسِرَ القلمُ\" means:", "options": ["The pen was broken", "The pen breaks", "Someone will break the pen", "The pen is new"], "answer": "The pen was broken"}
+          ]
+        },
+        {
+          "id": "stage8",
+          "title": "Complex Verbal Sentences (Two Objects)",
+          "icon": "🧮",
+          "description": "Verbs like أعطى and ظنّ that take two objects",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "Some verbs like \"أعطى\" (gave) can take:", "options": ["Two objects", "No objects", "Only a subject", "Only an adjective"], "answer": "Two objects"},
+            {"text": "\"أعطى المعلمُ الطالبَ كتاباً\" means:", "options": ["The teacher gave the student a book", "The student gave the teacher a book", "The book gave the teacher a student", "No one gave anything"], "answer": "The teacher gave the student a book"},
+            {"text": "In the sentence above, \"الطالبَ\" and \"كتاباً\" are both:", "options": ["Objects (منصوب)", "Subjects", "Adjectives", "Prepositions"], "answer": "Objects (منصوب)"},
+            {"text": "\"ظننتُ الجوَّ بارداً\" means:", "options": ["I thought the weather was cold", "The weather is cold", "I did not think about the weather", "It is cold"], "answer": "I thought the weather was cold"},
+            {"text": "Verbs like \"ظنّ\" (to think/assume) typically take:", "options": ["Two objects, originally a subject and predicate", "One object only", "No objects", "Only a preposition"], "answer": "Two objects, originally a subject and predicate"}
+          ]
+        },
+        {
+          "id": "stage9",
+          "title": "Describing People & Personality",
+          "icon": "🧑‍🤝‍🧑",
+          "description": "Generous, honest, active, lazy — describing character",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"كريم\" means:", "options": ["Generous", "Stingy", "Lazy", "Hardworking"], "answer": "Generous"},
+            {"text": "\"بخيل\" means:", "options": ["Stingy", "Generous", "Kind", "Honest"], "answer": "Stingy"},
+            {"text": "\"صادق\" means:", "options": ["Honest", "Dishonest", "Lazy", "Shy"], "answer": "Honest"},
+            {"text": "\"نشيط\" means:", "options": ["Active/energetic", "Lazy", "Sad", "Angry"], "answer": "Active/energetic"},
+            {"text": "\"كسول\" means:", "options": ["Lazy", "Active", "Honest", "Kind"], "answer": "Lazy"}
+          ]
+        },
+        {
+          "id": "stage10",
+          "title": "Travel & Directions (Advanced)",
+          "icon": "✈️",
+          "description": "Airport, tickets, passports, and asking for directions",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"المطار\" means:", "options": ["Airport", "Train station", "Bus stop", "Port"], "answer": "Airport"},
+            {"text": "\"تذكرة السفر\" means:", "options": ["Travel ticket", "Passport", "Suitcase", "Map"], "answer": "Travel ticket"},
+            {"text": "\"كيف أصل إلى المحطة؟\" means:", "options": ["How do I get to the station?", "Where is the station?", "When does the train leave?", "What is the fare?"], "answer": "How do I get to the station?"},
+            {"text": "\"استقم ثم انعطف يميناً\" means:", "options": ["Go straight then turn right", "Go straight then turn left", "Turn left then stop", "Stop here"], "answer": "Go straight then turn right"},
+            {"text": "\"جواز السفر\" means:", "options": ["Passport", "Ticket", "Visa", "Suitcase"], "answer": "Passport"}
+          ]
+        },
+        {
+          "id": "stage11",
+          "title": "Expressing Opinions",
+          "icon": "💬",
+          "description": "أعتقد، أظن، في رأيي — sharing your point of view",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"أعتقد أنّ\" means:", "options": ["I believe that", "I doubt that", "I forgot that", "I deny that"], "answer": "I believe that"},
+            {"text": "\"في رأيي\" means:", "options": ["In my opinion", "In your opinion", "It is known", "It is certain"], "answer": "In my opinion"},
+            {"text": "\"أظن أنه مسافرٌ\" means:", "options": ["I think he is traveling", "I know he is traveling", "He is not traveling", "He traveled yesterday"], "answer": "I think he is traveling"},
+            {"text": "\"من الواضح أنّ\" means:", "options": ["It is clear that", "It is doubtful that", "It is impossible that", "It is forbidden that"], "answer": "It is clear that"},
+            {"text": "\"لا أوافق\" means:", "options": ["I do not agree", "I agree", "I am not sure", "I forgot"], "answer": "I do not agree"}
+          ]
+        },
+        {
+          "id": "stage12",
+          "title": "Talking About the Past in Detail",
+          "icon": "📜",
+          "description": "كان، قد، and describing ongoing past actions",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"كنتُ أدرسُ عندما اتصلتَ\" means:", "options": ["I was studying when you called", "I studied after you called", "I will study when you call", "I never studied"], "answer": "I was studying when you called"},
+            {"text": "\"كان\" is used to:", "options": ["Express a past state (\"was/were\")", "Express the future", "Negate a sentence", "Ask a question"], "answer": "Express a past state (\"was/were\")"},
+            {"text": "\"كان الجوُّ بارداً أمس\" means:", "options": ["The weather was cold yesterday", "The weather is cold today", "The weather will be cold", "The weather is never cold"], "answer": "The weather was cold yesterday"},
+            {"text": "\"قد\" before a past tense verb can indicate:", "options": ["Emphasis or a completed action", "Negation", "A question", "The future"], "answer": "Emphasis or a completed action"},
+            {"text": "\"لقد نجحَ الطالبُ\" means:", "options": ["The student has indeed succeeded", "The student will succeed", "The student failed", "The student is studying"], "answer": "The student has indeed succeeded"}
+          ]
+        },
+        {
+          "id": "stage13",
+          "title": "Talking About the Future — سوف، س",
+          "icon": "🔮",
+          "description": "Near and distant future expressions",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"س\" attached to a present tense verb indicates:", "options": ["Near future", "Distant past", "A command", "A question"], "answer": "Near future"},
+            {"text": "\"سوف\" indicates:", "options": ["Future action, often more distant or emphasized", "Past action", "A command", "Negation"], "answer": "Future action, often more distant or emphasized"},
+            {"text": "\"سأذهب غداً\" means:", "options": ["I will go tomorrow", "I went yesterday", "I am going now", "I never go"], "answer": "I will go tomorrow"},
+            {"text": "\"سوف يسافر الأسبوعَ القادمَ\" means:", "options": ["He will travel next week", "He traveled last week", "He is traveling now", "He never travels"], "answer": "He will travel next week"},
+            {"text": "Both \"س\" and \"سوف\" are added to which tense of the verb?", "options": ["Present tense", "Past tense", "Command form", "None, they stand alone"], "answer": "Present tense"}
+          ]
+        },
+        {
+          "id": "stage14",
+          "title": "Reading Comprehension — Short Passages",
+          "icon": "📰",
+          "description": "Strategies for understanding a short Arabic text",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "When reading a short Arabic passage, identifying the main idea first helps you:", "options": ["Understand the overall meaning before details", "Translate word for word only", "Skip the passage entirely", "Guess randomly"], "answer": "Understand the overall meaning before details"},
+            {"text": "Skimming a passage means:", "options": ["Reading quickly for a general idea", "Reading every word slowly", "Memorizing the passage", "Translating each sentence"], "answer": "Reading quickly for a general idea"},
+            {"text": "If you don't know a word while reading, you should first try to:", "options": ["Guess its meaning from context", "Stop reading immediately", "Skip the whole passage", "Translate the whole text"], "answer": "Guess its meaning from context"},
+            {"text": "A topic sentence in a paragraph usually:", "options": ["Introduces the main idea of the paragraph", "Is always the last sentence", "Has no particular purpose", "Is a question"], "answer": "Introduces the main idea of the paragraph"},
+            {"text": "Answering comprehension questions accurately requires:", "options": ["Referring back to specific details in the text", "Guessing without reading", "Ignoring the text", "Only reading the title"], "answer": "Referring back to specific details in the text"}
+          ]
+        },
+        {
+          "id": "stage15",
+          "title": "Formal Letter Vocabulary & Phrases",
+          "icon": "✉️",
+          "description": "Common expressions used in formal Arabic writing",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"المحترم\" is used in letters to mean:", "options": ["Respected/Honorable", "Dear friend", "Goodbye", "Thank you"], "answer": "Respected/Honorable"},
+            {"text": "\"تحية طيبة وبعد\" is a common phrase used to:", "options": ["Open a formal letter after the greeting", "Close a letter", "Ask a question", "Give a command"], "answer": "Open a formal letter after the greeting"},
+            {"text": "\"مع فائق الاحترام والتقدير\" is typically used:", "options": ["To close a formal letter", "To open a letter", "In casual conversation", "As a question"], "answer": "To close a formal letter"},
+            {"text": "\"أتشرف بأن أكتب إليكم\" means:", "options": ["I am honored to write to you", "I am angry to write to you", "I refuse to write to you", "I forgot to write to you"], "answer": "I am honored to write to you"},
+            {"text": "\"في انتظار ردكم\" means:", "options": ["Awaiting your reply", "I will not reply", "I already replied", "No reply is needed"], "answer": "Awaiting your reply"}
+          ]
+        },
+        {
+          "id": "stage16",
+          "title": "Idioms & Common Expressions",
+          "icon": "🗨️",
+          "description": "Everyday expressions native speakers use often",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"على الرحب والسعة\" is an expression meaning:", "options": ["You're very welcome", "Goodbye", "I'm sorry", "Please wait"], "answer": "You're very welcome"},
+            {"text": "\"الله يعطيك العافية\" is commonly used to mean:", "options": ["May Allah give you strength/wellness (a kind expression)", "Goodbye forever", "I am angry with you", "Please stop"], "answer": "May Allah give you strength/wellness (a kind expression)"},
+            {"text": "\"كل عام وأنتم بخير\" is said:", "options": ["On occasions/holidays, wishing someone well every year", "Only at funerals", "Only in business meetings", "Never used"], "answer": "On occasions/holidays, wishing someone well every year"},
+            {"text": "\"لا بأس\" means:", "options": ["It's okay / no harm", "It's terrible", "I refuse", "Forget it entirely"], "answer": "It's okay / no harm"},
+            {"text": "\"إن شاء الله\" means:", "options": ["God willing", "Never", "Certainly not", "By force"], "answer": "God willing"}
+          ]
+        },
+        {
+          "id": "stage17",
+          "title": "Numbers 100+ and Ordinal Numbers",
+          "icon": "🥇",
+          "description": "Hundreds, thousands, and first/second/last",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"مئتان\" means:", "options": ["Two hundred", "One hundred", "Twenty", "Two"], "answer": "Two hundred"},
+            {"text": "\"ألف\" means:", "options": ["One thousand", "One hundred", "Ten thousand", "One million"], "answer": "One thousand"},
+            {"text": "\"الأول\" means:", "options": ["The first", "The second", "The last", "The only"], "answer": "The first"},
+            {"text": "\"الثاني\" means:", "options": ["The second", "The first", "The third", "The last"], "answer": "The second"},
+            {"text": "\"الأخير\" means:", "options": ["The last", "The first", "The middle", "The second"], "answer": "The last"}
+          ]
+        },
+        {
+          "id": "stage18",
+          "title": "Superlative & Comparative Review",
+          "icon": "🏆",
+          "description": "Reviewing \"more\" and \"most\" forms",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"الأكبر\" means:", "options": ["The biggest", "Bigger", "Big", "Small"], "answer": "The biggest"},
+            {"text": "Adding \"ال\" to the أفعل pattern typically forms:", "options": ["The superlative (\"the most...\")", "The comparative only", "A plural", "A verb"], "answer": "The superlative (\"the most...\")"},
+            {"text": "\"هو الأطولُ في الفصلِ\" means:", "options": ["He is the tallest in the class", "He is taller than the class", "He is short in the class", "He is not tall"], "answer": "He is the tallest in the class"},
+            {"text": "\"أذكى من\" means:", "options": ["Smarter than", "The smartest", "Smart", "Not smart"], "answer": "Smarter than"},
+            {"text": "\"أفضل\" means:", "options": ["Better/best", "Worse", "Bad", "Good only"], "answer": "Better/best"}
+          ]
+        },
+        {
+          "id": "stage19",
+          "title": "Advanced Question Formation",
+          "icon": "🔎",
+          "description": "Fuller questions combining multiple question words",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"ماذا فعلتَ أمس؟\" means:", "options": ["What did you do yesterday?", "What will you do?", "Where did you go?", "Who did this?"], "answer": "What did you do yesterday?"},
+            {"text": "\"لماذا تأخرتَ؟\" means:", "options": ["Why were you late?", "When did you arrive?", "How did you come?", "Where were you?"], "answer": "Why were you late?"},
+            {"text": "\"كم عمرك؟\" means:", "options": ["How old are you?", "What is your name?", "Where do you live?", "What do you do?"], "answer": "How old are you?"},
+            {"text": "\"أيّ كتابٍ تقرأ؟\" means:", "options": ["Which book are you reading?", "Are you reading a book?", "Why are you reading?", "When do you read?"], "answer": "Which book are you reading?"},
+            {"text": "\"متى ستعودُ؟\" means:", "options": ["When will you return?", "Where will you go?", "Why did you leave?", "How did you travel?"], "answer": "When will you return?"}
+          ]
+        },
+        {
+          "id": "stage20",
+          "title": "Review & Application — Mixed Sentences",
+          "icon": "🎓",
+          "description": "Combining everything learned into fuller, natural sentences",
+          "kicker": "Fluent Sentences",
+          "questions": [
+            {"text": "\"ذهب الطلابُ الذين نجحوا إلى الحفلِ\" combines a verbal sentence with:", "options": ["A relative clause (الذين نجحوا)", "A conditional clause", "A passive verb only", "A question"], "answer": "A relative clause (الذين نجحوا)"},
+            {"text": "\"لو درستَ لنجحتَ، ولكنك لم تدرسْ\" combines:", "options": ["A conditional clause and a negated past verb", "Two questions", "Two commands", "A superlative and a plural"], "answer": "A conditional clause and a negated past verb"},
+            {"text": "\"إنّ الطالبةَ التي حضرتْ مجتهدةٌ\" combines emphasis (إنّ) with:", "options": ["A relative pronoun (التي)", "A conditional (لو)", "A passive verb", "A question word"], "answer": "A relative pronoun (التي)"},
+            {"text": "Reviewing a mixed sentence, the best first step is to:", "options": ["Identify the main verb or predicate first", "Guess randomly", "Translate word by word without structure", "Ignore grammar completely"], "answer": "Identify the main verb or predicate first"},
+            {"text": "Combining several grammar rules in one sentence shows a learner's ability to:", "options": ["Apply Arabic grammar naturally in real communication", "Memorize isolated rules only", "Avoid using verbs", "Speak only in questions"], "answer": "Apply Arabic grammar naturally in real communication"}
+          ]
+        }
+      ]
+    }
+  ]
+}
