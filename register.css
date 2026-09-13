@@ -548,6 +548,7 @@ html, body { overflow-x: hidden; }
   border: 1px solid var(--border-light);
 
   padding: 18px;
+  padding-right: 40px; /* room so text doesn't run under the close button */
   box-shadow: 0 15px 40px rgba(0,0,0,0.15);
 
   z-index: 9999;
@@ -559,6 +560,33 @@ html, body { overflow-x: hidden; }
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+/* Close (×) button — sits top-right, subtle by default so it doesn't
+   compete with the primary Copy action. Needs .success-toast in front
+   to out-specificity the generic ".success-toast button" rule below. */
+.success-toast .success-toast-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.success-toast .success-toast-close:hover {
+  background: rgba(0,0,0,0.08);
+  color: var(--text-color);
 }
 
 

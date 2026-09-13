@@ -2283,22 +2283,22 @@
             {
               "text": "What is يَا in يَا زَيْدُ called?",
               "options": [
-                "Ḥarf an-Nidā' (the vocative particle)",
+                "Ḥarf an-Nidā'",
                 "Ḥarf al-'Aṭf",
                 "Ḥarf al-Jarr",
                 "Ḥarf an-Naṣb"
               ],
-              "answer": "Ḥarf an-Nidā' (the vocative particle)"
+              "answer": "Ḥarf an-Nidā'"
             },
             {
               "text": "يَا عَبْدَ اللَّهِ (\"O 'Abdullah!\") — since this Munādā is Muḍāf, what is its i'rāb?",
               "options": [
-                "Manṣūb (visibly, with Fatḥah)",
+                "Manṣūb",
                 "Mabnī on Dammah",
                 "Majrūr",
                 "Marfū'"
               ],
-              "answer": "Manṣūb (visibly, with Fatḥah)"
+              "answer": "Manṣūb"
             },
             {
               "text": "Besides يَا, are there other (less common) vocative particles in Arabic?",
@@ -2372,12 +2372,12 @@
             {
               "text": "أَ (the interrogative hamzah) functions similarly to which other particle?",
               "options": [
-                "هَلْ, both introduce yes/no questions",
+                "هَلْ",
                 "مَنْ",
                 "مَا",
                 "أَيْنَ"
               ],
-              "answer": "هَلْ, both introduce yes/no questions"
+              "answer": "هَلْ"
             }
           ]
         },
@@ -3000,12 +3000,12 @@
             {
               "text": "لَوْ اجْتَهَدْتَ لَنَجَحْتَ (\"Had you strived, you would have succeeded\") — what tense are the verbs in this sentence?",
               "options": [
-                "Al-Fi'l al-Māḍī (past tense), even though the meaning may be conditional",
+                "Al-Fi'l al-Māḍī",
                 "Al-Fi'l al-Muḍāri' only",
                 "Al-Fi'l al-Amr",
                 "A mix of Amr and Muḍāri'"
               ],
-              "answer": "Al-Fi'l al-Māḍī (past tense), even though the meaning may be conditional"
+              "answer": "Al-Fi'l al-Māḍī"
             },
             {
               "text": "What does لَوْلَا (lawlā) mean?",
@@ -3168,12 +3168,12 @@
             {
               "text": "لَمْ يَرْمِ (\"he did not throw\", from رَمَى) — why does the ي disappear here?",
               "options": [
-                "Because the verb is Majzūm by لَمْ, and the sign of jazm on a Nāqiṣ verb is dropping the weak letter",
+                "Because the verb is Majzūm",
                 "Because it's Manṣūb",
                 "Because it's Marfū'",
                 "There is no reason"
               ],
-              "answer": "Because the verb is Majzūm by لَمْ, and the sign of jazm on a Nāqiṣ verb is dropping the weak letter"
+              "answer": "Because the verb is Majzūm"
             }
           ]
         },
@@ -3198,7 +3198,7 @@
               "text": "جَاءَ زَيْدٌ وَهُوَ يَضْحَكُ (\"Zayd came while he was laughing\") — what is وَهُوَ يَضْحَكُ?",
               "options": [
                 "Jumlah al-Ḥāl (a sentence functioning as Ḥāl), in the position of Naṣb",
-                "Jumlah aṣ-Ṣilah",
+                "Jumlah aṣ-Ṣilah (a sentence functoning as Ṣilah)",
                 "Khabaru Kāna",
                 "Al-Mustathnā"
               ],

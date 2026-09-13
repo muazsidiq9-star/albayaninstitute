@@ -1,3 +1,54 @@
+// ===========================
+// 0️⃣ Passport Compression Helper
+// Resizes + compresses the image in-browser before it ever
+// reaches Supabase Storage, so egress per file stays tiny.
+// ===========================
+async function compressPassportImage(file, {
+  maxWidth = 500,
+  maxHeight = 500,
+  quality = 0.75,
+  maxSizeKB = 150
+} = {}) {
+  const img = await new Promise((resolve, reject) => {
+    const image = new Image();
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+      image.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+  let { width, height } = img;
+  if (width > maxWidth || height > maxHeight) {
+    const ratio = Math.min(maxWidth / width, maxHeight / height);
+    width = Math.round(width * ratio);
+    height = Math.round(height * ratio);
+  }
+
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+
+  let q = quality;
+  let blob = await new Promise((res) => canvas.toBlob(res, "image/jpeg", q));
+
+  // Step quality down further if it's still bigger than our target
+  while (blob && blob.size / 1024 > maxSizeKB && q > 0.3) {
+    q -= 0.1;
+    blob = await new Promise((res) => canvas.toBlob(res, "image/jpeg", q));
+  }
+
+  return new File(
+    [blob],
+    file.name.replace(/\.\w+$/, ".jpg"),
+    { type: "image/jpeg" }
+  );
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // ===========================
   // 1️⃣ Supabase Client from HTML
@@ -41,16 +92,82 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===========================
   // Country-based Plan Rendering
   // ===========================
-  const WEST_AFRICA_COUNTRIES = [
-    "nigeria", "ghana", "benin", "togo", "niger", "cameroon",
-    "senegal", "mali", "burkina faso", "guinea", "guinea-bissau",
-    "sierra leone", "liberia", "ivory coast", "gambia",
-    "cape verde", "mauritania"
+
+  // Full list of African countries (all 54), lowercase. Written out once so
+  // adding/removing countries from the register.html dropdown later never
+  // requires touching this file — any African country typed/selected here
+  // is automatically recognized.
+  const AFRICA_COUNTRIES = [
+    "algeria", "angola", "benin", "botswana", "burkina faso", "burundi",
+    "cabo verde", "cape verde", "cameroon", "central african republic", "chad",
+    "comoros", "democratic republic of the congo", "dr congo", "congo",
+    "republic of the congo", "djibouti", "egypt", "equatorial guinea",
+    "eritrea", "eswatini", "swaziland", "ethiopia", "gabon", "gambia",
+    "ghana", "guinea", "guinea-bissau", "ivory coast", "cote d'ivoire",
+    "côte d'ivoire", "kenya", "lesotho", "liberia", "libya", "madagascar",
+    "malawi", "mali", "mauritania", "mauritius", "morocco", "mozambique",
+    "namibia", "niger", "nigeria", "rwanda", "sao tome and principe",
+    "senegal", "seychelles", "sierra leone", "somalia", "south africa",
+    "south sudan", "sudan", "tanzania", "togo", "tunisia", "uganda",
+    "zambia", "zimbabwe"
   ];
 
-  function isWestAfrica(countryRaw) {
+  function isAfrica(countryRaw) {
     if (!countryRaw) return false;
-    return WEST_AFRICA_COUNTRIES.includes(countryRaw.trim().toLowerCase());
+    return AFRICA_COUNTRIES.includes(countryRaw.trim().toLowerCase());
+  }
+
+  // Currency display symbols/prefixes used when formatting plan prices.
+  const CURRENCY_SYMBOLS = {
+    NGN: "₦",
+    GHS: "GH₵",
+    SLE: "Le ",
+    USD: "$"
+  };
+
+  function formatPrice(amount, currency) {
+    const symbol = CURRENCY_SYMBOLS[currency] || `${currency} `;
+    return `${symbol}${Number(amount).toLocaleString()}`;
+  }
+
+  // Single source of truth for pricing per country. Returns an object keyed
+  // by plan name ("General" / "Premium"), each with { amount, currency }.
+  function getPricingForCountry(countryRaw) {
+    const country = (countryRaw || "").trim().toLowerCase();
+
+    if (country === "nigeria") {
+      return {
+        General: { amount: 10000, currency: "NGN" },
+        Premium: { amount: 50000, currency: "NGN" }
+      };
+    }
+
+    if (country === "ghana") {
+      return {
+        General: { amount: 100, currency: "GHS" },
+        Premium: { amount: 500, currency: "GHS" }
+      };
+    }
+
+    if (country === "sierra leone") {
+      return {
+        General: { amount: 200, currency: "SLE" },
+        Premium: { amount: 1000, currency: "SLE" }
+      };
+    }
+
+    if (isAfrica(country)) {
+      // Other African countries: flat USD pricing
+      return {
+        General: { amount: 10, currency: "USD" },
+        Premium: { amount: 50, currency: "USD" }
+      };
+    }
+
+    // International (outside Africa): single Premium plan, unchanged
+    return {
+      Premium: { amount: 50, currency: "USD" }
+    };
   }
 
   function attachPlanCardListeners() {
@@ -76,33 +193,29 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const westAfrica = isWestAfrica(country);
+    const pricing = getPricingForCountry(country);
+    const plans = Object.keys(pricing); // e.g. ["General", "Premium"] or just ["Premium"]
 
-    if (westAfrica) {
+    if (plans.length > 1) {
       planTypeSelect.innerHTML = `
         <option value="" data-translate="Select">Select</option>
-        <option value="General" data-translate="General">General</option>
-        <option value="Premium" data-translate="Premium">Premium</option>
-      `;
-      planPriceStrip.innerHTML = `
-        <div class="plan-price-card" data-plan="General" data-amount="10000" data-currency="NGN">
-          <span class="plan-price-name" data-translate="General">General</span>
-          <span class="plan-price-amount">₦10,000<small data-translate="/month">/month</small></span>
-        </div>
-        <div class="plan-price-card" data-plan="Premium" data-amount="50000" data-currency="NGN">
-          <span class="plan-price-name" data-translate="Premium">Premium</span>
-          <span class="plan-price-amount">₦50,000<small data-translate="/month">/month</small></span>
-        </div>
+        ${plans.map(plan => `<option value="${plan}" data-translate="${plan}">${plan}</option>`).join("")}
       `;
     } else {
-      planTypeSelect.innerHTML = `<option value="Premium" selected>Premium</option>`;
-      planPriceStrip.innerHTML = `
-        <div class="plan-price-card selected" data-plan="Premium" data-amount="50" data-currency="USD">
-          <span class="plan-price-name" data-translate="Premium">Premium</span>
-          <span class="plan-price-amount">$50<small data-translate="/month">/month</small></span>
+      // Only one plan available (international students) — auto-select it
+      planTypeSelect.innerHTML = `<option value="${plans[0]}" selected>${plans[0]}</option>`;
+    }
+
+    planPriceStrip.innerHTML = plans.map((plan, i) => {
+      const { amount, currency } = pricing[plan];
+      const selectedClass = plans.length === 1 ? "selected" : "";
+      return `
+        <div class="plan-price-card ${selectedClass}" data-plan="${plan}" data-amount="${amount}" data-currency="${currency}">
+          <span class="plan-price-name" data-translate="${plan}">${plan}</span>
+          <span class="plan-price-amount">${formatPrice(amount, currency)}<small data-translate="/month">/month</small></span>
         </div>
       `;
-    }
+    }).join("");
 
     attachPlanCardListeners();
     if (typeof translate === "function") translate(localStorage.getItem("lang") || "en");
@@ -188,24 +301,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // ----- Passport Upload -----
       let passportUrl = null;
+      let passportPath = null;
       const passportFile = passportInput.files[0];
 
       if (passportFile) {
-        if (passportFile.size > 2 * 1024 * 1024) { // 2MB max
-          passportWarning.textContent = t("Passport must not exceed 2MB");
+        if (passportFile.size > 8 * 1024 * 1024) { // 8MB sanity cap on the raw photo
+          passportWarning.textContent = t("Passport image is too large (max 8MB)");
           passportWarning.style.display = "block";
           return;
         }
 
         passportWarning.style.display = "none";
 
-        const fileExt = passportFile.name.split(".").pop();
-        const fileName = `passport_${Date.now()}.${fileExt}`;
+        // Resize/compress in-browser first — this is what actually
+        // controls Supabase egress, not the raw upload cap above.
+        let uploadFile;
+        try {
+          uploadFile = await compressPassportImage(passportFile, {
+            maxWidth: 500,
+            maxHeight: 500,
+            quality: 0.75,
+            maxSizeKB: 150
+          });
+        } catch (compressErr) {
+          console.warn("Passport compression failed, uploading original:", compressErr);
+          uploadFile = passportFile;
+        }
+
+        const fileName = `passport_${Date.now()}.jpg`;
 
         // Upload to 'passports' bucket
         const { error: uploadError } = await sb.storage
           .from("passports")
-          .upload(fileName, passportFile);
+          .upload(fileName, uploadFile, {
+            cacheControl: "31536000", // filenames are unique per upload, safe to cache for a year
+            contentType: "image/jpeg",
+            upsert: false
+          });
 
         if (uploadError) {
           console.error(uploadError);
@@ -219,6 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .getPublicUrl(fileName);
 
         passportUrl = urlData.publicUrl;
+        passportPath = fileName; // raw storage path, used for reliable deletes/updates later
       }
 
 
@@ -247,6 +380,7 @@ document.addEventListener("DOMContentLoaded", () => {
             reason_arabic: reasonArabic,
             additional: additional,
             passport_url: passportUrl,
+            passport_path: passportPath,
             payment_status: "unpaid",
             amount_due: amountDue,
             currency_due: currencyDue
@@ -307,6 +441,10 @@ function showSuccessNotification(matricNumber) {
   const toast = document.createElement("div");
   toast.className = "success-toast";
   toast.innerHTML = `
+  <button id="closeMatricToastBtn" class="success-toast-close" aria-label="Close">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+
   <p>
     <i class="fa-solid fa-circle-check"></i>
     ${tmpl("registration_successful")}
@@ -329,18 +467,22 @@ function showSuccessNotification(matricNumber) {
   // Animate in
   setTimeout(() => toast.classList.add("show"), 10);
 
-  // Copy button
-document.getElementById("copyMatricBtn").onclick = () => {
-  navigator.clipboard.writeText(matricNumber).then(() => {
-    alert(t("Matric Number copied to clipboard ✅"));
-  });
-};
-
-  // Auto-remove after 10s
-  setTimeout(() => {
+  function dismissToast() {
     toast.classList.remove("show");
     setTimeout(() => toast.remove(), 300);
-  }, 10000);
+  }
+
+  // Copy button — copies the matric number, then dismisses (they've got it)
+  document.getElementById("copyMatricBtn").onclick = () => {
+    navigator.clipboard.writeText(matricNumber).then(() => {
+      alert(t("Matric Number copied to clipboard ✅"));
+      dismissToast();
+    });
+  };
+
+  // Explicit close button — no auto-dismiss timer, stays until the user
+  // actually acknowledges it (copy or close).
+  document.getElementById("closeMatricToastBtn").onclick = dismissToast;
 }
 
 showSuccessNotification(data.matric_number);

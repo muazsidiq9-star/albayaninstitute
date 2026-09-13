@@ -302,7 +302,7 @@
       try {
        const { data, error } = await sb
           .from("students")
-          .select("fullname, email, whatsapp, matric_number, level_arabic, batch, passport_url")
+          .select("fullname, email, whatsapp, matric_number, level_arabic, batch, passport_url, passport_path")
           .eq("matric_number", matricNumber)
           .single();
         if (error) throw error;
@@ -344,6 +344,54 @@ matricEl.setAttribute('dir', 'ltr');
       document.getElementById("editProfileModal").style.display = "none";
     }
 
+    // ===========================
+    // Passport Compression Helper (same as register.js)
+    // ===========================
+    async function compressPassportImage(file, {
+      maxWidth = 500,
+      maxHeight = 500,
+      quality = 0.75,
+      maxSizeKB = 150
+    } = {}) {
+      const img = await new Promise((resolve, reject) => {
+        const image = new Image();
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          image.onload = () => resolve(image);
+          image.onerror = reject;
+          image.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+
+      let { width, height } = img;
+      if (width > maxWidth || height > maxHeight) {
+        const ratio = Math.min(maxWidth / width, maxHeight / height);
+        width = Math.round(width * ratio);
+        height = Math.round(height * ratio);
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+
+      let q = quality;
+      let blob = await new Promise((res) => canvas.toBlob(res, "image/jpeg", q));
+
+      while (blob && blob.size / 1024 > maxSizeKB && q > 0.3) {
+        q -= 0.1;
+        blob = await new Promise((res) => canvas.toBlob(res, "image/jpeg", q));
+      }
+
+      return new File(
+        [blob],
+        file.name.replace(/\.\w+$/, ".jpg"),
+        { type: "image/jpeg" }
+      );
+    }
+
     async function saveProfileChanges() {
   const matric = sessionStorage.getItem("matric");
 
@@ -358,24 +406,28 @@ matricEl.setAttribute('dir', 'ltr');
 
   try {
     let passport_url = null;
+    let passport_path = null;
 
     // ===========================
     // 1. GET CURRENT PASSPORT FIRST
     // ===========================
     const { data: current } = await sb
       .from("students")
-      .select("passport_url")
+      .select("passport_url, passport_path")
       .eq("matric_number", matric)
       .single();
 
     const oldPassport = current?.passport_url;
+    const oldPassportPath = current?.passport_path;
 
     // ===========================
     // 2. DELETE OLD PASSPORT IF NEW ONE IS UPLOADED
     // ===========================
-    if (passportFile && oldPassport) {
+    if (passportFile && (oldPassportPath || oldPassport)) {
       try {
-        const oldPath = oldPassport.split("/passports/")[1];
+        // Prefer the stored path (reliable); fall back to parsing the public URL
+        // for older rows that were saved before passport_path existed.
+        const oldPath = oldPassportPath || oldPassport?.split("/passports/")[1];
 
         if (oldPath) {
           const { error: deleteError } = await sb.storage
@@ -395,12 +447,26 @@ matricEl.setAttribute('dir', 'ltr');
     // 3. UPLOAD NEW PASSPORT
     // ===========================
     if (passportFile) {
-      const fileExt = passportFile.name.split(".").pop();
-      const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}.${fileExt}`;
+      let fileToUpload;
+      try {
+        fileToUpload = await compressPassportImage(passportFile, {
+          maxWidth: 500,
+          maxHeight: 500,
+          quality: 0.75,
+          maxSizeKB: 150
+        });
+      } catch (compressErr) {
+        console.warn("Passport compression failed, uploading original:", compressErr);
+        fileToUpload = passportFile;
+      }
+
+      const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}.jpg`;
 
       const { error: uploadError } = await sb.storage
         .from("passports")
-        .upload(fileName, passportFile, {
+        .upload(fileName, fileToUpload, {
+          cacheControl: "31536000", // filenames are unique per upload, safe to cache for a year
+          contentType: "image/jpeg",
           upsert: false
         });
 
@@ -412,6 +478,7 @@ matricEl.setAttribute('dir', 'ltr');
       passport_url = sb.storage
         .from("passports")
         .getPublicUrl(fileName).data.publicUrl;
+      passport_path = fileName;
     }
 
     // ===========================
@@ -425,6 +492,7 @@ matricEl.setAttribute('dir', 'ltr');
 
     if (passport_url) {
       updateData.passport_url = passport_url;
+      updateData.passport_path = passport_path;
     }
 
     const { error } = await sb

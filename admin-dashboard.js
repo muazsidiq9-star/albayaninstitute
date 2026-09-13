@@ -3,6 +3,74 @@
 // ===========================
 const db = window.supabaseClient;
 
+// ===========================
+// Extract the bucket-relative path from a Supabase public URL
+// (payments only stores receipt_url, no separate path column,
+// so deletions need to parse it back out)
+// ===========================
+function extractStoragePath(publicUrl) {
+  if (!publicUrl) return null;
+  const marker = "/object/public/";
+  const idx = publicUrl.indexOf(marker);
+  if (idx === -1) return null;
+  const afterMarker = publicUrl.slice(idx + marker.length);
+  const parts = afterMarker.split("/");
+  parts.shift(); // drop the bucket name, keep the rest of the path
+  return parts.length ? decodeURIComponent(parts.join("/")) : null;
+}
+
+
+// ===========================
+// Image Compression Helper
+// Resizes + compresses in-browser before upload so Supabase
+// Cached Egress stays low. maxWidth/maxHeight/quality/maxSizeKB
+// are tunable per use (passport photo vs. receipt scan).
+// ===========================
+async function compressImageFile(file, {
+  maxWidth = 500,
+  maxHeight = 500,
+  quality = 0.75,
+  maxSizeKB = 150
+} = {}) {
+  const img = await new Promise((resolve, reject) => {
+    const image = new Image();
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+      image.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+  let { width, height } = img;
+  if (width > maxWidth || height > maxHeight) {
+    const ratio = Math.min(maxWidth / width, maxHeight / height);
+    width = Math.round(width * ratio);
+    height = Math.round(height * ratio);
+  }
+
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+
+  let q = quality;
+  let blob = await new Promise((res) => canvas.toBlob(res, "image/jpeg", q));
+
+  while (blob && blob.size / 1024 > maxSizeKB && q > 0.3) {
+    q -= 0.1;
+    blob = await new Promise((res) => canvas.toBlob(res, "image/jpeg", q));
+  }
+
+  return new File(
+    [blob],
+    file.name.replace(/\.\w+$/, ".jpg"),
+    { type: "image/jpeg" }
+  );
+}
+
 /* -------------------------------------------------------
    LEVEL MAP — normalises any DB variant → select option
 ------------------------------------------------------- */
@@ -581,8 +649,8 @@ async function loadStudents() {
       tr.innerHTML = `
         <td>
           ${s.passport_url
-            ? `<img src="${s.passport_url}" class="passport-thumb" onclick="openPassportModal('${s.passport_url}')">`
-            : `<img src="passport-placeholder.png" class="passport-thumb">`}
+            ? `<img src="${s.passport_url}" class="passport-thumb" loading="lazy" onclick="openPassportModal('${s.passport_url}')">`
+            : `<img src="passport-placeholder.png" class="passport-thumb" loading="lazy">`}
         </td>
         <td>${s.matric_number}</td>
         <td>${s.fullname}</td>
@@ -593,6 +661,8 @@ async function loadStudents() {
         <td>${s.age}</td>
         <td>${s.level_arabic}</td>
         <td>${s.batch || "—"}</td>
+        <td>${s.plan_type || "—"}</td>
+        <td>${s.amount_due != null ? formatMoney(s.amount_due, s.currency_due) : "—"}</td>
         <td>${t(s.status)}</td>
         <td>
           <span class="approval-status ${s.admission_approved ? 'approved' : 'not-approved'}">
@@ -691,6 +761,10 @@ async function addStudent() {
     const age = document.getElementById("studentAge")?.value;
     const level_arabic = document.getElementById("studentLevel")?.value.trim();
     const batch = document.getElementById("studentBatch")?.value.trim();
+    const plan_type = document.getElementById("studentPlanType")?.value.trim() || null;
+    const amountDueRaw = document.getElementById("studentAmountDue")?.value;
+    const amount_due = amountDueRaw !== "" && amountDueRaw != null ? Number(amountDueRaw) : null;
+    const currency_due = document.getElementById("studentCurrencyDue")?.value || null;
     const status = document.getElementById("studentStatus")?.value.trim();
     const admission_approved = document.getElementById("studentAdmission")?.value.trim();
     const passportFile = document.getElementById("studentPassport")?.files[0];
@@ -709,7 +783,7 @@ async function addStudent() {
 let passport_path = null;
 
 if (passportFile) {
-  const MAX_SIZE = 2 * 1024 * 1024;
+  const MAX_SIZE = 8 * 1024 * 1024; // sanity cap on the raw photo; compression handles real size control
 
   if (!passportFile.type.startsWith("image/")) {
     alert(t("Only image files are allowed"));
@@ -717,12 +791,24 @@ if (passportFile) {
   }
 
   if (passportFile.size > MAX_SIZE) {
-    alert(t("Passport must not exceed 2MB"));
+    alert(t("Passport image is too large (max 8MB)"));
     return;
   }
 
-  const fileExt = passportFile.name.split(".").pop();
-  const fileName = `${Date.now()}_${Math.floor(Math.random() * 9999)}.${fileExt}`;
+  let uploadFile;
+  try {
+    uploadFile = await compressImageFile(passportFile, {
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 0.75,
+      maxSizeKB: 150
+    });
+  } catch (compressErr) {
+    console.warn("Passport compression failed, uploading original:", compressErr);
+    uploadFile = passportFile;
+  }
+
+  const fileName = `${Date.now()}_${Math.floor(Math.random() * 9999)}.jpg`;
 
   // =========================
   // 🔥 DELETE OLD FILE FIRST (EDIT ONLY)
@@ -738,7 +824,10 @@ if (passportFile) {
   // =========================
   const { error: uploadError } = await db.storage
     .from("passports")
-    .upload(fileName, passportFile, { cacheControl: "3600" });
+    .upload(fileName, uploadFile, {
+      cacheControl: "31536000", // filenames are unique per upload, safe to cache for a year
+      contentType: "image/jpeg"
+    });
 
   if (uploadError) throw uploadError;
 
@@ -753,7 +842,7 @@ if (passportFile) {
     if (window.editingStudentId) {
       await db.from("students").update({
   fullname, email, whatsapp, country, gender, age,
-  level_arabic, batch, status, admission_approved,
+  level_arabic, batch, plan_type, amount_due, currency_due, status, admission_approved,
   ...(passport_url ? { passport_url, passport_path } : {})
 }).eq("id", window.editingStudentId);
 
@@ -767,7 +856,7 @@ if (passportFile) {
 
       await db.from("students").insert([{
   fullname, email, whatsapp, country, gender, age,
-  level_arabic, batch, status, admission_approved,
+  level_arabic, batch, plan_type, amount_due, currency_due, status, admission_approved,
   passport_url,
   passport_path
 }]);
@@ -812,6 +901,9 @@ async function editStudent(id) {
   document.getElementById("studentAge").value = s.age;
   document.getElementById("studentLevel").value = s.level_arabic;
   document.getElementById("studentBatch").value = s.batch || "";
+  document.getElementById("studentPlanType").value = s.plan_type || "";
+  document.getElementById("studentAmountDue").value = s.amount_due ?? "";
+  document.getElementById("studentCurrencyDue").value = s.currency_due || "NGN";
   document.getElementById("studentStatus").value = s.status;
   document.getElementById("studentAdmission").value = s.admission_approved;
 
@@ -934,7 +1026,7 @@ async function loadPayments() {
       tr.innerHTML = `
         <td>
           ${p.receipt_url
-            ? `<img src="${p.receipt_url}" class="receipt-thumb" onclick="openReceiptModal('${p.receipt_url}')" alt="receipt"/>`
+            ? `<img src="${p.receipt_url}" class="receipt-thumb" loading="lazy" onclick="openReceiptModal('${p.receipt_url}')" alt="receipt"/>`
             : t("No receipt")}
         </td>
         <td>${p.students?.fullname || p.payer_name || t("Guest")}</td>
@@ -2506,7 +2598,27 @@ async function permanentDelete({ table, id, match, reloadFn, label, beforeDelete
 }
 
 window.permanentDeletePayment = id =>
-  permanentDelete({ table: "payments", id, reloadFn: loadPayments, label: t("payment") });
+  permanentDelete({
+    table: "payments",
+    id,
+    reloadFn: loadPayments,
+    label: t("payment"),
+    beforeDelete: async () => {
+      const { data: payment } = await db
+        .from("payments")
+        .select("receipt_url")
+        .eq("id", id)
+        .single();
+
+      const path = extractStoragePath(payment?.receipt_url);
+      if (path) {
+        const { error: storageError } = await db.storage
+          .from("payment_receipts")
+          .remove([path]);
+        if (storageError) console.error("Receipt delete failed:", storageError);
+      }
+    }
+  });
 
 window.permanentDeleteGrade = id =>
   permanentDelete({ table: "grades", id, reloadFn: loadGrades, label: t("grade") });
@@ -2625,6 +2737,14 @@ async function permanentDeleteStudent(id) {
     /* 2. Delete related tables first */
     if (matric) {
 
+      // Fetch receipt files before wiping the payments rows, so we
+      // can clean up storage too — the row's the only place these
+      // filenames are recorded (receipt_url only, no separate path column).
+      const { data: paymentsToClean } = await db
+        .from("payments")
+        .select("receipt_url")
+        .eq("matric_number", matric);
+
       await db.from("notifications").delete().eq("matric_number", matric);
       await db.from("grades").delete().eq("matric_number", matric);
       await db.from("payments").delete().eq("matric_number", matric);
@@ -2632,6 +2752,17 @@ async function permanentDeleteStudent(id) {
       await db.from("certificates").delete().eq("matric_number", matric);
       await db.from("course_registrations").delete().eq("matric_number", matric);
       await db.from("attendance_records").delete().eq("student_matric", id);
+
+      const receiptPaths = (paymentsToClean || [])
+        .map(p => extractStoragePath(p.receipt_url))
+        .filter(Boolean);
+
+      if (receiptPaths.length) {
+        const { error: receiptStorageError } = await db.storage
+          .from("payment_receipts")
+          .remove(receiptPaths);
+        if (receiptStorageError) console.error("Receipt cleanup failed:", receiptStorageError);
+      }
 
     }
 
@@ -3485,17 +3616,32 @@ async function saveAdminProfile() {
         alert(t("Only image files are allowed"));
         return;
       }
-      if (passportFile.size > 2 * 1024 * 1024) {
-        alert(t("Passport must not exceed 2MB"));
+      if (passportFile.size > 8 * 1024 * 1024) {
+        alert(t("Passport image is too large (max 8MB)"));
         return;
       }
 
-      const fileExt = passportFile.name.split(".").pop();
-      const fileName = `admin_${Date.now()}_${Math.floor(Math.random() * 9999)}.${fileExt}`;
+      let uploadFile;
+      try {
+        uploadFile = await compressImageFile(passportFile, {
+          maxWidth: 500,
+          maxHeight: 500,
+          quality: 0.75,
+          maxSizeKB: 150
+        });
+      } catch (compressErr) {
+        console.warn("Passport compression failed, uploading original:", compressErr);
+        uploadFile = passportFile;
+      }
+
+      const fileName = `admin_${Date.now()}_${Math.floor(Math.random() * 9999)}.jpg`;
 
       const { error: uploadError } = await db.storage
         .from("passports")
-        .upload(fileName, passportFile, { cacheControl: "3600" });
+        .upload(fileName, uploadFile, {
+          cacheControl: "31536000", // filenames are unique per upload, safe to cache for a year
+          contentType: "image/jpeg"
+        });
 
       if (uploadError) throw uploadError;
 
@@ -3729,7 +3875,7 @@ const TRASH_CATEGORIES = {
     ascending: true,
     headers: () => [t("Photo"), t("Matric"), t("Name"), t("Email"), t("Country"), t("Level"), t("Batch")],
     row: s => `
-      <td><img src="${s.passport_url || 'passport-placeholder.png'}" class="passport-thumb" style="width:35px;height:35px;border-radius:50%;object-fit:cover;"></td>
+      <td><img src="${s.passport_url || 'passport-placeholder.png'}" class="passport-thumb" loading="lazy" style="width:35px;height:35px;border-radius:50%;object-fit:cover;"></td>
       <td>${s.matric_number || "—"}</td>
       <td><strong>${s.fullname || "—"}</strong></td>
       <td>${s.email || "—"}</td>

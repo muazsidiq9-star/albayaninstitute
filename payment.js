@@ -1,3 +1,54 @@
+// ===========================
+// Receipt Compression Helper
+// Resizes + compresses receipt images before upload to keep
+// Supabase Cached Egress low. Kept larger/higher-quality than a
+// passport thumbnail since receipt text needs to stay legible.
+// ===========================
+async function compressReceiptImage(file, {
+  maxWidth = 1000,
+  maxHeight = 1400,
+  quality = 0.8,
+  maxSizeKB = 350
+} = {}) {
+  const img = await new Promise((resolve, reject) => {
+    const image = new Image();
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+      image.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+  let { width, height } = img;
+  if (width > maxWidth || height > maxHeight) {
+    const ratio = Math.min(maxWidth / width, maxHeight / height);
+    width = Math.round(width * ratio);
+    height = Math.round(height * ratio);
+  }
+
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+
+  let q = quality;
+  let blob = await new Promise((res) => canvas.toBlob(res, "image/jpeg", q));
+
+  while (blob && blob.size / 1024 > maxSizeKB && q > 0.4) {
+    q -= 0.1;
+    blob = await new Promise((res) => canvas.toBlob(res, "image/jpeg", q));
+  }
+
+  return new File(
+    [blob],
+    file.name.replace(/\.\w+$/, ".jpg"),
+    { type: "image/jpeg" }
+  );
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ================= HAMBURGER MENU ================= */
@@ -388,12 +439,28 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (receiptFile) {
-        const fileExt = receiptFile.name.split('.').pop();
+        let uploadFile = receiptFile;
+
+        // Only images can go through the canvas compressor — PDF/other
+        // receipt uploads are passed through untouched.
+        if (receiptFile.type.startsWith("image/")) {
+          try {
+            uploadFile = await compressReceiptImage(receiptFile);
+          } catch (compressErr) {
+            console.warn("Receipt compression failed, uploading original:", compressErr);
+            uploadFile = receiptFile;
+          }
+        }
+
+        const fileExt = uploadFile.name.split('.').pop();
         const fileName = `${Date.now()}-${Math.floor(Math.random() * 100000)}.${fileExt}`;
 
         const { error: uploadError } = await supabase.storage
           .from('payment_receipts')
-          .upload(fileName, receiptFile);
+          .upload(fileName, uploadFile, {
+            cacheControl: "31536000", // filenames are unique per upload, safe to cache for a year
+            contentType: uploadFile.type || undefined
+          });
 
         if (uploadError) throw uploadError;
 

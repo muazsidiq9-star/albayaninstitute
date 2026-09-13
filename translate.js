@@ -162,7 +162,7 @@ const DICT = {
 "Fill all required fields": "يرجى ملء جميع الحقول المطلوبة",
 "Fill all fields": "يرجى ملء جميع الحقول",
 "Only image files are allowed": "يُسمح بملفات الصور فقط",
-"Passport must not exceed 2MB": "يجب ألا يتجاوز حجم الصورة 2 ميجابايت",
+"Passport must not exceed 200KB": "يجب ألا يتجاوز حجم الصورة 200 كيلوبايت",
 "Please upload a passport photo": "يرجى رفع صورة جواز السفر",
 "Failed to mark payment. Try again.": "فشل تأكيد الدفع. حاول مرة أخرى",
 
@@ -314,7 +314,7 @@ const DICT = {
 "Supabase client not found": "لم يتم العثور على عميل Supabase",
 "Full Name and Email are required.": "الاسم الكامل والبريد الإلكتروني مطلوبان.",
 "This email is already registered!\nMatric Number:": "هذا البريد الإلكتروني مسجل مسبقًا!\nرقم التسجيل:",
-"Passport must not exceed 2MB": "يجب ألا يتجاوز حجم جواز السفر 2 ميغابايت",
+"Passport must not exceed 200KB": "يجب ألا يتجاوز حجم جواز السفر 200 كيلوبايت",
 "Passport upload failed. Check console.": "فشل تحميل جواز السفر. تحقق من وحدة التحكم.",
 "Processing... ⏳": "جاري المعالجة... ⏳",
 "Registration failed. Check console for details.": "فشل التسجيل. تحقق من وحدة التحكم للحصول على التفاصيل.",
@@ -847,7 +847,7 @@ const DICT = {
 "Name cannot be empty.": "لا يمكن أن يكون الاسم فارغًا.",
 "Failed to save profile.": "فشل حفظ الملف.",
 "Only image files are allowed.": "يُسمح بملفات الصور فقط.",
-"Photo must not exceed 2MB.": "يجب ألا تتجاوز الصورة 2 ميجابايت.",
+"Photo must not exceed 200KB.": "يجب ألا تتجاوز الصورة 200 كيلوبايت.",
 "Change photo": "تغيير الصورة",
 
 // ======= STAFF DASHBOARD — PASSWORD TAB =======
@@ -1992,10 +1992,10 @@ NEW FILES START HERE
 // STEP 3 — UPLOAD & SUBMIT
 "Passport Photo & Submit":   "الصورة الشخصية والإرسال",
 "Choose Photo":              "اختر صورة",
-"Max file size: 2MB. Niqāb-wearing sisters may upload with face covered.":
-  "الحجم الأقصى للملف: 2 ميجابايت. يمكن للأخوات المنتقبات تحميل الصورة مع تغطية الوجه.",
-"Passport photo must not exceed 2MB.":
-  "يجب ألا تتجاوز الصورة الشخصية 2 ميجابايت.",
+"Max file size: 200KB. Niqāb-wearing sisters may upload with face covered.":
+  "الحجم الأقصى للملف: 200 كيلوبايت. يمكن للأخوات المنتقبات تحميل الصورة مع تغطية الوجه.",
+"Passport photo must not exceed 200KB.":
+  "يجب ألا تتجاوز الصورة الشخصية 200 كيلوبايت.",
 "Do not submit this form more than once. Click the button only once and wait for confirmation.":
   "لا ترسل هذا النموذج أكثر من مرة. انقر الزر مرة واحدة فقط وانتظر التأكيد.",
 "Submit Registration":  "إرسال التسجيل",
@@ -2847,7 +2847,7 @@ NEW FILES START HERE
 "Delete this payment record?": "هل تريد حذف هذه الدفعة؟",
 "Access Denied": "تم رفض الوصول",
 "Only image files are allowed": "يُسمح بملفات الصور فقط",
-"Passport must not exceed 2MB": "يجب ألا يتجاوز حجم الصورة 2 ميغابايت",
+"Passport must not exceed 200KB": "يجب ألا يتجاوز حجم الصورة 200 كيلوبايت",
 
 // Role tags
 "#Director": "#المدير",
@@ -3232,38 +3232,6 @@ NEW FILES START HERE
 "We may update these Terms & Conditions from time to time to reflect changes in our programs or policies. Continued use of our website or services after an update means you accept the revised terms.": "قد نقوم بتحديث هذه الشروط والأحكام من وقت لآخر لتعكس التغييرات في برامجنا أو سياساتنا. استمرارك في استخدام موقعنا أو خدماتنا بعد أي تحديث يعني موافقتك على الشروط المُعدَّلة.",
 "If you have any questions regarding these Terms & Conditions, please contact us:": "إذا كانت لديك أي أسئلة بخصوص هذه الشروط والأحكام، يرجى التواصل معنا:",
 
-// Country dropdown options
-"Nigeria": "نيجيريا",
-"Ghana": "غانا",
-"Benin": "بنين",
-"Togo": "توغو",
-"Niger": "النيجر",
-"Cameroon": "الكاميرون",
-"Senegal": "السنغال",
-"Mali": "مالي",
-"Burkina Faso": "بوركينا فاسو",
-"Guinea": "غينيا",
-"Guinea-Bissau": "غينيا بيساو",
-"Sierra Leone": "سيراليون",
-"Liberia": "ليبيريا",
-"Ivory Coast": "ساحل العاج",
-"Gambia": "غامبيا",
-"Cape Verde": "الرأس الأخضر",
-"Mauritania": "موريتانيا",
-"United States": "الولايات المتحدة",
-"United Kingdom": "المملكة المتحدة",
-"Canada": "كندا",
-"South Africa": "جنوب أفريقيا",
-"Kenya": "كينيا",
-"Egypt": "مصر",
-"Saudi Arabia": "المملكة العربية السعودية",
-"United Arab Emirates": "الإمارات العربية المتحدة",
-"India": "الهند",
-"Pakistan": "باكستان",
-"Malaysia": "ماليزيا",
-"Indonesia": "إندونيسيا",
-"Australia": "أستراليا",
-"Other": "أخرى",
 
 // Plan pricing hint
 "Please select your country in Step 1 first.": "يرجى اختيار دولتك في الخطوة الأولى أولاً.",
@@ -3398,6 +3366,7 @@ NEW FILES START HERE
 "First Semester": "الفصل الدراسي الأول",
 "Second Semester": "الفصل الدراسي الثاني",
 
+"Africa": "أفريقيا",
 "Nigeria": "نيجيريا",
 "Algeria": "الجزائر",
 "Angola": "أنغولا",
@@ -3412,6 +3381,8 @@ NEW FILES START HERE
 "Comoros": "جزر القمر",
 "Congo (DRC)": "الكونغو (الديمقراطية)",
 "Congo (Republic)": "الكونغو (برازافيل)",
+"Democratic Republic of the Congo": "جمهورية الكونغو الديمقراطية",
+"Republic of the Congo": "جمهورية الكونغو",
 "Djibouti": "جيبوتي",
 "Egypt": "مصر",
 "Equatorial Guinea": "غينيا الاستوائية",
@@ -3439,6 +3410,7 @@ NEW FILES START HERE
 "Niger": "النيجر",
 "Rwanda": "رواندا",
 "São Tomé and Príncipe": "ساو تومي وبرينسيبي",
+"Sao Tome and Principe": "ساو تومي وبرينسيبي",
 "Senegal": "السنغال",
 "Seychelles": "سيشل",
 "Sierra Leone": "سيراليون",
@@ -3452,6 +3424,7 @@ NEW FILES START HERE
 "Uganda": "أوغندا",
 "Zambia": "زامبيا",
 "Zimbabwe": "زيمبابوي",
+"Other Countries": "دول أخرى",
 "United States": "الولايات المتحدة",
 "United Kingdom": "المملكة المتحدة",
 "Canada": "كندا",
@@ -3612,6 +3585,9 @@ NEW FILES START HERE
 "All Countries": "جميع الدول",
 "Selected ": "محدد ",
 "Clear": "مسح",
+
+"Plan": "الخطة",
+"Amount Due": "المبلغ المستحق",
 
 // ===== DYNAMIC TEMPLATES ===== 
 
