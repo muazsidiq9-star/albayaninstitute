@@ -35,6 +35,17 @@ async function initRegisterCourses() {
     const studentBatch = studentProfile.batch || "";
     console.log("👤 Student:", { matric, level: studentLevel, batch: studentBatch });
 
+    /* ── Helper: pick the section that applies to this student's batch ──
+       A course can have several instructor+batch sections now. Prefer an
+       exact batch match; fall back to a section left open to every batch
+       (blank batch). Returns null if nothing matches. */
+    function findMatchingSection(sections, batch) {
+      if (!sections || !sections.length) return null;
+      const exact = sections.find(s => s.batch && s.batch === batch);
+      if (exact) return exact;
+      return sections.find(s => !s.batch) || null;
+    }
+
     /* ── 2. Which courses are tagged for this student's level? ──
        A course can now be tagged for multiple levels (e.g. Advanced AND
        Intermediate sharing the same course), via course_levels. */
@@ -67,11 +78,6 @@ async function initRegisterCourses() {
       levelCourses = data || [];
     }
 
-    const cohortCourses = levelCourses.filter(course => {
-      // blank/null batch on the course = open to every batch at these levels
-      return !course.batch || course.batch === studentBatch;
-    });
-
     /* ── 3. Fetch explicit overrides for this student (carryover, etc.) ──
        These bypass level/batch entirely — an admin has to grant them
        individually, so there's no risk of exposing a course to a whole
@@ -96,6 +102,38 @@ async function initRegisterCourses() {
       if (overrideCourseError) console.error("❌ Override courses error:", overrideCourseError);
       overrideCourses = overrideCourseRows || [];
     }
+
+    /* ── 3b. Fetch every instructor+batch section for the courses we might
+       show, so we can (a) decide which cohort courses are actually open
+       to this student's batch, and (b) show the right instructor/batch
+       on each card. A course with zero sections on file is treated as
+       legacy/open-to-everyone, same as the old blank-batch behavior. */
+    const sectionCourseIds = [...new Set([
+      ...levelCourses.map(c => c.id),
+      ...overrideCourses.map(c => c.id)
+    ])];
+
+    let sectionsByCourse = {};
+    if (sectionCourseIds.length) {
+      const { data: sectionRows, error: sectionError } = await sb
+        .from("course_sections")
+        .select("course_id, instructor, batch")
+        .in("course_id", sectionCourseIds);
+
+      if (sectionError) console.error("❌ Course sections error:", sectionError);
+
+      (sectionRows || []).forEach(row => {
+        if (!sectionsByCourse[row.course_id]) sectionsByCourse[row.course_id] = [];
+        sectionsByCourse[row.course_id].push(row);
+      });
+    }
+
+    const cohortCourses = levelCourses.filter(course => {
+      const sections = sectionsByCourse[course.id] || [];
+      // No sections on file yet = legacy/open course, same as old blank-batch behavior.
+      if (!sections.length) return true;
+      return !!findMatchingSection(sections, studentBatch);
+    });
 
     /* ── 4. Merge, de-duped by course id ── */
     const courseMap = new Map();
@@ -147,12 +185,22 @@ async function initRegisterCourses() {
     container.innerHTML = courses.map((course, i) => {
       const isRegistered = registeredIds.includes(String(course.id));
       const levels = levelsByCourse[course.id] || (course.level ? [course.level] : []);
+
+      const sections = sectionsByCourse[course.id] || [];
+      const matchedSection = findMatchingSection(sections, studentBatch)
+        || (course.isOverride ? sections[0] : null)
+        || null;
+      const displayBatch = matchedSection
+        ? (matchedSection.batch || "All Batches")
+        : (sections.length ? "Multiple batches available" : "All Batches");
+      const displayInstructor = matchedSection ? (matchedSection.instructor || "—") : "—";
+
       return `
         <div class="course-card visible" style="transition-delay:${i * 60}ms">
           <h3>${course.course_name}${course.isOverride ? ` <span class="course-override-badge" style="font-size:11px;font-weight:normal;color:#8a6d00;background:#fff3cd;padding:2px 8px;border-radius:10px;">Special Access</span>` : ""}</h3>
           <p><strong>Level:</strong> ${levels.length ? levels.join(", ") : "—"}</p>
-          <p><strong>Batch:</strong> ${course.batch || "All Batches"}</p>
-          <p><strong>Instructor:</strong> ${course.instructor || "—"}</p>
+          <p><strong>Batch:</strong> ${displayBatch}</p>
+          <p><strong>Instructor:</strong> ${displayInstructor}</p>
           <button 
             class="register-btn ${isRegistered ? "registered" : ""}"
             data-id="${course.id}"

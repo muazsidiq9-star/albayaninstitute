@@ -632,6 +632,10 @@
         <i class="fa-solid fa-plus"></i>
         <span data-translate="Add Assessment">Add Assessment</span>
       </button>
+      <button class="btn btn-access" onclick="openAllAccessGrantsModal()">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span data-translate="Access Grants">Access Grants</span>
+      </button>
     </div>
     <div class="table-container">
       <table id="assessments-table">
@@ -702,11 +706,7 @@
             <span data-translate="Advanced">Advanced</span>
           </label>
         </div>
-        <select id="courseInstructor">
-  <option value="">Select Instructor</option>
-</select>
-        <input type="text" id="courseBatch" placeholder="Batch (e.g. June 2026) — leave blank for all batches"
-               data-translate-placeholder="Batch (e.g. June 2026) — leave blank for all batches">
+        <p class="course-form-hint" data-translate="Add teachers and batches from the course card below once it's created.">Add teachers and batches from the course card below once it's created.</p>
         <button class="btn btn-primary" id="addCourseBtn" onclick="addCourse()">
           <i class="fa-solid fa-plus"></i>
           <span data-translate="Add Course">Add Course</span>
@@ -1716,7 +1716,7 @@
       <h2 data-translate="Add Payment">Add Payment</h2>
       <div class="modal-grid">
         <label data-translate="Student">Student</label>
-        <select id="paymentStudent" onchange="autofillStudentLevel('paymentStudent','paymentLevel','paymentBatch','paymentEmail')">
+        <select id="paymentStudent" onchange="autofillStudentLevel('paymentStudent','paymentLevel','paymentBatch','paymentEmail','paymentAmount','paymentCurrency')">
           <option value="" data-translate="Select a student">Select a student</option>
         </select>
         <label data-translate="Email">Email</label>
@@ -2112,6 +2112,60 @@
         <button class="btn btn-cancel" onclick="closeModal('assessmentModal')">
           <span data-translate="Cancel">Cancel</span>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================
+       ALL ACCESS GRANTS MODAL (assessment_access_overrides)
+       Central view of every per-assessment access restriction
+       across ALL assessments, with bulk/one-click revoke —
+       so admins don't have to open each assessment's "Access"
+       modal one by one to remove students.
+  ================================================ -->
+  <div class="modal" id="allAccessGrantsModal">
+    <div class="modal-content modal-large cert-modal-content">
+      <button class="btn btn-close" onclick="closeModal('allAccessGrantsModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="cert-modal-form">
+        <h2 data-translate="All Access Grants">All Access Grants</h2>
+        <p style="color:#666;font-size:13px;margin:0 0 16px;" data-translate="Every student currently on an assessment's restricted access list, across every assessment. Revoke one, revoke a selection, or revoke everything at once.">
+          Every student currently on an assessment's restricted access list, across every assessment. Revoke one, revoke a selection, or revoke everything at once.
+        </p>
+        <input type="text" id="accessGrantsSearch" class="search-input" style="width:100%;margin-bottom:14px;"
+               placeholder="🔍 Search by student or assessment..." oninput="renderAccessGrants()"
+               data-translate-placeholder="🔍 Search by student or assessment...">
+        <div class="modal-actions" style="justify-content:flex-start;margin-top:0;">
+          <button class="btn btn-delete btn-small" id="revokeSelectedAccessGrantsBtn" onclick="revokeSelectedAccessGrants()" disabled>
+            <i class="fa-solid fa-user-slash"></i>
+            <span data-translate="Revoke Selected">Revoke Selected</span>
+            <span class="count-label"></span>
+          </button>
+          <button class="btn btn-danger" id="revokeAllAccessGrantsBtn" onclick="revokeAllAccessGrants()" disabled>
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span data-translate="Revoke All">Revoke All</span>
+            <span class="count-label"></span>
+          </button>
+        </div>
+      </div>
+      <div class="cert-modal-table-scroll">
+        <div class="table-container">
+          <table id="access-grants-table">
+            <thead>
+              <tr>
+                <th><input type="checkbox" id="selectAllAccessGrants" onchange="toggleSelectAllAccessGrants(this.checked)"></th>
+                <th data-translate="Student">Student</th>
+                <th data-translate="Assessment">Assessment</th>
+                <th data-translate="Granted On">Granted On</th>
+                <th data-translate="Actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="access-grants-body">
+              <tr><td colspan="5" class="empty-row" data-translate="No access grants found">No access grants found</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

@@ -186,6 +186,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     setDashboardGreeting();
 
     await loadStats(role);
+    await loadTeachers();
 
     if (role === "registrar") {
       loadStudents();
@@ -224,7 +225,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadStudentDropdown();
     loadPasswordStudentDropdown();
     updateUnreadCounter();
-    loadTeachers();
 
     enableTableSearch("searchStudents", "students-table");
     enableTableSearch("searchPayments", "payments-table");
@@ -703,7 +703,7 @@ async function loadStudents() {
 async function populateStudentSelects() {
   const { data } = await db
     .from("students")
-    .select("fullname, matric_number, level_arabic, batch, email")
+    .select("fullname, matric_number, level_arabic, batch, email, amount_due, currency_due")
     .order("fullname");
 
   ["paymentStudent", "gradeStudent"].forEach(id => {
@@ -718,17 +718,22 @@ async function populateStudentSelects() {
       opt.dataset.level = s.level_arabic || "";
       opt.dataset.batch = s.batch || "";
       opt.dataset.email = s.email || "";
+      opt.dataset.amountDue = s.amount_due ?? "";
+      opt.dataset.currencyDue = s.currency_due || "";
       select.appendChild(opt);
     });
   });
 }
 
-// Auto-fills a Level <select> (and optionally Batch / Email fields) from
-// the level_arabic / batch / email stashed on the chosen student <option>
-// (data-level / data-batch / data-email). Wired via onchange on
-// paymentStudent / gradeStudent. Silently no-ops if the student has no
-// level/batch/email on file yet — admin can still fill it in manually.
-function autofillStudentLevel(studentSelectId, levelSelectId, batchFieldId, emailFieldId) {
+// Auto-fills a Level <select> (and optionally Batch / Email / Amount /
+// Currency fields) from the level_arabic / batch / email / amount_due /
+// currency_due stashed on the chosen student <option> (data-level /
+// data-batch / data-email / data-amount-due / data-currency-due). Wired via
+// onchange on paymentStudent / gradeStudent. The admin can still edit the
+// filled-in amount/currency before saving — this is just a correct default
+// instead of a blank field they have to fill in from memory (which is how
+// students ended up mispriced in NGN regardless of their real country).
+function autofillStudentLevel(studentSelectId, levelSelectId, batchFieldId, emailFieldId, amountFieldId, currencyFieldId) {
   const studentSelect = document.getElementById(studentSelectId);
   const levelSelect = document.getElementById(levelSelectId);
   if (!studentSelect || !levelSelect) return;
@@ -745,6 +750,16 @@ function autofillStudentLevel(studentSelectId, levelSelectId, batchFieldId, emai
   if (emailFieldId) {
     const emailField = document.getElementById(emailFieldId);
     if (emailField) emailField.value = chosen?.dataset.email || "";
+  }
+
+  if (amountFieldId) {
+    const amountField = document.getElementById(amountFieldId);
+    if (amountField && chosen?.dataset.amountDue) amountField.value = chosen.dataset.amountDue;
+  }
+
+  if (currencyFieldId) {
+    const currencyField = document.getElementById(currencyFieldId);
+    if (currencyField && chosen?.dataset.currencyDue) currencyField.value = chosen.dataset.currencyDue;
   }
 }
 
@@ -977,15 +992,30 @@ async function addPayment() {
       window.editingPaymentId = null;
     }
  else {
+      // Denormalize the student's current name/country/plan onto the
+      // payment row at the moment it's created — payer_name, country, and
+      // plan_type were never being saved before, leaving them NULL forever.
+      const { data: studentInfo } = await db
+        .from("students")
+        .select("fullname, country, plan_type")
+        .eq("matric_number", matric_number)
+        .single();
+
       await db.from("payments").insert([{
         matric_number, payer_email, level_arabic, batch, amount, currency,
-        month, payment_method, created_at, status
+        month, payment_method, created_at, status,
+        payer_name: studentInfo?.fullname || null,
+        country: studentInfo?.country || null,
+        plan_type: studentInfo?.plan_type || null
       }]);
 
       await sendNotification(
         matric_number,
         t("Payment Recorded"),
-        JSON.stringify({ key: "PAYMENT_RECORDED", data: { amount: amount.toLocaleString(), month } })
+        JSON.stringify({
+          key: "PAYMENT_RECORDED",
+          data: { amount, currency, month } // raw amount + its currency, formatted client-side on read
+        })
       );
       showToast(t("Payment added"));
     }
@@ -1041,7 +1071,7 @@ async function loadPayments() {
         <td>${t(p.status)}</td>
         <td>
           ${p.status === "pending"
-            ? `<button class="mark-paid-btn" onclick="markPaid(this,'${p.id}','${p.matric_number}',${p.amount},'${p.month}')">✔ ${t("Mark Paid")}</button>`
+            ? `<button class="mark-paid-btn" onclick="markPaid(this,'${p.id}','${p.matric_number}',${p.amount},'${p.month}','${p.currency}')">✔ ${t("Mark Paid")}</button>`
             : `<span class="paid-badge">✔ ${t("Paid")}</span>`}
         </td>
         <td><button class="btn btn-edit" onclick="editPayment('${p.id}')">${t("Edit")}</button></td>
@@ -1058,7 +1088,7 @@ async function loadPayments() {
   window.reTranslate?.();
 }
 
-async function markPaid(btn, id, matric, amount, month) {
+async function markPaid(btn, id, matric, amount, month, currency) {
   try {
     btn.disabled = true;
     btn.textContent = t("Processing...");
@@ -1073,7 +1103,10 @@ async function markPaid(btn, id, matric, amount, month) {
     await sendNotification(
       matric,
       t("Payment Confirmed"),
-      JSON.stringify({ key: "PAYMENT_CONFIRMED", data: { amount: amount.toLocaleString(), month } })
+      JSON.stringify({
+        key: "PAYMENT_CONFIRMED",
+        data: { amount, currency, month } // raw amount + its currency, formatted client-side on read
+      })
     );
 
     await loadPayments();
@@ -1616,17 +1649,49 @@ function renderFees(data) {
    GRADES
 ------------------------------------------------------- */
 
+// Shared by all three "pick a course" dropdowns (grades, schedule,
+// assessments). A course can now have several course_sections (teacher +
+// batch pairs), so instead of the old single courses.batch value, this
+// builds a short label: the one batch if there's only one, "N batches"
+// if there's more than one, or nothing if the course has no sections yet.
+async function fetchSectionBatchesByCourse(courseIds) {
+  if (!courseIds.length) return {};
+
+  const { data, error } = await db
+    .from("course_sections")
+    .select("course_id, batch")
+    .in("course_id", courseIds);
+
+  if (error) { console.error("Load course_sections error:", error); return {}; }
+
+  const byCourse = {};
+  (data || []).forEach(row => {
+    if (!byCourse[row.course_id]) byCourse[row.course_id] = [];
+    byCourse[row.course_id].push(row.batch || t("All Batches"));
+  });
+  return byCourse;
+}
+
+function batchLabelFor(courseId, sectionBatchesByCourse) {
+  const batches = [...new Set(sectionBatchesByCourse[courseId] || [])];
+  if (!batches.length) return "";
+  if (batches.length === 1) return ` (${batches[0]})`;
+  return ` (${batches.length} ${t("batches")})`;
+}
+
 // Populates #gradeCourse from live `courses` data, same pattern as
 // loadCoursesForAssessmentForm(). Grades has no course_id column, so
 // the option value is the course name itself (what addGrade() saves).
 async function loadCoursesForGradeForm() {
   const { data, error } = await db
     .from("courses")
-    .select("id, course_name, level, batch")
+    .select("id, course_name, level")
     .eq("deleted", false)
     .order("course_name");
 
   if (error) { console.error(error); return; }
+
+  const sectionBatchesByCourse = await fetchSectionBatchesByCourse(data.map(c => c.id));
 
   const select = document.getElementById("gradeCourse");
   if (!select) return;
@@ -1636,7 +1701,7 @@ async function loadCoursesForGradeForm() {
   data.forEach(c => {
     const option = document.createElement("option");
     option.value = c.course_name;
-    option.textContent = `${c.course_name}${c.level ? " — " + c.level : ""}${c.batch ? " (" + c.batch + ")" : ""}`;
+    option.textContent = `${c.course_name}${c.level ? " — " + c.level : ""}${batchLabelFor(c.id, sectionBatchesByCourse)}`;
     option.dataset.courseName = c.course_name;
     option.dataset.courseId = c.id;
     select.appendChild(option);
@@ -1869,11 +1934,13 @@ async function editGrade(id) {
 async function loadCoursesForScheduleForm() {
   const { data, error } = await db
     .from("courses")
-    .select("id, course_name, level, batch")
+    .select("id, course_name, level")
     .eq("deleted", false)
     .order("course_name");
 
   if (error) { console.error(error); return; }
+
+  const sectionBatchesByCourse = await fetchSectionBatchesByCourse(data.map(c => c.id));
 
   const select = document.getElementById("classCourse");
   if (!select) return;
@@ -1883,7 +1950,7 @@ async function loadCoursesForScheduleForm() {
   data.forEach(c => {
     const option = document.createElement("option");
     option.value = c.course_name;
-    option.textContent = `${c.course_name}${c.level ? " — " + c.level : ""}${c.batch ? " (" + c.batch + ")" : ""}`;
+    option.textContent = `${c.course_name}${c.level ? " — " + c.level : ""}${batchLabelFor(c.id, sectionBatchesByCourse)}`;
     option.dataset.courseName = c.course_name;
     select.appendChild(option);
   });
@@ -2064,11 +2131,13 @@ window.editingAssessmentId = null;
 async function loadCoursesForAssessmentForm() {
   const { data, error } = await db
     .from("courses")
-    .select("id, course_name, level, batch")
+    .select("id, course_name, level")
     .eq("deleted", false)
     .order("course_name");
 
   if (error) { console.error(error); return; }
+
+  const sectionBatchesByCourse = await fetchSectionBatchesByCourse(data.map(c => c.id));
 
   const select = document.getElementById("assessmentCourse");
   select.innerHTML = `<option value="">Select Course</option>`;
@@ -2076,7 +2145,7 @@ async function loadCoursesForAssessmentForm() {
   data.forEach(c => {
     const option = document.createElement("option");
     option.value = c.id; // course_id (uuid)
-    option.textContent = `${c.course_name}${c.level ? " — " + c.level : ""}${c.batch ? " (" + c.batch + ")" : ""}`;
+    option.textContent = `${c.course_name}${c.level ? " — " + c.level : ""}${batchLabelFor(c.id, sectionBatchesByCourse)}`;
     option.dataset.courseName = c.course_name;
     select.appendChild(option);
   });
@@ -2256,36 +2325,29 @@ function formatForInput(dateString) {
 /* -------------------------------------------------------
    COURSES
 ------------------------------------------------------- */
+// Loads staff (role = teacher) into window.teacherCache. Used to build the
+// instructor <select> inline in each course card when adding a section
+// (see loadCoursesAdmin() / addCourseSection()), rather than a single
+// static dropdown — a course can now have several instructor+batch
+// sections, so each course card gets its own "add section" row.
 async function loadTeachers() {
   const { data, error } = await db
     .from("profiles")
     .select("id, full_name")
-    .eq("role", "teacher");
+    .eq("role", "teacher")
+    .order("full_name");
 
   if (error) {
     console.error(error);
     return;
   }
 
-  const select = document.getElementById("courseInstructor");
-  select.innerHTML = `<option value="">Select Instructor</option>`;
-
-  data.forEach(teacher => {
-    const option = document.createElement("option");
-    option.value = teacher.id; // UUID
-    option.textContent = teacher.full_name;
-    select.appendChild(option);
-  });
+  window.teacherCache = data || [];
 }
 
 async function addCourse() {
   const name = document.getElementById("courseName").value.trim();
   const levels = Array.from(document.querySelectorAll(".courseLevelCheckbox:checked")).map(cb => cb.value);
-  const batch = document.getElementById("courseBatch").value.trim();
-  const instructorSelect = document.getElementById("courseInstructor");
-
-  const instructor_id = instructorSelect.value;
-  const instructor_name = instructorSelect.options[instructorSelect.selectedIndex]?.text;
 
   if (!name) {
     alert(t("Course name is required"));
@@ -2297,17 +2359,13 @@ async function addCourse() {
     return;
   }
 
-  if (!instructor_id) {
-    alert(t("Please select an instructor"));
-    return;
-  }
-
+  // Instructor + batch no longer live on the course itself — a course can
+  // have several teacher/batch sections, added from its card in the list
+  // below (see addCourseSection()). This form only creates the course
+  // shell: name + level(s).
   const payload = {
     course_name: name,
-    level: levels[0], // kept for backward-compat display; course_levels is the real source of truth now
-    batch: batch || null, // blank = open to every batch at these levels
-    instructor_id,
-    instructor: instructor_name // 👈 store name too
+    level: levels[0] // kept for backward-compat display; course_levels is the real source of truth now
   };
 
   let courseId = window.editingCourseId;
@@ -2356,8 +2414,6 @@ async function addCourse() {
 
   document.getElementById("courseName").value = "";
   document.querySelectorAll(".courseLevelCheckbox").forEach(cb => cb.checked = false);
-  document.getElementById("courseBatch").value = "";
-  document.getElementById("courseInstructor").value = "";
 
   const addBtn = document.querySelector("[onclick='addCourse()']");
   if (addBtn) addBtn.innerHTML = `<i class="fa-solid fa-plus"></i> <span data-translate="Add Course">${t("Add Course")}</span>`;
@@ -2393,23 +2449,64 @@ async function loadCoursesAdmin() {
     levelsByCourse[row.course_id].push(row.level);
   });
 
+  // Each course can now have several instructor+batch sections (e.g. two
+  // private teachers running the same course/level on different batches)
+  // instead of exactly one instructor/batch baked into the course row.
+  const { data: sectionRows, error: sectionErr } = await db
+    .from("course_sections")
+    .select("id, course_id, instructor_id, instructor, batch")
+    .order("created_at", { ascending: true });
+
+  if (sectionErr) console.error("Load course_sections error:", sectionErr);
+
+  const sectionsByCourse = {};
+  (sectionRows || []).forEach(row => {
+    if (!sectionsByCourse[row.course_id]) sectionsByCourse[row.course_id] = [];
+    sectionsByCourse[row.course_id].push(row);
+  });
+
+  const teacherOptions = (window.teacherCache || [])
+    .map(tc => `<option value="${tc.id}">${tc.full_name}</option>`)
+    .join("");
+
   container.innerHTML = data.map(course => {
     const levels = levelsByCourse[course.id] || (course.level ? [course.level] : []);
+    const sections = sectionsByCourse[course.id] || [];
+
+    const sectionsHtml = sections.length
+      ? sections.map(s => `
+        <div class="course-section-row">
+          <span>${(s.instructor || t("No instructor"))}${s.batch ? " — " + s.batch : " — " + t("all batches")}</span>
+          <button class="btn btn-delete btn-icon-only" onclick="deleteCourseSection('${s.id}', '${course.id}')" title="${t('Remove')}">🗑️</button>
+        </div>
+      `).join("")
+      : `<p class="course-section-empty">${t("No teachers/batches added yet")}</p>`;
+
     return `
     <div class="course-item">
       <div>
         <strong>${course.course_name}</strong>
         <span class="course-meta">
           ${levels.length ? `${t("Levels:")}: ${levels.join(", ")}` : ""}
-          ${levels.length && course.batch ? " · " : ""}
-          ${course.batch ? `${t("Batch:")}: ${course.batch}` : ""}
-          ${(levels.length || course.batch) && course.instructor ? " · " : ""}
-          ${course.instructor ? `${t("Instructor:")}: ${course.instructor}` : ""}
         </span>
+        <div class="course-sections-list">
+          ${sectionsHtml}
+        </div>
+        <div class="course-section-add">
+          <select id="sectionInstructor-${course.id}">
+            <option value="">${t("Select Instructor")}</option>
+            ${teacherOptions}
+          </select>
+          <input type="text" id="sectionBatch-${course.id}"
+                 placeholder="${t('Batch (e.g. June 2026) — leave blank for all batches')}">
+          <button class="btn btn-primary" onclick="addCourseSection('${course.id}')">
+            <i class="fa-solid fa-plus"></i> ${t("Add Teacher/Batch")}
+          </button>
+        </div>
       </div>
       <div class="course-item-actions">
         <button class="btn btn-edit"
-          onclick="editCourse('${course.id}', '${course.course_name.replace(/'/g, "\\'")}', '${(course.level || "").replace(/'/g, "\\'")}', '${(course.instructor || "").replace(/'/g, "\\'")}', '${(course.batch || "").replace(/'/g, "\\'")}')">
+          onclick="editCourse('${course.id}', '${course.course_name.replace(/'/g, "\\'")}', '${(course.level || "").replace(/'/g, "\\'")}')">
           ${t("Edit")}
         </button>
         <button class="btn btn-delete" onclick="deleteCourse('${course.id}')">
@@ -2422,6 +2519,54 @@ async function loadCoursesAdmin() {
     </div>
   `;
   }).join("");
+}
+
+// Adds one instructor+batch section to a course. A course can have as many
+// of these as needed — e.g. two private teachers on the same course/level
+// running different batches — without splitting the course itself.
+async function addCourseSection(courseId) {
+  const instructorSelect = document.getElementById(`sectionInstructor-${courseId}`);
+  const batchInput = document.getElementById(`sectionBatch-${courseId}`);
+
+  const instructor_id = instructorSelect?.value;
+  const instructor_name = instructorSelect?.options[instructorSelect.selectedIndex]?.text;
+  const batch = batchInput?.value.trim();
+
+  if (!instructor_id) {
+    alert(t("Please select an instructor"));
+    return;
+  }
+
+  const { error } = await db.from("course_sections").insert([{
+    course_id: courseId,
+    instructor_id,
+    instructor: instructor_name,
+    batch: batch || null // blank = open to every batch
+  }]);
+
+  if (error) {
+    console.error(error);
+    alert(t("Error adding teacher/batch"));
+    return;
+  }
+
+  showToast(t("Teacher/batch added ✅"));
+  loadCoursesAdmin();
+}
+
+async function deleteCourseSection(sectionId, courseId) {
+  if (!confirm(t("Remove this teacher/batch from the course?"))) return;
+
+  const { error } = await db.from("course_sections").delete().eq("id", sectionId);
+
+  if (error) {
+    console.error(error);
+    alert(t("Error removing teacher/batch"));
+    return;
+  }
+
+  showToast(t("Removed ✅"));
+  loadCoursesAdmin();
 }
 
 
@@ -3494,10 +3639,8 @@ async function refreshCertViews() {
    (Delete / Permanent Delete now handled by the generic
    softDelete()/permanentDelete() helpers — see DELETE ACTIONS section)
 ------------------------------------------------------- */
-async function editCourse(id, currentName, currentLevel, currentInstructor, currentBatch) {
+async function editCourse(id, currentName, currentLevel) {
   document.getElementById("courseName").value = currentName;
-  document.getElementById("courseBatch").value = currentBatch || "";
-  document.getElementById("courseInstructor").value = currentInstructor;
 
   document.querySelectorAll(".courseLevelCheckbox").forEach(cb => cb.checked = false);
 
@@ -4694,9 +4837,192 @@ async function revokeAssessmentAccess(id) {
 
     showToast(t("Removed"));
     loadAssessmentAccessList();
+    // Keep the central "All Access Grants" list in sync if it's open too
+    if (typeof loadAllAccessGrants === "function" && document.getElementById("allAccessGrantsModal")?.classList.contains("show")) {
+      loadAllAccessGrants();
+    }
   } catch (e) {
     console.error("revokeAssessmentAccess error:", e);
     alert(t("Failed to remove student"));
+  }
+}
+
+/* -------------------------------------------------------
+   CENTRAL "ALL ACCESS GRANTS" VIEW
+   (assessment_access_overrides) — every per-assessment
+   restriction across every assessment, in one place, with
+   search, select-all, bulk revoke, and revoke-everything.
+   Avoids having to open each assessment's Access modal one
+   by one to remove students.
+------------------------------------------------------- */
+let allAccessGrantsCache = [];
+let selectedAccessGrantIds = new Set();
+
+async function openAllAccessGrantsModal() {
+  const searchInput = document.getElementById("accessGrantsSearch");
+  if (searchInput) searchInput.value = "";
+  selectedAccessGrantIds.clear();
+  openModal("allAccessGrantsModal");
+  loadAllAccessGrants();
+}
+
+async function loadAllAccessGrants() {
+  const tbody = document.getElementById("access-grants-body");
+  if (!tbody) return;
+
+  tbody.innerHTML = `<tr><td colspan="5" class="empty-row">
+    <i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading...")}
+  </td></tr>`;
+
+  try {
+    const { data: rows, error } = await db
+      .from("assessment_access_overrides")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    const students = await loadStudentsCache();
+    const nameMap = {};
+    (students || []).forEach(s => { nameMap[s.matric_number] = s.fullname; });
+
+    const assessmentMap = {};
+    (window.assessmentsRowCache || []).forEach(a => { assessmentMap[a.id] = a; });
+
+    allAccessGrantsCache = (rows || []).map(r => ({
+      ...r,
+      studentName: nameMap[r.matric_number] || "—",
+      assessmentTitle: assessmentMap[r.assessment_id]?.title || t("Deleted assessment"),
+      assessmentCourse: assessmentMap[r.assessment_id]?.course || "—"
+    }));
+
+    // Drop any stale selections from a previous load
+    const liveIds = new Set(allAccessGrantsCache.map(r => r.id));
+    selectedAccessGrantIds.forEach(id => { if (!liveIds.has(id)) selectedAccessGrantIds.delete(id); });
+
+    renderAccessGrants();
+  } catch (e) {
+    console.error("loadAllAccessGrants error:", e);
+    tbody.innerHTML = `<tr><td colspan="5" class="empty-row" style="color:red;">${t("Failed to load list.")}</td></tr>`;
+  }
+}
+
+function getFilteredAccessGrants() {
+  const searchVal = (document.getElementById("accessGrantsSearch")?.value || "").trim().toLowerCase();
+  if (!searchVal) return allAccessGrantsCache;
+  return allAccessGrantsCache.filter(r =>
+    (r.matric_number || "").toLowerCase().includes(searchVal) ||
+    (r.studentName || "").toLowerCase().includes(searchVal) ||
+    (r.assessmentTitle || "").toLowerCase().includes(searchVal)
+  );
+}
+
+function renderAccessGrants() {
+  const tbody = document.getElementById("access-grants-body");
+  if (!tbody) return;
+  const filtered = getFilteredAccessGrants();
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" class="empty-row" data-translate="No access grants found">${t("No access grants found")}</td></tr>`;
+    const selectAll = document.getElementById("selectAllAccessGrants");
+    if (selectAll) selectAll.checked = false;
+    updateAccessGrantsButtons(filtered.length);
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(r => `
+    <tr>
+      <td>
+        <input type="checkbox" class="access-grant-checkbox" value="${r.id}"
+          ${selectedAccessGrantIds.has(r.id) ? "checked" : ""}
+          onchange="toggleAccessGrantSelection('${r.id}', this.checked)">
+      </td>
+      <td>${escapeForAttr(r.studentName)}<br><span style="color:#888;font-size:12px;">${escapeForAttr(r.matric_number)}</span></td>
+      <td>${escapeForAttr(r.assessmentTitle)}<br><span style="color:#888;font-size:12px;">${escapeForAttr(r.assessmentCourse)}</span></td>
+      <td>${formatDate(r.created_at)}</td>
+      <td>
+        <button class="btn btn-delete btn-small" onclick="revokeAccessGrant('${r.id}')">${t("Revoke")}</button>
+      </td>
+    </tr>
+  `).join("");
+
+  const selectAll = document.getElementById("selectAllAccessGrants");
+  if (selectAll) selectAll.checked = filtered.every(r => selectedAccessGrantIds.has(r.id));
+
+  updateAccessGrantsButtons(filtered.length);
+}
+
+function updateAccessGrantsButtons(filteredCount) {
+  const revokeAllBtn = document.getElementById("revokeAllAccessGrantsBtn");
+  const revokeSelectedBtn = document.getElementById("revokeSelectedAccessGrantsBtn");
+
+  if (revokeAllBtn) {
+    revokeAllBtn.querySelector(".count-label").textContent = filteredCount ? `(${filteredCount})` : "";
+    revokeAllBtn.disabled = filteredCount === 0;
+  }
+  if (revokeSelectedBtn) {
+    revokeSelectedBtn.querySelector(".count-label").textContent = selectedAccessGrantIds.size ? `(${selectedAccessGrantIds.size})` : "";
+    revokeSelectedBtn.disabled = selectedAccessGrantIds.size === 0;
+  }
+}
+
+function toggleAccessGrantSelection(id, checked) {
+  if (checked) selectedAccessGrantIds.add(id);
+  else selectedAccessGrantIds.delete(id);
+  updateAccessGrantsButtons(getFilteredAccessGrants().length);
+}
+
+function toggleSelectAllAccessGrants(checked) {
+  getFilteredAccessGrants().forEach(r => {
+    if (checked) selectedAccessGrantIds.add(r.id);
+    else selectedAccessGrantIds.delete(r.id);
+  });
+  renderAccessGrants();
+}
+
+async function revokeAccessGrant(id) {
+  if (!confirm(t("Remove this student from the list?"))) return;
+  await deleteAccessGrantRows([id]);
+}
+
+async function revokeSelectedAccessGrants() {
+  const ids = Array.from(selectedAccessGrantIds);
+  if (!ids.length) return;
+  if (!confirm(t(`Revoke access for ${ids.length} selected student(s)?`))) return;
+  await deleteAccessGrantRows(ids);
+}
+
+async function revokeAllAccessGrants() {
+  const filtered = getFilteredAccessGrants();
+  if (!filtered.length) return;
+  const searchVal = document.getElementById("accessGrantsSearch")?.value?.trim();
+  const confirmMsg = searchVal
+    ? t(`Revoke ALL ${filtered.length} access grant(s) matching "${searchVal}"? This cannot be undone.`)
+    : t(`Revoke ALL ${filtered.length} access grant(s) across every assessment? This cannot be undone.`);
+  if (!confirm(confirmMsg)) return;
+  await deleteAccessGrantRows(filtered.map(r => r.id));
+}
+
+async function deleteAccessGrantRows(ids) {
+  try {
+    const { error } = await db
+      .from("assessment_access_overrides")
+      .delete()
+      .in("id", ids);
+
+    if (error) throw error;
+
+    ids.forEach(id => selectedAccessGrantIds.delete(id));
+    showToast(t(`Revoked ${ids.length} access grant(s)`));
+    loadAllAccessGrants();
+
+    // Keep the per-assessment modal in sync if it's the one open
+    if (currentAssessmentAccessId && typeof loadAssessmentAccessList === "function") {
+      loadAssessmentAccessList();
+    }
+  } catch (e) {
+    console.error("deleteAccessGrantRows error:", e);
+    alert(t("Failed to revoke access"));
   }
 }
 

@@ -609,8 +609,8 @@ const DICT = {
 "Pay Now": "ادفع الآن",
 "Remind Me Later": "ذكرني لاحقًا",
 
-"You have an outstanding payment of ₦{amount} for {months}. Please complete your payment.": 
-"لديك دفعة مستحقة بقيمة ₦{amount} لشهور {months}. يرجى إكمال الدفع.",
+"You have an outstanding payment of {amount} for {months}. Please complete your payment.": 
+"لديك دفعة مستحقة بقيمة {amount} لشهور {months}. يرجى إكمال الدفع.",
 
 "Register Courses": "تسجيل المواد",
 "My Courses": "موادي",
@@ -3589,6 +3589,15 @@ NEW FILES START HERE
 "Plan": "الخطة",
 "Amount Due": "المبلغ المستحق",
 
+"Access Grants": "منح الوصول",
+"All Access Grants": "جميع منح الوصول",
+"Every student currently on an assessment's restricted access list, across every assessment. Revoke one, revoke a selection, or revoke everything at once.": "كل طالب مدرَج حاليًا في قائمة الوصول المقيّد لأي تقييم، عبر جميع التقييمات. يمكنك إلغاء وصول طالب واحد، أو مجموعة مختارة، أو إلغاء الجميع دفعة واحدة.",
+"Revoke Selected": "إلغاء المحدد",
+"Revoke All": "إلغاء الكل",
+"No access grants found": "لا توجد منح وصول",
+"Deleted assessment": "تقييم محذوف",
+"🔍 Search by student or assessment...": "🔍 ابحث عن طالب أو تقييم...",
+
 // ===== DYNAMIC TEMPLATES ===== 
 
 en: {
@@ -3598,8 +3607,8 @@ en: {
   SESSION_EXPIRED: "Session expired",
   NO_ACTIVE_ASSESSMENT: "No active assessment",
 
-  PAYMENT_RECORDED: "Payment of ₦{amount} for {month} has been recorded",
-  PAYMENT_CONFIRMED: "Your payment of ₦{amount} for {month} has been confirmed",
+  PAYMENT_RECORDED: "Payment of {amount} for {month} has been recorded",
+  PAYMENT_CONFIRMED: "Your payment of {amount} for {month} has been confirmed",
   GRADE_RELEASED: "Your grade for {course} has been released",
   CLASS_SCHEDULED: "Your {course} class is scheduled on {date} at {time}",
 
@@ -3728,8 +3737,8 @@ ar: {
   SESSION_EXPIRED: "انتهت الجلسة",
   NO_ACTIVE_ASSESSMENT: "لا يوجد اختبار نشط حالياً",
 
-  PAYMENT_RECORDED: "تم تسجيل دفعة قدرها ₦{amount} لشهر {month}.",
-  PAYMENT_CONFIRMED: "تم تأكيد دفعتك بقيمة ₦{amount} لشهر {month}.",
+  PAYMENT_RECORDED: "تم تسجيل دفعة قدرها {amount} لشهر {month}.",
+  PAYMENT_CONFIRMED: "تم تأكيد دفعتك بقيمة {amount} لشهر {month}.",
   GRADE_RELEASED: "تم نشر درجتك لمادة {course}.",
   CLASS_SCHEDULED: "تم تحديد حصة {course} بتاريخ {date} الساعة {time}.",
 

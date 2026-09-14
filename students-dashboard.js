@@ -40,7 +40,7 @@ const matric = sessionStorage.getItem("matric");
 
 // Shared currency formatting — mirrors the admin dashboard's helper so
 // amounts read as "$59" / "₦25,000", never a raw number with no symbol.
-const CURRENCY_SYMBOLS = { NGN: "₦", USD: "$", EUR: "€", GBP: "£" };
+const CURRENCY_SYMBOLS = { NGN: "₦", USD: "$", EUR: "€", GBP: "£", GHS: "GH₵", SLE: "Le " };
 
 function formatMoney(amount, currency) {
   const symbol = CURRENCY_SYMBOLS[currency] || currency || "₦";
@@ -50,14 +50,17 @@ function formatMoney(amount, currency) {
 // Groups rows by currency and formats each total — a student should
 // almost always be in one currency, but this stays correct even if a
 // record was entered in a different one than usual.
-function formatGroupedTotals(rows, amountKey) {
+// `defaultCurrency` is used when a row has no `currency` set (e.g. older
+// records saved before currency tracking existed) — pass the student's
+// own currency_due here so it never silently assumes NGN for everyone.
+function formatGroupedTotals(rows, amountKey, defaultCurrency = "NGN") {
   const totals = {};
   (rows || []).forEach(r => {
-    const cur = r.currency || "NGN";
+    const cur = r.currency || defaultCurrency;
     totals[cur] = (totals[cur] || 0) + Number(r[amountKey] || 0);
   });
   const parts = Object.keys(totals).map(cur => formatMoney(totals[cur], cur));
-  return parts.length ? parts.join(" + ") : formatMoney(0, "NGN");
+  return parts.length ? parts.join(" + ") : formatMoney(0, defaultCurrency);
 }
 
 // ===========================
@@ -126,12 +129,16 @@ async function loadStats(matric, container) {
     // ===========================
     const { data: student } = await sb
       .from("students")
-      .select("level_arabic, batch")
+      .select("level_arabic, batch, currency_due")
       .eq("matric_number", matric)
       .single();
 
     const level = student?.level_arabic || t("Not assigned");
     const batch = student?.batch || t("Not assigned");
+    // Falls back to the student's own registered currency (set at
+    // registration / admin backfill) rather than assuming Naira for
+    // payment/fee rows that don't carry their own currency.
+    const defaultCurrency = student?.currency_due || "NGN";
 
     // ===========================
     // Current Month Name
@@ -153,7 +160,7 @@ async function loadStats(matric, container) {
     // ===========================
     // Monthly Total (grouped by currency — correct even if mixed)
     // ===========================
-    const monthlyTotalDisplay = formatGroupedTotals(monthlyPayments, "amount");
+    const monthlyTotalDisplay = formatGroupedTotals(monthlyPayments, "amount", defaultCurrency);
 
     // ===========================
     // Payment Status
@@ -211,7 +218,7 @@ const { data: outstanding } = await sb
 const uniqueMonths = [...new Set((outstanding || []).map(o => o.month))];
 
 const hasOutstanding = (outstanding || []).length > 0;
-const outstandingDisplay = formatGroupedTotals(outstanding, "amount_due");
+const outstandingDisplay = formatGroupedTotals(outstanding, "amount_due", defaultCurrency);
 
 const outstandingMonths = uniqueMonths.join(", ");
 
@@ -396,7 +403,21 @@ function toggleNotifications() {
 function renderMessage(message) {
   try {
     const parsed = JSON.parse(message);
-    return tmpl(parsed.key, parsed.data);
+    const data = { ...parsed.data };
+
+    // Money-bearing notifications (e.g. PAYMENT_RECORDED) carry a raw amount
+    // + currency; format it here with the correct symbol rather than
+    // trusting the stored string to already have one. Handles old records
+    // (amount stored as a comma-formatted string, no currency) by stripping
+    // commas and falling back to NGN only when currency truly wasn't saved.
+    if (data.amount !== undefined) {
+      const rawAmount = typeof data.amount === "string"
+        ? data.amount.replace(/,/g, "")
+        : data.amount;
+      data.amount = formatMoney(rawAmount, data.currency || "NGN");
+    }
+
+    return tmpl(parsed.key, data);
   } catch {
     return message;
   }

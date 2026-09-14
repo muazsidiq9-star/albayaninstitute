@@ -98,20 +98,76 @@ function switchTab(tab) {
 // ===========================
 // LOAD MY COURSES
 // ===========================
+// A teacher's courses now live in course_sections (course_id,
+// instructor_id, batch) — a course can have several teacher+batch
+// sections, not one instructor baked into the courses row. Levels
+// similarly live in course_levels (a course can hold several), with
+// courses.level kept only as a legacy fallback for older rows. This
+// mirrors loadCoursesAdmin()/addCourseSection() in the admin dashboard.
 async function loadMyCourses(teacherId) {
   const container = document.getElementById("coursesList");
 
-  const { data: courses, error: coursesError } = await db
+  const { data: sections, error: sectionsError } = await db
+    .from("course_sections")
+    .select("course_id, batch")
+    .eq("instructor_id", teacherId);
+
+  if (sectionsError) {
+    container.innerHTML = `<p style='color:red'>${t("Failed to load courses.")}</p>`;
+    return;
+  }
+
+  if (!sections || sections.length === 0) {
+    container.innerHTML = `<p class='empty-state'>${t("No courses assigned to you yet.")}</p>`;
+    document.getElementById("totalCourses").textContent = 0;
+    document.getElementById("totalStudents").textContent = 0;
+    return;
+  }
+
+  // A blank/null batch on a section means "all batches" for that course.
+  const batchesByCourse = {};
+  sections.forEach(s => {
+    if (!batchesByCourse[s.course_id]) batchesByCourse[s.course_id] = { all: false, set: new Set() };
+    if (s.batch) batchesByCourse[s.course_id].set.add(s.batch);
+    else batchesByCourse[s.course_id].all = true;
+  });
+
+  const courseIds = Object.keys(batchesByCourse);
+
+  const { data: courseRows, error: coursesError } = await db
     .from("courses")
     .select("id, course_name, level")
-    .eq("instructor_id", teacherId);
+    .in("id", courseIds)
+    .eq("deleted", false);
 
   if (coursesError) {
     container.innerHTML = `<p style='color:red'>${t("Failed to load courses.")}</p>`;
     return;
   }
 
-  if (!courses || courses.length === 0) {
+  const { data: levelRows } = await db
+    .from("course_levels")
+    .select("course_id, level")
+    .in("course_id", courseIds);
+
+  const levelsByCourse = {};
+  (levelRows || []).forEach(row => {
+    if (!levelsByCourse[row.course_id]) levelsByCourse[row.course_id] = [];
+    levelsByCourse[row.course_id].push(row.level);
+  });
+
+  // level here stays a single string (joined if multiple) since the
+  // rest of this file — grade/schedule/attendance forms — reads
+  // course.level as one value.
+  const courses = (courseRows || []).map(c => ({
+    id: c.id,
+    course_name: c.course_name,
+    level: (levelsByCourse[c.id] && levelsByCourse[c.id].length)
+      ? levelsByCourse[c.id].join(", ")
+      : (c.level || "")
+  }));
+
+  if (courses.length === 0) {
     container.innerHTML = `<p class='empty-state'>${t("No courses assigned to you yet.")}</p>`;
     document.getElementById("totalCourses").textContent = 0;
     document.getElementById("totalStudents").textContent = 0;
@@ -133,7 +189,28 @@ async function loadMyCourses(teacherId) {
 
     if (regError) continue;
 
-    const matricNumbers = (registrations || []).map(r => r.matric_number);
+    const registeredMatrics = (registrations || []).map(r => r.matric_number);
+    const courseBatches = batchesByCourse[course.id];
+
+    let students = [];
+
+    if (registeredMatrics.length > 0) {
+      const { data: studentRows, error: studentsError } = await db
+        .from("students")
+        .select("matric_number, fullname, email, level_arabic, batch, country, status")
+        .in("matric_number", registeredMatrics)
+        .eq("deleted", false);
+
+      if (!studentsError) {
+        // Only the batch(es) this teacher's section(s) actually cover —
+        // other sections on the same course may belong to other teachers.
+        students = courseBatches.all
+          ? (studentRows || [])
+          : (studentRows || []).filter(s => courseBatches.set.has(s.batch));
+      }
+    }
+
+    const matricNumbers = students.map(s => s.matric_number);
 
     // Collect all matrics for grade form
     matricNumbers.forEach(m => {
@@ -144,48 +221,34 @@ async function loadMyCourses(teacherId) {
 
     let studentsHTML = "";
 
-    if (matricNumbers.length === 0) {
+    if (students.length === 0) {
       studentsHTML = `<tr>
         <td colspan="7" class="empty-state">${t("No students enrolled yet")}</td>
       </tr>`;
     } else {
-      const { data: students, error: studentsError } = await db
-        .from("students")
-        .select("matric_number, fullname, email, level_arabic, batch, country, status")
-        .in("matric_number", matricNumbers)
-        .eq("deleted", false);
+      grandTotalStudents += students.length;
 
-      if (studentsError) {
-        studentsHTML = `<tr>
-          <td colspan="7" class="empty-state" style="color:red;">
-            ${t("Failed to load courses.")}
+      // Collect batches for filter
+      students.forEach(s => {
+        if (s.batch) allBatches.add(s.batch);
+      });
+
+      studentsHTML = students.map(s => `
+        <tr class="student-row" data-batch="${s.batch || ''}">
+          <td>${s.matric_number}</td>
+          <td>${s.fullname}</td>
+          <td>${s.email}</td>
+          <td>${s.country || "—"}</td>
+          <td>${s.level_arabic || "—"}</td>
+          <td>${s.batch || "—"}</td>
+          <td>
+            <span class="status-badge
+              ${s.status === 'active' ? 'badge-active' : 'badge-inactive'}">
+              ${t(s.status)}
+            </span>
           </td>
-        </tr>`;
-      } else {
-        grandTotalStudents += (students || []).length;
-        
-        // Collect batches for filter
-        (students || []).forEach(s => {
-          if (s.batch) allBatches.add(s.batch);
-        });
-
-        studentsHTML = (students || []).map(s => `
-          <tr class="student-row" data-batch="${s.batch || ''}">
-            <td>${s.matric_number}</td>
-            <td>${s.fullname}</td>
-            <td>${s.email}</td>
-            <td>${s.country || "—"}</td>
-            <td>${s.level_arabic || "—"}</td>
-            <td>${s.batch || "—"}</td>
-            <td>
-              <span class="status-badge
-                ${s.status === 'active' ? 'badge-active' : 'badge-inactive'}">
-                ${t(s.status)}
-              </span>
-            </td>
-          </tr>
-        `).join("");
-      }
+        </tr>
+      `).join("");
     }
 
     allHTML += `
@@ -193,7 +256,7 @@ async function loadMyCourses(teacherId) {
         <div class="course-block-header">
           <h3>📖 ${course.course_name}</h3>
           <span class="level-badge">${course.level || "—"}</span>
-          <span class="student-count">${matricNumbers.length} ${t("student(s)")}</span>
+          <span class="student-count">${students.length} ${t("student(s)")}</span>
         </div>
         <div class="table-container">
           <table class="staff-table">
@@ -922,105 +985,8 @@ function handleAvatarChange(event) {
   teacherData.pendingPhotoFile = file;
 }
 
-async function saveProfile() {
-  const newName = document.getElementById("profileName")?.value.trim();
-  if (!newName) {
-    alert(t("Name cannot be empty."));
-    return;
-  }
-
-  const btn = document.querySelector("[onclick='saveProfile()']");
-  if (btn) { btn.disabled = true; btn.textContent = t("Saving..."); }
-
-  try {
-    let passport_url = teacherData.passport_url || null;
-
-    // ===========================
-    // 1. DELETE OLD PASSPORT FIRST (OPTION 3)
-    // ===========================
-    if (teacherData.pendingPhotoFile && teacherData.passport_url) {
-
-      try {
-        const oldPath = teacherData.passport_url.split("/passports/")[1];
-
-        if (oldPath) {
-          const { error: deleteError } = await db.storage
-            .from("passports")
-            .remove([oldPath]);
-
-          if (deleteError) {
-            console.warn("Old passport delete failed:", deleteError.message);
-          }
-        }
-      } catch (e) {
-        console.warn("Passport cleanup error:", e);
-      }
-    }
-
-    // ===========================
-    // 2. UPLOAD NEW PASSPORT
-    // ===========================
-    if (teacherData.pendingPhotoFile) {
-      const file = teacherData.pendingPhotoFile;
-      const fileExt = file.name.split(".").pop();
-      const fileName = `staff_${teacherData.id}_${Date.now()}.${fileExt}`;
-
-      const { error: uploadError } = await db.storage
-        .from("passports")
-        .upload(fileName, file, {
-          cacheControl: "3600",
-          upsert: false
-        });
-
-      if (uploadError) throw uploadError;
-
-      const { data: publicData } = db.storage
-        .from("passports")
-        .getPublicUrl(fileName);
-
-      passport_url = publicData.publicUrl;
-
-      teacherData.passport_url = passport_url;
-      teacherData.pendingPhotoFile = null;
-    }
-
-    // ===========================
-    // 3. UPDATE PROFILE TABLE
-    // ===========================
-    const { data, error } = await db
-      .from("profiles")
-      .update({
-        full_name: newName,
-        ...(passport_url ? { passport_url } : {})
-      })
-      .eq("id", teacherData.id)
-      .select();
-
-    console.log("UPDATED PROFILE:", data);
-
-    if (error) throw error;
-
-    teacherData.name = newName;
-    sessionStorage.setItem("full_name", newName);
-
-    const greetingEl = document.getElementById("staffGreeting");
-    if (greetingEl) greetingEl.textContent = `${t("Welcome")}, ${newName} 👋`;
-
-    if (passport_url) {
-      showAvatarImage(passport_url);
-    } else {
-      showAvatarInitial(newName);
-    }
-
-    showToast(t("Profile saved ✅"));
-
-  } catch (err) {
-    console.error("Save profile error:", err);
-    alert(t("Failed to save profile.") + " " + (err.message || ""));
-  } finally {
-    if (btn) { btn.disabled = false; btn.textContent = t("Save Profile"); }
-  }
-}
+// (duplicate saveProfile() removed — the version above, which also
+// saves the phone field, is the one now in effect)
 
 // ===========================
 // CHANGE PASSWORD
