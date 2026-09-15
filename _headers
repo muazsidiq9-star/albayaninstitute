@@ -9,15 +9,27 @@
 # Points don't) that clearing site data or logging out "fixes" —
 # because both force a fresh fetch of everything.
 #
-# max-age=0, must-revalidate tells the browser: always check with
-# the server before using your cached copy. If the file hasn't
-# changed, the server replies 304 and the browser reuses what it has
-# (fast, no re-download). If it HAS changed, the browser gets the
-# new version immediately — no manual cache-busting query strings to
-# remember on every deploy.
+# IMPORTANT: HTML pages use `no-store`, NOT `must-revalidate`.
+# `must-revalidate` only governs the normal HTTP cache — it does
+# NOT reliably stop Chrome's back/forward cache (bfcache) from
+# restoring a full in-memory snapshot of the page (JS state and
+# all) without ever re-contacting the server. This is exactly what
+# was still happening on mobile after the first version of this
+# file: backgrounding the browser and returning to it, or using
+# back/forward navigation, restored an old in-memory copy of
+# quiz.html/quizzes.html instead of reloading — desktop testing
+# rarely hits this path since full refreshes are more common there.
+# `no-store` is the strongest signal to make Chrome do a real fresh
+# load every time, on any device, for any navigation type.
+#
+# JS/CSS files stay on `must-revalidate` — that part was never the
+# problem (bfcache concerns the page document itself, not its
+# subresources), and `must-revalidate` still lets the browser skip
+# a full re-download when the file genuinely hasn't changed (via a
+# 304 Not Modified), which `no-store` would prevent.
 
 /*.html
-  Cache-Control: public, max-age=0, must-revalidate
+  Cache-Control: no-store
 
 /*.js
   Cache-Control: public, max-age=0, must-revalidate

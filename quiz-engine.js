@@ -1868,7 +1868,79 @@ setStars(stars);
 renderWelcome();
 showScreen("screen-welcome");
 renderChallengeBanner();
+renderDebugOverlay();
 }
+
+  /* ================= DEBUG OVERLAY ================= *
+   * Visit any quiz page with ?debug=1 added to the URL to see this.
+   * Shows session/identity state and a live Supabase test query
+   * directly on screen — for diagnosing mobile issues where DevTools
+   * isn't available. Screenshot it and send it over. Safe to leave
+   * in permanently: normal visits (no ?debug=1) never show it and
+   * it does nothing unless that param is present. */
+  function renderDebugOverlay() {
+    if (params.get("debug") !== "1") return;
+
+    const box = document.createElement("div");
+    box.style.cssText =
+      "position:fixed;top:0;left:0;right:0;z-index:999999;background:#000;color:#0f0;" +
+      "font:11px/1.5 monospace;padding:10px;max-height:55vh;overflow:auto;white-space:pre-wrap;" +
+      "border-bottom:2px solid #0f0;";
+    document.body.appendChild(box);
+
+    const log = (msg) => { box.textContent += msg + "\n"; };
+
+    log("=== QUIZ DEBUG (" + new Date().toISOString() + ") ===");
+    log("URL: " + window.location.href);
+    log("");
+    log("sessionStorage.role: " + sessionStorage.getItem("role"));
+    log("sessionStorage.matric: " + sessionStorage.getItem("matric"));
+    log("isStudentLoggedIn (computed at script load): " + isStudentLoggedIn);
+    log("");
+    log("state.matric: " + state.matric);
+    log("state.player: " + state.player);
+    log("");
+
+    let lsSummary = "none found";
+    try {
+      const raw = localStorage.getItem("studentSession");
+      if (raw) {
+        const s = JSON.parse(raw);
+        lsSummary =
+          "matric=" + s.matric +
+          ", expiresAt=" + (s.expiresAt ? new Date(s.expiresAt).toISOString() : "none") +
+          ", expired=" + (s.expiresAt ? Date.now() > s.expiresAt : "n/a") +
+          ", currentStudent type=" + typeof s.currentStudent;
+      }
+    } catch (e) {
+      lsSummary = "PARSE ERROR: " + e.message;
+    }
+    log("localStorage.studentSession: " + lsSummary);
+    log("");
+
+    const sb = getSupabase();
+    log("Supabase client: " + (sb ? "initialized OK" : "NULL — client failed to initialize"));
+
+    if (sb && state.matric) {
+      log("Running test query against quiz_players for matric=" + state.matric + " ...");
+      sb.from("quiz_players")
+        .select("matric_number, total_xp, star_points, updated_at")
+        .eq("matric_number", state.matric)
+        .maybeSingle()
+        .then(({ data, error }) => {
+          log("");
+          log("TEST QUERY RESULT:");
+          log("  data: " + JSON.stringify(data));
+          log("  error: " + JSON.stringify(error));
+        })
+        .catch((err) => {
+          log("");
+          log("TEST QUERY THREW: " + (err && err.message ? err.message : err));
+        });
+    } else {
+      log("Skipped test query — " + (!sb ? "no Supabase client" : "no matric available"));
+    }
+  }
 
   // First unlocked stage without a recorded best score — the natural
   // "next up" spot, not necessarily the literal last-attempted stage.
