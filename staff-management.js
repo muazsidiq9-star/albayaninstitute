@@ -4,6 +4,7 @@
 const db = window.supabaseClient;
 
 let currentStaffId = null;       // for view/edit modal
+let currentStaffSalaryCurrency = "NGN"; // for defaulting the payment modal's currency
 let editingPaymentId = null;     // for payment edit
 
 // ===========================
@@ -219,7 +220,7 @@ function formatMonthName(num) {
 }
 
 function formatCurrency(amount, currency) {
-  const symbols = { NGN: "₦", USD: "$", EUR: "€", GBP: "£" };
+  const symbols = { NGN: "₦", USD: "$", EUR: "€", GBP: "£", GHS: "GH₵", SLE: "Le " };
   const sym = symbols[currency] || currency || "₦";
   return `${sym}${Number(amount || 0).toLocaleString()}`;
 }
@@ -253,16 +254,25 @@ async function loadStaffStats() {
   try {
     const { data: allStaff } = await db
       .from("profiles")
-      .select("status, monthly_salary")
+      .select("status, monthly_salary, salary_currency")
       .not("role", "is", null);
 
     if (!allStaff) return;
 
     const total = allStaff.length;
     const active = allStaff.filter(s => s.status === "active").length;
-    const payroll = allStaff
-      .filter(s => s.status === "active")
-      .reduce((sum, s) => sum + Number(s.monthly_salary || 0), 0);
+
+    // Group payroll by currency instead of summing raw numbers regardless
+    // of currency — a $50 salary and a ₦50,000 salary are not the same 50.
+    const activeStaff = allStaff.filter(s => s.status === "active");
+    const payrollByCurrency = {};
+    activeStaff.forEach(s => {
+      const cur = s.salary_currency || "NGN";
+      payrollByCurrency[cur] = (payrollByCurrency[cur] || 0) + Number(s.monthly_salary || 0);
+    });
+    const payrollDisplay = Object.keys(payrollByCurrency).length
+      ? Object.keys(payrollByCurrency).map(cur => formatCurrency(payrollByCurrency[cur], cur)).join(" + ")
+      : formatCurrency(0, "NGN");
 
     const totalEl = document.getElementById("totalStaff");
     const activeEl = document.getElementById("activeStaff");
@@ -270,7 +280,7 @@ async function loadStaffStats() {
 
     if (totalEl) totalEl.textContent = total;
     if (activeEl) activeEl.textContent = active;
-    if (payrollEl) payrollEl.textContent = "₦" + payroll.toLocaleString();
+    if (payrollEl) payrollEl.textContent = payrollDisplay;
   } catch (e) {
     console.error("Stats error:", e);
   }
@@ -293,7 +303,7 @@ async function loadStaff() {
     // Registered staff (already have a profiles row)
     const { data: profilesData, error: profilesError } = await db
       .from("profiles")
-      .select("id, full_name, role, staff_type, status, monthly_salary, passport_url, email, phone, date_joined, department")
+      .select("id, full_name, role, staff_type, status, monthly_salary, salary_currency, passport_url, email, phone, date_joined, department")
       .not("role", "is", null)
       .order("full_name", { ascending: true });
 
@@ -302,7 +312,7 @@ async function loadStaff() {
     // Pending invites (not yet registered)
     const { data: invitesData, error: invitesError } = await db
       .from("staff_invites")
-      .select("id, full_name, role, staff_type, status, monthly_salary, passport_url, email, phone, date_joined, department, registered, registered_at")
+      .select("id, full_name, role, staff_type, status, monthly_salary, salary_currency, passport_url, email, phone, date_joined, department, registered, registered_at")
       .eq("registered", false)
       .order("full_name", { ascending: true });
 
@@ -364,7 +374,7 @@ function renderStaffTable(data) {
 
     // Pay action: only for registered profiles
     const payAction = (!isPending && canPay)
-      ? `<button class="btn btn-pay pay-only" onclick="openPaymentModalForStaff('${s.id}', '${(s.full_name || "").replace(/'/g, "\\'")}')">
+      ? `<button class="btn btn-pay pay-only" onclick="openPaymentModalForStaff('${s.id}', '${(s.full_name || "").replace(/'/g, "\\'")}', '${s.salary_currency || "NGN"}')">
            <i class="fa-solid fa-money-bill"></i> ${t("Pay")}
          </button>`
       : "—";
@@ -402,7 +412,7 @@ function renderStaffTable(data) {
       <td>${s.email || "—"}</td>
       <td>${s.phone || "—"}</td>
       <td>${s.date_joined || "—"}</td>
-      <td>₦${Number(s.monthly_salary || 0).toLocaleString()}</td>
+      <td>${formatCurrency(s.monthly_salary, s.salary_currency)}</td>
       <td><span class="badge ${statusBadge}">${t(s.status || "active")}</span></td>
       <td>${regBadge}</td>
       <td>${viewAction}</td>
@@ -480,6 +490,7 @@ async function saveStaff() {
     const department = document.getElementById("staffDepartment")?.value;
     const date_joined = document.getElementById("staffDateJoined")?.value;
     const monthly_salary = document.getElementById("staffSalary")?.value;
+    const salary_currency = document.getElementById("staffSalaryCurrency")?.value || "NGN";
     const status = document.getElementById("staffStatus")?.value;
     const passportFile = document.getElementById("staffPassport")?.files[0];
 
@@ -532,6 +543,7 @@ async function saveStaff() {
   department,
   date_joined: date_joined || null,
   monthly_salary: monthly_salary ? Number(monthly_salary) : null,
+  salary_currency,
   status: status || "active",
   registered: false,
   ...(passport_url ? { passport_url, passport_path } : {})
@@ -558,6 +570,8 @@ function resetStaffModal() {
     const el = document.getElementById(id);
     if (el) el.value = "";
   });
+  const salaryCurrencyEl = document.getElementById("staffSalaryCurrency");
+  if (salaryCurrencyEl) salaryCurrencyEl.value = "NGN";
   ["staffRole","staffType","staffDepartment","staffStatus"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = el.id === "staffStatus" ? "active" : "";
@@ -651,6 +665,8 @@ async function openViewStaffModal(staffId) {
     return;
   }
 
+  currentStaffSalaryCurrency = s.salary_currency || "NGN";
+
   // Photo
   const photoEl = document.getElementById("viewStaffPhoto");
   if (photoEl) photoEl.src = s.passport_url || "passport-placeholder.png";
@@ -684,12 +700,14 @@ async function openViewStaffModal(staffId) {
   document.getElementById("viewStaffDepartment").value = s.department || "";
   document.getElementById("viewStaffDateJoined").value = s.date_joined || "";
   document.getElementById("viewStaffSalary").value = s.monthly_salary || "";
+  const viewSalaryCurrencyEl = document.getElementById("viewStaffCurrency");
+  if (viewSalaryCurrencyEl) viewSalaryCurrencyEl.value = s.salary_currency || "NGN";
   document.getElementById("viewStaffStatus").value = s.status || "active";
 
   // Check permissions — lock editing if not allowed
   const canManage = ["mudeer", "assistant_mudeer"].includes(window.currentRole);
   ["viewStaffFullName","viewStaffEmail","viewStaffPhone","viewStaffRole",
-   "viewStaffType","viewStaffDepartment","viewStaffDateJoined","viewStaffSalary","viewStaffStatus"]
+   "viewStaffType","viewStaffDepartment","viewStaffDateJoined","viewStaffSalary","viewStaffCurrency","viewStaffStatus"]
     .forEach(id => {
       const el = document.getElementById(id);
       if (el) el.disabled = !canManage;
@@ -719,6 +737,7 @@ async function updateStaff() {
     const department = document.getElementById("viewStaffDepartment")?.value;
     const date_joined = document.getElementById("viewStaffDateJoined")?.value;
     const monthly_salary = document.getElementById("viewStaffSalary")?.value;
+    const salary_currency = document.getElementById("viewStaffCurrency")?.value || "NGN";
     const status = document.getElementById("viewStaffStatus")?.value;
 
     if (!full_name || !role) {
@@ -737,6 +756,7 @@ async function updateStaff() {
         department,
         date_joined: date_joined || null,
         monthly_salary: monthly_salary ? Number(monthly_salary) : null,
+        salary_currency,
         status
       })
       .eq("id", currentStaffId);
@@ -799,7 +819,7 @@ function switchStaffTab(tab, btn) {
 // ===========================
 // PAYMENT MODAL (from table row)
 // ===========================
-function openPaymentModalForStaff(staffId, staffName) {
+function openPaymentModalForStaff(staffId, staffName, salaryCurrency) {
   currentStaffId = staffId;
   editingPaymentId = null;
 
@@ -813,7 +833,7 @@ function openPaymentModalForStaff(staffId, staffName) {
   document.getElementById("payMonth").value = new Date().getMonth() + 1;
   document.getElementById("payYear").value = new Date().getFullYear();
   document.getElementById("payAmount").value = "";
-  document.getElementById("payCurrency").value = "NGN";
+  document.getElementById("payCurrency").value = salaryCurrency || currentStaffSalaryCurrency || "NGN";
   document.getElementById("payStatus").value = "paid";
   document.getElementById("payDate").value = new Date().toISOString().split("T")[0];
   document.getElementById("payNote").value = "";
@@ -827,7 +847,7 @@ function openPaymentModal() {
 
   // Get staff name from view modal
   const staffName = document.getElementById("viewStaffName")?.textContent || "";
-  openPaymentModalForStaff(currentStaffId, staffName);
+  openPaymentModalForStaff(currentStaffId, staffName, currentStaffSalaryCurrency);
 }
 
 // ===========================

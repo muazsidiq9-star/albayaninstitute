@@ -217,6 +217,16 @@
         <input type="number" id="staffSalary" placeholder="0.00"
                data-translate-placeholder="0.00" min="0">
 
+        <label data-translate="Salary Currency">Salary Currency</label>
+        <select id="staffSalaryCurrency">
+          <option value="NGN">₦ NGN - Nigerian Naira</option>
+          <option value="GHS">₵ GHS - Ghanaian Cedi</option>
+          <option value="SLE">Le SLE - Sierra Leonean Leone</option>
+          <option value="USD">$ USD - US Dollar</option>
+          <option value="EUR">€ EUR - Euro</option>
+          <option value="GBP">£ GBP - British Pound</option>
+        </select>
+
         <label data-translate="Status">Status</label>
         <select id="staffStatus">
           <option value="active" data-translate="Active">Active</option>
@@ -316,8 +326,18 @@
           <label data-translate="Date Joined">Date Joined</label>
           <input type="date" id="viewStaffDateJoined">
 
-          <label data-translate="Monthly Salary">Monthly Salary (₦)</label>
+          <label data-translate="Monthly Salary">Monthly Salary</label>
           <input type="number" id="viewStaffSalary" min="0">
+
+          <label data-translate="Salary Currency">Salary Currency</label>
+          <select id="viewStaffCurrency">
+            <option value="NGN">₦ NGN - Nigerian Naira</option>
+            <option value="GHS">₵ GHS - Ghanaian Cedi</option>
+            <option value="SLE">Le SLE - Sierra Leonean Leone</option>
+            <option value="USD">$ USD - US Dollar</option>
+            <option value="EUR">€ EUR - Euro</option>
+            <option value="GBP">£ GBP - British Pound</option>
+          </select>
 
           <label data-translate="Status">Status</label>
           <select id="viewStaffStatus">
@@ -408,6 +428,8 @@
         <label data-translate="Currency">Currency</label>
         <select id="payCurrency">
           <option value="NGN">NGN (₦)</option>
+          <option value="GHS">GHS (₵)</option>
+          <option value="SLE">SLE (Le)</option>
           <option value="USD">USD ($)</option>
           <option value="EUR">EUR (€)</option>
           <option value="GBP">GBP (£)</option>

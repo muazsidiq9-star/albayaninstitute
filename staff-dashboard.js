@@ -3,6 +3,28 @@
 // ===========================
 const db = window.supabaseClient;
 
+// Single source of truth for currency symbols on this page — matches the
+// set used across payments/fees elsewhere in the project.
+function formatCurrency(amount, currency) {
+  const symbols = { NGN: "₦", USD: "$", EUR: "€", GBP: "£", GHS: "GH₵", SLE: "Le " };
+  const sym = symbols[currency] || currency || "₦";
+  return `${sym}${Number(amount || 0).toLocaleString()}`;
+}
+
+// Groups rows by currency and formats each total — a staff member should
+// almost always be paid in one currency, but this stays correct even if a
+// record was entered in a different one, instead of silently summing raw
+// numbers across currencies under one hardcoded symbol.
+function formatGroupedTotals(rows, amountKey, defaultCurrency = "NGN") {
+  const totals = {};
+  (rows || []).forEach(r => {
+    const cur = r.currency || defaultCurrency;
+    totals[cur] = (totals[cur] || 0) + Number(r[amountKey] || 0);
+  });
+  const parts = Object.keys(totals).map(cur => formatCurrency(totals[cur], cur));
+  return parts.length ? parts.join(" + ") : formatCurrency(0, defaultCurrency);
+}
+
 // Store teacher data globally
 let teacherData = {
   id: null,
@@ -723,7 +745,7 @@ async function loadProfileTab() {
 
   const { data: profile } = await db
     .from("profiles")
-    .select("passport_url, phone, department, staff_type, date_joined, monthly_salary")
+    .select("passport_url, phone, department, staff_type, date_joined, monthly_salary, salary_currency")
     .eq("id", teacherData.id)
     .single();
 
@@ -750,6 +772,7 @@ async function loadProfileTab() {
 
   // Store salary for payments tab
   teacherData.monthly_salary = profile?.monthly_salary || 0;
+  teacherData.salary_currency = profile?.salary_currency || "NGN";
 
   // Role tag badge
   const tagMap = {
@@ -869,9 +892,8 @@ async function loadMyPayments() {
     if (error) throw error;
 
     // Update summary strip
-    // Update summary strip
     const monthlySalary = teacherData.monthly_salary || 0;
-    const monthlyText = "₦" + Number(monthlySalary).toLocaleString();
+    const monthlyText = formatCurrency(monthlySalary, teacherData.salary_currency || "NGN");
     const monthlyEl = document.getElementById("paySummaryMonthly");
     monthlyEl.textContent = monthlyText;
     monthlyEl.dataset.original = monthlyText;
@@ -881,22 +903,24 @@ async function loadMyPayments() {
       const pc0 = document.getElementById("paySummaryPaidCount");
       pc0.textContent = "0"; pc0.dataset.original = "0";
       const tp0 = document.getElementById("paySummaryTotalPaid");
-      tp0.textContent = "₦0"; tp0.dataset.original = "₦0";
+      const zeroText = formatCurrency(0, teacherData.salary_currency || "NGN");
+      tp0.textContent = zeroText; tp0.dataset.original = zeroText;
       return;
     }
 
     const months = ["", "January","February","March","April","May","June",
                     "July","August","September","October","November","December"];
-    const symbols = { NGN: "₦", USD: "$", EUR: "€", GBP: "£" };
 
     const paidRows = data.filter(p => p.status === "paid" || p.status === "partial");
-    const totalPaid = paidRows.reduce((sum, p) => sum + Number(p.amount_paid || 0), 0);
+    // Groups by each row's own currency (falling back to the staff member's
+    // registered salary currency for old rows with none) rather than adding
+    // raw numbers together regardless of what currency they were paid in.
+    const totalPaidText = formatGroupedTotals(paidRows, "amount_paid", teacherData.salary_currency || "NGN");
 
     const paidCountEl = document.getElementById("paySummaryPaidCount");
     paidCountEl.textContent = paidRows.length;
     paidCountEl.dataset.original = String(paidRows.length);
 
-    const totalPaidText = "₦" + Math.round(totalPaid).toLocaleString();
     const totalPaidEl = document.getElementById("paySummaryTotalPaid");
     totalPaidEl.textContent = totalPaidText;
     totalPaidEl.dataset.original = totalPaidText;
@@ -907,8 +931,8 @@ async function loadMyPayments() {
       <tr>
         <td>${t(months[p.month] || p.month)}</td>
         <td>${p.year}</td>
-        <td>${(symbols[p.currency] || p.currency || "₦") + Number(p.amount_paid || 0).toLocaleString()}</td>
-        <td>${p.currency || "NGN"}</td>
+        <td>${formatCurrency(p.amount_paid, p.currency || teacherData.salary_currency || "NGN")}</td>
+        <td>${p.currency || teacherData.salary_currency || "NGN"}</td>
         <td>
           <span class="status-badge ${statusClass[p.status] || "badge-inactive"}">
             ${t(p.status)}

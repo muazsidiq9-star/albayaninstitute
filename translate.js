@@ -3598,6 +3598,8 @@ NEW FILES START HERE
 "Deleted assessment": "تقييم محذوف",
 "🔍 Search by student or assessment...": "🔍 ابحث عن طالب أو تقييم...",
 
+"Salary Currency": "عملة الراتب",
+
 // ===== DYNAMIC TEMPLATES ===== 
 
 en: {

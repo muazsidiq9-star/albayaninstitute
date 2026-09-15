@@ -1240,7 +1240,7 @@ async function loadFees() {
 async function loadStudentDropdown() {
   const { data, error } = await db
     .from("students")
-    .select("matric_number, fullname, country, level_arabic")
+    .select("matric_number, fullname, country, level_arabic, amount_due, currency_due")
     .order("fullname", { ascending: true });
 
   if (error) { console.error(error); return; }
@@ -1251,13 +1251,37 @@ async function loadStudentDropdown() {
   select.innerHTML = `
     <option value="">${t("Select Student")}</option>
     ${data.map(s => `
-      <option value="${s.matric_number}">
+      <option value="${s.matric_number}"
+              data-amount-due="${s.amount_due ?? ""}"
+              data-currency-due="${s.currency_due || ""}">
         ${s.fullname} (${s.matric_number})
       </option>
     `).join("")}
   `;
 
   ensureFeeCurrencyField();
+
+  // Auto-fill amount + currency from the student's own registered plan
+  // pricing (amount_due / currency_due) the moment they're picked — same
+  // pattern used on the Payments tab. Admin can still edit before saving;
+  // this just gives a correct default instead of a blank field.
+  select.onchange = autofillFeeAmount;
+}
+
+function autofillFeeAmount() {
+  const select = document.getElementById("studentSelect");
+  const chosen = select?.selectedOptions[0];
+  if (!chosen) return;
+
+  const amountField = document.getElementById("amount");
+  const currencyField = document.getElementById("feeCurrency");
+
+  if (amountField && chosen.dataset.amountDue) {
+    amountField.value = chosen.dataset.amountDue;
+  }
+  if (currencyField && chosen.dataset.currencyDue) {
+    currencyField.value = chosen.dataset.currencyDue;
+  }
 }
 
 // The fee form's HTML only ever had an "amount" input with no currency
