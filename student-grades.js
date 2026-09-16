@@ -259,6 +259,7 @@ function renderGrades(grades) {
   }
 
   grades.forEach(g => {
+    const remark = (g.remark || "").toLowerCase();
     const status = (g.status || "").toLowerCase();
     gradesBody.innerHTML += `
       <tr>
@@ -269,9 +270,9 @@ function renderGrades(grades) {
         <td>${g.semester      || "--"}</td>
         <td>${g.assessment_score ?? "--"}</td>
         <td>${g.exam_score    ?? "--"}</td>
-        <td>${g.total_score !== undefined ? g.total_score : "--"}</td>
-        <td>${g.remark        || "--"}</td>
-        <td><span class="sg-badge ${status}">${translateStatus(g.status)}</span></td>
+        <td><strong>${g.total_score !== undefined ? g.total_score : "--"}</strong></td>
+        <td>${g.remark ? `<span class="remark-badge remark-${remark}">${translateRemark(g.remark)}</span>` : "--"}</td>
+        <td>${g.status ? `<span class="sg-badge ${status}">${translateCourseStatus(g.status)}</span>` : "--"}</td>
       </tr>`;
   });
 
@@ -284,9 +285,22 @@ function renderGrades(grades) {
   }
 }
 
-function translateStatus(status) {
-  if (!status) return "--";
+// Grade remark (Pass / Average / Fail) — this used to be called
+// "translateStatus" and was wired to g.status by mistake, which is why
+// the Remark column never got a color and the Status column's badge
+// never matched a defined color (the CSS only ever had .pass/.average/.fail).
+function translateRemark(remark) {
+  if (!remark) return "--";
   const map = { pass: t("Pass"), average: t("Average"), fail: t("Fail") };
+  return map[remark.toLowerCase()] || remark;
+}
+
+// Course status (Completed / Loading / Cancelled) — separate 3-state
+// badge, colored the same green/blue/red as the equivalent status badges
+// on the admin dashboard.
+function translateCourseStatus(status) {
+  if (!status) return "--";
+  const map = { completed: t("Completed"), loading: t("Loading"), cancelled: t("Cancelled") };
   return map[status.toLowerCase()] || status;
 }
 

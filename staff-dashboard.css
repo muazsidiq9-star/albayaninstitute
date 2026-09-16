@@ -562,6 +562,15 @@ html, body { overflow-x: hidden; }
   flex-wrap: wrap;
 }
 
+/* Grade form reuses this same actions row (Update Grade + Cancel) —
+   let the submit button share space with Cancel instead of the 100%
+   width it uses when it's the form's only button. */
+.sched-form-actions .grade-submit-btn {
+  width: auto;
+  flex: 1;
+  margin-top: 0;
+}
+
 .btn-cancel-sched {
   display: inline-flex;
   align-items: center;

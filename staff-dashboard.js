@@ -420,6 +420,7 @@ function wireGradeAutoTotal() {
 // SUBMIT GRADE
 // ===========================
 async function submitGrade() {
+  const editId = document.getElementById("gradeEditId").value;
   const matric_number = document.getElementById("gradeStudentSelect").value;
   const course = document.getElementById("gradeCourseSelect").value;
   const level_arabic = document.getElementById("gradeLevelInput").value;
@@ -436,34 +437,54 @@ async function submitGrade() {
   }
 
   const btn = document.querySelector(".grade-submit-btn");
-  if (btn) { btn.disabled = true; btn.textContent = t("Submitting..."); }
+  const btnTextEl = document.querySelector(".grade-submit-btn-text");
+  if (btn) { btn.disabled = true; }
+  if (btnTextEl) { btnTextEl.textContent = editId ? t("Updating...") : t("Submitting..."); }
 
   try {
-    const { error } = await db.from("grades").insert([{
-      matric_number,
-      course,
-      level_arabic,
-      semester,
-      assessment_score,
-      exam_score,
-      total_score,
-      status,
-      remark,
-      released: false
-    }]);
+    if (editId) {
+      // released:false is part of the WHERE clause, not just the payload —
+      // if the admin released this grade in the moment between the staff
+      // opening the edit form and hitting Update, this simply matches zero
+      // rows instead of silently overwriting a released grade.
+      const { data, error } = await db
+        .from("grades")
+        .update({
+          matric_number, course, level_arabic, semester,
+          assessment_score, exam_score, total_score, status, remark
+        })
+        .eq("id", editId)
+        .eq("released", false)
+        .select("id");
 
-    if (error) throw error;
+      if (error) throw error;
 
-    showToast(t("Grade submitted ✅"));
+      if (!data || data.length === 0) {
+        alert(t("This grade has already been released and can no longer be edited."));
+      } else {
+        showToast(t("Grade updated ✅"));
+      }
 
-    // Reset form
-    document.getElementById("gradeStudentSelect").value = "";
-    document.getElementById("gradeCourseSelect").value = "";
-    document.getElementById("gradeLevelInput").value = "";
-    document.getElementById("gradeSemesterSelect").value = "";
-    document.getElementById("gradeAssessmentInput").value = "";
-    document.getElementById("gradeExamInput").value = "";
-    document.getElementById("gradeTotalInput").value = "";
+      cancelGradeEdit();
+    } else {
+      const { error } = await db.from("grades").insert([{
+        matric_number,
+        course,
+        level_arabic,
+        semester,
+        assessment_score,
+        exam_score,
+        total_score,
+        status,
+        remark,
+        released: false
+      }]);
+
+      if (error) throw error;
+
+      showToast(t("Grade submitted ✅"));
+      cancelGradeEdit();
+    }
 
     await loadMyGrades();
 
@@ -471,7 +492,13 @@ async function submitGrade() {
     console.error("Submit grade error:", err);
     alert(t("Failed to submit grade."));
   } finally {
-    if (btn) { btn.disabled = false; btn.textContent = t("Submit Grade"); }
+    if (btn) { btn.disabled = false; }
+    // Read current edit-mode state (not the pre-call snapshot) — on success
+    // cancelGradeEdit() already cleared it; on failure it's still mid-edit.
+    if (btnTextEl) {
+      const stillEditing = document.getElementById("gradeEditId").value;
+      btnTextEl.textContent = stillEditing ? t("Update Grade") : t("Submit Grade");
+    }
   }
 }
 
@@ -484,21 +511,21 @@ async function loadMyGrades() {
 
   if (!teacherData.studentMatrics.length) {
     tbody.innerHTML = `<tr>
-      <td colspan="9" class="empty-state">${t("No students assigned yet.")}</td>
+      <td colspan="10" class="empty-state">${t("No students assigned yet.")}</td>
     </tr>`;
     return;
   }
 
   const { data: grades, error } = await db
     .from("grades")
-    .select("matric_number, course, semester, assessment_score, exam_score, total_score, remark, released, level_arabic")
+    .select("id, matric_number, course, semester, assessment_score, exam_score, total_score, status, remark, released, level_arabic")
     .in("matric_number", teacherData.studentMatrics)
     .eq("deleted", false)
     .order("created_at", { ascending: false });
 
   if (error) {
     tbody.innerHTML = `<tr>
-      <td colspan="9" class="empty-state" style="color:red;">
+      <td colspan="10" class="empty-state" style="color:red;">
         ${t("Failed to load grades.")}
       </td>
     </tr>`;
@@ -507,11 +534,17 @@ async function loadMyGrades() {
 
   if (!grades || grades.length === 0) {
     tbody.innerHTML = `<tr>
-      <td colspan="9" class="empty-state">${t("No grades posted yet.")}</td>
+      <td colspan="10" class="empty-state">${t("No grades posted yet.")}</td>
     </tr>`;
     document.getElementById("totalGrades").textContent = 0;
+    window.staffGradesCache = [];
     return;
   }
+
+  // Cached so editStaffGrade() can populate the form without another
+  // round trip, and so we can double-check a row's released state
+  // client-side before letting the Edit button do anything.
+  window.staffGradesCache = grades;
 
   const { data: students } = await db
     .from("students")
@@ -547,8 +580,74 @@ async function loadMyGrades() {
           ${g.released ? t("Released") : t("Pending")}
         </span>
       </td>
+      <td>
+        ${g.released
+          ? `<span style="color:var(--text-muted); font-size:0.85em; white-space:nowrap;">
+               <i class="fa-solid fa-lock"></i> ${t("Locked")}
+             </span>`
+          : `<button class="btn btn-edit" onclick="editStaffGrade('${g.id}')">${t("Edit")}</button>`
+        }
+      </td>
     </tr>
   `).join("");
+}
+
+// ===========================
+// EDIT GRADE (staff) — only while unreleased
+// ===========================
+function editStaffGrade(id) {
+  const g = (window.staffGradesCache || []).find(x => String(x.id) === String(id));
+  if (!g) return;
+
+  // Belt-and-braces: the Edit button is only rendered for unreleased rows,
+  // but guard here too in case the cache is stale (e.g. admin released it
+  // in another tab a moment ago and this page hasn't refreshed yet).
+  if (g.released) {
+    alert(t("This grade has already been released and can no longer be edited."));
+    loadMyGrades();
+    return;
+  }
+
+  document.getElementById("gradeEditId").value = g.id;
+  document.getElementById("gradeStudentSelect").value = g.matric_number;
+  document.getElementById("gradeCourseSelect").value = g.course;
+  document.getElementById("gradeLevelInput").value = g.level_arabic || "";
+
+  // batch isn't on the grades row itself — pull it from the same select
+  // option the student dropdown already carries it on.
+  const studentOpt = document.getElementById("gradeStudentSelect").selectedOptions[0];
+  document.getElementById("gradeBatchInput").value = studentOpt?.dataset.batch || "";
+
+  document.getElementById("gradeSemesterSelect").value = g.semester;
+  document.getElementById("gradeAssessmentInput").value = g.assessment_score;
+  document.getElementById("gradeExamInput").value = g.exam_score;
+  document.getElementById("gradeTotalInput").value = g.total_score;
+  document.getElementById("gradeStatusSelect").value = g.status || "completed";
+  document.getElementById("gradeRemarkSelect").value = g.remark;
+
+  document.getElementById("gradeFormTitle").querySelector("span").textContent = t("Edit Grade");
+  document.querySelector(".grade-submit-btn-text").textContent = t("Update Grade");
+  document.getElementById("gradeCancelBtn").style.display = "";
+
+  document.getElementById("gradeFormTitle").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function cancelGradeEdit() {
+  document.getElementById("gradeEditId").value = "";
+  document.getElementById("gradeStudentSelect").value = "";
+  document.getElementById("gradeCourseSelect").value = "";
+  document.getElementById("gradeLevelInput").value = "";
+  document.getElementById("gradeBatchInput").value = "";
+  document.getElementById("gradeSemesterSelect").value = "";
+  document.getElementById("gradeAssessmentInput").value = "";
+  document.getElementById("gradeExamInput").value = "";
+  document.getElementById("gradeTotalInput").value = "";
+  document.getElementById("gradeStatusSelect").value = "completed";
+  document.getElementById("gradeRemarkSelect").value = "pass";
+
+  document.getElementById("gradeFormTitle").querySelector("span").textContent = t("Post a Grade");
+  document.querySelector(".grade-submit-btn-text").textContent = t("Submit Grade");
+  document.getElementById("gradeCancelBtn").style.display = "none";
 }
 
 // ===========================

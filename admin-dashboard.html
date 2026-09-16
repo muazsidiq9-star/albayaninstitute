@@ -361,6 +361,10 @@
         <i class="fa-solid fa-plus"></i>
         <span data-translate="Add Student">Add Student</span>
       </button>
+      <button class="add-btn" onclick="openPromoteModal()" style="margin-left:8px;">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        <span data-translate="Promote Students">Promote Students</span>
+      </button>
     </div>
     <div class="table-container">
       <table id="students-table">
@@ -1162,6 +1166,89 @@
           <span data-translate="Add Fee to Selected Students">Add Fee to Selected Students</span>
         </button>
         <button class="btn btn-cancel" onclick="closeModal('bulkFeeModal')">
+          <span data-translate="Cancel">Cancel</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================================================
+       PROMOTE STUDENTS MODAL — bulk-update Level and/or
+       Batch for every checked student in one Save. Built
+       so a whole cohort can be moved to the next level or
+       renamed to a new batch without editing each student
+       row one by one in the Edit Student modal.
+  ================================================ -->
+  <div class="modal" id="promoteStudentsModal">
+    <div class="modal-content modal-large">
+      <button class="btn btn-close" onclick="closeModal('promoteStudentsModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 data-translate="Promote / Move Students">Promote / Move Students</h2>
+
+      <label data-translate="Students">Students</label>
+      <div class="bulk-fee-filters" style="display:flex; gap:8px; flex-wrap:wrap; margin:6px 0;">
+        <select id="promoteLevelFilter" onchange="filterPromoteStudents()" style="flex:1; min-width:160px;">
+          <option value="" data-translate="All Levels">All Levels</option>
+          <option data-translate="Preliminary">Preliminary</option>
+          <option data-translate="Beginner">Beginner</option>
+          <option data-translate="Intermediate">Intermediate</option>
+          <option data-translate="Advanced">Advanced</option>
+        </select>
+        <select id="promoteBatchFilter" onchange="filterPromoteStudents()" style="flex:1; min-width:160px;">
+          <option value="" data-translate="All Batches">All Batches</option>
+        </select>
+      </div>
+      <input type="text" id="promoteSearch" class="search-input"
+             placeholder="🔍 Search by name or matric..."
+             data-translate-placeholder="🔍 Search by name or matric..."
+             oninput="filterPromoteStudents()" style="width:100%; margin:6px 0;">
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <span id="promoteSelectedCount">0 <span data-translate="selected">selected</span></span>
+        <span>
+          <button type="button" class="btn btn-edit" onclick="toggleAllPromoteStudents(true)">
+            <span data-translate="Select All">Select All</span>
+          </button>
+          <button type="button" class="btn btn-edit" onclick="toggleAllPromoteStudents(false)">
+            <span data-translate="Clear">Clear</span>
+          </button>
+        </span>
+      </div>
+
+      <div id="promoteStudentList" class="cert-course-checklist"
+           style="display:flex; flex-direction:column; gap:6px; padding:10px;
+                  border:1px solid var(--border-color); border-radius:6px; max-height:280px; overflow-y:auto;">
+        <span data-translate="Loading students...">Loading students...</span>
+      </div>
+
+      <div class="modal-grid" style="margin-top:16px;">
+        <label data-translate="New Level">New Level</label>
+        <select id="promoteNewLevel">
+          <option value="" data-translate="Don't change">Don't change</option>
+          <option data-translate="Preliminary">Preliminary</option>
+          <option data-translate="Beginner">Beginner</option>
+          <option data-translate="Intermediate">Intermediate</option>
+          <option data-translate="Advanced">Advanced</option>
+        </select>
+        <label data-translate="New Batch">New Batch</label>
+        <input type="text" id="promoteNewBatch"
+               placeholder="e.g. September 2026 (leave blank to keep current batch)"
+               data-translate-placeholder="e.g. September 2026 (leave blank to keep current batch)">
+      </div>
+
+      <p style="font-size:0.85rem; opacity:0.75; margin:8px 0 0;"
+         data-translate="Tick every student to move, set a New Level and/or New Batch, then Save once. Leave a field blank to leave that one unchanged for everyone selected.">
+        Tick every student to move, set a New Level and/or New Batch, then Save once. Leave a field blank to leave that one unchanged for everyone selected.
+      </p>
+
+      <div class="modal-actions">
+        <button id="promoteSaveBtn" class="btn btn-save" onclick="promoteSaveStudents()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span data-translate="Update Selected Students">Update Selected Students</span>
+        </button>
+        <button class="btn btn-cancel" onclick="closeModal('promoteStudentsModal')">
           <span data-translate="Cancel">Cancel</span>
         </button>
       </div>
@@ -2286,6 +2373,7 @@
             <input type="text" id="certProgrammeGradeNote"
                    placeholder="e.g. with Distinction"
                    data-translate-placeholder="e.g. with Distinction">
+            <small id="certProgrammeAvgHint" style="grid-column: 1 / -1; font-size:0.78rem; opacity:0.7; margin-top:-6px;"></small>
           </div>
           <p class="cert-multi-course-hint" style="font-size:0.85rem; opacity:0.75; margin:-8px 0 0;"
              data-translate="Issued once a student has completed every level of the programme, not just one.">

@@ -42,6 +42,11 @@ const matric = sessionStorage.getItem("matric");
 // amounts read as "$59" / "₦25,000", never a raw number with no symbol.
 const CURRENCY_SYMBOLS = { NGN: "₦", USD: "$", EUR: "€", GBP: "£", GHS: "GH₵", SLE: "Le " };
 
+// Set inside loadStats() once the student's real currency_due is fetched,
+// so other functions (like renderMessage, which runs separately for the
+// notifications list) have a correct fallback instead of hardcoding NGN.
+let studentDefaultCurrency = "NGN";
+
 function formatMoney(amount, currency) {
   const symbol = CURRENCY_SYMBOLS[currency] || currency || "₦";
   return `${symbol}${Number(amount || 0).toLocaleString()}`;
@@ -139,6 +144,7 @@ async function loadStats(matric, container) {
     // registration / admin backfill) rather than assuming Naira for
     // payment/fee rows that don't carry their own currency.
     const defaultCurrency = student?.currency_due || "NGN";
+    studentDefaultCurrency = defaultCurrency;
 
     // ===========================
     // Current Month Name
@@ -414,7 +420,7 @@ function renderMessage(message) {
       const rawAmount = typeof data.amount === "string"
         ? data.amount.replace(/,/g, "")
         : data.amount;
-      data.amount = formatMoney(rawAmount, data.currency || "NGN");
+      data.amount = formatMoney(rawAmount, data.currency || studentDefaultCurrency);
     }
 
     return tmpl(parsed.key, data);

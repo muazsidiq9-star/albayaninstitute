@@ -163,12 +163,13 @@
 
     <!-- POST GRADE FORM -->
     <div class="staff-card">
-      <h2 class="section-title">
+      <h2 class="section-title" id="gradeFormTitle">
         <i class="fa-solid fa-pen-to-square"></i>
         <span data-translate="Post a Grade">Post a Grade</span>
       </h2>
 
       <div class="grade-form">
+        <input type="hidden" id="gradeEditId" value="">
         <div class="grade-form-row">
           <div class="grade-form-field">
             <label data-translate="Student">Student</label>
@@ -247,10 +248,16 @@
           </div>
         </div>
 
-        <button class="btn btn-save grade-submit-btn" onclick="submitGrade()">
-          <i class="fa-solid fa-paper-plane"></i>
-          <span data-translate="Submit Grade">Submit Grade</span>
-        </button>
+        <div class="sched-form-actions">
+          <button class="btn btn-save grade-submit-btn" onclick="submitGrade()">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span class="grade-submit-btn-text" data-translate="Submit Grade">Submit Grade</span>
+          </button>
+          <button class="btn btn-cancel-sched" id="gradeCancelBtn" style="display:none;" onclick="cancelGradeEdit()">
+            <i class="fa-solid fa-xmark"></i>
+            <span data-translate="Cancel">Cancel</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -279,11 +286,12 @@
               <th data-translate="Total">Total</th>
               <th data-translate="Remark">Remark</th>
               <th data-translate="Released">Released</th>
+              <th data-translate="Actions">Actions</th>
             </tr>
           </thead>
           <tbody id="staffGradesBody">
             <tr>
-              <td colspan="9" class="empty-state" data-translate="Loading grades...">
+              <td colspan="10" class="empty-state" data-translate="Loading grades...">
                 Loading grades...
               </td>
             </tr>

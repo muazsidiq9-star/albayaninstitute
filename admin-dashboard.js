@@ -1598,6 +1598,145 @@ async function bulkSaveFee() {
   }
 }
 
+/* -------------------------------------------------------
+   PROMOTE / MOVE STUDENTS — bulk-update level_arabic and/or
+   batch for every checked student in one Save. Built for
+   cohort promotions (moving a batch to the next level) or
+   renaming a batch, without editing rows one by one in the
+   Edit Student modal. Reuses the same studentsCache the
+   autofill helpers elsewhere in this file already rely on.
+------------------------------------------------------- */
+
+async function openPromoteModal() {
+  document.getElementById("promoteLevelFilter").value = "";
+  document.getElementById("promoteBatchFilter").value = "";
+  document.getElementById("promoteSearch").value = "";
+  document.getElementById("promoteNewLevel").value = "";
+  document.getElementById("promoteNewBatch").value = "";
+
+  const list = document.getElementById("promoteStudentList");
+  list.innerHTML = `<span data-translate="Loading students...">${t("Loading students...")}</span>`;
+
+  openModal("promoteStudentsModal");
+
+  const students = await loadStudentsCache();
+
+  if (students.length === 0) {
+    list.innerHTML = `<span>${t("No students found")}</span>`;
+    return;
+  }
+
+  // Populate the batch filter from whatever batches actually exist right
+  // now, so admin picks a real current batch instead of retyping one by hand.
+  const batchFilter = document.getElementById("promoteBatchFilter");
+  const batches = [...new Set(students.map(s => s.batch).filter(Boolean))].sort();
+  batchFilter.innerHTML = `<option value="" data-translate="All Batches">${t("All Batches")}</option>` +
+    batches.map(b => `<option value="${b}">${b}</option>`).join("");
+
+  list.innerHTML = students.map((s, i) => `
+    <label class="bulkFeeStudentRow" data-search="${(s.fullname + " " + s.matric_number).toLowerCase()}"
+           data-level="${s.level_arabic || ""}" data-batch="${s.batch || ""}">
+      <input type="checkbox" class="promoteStudentCheckbox" value="${s.matric_number}"
+             id="promoteCb${i}" onchange="updatePromoteSelectedCount()">
+      <span class="bulkFeeStudentInfo">
+        <span class="bulkFeeStudentName">${s.fullname}</span>
+        <span class="bulkFeeStudentMatric">${s.matric_number} • ${s.level_arabic || "—"} • ${s.batch || "—"}</span>
+      </span>
+    </label>
+  `).join("");
+
+  updatePromoteSelectedCount();
+}
+
+// Search text + Level + Batch filters all narrow the same list together
+// (AND, not OR). Any filter left on "All" is ignored.
+function filterPromoteStudents() {
+  const query = document.getElementById("promoteSearch").value.trim().toLowerCase();
+  const level = document.getElementById("promoteLevelFilter").value;
+  const batch = document.getElementById("promoteBatchFilter").value;
+
+  document.querySelectorAll("#promoteStudentList .bulkFeeStudentRow").forEach(row => {
+    const matchesSearch = row.dataset.search.includes(query);
+    const matchesLevel = !level || row.dataset.level === level;
+    const matchesBatch = !batch || row.dataset.batch === batch;
+    row.style.display = (matchesSearch && matchesLevel && matchesBatch) ? "flex" : "none";
+  });
+}
+
+function toggleAllPromoteStudents(checked) {
+  // Only affects rows currently visible under the filters, so "Select All"
+  // after filtering to Level = Beginner only selects that cohort.
+  document.querySelectorAll("#promoteStudentList .bulkFeeStudentRow").forEach(row => {
+    if (row.style.display === "none") return;
+    const cb = row.querySelector(".promoteStudentCheckbox");
+    if (cb) cb.checked = checked;
+  });
+  updatePromoteSelectedCount();
+}
+
+function updatePromoteSelectedCount() {
+  const n = document.querySelectorAll(".promoteStudentCheckbox:checked").length;
+  const el = document.getElementById("promoteSelectedCount");
+  if (el) el.textContent = `${n} ${t("selected")}`;
+}
+
+async function promoteSaveStudents() {
+  const newLevel = document.getElementById("promoteNewLevel").value;
+  const newBatch = document.getElementById("promoteNewBatch").value.trim();
+
+  const matrics = Array.from(document.querySelectorAll(".promoteStudentCheckbox:checked"))
+    .map(cb => cb.value);
+
+  if (!newLevel && !newBatch) {
+    alert(t("Set a New Level and/or a New Batch"));
+    return;
+  }
+  if (matrics.length === 0) {
+    alert(t("Select at least one student"));
+    return;
+  }
+
+  const changeDesc = [newLevel && `Level → ${newLevel}`, newBatch && `Batch → ${newBatch}`]
+    .filter(Boolean).join(", ");
+  if (!confirm(`${t("Update")} ${matrics.length} ${t("student(s)")}: ${changeDesc}?`)) return;
+
+  const btn = document.getElementById("promoteSaveBtn");
+  setLoading(btn, true);
+
+  try {
+    const updateData = {};
+    if (newLevel) updateData.level_arabic = newLevel;
+    if (newBatch) updateData.batch = newBatch;
+
+    const { error } = await db
+      .from("students")
+      .update(updateData)
+      .in("matric_number", matrics);
+
+    if (error) {
+      console.error("Promote students error:", error);
+      alert(t("Error saving") + ": " + (error.message || t("See console.")));
+      return;
+    }
+
+    // Keep the in-memory cache accurate so reopening this modal (or any
+    // other dropdown reading studentsCache) reflects the move right away,
+    // instead of showing stale values until a full page reload.
+    studentsCache.forEach(s => {
+      if (matrics.includes(s.matric_number)) {
+        if (newLevel) s.level_arabic = newLevel;
+        if (newBatch) s.batch = newBatch;
+      }
+    });
+
+    closeModal("promoteStudentsModal");
+    loadStudents();
+    showToast(`${t("Updated")} ${matrics.length} ${t("student(s)")}`);
+  } finally {
+    setLoading(btn, false);
+  }
+}
+
 async function toggleStatus(matric, month, currentStatus) {
   const newStatus = currentStatus === "paid" ? "unpaid" : "paid";
   await db
@@ -1852,6 +1991,11 @@ async function loadGrades() {
     if (!window.editingGradeId) {
       tbody.innerHTML = "";
 
+      // Same 3 course-completion states used everywhere else (assessments,
+      // schedule), mapped onto the shared .badge system already used for
+      // payments/referrals elsewhere in this file.
+      const gradeStatusClass = { completed: "badge-success", loading: "badge-info", cancelled: "badge-danger" };
+
       grades.forEach(g => {
         const student = students.find(s => s.matric_number === g.matric_number) || {};
         const tr = document.createElement("tr");
@@ -1864,9 +2008,9 @@ async function loadGrades() {
           <td>${g.semester}</td>
           <td>${g.assessment_score}</td>
           <td>${g.exam_score}</td>
-          <td>${g.total_score}</td>
-          <td>${t(g.status)}</td>
-          <td>${t(g.remark)}</td>
+          <td><strong>${g.total_score}</strong></td>
+          <td><span class="badge ${gradeStatusClass[g.status] || "badge-default"}">${t(g.status)}</span></td>
+          <td><span class="remark-badge remark-${g.remark}">${t(g.remark)}</span></td>
           <td>
             <label class="switch">
               <input type="checkbox" ${g.released ? "checked" : ""} onchange="toggleReleased('${g.id}', this.checked)">
@@ -3281,6 +3425,8 @@ async function openCertificateModal(studentId, matric, fullname, level, batch) {
   if (programmeNameInput) programmeNameInput.value = "Arabic and Islamic Studies";
   const programmeGradeInput = document.getElementById("certProgrammeGradeNote");
   if (programmeGradeInput) programmeGradeInput.value = "";
+  const programmeAvgHint = document.getElementById("certProgrammeAvgHint");
+  if (programmeAvgHint) programmeAvgHint.textContent = "";
 
   window.certStudentData = { studentId, matric, fullname, level, batch };
 
@@ -3289,6 +3435,17 @@ async function openCertificateModal(studentId, matric, fullname, level, batch) {
   // needs a Supabase round trip.
   openModal("certificateModal");
 
+  // Fire-and-forget: pulls this student's released grades for this level
+  // and drops the average % straight into the Grade Note field, so the
+  // admin doesn't have to look it up and retype it by hand. Runs alongside
+  // the certs-history fetch below rather than blocking on it.
+  autofillCertGradeNote(matric, level);
+
+  // Same idea, but for the Full Programme tab: averages every released
+  // grade across ALL of this student's levels (not just the current one)
+  // and maps that onto a Distinction/Merit/Credit/Pass classification.
+  autofillProgrammeGradeNote(matric);
+
   const { data: existing } = await db
     .from("certificates")
     .select("id, course_name, grade_note, revoked, cert_type")
@@ -3296,6 +3453,99 @@ async function openCertificateModal(studentId, matric, fullname, level, batch) {
     .eq("deleted", false);
 
   renderExistingCerts(existing || []);
+}
+
+// Classification cutoffs, agreed with the institute:
+//   Distinction >= 70%, Merit >= 60%, Credit >= 50%, Pass otherwise
+// (including below 40% — a completed programme is still a completed
+// programme, so nobody who finishes ends up with no classification at all).
+function classifyOverallAverage(average) {
+  if (average >= 70) return "Distinction";
+  if (average >= 60) return "Merit";
+  if (average >= 50) return "Credit";
+  return "Pass";
+}
+
+// Computes "sum(total_score) / count" across EVERY released grade this
+// student has, across every level — the cumulative programme average —
+// and writes the resulting classification word into
+// #certProgrammeGradeNote (e.g. "Distinction"). The programme certificate
+// template (my-certificate.html) renders this raw, bold and large as
+// "with DISTINCTION" — it expects a word, not a percentage, unlike the
+// per-level cert's numeric grade note.
+async function autofillProgrammeGradeNote(matric) {
+  const noteField = document.getElementById("certProgrammeGradeNote");
+  const hintField = document.getElementById("certProgrammeAvgHint");
+  if (!noteField || !matric) return;
+
+  try {
+    const { data: grades, error } = await db
+      .from("grades")
+      .select("total_score")
+      .eq("matric_number", matric)
+      .eq("released", true);
+
+    if (error) throw error;
+
+    // Same staleness/overwrite guards as the per-level version: bail if the
+    // modal's moved on to a different student, or the admin already typed
+    // something in while this was loading.
+    if (window.certStudentData?.matric !== matric) return;
+    if (noteField.value.trim() !== "") return;
+
+    if (!grades || grades.length === 0) return; // nothing released yet — leave blank for manual entry
+
+    const total = grades.reduce((sum, g) => sum + (Number(g.total_score) || 0), 0);
+    const average = total / grades.length;
+    const classification = classifyOverallAverage(average);
+
+    noteField.value = classification;
+    if (hintField) {
+      hintField.textContent =
+        `${t("Based on an overall average of")} ${average.toFixed(2)}% ${t("across")} ${grades.length} ${t("released grade(s), all levels combined.")}`;
+    }
+  } catch (err) {
+    console.error("Auto-fill programme grade note error:", err);
+    // Fails silently — the admin can still type the note in by hand.
+  }
+}
+
+// Computes "sum(total_score) / count" across every RELEASED grade row this
+// student has for this level — First + Second semester combined, matching
+// the same "Level Average" math the transcript PDF already uses — and
+// writes it into #certGradeNote as a plain "85.20%" value. The certificate
+// template (my-certificate.html) already wraps this in
+// "with a total score of ___", so no extra wording belongs here; typing
+// a custom note starting with "with..." still overrides it downstream.
+async function autofillCertGradeNote(matric, level) {
+  const noteField = document.getElementById("certGradeNote");
+  if (!noteField || !matric || !level) return;
+
+  try {
+    const { data: grades, error } = await db
+      .from("grades")
+      .select("total_score")
+      .eq("matric_number", matric)
+      .eq("level_arabic", level)
+      .eq("released", true);
+
+    if (error) throw error;
+
+    // The admin may have already closed this modal / opened a different
+    // student before this resolves — only apply the result if it's still
+    // relevant, and never stomp text the admin has started typing meanwhile.
+    if (window.certStudentData?.matric !== matric || window.certStudentData?.level !== level) return;
+    if (noteField.value.trim() !== "") return;
+
+    if (!grades || grades.length === 0) return; // nothing released yet — leave blank for manual entry
+
+    const total = grades.reduce((sum, g) => sum + (Number(g.total_score) || 0), 0);
+    const average = total / grades.length;
+    noteField.value = `${average.toFixed(2)}%`;
+  } catch (err) {
+    console.error("Auto-fill grade note error:", err);
+    // Fails silently — the admin can still type the note in by hand.
+  }
 }
 
 // Toggles which certificate-type panel is shown inside the Issue

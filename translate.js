@@ -3597,9 +3597,20 @@ NEW FILES START HERE
 "No access grants found": "لا توجد منح وصول",
 "Deleted assessment": "تقييم محذوف",
 "🔍 Search by student or assessment...": "🔍 ابحث عن طالب أو تقييم...",
-
+"🔍 Search by name or matric...": "🔍 ابحث عن اسم أو رقم طالب...",
 "Salary Currency": "عملة الراتب",
 
+"Promote Students": "ترقية الطلاب",
+"Promote / Move Students": "ترقية / نقل الطلاب",
+"All Batches": "جميع الدفعات",
+"New Level": "المستوى الجديد",
+"Don't change": "بدون تغيير",
+"New Batch": "الدفعة الجديدة",
+"e.g. September 2026 (leave blank to keep current batch)": "مثال: سبتمبر 2026 (اتركه فارغًا للإبقاء على الدفعة الحالية)",
+"Tick every student to move, set a New Level and/or New Batch, then Save once. Leave a field blank to leave that one unchanged for everyone selected.": "حدد كل طالب تريد نقله، واضبط المستوى الجديد و/أو الدفعة الجديدة، ثم احفظ مرة واحدة. اترك أي حقل فارغًا لإبقائه دون تغيير لجميع المحددين.",
+"Update Selected Students": "تحديث الطلاب المحددين",
+"Update": "تحديث",
+"Updated": "تم التحديث",
 // ===== DYNAMIC TEMPLATES ===== 
 
 en: {

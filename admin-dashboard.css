@@ -1689,6 +1689,26 @@ input:checked + .slider:before { transform: translateX(22px); }
 [data-theme="dark"] .badge-teacher { background: #14532d; color: #4ade80; border-color: #166534; }
 [data-theme="dark"] .badge-danger  { background: #450a0a; color: #fca5a5; border-color: #7f1d1d; }
 
+/* Grade remark badges — same colors as staff-dashboard's .remark-badge,
+   so a "Pass"/"Average"/"Fail" remark looks identical everywhere it
+   appears (admin grades table, staff grades table, student grades page). */
+.remark-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.remark-pass    { background: #dcfcfa; color: #157480; }
+.remark-average { background: #fef9c3; color: #854d0e; }
+.remark-fail    { background: #fee2e2; color: #991b1b; }
+
+[data-theme="dark"] .remark-pass    { background: #144c53; color: #86e3ef; }
+[data-theme="dark"] .remark-average { background: #3a2f00; color: #fde68a; }
+[data-theme="dark"] .remark-fail    { background: #3b1a1a; color: #fca5a5; }
+
 .text-muted { color: var(--text-muted); font-size: 0.82rem; }
 
 @media (max-width: 480px) {

@@ -229,9 +229,35 @@ html, body { overflow-x: hidden; }
   font-weight: 700;
 }
 
-.sg-badge.pass    { background: #dcfce7; color: #15803d; }
-.sg-badge.average { background: #fef9c3; color: #854d0e; }
-.sg-badge.fail    { background: #fee2e2; color: #dc2626; }
+/* Remark badges — Pass/Average/Fail. Same colors as the admin and staff
+   dashboards' remark badges, so a remark looks identical everywhere. */
+.remark-badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.remark-pass    { background: #dcfcfa; color: #157480; }
+.remark-average { background: #fef9c3; color: #854d0e; }
+.remark-fail    { background: #fee2e2; color: #991b1b; }
+
+[data-theme="dark"] .remark-pass    { background: #144c53; color: #86e3ef; }
+[data-theme="dark"] .remark-average { background: #3a2f00; color: #fde68a; }
+[data-theme="dark"] .remark-fail    { background: #3b1a1a; color: #fca5a5; }
+
+/* Course status badges — Completed/Loading/Cancelled. These classes were
+   referenced in the JS (.sg-badge completed/loading/cancelled) but never
+   actually defined here, so the badge always rendered colorless. Colors
+   match the equivalent status badges on the admin dashboard. */
+.sg-badge.completed { background: #dcfce7; color: #15803d; }
+.sg-badge.loading    { background: #dbeafe; color: #1d4ed8; }
+.sg-badge.cancelled  { background: #fee2e2; color: #b91c1c; }
+
+[data-theme="dark"] .sg-badge.completed { background: #14532d; color: #86efac; }
+[data-theme="dark"] .sg-badge.loading   { background: #1e3a5f; color: #93c5fd; }
+[data-theme="dark"] .sg-badge.cancelled { background: #450a0a; color: #fca5a5; }
 
 
 /* ============================================================
