@@ -46,6 +46,7 @@ async function loadStudentSchedule() {
       tr.innerHTML = `
         <td>${s.level_arabic}</td>
         <td>${s.course}</td>
+        <td>${s.batch}</td>
         <td>${s.instructor}</td>
         <td>${formatDate(s.class_date)}</td>
         <td>${formatTime(s.class_time)}</td>

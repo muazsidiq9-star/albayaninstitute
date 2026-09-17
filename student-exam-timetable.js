@@ -83,7 +83,7 @@ async function loadTimetable(matric) {
     //    encodes its own level/batch, so this alone keeps Advanced and
     //    Intermediate exams from mixing, even if both courses share the
     //    same name.
-    const selectCols = "id, title, description, course_id, type, duration_minutes, start_time, end_time, is_active, semester, course, status";
+    const selectCols = "id, title, description, course_id, type, duration_minutes, start_time, end_time, is_active, semester, course, level_arabic, batch, status";
 
     let courseExams = [];
     if (courseIds.length) {
@@ -198,6 +198,8 @@ function renderTimetable(data) {
     tr.innerHTML = `
       <td>${a.title} (${a.type})</td>
       <td>${a.course}</td>
+      <td>${a.level_arabic}</td>
+      <td>${a.batch}</td>
       <td>${a.semester}</td>
       <td>${a.type}</td>
       <td>${formatDate(a.start_time)}</td>
