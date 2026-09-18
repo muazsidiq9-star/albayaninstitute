@@ -117,7 +117,7 @@ async function initRegisterCourses() {
     if (sectionCourseIds.length) {
       const { data: sectionRows, error: sectionError } = await sb
         .from("course_sections")
-        .select("course_id, instructor, batch")
+        .select("id, course_id, instructor, batch")
         .in("course_id", sectionCourseIds);
 
       if (sectionError) console.error("❌ Course sections error:", sectionError);
@@ -205,6 +205,7 @@ async function initRegisterCourses() {
             class="register-btn ${isRegistered ? "registered" : ""}"
             data-id="${course.id}"
             data-registered="${isRegistered}"
+            data-section-id="${matchedSection ? matchedSection.id : ""}"
           >
             ${isRegistered ? "Registered" : "Register"}
           </button>
@@ -216,6 +217,7 @@ async function initRegisterCourses() {
     document.querySelectorAll(".register-btn").forEach(btn => {
       btn.addEventListener("click", async () => {
         const courseId = btn.dataset.id;
+        const sectionId = btn.dataset.sectionId || null;
         const isRegistered = btn.dataset.registered === "true";
         btn.disabled = true;
 
@@ -249,10 +251,16 @@ async function initRegisterCourses() {
         } else {
           /* ── REGISTER ── */
           try {
-            console.log("➕ Inserting:", { matric, courseId, level: studentLevel, batch: studentBatch });
+            console.log("➕ Inserting:", { matric, courseId, level: studentLevel, batch: studentBatch, sectionId });
             const { data, error } = await sb
               .from("course_registrations")
-              .insert([{ matric_number: matric, course_id: courseId, level: studentLevel || null, batch: studentBatch || null }])
+              .insert([{
+                matric_number: matric,
+                course_id: courseId,
+                level: studentLevel || null,
+                batch: studentBatch || null,
+                section_id: sectionId || null // which teacher/batch section this registration belongs to
+              }])
               .select();
 
             if (error) {

@@ -268,9 +268,22 @@
           <i class="fa-solid fa-table-list"></i>
           <span data-translate="Posted Grades">Posted Grades</span>
         </h2>
-        <input type="text" id="searchGrades" class="search-input"
-               placeholder="🔍 Search grades..."
-               data-translate-placeholder="🔍 Search grades...">
+        <div class="filter-bar">
+          <select id="filterGradeCourse" class="search-input filter-select">
+            <option value="" data-translate="All Courses">📘 All Courses</option>
+          </select>
+          <select id="filterGradeBatch" class="search-input filter-select">
+            <option value="" data-translate="All Batches">📦 All Batches</option>
+          </select>
+          <select id="filterGradeReleased" class="search-input filter-select">
+            <option value="" data-translate="All Statuses">All Statuses</option>
+            <option value="released" data-translate="Released">Released</option>
+            <option value="pending" data-translate="Pending">Pending</option>
+          </select>
+          <input type="text" id="searchGrades" class="search-input"
+                 placeholder="🔍 Search grades..."
+                 data-translate-placeholder="🔍 Search grades...">
+        </div>
       </div>
       <div class="table-container">
         <table class="staff-table" id="staffGradesTable">

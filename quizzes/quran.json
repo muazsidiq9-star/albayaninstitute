@@ -22,7 +22,7 @@
               "kicker": "Juz' 30 · Hizb 59 — Ayah Count",
               "text": "How many ayahs does Surah An-Naba (النبأ) have?",
               "options": [
-                40,
+                "40",
                 "41",
                 "50",
                 "45"
@@ -44,10 +44,10 @@
               "kicker": "Juz' 30 · Hizb 59 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Abasa (عبس) or Ad-Duha (الضحى)?",
               "options": [
+                "Abasa",
+                "Ad-Duha",
                 "Al-Balad",
-                "Al-Qari'a",
-                "Quraysh",
-                "Abasa"
+                "Al-Qari'a"
               ],
               "answer": "Abasa"
             },
@@ -97,7 +97,7 @@
               "text": "How many ayahs does Surah Al-Qadr (القدر) have?",
               "options": [
                 "2",
-                5,
+                "5",
                 "25",
                 "8"
               ],
@@ -118,10 +118,10 @@
               "kicker": "Juz' 30 · Hizb 60 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Quraysh (قريش) or An-Nasr (النصر)?",
               "options": [
-                "Al-Masad",
                 "Quraysh",
-                "At-Takathur",
-                "Al-Ma'un"
+                "An-Nasr",
+                "Al-Masad",
+                "At-Takathur"
               ],
               "answer": "Quraysh"
             },
@@ -173,7 +173,7 @@
                 "15",
                 "40",
                 "33",
-                30
+                "30"
               ],
               "answer": "30"
             },
@@ -192,10 +192,10 @@
               "kicker": "Juz' 29 · Hizb 57 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Al-Mulk (الملك) or Al-Qalam (القلم)?",
               "options": [
-                "Al-Qiyamah",
                 "Al-Mulk",
-                "Al-Muzzammil",
-                "Al-Jinn"
+                "Al-Qalam",
+                "Al-Qiyamah",
+                "Al-Muzzammil"
               ],
               "answer": "Al-Mulk"
             },
@@ -246,7 +246,7 @@
               "options": [
                 "40",
                 "17",
-                20,
+                "20",
                 "15"
               ],
               "answer": "20"
@@ -255,21 +255,21 @@
               "kicker": "Juz' 29 · Hizb 58 — First Ayah",
               "text": "Which is the FIRST ayah of Surah Al-Muddathir (المدثر)?",
               "options": [
-                "Ya ayyuhal muzzammilu qumil laila illa qaleelan",
+                "Ya ayyuhal muddaththiru qum fa-andhir",
                 "Wannazi'aati gharqan",
                 "Qul oohiya ilayya annahu istama'a nafarun mina al-jinni",
                 "Wal mursalati urfan"
               ],
-              "answer": "Ya ayyuhal muzzammilu qumil laila illa qaleelan"
+              "answer": "Ya ayyuhal muddaththiru qum fa-andhir"
             },
             {
               "kicker": "Juz' 29 · Hizb 58 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Al-Muzzammil (المزمل) or Al-Muddathir (المدثر)?",
               "options": [
                 "Al-Muzzammil",
+                "Al-Muddathir",
                 "Al-Haqqa",
-                "Al-Munafiqun",
-                "Nuh"
+                "Al-Munafiqun"
               ],
               "answer": "Al-Muzzammil"
             },
@@ -321,7 +321,7 @@
                 "27",
                 "25",
                 "11",
-                22
+                "22"
               ],
               "answer": "22"
             },
@@ -340,10 +340,10 @@
               "kicker": "Juz' 28 · Hizb 55 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Al-Hashr (الحشر) or As-Saff (الصف)?",
               "options": [
-                "At-Tur",
-                "Ar-Rahman",
                 "Al-Hashr",
-                "Al-Hujurat"
+                "As-Saff",
+                "At-Tur",
+                "Ar-Rahman"
               ],
               "answer": "Al-Hashr"
             },
@@ -394,7 +394,7 @@
               "options": [
                 "21",
                 "1",
-                11,
+                "11",
                 "6"
               ],
               "answer": "11"
@@ -414,10 +414,10 @@
               "kicker": "Juz' 28 · Hizb 56 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Al-Munafiqun (المنافقون) or At-Taghabun (التغابن)?",
               "options": [
-                "As-Saff",
                 "Al-Munafiqun",
-                "An-Najm",
-                "Al-Waqi'a"
+                "At-Taghabun",
+                "As-Saff",
+                "An-Najm"
               ],
               "answer": "Al-Munafiqun"
             },
@@ -469,7 +469,7 @@
                 "63",
                 "59",
                 "30",
-                60
+                "60"
               ],
               "answer": "60"
             },
@@ -488,10 +488,10 @@
               "kicker": "Juz' 27 · Hizb 53 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — An-Najm (النجم) or Al-Qamar (القمر)?",
               "options": [
+                "An-Najm",
+                "Al-Qamar",
                 "Ar-Rahman",
-                "Al-Jumu'a",
-                "Al-Waqi'a",
-                "An-Najm"
+                "Al-Jumu'a"
               ],
               "answer": "An-Najm"
             },
@@ -543,7 +543,7 @@
                 "39",
                 "156",
                 "83",
-                78
+                "78"
               ],
               "answer": "78"
             },
@@ -562,10 +562,10 @@
               "kicker": "Juz' 27 · Hizb 54 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Al-Waqi'a (الواقعة) or Al-Hadid (الحديد)?",
               "options": [
+                "Al-Waqi'a",
+                "Al-Hadid",
                 "At-Tahrim",
-                "Al-Mujadila",
-                "At-Tur",
-                "Al-Waqi'a"
+                "Al-Mujadila"
               ],
               "answer": "Al-Waqi'a"
             },
@@ -616,7 +616,7 @@
               "options": [
                 "40",
                 "30",
-                35,
+                "35",
                 "17"
               ],
               "answer": "35"
@@ -688,7 +688,7 @@
               "kicker": "Juz' 26 · Hizb 52 — Ayah Count",
               "text": "How many ayahs does Surah Al-Hujurat (الحجرات) have?",
               "options": [
-                18,
+                "18",
                 "28",
                 "13",
                 "36"
@@ -710,10 +710,10 @@
               "kicker": "Juz' 26 · Hizb 52 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Al-Hujurat (الحجرات) or Adh-Dhariyat (الذاريات)?",
               "options": [
-                "Fussilat",
-                "Ar-Rahman",
                 "Al-Hujurat",
-                "Al-Jathiya"
+                "Adh-Dhariyat",
+                "Fussilat",
+                "Ar-Rahman"
               ],
               "answer": "Al-Hujurat"
             },
@@ -763,7 +763,7 @@
               "text": "How many ayahs does Surah Fussilat (فصلت) have?",
               "options": [
                 "74",
-                54,
+                "54",
                 "53",
                 "108"
               ],
@@ -784,10 +784,10 @@
               "kicker": "Juz' 25 · Hizb 49 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Fussilat (فصلت) or Ash-Shura (الشورى)?",
               "options": [
-                "As-Sajda",
                 "Fussilat",
-                "Ghafir",
-                "Az-Zumar"
+                "Ash-Shura",
+                "As-Sajda",
+                "Ghafir"
               ],
               "answer": "Fussilat"
             },
@@ -797,10 +797,10 @@
               "options": [
                 "19",
                 "23",
-                "25",
+                "24",
                 "20"
               ],
-              "answer": "25"
+              "answer": "24"
             },
             {
               "kicker": "Juz' 25 · Hizb 49 — Surah Number",
@@ -838,7 +838,7 @@
               "options": [
                 "118",
                 "64",
-                59,
+                "59",
                 "49"
               ],
               "answer": "59"
@@ -858,10 +858,10 @@
               "kicker": "Juz' 25 · Hizb 50 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Ad-Dukhan (الدخان) or Al-Jathiya (الجاثية)?",
               "options": [
-                "Muhammad",
-                "Ya-Sin",
                 "Ad-Dukhan",
-                "Az-Zukhruf"
+                "Al-Jathiya",
+                "Muhammad",
+                "Ya-Sin"
               ],
               "answer": "Ad-Dukhan"
             },
@@ -912,7 +912,7 @@
               "options": [
                 "72",
                 "37",
-                75,
+                "75",
                 "78"
               ],
               "answer": "75"
@@ -932,10 +932,10 @@
               "kicker": "Juz' 24 · Hizb 47 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Az-Zumar (الزمر) or Ghafir (غافر)?",
               "options": [
+                "Az-Zumar",
+                "Ghafir",
                 "Al-Fath",
-                "Al-Ahzab",
-                "Al-Jathiya",
-                "Az-Zumar"
+                "Al-Ahzab"
               ],
               "answer": "Az-Zumar"
             },
@@ -944,11 +944,11 @@
               "text": "In which Juz' does Surah Az-Zumar (الزمر) primarily appear?",
               "options": [
                 "1",
-                "24",
+                "23",
                 "26",
                 "19"
               ],
-              "answer": "24"
+              "answer": "23"
             },
             {
               "kicker": "Juz' 24 · Hizb 47 — Surah Number",
@@ -985,7 +985,7 @@
               "text": "How many ayahs does Surah Fussilat (فصلت) have?",
               "options": [
                 "74",
-                54,
+                "54",
                 "49",
                 "44"
               ],
@@ -1048,7 +1048,7 @@
               "text": "How many ayahs does Surah Ya-Sin (يس) have?",
               "options": [
                 "88",
-                83,
+                "83",
                 "63",
                 "80"
               ],
@@ -1069,10 +1069,10 @@
               "kicker": "Juz' 23 · Hizb 45 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Ya-Sin (يس) or As-Saffat (الصافات)?",
               "options": [
-                "Az-Zumar",
-                "Ar-Rum",
                 "Ya-Sin",
-                "Al-Ahqaf"
+                "As-Saffat",
+                "Az-Zumar",
+                "Ar-Rum"
               ],
               "answer": "Ya-Sin"
             },
@@ -1121,7 +1121,7 @@
               "kicker": "Juz' 23 · Hizb 46 — Ayah Count",
               "text": "How many ayahs does Surah Sad (ص) have?",
               "options": [
-                88,
+                "88",
                 "44",
                 "87",
                 "78"
@@ -1143,10 +1143,10 @@
               "kicker": "Juz' 23 · Hizb 46 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Sad (ص) or Az-Zumar (الزمر)?",
               "options": [
-                "Fussilat",
                 "Sad",
-                "Ash-Shura",
-                "Saba"
+                "Az-Zumar",
+                "Fussilat",
+                "Ash-Shura"
               ],
               "answer": "Sad"
             },
@@ -1198,7 +1198,7 @@
                 "63",
                 "146",
                 "83",
-                73
+                "73"
               ],
               "answer": "73"
             },
@@ -1217,10 +1217,10 @@
               "kicker": "Juz' 22 · Hizb 43 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Al-Ahzab (الأحزاب) or Saba (سبأ)?",
               "options": [
-                "Ya-Sin",
-                "Ad-Dukhan",
                 "Al-Ahzab",
-                "Al-Mu'minun"
+                "Saba",
+                "Ya-Sin",
+                "Ad-Dukhan"
               ],
               "answer": "Al-Ahzab"
             },
@@ -1270,7 +1270,7 @@
               "text": "How many ayahs does Surah Fatir (فاطر) have?",
               "options": [
                 "46",
-                45,
+                "45",
                 "35",
                 "40"
               ],
@@ -1291,10 +1291,10 @@
               "kicker": "Juz' 22 · Hizb 44 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Fatir (فاطر) or Ya-Sin (يس)?",
               "options": [
+                "Fatir",
+                "Ya-Sin",
                 "Al-Furqan",
-                "Ash-Shu'ara",
-                "Ad-Dukhan",
-                "Fatir"
+                "Ash-Shu'ara"
               ],
               "answer": "Fatir"
             },
@@ -1344,7 +1344,7 @@
               "text": "How many ayahs does Surah Al-Ankabut (العنكبوت) have?",
               "options": [
                 "64",
-                69,
+                "69",
                 "49",
                 "79"
               ],
@@ -1365,10 +1365,10 @@
               "kicker": "Juz' 21 · Hizb 41 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Al-Ankabut (العنكبوت) or Luqman (لقمان)?",
               "options": [
-                "Maryam",
                 "Al-Ankabut",
-                "Saba",
-                "Ash-Shu'ara"
+                "Luqman",
+                "Maryam",
+                "Saba"
               ],
               "answer": "Al-Ankabut"
             },
@@ -1377,11 +1377,11 @@
               "text": "In which Juz' does Surah Al-Ankabut (العنكبوت) primarily appear?",
               "options": [
                 "6",
-                "21",
+                "20",
                 "13",
                 "24"
               ],
-              "answer": "21"
+              "answer": "20"
             },
             {
               "kicker": "Juz' 21 · Hizb 41 — Surah Number",
@@ -1420,7 +1420,7 @@
                 "31",
                 "60",
                 "20",
-                30
+                "30"
               ],
               "answer": "30"
             },
@@ -1439,10 +1439,10 @@
               "kicker": "Juz' 21 · Hizb 42 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — As-Sajda (السجدة) or Al-Ahzab (الأحزاب)?",
               "options": [
+                "As-Sajda",
+                "Al-Ahzab",
                 "An-Naml",
-                "Ash-Shura",
-                "Al-Mu'minun",
-                "As-Sajda"
+                "Ash-Shura"
               ],
               "answer": "As-Sajda"
             },
@@ -1501,7 +1501,7 @@
               "options": [
                 "113",
                 "186",
-                93,
+                "93",
                 "83"
               ],
               "answer": "93"
@@ -1521,10 +1521,10 @@
               "kicker": "Juz' 20 · Hizb 39 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — An-Naml (النمل) or Al-Qasas (القصص)?",
               "options": [
-                "Al-Hajj",
-                "Ya-Sin",
                 "An-Naml",
-                "Al-Ankabut"
+                "Al-Qasas",
+                "Al-Hajj",
+                "Ya-Sin"
               ],
               "answer": "An-Naml"
             },
@@ -1537,7 +1537,7 @@
                 "9",
                 "20"
               ],
-              "answer": "20"
+              "answer": "19"
             },
             {
               "kicker": "Juz' 20 · Hizb 39 — Surah Number",
@@ -1573,7 +1573,7 @@
               "kicker": "Juz' 20 · Hizb 40 — Ayah Count",
               "text": "How many ayahs does Surah Al-Ankabut (العنكبوت) have?",
               "options": [
-                69,
+                "69",
                 "138",
                 "74",
                 "89"
@@ -1639,7 +1639,7 @@
                 "82",
                 "57",
                 "78",
-                77
+                "77"
               ],
               "answer": "77"
             },
@@ -1658,10 +1658,10 @@
               "kicker": "Juz' 19 · Hizb 37 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Al-Furqan (الفرقان) or Ash-Shu'ara (الشعراء)?",
               "options": [
-                "Al-Hijr",
-                "Al-Isra",
                 "Al-Furqan",
-                "Al-Qasas"
+                "Ash-Shu'ara",
+                "Al-Hijr",
+                "Al-Isra"
               ],
               "answer": "Al-Furqan"
             },
@@ -1710,7 +1710,7 @@
               "kicker": "Juz' 19 · Hizb 38 — Ayah Count",
               "text": "How many ayahs does Surah An-Naml (النمل) have?",
               "options": [
-                93,
+                "93",
                 "94",
                 "186",
                 "113"
@@ -1775,7 +1775,7 @@
               "options": [
                 "119",
                 "236",
-                118,
+                "118",
                 "128"
               ],
               "answer": "118"
@@ -1795,10 +1795,10 @@
               "kicker": "Juz' 18 · Hizb 35 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Al-Mu'minun (المؤمنون) or An-Nur (النور)?",
               "options": [
-                "Al-Hijr",
                 "Al-Mu'minun",
-                "Al-Isra",
-                "Al-Furqan"
+                "An-Nur",
+                "Al-Hijr",
+                "Al-Isra"
               ],
               "answer": "Al-Mu'minun"
             },
@@ -1849,7 +1849,7 @@
               "options": [
                 "154",
                 "87",
-                77,
+                "77",
                 "74"
               ],
               "answer": "77"
@@ -1910,7 +1910,7 @@
               "kicker": "Juz' 17 · Hizb 33 — Ayah Count",
               "text": "How many ayahs does Surah Al-Anbiya (الأنبياء) have?",
               "options": [
-                112,
+                "112",
                 "109",
                 "122",
                 "132"
@@ -1921,12 +1921,12 @@
               "kicker": "Juz' 17 · Hizb 33 — First Ayah",
               "text": "Which is the FIRST ayah of Surah Al-Anbiya (الأنبياء)?",
               "options": [
-                "Iqtarabatil saaatu wan-shaqqal qamar",
+                "Iqtaraba lin-naasi hisaabuhum wa hum fee ghaflatin mu-ridoon",
                 "Kaf-Ha-Ya-Ain-Sad",
                 "Tabaarak allathee nazzala al-furqana ala abadihi",
                 "Ta-Seen-Meem"
               ],
-              "answer": "Iqtarabatil saaatu wan-shaqqal qamar"
+              "answer": "Iqtaraba lin-naasi hisaabuhum wa hum fee ghaflatin mu-ridoon"
             },
             {
               "kicker": "Juz' 17 · Hizb 33 — Juz' Location",
@@ -1973,7 +1973,7 @@
               "kicker": "Juz' 17 · Hizb 34 — Ayah Count",
               "text": "How many ayahs does Surah Al-Hajj (الحج) have?",
               "options": [
-                78,
+                "78",
                 "73",
                 "77",
                 "98"
@@ -2038,7 +2038,7 @@
               "options": [
                 "105",
                 "113",
-                110,
+                "110",
                 "111"
               ],
               "answer": "110"
@@ -2058,10 +2058,10 @@
               "kicker": "Juz' 16 · Hizb 31 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Al-Kahf (الكهف) or Maryam (مريم)?",
               "options": [
-                "Yunus",
                 "Al-Kahf",
-                "Al-Anbiya",
-                "Yusuf"
+                "Maryam",
+                "Yunus",
+                "Al-Anbiya"
               ],
               "answer": "Al-Kahf"
             },
@@ -2110,7 +2110,7 @@
               "kicker": "Juz' 16 · Hizb 32 — Ayah Count",
               "text": "How many ayahs does Surah Ta-Ha (طه) have?",
               "options": [
-                135,
+                "135",
                 "67",
                 "125",
                 "134"
@@ -2173,7 +2173,7 @@
               "kicker": "Juz' 15 · Hizb 29 — Ayah Count",
               "text": "How many ayahs does Surah Al-Isra (الإسراء) have?",
               "options": [
-                111,
+                "111",
                 "222",
                 "110",
                 "55"
@@ -2237,7 +2237,7 @@
               "text": "How many ayahs does Surah Al-Kahf (الكهف) have?",
               "options": [
                 "120",
-                110,
+                "110",
                 "55",
                 "109"
               ],
@@ -2302,7 +2302,7 @@
                 "47",
                 "26",
                 "55",
-                52
+                "52"
               ],
               "answer": "52"
             },
@@ -2321,10 +2321,10 @@
               "kicker": "Juz' 14 · Hizb 27 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Ibrahim (إبراهيم) or Al-Hijr (الحجر)?",
               "options": [
-                "Al-Hajj",
                 "Ibrahim",
-                "An-Nisa",
-                "Hud"
+                "Al-Hijr",
+                "Al-Hajj",
+                "An-Nisa"
               ],
               "answer": "Ibrahim"
             },
@@ -2332,12 +2332,12 @@
               "kicker": "Juz' 14 · Hizb 27 — Juz' Location",
               "text": "In which Juz' does Surah Ibrahim (إبراهيم) primarily appear?",
               "options": [
-                "14",
+                "13",
                 "27",
                 "21",
                 "17"
               ],
-              "answer": "14"
+              "answer": "13"
             },
             {
               "kicker": "Juz' 14 · Hizb 27 — Surah Number",
@@ -2373,7 +2373,7 @@
               "kicker": "Juz' 14 · Hizb 28 — Ayah Count",
               "text": "How many ayahs does Surah An-Nahl (النحل) have?",
               "options": [
-                128,
+                "128",
                 "148",
                 "133",
                 "64"
@@ -2438,7 +2438,7 @@
               "options": [
                 "114",
                 "106",
-                111,
+                "111",
                 "101"
               ],
               "answer": "111"
@@ -2458,10 +2458,10 @@
               "kicker": "Juz' 13 · Hizb 25 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — Yusuf (يوسف) or Ar-Ra'd (الرعد)?",
               "options": [
+                "Yusuf",
+                "Ar-Ra'd",
                 "Maryam",
-                "Al-Ma'idah",
-                "Al-Kahf",
-                "Yusuf"
+                "Al-Ma'idah"
               ],
               "answer": "Yusuf"
             },
@@ -2510,7 +2510,7 @@
               "kicker": "Juz' 13 · Hizb 26 — Ayah Count",
               "text": "How many ayahs does Surah Ibrahim (إبراهيم) have?",
               "options": [
-                52,
+                "52",
                 "57",
                 "53",
                 "72"
@@ -2575,7 +2575,7 @@
               "options": [
                 "118",
                 "120",
-                123,
+                "123",
                 "128"
               ],
               "answer": "123"
@@ -2598,9 +2598,9 @@
                 "22",
                 "8",
                 "4",
-                "12"
+                "11"
               ],
-              "answer": "12"
+              "answer": "11"
             },
             {
               "kicker": "Juz' 12 · Hizb 23 — Surah Number",
@@ -2637,7 +2637,7 @@
               "text": "How many ayahs does Surah Yusuf (يوسف) have?",
               "options": [
                 "110",
-                111,
+                "111",
                 "116",
                 "222"
               ],
@@ -2701,7 +2701,7 @@
               "options": [
                 "130",
                 "119",
-                129,
+                "129",
                 "124"
               ],
               "answer": "129"
@@ -2721,10 +2721,10 @@
               "kicker": "Juz' 11 · Hizb 21 — Surah Order",
               "text": "Which surah comes EARLIER in the Mushaf — At-Tawbah (التوبة) or Yunus (يونس)?",
               "options": [
+                "At-Tawbah",
+                "Yunus",
                 "Al-Isra",
-                "Al-Baqarah",
-                "Yusuf",
-                "At-Tawbah"
+                "Al-Baqarah"
               ],
               "answer": "At-Tawbah"
             },
@@ -2775,7 +2775,7 @@
               "options": [
                 "133",
                 "118",
-                123,
+                "123",
                 "124"
               ],
               "answer": "123"
@@ -2846,7 +2846,7 @@
               "options": [
                 "70",
                 "150",
-                75,
+                "75",
                 "65"
               ],
               "answer": "75"
@@ -2871,7 +2871,7 @@
                 "10",
                 "27"
               ],
-              "answer": "10"
+              "answer": "9"
             },
             {
               "kicker": "Juz' 10 · Hizb 19 — Surah Number",
@@ -2910,7 +2910,7 @@
                 "119",
                 "132",
                 "149",
-                129
+                "129"
               ],
               "answer": "129"
             },
@@ -2972,7 +2972,7 @@
               "options": [
                 "205",
                 "201",
-                206,
+                "206",
                 "196"
               ],
               "answer": "206"
@@ -2994,10 +2994,10 @@
               "options": [
                 "2",
                 "21",
-                "9",
+                "8",
                 "27"
               ],
-              "answer": "9"
+              "answer": "8"
             },
             {
               "kicker": "Juz' 9 · Hizb 17 — Surah Number",
@@ -3034,7 +3034,7 @@
               "text": "How many ayahs does Surah Al-Anfal (الأنفال) have?",
               "options": [
                 "78",
-                75,
+                "75",
                 "72",
                 "85"
               ],
@@ -3099,7 +3099,7 @@
                 "166",
                 "185",
                 "145",
-                165
+                "165"
               ],
               "answer": "165"
             },
@@ -3120,10 +3120,10 @@
               "options": [
                 "21",
                 "16",
-                "8",
+                "7",
                 "11"
               ],
-              "answer": "8"
+              "answer": "7"
             },
             {
               "kicker": "Juz' 8 · Hizb 15 — Surah Number",
@@ -3159,7 +3159,7 @@
               "kicker": "Juz' 8 · Hizb 16 — Ayah Count",
               "text": "How many ayahs does Surah Al-A'raf (الأعراف) have?",
               "options": [
-                206,
+                "206",
                 "207",
                 "211",
                 "196"
@@ -3223,7 +3223,7 @@
               "text": "How many ayahs does Surah Al-Ma'idah (المائدة) have?",
               "options": [
                 "123",
-                120,
+                "120",
                 "117",
                 "110"
               ],
@@ -3249,7 +3249,7 @@
                 "10",
                 "6"
               ],
-              "answer": "7"
+              "answer": "6"
             },
             {
               "kicker": "Juz' 7 · Hizb 13 — Surah Number",
@@ -3288,7 +3288,7 @@
                 "166",
                 "155",
                 "168",
-                165
+                "165"
               ],
               "answer": "165"
             },
@@ -3349,7 +3349,7 @@
               "text": "How many ayahs does Surah An-Nisa (النساء) have?",
               "options": [
                 "196",
-                176,
+                "176",
                 "181",
                 "177"
               ],
@@ -3370,12 +3370,12 @@
               "kicker": "Juz' 6 · Hizb 11 — Juz' Location",
               "text": "In which Juz' does Surah An-Nisa (النساء) primarily appear?",
               "options": [
-                "6",
+                "4",
                 "29",
                 "12",
                 "9"
               ],
-              "answer": "6"
+              "answer": "4"
             },
             {
               "kicker": "Juz' 6 · Hizb 11 — Surah Number",
@@ -3413,7 +3413,7 @@
               "options": [
                 "110",
                 "140",
-                120,
+                "120",
                 "123"
               ],
               "answer": "120"
@@ -3474,7 +3474,7 @@
               "kicker": "Juz' 5 · Hizb 9 — Ayah Count",
               "text": "How many ayahs does Surah An-Nisa (النساء) have?",
               "options": [
-                176,
+                "176",
                 "181",
                 "156",
                 "166"
@@ -3497,11 +3497,11 @@
               "text": "In which Juz' does Surah An-Nisa (النساء) primarily appear?",
               "options": [
                 "30",
-                "5",
+                "4",
                 "27",
                 "28"
               ],
-              "answer": "5"
+              "answer": "4"
             },
             {
               "kicker": "Juz' 5 · Hizb 9 — Surah Number",
@@ -3539,7 +3539,7 @@
               "options": [
                 "171",
                 "166",
-                176,
+                "176",
                 "177"
               ],
               "answer": "176"
@@ -3560,11 +3560,11 @@
               "text": "In which Juz' does Surah An-Nisa (النساء) primarily appear?",
               "options": [
                 "12",
-                "5",
+                "4",
                 "21",
                 "7"
               ],
-              "answer": "5"
+              "answer": "4"
             },
             {
               "kicker": "Juz' 5 · Hizb 10 — Surah Number",
@@ -3602,7 +3602,7 @@
               "options": [
                 "199",
                 "195",
-                200,
+                "200",
                 "210"
               ],
               "answer": "200"
@@ -3623,11 +3623,11 @@
               "text": "In which Juz' does Surah Al-Imran (آل عمران) primarily appear?",
               "options": [
                 "14",
-                "4",
+                "3",
                 "20",
                 "1"
               ],
-              "answer": "4"
+              "answer": "3"
             },
             {
               "kicker": "Juz' 4 · Hizb 7 — Surah Number",
@@ -3666,7 +3666,7 @@
                 "186",
                 "179",
                 "196",
-                176
+                "176"
               ],
               "answer": "176"
             },
@@ -3728,7 +3728,7 @@
               "options": [
                 "283",
                 "276",
-                286,
+                "286",
                 "306"
               ],
               "answer": "286"
@@ -3748,12 +3748,12 @@
               "kicker": "Juz' 3 · Hizb 5 — Juz' Location",
               "text": "In which Juz' does Surah Al-Baqarah (البقرة) primarily appear?",
               "options": [
-                "3",
+                "1",
                 "26",
                 "23",
                 "20"
               ],
-              "answer": "3"
+              "answer": "1"
             },
             {
               "kicker": "Juz' 3 · Hizb 5 — Surah Number",
@@ -3790,7 +3790,7 @@
               "text": "How many ayahs does Surah Al-Imran (آل عمران) have?",
               "options": [
                 "201",
-                200,
+                "200",
                 "220",
                 "195"
               ],
@@ -3854,7 +3854,7 @@
               "options": [
                 "306",
                 "296",
-                286,
+                "286",
                 "283"
               ],
               "answer": "286"
@@ -3877,9 +3877,9 @@
                 "14",
                 "10",
                 "24",
-                "2"
+                "1"
               ],
-              "answer": "2"
+              "answer": "1"
             },
             {
               "kicker": "Juz' 2 · Hizb 3 — Surah Number",
@@ -3917,7 +3917,7 @@
               "options": [
                 "276",
                 "296",
-                286,
+                "286",
                 "287"
               ],
               "answer": "286"
@@ -3940,9 +3940,9 @@
                 "30",
                 "28",
                 "5",
-                "2"
+                "1"
               ],
-              "answer": "2"
+              "answer": "1"
             },
             {
               "kicker": "Juz' 2 · Hizb 4 — Surah Number",
@@ -3979,7 +3979,7 @@
               "text": "How many ayahs does Surah Al-Fatiha (الفاتحة) have?",
               "options": [
                 "10",
-                7,
+                "7",
                 "3",
                 "17"
               ],
@@ -4054,7 +4054,7 @@
               "options": [
                 "287",
                 "266",
-                286,
+                "286",
                 "296"
               ],
               "answer": "286"

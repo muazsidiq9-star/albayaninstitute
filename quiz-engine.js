@@ -1869,6 +1869,16 @@ renderWelcome();
 showScreen("screen-welcome");
 renderChallengeBanner();
 renderDebugOverlay();
+
+    // "My Rewards" shortcut — the hub links here with ?openRewards=1.
+    // Rewards are global to the student (student_rewards, keyed by
+    // matric number), so any quiz id works as the entry point. Guests
+    // have no rewards, so the param is ignored for them. The welcome
+    // screen renders first so the modal has something behind it.
+    if (params.get("openRewards") === "1" && isStudentLoggedIn) {
+      state.rewardsFromHub = true;
+      quizShowRewards();
+    }
 }
 
   /* ================= DEBUG OVERLAY ================= *
@@ -4297,6 +4307,12 @@ document.getElementById("stat-best-streak").textContent =
     if (modal) {
       modal.classList.remove("active");
       document.body.style.overflow = "";
+    }
+    // Opened from the hub's settings menu (?openRewards=1) — closing
+    // takes the student back there. replace() so the browser Back
+    // button doesn't land on this quiz URL and reopen the modal.
+    if (state.rewardsFromHub) {
+      window.location.replace("quizzes.html");
     }
   };
 

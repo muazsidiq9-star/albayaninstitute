@@ -2244,12 +2244,13 @@
                 <th><input type="checkbox" id="selectAllAccessGrants" onchange="toggleSelectAllAccessGrants(this.checked)"></th>
                 <th data-translate="Student">Student</th>
                 <th data-translate="Assessment">Assessment</th>
+                <th data-translate="Mode">Mode</th>
                 <th data-translate="Granted On">Granted On</th>
                 <th data-translate="Actions">Actions</th>
               </tr>
             </thead>
             <tbody id="access-grants-body">
-              <tr><td colspan="5" class="empty-row" data-translate="No access grants found">No access grants found</td></tr>
+              <tr><td colspan="6" class="empty-row" data-translate="No access grants found">No access grants found</td></tr>
             </tbody>
           </table>
         </div>
@@ -2259,9 +2260,14 @@
 
   <!-- ================================================
        ASSESSMENT ACCESS MODAL (assessment_access_overrides)
-       Restrict one specific assessment to only the listed
-       matric numbers, regardless of registration/level/batch.
-       Empty list = normal behavior (everyone eligible sees it).
+       Two modes, controlled by assessments.access_mode:
+       - "open" (default): normal eligibility rules apply to
+         everyone; students listed below are EXTRA exceptions
+         (e.g. a payment-issue student you've cleared) added
+         on top, without touching anyone else's access.
+       - "restricted": locks the assessment down to ONLY the
+         listed matric numbers, overriding normal eligibility
+         for everyone else.
   ================================================ -->
   <div class="modal" id="assessmentAccessModal">
     <div class="modal-content">
@@ -2270,13 +2276,18 @@
       </button>
       <h2 data-translate="Manage Access">Manage Access</h2>
       <p id="assessmentAccessSubtitle" style="color:#666;font-size:13px;margin:-10px 0 14px;"></p>
-      <p style="color:#666;font-size:13px;margin:0 0 16px;" data-translate="Add a student's matric number to restrict this assessment to only the students listed below — everyone else, even if normally eligible by level/batch, will not see it. Leave the list empty for normal behavior (open to everyone eligible).">
-        Add a student's matric number to restrict this assessment to only the students listed below — everyone else, even if normally eligible by level/batch, will not see it. Leave the list empty for normal behavior (open to everyone eligible).
-      </p>
+
+      <div class="access-mode-toggle" style="margin-bottom:16px;padding:12px;border-radius:8px;background:var(--surface-color,#f7f7f7);border:1px solid var(--border-color,#ddd);">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:600;margin:0;">
+          <input type="checkbox" id="assessmentAccessModeToggle" onchange="setAssessmentAccessMode(this.checked)">
+          <span data-translate="Lock this assessment to ONLY the students listed below">Lock this assessment to ONLY the students listed below</span>
+        </label>
+        <p id="assessmentAccessModeHint" style="color:#666;font-size:12px;margin:6px 0 0;"></p>
+      </div>
 
       <div class="override-form" style="grid-template-columns:1fr auto;">
         <div>
-          <label data-translate="Student (Matric Number)">Student (Matric Number)</label>
+          <label id="assessmentAccessMatricLabel" data-translate="Student (Matric Number)">Student (Matric Number)</label>
           <input type="text" id="assessmentAccessMatric" list="overrideStudentsList" placeholder="e.g. AB/2024/001"
                  data-translate-placeholder="e.g. AB/2024/001">
         </div>

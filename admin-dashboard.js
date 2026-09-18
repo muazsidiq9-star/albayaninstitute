@@ -1921,7 +1921,12 @@ async function addGrade() {
   try {
     const matric_number = document.getElementById("gradeStudent")?.value;
     const course = document.getElementById("gradeCourse")?.value;
-    const semester = document.getElementById("gradeSemester")?.selectedOptions[0].textContent;
+    // .value, not .textContent — the placeholder option ("Select Semester")
+    // has value="" but non-empty textContent, so reading textContent let a
+    // left-on-the-placeholder dropdown silently save the literal string
+    // "Select Semester" into the semester column instead of failing
+    // validation.
+    const semester = document.getElementById("gradeSemester")?.value;
     const level_arabic = document.getElementById("gradeLevel")?.value;
     const batch = document.getElementById("gradeBatch")?.value;
     const a = Number(document.getElementById("gradeAssessment")?.value || 0);
@@ -1933,7 +1938,7 @@ async function addGrade() {
     const btn = document.getElementById("addGradeBtn");
     setLoading(btn, true);
 
-    if (!matric_number || !course) {
+    if (!matric_number || !course || !semester) {
       alert(t("Fill all required fields"));
       return;
     }
@@ -4989,12 +4994,21 @@ async function revokeCourseOverride(id) {
 
 /* -------------------------------------------------------
    PER-ASSESSMENT ACCESS RESTRICTION
-   (assessment_access_overrides) — restricts ONE specific
-   assessment to only the matric numbers listed here.
-   Empty list = normal behavior (open to everyone eligible
-   by registration + level/batch, as usual). Use this for
-   resits/makeups: create a separate assessment row, then
-   list only the specific student(s) who should see it.
+   (assessment_access_overrides + assessments.access_mode)
+
+   Two modes, set per assessment via access_mode:
+   - "open" (default): normal eligibility (registration +
+     level/batch + payment, etc.) applies to everyone as usual.
+     Matric numbers listed here are EXTRA exceptions layered on
+     top — e.g. a student with a payment issue you've cleared —
+     without touching anyone else's access.
+   - "restricted": locks the assessment down to ONLY the listed
+     matric numbers, overriding normal eligibility for everyone
+     else. Use this for resits/makeups: create a separate
+     assessment row, then list only the specific student(s).
+
+   Requires an `access_mode` text column on `assessments`
+   (default 'open') — see assistant note for the migration SQL.
 ------------------------------------------------------- */
 let currentAssessmentAccessId = null;
 
@@ -5004,9 +5018,61 @@ function openAssessmentAccessModal(assessmentId, assessmentTitle) {
   if (subtitle) subtitle.textContent = assessmentTitle ? `"${assessmentTitle}"` : "";
 
   document.getElementById("assessmentAccessMatric").value = "";
+
+  const cached = (window.assessmentsRowCache || []).find(a => a.id === assessmentId);
+  updateAssessmentAccessModeUI(cached?.access_mode || "open");
+
   openModal("assessmentAccessModal");
   populateOverrideStudentsList(); // reuse the same datalist as the course-access tab
   loadAssessmentAccessList();
+}
+
+function updateAssessmentAccessModeUI(mode) {
+  const toggle = document.getElementById("assessmentAccessModeToggle");
+  const hint = document.getElementById("assessmentAccessModeHint");
+  const matricLabel = document.getElementById("assessmentAccessMatricLabel");
+  const isRestricted = mode === "restricted";
+
+  if (toggle) toggle.checked = isRestricted;
+
+  if (hint) {
+    hint.textContent = isRestricted
+      ? t("ON: only the students listed below can see or launch this assessment — everyone else, even if normally eligible by level/batch, is blocked.")
+      : t("OFF (default): this assessment behaves normally, open to everyone eligible. Students listed below get an EXTRA exception on top of that — e.g. a payment-issue student you've cleared — without affecting anyone else.");
+  }
+
+  if (matricLabel) {
+    matricLabel.textContent = isRestricted
+      ? t("Allowed student (Matric Number)")
+      : t("Grant exception to (Matric Number)");
+  }
+}
+
+async function setAssessmentAccessMode(isRestricted) {
+  if (!currentAssessmentAccessId) return;
+  const newMode = isRestricted ? "restricted" : "open";
+  const toggle = document.getElementById("assessmentAccessModeToggle");
+
+  try {
+    const { error } = await db
+      .from("assessments")
+      .update({ access_mode: newMode })
+      .eq("id", currentAssessmentAccessId);
+
+    if (error) throw error;
+
+    const cached = (window.assessmentsRowCache || []).find(a => a.id === currentAssessmentAccessId);
+    if (cached) cached.access_mode = newMode;
+
+    updateAssessmentAccessModeUI(newMode);
+    showToast(isRestricted
+      ? t("Assessment locked to listed students only")
+      : t("Assessment reopened to everyone eligible"));
+  } catch (e) {
+    console.error("setAssessmentAccessMode error:", e);
+    alert(t("Failed to update access mode"));
+    if (toggle) toggle.checked = !isRestricted; // revert the visual toggle
+  }
 }
 
 async function loadAssessmentAccessList() {
@@ -5144,7 +5210,7 @@ async function loadAllAccessGrants() {
   const tbody = document.getElementById("access-grants-body");
   if (!tbody) return;
 
-  tbody.innerHTML = `<tr><td colspan="5" class="empty-row">
+  tbody.innerHTML = `<tr><td colspan="6" class="empty-row">
     <i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading...")}
   </td></tr>`;
 
@@ -5167,7 +5233,8 @@ async function loadAllAccessGrants() {
       ...r,
       studentName: nameMap[r.matric_number] || "—",
       assessmentTitle: assessmentMap[r.assessment_id]?.title || t("Deleted assessment"),
-      assessmentCourse: assessmentMap[r.assessment_id]?.course || "—"
+      assessmentCourse: assessmentMap[r.assessment_id]?.course || "—",
+      accessMode: assessmentMap[r.assessment_id]?.access_mode || "open"
     }));
 
     // Drop any stale selections from a previous load
@@ -5177,7 +5244,7 @@ async function loadAllAccessGrants() {
     renderAccessGrants();
   } catch (e) {
     console.error("loadAllAccessGrants error:", e);
-    tbody.innerHTML = `<tr><td colspan="5" class="empty-row" style="color:red;">${t("Failed to load list.")}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" class="empty-row" style="color:red;">${t("Failed to load list.")}</td></tr>`;
   }
 }
 
@@ -5197,7 +5264,7 @@ function renderAccessGrants() {
   const filtered = getFilteredAccessGrants();
 
   if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" class="empty-row" data-translate="No access grants found">${t("No access grants found")}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" class="empty-row" data-translate="No access grants found">${t("No access grants found")}</td></tr>`;
     const selectAll = document.getElementById("selectAllAccessGrants");
     if (selectAll) selectAll.checked = false;
     updateAccessGrantsButtons(filtered.length);
@@ -5213,6 +5280,11 @@ function renderAccessGrants() {
       </td>
       <td>${escapeForAttr(r.studentName)}<br><span style="color:#888;font-size:12px;">${escapeForAttr(r.matric_number)}</span></td>
       <td>${escapeForAttr(r.assessmentTitle)}<br><span style="color:#888;font-size:12px;">${escapeForAttr(r.assessmentCourse)}</span></td>
+      <td>
+        ${r.accessMode === "restricted"
+          ? `<span class="status-badge badge-inactive" title="${t("Everyone else is blocked from this assessment")}">${t("Exclusive")}</span>`
+          : `<span class="status-badge badge-active" title="${t("Assessment stays open to everyone eligible; this is an extra exception")}">${t("Exception")}</span>`}
+      </td>
       <td>${formatDate(r.created_at)}</td>
       <td>
         <button class="btn btn-delete btn-small" onclick="revokeAccessGrant('${r.id}')">${t("Revoke")}</button>

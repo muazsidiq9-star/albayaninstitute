@@ -240,15 +240,22 @@ async function loadActiveAssessment() {
         return;
     }
 
-    // Per-assessment restriction: if this specific assessment has ANY rows
-    // in assessment_access_overrides, it's in "restricted mode" — only the
-    // matric numbers listed there may access it, full stop, regardless of
-    // registration, level, batch, or the course-level bypass below. If it
-    // has zero rows (the normal case), nothing changes here; it falls
-    // through to the usual registration/level/batch + course bypass checks.
-    // Use this for resits/makeups: create a separate assessment row with
-    // its own time window, then list only the specific student(s) here.
-    if (assessmentRestriction && assessmentRestriction.length > 0) {
+    // Per-assessment restriction: governed by assessments.access_mode, not
+    // by whether any override rows exist (a row can now also mean "grant
+    // an exception," see below) —
+    //   "restricted": ONLY the matric numbers in assessment_access_overrides
+    //   may access it, full stop, regardless of registration, level, batch,
+    //   or the course-level bypass below. Use this for resits/makeups:
+    //   create a separate assessment row with its own time window, then
+    //   list only the specific student(s) here.
+    //   "open" (default): normal registration/level/batch checks below
+    //   apply to everyone as usual. A student listed in
+    //   assessment_access_overrides is NOT exempted from those — they
+    //   already got their exemption from the fee gate above (feeExempt).
+    //   This is the payment-exception case: assessment stays open to the
+    //   whole class, a specific student with a cleared payment issue just
+    //   isn't blocked by the payment check.
+    if (assessment.access_mode === 'restricted') {
         if (!isListedForThisAssessment) {
             examTitle.textContent = "Not Available";
             examMessage.textContent = "This assessment is not available for you";

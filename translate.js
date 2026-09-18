@@ -3611,6 +3611,20 @@ NEW FILES START HERE
 "Update Selected Students": "تحديث الطلاب المحددين",
 "Update": "تحديث",
 "Updated": "تم التحديث",
+
+"Lock this assessment to ONLY the students listed below": "قصر هذا التقييم على الطلاب المدرَجين أدناه فقط",
+"OFF (default): this assessment behaves normally, open to everyone eligible. Students listed below get an EXTRA exception on top of that — e.g. a payment-issue student you've cleared — without affecting anyone else.": "إيقاف (الوضع الافتراضي): يعمل هذا التقييم بشكل طبيعي، ومتاح لكل طالب مستحق. يحصل الطلاب المدرَجون أدناه على استثناء إضافي فوق ذلك — كطالب لديه مشكلة في الدفع وافقتَ على استثنائه — دون التأثير على أي طالب آخر.",
+"ON: only the students listed below can see or launch this assessment — everyone else, even if normally eligible by level/batch, is blocked.": "تشغيل: لا يمكن رؤية هذا التقييم أو بدؤه إلا للطلاب المدرَجين أدناه — وكل من عداهم محظور، حتى لو كان مستحقًا عادةً حسب المستوى/الدفعة.",
+"Grant exception to (Matric Number)": "منح استثناء لـ (الرقم الجامعي)",
+"Allowed student (Matric Number)": "الطالب المسموح له (الرقم الجامعي)",
+"Assessment locked to listed students only": "تم قصر التقييم على الطلاب المدرَجين فقط",
+"Assessment reopened to everyone eligible": "تمت إعادة فتح التقييم لكل طالب مستحق",
+"Failed to update access mode": "فشل تحديث وضع الوصول",
+"Mode": "الوضع",
+"Exclusive": "حصري",
+"Exception": "استثناء",
+"Everyone else is blocked from this assessment": "كل من عداهم محظور من هذا التقييم",
+"Assessment stays open to everyone eligible; this is an extra exception": "يبقى التقييم متاحًا لكل طالب مستحق؛ هذا استثناء إضافي فقط",
 // ===== DYNAMIC TEMPLATES ===== 
 
 en: {

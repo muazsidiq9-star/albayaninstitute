@@ -84,6 +84,7 @@
         <button type="button" class="quiz-hub-more-item" id="hub-continue-btn" hidden>▶️ Continue: …</button>
         <div class="quiz-hub-more-divider" id="hub-continue-divider" hidden></div>
         <button type="button" class="quiz-hub-more-item" data-proxy="global-stats-btn">📊 My Overall Statistics</button>
+        <button type="button" class="quiz-hub-more-item" id="hub-rewards-btn" hidden>🎁 My Rewards</button>
         <button type="button" class="quiz-hub-more-item" data-proxy="overall-leaderboard-trigger">🏆 Overall Leaderboard</button>
         <button type="button" class="quiz-hub-more-item" id="hub-badges-btn">🎖️ My Badges</button>
         <button type="button" class="quiz-hub-more-item" data-proxy="how-to-play-btn">ⓘ How to Play & Earn</button>
@@ -1788,6 +1789,31 @@ document.body.style.overflow =
       window.location.href = `quiz.html?id=${encodeURIComponent(last.quizId)}&resume=1`;
     });
   })();
+
+  // "My Rewards" — students only (same rule as quiz.html, where the
+  // trigger is hidden for guests). Rewards live in student_rewards keyed
+  // by matric number, so like badges they're global, not per-quiz: any
+  // quiz id works as the entry point. quiz.html opens its existing
+  // rewards modal when it sees ?openRewards=1, so claiming a reward
+  // goes through the exact same code path as it does inside a quiz.
+  const rewardsBtn = document.getElementById("hub-rewards-btn");
+  if (rewardsBtn && !isGuestUser()) {
+    rewardsBtn.hidden = false;
+    rewardsBtn.addEventListener("click", async () => {
+      closeMenu();
+      const last = await resolveLastPlayed();
+      let targetId = last && last.quizId;
+      if (!targetId) {
+        const index = await waitForQuizIndex();
+        targetId = index && index[0] && index[0].id;
+      }
+      if (!targetId) {
+        alert("No quizzes available yet.");
+        return;
+      }
+      window.location.href = `quiz.html?id=${encodeURIComponent(targetId)}&openRewards=1`;
+    });
+  }
 
   // "My Badges" — badges are global to the student (stored on
   // quiz_players), not per-quiz, so quiz.html's existing badges

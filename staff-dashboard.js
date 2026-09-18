@@ -94,6 +94,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadProfileTab();
     wireGradeAutoTotal();
     enableGradeSearch();
+    enableGradeFilters();
 
   } catch (err) {
     console.error("Staff dashboard error:", err);
@@ -122,16 +123,22 @@ function switchTab(tab) {
 // ===========================
 // A teacher's courses now live in course_sections (course_id,
 // instructor_id, batch) — a course can have several teacher+batch
-// sections, not one instructor baked into the courses row. Levels
-// similarly live in course_levels (a course can hold several), with
-// courses.level kept only as a legacy fallback for older rows. This
-// mirrors loadCoursesAdmin()/addCourseSection() in the admin dashboard.
+// sections, not one instructor baked into the courses row. Which
+// students belong to THIS teacher is now read straight off each
+// registration's own section_id (see course_registrations.section_id),
+// instead of comparing batch text — comparing text broke whenever this
+// teacher had even one "open to all batches" section on a course, which
+// made every batch on that course show up, including other teachers'.
+// Levels similarly live in course_levels (a course can hold several),
+// with courses.level kept only as a legacy fallback for older rows.
+// This mirrors loadCoursesAdmin()/addCourseSection() in the admin
+// dashboard.
 async function loadMyCourses(teacherId) {
   const container = document.getElementById("coursesList");
 
   const { data: sections, error: sectionsError } = await db
     .from("course_sections")
-    .select("course_id, batch")
+    .select("id, course_id, batch")
     .eq("instructor_id", teacherId);
 
   if (sectionsError) {
@@ -146,15 +153,15 @@ async function loadMyCourses(teacherId) {
     return;
   }
 
-  // A blank/null batch on a section means "all batches" for that course.
-  const batchesByCourse = {};
+  // This teacher's own section ids, grouped by course — a registration
+  // only belongs to this teacher if it's tied to one of THESE ids.
+  const sectionIdsByCourse = {};
   sections.forEach(s => {
-    if (!batchesByCourse[s.course_id]) batchesByCourse[s.course_id] = { all: false, set: new Set() };
-    if (s.batch) batchesByCourse[s.course_id].set.add(s.batch);
-    else batchesByCourse[s.course_id].all = true;
+    if (!sectionIdsByCourse[s.course_id]) sectionIdsByCourse[s.course_id] = [];
+    sectionIdsByCourse[s.course_id].push(s.id);
   });
 
-  const courseIds = Object.keys(batchesByCourse);
+  const courseIds = Object.keys(sectionIdsByCourse);
 
   const { data: courseRows, error: coursesError } = await db
     .from("courses")
@@ -204,15 +211,17 @@ async function loadMyCourses(teacherId) {
   let allBatches = new Set(); // Collect all unique batches
 
   for (const course of courses) {
+    const mySectionIds = sectionIdsByCourse[course.id];
+
     const { data: registrations, error: regError } = await db
       .from("course_registrations")
       .select("matric_number")
-      .eq("course_id", course.id);
+      .eq("course_id", course.id)
+      .in("section_id", mySectionIds);
 
     if (regError) continue;
 
     const registeredMatrics = (registrations || []).map(r => r.matric_number);
-    const courseBatches = batchesByCourse[course.id];
 
     let students = [];
 
@@ -223,14 +232,9 @@ async function loadMyCourses(teacherId) {
         .in("matric_number", registeredMatrics)
         .eq("deleted", false);
 
-      if (!studentsError) {
-        // Only the batch(es) this teacher's section(s) actually cover —
-        // other sections on the same course may belong to other teachers.
-        students = courseBatches.all
-          ? (studentRows || [])
-          : (studentRows || []).filter(s => courseBatches.set.has(s.batch));
-      }
+      if (!studentsError) students = studentRows || [];
     }
+
 
     const matricNumbers = students.map(s => s.matric_number);
 
@@ -301,7 +305,25 @@ async function loadMyCourses(teacherId) {
   }
 
   document.getElementById("totalStudents").textContent = grandTotalStudents;
-  container.innerHTML = allHTML;
+
+  // A registration with no section_id yet (never matched to a section
+  // during the course_sections backfill) won't show for any teacher —
+  // safer than guessing, but worth a visible nudge so it doesn't just
+  // look like a missing student. Checked once across all of this
+  // teacher's courses, not per course, to keep this to one extra query.
+  const { count: unlinkedCount } = await db
+    .from("course_registrations")
+    .select("id", { count: "exact", head: true })
+    .in("course_id", courseIds)
+    .is("section_id", null);
+
+  const unlinkedNotice = unlinkedCount
+    ? `<p class="empty-state" style="color:#b45309;">
+        ⚠️ ${unlinkedCount} ${t("registration(s) on your courses aren't linked to a section yet, so they won't show below until an admin fixes them.")}
+       </p>`
+    : "";
+
+  container.innerHTML = unlinkedNotice + allHTML;
   
   // Populate batch filter dropdown
   populateBatchFilter(allBatches);
@@ -561,7 +583,10 @@ async function loadMyGrades() {
   document.getElementById("totalGrades").textContent = grades.length;
 
   tbody.innerHTML = grades.map(g => `
-    <tr class="grade-row">
+    <tr class="grade-row"
+        data-course="${g.course || ''}"
+        data-batch="${batchMap[g.matric_number] || ''}"
+        data-released="${g.released ? 'released' : 'pending'}">
       <td>${nameMap[g.matric_number] || "—"}</td>
       <td>${g.matric_number}</td>
       <td>${batchMap[g.matric_number] || "—"}</td>
@@ -590,6 +615,59 @@ async function loadMyGrades() {
       </td>
     </tr>
   `).join("");
+
+  populateGradeFilters(grades, batchMap);
+}
+
+// ===========================
+// GRADE FILTERS (Course / Batch / Released)
+// ===========================
+// Populates the two dropdowns from whatever's actually in the current
+// grades list, so a teacher only ever sees filter options that apply
+// to them — same pattern as populateBatchFilter() on the courses tab.
+function populateGradeFilters(grades, batchMap) {
+  const courseSelect = document.getElementById("filterGradeCourse");
+  const batchSelect = document.getElementById("filterGradeBatch");
+  if (!courseSelect || !batchSelect) return;
+
+  const courses = [...new Set(grades.map(g => g.course).filter(Boolean))].sort();
+  const batches = [...new Set(grades.map(g => batchMap[g.matric_number]).filter(Boolean))].sort();
+
+  const prevCourse = courseSelect.value;
+  const prevBatch = batchSelect.value;
+
+  courseSelect.innerHTML = `<option value="" data-translate="All Courses">📘 ${t("All Courses")}</option>` +
+    courses.map(c => `<option value="${c}">${c}</option>`).join("");
+
+  batchSelect.innerHTML = `<option value="" data-translate="All Batches">📦 ${t("All Batches")}</option>` +
+    batches.map(b => `<option value="${b}">${b}</option>`).join("");
+
+  // Keep whatever was selected, if it's still a valid option after reload.
+  if (courses.includes(prevCourse)) courseSelect.value = prevCourse;
+  if (batches.includes(prevBatch)) batchSelect.value = prevBatch;
+}
+
+function filterGradesTable() {
+  const courseValue = document.getElementById("filterGradeCourse")?.value || "";
+  const batchValue = document.getElementById("filterGradeBatch")?.value || "";
+  const releasedValue = document.getElementById("filterGradeReleased")?.value || "";
+  const searchValue = (document.getElementById("searchGrades")?.value || "").toLowerCase();
+
+  document.querySelectorAll(".grade-row").forEach(row => {
+    const matchesCourse = !courseValue || row.dataset.course === courseValue;
+    const matchesBatch = !batchValue || row.dataset.batch === batchValue;
+    const matchesReleased = !releasedValue || row.dataset.released === releasedValue;
+    const matchesSearch = !searchValue || row.textContent.toLowerCase().includes(searchValue);
+
+    row.style.display = (matchesCourse && matchesBatch && matchesReleased && matchesSearch) ? "" : "none";
+  });
+}
+
+function enableGradeFilters() {
+  ["filterGradeCourse", "filterGradeBatch", "filterGradeReleased"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("change", filterGradesTable);
+  });
 }
 
 // ===========================
@@ -1171,16 +1249,12 @@ function enableSearch() {
 // ===========================
 // SEARCH — GRADES TAB
 // ===========================
+// Combined with the Course/Batch/Released dropdowns via
+// filterGradesTable() — see enableGradeFilters() above.
 function enableGradeSearch() {
   const input = document.getElementById("searchGrades");
   if (!input) return;
-  input.addEventListener("keyup", () => {
-    const filter = input.value.toLowerCase();
-    document.querySelectorAll(".grade-row").forEach(row => {
-      row.style.display =
-        row.textContent.toLowerCase().includes(filter) ? "" : "none";
-    });
-  });
+  input.addEventListener("keyup", filterGradesTable);
 }
 
 // ===========================
