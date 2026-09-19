@@ -172,6 +172,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     sessionStorage.setItem("role", role);
     window.currentRole = role;
+    window.currentUserId = user.id;
 
     console.log("Logged in as:", role);
 
@@ -193,6 +194,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       loadPayments();
       loadFees();
       loadCoursesAdmin();
+      loadRegistrationLockStatus();
       loadDeletedStudents();
     }
 
@@ -207,6 +209,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       loadSchedule();
       loadAssessments();
       loadCoursesAdmin();
+      loadRegistrationLockStatus();
       loadDeletedStudents();
     }
 
@@ -217,6 +220,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       loadSchedule();
       loadAssessments();
       loadCoursesAdmin();
+      loadRegistrationLockStatus();
       loadFees();
       loadDeletedStudents();
     }
@@ -673,6 +677,11 @@ async function loadStudents() {
           ${s.admission_approved ? '' : `<button class="btn-approve" onclick="approveStudent('${s.id}')">${t("Approve")}</button>`}
         </td>
         <td>
+          <button class="btn btn-small" onclick="openStudentCoursesModal('${s.matric_number}', '${(s.fullname || "").replace(/'/g, "\\'")}')">
+            📚 ${t("Courses")}
+          </button>
+        </td>
+        <td>
           <button class="btn btn-small" onclick='sendSingleEmail(${JSON.stringify(s)})'>
             ${t("Send Email")}
           </button>
@@ -698,6 +707,89 @@ async function loadStudents() {
 
   populateStudentSelects();
   window.reTranslate?.();
+}
+
+// ===========================
+// STUDENT COURSES MODAL
+// ===========================
+// Read-only view of everything a given student is registered for:
+// course, the level/batch captured in course_registrations at the time
+// they registered (not their current global level/batch, which may have
+// moved on since — same reasoning as autofillGradeLevelBatch above),
+// and whichever course_sections instructor currently covers that course
+// for that batch.
+async function openStudentCoursesModal(matric, fullname) {
+  const subtitle = document.getElementById("studentCoursesSubtitle");
+  if (subtitle) subtitle.textContent = `${fullname} — ${matric}`;
+
+  const tbody = document.getElementById("student-courses-body");
+  if (tbody) {
+    tbody.innerHTML = `<tr><td colspan="4" class="empty-row">
+      <i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading...")}
+    </td></tr>`;
+  }
+
+  openModal("studentCoursesModal");
+
+  try {
+    const { data: registrations, error: regError } = await db
+      .from("course_registrations")
+      .select("*")
+      .eq("matric_number", matric);
+
+    if (regError) throw regError;
+
+    if (!registrations || registrations.length === 0) {
+      if (tbody) tbody.innerHTML = `<tr><td colspan="4" class="empty-row" data-translate="No courses registered">${t("No courses registered")}</td></tr>`;
+      return;
+    }
+
+    const courseIds = [...new Set(registrations.map(r => r.course_id))];
+
+    const { data: courseRows } = await db
+      .from("courses")
+      .select("id, course_name")
+      .in("id", courseIds);
+
+    const courseNameById = {};
+    (courseRows || []).forEach(c => { courseNameById[c.id] = c.course_name; });
+
+    const { data: sectionRows } = await db
+      .from("course_sections")
+      .select("course_id, instructor, batch")
+      .in("course_id", courseIds);
+
+    // For each (course, batch) pick the section matching that exact batch;
+    // if none, fall back to a section with batch = null (covers all batches).
+    const sectionsByCourse = {};
+    (sectionRows || []).forEach(s => {
+      if (!sectionsByCourse[s.course_id]) sectionsByCourse[s.course_id] = [];
+      sectionsByCourse[s.course_id].push(s);
+    });
+
+    function resolveInstructor(courseId, batch) {
+      const sections = sectionsByCourse[courseId] || [];
+      const exact = sections.find(s => s.batch && s.batch === batch);
+      if (exact) return exact.instructor || t("No instructor");
+      const allBatches = sections.find(s => !s.batch);
+      if (allBatches) return allBatches.instructor || t("No instructor");
+      return "—";
+    }
+
+    if (tbody) {
+      tbody.innerHTML = registrations.map(r => `
+        <tr>
+          <td>${escapeForAttr(courseNameById[r.course_id] || t("Deleted course"))}</td>
+          <td>${escapeForAttr(r.level || "—")}</td>
+          <td>${escapeForAttr(r.batch || "—")}</td>
+          <td>${escapeForAttr(resolveInstructor(r.course_id, r.batch))}</td>
+        </tr>
+      `).join("");
+    }
+  } catch (e) {
+    console.error("openStudentCoursesModal error:", e);
+    if (tbody) tbody.innerHTML = `<tr><td colspan="4" class="empty-row" style="color:red;">${t("Failed to load courses.")}</td></tr>`;
+  }
 }
 
 async function populateStudentSelects() {
@@ -2493,6 +2585,81 @@ function formatForInput(dateString) {
   const hours = String(d.getHours()).padStart(2, "0");
   const minutes = String(d.getMinutes()).padStart(2, "0");
   return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
+/* -------------------------------------------------------
+   REGISTRATION LOCK
+------------------------------------------------------- */
+async function loadRegistrationLockStatus() {
+  const { data, error } = await db
+    .from("app_settings")
+    .select("registration_locked, locked_message")
+    .eq("id", 1)
+    .single();
+
+  const btn = document.getElementById("regLockToggleBtn");
+  const msgInput = document.getElementById("regLockMessage");
+  if (error) {
+    console.error("Load registration lock status error:", error);
+    if (btn) btn.disabled = true;
+    return;
+  }
+
+  window.registrationLocked = !!data?.registration_locked;
+  if (msgInput) msgInput.value = data?.locked_message || "";
+  if (btn) btn.disabled = false;
+  renderRegistrationLockUI();
+}
+
+function renderRegistrationLockUI() {
+  const statusEl = document.getElementById("regLockStatus");
+  const btn = document.getElementById("regLockToggleBtn");
+  const card = document.getElementById("registrationLockCard");
+  if (!statusEl || !btn) return;
+
+  if (window.registrationLocked) {
+    statusEl.innerHTML = `🔴 ${t("Registration is LOCKED — students cannot register or unregister")}`;
+    btn.innerHTML = `<i class="fa-solid fa-toggle-on"></i> <span>${t("Unlock Registration")}</span>`;
+    if (card) card.style.borderLeftColor = "#dc3545";
+  } else {
+    statusEl.innerHTML = `🟢 ${t("Registration is OPEN")}`;
+    btn.innerHTML = `<i class="fa-solid fa-toggle-off"></i> <span>${t("Lock Registration")}</span>`;
+    if (card) card.style.borderLeftColor = "#28a745";
+  }
+}
+
+async function toggleRegistrationLock() {
+  const btn = document.getElementById("regLockToggleBtn");
+  const msgInput = document.getElementById("regLockMessage");
+  const newState = !window.registrationLocked;
+
+  const confirmMsg = newState
+    ? t("Lock course registration? Students will be unable to register or unregister until you unlock it.")
+    : t("Unlock course registration? Students will be able to register again.");
+  if (!confirm(confirmMsg)) return;
+
+  btn.disabled = true;
+  const { error } = await db
+    .from("app_settings")
+    .update({
+      registration_locked: newState,
+      locked_message: msgInput?.value.trim() || null,
+      updated_at: new Date().toISOString(),
+      updated_by: window.currentUserId || null
+    })
+    .eq("id", 1);
+
+  btn.disabled = false;
+
+  if (error) {
+    console.error("Toggle registration lock error:", error);
+    showToast(t("Error updating registration lock: ") + error.message, "error");
+    return;
+  }
+
+  window.registrationLocked = newState;
+  renderRegistrationLockUI();
+  showToast(newState ? t("Registration locked 🔒") : t("Registration unlocked 🔓"), "success");
 }
 
 /* -------------------------------------------------------

@@ -83,7 +83,7 @@ async function loadTimetable(matric) {
     //    encodes its own level/batch, so this alone keeps Advanced and
     //    Intermediate exams from mixing, even if both courses share the
     //    same name.
-    const selectCols = "id, title, description, course_id, type, duration_minutes, start_time, end_time, is_active, semester, course, level_arabic, batch, status";
+    const selectCols = "id, title, description, course_id, type, duration_minutes, start_time, end_time, is_active, semester, course, level_arabic, batch, status, access_mode";
 
     let courseExams = [];
     if (courseIds.length) {
@@ -110,23 +110,14 @@ async function loadTimetable(matric) {
     [...courseExams, ...extraExams].forEach(a => { examMap[a.id] = a; });
     const allExams = Object.values(examMap);
 
-    // 2b. Find which of these are in "restricted mode" at all (ANY row in
-    //     assessment_access_overrides) so a resit meant for one student
-    //     doesn't show up on a classmate's timetable just because they
-    //     happen to be registered for the same course.
-    const allExamIds = allExams.map(a => a.id);
-    const restrictedIdSet = new Set();
-    if (allExamIds.length) {
-      const { data: restrictionRows, error: restrictionErr } = await db
-        .from("assessment_access_overrides")
-        .select("assessment_id")
-        .in("assessment_id", allExamIds);
-      if (restrictionErr) throw restrictionErr;
-      (restrictionRows || []).forEach(r => restrictedIdSet.add(r.assessment_id));
-    }
-
+    // 2b. Per-assessment restriction is governed by assessments.access_mode
+    //     (fetched above via selectCols), not by whether any row exists in
+    //     assessment_access_overrides -- a row there can also mean "grant
+    //     an exception" (open mode), which must NOT hide the assessment
+    //     from the rest of the class. Only "restricted" mode hides it from
+    //     everyone except the matrics explicitly listed (myOverrideSet).
     const data = allExams
-      .filter(a => !restrictedIdSet.has(a.id) || myOverrideSet.has(a.id))
+      .filter(a => a.access_mode !== 'restricted' || myOverrideSet.has(a.id))
       .sort((a, b) => new Date(a.start_time) - new Date(b.start_time));
 
     renderTimetable(data);

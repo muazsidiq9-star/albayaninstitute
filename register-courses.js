@@ -18,6 +18,38 @@ async function initRegisterCourses() {
   }
 
   try {
+    /* ── 0. Is registration currently locked by admin? ──
+       Checked first, before anything else, so a locked page never even
+       queries the student's profile/courses. This is a UX gate only —
+       the real enforcement lives in a DB trigger on course_registrations,
+       so registering/unregistering is blocked server-side too even if
+       someone bypasses this page entirely. */
+    const { data: settings, error: settingsError } = await sb
+      .from("app_settings")
+      .select("registration_locked, locked_message")
+      .eq("id", 1)
+      .single();
+
+    if (settingsError) {
+      console.error("❌ Settings fetch error:", settingsError);
+      // Fail open on a read error rather than blocking everyone by accident.
+    }
+
+    if (settings?.registration_locked) {
+      const lockedHeading = typeof t === "function" ? t("Registration is currently closed") : "Registration is currently closed";
+      const lockedBody = settings.locked_message ||
+        (typeof t === "function" ? t("Course registration has been temporarily locked by the administration. Please check back later.") : "Course registration has been temporarily locked by the administration. Please check back later.");
+
+      container.innerHTML = `
+        <div class="registration-locked-notice" style="text-align:center;padding:60px 20px;max-width:520px;margin:0 auto;">
+          <div style="font-size:48px;margin-bottom:12px;">🔒</div>
+          <h2>${lockedHeading}</h2>
+          <p>${lockedBody}</p>
+        </div>
+      `;
+      return;
+    }
+
     /* ── 1. Who is this student? ── */
     const { data: studentProfile, error: profileError } = await sb
       .from("students")
@@ -206,6 +238,7 @@ async function initRegisterCourses() {
             data-id="${course.id}"
             data-registered="${isRegistered}"
             data-section-id="${matchedSection ? matchedSection.id : ""}"
+            ${isRegistered ? `disabled title="Manage this from My Courses"` : ""}
           >
             ${isRegistered ? "Registered" : "Register"}
           </button>
@@ -213,80 +246,56 @@ async function initRegisterCourses() {
       `;
     }).join("");
 
-    /* ── 6. Button clicks ── */
-    document.querySelectorAll(".register-btn").forEach(btn => {
+    /* ── 6. Button clicks ──
+       Register only — unregistering now lives exclusively on My Courses,
+       so it stays available even while registration is locked here
+       (the lock trigger only guards INSERT, not DELETE). Already-registered
+       cards render their button as disabled above, so this only ever
+       fires for courses the student hasn't registered for yet. */
+    document.querySelectorAll(".register-btn:not([disabled])").forEach(btn => {
       btn.addEventListener("click", async () => {
         const courseId = btn.dataset.id;
         const sectionId = btn.dataset.sectionId || null;
-        const isRegistered = btn.dataset.registered === "true";
         btn.disabled = true;
 
-        if (isRegistered) {
-          /* ── UNREGISTER ── */
-          try {
-            console.log("🗑️ Deleting:", { matric, courseId });
-            const { data, error } = await sb
-              .from("course_registrations")
-              .delete()
-              .eq("course_id", courseId)
-              .eq("matric_number", matric);
+        try {
+          console.log("➕ Inserting:", { matric, courseId, level: studentLevel, batch: studentBatch, sectionId });
+          const { data, error } = await sb
+            .from("course_registrations")
+            .insert([{
+              matric_number: matric,
+              course_id: courseId,
+              level: studentLevel || null,
+              batch: studentBatch || null,
+              section_id: sectionId || null // which teacher/batch section this registration belongs to
+            }])
+            .select();
 
-            if (error) {
-              console.error("❌ Delete error:", error);
-              alert("Failed to unregister: " + error.message);
+          if (error) {
+            console.error("❌ Insert error:", error);
+            // Already registered? (unique violation = 23505)
+            if (error.code === "23505" || error.message.includes("duplicate")) {
+              btn.textContent = "Registered";
+              btn.disabled = true;
+              btn.title = "Manage this from My Courses";
+              btn.classList.add("registered");
+              alert("You were already registered.");
+            } else {
+              alert("Failed to register: " + error.message);
               btn.disabled = false;
-              return;
             }
-
-            console.log("🗑️ Delete result:", data);
-            btn.textContent = "Register";
-            btn.dataset.registered = "false";
-            btn.classList.remove("registered");
-          } catch (err) {
-            console.error("❌ Unregister exception:", err);
-            alert("Error: " + err.message);
-            btn.disabled = false;
+            return;
           }
 
-        } else {
-          /* ── REGISTER ── */
-          try {
-            console.log("➕ Inserting:", { matric, courseId, level: studentLevel, batch: studentBatch, sectionId });
-            const { data, error } = await sb
-              .from("course_registrations")
-              .insert([{
-                matric_number: matric,
-                course_id: courseId,
-                level: studentLevel || null,
-                batch: studentBatch || null,
-                section_id: sectionId || null // which teacher/batch section this registration belongs to
-              }])
-              .select();
-
-            if (error) {
-              console.error("❌ Insert error:", error);
-              // Already registered? (unique violation = 23505)
-              if (error.code === "23505" || error.message.includes("duplicate")) {
-                btn.textContent = "Registered";
-                btn.dataset.registered = "true";
-                btn.classList.add("registered");
-                alert("You were already registered.");
-              } else {
-                alert("Failed to register: " + error.message);
-              }
-              btn.disabled = false;
-              return;
-            }
-
-            console.log("➕ Insert result:", data);
-            btn.textContent = "Registered";
-            btn.dataset.registered = "true";
-            btn.classList.add("registered");
-          } catch (err) {
-            console.error("❌ Register exception:", err);
-            alert("Error: " + err.message);
-            btn.disabled = false;
-          }
+          console.log("➕ Insert result:", data);
+          btn.textContent = "Registered";
+          btn.disabled = true;
+          btn.title = "Manage this from My Courses";
+          btn.classList.add("registered");
+        } catch (err) {
+          console.error("❌ Register exception:", err);
+          alert("Error: " + err.message);
+          btn.disabled = false;
         }
       });
     });

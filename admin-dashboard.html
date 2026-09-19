@@ -385,6 +385,7 @@
             <th data-translate="Status">Status</th>
             <th data-translate="Admission">Admission</th>
             <th data-translate="Actions">Actions</th>
+            <th data-translate="Courses">Courses</th>
             <th data-translate="Welcome Email">Welcome Email</th>
             <th data-translate="Edit">Edit</th>
             <th data-translate="Delete">Delete</th>
@@ -673,6 +674,33 @@
        COURSES SECTION (tab-courses)
   ================================================ -->
   <div class="dash-tab-panel" id="tab-courses" style="display:none;">
+  <!-- ================================================
+       REGISTRATION LOCK CONTROL
+  ================================================ -->
+  <section class="courses-section dash-section">
+    <div class="card" id="registrationLockCard" style="border-left:4px solid #ccc;">
+      <h2 class="section-title">
+        <i class="fa-solid fa-lock"></i>
+        <span data-translate="Course Registration Control">Course Registration Control</span>
+      </h2>
+      <p id="regLockStatus" style="font-weight:bold;">&nbsp;</p>
+      <div style="margin:10px 0;">
+        <label for="regLockMessage" style="display:block;font-weight:normal;margin-bottom:4px;" data-translate="Message students see while locked (optional)">
+          Message students see while locked (optional)
+        </label>
+        <textarea id="regLockMessage" rows="2" style="width:100%;"
+          placeholder="Course registration has been temporarily locked by the administration. Please check back later."
+          data-translate-placeholder="Course registration has been temporarily locked by the administration. Please check back later."></textarea>
+      </div>
+      <button class="btn btn-primary" id="regLockToggleBtn" onclick="toggleRegistrationLock()" disabled>
+        <i class="fa-solid fa-toggle-off"></i>
+        <span data-translate="Lock Registration">Lock Registration</span>
+      </button>
+      <p class="course-form-hint" data-translate="When locked, students cannot register or unregister for any course until you unlock it here.">
+        When locked, students cannot register or unregister for any course until you unlock it here.
+      </p>
+    </div>
+  </section>
   <!-- ================================================
        COURSES SECTION
   ================================================ -->
@@ -2310,6 +2338,43 @@
             <tr><td colspan="3" class="empty-row" data-translate="No restrictions — open to everyone eligible">No restrictions — open to everyone eligible</td></tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================
+       STUDENT COURSES MODAL — read-only view of every course
+       a given student is registered for: level and batch as
+       captured in course_registrations at registration time,
+       and the instructor currently assigned to that course for
+       that batch (from course_sections). Opened from a button
+       on each row of the Students table.
+  ================================================ -->
+  <div class="modal" id="studentCoursesModal">
+    <div class="modal-content modal-large cert-modal-content">
+      <button class="btn btn-close" onclick="closeModal('studentCoursesModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="cert-modal-form">
+        <h2 data-translate="Registered Courses">Registered Courses</h2>
+        <p id="studentCoursesSubtitle" style="color:#666;font-size:13px;margin:-10px 0 16px;"></p>
+      </div>
+      <div class="cert-modal-table-scroll">
+        <div class="table-container">
+          <table id="student-courses-table">
+            <thead>
+              <tr>
+                <th data-translate="Course">Course</th>
+                <th data-translate="Level">Level</th>
+                <th data-translate="Batch">Batch</th>
+                <th data-translate="Instructor">Instructor</th>
+              </tr>
+            </thead>
+            <tbody id="student-courses-body">
+              <tr><td colspan="4" class="empty-row" data-translate="No courses registered">No courses registered</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

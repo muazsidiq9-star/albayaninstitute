@@ -29,7 +29,6 @@
         <a href="index.html" data-translate="Home">Home</a>
         <a href="courses.html" data-translate="Courses">Courses</a>
         <a href="students-dashboard.html" data-translate="Student Dashboard">Student Dashboard</a>
-<a href="quizzes.html" data-translate="Quizzes">Quizzes</a>
         <a href="contact.html" data-translate="Contact">Contact</a>
       </div>
     </div>
@@ -543,30 +542,21 @@
         [...(courseExams || []), ...extraExams].forEach(e => { examMap[e.id] = e; });
         const allExams = Object.values(examMap);
 
-        // 2b. Of all exams pulled above, find which ones are in "restricted
-        //     mode" at all (ANY row in assessment_access_overrides) -- this
-        //     needs to be known for every exam here, not just this
-        //     student's own, so a restricted resit can be correctly hidden
-        //     from classmates who would otherwise match by registration/level/batch.
-        const allExamIds = allExams.map(e => e.id);
-        const restrictedIdSet = new Set();
-        if (allExamIds.length) {
-          const { data: restrictionRows, error: restrictionErr } = await sb
-            .from("assessment_access_overrides")
-            .select("assessment_id")
-            .in("assessment_id", allExamIds);
-          if (restrictionErr) throw restrictionErr;
-          (restrictionRows || []).forEach(r => restrictedIdSet.add(r.assessment_id));
-        }
+        // 2b. Per-assessment restriction is governed by assessments.access_mode
+        //     (already present on each exam row via select("*")), not by
+        //     whether any row exists in assessment_access_overrides -- a
+        //     row there can also mean "grant an exception" (open mode),
+        //     which must NOT hide the assessment from the rest of the
+        //     class. Only "restricted" mode hides it from everyone except
+        //     the matrics explicitly listed (myOverrideSet).
 
         // 3. Client-side gate, same three-tier precedence as test-hall.js:
-        //    (a) per-assessment restriction wins outright -- only listed
-        //        matrics see it, no matter what;
+        //    (a) "restricted" mode wins outright -- only listed matrics see it;
         //    (b) course-level bypass skips registration/level/batch;
         //    (c) otherwise, normal level + batch match against this
         //        student's registration for that specific course.
         const exams = allExams.filter(exam => {
-          if (restrictedIdSet.has(exam.id)) {
+          if (exam.access_mode === 'restricted') {
             return myOverrideSet.has(exam.id);
           }
 
