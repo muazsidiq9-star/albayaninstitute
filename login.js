@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "registrar"
   ];
 
-  const staffRoles = ["teacher"];
+  const staffRoles = ["teacher", "admissions_officer"];
 
   // ===========================
   // FORGOT PASSWORD ROUTING

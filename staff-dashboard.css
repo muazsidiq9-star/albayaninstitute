@@ -437,6 +437,23 @@ html, body { overflow-x: hidden; }
 .staff-table tbody tr:nth-child(even) { background: var(--surface-color); }
 .staff-table tbody tr:hover { background: var(--primary-xlight); }
 
+.sortable-th {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: 20px !important;
+}
+.sortable-th:hover { background: rgba(255, 255, 255, 0.1); }
+.sortable-th::after {
+  content: "⇅";
+  position: absolute;
+  right: 6px;
+  opacity: 0.45;
+  font-size: 0.75em;
+}
+.sortable-th.sort-asc::after { content: "▲"; opacity: 1; }
+.sortable-th.sort-desc::after { content: "▼"; opacity: 1; }
+
 
 /* ============================================================
    STATUS & REMARK BADGES
@@ -648,10 +665,14 @@ html, body { overflow-x: hidden; }
    PROFILE TAB
 ============================================================ */
 .profile-form {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));   /* two fields per row on desktop */
+  gap: 14px 16px;
   margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  .profile-form { grid-template-columns: 1fr; }        /* stack on phones */
 }
 
 .profile-field {
@@ -1003,4 +1024,205 @@ html, body { overflow-x: hidden; }
   .filter-bar { width: 100%; }
   .filter-select { width: 100%; }
   .filter-bar .search-input { width: 100%; }
+}
+
+/* ============================================================
+   ADMISSIONS OFFICER — LEADS TAB
+   Added for the "Leads" tab shared by the Admissions Officer
+   role on this page. Section-header controls, action buttons,
+   the danger badge colour, and modal styles that this file
+   didn't need before (the teacher-only view never used a modal).
+============================================================ */
+
+.filter-select {
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--text-color);
+  font-size: 0.85rem;
+  font-family: inherit;
+}
+
+@media (max-width: 640px) {
+  .section-header { flex-direction: column; align-items: stretch; }
+  .search-input, .filter-select, .add-btn { width: 100%; }
+}
+
+.add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.add-btn:hover { background: var(--primary-dark); }
+
+.btn-edit {
+  background: #fde047;
+  color: #713f12;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+.btn-edit:hover { background: #fef08a; transform: translateY(-1px); }
+
+.btn-delete {
+  background: #dc2626;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+.btn-delete:hover { background: #b91c1c; transform: translateY(-1px); }
+
+.btn-cancel { background: #dc2626; color: #fff; }
+.btn-cancel:hover { background: #b91c1c; }
+
+.badge-danger {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+[data-theme="dark"] .badge-danger { background: #450a0a; color: #fca5a5; border-color: #7f1d1d; }
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(3px);
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto;
+  padding: 90px 16px 30px;
+}
+.modal.show { display: flex; }
+
+.modal-content {
+  position: relative;
+  z-index: 1000000;
+  background: var(--card-color);
+  width: min(560px, 100%);
+  border-radius: 14px;
+  padding: 24px 20px;
+  max-height: calc(100dvh - 20px);
+  overflow-y: auto;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+  animation: leadFadeUp 0.3s ease;
+}
+
+@keyframes leadFadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-content h2 {
+  margin: 0 40px 20px 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  background: var(--primary);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.btn-close {
+  background: #dc2626;
+  color: #fff;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn-close:hover { background: #b91c1c; }
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.modal-grid label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: -6px;
+}
+.modal-grid input,
+.modal-grid select,
+.modal-grid textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 7px;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--text-color);
+  font-size: 0.88rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+.modal-grid input:focus,
+.modal-grid select:focus,
+.modal-grid textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(22,163,74,0.13);
+}
+.modal-grid textarea { grid-column: 1 / -1; resize: vertical; }
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .modal-grid { grid-template-columns: 1fr; }
+}
+
+
+/* ============================================================
+   FORM CARDS — WIDTH CAP + SIDE-BY-SIDE FIELDS (desktop)
+   Add class "staff-card--form" to any card that holds a form.
+   Change --form-card-max to make all form cards wider/narrower.
+============================================================ */
+.staff-card--form {
+  max-width: var(--form-card-max, 880px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Two short fields per row (used by Change Password) */
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 16px;
+  margin-bottom: 14px;
+}
+.form-grid-2 .form-group1 { margin-bottom: 0; }
+
+@media (max-width: 600px) {
+  .form-grid-2 { grid-template-columns: 1fr; }
 }

@@ -71,8 +71,11 @@
 
               <div class="form-group">
                 <label for="semester" data-translate="Semester">Semester</label>
-                <input type="text" id="semester" placeholder="e.g., Spring 2025"
-                       data-translate-placeholder="e.g., Spring 2025" required>
+                <select id="semester" required>
+                  <option value="" data-translate="Select Semester">Select Semester</option>
+                  <option value="First Semester" data-translate="First Semester">First Semester</option>
+                  <option value="Second Semester" data-translate="Second Semester">Second Semester</option>
+                </select>
               </div>
 
               <div class="form-group">
@@ -81,6 +84,25 @@
                   <option value="activity" data-translate="Activity">Activity</option>
                   <option value="course_outline" data-translate="Course Outline">Course Outline</option>
                 </select>
+              </div>
+
+              <div class="form-group">
+                <label for="level_arabic" data-translate="Level">Level</label>
+                <select id="level_arabic">
+                  <option value="" data-translate="All Levels">All Levels</option>
+                  <option data-translate="Preliminary">Preliminary</option>
+                  <option data-translate="Beginner">Beginner</option>
+                  <option data-translate="Intermediate">Intermediate</option>
+                  <option data-translate="Advanced">Advanced</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="batch" data-translate="Batch">Batch</label>
+                <input type="text" id="batch" list="batchList"
+                       placeholder="e.g. June 2026 (leave blank for all batches)"
+                       data-translate-placeholder="e.g. June 2026 (leave blank for all batches)">
+                <datalist id="batchList"></datalist>
               </div>
 
               <div class="form-group sem-full">
@@ -142,6 +164,12 @@
           </select>
           <select id="filterType">
             <option value="" data-translate="All Types">All Types</option>
+          </select>
+          <select id="filterLevel">
+            <option value="" data-translate="All Levels">All Levels</option>
+          </select>
+          <select id="filterBatch">
+            <option value="" data-translate="All Batches">All Batches</option>
           </select>
         </div>
 

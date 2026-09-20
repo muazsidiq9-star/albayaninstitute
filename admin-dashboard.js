@@ -178,6 +178,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     applyRolePermissions(role);
     applyActionRestrictions(role);
+    applyStudentsReadOnly(role);
     restrictPasswordSections();
 
     // Init tab system + admin profile
@@ -199,6 +200,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (role === "bursar") {
+      loadStudents();
       loadPayments();
       loadFees();
     }
@@ -411,7 +413,7 @@ async function loadStudentsCache() {
 function applyRolePermissions(role) {
   const permissions = {
     registrar: ["students", "payments", "student_fee_status", "courses", "course_registrations"],
-    bursar: ["payments", "student_fee_status"],
+    bursar: ["students", "payments", "student_fee_status"],
     h_o_d: ["students", "courses", "course_registrations", "grades", "schedule", "assessments"],
     mudeer: ["students", "payments", "student_fee_status", "courses", "course_registrations", "grades", "schedule", "assessments"],
     assistant_mudeer: ["students", "payments", "student_fee_status", "courses", "course_registrations", "grades", "schedule", "assessments"]
@@ -435,13 +437,23 @@ function applyRolePermissions(role) {
   });
 }
 
+// Roles that may VIEW the Students tab but not change anything in it.
+// (Hides Add / Promote / Approve / Email / Edit / Delete / Certificate.)
+// The database policies still block writes for these roles either way.
+const STUDENTS_READ_ONLY_ROLES = ["bursar"];
+
+function applyStudentsReadOnly(role) {
+  document.getElementById("tab-students")
+    ?.classList.toggle("students-readonly", STUDENTS_READ_ONLY_ROLES.includes(role));
+}
+
 function applyActionRestrictions(role) {
   const roleUI = {
     mudeer: ["all"],
     assistant_mudeer: ["all"],
     h_o_d: ["students", "courses", "course_registrations", "grades", "schedule", "assessments"],
     registrar: ["students", "payments", "student_fee_status", "courses", "course_registrations"],
-    bursar: ["payments", "student_fee_status"]
+    bursar: ["students", "payments", "student_fee_status"]
   };
 
   window.canDo = (section) => {
@@ -561,66 +573,64 @@ function toggleStatsVisibility() {
   applyStatsVisibility();
 }
 
-async function loadStats(role) {
+async function loadStats() {
+  // NOTE: no `role` argument on purpose. Four callers (add student, add /
+  // edit payment, confirm payment, permanent delete) call loadStats() with
+  // nothing, and the old version treated a missing role as "restricted" and
+  // wrote a dash into the payment stats. Permission now comes from the same
+  // tab list that shows/hides the tab buttons, so it can't depend on the caller.
   try {
-    const { count: studentCount, error: sErr } = await db
-      .from("students")
-      .select("*", { count: "exact", head: true });
+    const can = tabId => typeof window.isTabAllowed === "function" && window.isTabAllowed(tabId);
+    const canViewStudents = can("tab-students");
+    const canViewPayments = can("tab-payments");
 
-    if (!sErr) {
-      const el = document.getElementById("totalStudents");
-      el.dataset.value = studentCount || 0;
-      el.textContent = el.dataset.value;
-    }
+    if (canViewStudents) {
+      const { count: studentCount, error: sErr } = await db
+        .from("students")
+        .select("*", { count: "exact", head: true });
 
-    // ❌ BLOCK payment stats for restricted roles
-    const canViewPayments = ["mudeer", "assistant_mudeer", "bursar", "registrar"].includes(role);
-
-    if (!canViewPayments) {
-      const pEl = document.getElementById("totalPayments");
-      const aEl = document.getElementById("totalAmountPaid");
-      pEl.dataset.value = "—";
-      aEl.dataset.value = "—";
-      pEl.textContent = "—";
-      aEl.textContent = "—";
-      applyStatsVisibility();
-      return;
-    }
-
-    // continue payment logic only if allowed
-    let rates = { NGN: 1, USD: 1600, EUR: 1750, GBP: 2000 };
-
-    try {
-      const ratesRes = await fetch("https://api.exchangerate-api.com/v4/latest/NGN");
-      if (ratesRes.ok) {
-        const ratesData = await ratesRes.json();
-        rates = { NGN: 1 };
-        for (const [currency, rate] of Object.entries(ratesData.rates)) {
-          rates[currency] = 1 / rate;
-        }
+      if (!sErr) {
+        const el = document.getElementById("totalStudents");
+        el.dataset.value = studentCount || 0;
+        el.textContent = el.dataset.value;
       }
-    } catch (rateErr) {
-      console.warn("Could not fetch live rates, using fallback:", rateErr);
     }
 
-    const { data: payments, error: pErr } = await db
-      .from("payments")
-      .select("amount, currency");
+    if (canViewPayments) {
+      let rates = { NGN: 1, USD: 1600, EUR: 1750, GBP: 2000 };
 
-    if (!pErr && payments) {
-      const pEl = document.getElementById("totalPayments");
-      pEl.dataset.value = payments.length;
-      pEl.textContent = pEl.dataset.value;
+      try {
+        const ratesRes = await fetch("https://api.exchangerate-api.com/v4/latest/NGN");
+        if (ratesRes.ok) {
+          const ratesData = await ratesRes.json();
+          rates = { NGN: 1 };
+          for (const [currency, rate] of Object.entries(ratesData.rates)) {
+            rates[currency] = 1 / rate;
+          }
+        }
+      } catch (rateErr) {
+        console.warn("Could not fetch live rates, using fallback:", rateErr);
+      }
 
-      const totalNGN = payments.reduce((sum, p) => {
-        const currency = p.currency || "NGN";
-        const rate = rates[currency] || 1;
-        return sum + (Number(p.amount || 0) * rate);
-      }, 0);
+      const { data: payments, error: pErr } = await db
+        .from("payments")
+        .select("amount, currency");
 
-      const aEl = document.getElementById("totalAmountPaid");
-      aEl.dataset.value = "₦" + Math.round(totalNGN).toLocaleString();
-      aEl.textContent = aEl.dataset.value;
+      if (!pErr && payments) {
+        const pEl = document.getElementById("totalPayments");
+        pEl.dataset.value = payments.length;
+        pEl.textContent = pEl.dataset.value;
+
+        const totalNGN = payments.reduce((sum, p) => {
+          const currency = p.currency || "NGN";
+          const rate = rates[currency] || 1;
+          return sum + (Number(p.amount || 0) * rate);
+        }, 0);
+
+        const aEl = document.getElementById("totalAmountPaid");
+        aEl.dataset.value = "₦" + Math.round(totalNGN).toLocaleString();
+        aEl.textContent = aEl.dataset.value;
+      }
     }
 
     applyStatsVisibility();
@@ -673,7 +683,7 @@ async function loadStudents() {
             ${s.admission_approved ? t('✅ Approved') : t('❌ Not Approved')}
           </span>
         </td>
-        <td>
+        <td class="student-action-col">
           ${s.admission_approved ? '' : `<button class="btn-approve" onclick="approveStudent('${s.id}')">${t("Approve")}</button>`}
         </td>
         <td>
@@ -681,25 +691,25 @@ async function loadStudents() {
             📚 ${t("Courses")}
           </button>
         </td>
-        <td>
+        <td class="student-action-col">
           <button class="btn btn-small" onclick='sendSingleEmail(${JSON.stringify(s)})'>
             ${t("Send Email")}
           </button>
         </td>
-        <td><button class="btn btn-edit" onclick="editStudent('${s.id}')">${t("Edit")}</button></td>
-        <td>
+        <td class="student-action-col"><button class="btn btn-edit" onclick="editStudent('${s.id}')">${t("Edit")}</button></td>
+        <td class="student-action-col">
   <button class="btn btn-delete"
           onclick="deleteStudent('${s.id}')">
     ${t("Delete")}
   </button>
   </td>
-   <td>
+   <td class="student-action-col">
   <button class="btn btn-danger"
           onclick="permanentDeleteStudent('${s.id}')">
     🗑️
   </button>
 </td>
-        <td><button class="btn btn-cert" onclick="openCertificateModal('${s.id}', '${s.matric_number}', '${s.fullname}', '${s.level_arabic}', '${s.batch || ""}')">🎓 ${t("Issue")}</button></td>
+        <td class="student-action-col"><button class="btn btn-cert" onclick="openCertificateModal('${s.id}', '${s.matric_number}', '${s.fullname}', '${s.level_arabic}', '${s.batch || ""}')">🎓 ${t("Issue")}</button></td>
       `;
       tbody.appendChild(tr);
     });
@@ -2221,17 +2231,19 @@ async function loadCoursesForScheduleForm() {
   });
 }
 
-// Populates the schedule modal's Instructor <select> from staff on file
-// (profiles where role = teacher) — same source as the Courses tab's
-// instructor dropdown, so names are picked, not retyped. The `schedule`
-// table only ever stored the instructor's plain name (no instructor_id
-// column), so the option value here is the name itself, same as before —
-// this doesn't require a schema change or touch any existing row.
+// Populates the schedule modal's Instructor <select> from staff who can
+// teach (profiles where role = teacher OR admissions_officer — an
+// Admissions Officer can be handed a class while keeping their role) —
+// same source as the Courses tab's instructor dropdown, so names are
+// picked, not retyped. The `schedule` table only ever stored the
+// instructor's plain name (no instructor_id column), so the option value
+// here is the name itself, same as before — this doesn't require a
+// schema change or touch any existing row.
 async function loadTeachersForScheduleForm() {
   const { data, error } = await db
     .from("profiles")
     .select("id, full_name")
-    .eq("role", "teacher")
+    .in("role", ["teacher", "admissions_officer"])
     .order("full_name");
 
   if (error) { console.error(error); return; }
@@ -2665,16 +2677,17 @@ async function toggleRegistrationLock() {
 /* -------------------------------------------------------
    COURSES
 ------------------------------------------------------- */
-// Loads staff (role = teacher) into window.teacherCache. Used to build the
-// instructor <select> inline in each course card when adding a section
-// (see loadCoursesAdmin() / addCourseSection()), rather than a single
-// static dropdown — a course can now have several instructor+batch
-// sections, so each course card gets its own "add section" row.
+// Loads staff who can teach (role = teacher OR admissions_officer) into
+// window.teacherCache. Used to build the instructor <select> inline in
+// each course card when adding a section (see loadCoursesAdmin() /
+// addCourseSection()), rather than a single static dropdown — a course
+// can now have several instructor+batch sections, so each course card
+// gets its own "add section" row.
 async function loadTeachers() {
   const { data, error } = await db
     .from("profiles")
     .select("id, full_name")
-    .eq("role", "teacher")
+    .in("role", ["teacher", "admissions_officer"])
     .order("full_name");
 
   if (error) {
@@ -4124,7 +4137,7 @@ async function loadAdminProfile() {
 
     const { data: profile, error } = await db
       .from("profiles")
-      .select("full_name, role, staff_type, department, phone, email, passport_url")
+      .select("full_name, role, staff_type, department, phone, country, state, address, email, passport_url")
       .eq("id", user.id)
       .single();
 
@@ -4171,6 +4184,15 @@ async function loadAdminProfile() {
     const phoneEl = document.getElementById("adminPhone");
     if (phoneEl) phoneEl.value = profile.phone || "";
 
+    const countryEl = document.getElementById("adminCountry");
+    if (countryEl) countryEl.value = profile.country || "";
+
+    const stateEl = document.getElementById("adminState");
+    if (stateEl) stateEl.value = profile.state || "";
+
+    const addressEl = document.getElementById("adminAddress");
+    if (addressEl) addressEl.value = profile.address || "";
+
     const deptEl = document.getElementById("adminDepartment");
     if (deptEl) deptEl.value = profile.department || "";
 
@@ -4189,6 +4211,9 @@ async function saveAdminProfile() {
 
     const full_name = document.getElementById("adminFullName")?.value.trim();
     const phone = document.getElementById("adminPhone")?.value.trim();
+    const country = document.getElementById("adminCountry")?.value.trim();
+    const state = document.getElementById("adminState")?.value.trim();
+    const address = document.getElementById("adminAddress")?.value.trim();
     const department = document.getElementById("adminDepartment")?.value;
     const passportFile = document.getElementById("adminPassportFile")?.files[0];
 
@@ -4245,6 +4270,11 @@ async function saveAdminProfile() {
     const updatePayload = {
       full_name,
       phone,
+      // Only touch these when the input exists on the page, so a missing
+      // input can never wipe saved values.
+      ...(document.getElementById("adminCountry") ? { country: country || null } : {}),
+      ...(document.getElementById("adminState")   ? { state:   state   || null } : {}),
+      ...(document.getElementById("adminAddress") ? { address: address || null } : {}),
       department,
       ...(passport_url ? { passport_url, passport_path } : {})
     };

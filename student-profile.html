@@ -57,25 +57,32 @@
   <main class="sp-main">
 
     <!-- PROFILE CARD -->
-    <div class="sp-profile-card">
+    <section class="sp-profile-card">
 
-      <!-- Avatar -->
-      <div class="sp-avatar-wrap">
-        <img
-          src="passport-placeholder.png"
-          alt="Profile Picture"
-          class="sp-avatar passport-clickable"
-          id="profilePic"
-          onclick="openPassportViewer(this.src)"
-          title="Click to view"
-        >
-        <span class="sp-avatar-hint">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </span>
+      <!-- Head: avatar + name + edit -->
+      <div class="sp-profile-head">
+        <div class="sp-avatar-wrap">
+          <img
+            src="passport-placeholder.png"
+            alt="Profile Picture"
+            class="sp-avatar passport-clickable"
+            id="profilePic"
+            onclick="openPassportViewer(this.src)"
+            title="Click to view"
+          >
+          <span class="sp-avatar-hint">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span>
+        </div>
+
+        <div class="sp-identity">
+          <h2 class="fullname sp-fullname">Student Name</h2>
+          <button class="sp-edit-btn" onclick="openEditProfileModal()">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span data-translate="Edit Profile">Edit Profile</span>
+          </button>
+        </div>
       </div>
-
-      <!-- Name -->
-      <h2 class="fullname sp-fullname">Student Name</h2>
 
       <!-- Info rows -->
       <div class="sp-info-grid">
@@ -89,7 +96,6 @@
             <span class="sp-info-value value email"></span>
           </div>
         </div>
-
         <div class="sp-info-row">
           <div class="sp-info-icon" style="background:#dcfce7; color:#25d366;">
             <i class="fa-brands fa-whatsapp"></i>
@@ -99,7 +105,6 @@
             <span class="sp-info-value value phone"></span>
           </div>
         </div>
-
         <div class="sp-info-row">
           <div class="sp-info-icon" style="background:#dbeafe; color:#1d4ed8;">
             <i class="fa-solid fa-id-card"></i>
@@ -109,7 +114,6 @@
             <span class="sp-info-value value matric"></span>
           </div>
         </div>
-
         <div class="sp-info-row">
           <div class="sp-info-icon" style="background:#fef9c3; color:#854d0e;">
             <i class="fa-solid fa-signal"></i>
@@ -119,7 +123,6 @@
             <span class="sp-info-value value level"></span>
           </div>
         </div>
-
         <div class="sp-info-row">
           <div class="sp-info-icon" style="background:#f3e8ff; color:#7e22ce;">
             <i class="fa-solid fa-calendar-days"></i>
@@ -137,19 +140,14 @@
             <span class="sp-info-label" data-translate="Residence:">Residence:</span>
             <span class="sp-info-value value country"></span>
           </div>
+        </div>
 
       </div>
 
-      <!-- Edit button -->
-      <button class="sp-edit-btn" onclick="openEditProfileModal()">
-        <i class="fa-solid fa-pen-to-square"></i>
-        <span data-translate="Edit Profile">Edit Profile</span>
-      </button>
-
-    </div>
+    </section>
 
     <!-- CHANGE PASSWORD CARD -->
-    <div class="sp-password-card">
+    <section class="sp-password-card">
       <div class="sp-card-header">
         <div class="sp-card-icon">
           <i class="fa-solid fa-lock"></i>
@@ -197,7 +195,7 @@
         <p id="passwordMessage" class="sp-password-msg"></p>
 
       </div>
-    </div>
+    </section>
 
   </main>
 

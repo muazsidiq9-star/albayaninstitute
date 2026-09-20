@@ -138,6 +138,7 @@ function formatRole(role) {
     h_o_d: t("Head of Department"),
     bursar: t("Bursar"),
     registrar: t("Registrar"),
+    admissions_officer: t("Admissions Officer"),
     teacher: t("Teacher")
   };
 
@@ -151,6 +152,7 @@ function getRoleTag(role) {
     h_o_d: `#${t("Head of Department")}`,
     bursar: `#${t("Bursar")}`,
     registrar: `#${t("Registrar")}`,
+    admissions_officer: `#${t("Admissions Officer")}`,
     teacher: `#${t("Teacher")}`
   };
 
@@ -164,6 +166,7 @@ function getRoleBadgeClass(role) {
     h_o_d: "badge-info",
     bursar: "badge-warning",
     registrar: "badge-default",
+    admissions_officer: "badge-info",
     teacher: "badge-teacher"
   };
   return map[role] || "badge-default";
@@ -303,7 +306,7 @@ async function loadStaff() {
     // Registered staff (already have a profiles row)
     const { data: profilesData, error: profilesError } = await db
       .from("profiles")
-      .select("id, full_name, role, staff_type, status, monthly_salary, salary_currency, passport_url, email, phone, date_joined, department")
+      .select("id, full_name, role, staff_type, status, monthly_salary, salary_currency, passport_url, email, phone, country, state, address, date_joined, department")
       .not("role", "is", null)
       .order("full_name", { ascending: true });
 
@@ -312,7 +315,7 @@ async function loadStaff() {
     // Pending invites (not yet registered)
     const { data: invitesData, error: invitesError } = await db
       .from("staff_invites")
-      .select("id, full_name, role, staff_type, status, monthly_salary, salary_currency, passport_url, email, phone, date_joined, department, registered, registered_at")
+      .select("id, full_name, role, staff_type, status, monthly_salary, salary_currency, passport_url, email, phone, country, state, address, date_joined, department, registered, registered_at")
       .eq("registered", false)
       .order("full_name", { ascending: true });
 
@@ -485,6 +488,9 @@ async function saveStaff() {
     const full_name = document.getElementById("staffName")?.value.trim();
     const email = document.getElementById("staffEmail")?.value.trim();
     const phone = document.getElementById("staffPhone")?.value.trim();
+    const country = document.getElementById("staffCountry")?.value.trim();
+    const state = document.getElementById("staffState")?.value.trim();
+    const address = document.getElementById("staffAddress")?.value.trim();
     const role = document.getElementById("staffRole")?.value;
     const staff_type = document.getElementById("staffType")?.value;
     const department = document.getElementById("staffDepartment")?.value;
@@ -538,6 +544,9 @@ async function saveStaff() {
   full_name,
   email,
   phone,
+  country: country || null,
+  state: state || null,
+  address: address || null,
   role,
   staff_type,
   department,
@@ -566,7 +575,7 @@ async function saveStaff() {
 }
 
 function resetStaffModal() {
-  ["staffName","staffEmail","staffPhone","staffSalary","staffDateJoined"].forEach(id => {
+  ["staffName","staffEmail","staffPhone","staffCountry","staffState","staffAddress","staffSalary","staffDateJoined"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = "";
   });
@@ -685,6 +694,13 @@ async function openViewStaffModal(staffId) {
   const typeDeptEl = document.getElementById("viewStaffTypeDept");
   if (typeDeptEl) typeDeptEl.textContent = `${formatStaffType(s.staff_type)} · ${formatDepartment(s.department)}`;
 
+  const locationEl = document.getElementById("viewStaffLocation");
+  if (locationEl) {
+    const locationParts = [s.state, s.country].filter(Boolean);
+    locationEl.textContent = locationParts.length ? locationParts.join(", ") : "";
+    locationEl.style.display = locationParts.length ? "" : "none";
+  }
+
   const statusBadgeEl = document.getElementById("viewStaffStatusBadge");
   if (statusBadgeEl) {
     statusBadgeEl.textContent = t(s.status || "active");
@@ -695,6 +711,9 @@ async function openViewStaffModal(staffId) {
   document.getElementById("viewStaffFullName").value = s.full_name || "";
   document.getElementById("viewStaffEmail").value = s.email || "";
   document.getElementById("viewStaffPhone").value = s.phone || "";
+  document.getElementById("viewStaffCountry").value = s.country || "";
+  document.getElementById("viewStaffState").value = s.state || "";
+  document.getElementById("viewStaffAddress").value = s.address || "";
   document.getElementById("viewStaffRole").value = s.role || "";
   document.getElementById("viewStaffType").value = s.staff_type || "";
   document.getElementById("viewStaffDepartment").value = s.department || "";
@@ -706,7 +725,7 @@ async function openViewStaffModal(staffId) {
 
   // Check permissions — lock editing if not allowed
   const canManage = ["mudeer", "assistant_mudeer"].includes(window.currentRole);
-  ["viewStaffFullName","viewStaffEmail","viewStaffPhone","viewStaffRole",
+  ["viewStaffFullName","viewStaffEmail","viewStaffPhone","viewStaffCountry","viewStaffState","viewStaffAddress","viewStaffRole",
    "viewStaffType","viewStaffDepartment","viewStaffDateJoined","viewStaffSalary","viewStaffCurrency","viewStaffStatus"]
     .forEach(id => {
       const el = document.getElementById(id);
@@ -732,6 +751,9 @@ async function updateStaff() {
     const full_name = document.getElementById("viewStaffFullName")?.value.trim();
     const email = document.getElementById("viewStaffEmail")?.value.trim();
     const phone = document.getElementById("viewStaffPhone")?.value.trim();
+    const country = document.getElementById("viewStaffCountry")?.value.trim();
+    const state = document.getElementById("viewStaffState")?.value.trim();
+    const address = document.getElementById("viewStaffAddress")?.value.trim();
     const role = document.getElementById("viewStaffRole")?.value;
     const staff_type = document.getElementById("viewStaffType")?.value;
     const department = document.getElementById("viewStaffDepartment")?.value;
@@ -751,6 +773,9 @@ async function updateStaff() {
         full_name,
         email,
         phone,
+        country: country || null,
+        state: state || null,
+        address: address || null,
         role,
         staff_type,
         department,

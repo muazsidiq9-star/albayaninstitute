@@ -32,8 +32,12 @@ let teacherData = {
   email: null,
   role: null,
   courses: [],
-  studentMatrics: []
+  studentMatrics: [],
+  registrations: [], // {matric_number, course_id, course_name, level, batch} — this teacher's own sections only
+  studentNames: {}    // matric_number -> fullname
 };
+
+let allLeadsData = [];
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -55,8 +59,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       .eq("id", user.id)
       .single();
 
-    if (profileError || !profile || profile.role !== "teacher") {
-      alert(t("Access denied. Teachers only."));
+    if (profileError || !profile || !["teacher", "admissions_officer"].includes(profile.role)) {
+      alert(t("Access denied."));
       await db.auth.signOut();
       window.location.href = "login.html";
       return;
@@ -95,6 +99,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     wireGradeAutoTotal();
     enableGradeSearch();
     enableGradeFilters();
+    enableGradeSorting();
+
+    // The Leads tab (and its stat cards) only apply to Admissions Officers —
+    // a teacher never sees them. Everything else on this page (Courses,
+    // Grades, Schedule, Attendance, Payments) stays visible to BOTH roles:
+    // an Admissions Officer who isn't currently assigned any students just
+    // sees those tables empty, exactly like a newly added teacher would.
+    const isAdmissionsOfficer = teacherData.role === "admissions_officer";
+    document.querySelector("[onclick=\"switchTab('leads')\"]")
+      ?.classList.toggle("hidden", !isAdmissionsOfficer);
+    document.getElementById("tab-leads")
+      ?.classList.toggle("hidden", !isAdmissionsOfficer);
+    document.querySelectorAll(".leads-stat")
+      .forEach(el => el.classList.toggle("hidden", !isAdmissionsOfficer));
+
+    if (isAdmissionsOfficer) {
+      enableLeadSearch();
+      enableLeadStatusFilter();
+    }
 
   } catch (err) {
     console.error("Staff dashboard error:", err);
@@ -116,6 +139,279 @@ function switchTab(tab) {
 
   // Lazy-load attendance tab
   if (tab === "attendance") loadMyAttendanceSessions();
+
+  // Lazy-load leads tab (Admissions Officer only)
+  if (tab === "leads") loadLeads();
+}
+
+// ===========================
+// MODAL HELPERS (used by the Leads tab)
+// ===========================
+function openModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.add("show");
+}
+
+function closeModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.remove("show");
+}
+
+// ===========================
+// LEADS — LOAD + RENDER (Admissions Officer only)
+// ===========================
+async function loadLeads() {
+  const tbody = document.querySelector("#leads-table tbody");
+  if (!tbody) return;
+
+  tbody.innerHTML = `<tr><td colspan="8" class="empty-state">
+    <i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading...")}
+  </td></tr>`;
+
+  try {
+    const { data, error } = await db
+      .from("admission_leads")
+      .select("id, full_name, phone, email, source, status, notes, created_at")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    allLeadsData = data || [];
+    renderLeadsTable(allLeadsData);
+    updateLeadStats(allLeadsData);
+
+  } catch (e) {
+    console.error("Load leads error:", e);
+    tbody.innerHTML = `<tr><td colspan="8" class="empty-state">${t("Failed to load leads")}</td></tr>`;
+  }
+}
+
+function updateLeadStats(data) {
+  const totalEl = document.getElementById("totalLeads");
+  const followUpEl = document.getElementById("followUpLeads");
+  const enrolledEl = document.getElementById("enrolledLeads");
+
+  if (totalEl) totalEl.textContent = data.length;
+  if (followUpEl) {
+    followUpEl.textContent = data.filter(l =>
+      ["new", "contacted", "follow_up"].includes(l.status)
+    ).length;
+  }
+  if (enrolledEl) enrolledEl.textContent = data.filter(l => l.status === "enrolled").length;
+}
+
+function getLeadStatusBadgeClass(status) {
+  const map = {
+    new: "badge-info",
+    contacted: "badge-warning",
+    follow_up: "badge-warning",
+    interested: "badge-success",
+    enrolled: "badge-success",
+    not_interested: "badge-danger"
+  };
+  return map[status] || "badge-default";
+}
+
+function formatLeadStatus(status) {
+  const map = {
+    new: t("New"),
+    contacted: t("Contacted"),
+    follow_up: t("Follow-up"),
+    interested: t("Interested"),
+    enrolled: t("Enrolled"),
+    not_interested: t("Not Interested")
+  };
+  return map[status] || status;
+}
+
+function formatLeadSource(source) {
+  const map = {
+    whatsapp: t("WhatsApp"),
+    website: t("Website"),
+    referral: t("Referral"),
+    other: t("Other")
+  };
+  return map[source] || source;
+}
+
+function renderLeadsTable(data) {
+  const tbody = document.querySelector("#leads-table tbody");
+  if (!tbody) return;
+
+  if (!data || data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="8" class="empty-state">${t("No leads yet")}</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = "";
+
+  data.forEach(lead => {
+    const tr = document.createElement("tr");
+    const statusBadge = getLeadStatusBadgeClass(lead.status);
+    const addedDate = lead.created_at
+      ? new Date(lead.created_at).toLocaleDateString()
+      : "—";
+    const notesPreview = lead.notes
+      ? (lead.notes.length > 40 ? lead.notes.slice(0, 40) + "…" : lead.notes)
+      : "—";
+
+    tr.innerHTML = `
+      <td>${lead.full_name || "—"}</td>
+      <td>${lead.phone || "—"}</td>
+      <td>${formatLeadSource(lead.source)}</td>
+      <td><span class="badge ${statusBadge}">${formatLeadStatus(lead.status)}</span></td>
+      <td title="${(lead.notes || "").replace(/"/g, "&quot;")}">${notesPreview}</td>
+      <td>${addedDate}</td>
+      <td>
+        <button class="btn btn-edit" onclick="openEditLeadModal('${lead.id}')">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+      </td>
+      <td>
+        <button class="btn btn-delete" onclick="deleteLead('${lead.id}')">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  window.reTranslate?.();
+}
+
+// ===========================
+// LEADS — SEARCH + FILTER
+// ===========================
+function enableLeadSearch() {
+  const input = document.getElementById("searchLeads");
+  if (!input) return;
+  input.addEventListener("keyup", filterLeadsTable);
+}
+
+function enableLeadStatusFilter() {
+  const select = document.getElementById("filterLeadStatus");
+  if (!select) return;
+  select.addEventListener("change", filterLeadsTable);
+}
+
+function filterLeadsTable() {
+  const search = (document.getElementById("searchLeads")?.value || "").toLowerCase();
+  const statusFilter = document.getElementById("filterLeadStatus")?.value || "";
+
+  const filtered = allLeadsData.filter(lead => {
+    const matchesSearch =
+      (lead.full_name || "").toLowerCase().includes(search) ||
+      (lead.phone || "").toLowerCase().includes(search) ||
+      (lead.email || "").toLowerCase().includes(search);
+    const matchesStatus = !statusFilter || lead.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  renderLeadsTable(filtered);
+}
+
+// ===========================
+// LEADS — ADD / EDIT / SAVE
+// ===========================
+let editingLeadId = null;
+
+function openAddLeadModal() {
+  editingLeadId = null;
+  document.getElementById("leadModalTitle").textContent = t("Add Lead");
+  document.getElementById("leadName").value = "";
+  document.getElementById("leadPhone").value = "";
+  document.getElementById("leadEmail").value = "";
+  document.getElementById("leadSource").value = "whatsapp";
+  document.getElementById("leadStatus").value = "new";
+  document.getElementById("leadNotes").value = "";
+  openModal("leadModal");
+}
+
+function openEditLeadModal(leadId) {
+  const lead = allLeadsData.find(l => l.id === leadId);
+  if (!lead) return;
+
+  editingLeadId = leadId;
+  document.getElementById("leadModalTitle").textContent = t("Edit Lead");
+  document.getElementById("leadName").value = lead.full_name || "";
+  document.getElementById("leadPhone").value = lead.phone || "";
+  document.getElementById("leadEmail").value = lead.email || "";
+  document.getElementById("leadSource").value = lead.source || "whatsapp";
+  document.getElementById("leadStatus").value = lead.status || "new";
+  document.getElementById("leadNotes").value = lead.notes || "";
+  openModal("leadModal");
+}
+
+async function saveLead() {
+  const btn = document.getElementById("saveLeadBtn");
+  if (btn) { btn.disabled = true; }
+
+  try {
+    const full_name = document.getElementById("leadName")?.value.trim();
+    const phone = document.getElementById("leadPhone")?.value.trim();
+    const email = document.getElementById("leadEmail")?.value.trim();
+    const source = document.getElementById("leadSource")?.value;
+    const status = document.getElementById("leadStatus")?.value;
+    const notes = document.getElementById("leadNotes")?.value.trim();
+
+    if (!full_name || !phone) {
+      alert(t("Full name and phone are required"));
+      return;
+    }
+
+    const payload = {
+      full_name,
+      phone,
+      email: email || null,
+      source,
+      status,
+      notes: notes || null
+    };
+
+    let error;
+    if (editingLeadId) {
+      ({ error } = await db
+        .from("admission_leads")
+        .update(payload)
+        .eq("id", editingLeadId));
+    } else {
+      ({ error } = await db
+        .from("admission_leads")
+        .insert([{ ...payload, created_by: teacherData.id }]));
+    }
+
+    if (error) throw error;
+
+    showToast(editingLeadId ? t("Lead updated") : t("Lead added"));
+    closeModal("leadModal");
+    await loadLeads();
+
+  } catch (e) {
+    console.error("Save lead error:", e);
+    alert(t("Failed to save lead. See console."));
+  } finally {
+    if (btn) { btn.disabled = false; }
+  }
+}
+
+async function deleteLead(leadId) {
+  if (!confirm(t("Delete this lead? This cannot be undone."))) return;
+
+  try {
+    const { error } = await db
+      .from("admission_leads")
+      .delete()
+      .eq("id", leadId);
+
+    if (error) throw error;
+
+    showToast(t("Lead deleted"));
+    await loadLeads();
+
+  } catch (e) {
+    console.error("Delete lead error:", e);
+    alert(t("Failed to delete lead."));
+  }
 }
 
 // ===========================
@@ -209,17 +505,29 @@ async function loadMyCourses(teacherId) {
   let grandTotalStudents = 0;
   let allHTML = "";
   let allBatches = new Set(); // Collect all unique batches
+  let allRegistrations = []; // {matric_number, course_id, course_name, level, batch} — this teacher's own registrations only
+  let studentNames = {}; // matric_number -> fullname, for building grade-form dropdowns without another round trip
 
   for (const course of courses) {
     const mySectionIds = sectionIdsByCourse[course.id];
 
     const { data: registrations, error: regError } = await db
       .from("course_registrations")
-      .select("matric_number")
+      .select("matric_number, level, batch")
       .eq("course_id", course.id)
       .in("section_id", mySectionIds);
 
     if (regError) continue;
+
+    registrations?.forEach(r => {
+      allRegistrations.push({
+        matric_number: r.matric_number,
+        course_id: course.id,
+        course_name: course.course_name,
+        level: r.level,
+        batch: r.batch
+      });
+    });
 
     const registeredMatrics = (registrations || []).map(r => r.matric_number);
 
@@ -234,6 +542,8 @@ async function loadMyCourses(teacherId) {
 
       if (!studentsError) students = studentRows || [];
     }
+
+    students.forEach(s => { studentNames[s.matric_number] = s.fullname; });
 
 
     const matricNumbers = students.map(s => s.matric_number);
@@ -305,6 +615,8 @@ async function loadMyCourses(teacherId) {
   }
 
   document.getElementById("totalStudents").textContent = grandTotalStudents;
+  teacherData.registrations = allRegistrations;
+  teacherData.studentNames = studentNames;
 
   // A registration with no section_id yet (never matched to a section
   // during the course_sections backfill) won't show for any teacher —
@@ -386,40 +698,69 @@ function applyCombinedFilters() {
 // ===========================
 // POPULATE GRADE FORM
 // ===========================
+// Course-driven: which students show up (and their level/batch) always
+// comes from teacherData.registrations — this teacher's own
+// course_registrations rows — never from the student's live profile,
+// which can drift the moment they're promoted to a new level/batch.
 async function populateGradeForm() {
-  if (!teacherData.studentMatrics.length) return;
-
-  const { data: students } = await db
-    .from("students")
-    .select("matric_number, fullname, level_arabic, batch")
-    .in("matric_number", teacherData.studentMatrics)
-    .eq("deleted", false)
-    .order("fullname");
-
-  const studentSelect = document.getElementById("gradeStudentSelect");
-  studentSelect.innerHTML = `<option value="">${t("Select Student")}</option>` +
-    (students || []).map(s =>
-      `<option value="${s.matric_number}"
-        data-level="${s.level_arabic}"
-        data-batch="${s.batch || ''}">
-        ${s.fullname} (${s.matric_number})
-      </option>`
-    ).join("");
-
-  // Auto-fill level when student selected
-  studentSelect.addEventListener("change", () => {
-    const selected = studentSelect.selectedOptions[0];
-    const level = selected?.dataset.level || "";
-    const batch = selected?.dataset.batch || "";
-    document.getElementById("gradeLevelInput").value = level;
-    document.getElementById("gradeBatchInput").value = batch;
-  });
-
   const courseSelect = document.getElementById("gradeCourseSelect");
+  const studentSelect = document.getElementById("gradeStudentSelect");
+  if (!courseSelect || !studentSelect) return;
+
   courseSelect.innerHTML = `<option value="">${t("Select Course")}</option>` +
     teacherData.courses.map(c =>
       `<option value="${c.course_name}">${c.course_name}</option>`
     ).join("");
+
+  resetGradeStudentSelect();
+
+  courseSelect.addEventListener("change", () => populateGradeStudentsForCourse(courseSelect.value));
+  studentSelect.addEventListener("change", () => {
+    const selected = studentSelect.selectedOptions[0];
+    document.getElementById("gradeLevelInput").value = selected?.dataset.level || "";
+    document.getElementById("gradeBatchInput").value = selected?.dataset.batch || "";
+  });
+}
+
+function resetGradeStudentSelect() {
+  const studentSelect = document.getElementById("gradeStudentSelect");
+  if (!studentSelect) return;
+  studentSelect.innerHTML = `<option value="">${t("Select Course First")}</option>`;
+  studentSelect.disabled = true;
+  document.getElementById("gradeLevelInput").value = "";
+  document.getElementById("gradeBatchInput").value = "";
+}
+
+// Only students actually registered under one of THIS teacher's own
+// sections for the chosen course — with level/batch taken straight from
+// that registration, not the student's current profile.
+function populateGradeStudentsForCourse(courseName) {
+  const studentSelect = document.getElementById("gradeStudentSelect");
+  if (!studentSelect) return;
+
+  document.getElementById("gradeLevelInput").value = "";
+  document.getElementById("gradeBatchInput").value = "";
+
+  if (!courseName) {
+    resetGradeStudentSelect();
+    return;
+  }
+
+  const regsForCourse = teacherData.registrations.filter(r => r.course_name === courseName);
+
+  if (!regsForCourse.length) {
+    studentSelect.innerHTML = `<option value="">${t("No students registered for this course")}</option>`;
+    studentSelect.disabled = true;
+    return;
+  }
+
+  studentSelect.disabled = false;
+  studentSelect.innerHTML = `<option value="">${t("Select Student")}</option>` +
+    regsForCourse.map(r => `
+      <option value="${r.matric_number}" data-level="${r.level || ''}" data-batch="${r.batch || ''}">
+        ${teacherData.studentNames[r.matric_number] || r.matric_number} (${r.matric_number})
+      </option>
+    `).join("");
 }
 
 // ===========================
@@ -446,6 +787,7 @@ async function submitGrade() {
   const matric_number = document.getElementById("gradeStudentSelect").value;
   const course = document.getElementById("gradeCourseSelect").value;
   const level_arabic = document.getElementById("gradeLevelInput").value;
+  const batch = document.getElementById("gradeBatchInput").value;
   const semester = document.getElementById("gradeSemesterSelect").value;
   const assessment_score = Number(document.getElementById("gradeAssessmentInput").value || 0);
   const exam_score = Number(document.getElementById("gradeExamInput").value || 0);
@@ -472,7 +814,7 @@ async function submitGrade() {
       const { data, error } = await db
         .from("grades")
         .update({
-          matric_number, course, level_arabic, semester,
+          matric_number, course, level_arabic, batch, semester,
           assessment_score, exam_score, total_score, status, remark
         })
         .eq("id", editId)
@@ -493,6 +835,7 @@ async function submitGrade() {
         matric_number,
         course,
         level_arabic,
+        batch,
         semester,
         assessment_score,
         exam_score,
@@ -512,7 +855,16 @@ async function submitGrade() {
 
   } catch (err) {
     console.error("Submit grade error:", err);
-    alert(t("Failed to submit grade."));
+    if (err?.code === "23505") {
+      // Postgres unique-violation — grades has a unique constraint on
+      // (matric_number, course, semester, level_arabic), so this means a
+      // grade for this exact combo already exists (e.g. a CBT assessment
+      // already auto-graded it). Tell the teacher to edit it instead of
+      // showing the raw constraint error.
+      alert(t("A grade already exists for this student on this course, semester and level. Please edit the existing record instead of adding a new one."));
+    } else {
+      alert(t("Failed to submit grade."));
+    }
   } finally {
     if (btn) { btn.disabled = false; }
     // Read current edit-mode state (not the pre-call snapshot) — on success
@@ -531,23 +883,31 @@ async function loadMyGrades() {
   const tbody = document.getElementById("staffGradesBody");
   if (!tbody) return;
 
-  if (!teacherData.studentMatrics.length) {
+  const myCourseNames = teacherData.courses.map(c => c.course_name);
+
+  if (!teacherData.studentMatrics.length || !myCourseNames.length) {
     tbody.innerHTML = `<tr>
-      <td colspan="10" class="empty-state">${t("No students assigned yet.")}</td>
+      <td colspan="11" class="empty-state">${t("No students assigned yet.")}</td>
     </tr>`;
     return;
   }
 
+  // .in("course", myCourseNames) is the scoping check that was missing —
+  // without it, a student who shares a DIFFERENT course with a DIFFERENT
+  // teacher would leak that other teacher's grade row in here too, since
+  // matching on matric_number alone doesn't know which course a grade
+  // actually belongs to.
   const { data: grades, error } = await db
     .from("grades")
-    .select("id, matric_number, course, semester, assessment_score, exam_score, total_score, status, remark, released, level_arabic")
+    .select("id, matric_number, course, semester, assessment_score, exam_score, total_score, status, remark, released, level_arabic, batch")
     .in("matric_number", teacherData.studentMatrics)
+    .in("course", myCourseNames)
     .eq("deleted", false)
     .order("created_at", { ascending: false });
 
   if (error) {
     tbody.innerHTML = `<tr>
-      <td colspan="10" class="empty-state" style="color:red;">
+      <td colspan="11" class="empty-state" style="color:red;">
         ${t("Failed to load grades.")}
       </td>
     </tr>`;
@@ -556,7 +916,7 @@ async function loadMyGrades() {
 
   if (!grades || grades.length === 0) {
     tbody.innerHTML = `<tr>
-      <td colspan="10" class="empty-state">${t("No grades posted yet.")}</td>
+      <td colspan="11" class="empty-state">${t("No grades posted yet.")}</td>
     </tr>`;
     document.getElementById("totalGrades").textContent = 0;
     window.staffGradesCache = [];
@@ -570,26 +930,46 @@ async function loadMyGrades() {
 
   const { data: students } = await db
     .from("students")
-    .select("matric_number, fullname, batch")
+    .select("matric_number, fullname")
     .in("matric_number", teacherData.studentMatrics);
 
   const nameMap = {};
-  const batchMap = {};
-  (students || []).forEach(s => {
-    nameMap[s.matric_number] = s.fullname;
-    batchMap[s.matric_number] = s.batch;
-  });
+  (students || []).forEach(s => { nameMap[s.matric_number] = s.fullname; });
+
+  // Batch/level for a grade come from the grade row itself (each grade
+  // now snapshots them at posting time — see submitGrade()). Older rows
+  // posted before grades.batch existed fall back to this teacher's own
+  // registration record for that student+course, never the student's
+  // current live profile, which is what caused batches to drift once a
+  // student got promoted.
+  function resolveBatch(g) {
+    if (g.batch) return g.batch;
+    const reg = teacherData.registrations.find(r => r.matric_number === g.matric_number && r.course_name === g.course);
+    return reg?.batch || "";
+  }
 
   document.getElementById("totalGrades").textContent = grades.length;
 
-  tbody.innerHTML = grades.map(g => `
+  tbody.innerHTML = grades.map(g => {
+    const batch = resolveBatch(g);
+    const studentName = nameMap[g.matric_number] || "";
+    return `
     <tr class="grade-row"
+        data-student="${(studentName || g.matric_number).toLowerCase()}"
+        data-matric="${(g.matric_number || '').toLowerCase()}"
+        data-level="${(g.level_arabic || '').toLowerCase()}"
         data-course="${g.course || ''}"
-        data-batch="${batchMap[g.matric_number] || ''}"
+        data-batch="${batch}"
+        data-semester="${(g.semester || '').toLowerCase()}"
+        data-assessment-score="${g.assessment_score || 0}"
+        data-exam-score="${g.exam_score || 0}"
+        data-total-score="${g.total_score || 0}"
+        data-remark="${(g.remark || '').toLowerCase()}"
         data-released="${g.released ? 'released' : 'pending'}">
-      <td>${nameMap[g.matric_number] || "—"}</td>
+      <td>${studentName || "—"}</td>
       <td>${g.matric_number}</td>
-      <td>${batchMap[g.matric_number] || "—"}</td>
+      <td>${g.level_arabic || "—"}</td>
+      <td>${batch || "—"}</td>
       <td>${g.course}</td>
       <td>${g.semester}</td>
       <td>${g.assessment_score}</td>
@@ -614,59 +994,120 @@ async function loadMyGrades() {
         }
       </td>
     </tr>
-  `).join("");
+  `;
+  }).join("");
 
-  populateGradeFilters(grades, batchMap);
+  populateGradeFilters(grades, resolveBatch);
 }
 
 // ===========================
-// GRADE FILTERS (Course / Batch / Released)
+// GRADE FILTERS (Course / Level / Batch / Released)
 // ===========================
-// Populates the two dropdowns from whatever's actually in the current
+// Populates the dropdowns from whatever's actually in the current
 // grades list, so a teacher only ever sees filter options that apply
 // to them — same pattern as populateBatchFilter() on the courses tab.
-function populateGradeFilters(grades, batchMap) {
+function populateGradeFilters(grades, resolveBatch) {
   const courseSelect = document.getElementById("filterGradeCourse");
+  const levelSelect = document.getElementById("filterGradeLevel");
   const batchSelect = document.getElementById("filterGradeBatch");
-  if (!courseSelect || !batchSelect) return;
+  if (!courseSelect || !levelSelect || !batchSelect) return;
 
   const courses = [...new Set(grades.map(g => g.course).filter(Boolean))].sort();
-  const batches = [...new Set(grades.map(g => batchMap[g.matric_number]).filter(Boolean))].sort();
+  const levels = [...new Set(grades.map(g => g.level_arabic).filter(Boolean))].sort();
+  const batches = [...new Set(grades.map(g => resolveBatch(g)).filter(Boolean))].sort();
 
   const prevCourse = courseSelect.value;
+  const prevLevel = levelSelect.value;
   const prevBatch = batchSelect.value;
 
   courseSelect.innerHTML = `<option value="" data-translate="All Courses">📘 ${t("All Courses")}</option>` +
     courses.map(c => `<option value="${c}">${c}</option>`).join("");
+
+  levelSelect.innerHTML = `<option value="" data-translate="All Levels">🎓 ${t("All Levels")}</option>` +
+    levels.map(l => `<option value="${l}">${l}</option>`).join("");
 
   batchSelect.innerHTML = `<option value="" data-translate="All Batches">📦 ${t("All Batches")}</option>` +
     batches.map(b => `<option value="${b}">${b}</option>`).join("");
 
   // Keep whatever was selected, if it's still a valid option after reload.
   if (courses.includes(prevCourse)) courseSelect.value = prevCourse;
+  if (levels.includes(prevLevel)) levelSelect.value = prevLevel;
   if (batches.includes(prevBatch)) batchSelect.value = prevBatch;
 }
 
 function filterGradesTable() {
   const courseValue = document.getElementById("filterGradeCourse")?.value || "";
+  const levelValue = (document.getElementById("filterGradeLevel")?.value || "").toLowerCase();
   const batchValue = document.getElementById("filterGradeBatch")?.value || "";
   const releasedValue = document.getElementById("filterGradeReleased")?.value || "";
   const searchValue = (document.getElementById("searchGrades")?.value || "").toLowerCase();
 
   document.querySelectorAll(".grade-row").forEach(row => {
     const matchesCourse = !courseValue || row.dataset.course === courseValue;
+    const matchesLevel = !levelValue || row.dataset.level === levelValue;
     const matchesBatch = !batchValue || row.dataset.batch === batchValue;
     const matchesReleased = !releasedValue || row.dataset.released === releasedValue;
     const matchesSearch = !searchValue || row.textContent.toLowerCase().includes(searchValue);
 
-    row.style.display = (matchesCourse && matchesBatch && matchesReleased && matchesSearch) ? "" : "none";
+    row.style.display = (matchesCourse && matchesLevel && matchesBatch && matchesReleased && matchesSearch) ? "" : "none";
   });
 }
 
 function enableGradeFilters() {
-  ["filterGradeCourse", "filterGradeBatch", "filterGradeReleased"].forEach(id => {
+  ["filterGradeCourse", "filterGradeLevel", "filterGradeBatch", "filterGradeReleased"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener("change", filterGradesTable);
+  });
+}
+
+// ===========================
+// SORT GRADES TABLE (tap a column header)
+// ===========================
+// Reorders the already-rendered <tr> elements in place (doesn't re-fetch
+// or re-render), so it stays in sync with whatever the Course/Level/
+// Batch/Released filters and search box currently have showing/hidden.
+let gradeSortState = { key: null, direction: 1 };
+const GRADE_SORT_NUMERIC_KEYS = new Set(["assessmentScore", "examScore", "totalScore"]);
+
+function sortGradesTable(key) {
+  const tbody = document.getElementById("staffGradesBody");
+  if (!tbody) return;
+
+  const rows = Array.from(tbody.querySelectorAll(".grade-row"));
+  if (!rows.length) return;
+
+  if (gradeSortState.key === key) {
+    gradeSortState.direction *= -1;
+  } else {
+    gradeSortState.key = key;
+    gradeSortState.direction = 1;
+  }
+
+  const numeric = GRADE_SORT_NUMERIC_KEYS.has(key);
+
+  rows.sort((a, b) => {
+    const rawA = a.dataset[key] ?? "";
+    const rawB = b.dataset[key] ?? "";
+
+    if (numeric) {
+      return (Number(rawA) - Number(rawB)) * gradeSortState.direction;
+    }
+    return rawA.localeCompare(rawB) * gradeSortState.direction;
+  });
+
+  rows.forEach(row => tbody.appendChild(row));
+
+  document.querySelectorAll(".sortable-th").forEach(th => {
+    th.classList.remove("sort-asc", "sort-desc");
+    if (th.dataset.sortKey === key) {
+      th.classList.add(gradeSortState.direction === 1 ? "sort-asc" : "sort-desc");
+    }
+  });
+}
+
+function enableGradeSorting() {
+  document.querySelectorAll(".sortable-th").forEach(th => {
+    th.addEventListener("click", () => sortGradesTable(th.dataset.sortKey));
   });
 }
 
@@ -675,7 +1116,15 @@ function enableGradeFilters() {
 // ===========================
 function editStaffGrade(id) {
   const g = (window.staffGradesCache || []).find(x => String(x.id) === String(id));
-  if (!g) return;
+  if (!g) {
+    // Cache is stale (list was refreshed/filtered since this button was
+    // rendered) rather than the grade not existing — tell the teacher
+    // instead of the button silently doing nothing, and refresh so the
+    // cache is back in sync for their next click.
+    alert(t("Couldn't find that grade — the list may have changed. Refreshing…"));
+    loadMyGrades();
+    return;
+  }
 
   // Belt-and-braces: the Edit button is only rendered for unreleased rows,
   // but guard here too in case the cache is stale (e.g. admin released it
@@ -687,14 +1136,11 @@ function editStaffGrade(id) {
   }
 
   document.getElementById("gradeEditId").value = g.id;
-  document.getElementById("gradeStudentSelect").value = g.matric_number;
   document.getElementById("gradeCourseSelect").value = g.course;
+  populateGradeStudentsForCourse(g.course); // rebuild the student list for this course before selecting one
+  document.getElementById("gradeStudentSelect").value = g.matric_number;
   document.getElementById("gradeLevelInput").value = g.level_arabic || "";
-
-  // batch isn't on the grades row itself — pull it from the same select
-  // option the student dropdown already carries it on.
-  const studentOpt = document.getElementById("gradeStudentSelect").selectedOptions[0];
-  document.getElementById("gradeBatchInput").value = studentOpt?.dataset.batch || "";
+  document.getElementById("gradeBatchInput").value = g.batch || "";
 
   document.getElementById("gradeSemesterSelect").value = g.semester;
   document.getElementById("gradeAssessmentInput").value = g.assessment_score;
@@ -712,10 +1158,8 @@ function editStaffGrade(id) {
 
 function cancelGradeEdit() {
   document.getElementById("gradeEditId").value = "";
-  document.getElementById("gradeStudentSelect").value = "";
   document.getElementById("gradeCourseSelect").value = "";
-  document.getElementById("gradeLevelInput").value = "";
-  document.getElementById("gradeBatchInput").value = "";
+  resetGradeStudentSelect();
   document.getElementById("gradeSemesterSelect").value = "";
   document.getElementById("gradeAssessmentInput").value = "";
   document.getElementById("gradeExamInput").value = "";
@@ -918,11 +1362,12 @@ async function loadProfileTab() {
 
   if (nameEl)  nameEl.value  = teacherData.name  || "";
   if (emailEl) emailEl.value = teacherData.email || "";
-  if (roleEl)  roleEl.value  = t("Teacher");
+  const roleDisplayMap = { teacher: t("Teacher"), admissions_officer: t("Admissions Officer") };
+  if (roleEl)  roleEl.value  = roleDisplayMap[teacherData.role] || t("Staff");
 
   const { data: profile } = await db
     .from("profiles")
-    .select("passport_url, phone, department, staff_type, date_joined, monthly_salary, salary_currency")
+    .select("passport_url, phone, country, state, address, department, staff_type, date_joined, monthly_salary, salary_currency")
     .eq("id", teacherData.id)
     .single();
 
@@ -935,6 +1380,9 @@ async function loadProfileTab() {
 
   // New fields
   const phoneEl      = document.getElementById("profilePhone");
+  const countryEl    = document.getElementById("profileCountry");
+  const stateEl      = document.getElementById("profileState");
+  const addressEl    = document.getElementById("profileAddress");
   const typeEl       = document.getElementById("profileStaffType");
   const deptEl       = document.getElementById("profileDepartment");
   const joinedEl     = document.getElementById("profileDateJoined");
@@ -942,10 +1390,13 @@ async function loadProfileTab() {
   const typeMap = { full_time: "Full-time", part_time: "Part-time", contract: "Contract", volunteer: "Volunteer" };
   const deptMap = { teaching: "Teaching", admin: "Admin", finance: "Finance", it: "IT" };
 
-  if (phoneEl)  phoneEl.value  = profile?.phone || "—";
-  if (typeEl)   typeEl.value   = typeMap[profile?.staff_type] || (profile?.staff_type || "—");
-  if (deptEl)   deptEl.value   = deptMap[profile?.department] || (profile?.department || "—");
-  if (joinedEl) joinedEl.value = profile?.date_joined || "—";
+  if (phoneEl)   phoneEl.value   = profile?.phone || "—";
+  if (countryEl) countryEl.value = profile?.country || "";
+  if (stateEl)   stateEl.value   = profile?.state || "";
+  if (addressEl) addressEl.value = profile?.address || "";
+  if (typeEl)    typeEl.value    = typeMap[profile?.staff_type] || (profile?.staff_type || "—");
+  if (deptEl)    deptEl.value    = deptMap[profile?.department] || (profile?.department || "—");
+  if (joinedEl)  joinedEl.value  = profile?.date_joined || "—";
 
   // Store salary for payments tab
   teacherData.monthly_salary = profile?.monthly_salary || 0;
@@ -954,12 +1405,14 @@ async function loadProfileTab() {
   // Role tag badge
   const tagMap = {
     mudeer: "#Director", assistant_mudeer: "#Asst. Director", h_o_d: "#Head of Dept.",
-    bursar: "#Bursar", registrar: "#Registrar", teacher: "#Teacher"
+    bursar: "#Bursar", registrar: "#Registrar", teacher: "#Teacher",
+    admissions_officer: "#Admissions Officer"
   };
   const classMap = {
     mudeer: "badge-success", assistant_mudeer: "badge-info",
     h_o_d: "badge-info",
-    bursar: "badge-warning", registrar: "badge-default", teacher: "badge-teacher"
+    bursar: "badge-warning", registrar: "badge-default", teacher: "badge-teacher",
+    admissions_officer: "badge-info"
   };
   const tagEl = document.getElementById("staffRoleTag");
   if (tagEl) {
@@ -974,6 +1427,9 @@ async function loadProfileTab() {
 async function saveProfile() {
   const newName = document.getElementById("profileName")?.value.trim();
   const newPhone = document.getElementById("profilePhone")?.value.trim();
+  const newCountry = document.getElementById("profileCountry")?.value.trim();
+  const newState = document.getElementById("profileState")?.value.trim();
+  const newAddress = document.getElementById("profileAddress")?.value.trim();
 
   if (!newName) {
     alert(t("Name cannot be empty."));
@@ -1019,6 +1475,9 @@ async function saveProfile() {
       .update({
         full_name: newName,
         phone: newPhone || null,
+        country: newCountry || null,
+        state: newState || null,
+        address: newAddress || null,
         ...(passport_url ? { passport_url } : {})
       })
       .eq("id", teacherData.id);

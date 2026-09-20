@@ -187,9 +187,11 @@ body {
 .stats {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* --stat-count is set by initDashTabs() = how many cards this role sees.
+     3 cards -> full width (as before); 1-2 cards -> narrower and centred. */
+  grid-template-columns: repeat(var(--stat-count, 3), minmax(0, 1fr));
   gap: 16px;
-  max-width: 900px;
+  max-width: calc(var(--stat-count, 3) * 300px);
   margin: 32px auto;
   padding: 0 20px;
 }
@@ -278,7 +280,7 @@ body {
 }
 
 @media (max-width: 640px) {
-  .stats { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: 1fr; max-width: 900px; }
 }
 
 
@@ -2012,4 +2014,14 @@ input:checked + .slider:before { transform: translateX(22px); }
   .vl-book-form input { width: 100%; min-width: unset; }
   .vl-video-filter { flex-direction: column; }
   .vl-video-filter select { width: 100%; }
+}
+
+
+/* ============================================================
+   READ-ONLY STUDENTS TAB (e.g. bursar)
+   Class is added to #tab-students by applyStudentsReadOnly().
+============================================================ */
+#tab-students.students-readonly .student-action-col,
+#tab-students.students-readonly .student-write-btn {
+  display: none !important;
 }

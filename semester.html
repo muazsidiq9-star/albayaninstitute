@@ -68,6 +68,28 @@
   ================================================ -->
   <div class="semester-container">
 
+    <!-- Shown when we know the viewer's level/batch (logged-in student) -->
+    <div class="sem-viewer-banner hidden" id="semViewerBanner"></div>
+
+    <!-- Shown to a guest so they can pick a level/batch to browse -->
+    <div class="sem-viewer-picker hidden" id="semViewerPicker">
+      <p data-translate="Select your level and batch to see activities specific to you. Leave a field blank to keep it broad.">
+        Select your level and batch to see activities specific to you. Leave a field blank to keep it broad.
+      </p>
+      <div class="sem-picker-row">
+        <select id="semPickLevel">
+          <option value="" data-translate="All Levels">All Levels</option>
+          <option data-translate="Preliminary">Preliminary</option>
+          <option data-translate="Beginner">Beginner</option>
+          <option data-translate="Intermediate">Intermediate</option>
+          <option data-translate="Advanced">Advanced</option>
+        </select>
+        <select id="semPickBatch">
+          <option value="" data-translate="All Batches">All Batches</option>
+        </select>
+      </div>
+    </div>
+
     <!-- Loading state -->
     <div class="sem-loading" id="semLoading">
       <div class="sem-spinner"></div>
@@ -117,10 +139,139 @@
     const supabaseKey = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
     const db = supabase.createClient(supabaseUrl, supabaseKey);
 
+    let allEntries = [];
+    let viewerLevel = "";
+    let viewerBatch = "";
+    let viewerIsKnownStudent = false;
+
+    // ===========================
+    // WHO'S LOOKING? — a logged-in student is identified by their matric
+    // number (sessionStorage, or restored from the 14-day localStorage
+    // session same as students-dashboard.js does). We then fetch their
+    // level/batch FRESH from the students table rather than trusting the
+    // cached session value — a student's level/batch can change (e.g. a
+    // promotion) any time within that 14-day window, and students-
+    // dashboard.js itself never trusts the cached value either; it always
+    // re-queries by matric_number. Anyone with no matric on file is a
+    // guest and gets a picker so they can still narrow the list manually.
+    // ===========================
+    function getMatric() {
+      const live = sessionStorage.getItem("matric");
+      if (live) return live;
+
+      try {
+        const persisted = localStorage.getItem("studentSession");
+        if (persisted) {
+          const saved = JSON.parse(persisted);
+          if (saved.expiresAt && saved.expiresAt > Date.now() && saved.matric) {
+            return saved.matric;
+          }
+        }
+      } catch (e) { /* ignore malformed session data */ }
+
+      return null;
+    }
+
+    async function detectViewer() {
+      const matric = getMatric();
+
+      if (matric) {
+        try {
+          const { data: student, error } = await db
+            .from("students")
+            .select("level_arabic, batch")
+            .eq("matric_number", matric)
+            .single();
+
+          if (!error && student) {
+            viewerLevel = student.level_arabic || "";
+            viewerBatch = student.batch || "";
+            viewerIsKnownStudent = true;
+            return;
+          }
+        } catch (e) {
+          console.error("Could not fetch student level/batch:", e);
+        }
+      }
+
+      // Guest — restore any level/batch they picked on a previous visit
+      try {
+        const pref = JSON.parse(localStorage.getItem("semesterGuestPref") || "{}");
+        viewerLevel = pref.level || "";
+        viewerBatch = pref.batch || "";
+      } catch (e) {
+        viewerLevel = "";
+        viewerBatch = "";
+      }
+    }
+
+    function entryMatchesViewer(entry) {
+      const levelOk = !viewerLevel || !entry.level_arabic || entry.level_arabic === viewerLevel;
+      const batchOk = !viewerBatch || !entry.batch || entry.batch === viewerBatch;
+      return levelOk && batchOk;
+    }
+
+    function renderViewerUI() {
+      const banner = document.getElementById("semViewerBanner");
+      const picker = document.getElementById("semViewerPicker");
+
+      if (viewerIsKnownStudent) {
+        picker.classList.add("hidden");
+        banner.classList.remove("hidden");
+        banner.innerHTML = `
+          <i class="fa-solid fa-user-check"></i>
+          Showing activities for:
+          <strong>${viewerLevel || "All Levels"}</strong> •
+          <strong>${viewerBatch || "All Batches"}</strong>
+        `;
+        return;
+      }
+
+      banner.classList.add("hidden");
+      picker.classList.remove("hidden");
+
+      const levelSelect = document.getElementById("semPickLevel");
+      const batchSelect = document.getElementById("semPickBatch");
+      if (levelSelect) levelSelect.value = viewerLevel;
+
+      // Batch options come from whatever batches actually appear in the
+      // loaded entries — populated once entries arrive (see loadSemester).
+      if (batchSelect) batchSelect.value = viewerBatch;
+
+      levelSelect?.addEventListener("change", () => {
+        viewerLevel = levelSelect.value;
+        saveGuestPref();
+        renderSemesterContent();
+      });
+      batchSelect?.addEventListener("change", () => {
+        viewerBatch = batchSelect.value;
+        saveGuestPref();
+        renderSemesterContent();
+      });
+    }
+
+    function saveGuestPref() {
+      localStorage.setItem("semesterGuestPref", JSON.stringify({ level: viewerLevel, batch: viewerBatch }));
+    }
+
+    function populateGuestBatchOptions() {
+      const batchSelect = document.getElementById("semPickBatch");
+      if (!batchSelect || viewerIsKnownStudent) return;
+
+      const batches = [...new Set(allEntries.map(e => e.batch).filter(Boolean))];
+      batchSelect.innerHTML = `<option value="">All Batches</option>` +
+        batches.map(b => `<option value="${b}">${b}</option>`).join("");
+      batchSelect.value = viewerBatch;
+    }
+
     async function loadSemester() {
+      await detectViewer();
+      renderViewerUI();
+
       const { data, error } = await db
         .from("semester_schedule")
         .select("*")
+        .or("deleted.is.null,deleted.eq.false")
         .order("start_date", { ascending: true });
 
       const loading = document.getElementById("semLoading");
@@ -131,6 +282,13 @@
         return;
       }
 
+      allEntries = data || [];
+      populateGuestBatchOptions();
+      renderSemesterContent();
+    }
+
+    function renderSemesterContent() {
+      const data = allEntries.filter(entryMatchesViewer);
       const container = document.getElementById("semesterContent");
       container.innerHTML = "";
 

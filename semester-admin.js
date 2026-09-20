@@ -53,6 +53,10 @@ function renderEntries(entries) {
       <div class="entry-meta">
         ${entry.semester} • ${entry.type.replace("_", " ")}
       </div>
+      <div class="entry-meta">
+        <span><i class="fa-solid fa-layer-group"></i> ${entry.level_arabic || "All Levels"}</span>
+        <span><i class="fa-solid fa-people-group"></i> ${entry.batch || "All Batches"}</span>
+      </div>
       <strong>${entry.title}</strong>
       <div>${entry.description || ""}</div>
       <div class="entry-meta">
@@ -95,14 +99,20 @@ async function updateUnreadCounter() {
 function populateFilters() {
   const semesterSelect = document.getElementById("filterSemester");
   const typeSelect = document.getElementById("filterType");
+  const levelSelect = document.getElementById("filterLevel");
+  const batchSelect = document.getElementById("filterBatch");
 
   if (!semesterSelect || !typeSelect) return;
 
   const semesters = [...new Set(cachedEntries.map(e => e.semester))];
   const types = [...new Set(cachedEntries.map(e => e.type))];
+  const levels = [...new Set(cachedEntries.map(e => e.level_arabic).filter(Boolean))];
+  const batches = [...new Set(cachedEntries.map(e => e.batch).filter(Boolean))];
 
   semesterSelect.innerHTML = `<option value="">All Semesters</option>`;
   typeSelect.innerHTML = `<option value="">All Types</option>`;
+  if (levelSelect) levelSelect.innerHTML = `<option value="">All Levels</option>`;
+  if (batchSelect) batchSelect.innerHTML = `<option value="">All Batches</option>`;
 
   semesters.forEach(s =>
     semesterSelect.innerHTML += `<option value="${s}">${s}</option>`
@@ -111,12 +121,26 @@ function populateFilters() {
   types.forEach(t =>
     typeSelect.innerHTML += `<option value="${t}">${t.replace("_"," ")}</option>`
   );
+
+  if (levelSelect) {
+    levels.forEach(l =>
+      levelSelect.innerHTML += `<option value="${l}">${l}</option>`
+    );
+  }
+
+  if (batchSelect) {
+    batches.forEach(b =>
+      batchSelect.innerHTML += `<option value="${b}">${b}</option>`
+    );
+  }
 }
 
 function applyFilters() {
   const search = document.getElementById("searchInput")?.value.toLowerCase() || "";
   const semester = document.getElementById("filterSemester")?.value;
   const type = document.getElementById("filterType")?.value;
+  const level = document.getElementById("filterLevel")?.value;
+  const batch = document.getElementById("filterBatch")?.value;
 
   let filtered = cachedEntries.filter(entry => {
     const matchesSearch =
@@ -129,7 +153,13 @@ function applyFilters() {
     const matchesType =
       !type || entry.type === type;
 
-    return matchesSearch && matchesSemester && matchesType;
+    const matchesLevel =
+      !level || entry.level_arabic === level;
+
+    const matchesBatch =
+      !batch || entry.batch === batch;
+
+    return matchesSearch && matchesSemester && matchesType && matchesLevel && matchesBatch;
   });
 
   renderEntries(filtered);
@@ -139,6 +169,8 @@ function applyFilters() {
 document.getElementById("searchInput")?.addEventListener("input", applyFilters);
 document.getElementById("filterSemester")?.addEventListener("change", applyFilters);
 document.getElementById("filterType")?.addEventListener("change", applyFilters);
+document.getElementById("filterLevel")?.addEventListener("change", applyFilters);
+document.getElementById("filterBatch")?.addEventListener("change", applyFilters);
 
 // ================================
 // LOADING HELPERS
@@ -167,6 +199,8 @@ document.getElementById("semesterForm").onsubmit = async e => {
   const payload = {
     semester: document.getElementById("semester").value,
     type: document.getElementById("type").value,
+    level_arabic: document.getElementById("level_arabic").value || null,
+    batch: document.getElementById("batch").value.trim() || null,
     title: document.getElementById("title").value,
     description: document.getElementById("description").value,
     start_date: document.getElementById("start_date").value || null,
@@ -206,8 +240,23 @@ document.getElementById("semesterForm").onsubmit = async e => {
 function openEdit(entry) {
   editingEntry = entry;
 
-  document.getElementById("semester").value = entry.semester;
+  const semesterSelect = document.getElementById("semester");
+  semesterSelect.querySelectorAll("option[data-legacy]").forEach(o => o.remove());
+  const hasMatchingOption = [...semesterSelect.options].some(o => o.value === entry.semester);
+  if (entry.semester && !hasMatchingOption) {
+    // Older entry saved before this became a dropdown (e.g. "Harmattan",
+    // "Spring 2025") — keep it selectable instead of silently blanking it
+    // out or overwriting it with "First Semester" on save.
+    const opt = document.createElement("option");
+    opt.value = entry.semester;
+    opt.textContent = entry.semester;
+    opt.dataset.legacy = "true";
+    semesterSelect.appendChild(opt);
+  }
+  semesterSelect.value = entry.semester;
   document.getElementById("type").value = entry.type;
+  document.getElementById("level_arabic").value = entry.level_arabic || "";
+  document.getElementById("batch").value = entry.batch || "";
   document.getElementById("title").value = entry.title;
   document.getElementById("description").value = entry.description;
   document.getElementById("start_date").value = entry.start_date || "";
@@ -293,6 +342,8 @@ function resetForm() {
 
   setTimeout(() => {
     document.getElementById("semesterForm").reset();
+    document.getElementById("semester")
+      .querySelectorAll("option[data-legacy]").forEach(o => o.remove());
     editingEntry = null;
     cancelBtn.style.display = "none";
     resetLoading(cancelBtn);
@@ -302,7 +353,26 @@ function resetForm() {
 cancelBtn.onclick = resetForm;
 
 // ================================
+// BATCH AUTOCOMPLETE (from students table)
+// ================================
+async function loadBatchSuggestions() {
+  const { data, error } = await db
+    .from("students")
+    .select("batch")
+    .not("batch", "is", null);
+
+  if (error) return console.error(error);
+
+  const list = document.getElementById("batchList");
+  if (!list) return;
+
+  const batches = [...new Set(data.map(s => s.batch).filter(Boolean))];
+  list.innerHTML = batches.map(b => `<option value="${b}"></option>`).join("");
+}
+
+// ================================
 // INIT
 // ================================
 loadEntries();
 updateUnreadCounter();
+loadBatchSuggestions();

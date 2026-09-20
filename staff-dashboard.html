@@ -101,13 +101,46 @@
         <p data-translate="Grades Posted">Grades Posted</p>
       </div>
     </div>
+    <div class="stat-card leads-stat hidden">
+      <div class="stat-icon"><i class="fa-solid fa-user-group"></i></div>
+      <div class="stat-info">
+        <h3 id="totalLeads" data-no-translate="true">0</h3>
+        <p data-translate="Total Leads">Total Leads</p>
+      </div>
+    </div>
+    <div class="stat-card leads-stat hidden">
+      <div class="stat-icon students"><i class="fa-solid fa-comment-dots"></i></div>
+      <div class="stat-info">
+        <h3 id="followUpLeads" data-no-translate="true">0</h3>
+        <p data-translate="Need Follow-up">Need Follow-up</p>
+      </div>
+    </div>
+    <div class="stat-card leads-stat hidden">
+      <div class="stat-icon grades"><i class="fa-solid fa-circle-check"></i></div>
+      <div class="stat-info">
+        <h3 id="enrolledLeads" data-no-translate="true">0</h3>
+        <p data-translate="Enrolled">Enrolled</p>
+      </div>
+    </div>
   </section>
 
   <!-- ================================================
        TAB NAVIGATION
   ================================================ -->
   <div class="tab-nav">
-    <button class="tab-btn active" onclick="switchTab('courses')">
+    <button class="tab-btn active" onclick="switchTab('profile')">
+      <i class="fa-solid fa-user"></i>
+      <span data-translate="My Profile">My Profile</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('payments')">
+      <i class="fa-solid fa-money-bill-wave"></i>
+      <span data-translate="My Payments">My Payments</span>
+    </button>
+    <button class="tab-btn hidden" onclick="switchTab('leads')">
+      <i class="fa-solid fa-user-group"></i>
+      <span data-translate="Leads">Leads</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('courses')">
       <i class="fa-solid fa-book-open"></i>
       <span data-translate="My Courses">My Courses</span>
     </button>
@@ -123,14 +156,6 @@
       <i class="fa-solid fa-clipboard-user"></i>
       <span data-translate="Attendance">Attendance</span>
     </button>
-    <button class="tab-btn" onclick="switchTab('payments')">
-      <i class="fa-solid fa-money-bill-wave"></i>
-      <span data-translate="My Payments">My Payments</span>
-    </button>
-    <button class="tab-btn" onclick="switchTab('profile')">
-      <i class="fa-solid fa-user"></i>
-      <span data-translate="My Profile">My Profile</span>
-    </button>
   </div>
 
   <!-- ================================================
@@ -139,7 +164,7 @@
   <!-- ================================================
      TAB: MY COURSES
 =============================================== -->
-<div class="tab-content active" id="tab-courses">
+<div class="tab-content" id="tab-courses">
   <div class="section-header">
     <h2 data-translate="My Courses & Students">My Courses &amp; Students</h2>
     <div class="filter-bar">
@@ -162,7 +187,7 @@
   <div class="tab-content" id="tab-grades">
 
     <!-- POST GRADE FORM -->
-    <div class="staff-card">
+    <div class="staff-card staff-card--form">
       <h2 class="section-title" id="gradeFormTitle">
         <i class="fa-solid fa-pen-to-square"></i>
         <span data-translate="Post a Grade">Post a Grade</span>
@@ -172,15 +197,15 @@
         <input type="hidden" id="gradeEditId" value="">
         <div class="grade-form-row">
           <div class="grade-form-field">
-            <label data-translate="Student">Student</label>
-            <select id="gradeStudentSelect">
-              <option value="" data-translate="Select Student">Select Student</option>
-            </select>
-          </div>
-          <div class="grade-form-field">
             <label data-translate="Course">Course</label>
             <select id="gradeCourseSelect">
               <option value="" data-translate="Select Course">Select Course</option>
+            </select>
+          </div>
+          <div class="grade-form-field">
+            <label data-translate="Student">Student</label>
+            <select id="gradeStudentSelect" disabled>
+              <option value="" data-translate="Select Course First">Select Course First</option>
             </select>
           </div>
         </div>
@@ -272,6 +297,9 @@
           <select id="filterGradeCourse" class="search-input filter-select">
             <option value="" data-translate="All Courses">📘 All Courses</option>
           </select>
+          <select id="filterGradeLevel" class="search-input filter-select">
+            <option value="" data-translate="All Levels">🎓 All Levels</option>
+          </select>
           <select id="filterGradeBatch" class="search-input filter-select">
             <option value="" data-translate="All Batches">📦 All Batches</option>
           </select>
@@ -289,22 +317,23 @@
         <table class="staff-table" id="staffGradesTable">
           <thead>
             <tr>
-              <th data-translate="Student">Student</th>
-              <th data-translate="Matric">Matric</th>
-              <th data-translate="Batch">Batch</th>
-              <th data-translate="Course">Course</th>
-              <th data-translate="Semester">Semester</th>
-              <th data-translate="Assessment">Assessment</th>
-              <th data-translate="Exam">Exam</th>
-              <th data-translate="Total">Total</th>
-              <th data-translate="Remark">Remark</th>
-              <th data-translate="Released">Released</th>
+              <th class="sortable-th" data-sort-key="student" data-translate="Student">Student</th>
+              <th class="sortable-th" data-sort-key="matric" data-translate="Matric">Matric</th>
+              <th class="sortable-th" data-sort-key="level" data-translate="Level">Level</th>
+              <th class="sortable-th" data-sort-key="batch" data-translate="Batch">Batch</th>
+              <th class="sortable-th" data-sort-key="course" data-translate="Course">Course</th>
+              <th class="sortable-th" data-sort-key="semester" data-translate="Semester">Semester</th>
+              <th class="sortable-th" data-sort-key="assessmentScore" data-translate="Assessment">Assessment</th>
+              <th class="sortable-th" data-sort-key="examScore" data-translate="Exam">Exam</th>
+              <th class="sortable-th" data-sort-key="totalScore" data-translate="Total">Total</th>
+              <th class="sortable-th" data-sort-key="remark" data-translate="Remark">Remark</th>
+              <th class="sortable-th" data-sort-key="released" data-translate="Released">Released</th>
               <th data-translate="Actions">Actions</th>
             </tr>
           </thead>
           <tbody id="staffGradesBody">
             <tr>
-              <td colspan="10" class="empty-state" data-translate="Loading grades...">
+              <td colspan="11" class="empty-state" data-translate="Loading grades...">
                 Loading grades...
               </td>
             </tr>
@@ -320,7 +349,7 @@
   <div class="tab-content" id="tab-schedule">
 
     <!-- ADD / EDIT FORM -->
-    <div class="staff-card" id="scheduleFormCard" style="display:none;">
+    <div class="staff-card staff-card--form" id="scheduleFormCard" style="display:none;">
       <h2 class="section-title" id="scheduleFormTitle">
         <i class="fa-solid fa-calendar-plus"></i>
         <span data-translate="Add Class">Add Class</span>
@@ -427,7 +456,7 @@
   <div class="tab-content" id="tab-attendance">
 
     <!-- ADD / EDIT FORM -->
-    <div class="staff-card" id="attendanceFormCard" style="display:none;">
+    <div class="staff-card staff-card--form" id="attendanceFormCard" style="display:none;">
       <h2 class="section-title" id="attendanceFormTitle">
         <i class="fa-solid fa-clipboard-user"></i>
         <span data-translate="Create Attendance Session">Create Attendance Session</span>
@@ -624,10 +653,115 @@
   <!-- ================================================
        TAB: MY PROFILE
   ================================================ -->
-  <div class="tab-content" id="tab-profile">
+  <div class="tab-content" id="tab-leads">
+    <div class="staff-card">
+      <div class="section-header">
+        <h2 data-translate="Interested Students">Interested Students</h2>
+        <input type="text" id="searchLeads" class="search-input"
+               placeholder="Search by name or phone..."
+               data-translate-placeholder="Search by name or phone...">
+        <select id="filterLeadStatus" class="filter-select">
+          <option value="" data-translate="All Statuses">All Statuses</option>
+          <option value="new" data-translate="New">New</option>
+          <option value="contacted" data-translate="Contacted">Contacted</option>
+          <option value="follow_up" data-translate="Follow-up">Follow-up</option>
+          <option value="interested" data-translate="Interested">Interested</option>
+          <option value="enrolled" data-translate="Enrolled">Enrolled</option>
+          <option value="not_interested" data-translate="Not Interested">Not Interested</option>
+        </select>
+        <button class="add-btn" onclick="openAddLeadModal()">
+          <i class="fa-solid fa-plus"></i>
+          <span data-translate="Add Lead">Add Lead</span>
+        </button>
+      </div>
+
+      <div class="table-container">
+        <table id="leads-table" class="staff-table">
+          <thead>
+            <tr>
+              <th data-translate="Name">Name</th>
+              <th data-translate="Contact">Contact</th>
+              <th data-translate="Source">Source</th>
+              <th data-translate="Status">Status</th>
+              <th data-translate="Notes">Notes</th>
+              <th data-translate="Added">Added</th>
+              <th data-translate="Edit">Edit</th>
+              <th data-translate="Delete">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="8" class="empty-state">
+              <i class="fa-solid fa-spinner fa-spin"></i> <span data-translate="Loading...">Loading...</span>
+            </td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================
+       ADD / EDIT LEAD MODAL
+  ================================================ -->
+  <div class="modal" id="leadModal">
+    <div class="modal-content">
+      <button class="btn btn-close" onclick="closeModal('leadModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 id="leadModalTitle" data-translate="Add Lead">Add Lead</h2>
+
+      <div class="modal-grid">
+        <label data-translate="Full Name">Full Name</label>
+        <input type="text" id="leadName" placeholder="Full Name"
+               data-translate-placeholder="Full Name">
+
+        <label data-translate="Phone / WhatsApp">Phone / WhatsApp</label>
+        <input type="text" id="leadPhone" placeholder="Phone or WhatsApp Number"
+               data-translate-placeholder="Phone or WhatsApp Number">
+
+        <label data-translate="Email">Email</label>
+        <input type="email" id="leadEmail" placeholder="Email (optional)"
+               data-translate-placeholder="Email (optional)">
+
+        <label data-translate="Source">Source</label>
+        <select id="leadSource">
+          <option value="whatsapp" data-translate="WhatsApp">WhatsApp</option>
+          <option value="website" data-translate="Website">Website</option>
+          <option value="referral" data-translate="Referral">Referral</option>
+          <option value="other" data-translate="Other">Other</option>
+        </select>
+
+        <label data-translate="Status">Status</label>
+        <select id="leadStatus">
+          <option value="new" data-translate="New">New</option>
+          <option value="contacted" data-translate="Contacted">Contacted</option>
+          <option value="follow_up" data-translate="Follow-up">Follow-up</option>
+          <option value="interested" data-translate="Interested">Interested</option>
+          <option value="enrolled" data-translate="Enrolled">Enrolled</option>
+          <option value="not_interested" data-translate="Not Interested">Not Interested</option>
+        </select>
+
+        <label data-translate="Notes">Notes</label>
+        <textarea id="leadNotes" rows="3" placeholder="Follow-up notes..."
+                  data-translate-placeholder="Follow-up notes..."></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-cancel" onclick="closeModal('leadModal')">
+          <i class="fa-solid fa-xmark"></i>
+          <span data-translate="Cancel">Cancel</span>
+        </button>
+        <button id="saveLeadBtn" class="btn btn-save" data-text="Save Lead" onclick="saveLead()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span data-translate="Save Lead">Save Lead</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content active" id="tab-profile">
 
     <!-- PROFILE CARD -->
-    <div class="staff-card">
+    <div class="staff-card staff-card--form">
       <h2 class="section-title">
         <i class="fa-solid fa-user-circle"></i>
         <span data-translate="My Profile">My Profile</span>
@@ -679,6 +813,24 @@
                  data-translate-placeholder="Phone Number">
         </div>
         <div class="profile-field">
+          <label data-translate="Country">Country</label>
+          <input type="text" id="profileCountry"
+                 placeholder="Country"
+                 data-translate-placeholder="Country">
+        </div>
+        <div class="profile-field">
+          <label data-translate="State">State</label>
+          <input type="text" id="profileState"
+                 placeholder="State / Region"
+                 data-translate-placeholder="State / Region">
+        </div>
+        <div class="profile-field">
+          <label data-translate="Address">Address</label>
+          <input type="text" id="profileAddress"
+                 placeholder="Street Address"
+                 data-translate-placeholder="Street Address">
+        </div>
+        <div class="profile-field">
           <label data-translate="Role">Role</label>
           <input type="text" id="profileRole"
                  placeholder="Role"
@@ -711,33 +863,35 @@
     </div>
 
     <!-- CHANGE PASSWORD CARD -->
-    <div class="staff-card">
+    <div class="staff-card staff-card--form">
       <h2 class="section-title">
         <i class="fa-solid fa-lock"></i>
         <span data-translate="Change Password">Change Password</span>
       </h2>
 
-      <div class="form-group1">
-        <label data-translate="New Password">New Password</label>
-        <div class="input-group">
-          <input id="newPassword" type="password"
-                 placeholder="Enter new password"
-                 data-translate-placeholder="Enter new password">
-          <button type="button" class="toggle-btn" onclick="togglePassword('newPassword')">
-            <i class="fa-solid fa-eye"></i>
-          </button>
+      <div class="form-grid-2">
+        <div class="form-group1">
+          <label data-translate="New Password">New Password</label>
+          <div class="input-group">
+            <input id="newPassword" type="password"
+                   placeholder="Enter new password"
+                   data-translate-placeholder="Enter new password">
+            <button type="button" class="toggle-btn" onclick="togglePassword('newPassword')">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group1">
-        <label data-translate="Confirm Password">Confirm Password</label>
-        <div class="input-group">
-          <input id="confirmPassword" type="password"
-                 placeholder="Confirm new password"
-                 data-translate-placeholder="Confirm new password">
-          <button type="button" class="toggle-btn" onclick="togglePassword('confirmPassword')">
-            <i class="fa-solid fa-eye"></i>
-          </button>
+        <div class="form-group1">
+          <label data-translate="Confirm Password">Confirm Password</label>
+          <div class="input-group">
+            <input id="confirmPassword" type="password"
+                   placeholder="Confirm new password"
+                   data-translate-placeholder="Confirm new password">
+            <button type="button" class="toggle-btn" onclick="togglePassword('confirmPassword')">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
         </div>
       </div>
 
