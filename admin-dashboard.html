@@ -59,7 +59,7 @@
         <a href="courses.html" data-translate="Courses">Courses</a>
         <a href="register.html" data-translate="Register">Register</a>
         <a href="students-dashboard.html" data-translate="Student Dashboard">Student Dashboard</a>
-
+<a href="quizzes.html" data-translate="Quizzes">Quizzes</a>
         <a href="admin-dashboard.html" class="active" data-translate="Admin Dashboard">Admin Dashboard</a>
         <a href="staff-management.html" data-translate="Staff Management">Staff Management</a>
         <a href="admin-inbox.html">
@@ -369,10 +369,10 @@
       <div class="table-filters">
         <select id="studentsLevelFilter" class="table-filter-select" aria-label="Filter by level">
           <option value="" data-translate="All Levels">All Levels</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
         <select id="studentsBatchFilter" class="table-filter-select" aria-label="Filter by batch">
           <option value="" data-translate="All Batches">All Batches</option>
@@ -437,22 +437,22 @@
       <div class="table-filters">
         <select id="paymentsLevelFilter" class="table-filter-select" aria-label="Filter by level">
           <option value="" data-translate="All Levels">All Levels</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
         <select id="paymentsBatchFilter" class="table-filter-select" aria-label="Filter by batch">
           <option value="" data-translate="All Batches">All Batches</option>
         </select>
         <select id="paymentsMonthFilter" class="table-filter-select" aria-label="Filter by month">
           <option value="" data-translate="All Months">All Months</option>
-          <option data-translate="January">January</option><option data-translate="February">February</option>
-          <option data-translate="March">March</option><option data-translate="April">April</option>
-          <option data-translate="May">May</option><option data-translate="June">June</option>
-          <option data-translate="July">July</option><option data-translate="August">August</option>
-          <option data-translate="September">September</option><option data-translate="October">October</option>
-          <option data-translate="November">November</option><option data-translate="December">December</option>
+          <option value="January" data-translate="January">January</option><option value="February" data-translate="February">February</option>
+          <option value="March" data-translate="March">March</option><option value="April" data-translate="April">April</option>
+          <option value="May" data-translate="May">May</option><option value="June" data-translate="June">June</option>
+          <option value="July" data-translate="July">July</option><option value="August" data-translate="August">August</option>
+          <option value="September" data-translate="September">September</option><option value="October" data-translate="October">October</option>
+          <option value="November" data-translate="November">November</option><option value="December" data-translate="December">December</option>
         </select>
       </div>
       <input type="text" id="searchPayments" class="search-input"
@@ -511,10 +511,10 @@
           </select>
           <select id="month">
             <option value="" data-translate="Select Month">Select Month</option>
-            <option>January</option><option>February</option><option>March</option>
-            <option>April</option><option>May</option><option>June</option>
-            <option>July</option><option>August</option><option>September</option>
-            <option>October</option><option>November</option><option>December</option>
+            <option value="January">January</option><option value="February">February</option><option value="March">March</option>
+            <option value="April">April</option><option value="May">May</option><option value="June">June</option>
+            <option value="July">July</option><option value="August">August</option><option value="September">September</option>
+            <option value="October">October</option><option value="November">November</option><option value="December">December</option>
           </select>
           <input id="amount" type="number" placeholder="Amount"
                  data-translate-placeholder="Amount">
@@ -528,28 +528,28 @@
         </div>
         <button class="add-btn" onclick="openBulkFeeModal()" style="margin-top:10px;">
           <i class="fa-solid fa-users"></i>
-          <span data-translate="Bulk Add for Multiple Students">Bulk Add for Multiple Students</span>
+          <span data-translate="Bulk Add Fee for Multiple Students">Bulk Add Fee for Multiple Students</span>
         </button>
       </div>
       <div class="fee-filters-row">
         <select id="feesLevelFilter" class="table-filter-select" aria-label="Filter by level" onchange="filterFees()">
           <option value="" data-translate="All Levels">All Levels</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
         <select id="feesBatchFilter" class="table-filter-select" aria-label="Filter by batch" onchange="filterFees()">
           <option value="" data-translate="All Batches">All Batches</option>
         </select>
         <select id="feesMonthFilter" class="table-filter-select" aria-label="Filter by month" onchange="filterFees()">
           <option value="" data-translate="All Months">All Months</option>
-          <option data-translate="January">January</option><option data-translate="February">February</option>
-          <option data-translate="March">March</option><option data-translate="April">April</option>
-          <option data-translate="May">May</option><option data-translate="June">June</option>
-          <option data-translate="July">July</option><option data-translate="August">August</option>
-          <option data-translate="September">September</option><option data-translate="October">October</option>
-          <option data-translate="November">November</option><option data-translate="December">December</option>
+          <option value="January" data-translate="January">January</option><option value="February" data-translate="February">February</option>
+          <option value="March" data-translate="March">March</option><option value="April" data-translate="April">April</option>
+          <option value="May" data-translate="May">May</option><option value="June" data-translate="June">June</option>
+          <option value="July" data-translate="July">July</option><option value="August" data-translate="August">August</option>
+          <option value="September" data-translate="September">September</option><option value="October" data-translate="October">October</option>
+          <option value="November" data-translate="November">November</option><option value="December" data-translate="December">December</option>
         </select>
       </div>
       <input id="search" class="search-box"
@@ -574,18 +574,18 @@
       <div class="table-filters">
         <select id="gradesLevelFilter" class="table-filter-select" aria-label="Filter by level">
           <option value="" data-translate="All Levels">All Levels</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
         <select id="gradesBatchFilter" class="table-filter-select" aria-label="Filter by batch">
           <option value="" data-translate="All Batches">All Batches</option>
         </select>
         <select id="gradesSemesterFilter" class="table-filter-select" aria-label="Filter by semester">
           <option value="" data-translate="All Semesters">All Semesters</option>
-          <option data-translate="First">First</option>
-          <option data-translate="Second">Second</option>
+          <option value="First" data-translate="First">First</option>
+          <option value="Second" data-translate="Second">Second</option>
         </select>
       </div>
       <input type="text" id="searchGrades" class="search-input"
@@ -637,10 +637,10 @@
       <div class="table-filters">
         <select id="scheduleLevelFilter" class="table-filter-select" aria-label="Filter by level">
           <option value="" data-translate="All Levels">All Levels</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
         <select id="scheduleBatchFilter" class="table-filter-select" aria-label="Filter by batch">
           <option value="" data-translate="All Batches">All Batches</option>
@@ -688,10 +688,10 @@
       <div class="table-filters">
         <select id="attendanceLevelFilter" class="table-filter-select" aria-label="Filter by level">
           <option value="" data-translate="All Levels">All Levels</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
         <select id="attendanceBatchFilter" class="table-filter-select" aria-label="Filter by batch">
           <option value="" data-translate="All Batches">All Batches</option>
@@ -740,18 +740,18 @@
       <div class="table-filters">
         <select id="assessmentsLevelFilter" class="table-filter-select" aria-label="Filter by level">
           <option value="" data-translate="All Levels">All Levels</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
         <select id="assessmentsBatchFilter" class="table-filter-select" aria-label="Filter by batch">
           <option value="" data-translate="All Batches">All Batches</option>
         </select>
         <select id="assessmentsSemesterFilter" class="table-filter-select" aria-label="Filter by semester">
           <option value="" data-translate="All Semesters">All Semesters</option>
-          <option data-translate="First">First</option>
-          <option data-translate="Second">Second</option>
+          <option value="First" data-translate="First">First</option>
+          <option value="Second" data-translate="Second">Second</option>
         </select>
       </div>
       <input type="text" id="searchAssessments" class="search-input"
@@ -1026,10 +1026,10 @@
         <label data-translate="Month">Month</label>
         <select id="vl-modal-month">
           <option value="" data-translate="Select Month">Select Month</option>
-          <option>January</option><option>February</option><option>March</option>
-          <option>April</option><option>May</option><option>June</option>
-          <option>July</option><option>August</option><option>September</option>
-          <option>October</option><option>November</option><option>December</option>
+          <option value="January">January</option><option value="February">February</option><option value="March">March</option>
+          <option value="April">April</option><option value="May">May</option><option value="June">June</option>
+          <option value="July">July</option><option value="August">August</option><option value="September">September</option>
+          <option value="October">October</option><option value="November">November</option><option value="December">December</option>
         </select>
 
         <label data-translate="YouTube Video ID">YouTube Video ID</label>
@@ -1071,10 +1071,10 @@
         <label data-translate="Month">Month</label>
         <select id="bulkFeeMonth">
           <option value="" data-translate="Select Month">Select Month</option>
-          <option>January</option><option>February</option><option>March</option>
-          <option>April</option><option>May</option><option>June</option>
-          <option>July</option><option>August</option><option>September</option>
-          <option>October</option><option>November</option><option>December</option>
+          <option value="January">January</option><option value="February">February</option><option value="March">March</option>
+          <option value="April">April</option><option value="May">May</option><option value="June">June</option>
+          <option value="July">July</option><option value="August">August</option><option value="September">September</option>
+          <option value="October">October</option><option value="November">November</option><option value="December">December</option>
         </select>
         <label data-translate="Amount">Amount</label>
         <input id="bulkFeeAmount" type="number" placeholder="Amount" data-translate-placeholder="Amount">
@@ -1278,10 +1278,10 @@
         </select>
         <select id="bulkFeeLevelFilter" onchange="filterBulkFeeStudents()" style="flex:1; min-width:160px;">
           <option value="" data-translate="All Levels">All Levels</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
       </div>
       <input type="text" id="bulkFeeSearch" class="search-input"
@@ -1343,10 +1343,10 @@
       <div class="bulk-fee-filters" style="display:flex; gap:8px; flex-wrap:wrap; margin:6px 0;">
         <select id="promoteLevelFilter" onchange="filterPromoteStudents()" style="flex:1; min-width:160px;">
           <option value="" data-translate="All Levels">All Levels</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
         <select id="promoteBatchFilter" onchange="filterPromoteStudents()" style="flex:1; min-width:160px;">
           <option value="" data-translate="All Batches">All Batches</option>
@@ -1379,10 +1379,10 @@
         <label data-translate="New Level">New Level</label>
         <select id="promoteNewLevel">
           <option value="" data-translate="Don't change">Don't change</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
         <label data-translate="New Batch">New Batch</label>
         <input type="text" id="promoteNewBatch"
@@ -1426,6 +1426,23 @@
    <section class="dash-section" style="margin-top: 30px;">
       <div class="section-header">
         <h2 data-translate="Issued Certificates History">Issued Certificates History</h2>
+        <div class="table-filters">
+          <select id="certLevelFilter" class="table-filter-select" aria-label="Filter by level">
+            <option value="" data-translate="All Levels">All Levels</option>
+            <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+            <option value="Beginner" data-translate="Beginner">Beginner</option>
+            <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+            <option value="Advanced" data-translate="Advanced">Advanced</option>
+          </select>
+          <select id="certBatchFilter" class="table-filter-select" aria-label="Filter by batch">
+            <option value="" data-translate="All Batches">All Batches</option>
+          </select>
+          <select id="certStatusFilter" class="table-filter-select" aria-label="Filter by status">
+            <option value="" data-translate="All Statuses">All Statuses</option>
+            <option value="active" data-translate="Active">Active</option>
+            <option value="revoked" data-translate="Revoked">Revoked</option>
+          </select>
+        </div>
         <input type="text" id="searchCertRegistry" class="search-input" 
                placeholder="🔍 Search certificates history..." 
                data-translate-placeholder="🔍 Search certificates history...">
@@ -1824,10 +1841,10 @@
         <label data-translate="Level">Level</label>
         <select id="studentLevel" required>
           <option value="" data-translate="Choose Level">Choose Level</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
         <label data-translate="Batch">Batch</label>
         <input type="text" id="studentBatch" placeholder="e.g. June 2026"
@@ -1925,6 +1942,7 @@
         <select id="studentStatus">
           <option value="active" data-translate="Active">Active</option>
           <option value="inactive" data-translate="Inactive">Inactive</option>
+          <option value="graduated" data-translate="Graduated">Graduated</option>
         </select>
         <label data-translate="Admission">Admission</label>
         <select id="studentAdmission">
@@ -1963,10 +1981,10 @@
         <label data-translate="Level">Level</label>
         <select id="paymentLevel" required>
           <option value="" data-translate="Select Level">Select Level</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
         <label data-translate="Batch">Batch</label>
         <input type="text" id="paymentBatch" placeholder="Batch" disabled>
@@ -2102,10 +2120,10 @@
         <label data-translate="Level">Level</label>
         <select id="gradeLevel" required>
           <option value="" data-translate="Choose Level">Choose Level</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
         <label data-translate="Batch">Batch</label>
         <input type="text" id="gradeBatch" placeholder="Batch" disabled>
@@ -2117,8 +2135,8 @@
         <label data-translate="Semester">Semester</label>
         <select id="gradeSemester" required>
           <option value="" data-translate="Select Semester">Select Semester</option>
-          <option data-translate="First">First</option>
-          <option data-translate="Second">Second</option>
+          <option value="First" data-translate="First">First</option>
+          <option value="Second" data-translate="Second">Second</option>
         </select>
         <label data-translate="Assessment Score">Assessment Score</label>
         <input type="number" id="gradeAssessment" placeholder="Assessment"
@@ -2165,10 +2183,10 @@
         <label data-translate="Level">Level</label>
         <select id="classLevel" required>
           <option value="" data-translate="Choose Level">Choose Level</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
         <label data-translate="Batch">Batch</label>
         <input type="text" id="classBatch" placeholder="e.g. June 2026"
@@ -2221,10 +2239,10 @@
         <label data-translate="Level">Level</label>
         <select id="attendanceLevel">
           <option value="" data-translate="Choose Level">Choose Level</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
         <label data-translate="Batch">Batch</label>
         <input type="text" id="attendanceBatch" placeholder="e.g. June 2026"
@@ -2302,10 +2320,10 @@
         <label data-translate="Level (optional)">Level (optional)</label>
         <select id="assessmentLevel">
           <option value="" data-translate="All levels registered for this course">All levels registered for this course</option>
-          <option data-translate="Preliminary">Preliminary</option>
-          <option data-translate="Beginner">Beginner</option>
-          <option data-translate="Intermediate">Intermediate</option>
-          <option data-translate="Advanced">Advanced</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
         </select>
         <label data-translate="Batch">Batch</label>
         <input type="text" id="assessmentBatch" placeholder="e.g. June 2026"
@@ -2317,8 +2335,8 @@
         <label data-translate="Semester">Semester</label>
         <select id="assessmentSemester">
           <option value="" data-translate="Select Semester">Select Semester</option>
-          <option data-translate="First">First</option>
-          <option data-translate="Second">Second</option>
+          <option value="First" data-translate="First">First</option>
+          <option value="Second" data-translate="Second">Second</option>
         </select>
         <label data-translate="Type">Type</label>
         <select id="assessmentType">

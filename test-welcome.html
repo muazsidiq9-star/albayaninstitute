@@ -183,6 +183,8 @@
   <!-- SCRIPTS -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
+  <script src="student-guard.js"></script>
+
   <script>
     
 
@@ -231,6 +233,7 @@
         upcoming:   { cls: "badge-upcoming", icon: "fa-solid fa-clock",                label: "Upcoming"          },
         waiting:    { cls: "badge-waiting",  icon: "fa-solid fa-hourglass-half",        label: "Awaiting Activation" },
         ended:      { cls: "badge-ended",    icon: "fa-solid fa-circle-xmark",         label: "Ended"             },
+        attempted:  { cls: "badge-ended",    icon: "fa-solid fa-circle-check",         label: "Attempted"         },
         none:       { cls: "badge-none",     icon: "fa-solid fa-calendar-times",       label: "No Exam"           },
         loading:    { cls: "badge-loading",  icon: "fa-solid fa-spinner fa-spin",      label: "Loading..."        },
       };
@@ -291,7 +294,17 @@
     function setExamReadyUI(exam, startTime, endTime, now) {
       const btn = document.getElementById("attemptBtn");
 
-      if (now >= startTime && now <= endTime && exam.is_active === true) {
+      // Already submitted -> takes precedence over every other state
+      if (attemptedIds.has(String(exam.id))) {
+        setBadge("attempted");
+        examTitle.textContent  = `${exam.type} Attempted`;
+        examMsg.textContent    = "You have already attempted this assessment";
+        btn.disabled           = true;
+        btn.setAttribute("data-no-translate", "true");
+        btn.innerHTML          = `<i class="fa-solid fa-circle-check"></i> Attempted`;
+        btn.classList.remove("btn-active");
+
+      } else if (now >= startTime && now <= endTime && exam.is_active === true) {
         setBadge("ongoing");
         examTitle.textContent  = `Ongoing ${exam.type}`;
         examMsg.textContent    = "Your assessment is currently ongoing. Click below to begin";
@@ -331,6 +344,38 @@
     /* ── Shared state for the preload list / selection ── */
     let examsList = [];
     let selectedExamId = null;
+    let attemptedIds = new Set();
+
+    /* ── Which of these assessments has this student already submitted? ──
+       Same rule test-hall.js uses: a student_answers row with is_final = true.
+       Paginated (1000-row Supabase cap; one row per question). Never blocks
+       the page if the lookup fails. ── */
+    async function fetchAttemptedIds(assessmentIds) {
+      const attempted = new Set();
+      if (!assessmentIds.length) return attempted;
+
+      try {
+        const PAGE = 1000;
+        let from = 0;
+        while (true) {
+          const { data, error } = await sb
+            .from("student_answers")
+            .select("assessment_id")
+            .eq("matric_number", matric)
+            .eq("is_final", true)
+            .in("assessment_id", assessmentIds)
+            .order("assessment_id", { ascending: true })
+            .range(from, from + PAGE - 1);
+          if (error) throw error;
+          (data || []).forEach(r => attempted.add(String(r.assessment_id)));
+          if (!data || data.length < PAGE) break;
+          from += PAGE;
+        }
+      } catch (e) {
+        console.error("Error checking attempted assessments:", e);
+      }
+      return attempted;
+    }
 
     /* ── Render one exam into the hero + info card + wire its Attempt button ── */
     function renderExam(exam, now) {
@@ -396,7 +441,15 @@
       const list = document.getElementById("preloadList");
       const now  = new Date();
 
-      const visible = exams.filter(e => new Date(e.end_time) >= now); // exclude completed
+      // exclude completed; attempted ones sink to the bottom so the next
+      // assessment to take is always at the top
+      const visible = exams
+        .filter(e => new Date(e.end_time) >= now)
+        .sort((a, b) => {
+          const aDone = attemptedIds.has(String(a.id)) ? 1 : 0;
+          const bDone = attemptedIds.has(String(b.id)) ? 1 : 0;
+          return aDone - bDone;
+        });
 
       if (!visible.length) {
         list.innerHTML = `<p class="tw-preload-empty" data-no-translate="true">
@@ -416,8 +469,12 @@
         const level = e.level_arabic || t("All Levels");
         const batch = e.batch || t("All Batches");
 
+        const isAttempted = attemptedIds.has(String(e.id));
+
         let action;
-        if (isOngoing) {
+        if (isAttempted) {
+          action = `<span class="tw-preload-muted" style="color:#0f766e;font-weight:600;"><i class="fa-solid fa-circle-check"></i> ${t("Attempted")}</span>`;
+        } else if (isOngoing) {
           action = `<button class="tw-preload-btn" onclick="selectAssessment('${e.id}')">${t("View / Enter")}</button>`;
         } else if (isWaiting) {
           action = `<button class="tw-preload-btn" onclick="selectAssessment('${e.id}')">${t("View")}</button>`;
@@ -426,7 +483,7 @@
         }
 
         return `
-          <div class="tw-preload-item" data-id="${e.id}">
+          <div class="tw-preload-item" data-id="${e.id}"${isAttempted ? ' style="opacity:0.6;"' : ''}>
             <div class="tw-preload-text">
               <strong>${e.title} ${e.type}</strong> ${t("for")} ${level}, ${batch} ${t("batch")}
             </div>
@@ -582,6 +639,8 @@
           return;
         }
 
+        attemptedIds = await fetchAttemptedIds(exams.map(e => e.id));
+
         const now = new Date();
 
         // 4. Screen 1 (the preload list) is the default landing view. We only
@@ -598,7 +657,7 @@
         if (requestedId) {
           const candidate = exams.find(e => String(e.id) === String(requestedId)) || null;
 
-          if (candidate && new Date(candidate.end_time) >= now) {
+          if (candidate && new Date(candidate.end_time) >= now && !attemptedIds.has(String(candidate.id))) {
             exam = candidate;
           } else {
             localStorage.removeItem("currentAssessmentId");

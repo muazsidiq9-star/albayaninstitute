@@ -468,9 +468,11 @@ html, body { overflow-x: hidden; }
 
 .badge-active   { background: #dcfcfa; color: #157480; }
 .badge-inactive { background: #fee2e2; color: #991b1b; }
+.badge-graduated { background: #ede9fe; color: #5b21b6; }
 
 [data-theme="dark"] .badge-active   { background: #144c53; color: #86e3ef; }
 [data-theme="dark"] .badge-inactive { background: #3b1a1a; color: #fca5a5; }
+[data-theme="dark"] .badge-graduated { background: #2e1f5e; color: #c4b5fd; }
 
 .remark-badge {
   padding: 3px 10px;

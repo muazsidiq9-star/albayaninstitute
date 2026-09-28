@@ -923,6 +923,15 @@ async function addStudent() {
       return;
     }
 
+    // Graduates skip the certificate payment check, so make the admin confirm
+    // clearance the moment a student is newly marked as graduated.
+    if (status === "graduated") {
+      const prev = (window.studentsRowCache || []).find(r => r.id === window.editingStudentId);
+      if (!prev || prev.status !== "graduated") {
+        if (!confirm(t("Mark this student as Graduated? Only do this once all their fees are cleared — graduates skip the payment check when viewing certificates."))) return;
+      }
+    }
+
     if (!window.editingStudentId && !passportFile) {
       alert(t("Please upload a passport photo"));
       return;
@@ -4605,7 +4614,6 @@ async function loadCertificatesRegistryData() {
     const activeChip = document.querySelector(".cert-filter-chip.active");
     renderCertRegistryRows(activeChip?.dataset.registryFilter || "all");
 
-    enableTableSearch("searchCertRegistry", "cert-registry-table");
     window.reTranslate?.();
   } catch (err) {
     console.error("Cert dashboard view render failure:", err);
@@ -4621,6 +4629,20 @@ function renderCertRegistryRows(filter) {
   const all = window.certRegistryData || [];
   const data = filter === "all" ? all : all.filter(c => (c.cert_type || "level") === filter);
 
+  populateCertBatchFilter();
+  const certTable = document.getElementById("cert-registry-table");
+  if (certTable && !certTable.dataset.filteringBound) {
+    certTable.dataset.filteringBound = "1";
+    enableTableFiltering("cert-registry-table", {
+      searchInputId: "searchCertRegistry",
+      filters: [
+        { selectId: "certLevelFilter", dataKey: "level" },
+        { selectId: "certBatchFilter", dataKey: "batch" },
+        { selectId: "certStatusFilter", dataKey: "status" }
+      ]
+    });
+  }
+
   if (data.length === 0) {
     tbody.innerHTML = `<tr><td colspan="9" class="empty-row">${t("No certificates issued yet.")}</td></tr>`;
     return;
@@ -4635,7 +4657,7 @@ function renderCertRegistryRows(filter) {
       ? `<span class="badge badge-type-programme" style="font-size:0.75rem;">${t("Programme")}</span>`
       : `<span class="badge badge-info" style="font-size:0.75rem;">${t("Level")}</span>`;
     return `
-      <tr>
+      <tr data-level="${c.level || ""}" data-batch="${c.batch || ""}" data-status="${c.revoked ? "revoked" : "active"}">
         <td><strong>${c.student_name || "—"}</strong></td>
         <td><code style="font-size:0.85rem;">${c.matric_number || "—"}</code></td>
         <td>${typeBadge}</td>
@@ -4657,6 +4679,21 @@ function renderCertRegistryRows(filter) {
       </tr>
     `;
   }).join("");
+
+  certTable?._applyRowFilters?.();
+}
+
+// Batch options come from the certificates themselves (so you only ever
+// see batches that actually have certificates), and the current
+// selection is kept if it still exists.
+function populateCertBatchFilter() {
+  const select = document.getElementById("certBatchFilter");
+  if (!select) return;
+  const batches = [...new Set((window.certRegistryData || []).map(c => c.batch).filter(Boolean))].sort();
+  const current = select.value;
+  select.innerHTML = `<option value="" data-translate="All Batches">${t("All Batches")}</option>` +
+    batches.map(b => `<option value="${b}">${b}</option>`).join("");
+  if (batches.includes(current)) select.value = current;
 }
 
 // Filter-chip click handler — All / Per-Level / Full Programme, above the

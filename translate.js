@@ -1143,9 +1143,6 @@ NEW FILES START HERE
 "Who Can Join": "من يمكنه الانضمام؟",
 "Our programs are suitable for beginners with no prior knowledge of Arabic, intermediate learners seeking improvement, and advanced students aiming to strengthen their understanding of grammar and Arabic texts.":
   "برامجنا مناسبة للمبتدئين الذين ليس لديهم معرفة سابقة بالعربية، والمتوسطين الساعين إلى التحسين، والمتقدمين الراغبين في تعميق فهمهم للنحو والنصوص العربية.",
-"Beginner":     "مبتدئ",
-"Intermediate": "متوسط",
-"Advanced":     "متقدم",
 
 // OUR COMMITMENT
 "Our Commitment": "التزامنا",
@@ -3562,7 +3559,7 @@ NEW FILES START HERE
 "Error downloading PDF. See console for details.": "حدث خطأ أثناء تحميل ملف PDF. يرجى مراجعة وحدة التحكم لمزيد من التفاصيل.",
 "Preliminary": "تمهيدي",
 "Beginner": "مبتدئ",
-"Intermediate": "المتوسط",
+"Intermediate": "متوسط",
 "Advanced": "متقدم",
 "First": "الأول",
 "Second": "الثاني",
@@ -3708,6 +3705,17 @@ NEW FILES START HERE
 "Select Semester": "اختر الفصل الدراسي",
 "First Semester": "الفصل الدراسي الأول",
 "Second Semester": "الفصل الدراسي الثاني",
+
+"Attempted": "تمت المحاولة",
+"You have already attempted this assessment": "لقد قمت بهذه المحاولة مسبقًا",
+"Attempted": "تمت المحاولة",
+"Back to Assessments": "العودة إلى الاختبارات",
+
+  "Graduated": "متخرج",
+  "graduated": "متخرج",
+  "Mark this student as Graduated? Only do this once all their fees are cleared — graduates skip the payment check when viewing certificates.": "هل تريد تحديد هذا الطالب كمتخرج؟ افعل ذلك فقط بعد تسوية جميع رسومه — يتجاوز الخريجون فحص الدفع عند عرض الشهادات.",
+  "🎓 Graduated": "🎓 متخرج",
+  "Your account is no longer active. Please contact the institute.": "حسابك لم يعد نشطًا. يرجى التواصل مع المعهد.",
 // ===== DYNAMIC TEMPLATES ===== 
 
 en: {

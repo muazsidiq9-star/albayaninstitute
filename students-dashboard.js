@@ -134,7 +134,7 @@ async function loadStats(matric, container) {
     // ===========================
     const { data: student } = await sb
       .from("students")
-      .select("level_arabic, batch, currency_due")
+      .select("level_arabic, batch, currency_due, status")
       .eq("matric_number", matric)
       .single();
 
@@ -171,9 +171,13 @@ async function loadStats(matric, container) {
     // ===========================
     // Payment Status
     // ===========================
-    const paymentStatus = monthlyPayments?.length > 0
-  ? "✅ Paid" 
-  : "❌ Unpaid";
+    // Graduates no longer pay monthly, so show that instead of "Unpaid"
+    const isGraduated = String(student?.status || "").toLowerCase() === "graduated";
+    const paymentStatus = isGraduated
+  ? t("🎓 Graduated")
+  : (monthlyPayments?.length > 0
+    ? "✅ Paid"
+    : "❌ Unpaid");
 
     // ===========================
     // Cumulative Semester Score (GP-style)

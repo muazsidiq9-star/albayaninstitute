@@ -120,11 +120,55 @@ async function loadTimetable(matric) {
       .filter(a => a.access_mode !== 'restricted' || myOverrideSet.has(a.id))
       .sort((a, b) => new Date(a.start_time) - new Date(b.start_time));
 
-    renderTimetable(data);
+    // 3. Which of these has this student already submitted (is_final = true)?
+    const attemptedIds = await fetchAttemptedIds(matric, data.map(a => a.id));
+
+    renderTimetable(data, attemptedIds);
 
   } catch (e) {
     console.error("Error loading timetable:", e);
   }
+}
+
+
+// ============================================
+// ATTEMPTED ASSESSMENTS
+// ============================================
+// Same rule test-hall.js uses: an assessment counts as attempted once this
+// student has a student_answers row with is_final = true. Paginated because
+// student_answers holds one row per question and Supabase caps a response
+// at 1000 rows. Never blocks the timetable if the lookup fails.
+
+async function fetchAttemptedIds(matric, assessmentIds) {
+  const attempted = new Set();
+  if (!assessmentIds.length) return attempted;
+
+  try {
+    const PAGE = 1000;
+    let from = 0;
+
+    while (true) {
+      const { data, error } = await db
+        .from("student_answers")
+        .select("assessment_id")
+        .eq("matric_number", matric)
+        .eq("is_final", true)
+        .in("assessment_id", assessmentIds)
+        .order("assessment_id", { ascending: true })
+        .range(from, from + PAGE - 1);
+
+      if (error) throw error;
+
+      (data || []).forEach(r => attempted.add(String(r.assessment_id)));
+
+      if (!data || data.length < PAGE) break;
+      from += PAGE;
+    }
+  } catch (e) {
+    console.error("Error checking attempted assessments:", e);
+  }
+
+  return attempted;
 }
 
 
@@ -148,6 +192,10 @@ function getStatus(a) {
 // ============================================
 
 function getStatusBadge(status) {
+  if (status === "Attempted") {
+    return `<span style="color: #0f766e; font-weight: bold;"><i class="fa-solid fa-circle-check"></i> Attempted</span>`;
+  }
+
   if (status === "Upcoming") {
     return `<span style="color: blue; font-weight: bold;">Upcoming</span>`;
   }
@@ -174,7 +222,7 @@ function formatDate(dateString) {
 // RENDER TIMETABLE
 // ============================================
 
-function renderTimetable(data) {
+function renderTimetable(data, attemptedIds = new Set()) {
   const tbody = document.querySelector("#scheduleTable");
 
   if (!tbody) return;
@@ -182,7 +230,8 @@ function renderTimetable(data) {
   tbody.innerHTML = "";
 
   data.forEach(a => {
-    const status = getStatus(a);
+    const attempted = attemptedIds.has(String(a.id));
+    const status = attempted ? "Attempted" : getStatus(a);
 
     const tr = document.createElement("tr");
 
@@ -204,6 +253,11 @@ function renderTimetable(data) {
       tr.style.background = "var(--bg-color)";
     }
 
+    // Dim attempted rows so the next exam to take stands out
+    if (status === "Attempted") {
+      tr.style.opacity = "0.6";
+    }
+
     tbody.appendChild(tr);
   });
 }
@@ -214,6 +268,10 @@ function renderTimetable(data) {
 // ============================================
 
 function getActionButton(a, status) {
+  if (status === "Attempted") {
+    return `<span style="color: #0f766e;">Attempted</span>`;
+  }
+
   if (status === "Ongoing") {
     return `
       <button class="btn btn-start" onclick="enterExam('${a.id}')">

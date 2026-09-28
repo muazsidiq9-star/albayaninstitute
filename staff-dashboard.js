@@ -586,7 +586,7 @@ async function loadMyCourses(teacherId) {
           <td>${s.batch || "—"}</td>
           <td>
             <span class="status-badge
-              ${s.status === 'active' ? 'badge-active' : 'badge-inactive'}">
+              ${s.status === 'active' ? 'badge-active' : (s.status === 'graduated' ? 'badge-graduated' : 'badge-inactive')}">
               ${t(s.status)}
             </span>
           </td>

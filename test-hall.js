@@ -1106,6 +1106,127 @@ function endTestSession() {
     const completionModal = document.getElementById('completionModal');
 
     completionModal.style.display = 'flex';
+
+    // Point the primary button back to the assessment list if this student
+    // still has something to take; otherwise it stays as "Go to dashboard".
+    updateCompletionButton();
+}
+
+// ================= MORE ASSESSMENTS AVAILABLE? =================
+// Mirrors test-welcome.html's eligibility gate (registration / course bypass /
+// restricted mode / level + batch), then keeps only assessments that have
+// started, haven't ended, and haven't been finally submitted by this student.
+async function hasMoreAvailableAssessments() {
+    try {
+        const { data: regs } = await supabaseClient
+            .from('course_registrations')
+            .select('course_id, level, batch')
+            .eq('matric_number', matricNumber);
+
+        const levelByCourse = {}, batchByCourse = {};
+        (regs || []).forEach(r => {
+            if (r.course_id) {
+                levelByCourse[r.course_id] = r.level;
+                batchByCourse[r.course_id] = r.batch;
+            }
+        });
+
+        const { data: courseOv } = await supabaseClient
+            .from('course_access_overrides')
+            .select('course_id')
+            .eq('matric_number', matricNumber);
+        const courseOverrideSet = new Set((courseOv || []).map(o => o.course_id).filter(Boolean));
+
+        const courseIds = [...new Set([
+            ...(regs || []).map(r => r.course_id).filter(Boolean),
+            ...courseOverrideSet
+        ])];
+
+        const { data: assessOv } = await supabaseClient
+            .from('assessment_access_overrides')
+            .select('assessment_id')
+            .eq('matric_number', matricNumber);
+        const overrideIds = (assessOv || []).map(o => o.assessment_id);
+        const overrideSet = new Set(overrideIds);
+
+        const examMap = {};
+        if (courseIds.length) {
+            const { data } = await supabaseClient
+                .from('assessments').select('*').in('course_id', courseIds);
+            (data || []).forEach(e => { examMap[e.id] = e; });
+        }
+        if (overrideIds.length) {
+            const { data } = await supabaseClient
+                .from('assessments').select('*').in('id', overrideIds);
+            (data || []).forEach(e => { examMap[e.id] = e; });
+        }
+
+        const now = new Date();
+        const candidates = Object.values(examMap).filter(exam => {
+            if (String(exam.id) === String(assessmentId)) return false;
+
+            // started and not ended
+            if (new Date(exam.start_time) > now || new Date(exam.end_time) < now) return false;
+
+            if (exam.access_mode === 'restricted') return overrideSet.has(exam.id);
+            if (exam.course_id && courseOverrideSet.has(exam.course_id)) return true;
+
+            const levelMatch = !exam.level_arabic || exam.level_arabic === levelByCourse[exam.course_id];
+            const batchMatch = !exam.batch || exam.batch === batchByCourse[exam.course_id];
+            return levelMatch && batchMatch;
+        });
+
+        if (!candidates.length) return false;
+
+        // Drop the ones already finally submitted
+        const { data: done } = await supabaseClient
+            .from('student_answers')
+            .select('assessment_id')
+            .eq('matric_number', matricNumber)
+            .eq('is_final', true)
+            .in('assessment_id', candidates.map(c => c.id))
+            .limit(1000);
+        const doneSet = new Set((done || []).map(r => String(r.assessment_id)));
+
+        return candidates.some(c => !doneSet.has(String(c.id)));
+    } catch (err) {
+        console.error('More-assessments check failed:', err);
+        return false; // fail safe: keep the normal dashboard button
+    }
+}
+
+function setButtonLabel(btn, text) {
+    const span = btn.querySelector('[data-translate]');
+    if (span) {
+        span.setAttribute('data-translate', text);
+        span.textContent = (typeof t === 'function') ? t(text) : text;
+        return;
+    }
+    // no translate span: replace the last text node, keeping any icon
+    for (let i = btn.childNodes.length - 1; i >= 0; i--) {
+        const n = btn.childNodes[i];
+        if (n.nodeType === 3 && n.textContent.trim()) {
+            n.textContent = ' ' + ((typeof t === 'function') ? t(text) : text);
+            return;
+        }
+    }
+    btn.textContent = (typeof t === 'function') ? t(text) : text;
+}
+
+async function updateCompletionButton() {
+    const btn = document.getElementById('goDashboardBtn');
+    if (!btn) return;
+
+    if (await hasMoreAvailableAssessments()) {
+        setButtonLabel(btn, 'Back to Assessments');
+        const icon = btn.querySelector('i');
+        if (icon) icon.className = 'fa-solid fa-list-check';
+        btn.onclick = () => {
+            localStorage.removeItem('currentAssessmentId');
+            sessionStorage.removeItem('examId');
+            window.location.href = 'test-welcome.html';
+        };
+    }
 }
 console.log("HEADER UPDATED:", examTitle.textContent);
 setInterval(() => {

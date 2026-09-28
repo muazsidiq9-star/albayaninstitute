@@ -579,6 +579,9 @@
   </script>
 
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+  <script src="student-guard.js"></script>
+  
   <script>
     const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
     const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
@@ -764,6 +767,96 @@
       `;
     }
 
+    /* ── FEE GATE ──
+       Same rule the test hall uses: the student must have a paid, non-deleted
+       payment for the current month, otherwise no certificates are rendered. */
+    const CURRENCY_SYMBOLS = { NGN: "₦", USD: "$", EUR: "€", GBP: "£" };
+
+    function formatMoney(amount, currency) {
+      const symbol = CURRENCY_SYMBOLS[currency] || currency || "₦";
+      return `${symbol}${Number(amount || 0).toLocaleString()}`;
+    }
+
+    function formatGroupedTotals(rows, amountKey) {
+      const totals = {};
+      (rows || []).forEach(r => {
+        const cur = r.currency || "NGN";
+        totals[cur] = (totals[cur] || 0) + Number(r[amountKey] || 0);
+      });
+      const parts = Object.keys(totals).map(cur => formatMoney(totals[cur], cur));
+      return parts.length ? parts.join(" + ") : null;
+    }
+
+    // Throws on query error so a network/RLS failure shows "Failed to Load"
+    // rather than wrongly telling the student they owe money.
+    async function hasClearedFees(student) {
+      // Graduates no longer pay monthly. Admin only tags a student as
+      // graduated once their clearance is done, so this skips the check.
+      // Everyone else still needs a paid payment for the current month.
+      const st = String(student && student.status || "").trim().toLowerCase();
+      if (st === "graduated" || st === "graduate") return true;
+
+      const monthNames = [
+        "January","February","March","April","May","June",
+        "July","August","September","October","November","December"
+      ];
+      const currentMonthName = monthNames[new Date().getMonth()];
+
+      const { data, error } = await sb
+        .from("payments")
+        .select("id")
+        .eq("matric_number", matric)
+        .eq("month", currentMonthName)
+        .eq("status", "paid")
+        .eq("deleted", false)
+        .limit(1);
+
+      if (error) throw error;
+      return !!(data && data.length);
+    }
+
+    async function renderFeeDenied(container) {
+      let detail = "";
+      let months = "";
+      try {
+        const { data: outstanding } = await sb
+          .from("student_fee_status")
+          .select("month, amount_due, currency")
+          .eq("matric_number", matric)
+          .eq("status", "unpaid");
+
+        months = [...new Set((outstanding || []).map(o => o.month))].join(", ");
+        const total = formatGroupedTotals(outstanding, "amount_due");
+        if (total) {
+          detail = `<br><b style="color:#b91c1c;">${total}</b>${months ? ` — <b>${months}</b>` : ""}`;
+        }
+      } catch (e) {
+        console.error("Outstanding fee lookup failed:", e);
+      }
+
+      const waMessage = encodeURIComponent(
+        `Hello Sir/Madam, I'm trying to access my certificate but it says I have an outstanding payment${months ? ` for ${months}` : ""}. Please can you assist me?`
+      );
+
+      container.innerHTML = `
+        <div class="no-cert">
+          <div class="no-cert-icon-wrap" style="border-color:#fecaca; background:#fee2e2;">
+            <i class="fas fa-lock" style="color:#b91c1c;"></i>
+          </div>
+          <h3 style="color:#b91c1c;">${t("Certificates Locked")}</h3>
+          <p>${t("You have an outstanding payment. Please clear it to access your certificates.")}${detail}</p>
+          <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:20px;">
+            <a href="https://wa.me/2347054711066?text=${waMessage}" target="_blank" rel="noopener" style="text-decoration:none;">
+              <button type="button" class="btn-download"><i class="fab fa-whatsapp"></i> ${t("Contact Admin on WhatsApp")}</button>
+            </a>
+            <button type="button" class="btn-download" onclick="window.location.href='payment.html'">
+              <i class="fas fa-credit-card"></i> ${t("Go to Payment")}
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
     /* ── LOAD CERTIFICATES ── */
     document.addEventListener("DOMContentLoaded", async () => {
       const container       = document.getElementById("certContainer");
@@ -774,11 +867,17 @@
       try {
         const { data: student, error: studentError } = await sb
           .from("students")
-          .select("fullname, matric_number, level_arabic, batch")
+          .select("fullname, matric_number, level_arabic, batch, status")
           .eq("matric_number", matric)
           .single();
 
         if (studentError || !student) throw new Error("Student not found");
+
+        // Owing students get no certificates rendered at all
+        if (!(await hasClearedFees(student))) {
+          await renderFeeDenied(container);
+          return;
+        }
 
         const { data: certs, error: certError } = await sb
           .from("certificates")
