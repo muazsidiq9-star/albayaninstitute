@@ -23,7 +23,7 @@ html, body { overflow-x: hidden; }
 .course-banner-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.48) 0%, rgba(0,60,20,0.68) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.50) 0%, rgba(0, 38, 50, 0.62) 100%);
   z-index: 1;
 }
 
@@ -60,7 +60,7 @@ html, body { overflow-x: hidden; }
   font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: #bbf7d0;
+  color: #bbe9f7;
   margin-bottom: 12px;
 }
 
@@ -74,7 +74,7 @@ html, body { overflow-x: hidden; }
 
 .course-banner-content > p {
   font-size: clamp(0.9rem, 2vw, 1.05rem);
-  color: #dff5e8;
+  color: #dff4f5;
   line-height: 1.7;
   margin-bottom: 20px;
   max-width: 600px;
@@ -105,7 +105,7 @@ html, body { overflow-x: hidden; }
 
 .meta-badge i {
   font-size: 0.75rem;
-  color: #bbf7d0;
+  color: #bbe9f7;
 }
 
 /* Enrol button */
@@ -310,7 +310,7 @@ html, body { overflow-x: hidden; }
 }
 
 .cp-cta-content p {
-  color: #bbf7d0;
+  color: #bbe6f7;
   font-size: 0.9rem;
   line-height: 1.6;
   max-width: 460px;

@@ -232,11 +232,44 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadPasswordStudentDropdown();
     updateUnreadCounter();
 
-    enableTableSearch("searchStudents", "students-table");
-    enableTableSearch("searchPayments", "payments-table");
-    enableTableSearch("searchGrades", "grades-table");
-    enableTableSearch("searchSchedule", "schedule-table");
-    enableTableSearch("searchAssessments", "assessments-table");
+    enableTableFiltering("students-table", {
+      searchInputId: "searchStudents",
+      filters: [
+        { selectId: "studentsLevelFilter", dataKey: "level" },
+        { selectId: "studentsBatchFilter", dataKey: "batch" }
+      ]
+    });
+    enableTableFiltering("payments-table", {
+      searchInputId: "searchPayments",
+      filters: [
+        { selectId: "paymentsLevelFilter", dataKey: "level" },
+        { selectId: "paymentsBatchFilter", dataKey: "batch" },
+        { selectId: "paymentsMonthFilter", dataKey: "month" }
+      ]
+    });
+    enableTableFiltering("grades-table", {
+      searchInputId: "searchGrades",
+      filters: [
+        { selectId: "gradesLevelFilter", dataKey: "level" },
+        { selectId: "gradesBatchFilter", dataKey: "batch" },
+        { selectId: "gradesSemesterFilter", dataKey: "semester" }
+      ]
+    });
+    enableTableFiltering("schedule-table", {
+      searchInputId: "searchSchedule",
+      filters: [
+        { selectId: "scheduleLevelFilter", dataKey: "level" },
+        { selectId: "scheduleBatchFilter", dataKey: "batch" }
+      ]
+    });
+    enableTableFiltering("assessments-table", {
+      searchInputId: "searchAssessments",
+      filters: [
+        { selectId: "assessmentsLevelFilter", dataKey: "level" },
+        { selectId: "assessmentsBatchFilter", dataKey: "batch" },
+        { selectId: "assessmentsSemesterFilter", dataKey: "semester" }
+      ]
+    });
 
     enableTableSorting("students-table");
     enableTableSorting("payments-table");
@@ -656,11 +689,9 @@ async function loadStudents() {
   if (!tbody) return;
 
   if (!window.editingStudentId) {
-    tbody.innerHTML = "";
-
-    data?.forEach(s => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
+    renderTableRowsDiff(tbody, data, "id", s => ({
+      dataset: { level: s.level_arabic || "", batch: s.batch || "" },
+      html: `
         <td>
           ${s.passport_url
             ? `<img src="${s.passport_url}" class="passport-thumb" loading="lazy" onclick="openPassportModal('${s.passport_url}')">`
@@ -710,12 +741,13 @@ async function loadStudents() {
   </button>
 </td>
         <td class="student-action-col"><button class="btn btn-cert" onclick="openCertificateModal('${s.id}', '${s.matric_number}', '${s.fullname}', '${s.level_arabic}', '${s.batch || ""}')">🎓 ${t("Issue")}</button></td>
-      `;
-      tbody.appendChild(tr);
-    });
+      `
+    }));
   }
 
   populateStudentSelects();
+  populateBatchFilterOptions();
+  document.getElementById("students-table")?._applyRowFilters?.();
   window.reTranslate?.();
 }
 
@@ -1151,11 +1183,13 @@ async function loadPayments() {
   if (!tbody) return;
 
   if (!window.editingPaymentId) {
-    tbody.innerHTML = "";
-
-    data?.forEach(p => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
+    renderTableRowsDiff(tbody, data, "id", p => ({
+      dataset: {
+        level: p.students?.level_arabic || p.level_arabic || "",
+        batch: p.students?.batch || p.batch || "",
+        month: p.month || ""
+      },
+      html: `
         <td>
           ${p.receipt_url
             ? `<img src="${p.receipt_url}" class="receipt-thumb" loading="lazy" onclick="openReceiptModal('${p.receipt_url}')" alt="receipt"/>`
@@ -1183,10 +1217,10 @@ async function loadPayments() {
             <button class="btn btn-danger btn-icon-only" onclick="permanentDeletePayment('${p.id}')" title="${t('Permanently Delete')}">🗑️</button>
           </div>
         </td>
-      `;
-      tbody.appendChild(tr);
-    });
+      `
+    }));
   }
+  document.getElementById("payments-table")?._applyRowFilters?.();
   window.reTranslate?.();
 }
 
@@ -1336,18 +1370,27 @@ async function loadFees() {
   if (error) { console.error(error); return; }
 
   allFees = data;
-  renderFees(data);
+  filterFees();
 }
 
 async function loadStudentDropdown() {
   const { data, error } = await db
     .from("students")
-    .select("matric_number, fullname, country, level_arabic, amount_due, currency_due")
+    .select("matric_number, fullname, country, level_arabic, batch, amount_due, currency_due")
     .order("fullname", { ascending: true });
 
   if (error) { console.error(error); return; }
 
   window.feeStudentsCache = data || [];
+
+  // Fees are keyed only by matric_number (student_fee_status has no
+  // level/batch of its own), so the Level/Batch filters on that tab look
+  // the student's current level/batch up here instead.
+  window.feeStudentMeta = {};
+  (data || []).forEach(s => {
+    window.feeStudentMeta[s.matric_number] = { level: s.level_arabic || "", batch: s.batch || "" };
+  });
+  populateFeeFilterOptions();
 
   const select = document.getElementById("studentSelect");
   select.innerHTML = `
@@ -1368,6 +1411,22 @@ async function loadStudentDropdown() {
   // pattern used on the Payments tab. Admin can still edit before saving;
   // this just gives a correct default instead of a blank field.
   select.onchange = autofillFeeAmount;
+}
+
+// Batch names are free text, so (like the other tabs' Batch filters) this
+// dropdown is rebuilt from whatever batches actually exist on the
+// students list rather than a fixed option set.
+function populateFeeFilterOptions() {
+  const batchSelect = document.getElementById("feesBatchFilter");
+  if (!batchSelect) return;
+
+  const batches = [...new Set(Object.values(window.feeStudentMeta || {}).map(m => m.batch).filter(Boolean))].sort();
+  const current = batchSelect.value;
+  batchSelect.innerHTML = `<option value="" data-translate="All Batches">${t("All Batches")}</option>` +
+    batches.map(b => `<option value="${b}">${b}</option>`).join("");
+  if (batches.includes(current)) batchSelect.value = current;
+
+  window.reTranslate?.();
 }
 
 function autofillFeeAmount() {
@@ -1855,9 +1914,18 @@ async function toggleStatus(matric, month, currentStatus) {
 
 function filterFees() {
   const query = document.getElementById("search").value.toLowerCase();
-  const filtered = allFees.filter(row =>
-    row.matric_number.toLowerCase().includes(query)
-  );
+  const levelVal = document.getElementById("feesLevelFilter")?.value || "";
+  const batchVal = document.getElementById("feesBatchFilter")?.value || "";
+  const monthVal = document.getElementById("feesMonthFilter")?.value || "";
+
+  const filtered = (allFees || []).filter(row => {
+    const meta = window.feeStudentMeta?.[row.matric_number] || {};
+    const matchesSearch = row.matric_number.toLowerCase().includes(query);
+    const matchesLevel = !levelVal || meta.level === levelVal;
+    const matchesBatch = !batchVal || meta.batch === batchVal;
+    const matchesMonth = !monthVal || row.month === monthVal;
+    return matchesSearch && matchesLevel && matchesBatch && matchesMonth;
+  });
   renderFees(filtered);
 }
 
@@ -2096,17 +2164,16 @@ async function loadGrades() {
     if (!tbody) return;
 
     if (!window.editingGradeId) {
-      tbody.innerHTML = "";
-
       // Same 3 course-completion states used everywhere else (assessments,
       // schedule), mapped onto the shared .badge system already used for
       // payments/referrals elsewhere in this file.
       const gradeStatusClass = { completed: "badge-success", loading: "badge-info", cancelled: "badge-danger" };
 
-      grades.forEach(g => {
+      renderTableRowsDiff(tbody, grades, "id", g => {
         const student = students.find(s => s.matric_number === g.matric_number) || {};
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
+        return {
+          dataset: { level: g.level_arabic || "", batch: g.batch || "", semester: g.semester || "" },
+          html: `
           <td>${student.fullname || ""}</td>
           <td>${g.matric_number}</td>
           <td>${g.level_arabic || ""}</td>
@@ -2131,10 +2198,11 @@ async function loadGrades() {
               <button class="btn btn-danger btn-icon-only" onclick="permanentDeleteGrade('${g.id}')" title="${t('Permanently Delete')}">🗑️</button>
             </div>
           </td>
-        `;
-        tbody.appendChild(tr);
+        `
+        };
       });
     }
+    document.getElementById("grades-table")?._applyRowFilters?.();
     window.reTranslate?.();
   } catch (e) {
     console.error("Failed to load grades:", e);
@@ -2322,10 +2390,9 @@ async function loadSchedule() {
     if (!tbody) return;
 
     if (!window.editingScheduleId) {
-      tbody.innerHTML = "";
-      data?.forEach(c => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
+      renderTableRowsDiff(tbody, data, "id", c => ({
+        dataset: { level: c.level_arabic || "", batch: c.batch || "" },
+        html: `
           <td>${c.level_arabic}</td>
           <td>${c.batch || "—"}</td>
           <td>${c.course}</td>
@@ -2341,10 +2408,10 @@ async function loadSchedule() {
               <button class="btn btn-danger btn-icon-only" onclick="permanentDeleteSchedule('${c.id}')" title="${t('Permanently Delete')}">🗑️</button>
             </div>
           </td>
-        `;
-        tbody.appendChild(tr);
-      });
+        `
+      }));
     }
+    document.getElementById("schedule-table")?._applyRowFilters?.();
     window.reTranslate?.();
   } catch (e) {
     console.error("Load schedule error:", e);
@@ -2541,10 +2608,9 @@ async function loadAssessments() {
     if (!tbody) return;
 
     if (!window.editingAssessmentId) {
-      tbody.innerHTML = "";
-      data?.forEach(a => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
+      renderTableRowsDiff(tbody, data, "id", a => ({
+        dataset: { level: a.level_arabic || "", batch: a.batch || "", semester: a.semester || "" },
+        html: `
           <td>${a.description}</td>
           <td>${a.title}</td>
           <td>${a.level_arabic}</td>
@@ -2575,10 +2641,10 @@ async function loadAssessments() {
               <button class="btn btn-danger btn-icon-only" onclick="permanentDeleteAssessment('${a.id}')" title="${t('Permanently Delete')}">🗑️</button>
             </div>
           </td>
-        `;
-        tbody.appendChild(tr);
-      });
+        `
+      }));
     }
+    document.getElementById("assessments-table")?._applyRowFilters?.();
   } catch (e) {
     console.error("Load assessments error:", e);
   }
@@ -3401,6 +3467,136 @@ function enableTableSearch(inputId, tableId) {
       row.style.display = row.textContent.toLowerCase().includes(filter) ? "" : "none";
     });
   });
+}
+
+// Combines the plain text search above with one or more dropdown filters
+// (Level / Batch / Semester). Each row carries the raw underlying value in
+// a data-* attribute (set when the row is built, e.g. tr.dataset.level =
+// s.level_arabic) so filtering matches the real value rather than however
+// it happens to be displayed/translated in the cell — same approach
+// already used for the bulk-fee and promote-students pickers.
+//
+// Keyed diff renderer: instead of wiping <tbody> and rebuilding every row
+// on every reload (which is what was resetting scroll position and
+// flashing the full unfiltered list back into view for a moment on every
+// single edit/toggle/delete), this reconciles the existing rows against
+// the fresh data by id:
+//   - rows whose html hasn't changed are left completely untouched
+//   - rows that changed get their innerHTML/dataset updated in place
+//     (same <tr> node, so its scroll position/identity is preserved)
+//   - rows no longer in the data are removed
+//   - new rows are inserted
+// so an active search/filter (which just toggles row.style.display) is
+// never disturbed, and the admin's scroll position survives a reload.
+//
+// tbody: the <tbody> element to reconcile
+// data: fresh array of row objects from the DB
+// keyField: property that uniquely identifies a row (usually "id")
+// buildRow(item): returns { html, dataset } for that item — `dataset` is
+//   the { level, batch, semester, month, ... } object used by the filter
+//   dropdowns (same keys as the `dataKey` values passed to enableTableFiltering)
+function renderTableRowsDiff(tbody, data, keyField, buildRow) {
+  if (!tbody) return;
+
+  const existing = new Map();
+  Array.from(tbody.children).forEach(tr => {
+    if (tr.dataset.rowKey) existing.set(tr.dataset.rowKey, tr);
+  });
+
+  let anchor = tbody.firstChild;
+
+  (data || []).forEach(item => {
+    const key = String(item[keyField]);
+    const { html, dataset } = buildRow(item);
+    let tr = existing.get(key);
+
+    if (tr) {
+      existing.delete(key);
+      if (tr.__lastHtml !== html) {
+        tr.innerHTML = html;
+        tr.__lastHtml = html;
+      }
+    } else {
+      tr = document.createElement("tr");
+      tr.dataset.rowKey = key;
+      tr.innerHTML = html;
+      tr.__lastHtml = html;
+    }
+
+    Object.entries(dataset || {}).forEach(([k, v]) => { tr.dataset[k] = v ?? ""; });
+
+    if (tr !== anchor) {
+      tbody.insertBefore(tr, anchor);
+    } else {
+      anchor = anchor.nextSibling;
+    }
+  });
+
+  // Anything left in `existing` is no longer in the fresh data — remove it
+  existing.forEach(tr => tr.remove());
+}
+
+// config: { searchInputId?, filters: [{ selectId, dataKey }] }
+// Call again (or rely on the returned applyFilters, stashed on the table
+// as _applyRowFilters) after re-rendering the tbody so an active filter
+// stays applied across reloads.
+function enableTableFiltering(tableId, config) {
+  const table = document.getElementById(tableId);
+  if (!table) return;
+
+  function applyFilters() {
+    const query = config.searchInputId
+      ? (document.getElementById(config.searchInputId)?.value || "").trim().toLowerCase()
+      : "";
+
+    const active = (config.filters || []).map(f => ({
+      key: f.dataKey,
+      value: document.getElementById(f.selectId)?.value || ""
+    }));
+
+    table.querySelectorAll("tbody tr").forEach(row => {
+      if (row.querySelector("td.empty-row")) return; // leave "no data yet" row alone
+
+      const matchesSearch = !query || row.textContent.toLowerCase().includes(query);
+      const matchesFilters = active.every(f => !f.value || (row.dataset[f.key] || "") === f.value);
+      row.style.display = (matchesSearch && matchesFilters) ? "" : "none";
+    });
+  }
+
+  if (config.searchInputId) {
+    document.getElementById(config.searchInputId)?.addEventListener("keyup", applyFilters);
+  }
+  (config.filters || []).forEach(f => {
+    document.getElementById(f.selectId)?.addEventListener("change", applyFilters);
+  });
+
+  table._applyRowFilters = applyFilters;
+  applyFilters();
+}
+
+// Batch names are free-text (unlike Level/Semester, which are a fixed,
+// known set already hardcoded into every Level/Semester <select> in this
+// file), so the Batch filter options are rebuilt from whatever batches
+// actually exist on the students list — same pattern as
+// promoteBatchFilter/bulkFeeBatchFilter already use.
+function populateBatchFilterOptions() {
+  const batches = [...new Set((window.studentsRowCache || []).map(s => s.batch).filter(Boolean))].sort();
+  const optionsHtml = `<option value="" data-translate="All Batches">${t("All Batches")}</option>` +
+    batches.map(b => `<option value="${b}">${b}</option>`).join("");
+
+  [
+    "studentsBatchFilter", "paymentsBatchFilter", "gradesBatchFilter",
+    "scheduleBatchFilter", "assessmentsBatchFilter", "attendanceBatchFilter",
+    "feesBatchFilter"
+  ].forEach(id => {
+    const select = document.getElementById(id);
+    if (!select) return;
+    const current = select.value;
+    select.innerHTML = optionsHtml;
+    if (batches.includes(current)) select.value = current;
+  });
+
+  window.reTranslate?.();
 }
 
 function enableTableSorting(tableId) {
@@ -4765,9 +4961,14 @@ async function loadAttendanceSessions() {
   const tbody = document.getElementById("attendance-sessions-body");
   if (!tbody) return;
 
-  tbody.innerHTML = `<tr><td colspan="8" class="empty-row">
-    <i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading sessions...")}
-  </td></tr>`;
+  // Only show the loading spinner on the very first load — an empty-row
+  // placeholder would otherwise wipe out an existing, already-filtered
+  // list every time this reloads after an edit/toggle/delete.
+  if (!tbody.querySelector("tr[data-row-key]")) {
+    tbody.innerHTML = `<tr><td colspan="8" class="empty-row">
+      <i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading sessions...")}
+    </td></tr>`;
+  }
 
   try {
     const { data: sessions, error } = await db
@@ -4797,8 +4998,9 @@ async function loadAttendanceSessions() {
       countMap[r.session_id] = (countMap[r.session_id] || 0) + 1;
     });
 
-    tbody.innerHTML = sessions.map(s => `
-      <tr>
+    renderTableRowsDiff(tbody, sessions, "id", s => ({
+      dataset: { level: s.level || "", batch: s.batch || "" },
+      html: `
         <td>${s.title}</td>
         <td><span class="badge badge-info">${t(s.level)}</span></td>
         <td>${s.batch || "—"}</td>
@@ -4831,10 +5033,22 @@ async function loadAttendanceSessions() {
             </button>
           </div>
         </td>
-      </tr>
-    `).join("");
+      `
+    }));
 
-    enableTableSearch("searchAttendance", "attendance-sessions-table");
+    const attendanceTable = document.getElementById("attendance-sessions-table");
+    if (attendanceTable && !attendanceTable.dataset.filteringBound) {
+      attendanceTable.dataset.filteringBound = "1";
+      enableTableFiltering("attendance-sessions-table", {
+        searchInputId: "searchAttendance",
+        filters: [
+          { selectId: "attendanceLevelFilter", dataKey: "level" },
+          { selectId: "attendanceBatchFilter", dataKey: "batch" }
+        ]
+      });
+    } else {
+      attendanceTable?._applyRowFilters?.();
+    }
     window.reTranslate?.();
 
   } catch (e) {

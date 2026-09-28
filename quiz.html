@@ -671,12 +671,34 @@
   });
 </script>
 
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
+    // Pinned to an exact version on jsDelivr instead of unpkg's unversioned
+    // "@2" (which forced a 302 redirect on EVERY page load to resolve
+    // "what's the latest v2 build right now" before even downloading the
+    // file — see the Network tab screenshot). A pinned exact version is
+    // byte-identical to what "@2" resolves to today, loads with one
+    // request instead of two, and is immutable so browsers can cache it
+    // indefinitely — strictly better, not just "safer for later."
+    //
+    // If this script still fails to load (dead network, blocked CDN,
+    // etc.), window.sb would silently stay undefined and every Supabase
+    // read on this page would quietly no-op — LOOKING exactly like guest
+    // mode with no indication anything's wrong. Surface it instead.
     const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
     const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
-    window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    if (typeof supabase === "undefined" || !supabase.createClient) {
+      console.error("[SUPABASE] SDK failed to load — this page will not be able to read or save any data until it's refreshed.");
+      document.addEventListener("DOMContentLoaded", function () {
+        const banner = document.createElement("div");
+        banner.textContent = "⚠️ Connection issue loading this page — please refresh.";
+        banner.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:999999;background:#c0392b;color:#fff;text-align:center;padding:10px 14px;font-weight:700;font-size:14px;";
+        document.body.prepend(banner);
+      });
+    } else {
+      window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
   </script>
   
 <script>window.QUIZ_PAGE_NO_TRANSLATE = true;</script>

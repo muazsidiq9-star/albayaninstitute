@@ -402,11 +402,25 @@
     });
 </script>
   <!-- SUPABASE CLIENT -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0"></script>
   <script>
+    // See quiz.html for the full reasoning — pinned exact version instead
+    // of unpkg's unversioned "@2" (removes a redirect hop on every load),
+    // plus a visible failure banner instead of silently acting like a
+    // guest if the SDK doesn't load.
     const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
     const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
-    window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    if (typeof supabase === "undefined" || !supabase.createClient) {
+      console.error("[SUPABASE] SDK failed to load — this page will not be able to read or save any data until it's refreshed.");
+      document.addEventListener("DOMContentLoaded", function () {
+        const banner = document.createElement("div");
+        banner.textContent = "⚠️ Connection issue loading this page — please refresh.";
+        banner.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:999999;background:#c0392b;color:#fff;text-align:center;padding:10px 14px;font-weight:700;font-size:14px;";
+        document.body.prepend(banner);
+      });
+    } else {
+      window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
   </script>
   <script>
 /* =========================================================

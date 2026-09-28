@@ -171,7 +171,7 @@ async function loadLeads() {
   try {
     const { data, error } = await db
       .from("admission_leads")
-      .select("id, full_name, phone, email, source, status, notes, created_at")
+      .select("id, full_name, phone, email, country, source, status, notes, created_at")
       .order("created_at", { ascending: false });
 
     if (error) throw error;
@@ -258,6 +258,8 @@ function renderLeadsTable(data) {
     tr.innerHTML = `
       <td>${lead.full_name || "—"}</td>
       <td>${lead.phone || "—"}</td>
+      <td>${lead.email || "—"}</td>
+      <td>${lead.country || "—"}</td>
       <td>${formatLeadSource(lead.source)}</td>
       <td><span class="badge ${statusBadge}">${formatLeadStatus(lead.status)}</span></td>
       <td title="${(lead.notes || "").replace(/"/g, "&quot;")}">${notesPreview}</td>
@@ -302,7 +304,8 @@ function filterLeadsTable() {
     const matchesSearch =
       (lead.full_name || "").toLowerCase().includes(search) ||
       (lead.phone || "").toLowerCase().includes(search) ||
-      (lead.email || "").toLowerCase().includes(search);
+      (lead.email || "").toLowerCase().includes(search) ||
+      (lead.country || "").toLowerCase().includes(search);
     const matchesStatus = !statusFilter || lead.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -321,6 +324,7 @@ function openAddLeadModal() {
   document.getElementById("leadName").value = "";
   document.getElementById("leadPhone").value = "";
   document.getElementById("leadEmail").value = "";
+  document.getElementById("leadCountry").value = "";
   document.getElementById("leadSource").value = "whatsapp";
   document.getElementById("leadStatus").value = "new";
   document.getElementById("leadNotes").value = "";
@@ -336,6 +340,7 @@ function openEditLeadModal(leadId) {
   document.getElementById("leadName").value = lead.full_name || "";
   document.getElementById("leadPhone").value = lead.phone || "";
   document.getElementById("leadEmail").value = lead.email || "";
+  document.getElementById("leadCountry").value = lead.country || "";
   document.getElementById("leadSource").value = lead.source || "whatsapp";
   document.getElementById("leadStatus").value = lead.status || "new";
   document.getElementById("leadNotes").value = lead.notes || "";
@@ -350,6 +355,7 @@ async function saveLead() {
     const full_name = document.getElementById("leadName")?.value.trim();
     const phone = document.getElementById("leadPhone")?.value.trim();
     const email = document.getElementById("leadEmail")?.value.trim();
+    const country = document.getElementById("leadCountry")?.value.trim();
     const source = document.getElementById("leadSource")?.value;
     const status = document.getElementById("leadStatus")?.value;
     const notes = document.getElementById("leadNotes")?.value.trim();
@@ -363,6 +369,7 @@ async function saveLead() {
       full_name,
       phone,
       email: email || null,
+      country: country || null,
       source,
       status,
       notes: notes || null
