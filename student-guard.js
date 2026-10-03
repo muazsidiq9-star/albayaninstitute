@@ -26,7 +26,13 @@
     if (!window.supabase || !window.supabase.createClient) return;
 
     try {
-      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+      // persistSession/autoRefreshToken: false -- this client only ever does
+      // one read-only lookup, so it has no business managing an auth session.
+      // Without this, it fights the page's own Supabase client over the same
+      // storage key ("Multiple GoTrueClient instances..." warning).
+      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+        auth: { persistSession: false, autoRefreshToken: false }
+      });
 
       const { data, error } = await client
         .from("students")

@@ -1426,6 +1426,7 @@
    <section class="dash-section" style="margin-top: 30px;">
       <div class="section-header">
         <h2 data-translate="Issued Certificates History">Issued Certificates History</h2>
+        <div id="certRegistryEditSlot"></div>
         <div class="table-filters">
           <select id="certLevelFilter" class="table-filter-select" aria-label="Filter by level">
             <option value="" data-translate="All Levels">All Levels</option>
@@ -2780,6 +2781,9 @@
     window.initDashTabs = initDashTabs;
   </script>
   <script src="translate.js"></script>
+  <!-- jsPDF, for admin-side certificate downloads (students who can't use the portal) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="cert-pdf-generator.js"></script>
   <script src="admin-dashboard.js"></script>
 </body>
 </html>

@@ -3716,6 +3716,13 @@ NEW FILES START HERE
   "Mark this student as Graduated? Only do this once all their fees are cleared — graduates skip the payment check when viewing certificates.": "هل تريد تحديد هذا الطالب كمتخرج؟ افعل ذلك فقط بعد تسوية جميع رسومه — يتجاوز الخريجون فحص الدفع عند عرض الشهادات.",
   "🎓 Graduated": "🎓 متخرج",
   "Your account is no longer active. Please contact the institute.": "حسابك لم يعد نشطًا. يرجى التواصل مع المعهد.",
+
+  "Download": "تحميل",
+  "Reopen this student's certificate tab first, then try downloading again.": "يرجى إعادة فتح تبويب شهادة هذا الطالب أولاً، ثم إعادة محاولة التحميل.",
+  "Certificate PDF generator failed to load. Check your connection and refresh.": "فشل تحميل أداة إنشاء الشهادة. تحقق من اتصالك وأعد تحميل الصفحة.",
+  "Failed to generate the certificate PDF. See console.": "فشل إنشاء ملف PDF للشهادة. راجع الـ console.",
+  "Couldn't find that certificate. Refresh the Certificates tab and try again.": "تعذر العثور على هذه الشهادة. أعد تحميل تبويب الشهادات وحاول مرة أخرى.",
+  
 // ===== DYNAMIC TEMPLATES ===== 
 
 en: {

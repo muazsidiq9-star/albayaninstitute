@@ -3838,7 +3838,7 @@ async function openCertificateModal(studentId, matric, fullname, level, batch) {
 
   const { data: existing } = await db
     .from("certificates")
-    .select("id, course_name, grade_note, revoked, cert_type")
+    .select("id, course_name, grade_note, revoked, cert_type, issued_at")
     .eq("matric_number", matric)
     .eq("deleted", false);
 
@@ -3990,6 +3990,11 @@ function renderExistingCerts(certs) {
               </td>
               <td>
                 <div class="table-row-actions">
+                  ${c.revoked ? "" : `
+                    <button class="btn btn-small" onclick="downloadCertificateAsAdmin('${c.id}', '${c.cert_type}', '${c.course_name.replace(/'/g, "\\'")}', '${(c.grade_note || "").replace(/'/g, "\\'")}', '${c.issued_at}')">
+                      ⬇️ ${t("Download")}
+                    </button>
+                  `}
                   ${c.revoked
                     ? `<button class="btn btn-save btn-small" onclick="restoreCertificate('${c.id}')">${t("Restore")}</button>`
                     : `<button class="btn btn-edit btn-small"
@@ -4143,6 +4148,34 @@ async function issueFullProgrammeCertificate() {
   showToast(`${t("Full Programme certificate issued to")} ${fullname} ✅`);
 }
 
+// Generates the exact same PDF the student portal would, for a student who
+// can't access the portal themselves. Uses window.certStudentData (set when
+// the certificate modal opened) for name/matric/level/batch — the same
+// fields the student-side download buttons rely on. Works on whichever
+// student's modal is currently open, since that's the data available here.
+async function downloadCertificateAsAdmin(certId, certType, courseName, gradeNote, issuedAt) {
+  const { matric, fullname, level, batch } = window.certStudentData || {};
+  if (!matric || !fullname) {
+    alert(t("Reopen this student's certificate tab first, then try downloading again."));
+    return;
+  }
+  if (typeof downloadCertificate !== "function" || typeof downloadFullProgrammeCertificate !== "function") {
+    alert(t("Certificate PDF generator failed to load. Check your connection and refresh."));
+    return;
+  }
+
+  try {
+    if (certType === "programme") {
+      await downloadFullProgrammeCertificate(certId, fullname, matric, courseName, batch, issuedAt, gradeNote);
+    } else {
+      await downloadCertificate(certId, fullname, matric, courseName, level, batch, issuedAt, gradeNote);
+    }
+  } catch (e) {
+    console.error("Admin certificate download failed:", e);
+    alert(t("Failed to generate the certificate PDF. See console."));
+  }
+}
+
 async function revokeCertificate(certId) {
   if (!confirm(t("Revoke this certificate? The student will no longer see it."))) return;
 
@@ -4151,9 +4184,7 @@ async function revokeCertificate(certId) {
   if (error) { alert(t("Failed to revoke certificate.")); return; }
 
   showToast(t("Certificate revoked."));
-  const { studentId, matric, fullname, level, batch } = window.certStudentData;
-  closeModal("certificateModal");
-  await openCertificateModal(studentId, matric, fullname, level, batch);
+  await refreshCertViews();
 }
 
 async function restoreCertificate(certId) {
@@ -4164,16 +4195,22 @@ async function restoreCertificate(certId) {
   if (error) { alert(t("Failed to restore certificate.")); return; }
 
   showToast(t("Certificate restored ✅"));
-  const { studentId, matric, fullname, level, batch } = window.certStudentData;
-  closeModal("certificateModal");
-  await openCertificateModal(studentId, matric, fullname, level, batch);
+  await refreshCertViews();
 }
 
-function editCertificate(certId, currentCourse, currentGradeNote) {
+function editCertificate(certId, currentCourse, currentGradeNote, studentLabel) {
   const old = document.getElementById("certEditForm");
   if (old) old.remove();
 
-  const container = document.getElementById("certHistoryScroll");
+  // Modal open (editing from a student record) -> inline into its history
+  // list, as before. Otherwise (editing from the Certificates tab's own
+  // registry) -> inline into that table's own edit slot instead.
+  const modalOpen = document.getElementById("certificateModal")?.classList.contains("show");
+  const container = modalOpen
+    ? document.getElementById("certHistoryScroll")
+    : document.getElementById("certRegistryEditSlot");
+  if (!container) return;
+
   const form = document.createElement("div");
   form.id = "certEditForm";
   form.style.cssText = `
@@ -4183,7 +4220,7 @@ function editCertificate(certId, currentCourse, currentGradeNote) {
   `;
 
   form.innerHTML = `
-    <h3 style="margin-bottom:12px; font-size:1rem;">${t("Edit Certificate")}</h3>
+    <h3 style="margin-bottom:12px; font-size:1rem;">${t("Edit Certificate")}${studentLabel ? ` — ${studentLabel}` : ""}</h3>
     <label style="font-weight:600; font-size:0.9rem;">${t("Course Name(s)")}</label>
     <input type="text" id="editCertCourse" value="${currentCourse}"
       placeholder="${t("For multiple courses, separate with a comma")}"
@@ -4230,8 +4267,7 @@ async function saveCertificateEdit(certId) {
   showToast(t("Certificate updated ✅"));
   document.getElementById("certEditForm")?.remove();
 
-  const { matric, fullname, level, studentId, batch } = window.certStudentData;
-  await openCertificateModal(studentId, matric, fullname, level, batch);
+  await refreshCertViews();
 }
 
 // Soft delete — moves the certificate to trash (hidden from views, but
@@ -4668,6 +4704,22 @@ function renderCertRegistryRows(filter) {
         <td>${formattedDate}</td>
         <td>
           <div class="table-row-actions">
+            ${c.revoked
+              ? `<button class="btn btn-save btn-small" onclick="restoreCertificate('${c.id}')">${t("Restore")}</button>`
+              : `
+                <button class="btn btn-icon-only" onclick="downloadCertificateFromRegistry('${c.id}')" title="${t('Download')}">
+                  ⬇️
+                </button>
+                <button class="btn btn-edit btn-icon-only"
+                  onclick="editCertificate('${c.id}', '${c.course_name.replace(/'/g, "\\'")}', '${(c.grade_note || "").replace(/'/g, "\\'")}', '${(c.student_name || "").replace(/'/g, "\\'")}')"
+                  title="${t('Edit')}">
+                  ✏️
+                </button>
+                <button class="btn btn-delete btn-small" onclick="revokeCertificate('${c.id}')">
+                  ${t("Revoke")}
+                </button>
+              `
+            }
             <button class="btn btn-delete btn-icon-only" onclick="deleteCertificate('${c.id}')" title="${t('Move to Trash')}">
               🚮
             </button>
@@ -4681,6 +4733,34 @@ function renderCertRegistryRows(filter) {
   }).join("");
 
   certTable?._applyRowFilters?.();
+}
+
+// Generates the certificate PDF straight from the Certificates tab's own
+// registry row -- no need to open the student's record first. Every field
+// the PDF needs (name, matric, level, batch, course, grade note, date) is
+// already in window.certRegistryData from the last load, so this looks the
+// row up by id instead of re-fetching.
+async function downloadCertificateFromRegistry(certId) {
+  const c = (window.certRegistryData || []).find(row => String(row.id) === String(certId));
+  if (!c) {
+    alert(t("Couldn't find that certificate. Refresh the Certificates tab and try again."));
+    return;
+  }
+  if (typeof downloadCertificate !== "function" || typeof downloadFullProgrammeCertificate !== "function") {
+    alert(t("Certificate PDF generator failed to load. Check your connection and refresh."));
+    return;
+  }
+
+  try {
+    if (c.cert_type === "programme") {
+      await downloadFullProgrammeCertificate(c.id, c.student_name, c.matric_number, c.course_name, c.batch, c.issued_at, c.grade_note);
+    } else {
+      await downloadCertificate(c.id, c.student_name, c.matric_number, c.course_name, c.level, c.batch, c.issued_at, c.grade_note);
+    }
+  } catch (e) {
+    console.error("Registry certificate download failed:", e);
+    alert(t("Failed to generate the certificate PDF. See console."));
+  }
 }
 
 // Batch options come from the certificates themselves (so you only ever
