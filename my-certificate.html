@@ -587,7 +587,6 @@
 
   <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="student-guard.js"></script>
   <script src="cert-pdf-generator.js"></script>
   <script src="translate.js"></script>
 
@@ -635,6 +634,23 @@
       `;
     }
 
+    // Puts a Download button into a disabled "Generating..." state for the
+    // duration of the PDF build, then restores it either way -- Arabic font
+    // loading and image embedding can take a moment, so without this the
+    // button just sits there looking unresponsive.
+    async function withButtonLoading(btn, action) {
+      if (!btn) { await action(); return; }
+      const originalHTML = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${t("Generating...")}`;
+      try {
+        await action();
+      } finally {
+        btn.innerHTML = originalHTML;
+        btn.disabled = false;
+      }
+    }
+
     function renderLevelCard(cert, student) {
       const formattedDate = new Date(cert.issued_at).toLocaleDateString("en-GB", {
         day: "numeric", month: "long", year: "numeric"
@@ -675,7 +691,7 @@
               </div>
             </div>
             <div class="cert-actions">
-            <button class="btn-download" onclick="downloadCertificate(
+            <button class="btn-download" onclick="withButtonLoading(this, () => downloadCertificate(
                 '${cert.id}',
                 '${student.fullname.replace(/'/g, "\\'")}',
                 '${student.matric_number}',
@@ -684,7 +700,7 @@
                 '${(student.batch || "").replace(/'/g, "\\'")}',
                 '${cert.issued_at}',
                 '${(cert.grade_note || "").replace(/'/g, "\\'")}'
-              )">
+              ))">
                 <i class="fas fa-download"></i> Download PDF
               </button>
             </div>
@@ -735,7 +751,7 @@
               </div>
             </div>
             <div class="cert-actions">
-            <button class="btn-download" onclick="downloadFullProgrammeCertificate(
+            <button class="btn-download" onclick="withButtonLoading(this, () => downloadFullProgrammeCertificate(
                 '${cert.id}',
                 '${student.fullname.replace(/'/g, "\\'")}',
                 '${student.matric_number}',
@@ -743,7 +759,7 @@
                 '${(student.batch || "").replace(/'/g, "\\'")}',
                 '${cert.issued_at}',
                 '${(cert.grade_note || "").replace(/'/g, "\\'")}'
-              )">
+              ))">
                 <i class="fas fa-download"></i> Download PDF
               </button>
             </div>

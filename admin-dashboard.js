@@ -3991,7 +3991,7 @@ function renderExistingCerts(certs) {
               <td>
                 <div class="table-row-actions">
                   ${c.revoked ? "" : `
-                    <button class="btn btn-small" onclick="downloadCertificateAsAdmin('${c.id}', '${c.cert_type}', '${c.course_name.replace(/'/g, "\\'")}', '${(c.grade_note || "").replace(/'/g, "\\'")}', '${c.issued_at}')">
+                    <button class="btn btn-small" onclick="downloadCertificateAsAdmin(this, '${c.id}', '${c.cert_type}', '${c.course_name.replace(/'/g, "\\'")}', '${(c.grade_note || "").replace(/'/g, "\\'")}', '${c.issued_at}')">
                       ⬇️ ${t("Download")}
                     </button>
                   `}
@@ -4153,7 +4153,7 @@ async function issueFullProgrammeCertificate() {
 // the certificate modal opened) for name/matric/level/batch — the same
 // fields the student-side download buttons rely on. Works on whichever
 // student's modal is currently open, since that's the data available here.
-async function downloadCertificateAsAdmin(certId, certType, courseName, gradeNote, issuedAt) {
+async function downloadCertificateAsAdmin(btn, certId, certType, courseName, gradeNote, issuedAt) {
   const { matric, fullname, level, batch } = window.certStudentData || {};
   if (!matric || !fullname) {
     alert(t("Reopen this student's certificate tab first, then try downloading again."));
@@ -4164,15 +4164,38 @@ async function downloadCertificateAsAdmin(certId, certType, courseName, gradeNot
     return;
   }
 
-  try {
-    if (certType === "programme") {
-      await downloadFullProgrammeCertificate(certId, fullname, matric, courseName, batch, issuedAt, gradeNote);
-    } else {
-      await downloadCertificate(certId, fullname, matric, courseName, level, batch, issuedAt, gradeNote);
+  await withButtonLoading(btn, `⏳ ${t("Generating...")}`, async () => {
+    try {
+      if (certType === "programme") {
+        await downloadFullProgrammeCertificate(certId, fullname, matric, courseName, batch, issuedAt, gradeNote);
+      } else {
+        await downloadCertificate(certId, fullname, matric, courseName, level, batch, issuedAt, gradeNote);
+      }
+    } catch (e) {
+      console.error("Admin certificate download failed:", e);
+      alert(t("Failed to generate the certificate PDF. See console."));
     }
-  } catch (e) {
-    console.error("Admin certificate download failed:", e);
-    alert(t("Failed to generate the certificate PDF. See console."));
+  });
+}
+
+// Puts a button into a disabled "loading" state for the duration of an
+// async action, then restores its original content/state no matter how
+// the action ends (success, error, or thrown). Used by the certificate
+// download buttons, which can take a moment (Arabic font load, image
+// embed) with nothing else on screen to show it's working.
+async function withButtonLoading(btn, loadingLabel, action) {
+  if (!btn) { await action(); return; }
+
+  const originalHTML = btn.innerHTML;
+  const originalDisabled = btn.disabled;
+  btn.disabled = true;
+  btn.innerHTML = loadingLabel;
+
+  try {
+    await action();
+  } finally {
+    btn.innerHTML = originalHTML;
+    btn.disabled = originalDisabled;
   }
 }
 
@@ -4707,7 +4730,7 @@ function renderCertRegistryRows(filter) {
             ${c.revoked
               ? `<button class="btn btn-save btn-small" onclick="restoreCertificate('${c.id}')">${t("Restore")}</button>`
               : `
-                <button class="btn btn-icon-only" onclick="downloadCertificateFromRegistry('${c.id}')" title="${t('Download')}">
+                <button class="btn btn-icon-only" onclick="downloadCertificateFromRegistry(this, '${c.id}')" title="${t('Download')}">
                   ⬇️
                 </button>
                 <button class="btn btn-edit btn-icon-only"
@@ -4740,7 +4763,7 @@ function renderCertRegistryRows(filter) {
 // the PDF needs (name, matric, level, batch, course, grade note, date) is
 // already in window.certRegistryData from the last load, so this looks the
 // row up by id instead of re-fetching.
-async function downloadCertificateFromRegistry(certId) {
+async function downloadCertificateFromRegistry(btn, certId) {
   const c = (window.certRegistryData || []).find(row => String(row.id) === String(certId));
   if (!c) {
     alert(t("Couldn't find that certificate. Refresh the Certificates tab and try again."));
@@ -4751,16 +4774,18 @@ async function downloadCertificateFromRegistry(certId) {
     return;
   }
 
-  try {
-    if (c.cert_type === "programme") {
-      await downloadFullProgrammeCertificate(c.id, c.student_name, c.matric_number, c.course_name, c.batch, c.issued_at, c.grade_note);
-    } else {
-      await downloadCertificate(c.id, c.student_name, c.matric_number, c.course_name, c.level, c.batch, c.issued_at, c.grade_note);
+  await withButtonLoading(btn, "⏳", async () => {
+    try {
+      if (c.cert_type === "programme") {
+        await downloadFullProgrammeCertificate(c.id, c.student_name, c.matric_number, c.course_name, c.batch, c.issued_at, c.grade_note);
+      } else {
+        await downloadCertificate(c.id, c.student_name, c.matric_number, c.course_name, c.level, c.batch, c.issued_at, c.grade_note);
+      }
+    } catch (e) {
+      console.error("Registry certificate download failed:", e);
+      alert(t("Failed to generate the certificate PDF. See console."));
     }
-  } catch (e) {
-    console.error("Registry certificate download failed:", e);
-    alert(t("Failed to generate the certificate PDF. See console."));
-  }
+  });
 }
 
 // Batch options come from the certificates themselves (so you only ever

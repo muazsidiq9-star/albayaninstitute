@@ -3722,7 +3722,7 @@ NEW FILES START HERE
   "Certificate PDF generator failed to load. Check your connection and refresh.": "فشل تحميل أداة إنشاء الشهادة. تحقق من اتصالك وأعد تحميل الصفحة.",
   "Failed to generate the certificate PDF. See console.": "فشل إنشاء ملف PDF للشهادة. راجع الـ console.",
   "Couldn't find that certificate. Refresh the Certificates tab and try again.": "تعذر العثور على هذه الشهادة. أعد تحميل تبويب الشهادات وحاول مرة أخرى.",
-  
+  "Generating...": "جارٍ الإنشاء...",
 // ===== DYNAMIC TEMPLATES ===== 
 
 en: {
