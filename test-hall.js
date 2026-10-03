@@ -137,13 +137,15 @@ async function checkFees() {
       "July","August","September","October","November","December"
     ];
 
-    const currentMonthName = monthNames[new Date().getMonth()];
+    // Months are stored with the year, e.g. "October 2026"
+    const nowDate = new Date();
+    const currentMonthKey = `${monthNames[nowDate.getMonth()]} ${nowDate.getFullYear()}`;
 
     const { data, error } = await supabaseClient
       .from("payments")
       .select("id")
       .eq("matric_number", matricNumber)
-      .eq("month", currentMonthName)
+      .eq("month", currentMonthKey)
       .eq("status", "paid")
       .eq("deleted", false)
       .limit(1);

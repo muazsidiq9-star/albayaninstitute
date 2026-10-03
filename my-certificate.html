@@ -809,13 +809,15 @@
         "January","February","March","April","May","June",
         "July","August","September","October","November","December"
       ];
-      const currentMonthName = monthNames[new Date().getMonth()];
+      // Months are stored with the year, e.g. "October 2026"
+      const nowDate = new Date();
+      const currentMonthKey = `${monthNames[nowDate.getMonth()]} ${nowDate.getFullYear()}`;
 
       const { data, error } = await sb
         .from("student_fee_status")
         .select("status")
         .eq("matric_number", matric)
-        .eq("month", currentMonthName)
+        .eq("month", currentMonthKey)
         .limit(1);
 
       if (error) throw error;

@@ -447,12 +447,6 @@
         </select>
         <select id="paymentsMonthFilter" class="table-filter-select" aria-label="Filter by month">
           <option value="" data-translate="All Months">All Months</option>
-          <option value="January" data-translate="January">January</option><option value="February" data-translate="February">February</option>
-          <option value="March" data-translate="March">March</option><option value="April" data-translate="April">April</option>
-          <option value="May" data-translate="May">May</option><option value="June" data-translate="June">June</option>
-          <option value="July" data-translate="July">July</option><option value="August" data-translate="August">August</option>
-          <option value="September" data-translate="September">September</option><option value="October" data-translate="October">October</option>
-          <option value="November" data-translate="November">November</option><option value="December" data-translate="December">December</option>
         </select>
       </div>
       <input type="text" id="searchPayments" class="search-input"
@@ -516,6 +510,7 @@
             <option value="July">July</option><option value="August">August</option><option value="September">September</option>
             <option value="October">October</option><option value="November">November</option><option value="December">December</option>
           </select>
+          <select id="feeYear" aria-label="Year"></select>
           <input id="amount" type="number" placeholder="Amount"
                  data-translate-placeholder="Amount">
           <button class="btn btn-save" id="saveFeeBtn" onclick="saveFee()">
@@ -544,12 +539,6 @@
         </select>
         <select id="feesMonthFilter" class="table-filter-select" aria-label="Filter by month" onchange="filterFees()">
           <option value="" data-translate="All Months">All Months</option>
-          <option value="January" data-translate="January">January</option><option value="February" data-translate="February">February</option>
-          <option value="March" data-translate="March">March</option><option value="April" data-translate="April">April</option>
-          <option value="May" data-translate="May">May</option><option value="June" data-translate="June">June</option>
-          <option value="July" data-translate="July">July</option><option value="August" data-translate="August">August</option>
-          <option value="September" data-translate="September">September</option><option value="October" data-translate="October">October</option>
-          <option value="November" data-translate="November">November</option><option value="December" data-translate="December">December</option>
         </select>
       </div>
       <input id="search" class="search-box"
@@ -1076,6 +1065,8 @@
           <option value="July">July</option><option value="August">August</option><option value="September">September</option>
           <option value="October">October</option><option value="November">November</option><option value="December">December</option>
         </select>
+        <label data-translate="Year">Year</label>
+        <select id="bulkFeeYear"></select>
         <label data-translate="Amount">Amount</label>
         <input id="bulkFeeAmount" type="number" placeholder="Amount" data-translate-placeholder="Amount">
         <label data-translate="Currency">Currency</label>
@@ -2082,6 +2073,8 @@
           <option value="September">September</option><option value="October">October</option>
           <option value="November">November</option><option value="December">December</option>
         </select>
+        <label data-translate="Year">Year</label>
+        <select id="paymentYear" required></select>
         <label data-translate="Date">Date</label>
         <input type="date" id="paymentDate">
         <label data-translate="Method">Method</label>

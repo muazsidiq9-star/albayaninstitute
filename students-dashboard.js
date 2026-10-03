@@ -150,7 +150,10 @@ async function loadStats(matric, container) {
     // Current Month Name
     // ===========================
     const now = new Date();
-    const monthName = now.toLocaleString("default", { month: "long" });
+    const monthName = now.toLocaleString("default", { month: "long" });   // display only
+    // Months are stored in English with the year, e.g. "October 2026"
+    const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const currentMonthKey = `${MONTH_NAMES[now.getMonth()]} ${now.getFullYear()}`;
 
     // ===========================
     // Fetch THIS MONTH Payments
@@ -161,7 +164,7 @@ async function loadStats(matric, container) {
       .eq("matric_number", matric)
       .eq("status", "paid")
       .eq("deleted", false)
-      .eq("month", monthName);
+      .eq("month", currentMonthKey);
 
     // ===========================
     // Monthly Total (grouped by currency — correct even if mixed)

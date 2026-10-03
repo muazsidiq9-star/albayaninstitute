@@ -288,6 +288,84 @@ document.addEventListener("DOMContentLoaded", async () => {
 /* -------------------------------------------------------
    UTILITIES
 ------------------------------------------------------- */
+/* -------------------------------------------------------
+   MONTH + YEAR HELPERS
+   Months are stored as "October 2026" (month name + year) so the same
+   month in a different year never collides with the unique
+   (matric_number, month) keys on payments / student_fee_status.
+   Each month <select> (January–December) is paired with a year <select>;
+   the two are combined only when reading/saving.
+------------------------------------------------------- */
+const MONTH_NAMES = ["January","February","March","April","May","June",
+                     "July","August","September","October","November","December"];
+const MONTH_YEAR_START = 2026;   // first year the system was used — change if needed
+
+// (Re)builds a year <select>: MONTH_YEAR_START … next year, with `selectedYear`
+// (default: the current year) selected. A year outside that range is added.
+function fillYearSelect(selectId, selectedYear) {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  const current = new Date().getFullYear();
+  const want = Number(selectedYear) || current;
+  const lo = Math.min(MONTH_YEAR_START, want);
+  const hi = Math.max(current + 1, want);
+  sel.innerHTML = "";
+  for (let y = lo; y <= hi; y++) sel.add(new Option(y, y));
+  sel.value = String(want);
+}
+
+// "October" + "2026" -> "October 2026" ("" if either is missing)
+function getMonthYear(monthId, yearId) {
+  const m = document.getElementById(monthId)?.value;
+  const y = document.getElementById(yearId)?.value;
+  return (m && y) ? `${m} ${y}` : "";
+}
+
+// "October 2026" -> month select = October, year select = 2026.
+// A legacy value with no year ("October") only sets the month.
+function setMonthYear(monthId, yearId, value) {
+  const str = String(value || "").trim();
+  const match = str.match(/^(.*?)\s+(\d{4})$/);
+  const monthEl = document.getElementById(monthId);
+  if (monthEl) monthEl.value = match ? match[1] : str;
+  fillYearSelect(yearId, match ? match[2] : null);
+}
+
+// Chronological sort key for "October 2026" (values without a year sort first)
+function monthSortKey(v) {
+  const str = String(v || "").trim();
+  const match = str.match(/^(.*?)\s+(\d{4})$/);
+  const idx = MONTH_NAMES.indexOf(match ? match[1] : str);
+  return (match ? Number(match[2]) : 0) * 12 + (idx === -1 ? 0 : idx);
+}
+
+// Rebuilds a "filter by month" dropdown from the months that actually exist
+// in the data (newest first), keeping the current selection if still present.
+function populateMonthFilter(selectId, months) {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+
+  const unique = [...new Set((months || []).filter(Boolean))]
+    .sort((a, b) => monthSortKey(b) - monthSortKey(a));
+
+  const key = unique.join("|");
+  if (sel.dataset.monthOptionsKey === key) return;   // nothing changed — don't touch the open dropdown
+  sel.dataset.monthOptionsKey = key;
+
+  const current = sel.value;
+  sel.innerHTML = `<option value="" data-translate="All Months">${t("All Months")}</option>` +
+    unique.map(m => {
+      const match = String(m).match(/^(.*?)\s+(\d{4})$/);
+      const label = match ? `${t(match[1])} ${match[2]}` : t(m);
+      return `<option value="${m}">${label}</option>`;
+    }).join("");
+  if (unique.includes(current)) sel.value = current;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  ["paymentYear", "feeYear", "bulkFeeYear"].forEach(id => fillYearSelect(id));
+});
+
 function showToast(msg) {
   const toast = document.getElementById("admin-toast");
   if (!toast) return;
@@ -357,6 +435,9 @@ function openModal(id) {
 
   const key = editMap[id];
   if (key) window[key] = null;
+
+  // Add Payment starts on the current year (the edit flow sets it from the record)
+  if (id === "paymentModal") fillYearSelect("paymentYear");
 
   // Course dropdowns need live data from `courses` every time these
   // modals open fresh (the edit* functions already load it for the
@@ -1109,7 +1190,7 @@ async function addPayment() {
     const batch = document.getElementById("paymentBatch")?.value;
     const amount = Number(document.getElementById("paymentAmount")?.value || 0);
     const currency = document.getElementById("paymentCurrency")?.value;
-    const month = document.getElementById("paymentMonth")?.value;
+    const month = getMonthYear("paymentMonth", "paymentYear");
     const payment_method = document.getElementById("paymentMethod")?.value;
     const created_at = document.getElementById("paymentDate")?.value || null;
     const status = document.getElementById("paymentStatus")?.value || "pending";
@@ -1187,6 +1268,7 @@ async function loadPayments() {
     .order("created_at", { ascending: false });
 
   window.paymentsRowCache = data || [];
+  populateMonthFilter("paymentsMonthFilter", (data || []).map(p => p.month));
 
   const tbody = document.querySelector("#payments-table tbody");
   if (!tbody) return;
@@ -1329,7 +1411,7 @@ async function editPayment(id) {
   document.getElementById("paymentBatch").value = p.batch || "";
   document.getElementById("paymentAmount").value = p.amount;
   document.getElementById("paymentCurrency").value = p.currency || "NGN";
-  document.getElementById("paymentMonth").value = p.month;
+  setMonthYear("paymentMonth", "paymentYear", p.month);
   document.getElementById("paymentMethod").value = p.payment_method;
   document.getElementById("paymentStatus").value = p.status;
   document.getElementById("paymentStudent").disabled = true;
@@ -1379,6 +1461,7 @@ async function loadFees() {
   if (error) { console.error(error); return; }
 
   allFees = data;
+  populateMonthFilter("feesMonthFilter", (data || []).map(r => r.month));
   filterFees();
 }
 
@@ -1556,7 +1639,7 @@ function ensureFeeCurrencyField() {
 
 async function saveFee() {
   const matric = document.getElementById("studentSelect").value;
-  const month = document.getElementById("month").value;
+  const month = getMonthYear("month", "feeYear");
   const amount = document.getElementById("amount").value;
   const currency = document.getElementById("feeCurrency")?.value || "NGN";
 
@@ -1590,6 +1673,7 @@ async function saveFee() {
 function clearForm() {
   document.getElementById("studentSelect").value = "";
   document.getElementById("month").value = "";
+  fillYearSelect("feeYear");
   document.getElementById("amount").value = "";
   const currencyField = document.getElementById("feeCurrency");
   if (currencyField) currencyField.value = "NGN";
@@ -1605,8 +1689,9 @@ function editFee(matric, month, amount, currency, status) {
 
   document.getElementById("studentSelect").value = matric;
   document.getElementById("studentSelect").disabled = true;
-  document.getElementById("month").value = month;
+  setMonthYear("month", "feeYear", month);
   document.getElementById("month").disabled = true;
+  document.getElementById("feeYear").disabled = true;
   document.getElementById("amount").value = amount;
   const currencyField = document.getElementById("feeCurrency");
   if (currencyField) currencyField.value = currency || "NGN";
@@ -1632,6 +1717,7 @@ function resetFeeForm() {
   clearForm();
   document.getElementById("studentSelect").disabled = false;
   document.getElementById("month").disabled = false;
+  document.getElementById("feeYear").disabled = false;
   document.getElementById("saveFeeBtnText").textContent = t("Save");
   document.getElementById("cancelFeeEditBtn").style.display = "none";
   window.editingFeeKey = null;
@@ -1647,6 +1733,7 @@ function resetFeeForm() {
 
 async function openBulkFeeModal() {
   document.getElementById("bulkFeeMonth").value = "";
+  fillYearSelect("bulkFeeYear");
   document.getElementById("bulkFeeAmount").value = "";
   document.getElementById("bulkFeeCurrency").value = "NGN";
   document.getElementById("bulkFeeSearch").value = "";
@@ -1723,7 +1810,7 @@ function updateBulkFeeSelectedCount() {
 }
 
 async function bulkSaveFee() {
-  const month = document.getElementById("bulkFeeMonth").value;
+  const month = getMonthYear("bulkFeeMonth", "bulkFeeYear");
   const amount = document.getElementById("bulkFeeAmount").value;
   const currency = document.getElementById("bulkFeeCurrency")?.value || "NGN";
 

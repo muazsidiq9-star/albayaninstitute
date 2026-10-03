@@ -106,19 +106,6 @@ const DICT = {
 "Amount Paid": "المبلغ المدفوع",
 "Select Month": "اختر الشهر",
 
-"January": "يناير",
-"February": "فبراير",
-"March": "مارس",
-"April": "أبريل",
-"May": "مايو",
-"June": "يونيو",
-"July": "يوليو",
-"August": "أغسطس",
-"September": "سبتمبر",
-"October": "أكتوبر",
-"November": "نوفمبر",
-"December": "ديسمبر",
-
 "Paid": "مدفوع",
 "Pending": "قيد الانتظار",
 

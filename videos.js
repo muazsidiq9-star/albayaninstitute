@@ -34,6 +34,9 @@ if (!matric) {
 
 
 // ===== Month helper =====
+// Payment months are stored as "October 2026" (month name + year), while a
+// video's month is just "October". Only the month name matters for the unlock
+// check, so take the first word — this works for both formats.
 function monthToNumber(month) {
   if (!month) return 0;
   const map = {
@@ -41,7 +44,8 @@ function monthToNumber(month) {
     may:5, june:6, july:7, august:8,
     september:9, october:10, november:11, december:12
   };
-  return map[month.toLowerCase()] || 0;
+  const name = String(month).trim().split(/\s+/)[0].toLowerCase();
+  return map[name] || 0;
 }
 
 

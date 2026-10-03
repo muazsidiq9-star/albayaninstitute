@@ -246,8 +246,11 @@
 
         /* Stats */
         const now          = new Date();
-        const monthName    = now.toLocaleString("default", { month: "long" });
-        const monthlyPayments = payments?.filter(p => p.status === "paid" && p.month === monthName) || [];
+        const monthName    = now.toLocaleString("default", { month: "long" });   // display only
+        // Months are stored in English with the year, e.g. "October 2026"
+        const MONTH_NAMES  = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+        const currentMonthKey = `${MONTH_NAMES[now.getMonth()]} ${now.getFullYear()}`;
+        const monthlyPayments = payments?.filter(p => p.status === "paid" && p.month === currentMonthKey) || [];
         const monthlyTotalDisplay = formatGroupedTotals(monthlyPayments, "amount");
         const lastPayment  = payments?.find(p => p.status === "paid");
         const lastPaidMonth = lastPayment?.month || null;

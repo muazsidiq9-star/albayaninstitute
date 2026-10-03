@@ -220,8 +220,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const errorMsg = document.querySelector('.error-msg');
   const submitBtn = document.querySelector('.submit-btn');
   const monthSelect = document.getElementById('month');
+  const yearSelect  = document.getElementById('year');
 
   if (!paymentForm) return;
+
+  /* ================= PAYMENT MONTH + YEAR =================
+     The month <select> holds January–December and the year <select>
+     holds the year. They are combined into one value like "October 2026"
+     so the same month in a new year never collides with the old one
+     (payments has a unique constraint on matric_number + month). */
+  const START_YEAR = 2026;   // first year the system was used — change if needed
+
+  (function buildYearOptions() {
+    if (!yearSelect) return;
+    const currentYear = new Date().getFullYear();
+    yearSelect.innerHTML = '';
+    for (let y = START_YEAR; y <= currentYear + 1; y++) {   // +1 allows paying ahead
+      // defaultSelected = true keeps the current year selected after paymentForm.reset()
+      yearSelect.add(new Option(y, y, y === currentYear, y === currentYear));
+    }
+  })();
+
+  function getSelectedMonth() {
+    const m = monthSelect?.value;
+    const y = yearSelect?.value;
+    return (m && y) ? `${m} ${y}` : '';   // e.g. "October 2026", or '' if either is missing
+  }
 
   successMsg.style.display = 'none';
   errorMsg.style.display = 'none';
@@ -283,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function checkExistingPaymentForMonth() {
-    const month = monthSelect?.value;
+    const month = getSelectedMonth();
     const matric_number = (detectedStudent || currentStudent)?.matric_number;
 
     if (!month || !matric_number) {
@@ -323,6 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   monthSelect?.addEventListener('change', checkExistingPaymentForMonth);
+  yearSelect?.addEventListener('change', checkExistingPaymentForMonth);
 
   /* ================= AUTO FILL FROM SESSION ================= */
   if (currentStudent) {
@@ -385,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const amount     = document.getElementById('amount').value;
     const currency   = document.getElementById("currency").value;
     const date       = document.getElementById("payment-date")?.value || null;
-    const month      = document.getElementById('month').value;
+    const month      = getSelectedMonth();
     const receiptFile = document.getElementById('receipt')?.files[0] || null;
     const matric_number = (detectedStudent || currentStudent)?.matric_number || null;
 
