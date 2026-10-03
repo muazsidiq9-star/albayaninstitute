@@ -2064,6 +2064,7 @@ NEW FILES START HERE
 "Currency":             "العملة",
 "Payment Date":         "تاريخ الدفع",
 "Payment Month":        "شهر الدفع",
+"Payment Year":         "سنة الدفع",
 "Select Month":         "اختر الشهر",
 "January":   "يناير",
 "February":  "فبراير",
