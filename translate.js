@@ -14,15 +14,15 @@ const DICT = {
     "Please upload your payment receipt here for confirmation.": "يرجى رفع إيصال الدفع الخاص بك هنا للتأكيد.",
     "Plan Type": "نوع الخطة",
 
-    "Test/Exam Timetable": "جدول الاخبار/الامتحان",
-    "Take Test/Exam": "ادخل للاخبار/للامتحان",
+    "Test/Exam Timetable": "جدول الاختبارات",
+    "Take Test/Exam": "أداء الاختبار",
     "Admission Letter": "رسالة القبول",
     "Pay Now": "ادفع الآن",
 
 
-"Admin Dashboard": "لوحة تحكم المشرف",
+"Admin Dashboard": "لوحة الإدارة",
 "Manage Students, Payments, Grades & Schedule":
-"إدارة الطلاب والمدفوعات والدرجات والجداول",
+"إدارة الطلاب والمدفوعات والدرجات والجدول",
 
 "Send Welcome Emails" : "إرسال رسائل الترحيب الإلكترونية",
 
@@ -30,10 +30,10 @@ const DICT = {
 "Payments": "المدفوعات",
 "Logout": "تسجيل الخروج",
 
-"My Courses": "دوراتي",
-"All courses you are enrolled in, with quick links to schedules": "جميع الدورات التي أنت مسجل فيها مع روابط سريعة للجدول",
-"Your Enrolled Courses": "دوراتك المسجلة",
-"No courses enrolled yet": "لا توجد دورات مسجلة بعد",
+"My Courses": "مقرراتي",
+"All courses you are enrolled in, with quick links to schedules": "جميع المقررات التي سجلت فيها، مع روابط سريعة للجداول",
+"Your Enrolled Courses": "مقرراتك المسجلة",
+"No courses enrolled yet": "لا توجد مقررات مسجلة بعد",
 
 "Students": "الطلاب",
 "Amount Paid": "المبلغ المدفوع",
@@ -60,7 +60,7 @@ const DICT = {
 "Level": "المستوى",
 "Status": "الحالة",
 "Edit": "تعديل",
-"Actions": "إجراءات",
+"Actions": "الإجراءات",
 "No students yet": "لا يوجد طلاب بعد",
 
 "Student Name": "اسم الطالب",
@@ -89,9 +89,6 @@ const DICT = {
 "Full Name": "الاسم الكامل",
 "Email Address": "عنوان البريد الإلكتروني",
 "WhatsApp Phone Number *": "رقم واتساب *",
-"Nationality": "الجنسية",
-"Gender": "الجنس",
-"Age": "العمر",
 "Passport Photo": "الصورة الشخصية",
 
 "-- Choose Level --": "-- اختر المستوى --",
@@ -103,7 +100,6 @@ const DICT = {
 "Inactive": "غير نشط",
 
 "Add Payment": "إضافة دفعة",
-"Amount Paid": "المبلغ المدفوع",
 "Select Month": "اختر الشهر",
 
 "Paid": "مدفوع",
@@ -132,13 +128,13 @@ const DICT = {
 "Instructor Name": "اسم المدرس",
 "Meeting Link": "رابط الاجتماع",
 
-"Scheduled": "مجدولة",
-"Completed": "مكتملة",
-"Cancelled": "ملغاة",
+"Scheduled": "مجدول",
+"Completed": "مكتمل",
+"Cancelled": "ملغى",
 "scheduled": "مجدولة",
 "completed": "مكتملة",
 "cancelled": "ملغاة",
-"Semester Work": "أعمال الفصل",
+"Semester Work": "أعمال الفصل الدراسي",
 "Emails": "الرسائل",
 
 
@@ -155,20 +151,17 @@ const DICT = {
 
 "Student added": "تمت إضافة الطالب",
 "Student updated": "تم تحديث بيانات الطالب",
-"Edit": "تعديل",
 "Delete": "حذف",
 "Select student": "اختر الطالب",
 
 "Payment added": "تمت إضافة الدفع",
-"Payment updated": "تم تحديث الدفع",
+"Payment updated": "تم تحديث الدفعة",
 "Payment Recorded": "تم تسجيل الدفع",
 "Payment Confirmed": "تم تأكيد الدفع",
 "Processing...": "جارٍ المعالجة...",
 "Mark Paid": "تأكيد الدفع",
-"Paid": "مدفوع",
 "✅ Paid": "✅ مدفوع",
 "❌ Unpaid": "❌ لم يتم الدفع",
-"Pending": "قيد الانتظار",
 
 "Your payment of ₦": "تم تأكيد دفعتك بمبلغ ₦",
 "payment has been recorded for": "وقد تم تسجيلها لشهر",
@@ -177,7 +170,7 @@ const DICT = {
 "Grade added": "تمت إضافة الدرجة",
 "Grade updated": "تم تحديث الدرجة",
 "New Grade Posted": "تم نشر درجة جديدة",
-"Your grade for": "تم نشر درجتك في مادة",
+"Your grade for": "تم نشر درجتك في مقرر",
 "has been released.": "وقد أصبحت متاحة",
 
 "Schedule added": "تمت إضافة الجدول",
@@ -209,8 +202,8 @@ const DICT = {
   "Login": "تسجيل الدخول",
   
   "Sign Up": "إنشاء حساب جديد",
-  "Log In": "الدخول إلى الحساب",
-  "Log in": "الدخول إلى الحساب",
+  "Log In": "تسجيل الدخول",
+  "Log in": "تسجيل الدخول",
 
 // Alerts / JS messages
 "Please fill all fields": "يرجى ملء جميع الحقول",
@@ -224,37 +217,23 @@ const DICT = {
 "Login failed. Check console for details.": "فشل تسجيل الدخول. تحقق من وحدة التحكم لمزيد من التفاصيل.",
 "Welcome back, {username}!": "مرحبًا بعودتك، {username}!",
 "Welcome back, Admin {username}!": "مرحبًا بعودتك، المسؤول {username}!",
-"Please fill all fields": "يرجى ملء جميع الحقول",
-"Processing... ⏳": "جارٍ المعالجة... ⏳",
-"Login": "تسجيل الدخول",
 "Invalid login credentials": "بيانات تسجيل الدخول غير صحيحة",
 "Invalid login": "تسجيل دخول غير صحيح",
 "Profile not found. Contact administrator.": "لم يتم العثور على الملف الشخصي. يرجى التواصل مع الإدارة.",
 "Unauthorized role": "دور غير مصرح به",
-"Login failed. Check console for details.": "فشل تسجيل الدخول. راجع وحدة التحكم للتفاصيل",
 "Access denied. You selected a wrong account type.": "تم رفض الوصول. لقد اخترت نوع حساب غير صحيح",
 
-"Please enter your email": "يرجى إدخال بريدك الإلكتروني",
-"No student found with this email.": "لم يتم العثور على طالب بهذا البريد الإلكتروني",
-"Failed to reset password. Try again later.": "فشل إعادة تعيين كلمة المرور. حاول مرة أخرى لاحقاً",
-"Password Reset": "إعادة تعيين كلمة المرور",
-"Your temporary password is:": "كلمة المرور المؤقتة الخاصة بك هي:",
-"Temporary password copied to clipboard!": "تم نسخ كلمة المرور المؤقتة إلى الحافظة!",
 
-"Something went wrong. Check console.": "حدث خطأ ما. تحقق من وحدة التحكم",
 "Contact administrator": "تواصل مع المسؤول",
 "Invalid request": "طلب غير صالح",
 
 "Edit Class":        "تعديل الدرس",
-"Add Class":         "إضافة درس",
-"Save Class":        "حفظ الدرس",
+"Save Class":        "حفظ الحصة",
 "Update Class":      "تحديث الدرس",
 "Schedule updated ✅": "تم تحديث الجدول ✅",
 "Class added ✅":     "تمت إضافة الدرس ✅",
 "Failed to save schedule.": "فشل حفظ الجدول.",
-"Select Course":     "اختر المادة",
-"Edit":              "تعديل",
-"Cancel":            "إلغاء",
+"Select Course":     "اختر المقرر",
 
 "Welcome": "مرحبًا",
 
@@ -262,7 +241,7 @@ const DICT = {
 "Assistant Mudeer": "نائب المدير",
 "Head of Department": "رئيس القسم",
 "Registrar": "المسجل",
-"Bursar": "المحاسب",
+"Bursar": "أمين الصندوق",
 "Head_of_dept": "رئيس القسم",
 "h_o_d": "رئيس القسم",
 
@@ -290,7 +269,6 @@ const DICT = {
 
 
 // ======= PAYMENT.JS STRINGS =======
-"Processing... ⏳": "جاري المعالجة... ⏳",
 "Please fill all required fields correctly.": "يرجى ملء جميع الحقول المطلوبة بشكل صحيح.",
 "Payment submitted successfully. We will confirm shortly.": "تم تقديم الدفع بنجاح. سنؤكد قريبًا.",
 "Something went wrong. Please try again.": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
@@ -301,12 +279,9 @@ const DICT = {
 "Supabase client not found": "لم يتم العثور على عميل Supabase",
 "Full Name and Email are required.": "الاسم الكامل والبريد الإلكتروني مطلوبان.",
 "This email is already registered!\nMatric Number:": "هذا البريد الإلكتروني مسجل مسبقًا!\nرقم التسجيل:",
-"Passport must not exceed 200KB": "يجب ألا يتجاوز حجم جواز السفر 200 كيلوبايت",
 "Passport upload failed. Check console.": "فشل تحميل جواز السفر. تحقق من وحدة التحكم.",
-"Processing... ⏳": "جاري المعالجة... ⏳",
 "Registration failed. Check console for details.": "فشل التسجيل. تحقق من وحدة التحكم للحصول على التفاصيل.",
 "Registration successful 🎉\n\nYour Matric Number (Default Password). Save for first login.:": "تم التسجيل بنجاح 🎉\n\nرقم التسجيل الخاص بك (كلمة المرور الافتراضية). احفظها لتسجيل الدخول الأول.:",
-"Unexpected error occurred. Check console.": "حدث خطأ غير متوقع. تحقق من وحدة التحكم.",
 "Unexpected error occurred. Check console.": "حدث خطأ غير متوقع. تحقق من وحدة التحكم.",
 "Register": "تسجيل",
 
@@ -317,18 +292,11 @@ const DICT = {
 "View your upcoming classes, timings, and instructors": "عرض الحصص القادمة، المواعيد، والمدرسين",
 "Your Classes": "حصصك",
 "Class": "الحصة",
-"Course": "المادة",
-"Instructor": "المدرس",
-"Date": "التاريخ",
-"Time": "الوقت",
-"Link": "الرابط",
-"Status": "الحالة",
 "View your Upcoming Test/Exam Schedule": "عرض توقيت الاختبارات / الامتحانات القادمة",
 
 
 // ======= SCHEDULE PAGE =======
 "No upcoming classes": "لا توجد حصص قادمة",
-"Join": "انضم",
 "N/A": "غير متاح",
 "Failed to load schedule": "فشل تحميل الجدول",
 
@@ -338,26 +306,16 @@ const DICT = {
 
 "Home": "الرئيسية",
 "About": "من نحن",
-"Courses": "الدورات",
-"Register": "التسجيل",
+"Courses": "المقررات",
 "Dashboard": "لوحة التحكم",
 "Payment": "الدفع",
 "Schedule": "الجدول",
 "Contact": "اتصل بنا",
 
-"Search by course...": "ابحث حسب المادة...",
+"Search by course...": "ابحث حسب المقرر...",
 "All": "الكل",
-"Pass": "ناجح",
-"Average": "متوسط",
-"Fail": "راسب",
 
-"Matric Number": "رقم التسجيل",
-"Level": "المستوى",
-"Course": "المادة",
-"Assessment": "التقييم",
-"Exam": "الامتحان",
 "Total Score (%)": "المجموع (%)",
-"Status": "الحالة",
 
 "Download My Grades (PDF)": "تحميل الدرجات (PDF)",
 
@@ -365,9 +323,9 @@ const DICT = {
 
 "Student login required": "تسجيل دخول الطالب مطلوب",
 
-"No grades found": "لا توجد درجات",
+"No grades found": "لم يتم العثور على درجات",
 
-"No grades to download.": "لا توجد درجات للتحميل",
+"No grades to download.": "لا توجد درجات للتحميل.",
 
 "Al-Bayan Arabic Institute Online": "معهد البيان للدراسات العربية عبر الانترنت",
 "My Grades Report": "تقرير الدرجات",
@@ -376,12 +334,6 @@ const DICT = {
 "Matric Number:": "رقم التسجيل:",
 "Date:": "التاريخ:",
 
-"Level": "المستوى",
-"Course": "المادة",
-"Assessment": "التقييم",
-"Exam": "الامتحان",
-"Total": "المجموع",
-"Status": "الحالة",
 
 "Total Score Sum:": "إجمالي مجموع الدرجات:",
 
@@ -389,7 +341,7 @@ const DICT = {
 "هذا المستند تم إنشاؤه آليًا ولا يحتاج إلى توقيع.",
 
 "Error downloading PDF. See console for details.":
-"حدث خطأ أثناء تحميل ملف PDF. راجع وحدة التحكم.",
+"حدث خطأ أثناء تحميل ملف PDF. يرجى مراجعة وحدة التحكم لمزيد من التفاصيل.",
 
 "My Payments": "مدفوعاتي",
 "View your payment history, total paid, and pending payments":
@@ -408,7 +360,6 @@ const DICT = {
 "pending": "قيد الانتظار",
 "failed": "فشل",
 
-"Student login required": "تسجيل دخول الطالب مطلوب",
 "Failed to load payments": "فشل في تحميل المدفوعات",
 "Student info missing": "بيانات الطالب غير متوفرة",
 "Failed to fetch student info": "فشل في جلب بيانات الطالب",
@@ -417,11 +368,11 @@ const DICT = {
 // ======= STUDENT PROFILE PAGE =======
 "My Profile": "ملفي الشخصي",
 "View and manage your personal information, registered courses, and progress":
-"عرض وإدارة معلوماتك الشخصية، الدورات المسجلة، ومستوى تقدمك",
+"عرض وإدارة معلوماتك الشخصية والمقررات المسجلة ومستوى تقدمك",
 
 "Email Address:": "البريد الإلكتروني:",
 "WhatsApp:": "واتساب:",
-"Student ID:": "الرقم الجامعي:",
+"Student ID:": "رقم الطالب:",
 "Level:": "المستوى:",
 
 "Edit Profile": "تعديل الملف الشخصي",
@@ -434,17 +385,10 @@ const DICT = {
 "Enter your password": "أدخل كلمة المرور",
 "Enter your Email": "أدخل البريد",
 
-"Edit Profile": "تعديل الملف الشخصي",
-"Full Name": "الاسم الكامل",
-"Email Address": "البريد الإلكتروني",
-"WhatsApp": "واتساب",
-"Level": "المستوى",
 "Change Passport (optional)": "تغيير الصورة الشخصية (اختياري)",
 "Save Changes": "حفظ التغييرات",
 
-"Student Name": "اسم الطالب",
 
-"Student login required": "يجب تسجيل الدخول كطالب",
 "Please fill all required fields": "يرجى ملء جميع الحقول المطلوبة",
 "Passport upload failed": "فشل رفع الصورة الشخصية",
 "Profile update failed": "فشل تحديث الملف الشخصي",
@@ -460,50 +404,41 @@ const DICT = {
 "Something went wrong.": "حدث خطأ ما",
 
 // ======= STUDENT DASHBOARD PAGE =======
-"Student Dashboard": "لوحة تحكم الطالب",
+"Student Dashboard": "لوحة الطالب",
 
 "Welcome back! Manage your registration, payments, courses, resources, and online classes from one place.":
-"مرحبًا بعودتك! يمكنك إدارة التسجيل، المدفوعات، الدورات، الموارد، والفصول الدراسية عبر الإنترنت من مكان واحد.",
+"مرحبًا بعودتك! يمكنك إدارة التسجيل، المدفوعات، المقررات، الموارد، والفصول الدراسية عبر الإنترنت من مكان واحد.",
 
 "Quick Access Tools": "أدوات الوصول السريع",
 "Click any card below to manage your student activities.":
 "انقر على أي بطاقة أدناه لإدارة أنشطتك الدراسية.",
 
-"My Profile": "ملفي الشخصي",
 "Make Payment": "إجراء الدفع",
-"Payment History": "سجل المدفوعات",
-"All Courses": "جميع الدورات",
+"All Courses": "جميع المقررات",
 "Semester Activities" : "أنشطة الفصل الدراسي",
-"Class Schedule": "جدول الحصص",
-"My Grades": "درجاتي",
 "Learning Resources": "الموارد التعليمية",
 "Join Online Class": "الانضمام إلى الفصل الإلكتروني",
 "Contact / Support": "التواصل / الدعم",
 
 "🔔 Notifications": "🔔 الإشعارات",
 
-"Logout": "تسجيل الخروج",
 
-"Register Courses": "تسجيل الدورات",
-"Select courses you want to enroll in.": "اختر الدورات التي تريد التسجيل فيها",
-"Ensure to select all the courses of your level completely first.": "تأكد من اختيار جميع دورات مستواك بالكامل أولاً",
+"Register Courses": "تسجيل المقررات",
+"Select courses you want to enroll in.": "اختر المقررات التي ترغب في التسجيل فيها.",
+"Ensure to select all the courses of your level completely first.": "تأكد من اختيار جميع مقررات مستواك بالكامل أولاً.",
 
 "register": "تسجيل",
-"registered": "مسجل",
+"registered": "مسجّل",
 "level": "المستوى",
 "instructor": "المعلم",
-"Register": "سجل",
 
 "Error registering": "حدث خطأ أثناء التسجيل",
 
 // ===== STUDENT DASHBOARD (JS STRINGS) =====
 
-"Student login required": "تسجيل دخول الطالب مطلوب",
 
 "Arabic Level": "المستوى العربي",
-"Payments Made": "عدد المدفوعات",
-"Total Paid": "إجمالي المدفوعات",
-"Latest Grade": "آخر نتيجة",
+"Latest Grade": "أحدث درجة",
 
 "Not assigned": "غير محدد",
 
@@ -517,12 +452,10 @@ const DICT = {
 "Failed to load notifications": "فشل في تحميل الإشعارات",
 "Failed to load": "فشل التحميل",
 
-  "About": "عن المعهد",
   "Videos": "الفيديوهات",
-  "Contact": "الاتصال",
   "🎬 Learning Videos": "🎬 فيديوهات تعليمية",
   "Access videos based on your active subscription": "الوصول إلى الفيديوهات بناءً على اشتراكك النشط",
-  "Watch on Telegram": "المشاهدة على تيليجرام",
+  "Watch on Telegram": "شاهد على تيليغرام",
 
   "No videos found": "لا توجد فيديوهات",
 "Please login first.": "يرجى تسجيل الدخول أولاً.",
@@ -533,7 +466,6 @@ const DICT = {
 
 
 "Add Course": "إضافة مقرر",
-"All Courses": "جميع المقررات",
 "Assessments": "التقييمات",
 "+ Add Assessment": "+ إضافة تقييم",
 "Exams": "الامتحانات",
@@ -551,7 +483,7 @@ const DICT = {
 
 "💾 Save": "💾 حفظ",
 
-"🔍 Search by matric...": "🔍 البحث برقم التسجيل...",
+"🔍 Search by matric...": "🔍 البحث بالرقم الجامعي...",
 "🔍 Search by matric or name...": "🔍 البحث برقم التسجيل أو الاسم...",
 
 "💳 Manage Student Fees": "💳 إدارة رسوم الطلاب",
@@ -567,7 +499,6 @@ const DICT = {
 "New Password": "كلمة المرور الجديدة",
 "Select Student": "اختر الطالب",
 
-"Update Password": "تحديث كلمة المرور",
 
 "Password updated successfully": "تم تحديث كلمة المرور بنجاح",
 "Failed to update password": "فشل في تحديث كلمة المرور",
@@ -576,49 +507,28 @@ const DICT = {
 "Password Updated": "تم تحديث كلمة المرور",
 "Your account password has been updated by the admin. Please log in with your new password.": "تم تحديث كلمة مرور حسابك من قبل الإدارة. يرجى تسجيل الدخول باستخدام كلمة المرور الجديدة.",
 
-"Enter your password": "أدخل كلمة المرور",
-"Enter your Email": "أدخل البريد",
 
-"✅ Paid": "✅ مدفوع",
-"❌ Unpaid": "❌ لم يتم الدفع",
-"Pending": "قيد الانتظار",
 
-"Arabic Level": "المستوى العربي",
-"Payment": "الدفع",
-"Amount": "المبلغ",
-"Latest Grade": "أحدث نتيجة",
 "Outstanding Payment": "دفعة مستحقة",
 "Please complete your payment of": "يرجى إكمال الدفع بقيمة",
-"Failed to load stats": "فشل تحميل دار الأبرارات",
-"Failed to load notifications": "فشل تحميل الإشعارات",
-"No notifications yet.": "لا توجد إشعارات بعد",
 "Payment Reminder": "تذكير بالدفع",
-"Pay Now": "ادفع الآن",
-"Remind Me Later": "ذكرني لاحقًا",
+"Remind Me Later": "ذكّرني لاحقًا",
 
 "You have an outstanding payment of {amount} for {months}. Please complete your payment.": 
 "لديك دفعة مستحقة بقيمة {amount} لشهور {months}. يرجى إكمال الدفع.",
 
-"Register Courses": "تسجيل المواد",
-"My Courses": "موادي",
 
 "⚠️ Payment Reminder": "⚠️ تذكير بالدفع",
 
-"Register Courses": "تسجيل المواد",
-"Select courses you want to enroll in.": "اختر المواد التي ترغب في التسجيل فيها.",
-"Ensure to select all the courses of your level completely first.": "تأكد من اختيار جميع مواد مستواك بالكامل أولاً.",
-"Your Enrolled Courses": "المواد المسجلة",
-"All courses you are enrolled in, with quick links to schedules": "جميع المواد التي سجلت فيها، مع روابط سريعة للجداول",
 
 "Matric Number copied to clipboard ✅": "تم نسخ الرقم الجامعي إلى الحافظة ✅",
 
 
 
-"has successfully completed the course": "أتمّ بنجاح المادة",
+"has successfully completed the course": "أتمّ بنجاح المقرر",
 "This is to certify that": "نشهد بأن",
 "Date of Issue:": "تاريخ الإصدار:",
 "Matric No:": "الرقم الجامعي:",
-"Mudeer": "المدير",
 "Bursar, Al-Bayan Arabic Institute Online": "المحاسب، البيان للدراسات العربية",
 "My Certificates": "شهاداتي",
 
@@ -626,19 +536,14 @@ const DICT = {
 "Please login to view your exam timetable": "يرجى تسجيل الدخول لعرض جدول الاختبارات",
 
 "Test/Exam Welcome - Al-Bayan": "مرحبًا بكم في الاختبار/الامتحان - البيان",
-"Home": "الرئيسية",
-"Courses": "الدورات",
-"Student Dashboard": "لوحة الطالب",
-"Contact": "اتصل بنا",
 
 "Loading Test/Exam...": "جاري تحميل الاختبار/الامتحان...",
 "Please wait while we fetch your upcoming test/exam details.": "يرجى الانتظار بينما نقوم بجلب تفاصيل الاختبار/الامتحان القادم.",
 
-"Loading...": "جاري التحميل...",
+"Loading...": "جارٍ التحميل...",
 
-"Level:": "المستوى:",
 "Semester:": "الفصل الدراسي:",
-"Course:": "المادة:",
+"Course:": "المقرر:",
 "Type:": "النوع:",
 "Duration:": "المدة:",
 "minutes": "دقيقة",
@@ -661,7 +566,6 @@ const DICT = {
 "Your assessment is currently ongoing. Click below to begin.": "الاختبار جارٍ حاليًا. اضغط أدناه للبدء.",
 
 "Attempt Test/Exam": "بدء الاختبار/الامتحان",
-"ATTEMPT_TEST": "Attempt Test/Exam",
 "ATTEMPT_TEST": "محاولة الاختبار",
 
 "Upcoming Test": "اختبار قادم",
@@ -688,14 +592,13 @@ const DICT = {
 "Error fetching exam.": "حدث خطأ أثناء جلب الاختبار.",
 "Please try again later.": "يرجى المحاولة مرة أخرى لاحقًا.",
 
-"Student login required": "يجب تسجيل دخول الطالب",
 
-"Al-Bayan Arabic Isntitute Online": "معهد البيان للدراسات العربية عبر الانترنت",
+"Al-Bayan Arabic Institute Online": "معهد البيان للدراسات العربية عبر الانترنت",
 
 "All rights reserved.": "جميع الحقوق محفوظة.",
-"© 2025 - {year} Al-Bayan Arabic Isntitute Online. All rights reserved.": "© 2025 - {year} معهد البيان للدراسات العربية عبر الانترنت. جميع الحقوق محفوظة.",
+"© 2025 - {year} Al-Bayan Arabic Institute Online. All rights reserved.": "© 2025 - {year} معهد البيان للدراسات العربية عبر الانترنت. جميع الحقوق محفوظة.",
 
-"© 2025 - {year} Al-Bayan Arabic Isntitute Online.": "© 2025 - {year} معهد البيان للدراسات العربية عبر الانترنت.",
+"© 2025 - {year} Al-Bayan Arabic Institute Online.": "© 2025 - {year} معهد البيان للدراسات العربية عبر الانترنت.",
 "Loading assessment...": "جاري تحميل الاختبار...",
 "Assessment ongoing": "الاختبار جارٍ",
 "Assessment closed": "تم إغلاق الاختبار",
@@ -703,10 +606,6 @@ const DICT = {
 
 "Test Hall - Al-Bayan": "قاعة الاختبار - البيان",
 
-"Home": "الرئيسية",
-"Courses": "الدورات",
-"Student Dashboard": "لوحة الطالب",
-"Contact": "اتصل بنا",
 
 "Loading Test...": "جارٍ تحميل الاختبار...",
 "Your test details will appear here once it starts.": "ستظهر تفاصيل الاختبار هنا عند بدايته.",
@@ -725,15 +624,11 @@ const DICT = {
 "Test/Exam Submitted": "تم إرسال الاختبار",
 "Thank you. Your test/exam has been successfully submitted. Results will be released later.": "شكرًا لك. تم إرسال اختبارك بنجاح. سيتم نشر النتائج لاحقًا.",
 
-"Go to Dashboard": "الذهاب إلى اللوحة",
-"Logout": "تسجيل الخروج",
+"Go to Dashboard": "الذهاب إلى لوحة التحكم",
 
 
-"Loading...": "جارٍ التحميل...",
 "Access Denied": "تم رفض الوصول",
 "No questions available.": "لا توجد أسئلة متاحة.",
-"No Active Test / Exam": "لا يوجد اختبار نشط",
-"Please check back later.": "يرجى العودة لاحقًا.",
 
 "You have already attempted this test/exam. Wait for the next schedule.": "لقد أجريت هذا الاختبار بالفعل. انتظر الموعد القادم.",
 
@@ -751,10 +646,9 @@ const DICT = {
 
 "Error grading exam. Check console.": "حدث خطأ أثناء تصحيح الاختبار. تحقق من وحدة التحكم.",
 
-"Loading Test...": "جارٍ تحميل الاختبار...",
 "Review Modal": "نافذة المراجعة",
 
-"Remember Me": "تذكرني",
+"Remember Me": "تذكّرني",
 
 "Close": "إغلاق",
 "Submit anyway": "إرسال على أي حال",
@@ -777,58 +671,32 @@ const DICT = {
 
 // ======= STAFF DASHBOARD — HTML STRINGS =======
 "My Dashboard": "لوحتي",
-"Manage your courses, students and grades": "إدارة موادك وطلابك ودرجاتك",
-"My Courses": "موادي",
-"Grades": "الدرجات",
-"Schedule": "الجدول",
-"My Profile": "ملفي الشخصي",
-"My Courses & Students": "موادي وطلابي",
+"Manage your courses, students and grades": "إدارة مقرراتك وطلابك ودرجاتهم",
+"My Courses & Students": "مقرراتي وطلابي",
 "🔍 Search students...": "🔍 البحث عن الطلاب...",
-"Loading your courses...": "جاري تحميل موادك...",
+"Loading your courses...": "جارٍ تحميل مقرراتك...",
 "📝 Post a Grade": "📝 تسجيل درجة",
 
-"Course": "المادة",
-"Level": "المستوى",
 "Semester": "الفصل الدراسي",
-"Assessment Score": "درجة التقييم",
-"Exam Score": "درجة الامتحان",
-"Total Score": "المجموع الكلي",
-"Status": "الحالة",
 "Remark": "الملاحظة",
-"Select Student": "اختر الطالب",
-"Select Course": "اختر المادة",
 "Select Semester": "اختر الفصل الدراسي",
 "First": "الأول",
 "Second": "الثاني",
-"Completed": "مكتمل",
 "Loading": "جارٍ التحميل",
-"Cancelled": "ملغى",
-"Pass": "ناجح",
-"Average": "متوسط",
-"Fail": "راسب",
 "Submit Grade": "إرسال الدرجة",
 "Submitting...": "جارٍ الإرسال...",
 "📊 Posted Grades": "📊 الدرجات المسجلة",
 "🔍 Search grades...": "🔍 البحث في الدرجات...",
 "Matric": "الرقم الجامعي",
-"Assessment": "التقييم",
-"Exam": "الامتحان",
-"Total": "المجموع",
-"Released": "تم النشر",
-"Pending": "قيد الانتظار",
-"Loading grades...": "جاري تحميل الدرجات...",
+"Released": "نُشر",
+"Loading grades...": "جارٍ تحميل الدرجات...",
 "📅 My Class Schedule": "📅 جدول حصصي",
-"Loading schedule...": "جاري تحميل الجدول...",
-"Date": "التاريخ",
-"Time": "الوقت",
-"Link": "الرابط",
+"Loading schedule...": "جارٍ تحميل الجدول...",
 
 // ======= STAFF DASHBOARD — PROFILE TAB =======
 "👤 My Profile": "👤 ملفي الشخصي",
-"Full Name": "الاسم الكامل",
-"Email": "البريد الإلكتروني",
 "Role": "الدور",
-"Save Profile": "حفظ الملف",
+"Save Profile": "حفظ الملف الشخصي",
 "Saving...": "جارٍ الحفظ...",
 "Profile saved ✅": "تم حفظ الملف ✅",
 "Name cannot be empty.": "لا يمكن أن يكون الاسم فارغًا.",
@@ -839,11 +707,8 @@ const DICT = {
 
 // ======= STAFF DASHBOARD — PASSWORD TAB =======
 "🔐 Change Password": "🔐 تغيير كلمة المرور",
-"New Password": "كلمة المرور الجديدة",
 "Confirm Password": "تأكيد كلمة المرور",
-"Enter new password": "أدخل كلمة المرور الجديدة",
 "Confirm new password": "أكد كلمة المرور الجديدة",
-"Update Password": "تحديث كلمة المرور",
 "Updating...": "جارٍ التحديث...",
 "Password must be at least 6 characters.": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.",
 "Passwords do not match.": "كلمتا المرور غير متطابقتين.",
@@ -854,51 +719,44 @@ const DICT = {
 "Grade submitted ✅": "تم إرسال الدرجة ✅",
 "Failed to submit grade.": "فشل إرسال الدرجة.",
 "Please fill all required fields.": "يرجى ملء جميع الحقول المطلوبة.",
-"No courses assigned to you yet.": "لم يتم تعيين أي مواد لك بعد.",
+"No courses assigned to you yet.": "لم يتم تعيين أي مقررات لك بعد.",
 "No students enrolled yet": "لا يوجد طلاب مسجلون بعد",
-"Failed to load courses.": "فشل تحميل المواد.",
+"Failed to load courses.": "فشل تحميل المقررات.",
 "No students assigned yet.": "لم يتم تعيين أي طلاب بعد.",
 "No grades posted yet.": "لم يتم تسجيل أي درجات بعد.",
 "Failed to load grades.": "فشل تحميل الدرجات.",
-"No courses assigned yet.": "لم يتم تعيين أي مواد بعد.",
+"No courses assigned yet.": "لم يتم تعيين أي مقررات بعد.",
 "No classes scheduled yet.": "لم يتم جدولة أي حصص بعد.",
 "Failed to load schedule.": "فشل تحميل الجدول.",
 "Access denied. Teachers only.": "الوصول مرفوض. للمعلمين فقط.",
 
 // ======= MY CERTIFICATE PAGE =======
-"My Certificates": "شهاداتي",
 "Download your certificates of completion": "تحميل شهادات الإتمام الخاصة بك",
 "Loading your certificates...": "جاري تحميل شهاداتك...",
 "No Certificates Yet": "لا توجد شهادات بعد",
 "You haven't been issued any certificates yet.": "لم يتم إصدار أي شهادة لك بعد.",
-"Complete your courses to earn a certificate.": "أكمل موادك للحصول على شهادة.",
+"Complete your courses to earn a certificate.": "أكمل مقرراتك للحصول على شهادة.",
 "Student:": "الطالب:",
 "Issued by:": "صادرة من:",
 "✅ Certificate of Completion": "✅ شهادة إتمام",
 "Download PDF": "تحميل PDF",
 "Failed to load certificates.": "فشل تحميل الشهادات.",
-"Student login required": "تسجيل دخول الطالب مطلوب",
 "Certificate": "الشهادة",
 
 // ======= ADMIN DASHBOARD — CERTIFICATE MODAL =======
 "Issue Certificate": "إصدار شهادة",
 "Grade Note (optional)": "ملاحظة الدرجة (اختياري)",
 "e.g. with a total score of 85%": "مثال: بمجموع درجات 85%",
-"Please select a course before issuing.": "يرجى اختيار المادة قبل الإصدار.",
+"Please select a course before issuing.": "يرجى اختيار المقرر قبل الإصدار.",
 "Failed to issue certificate. See console.": "فشل إصدار الشهادة. راجع وحدة التحكم.",
 "Certificate issued to": "تم إصدار شهادة لـ",
 "Issued Certificates": "الشهادات الصادرة",
 "Grade Note": "ملاحظة الدرجة",
-"Active": "نشطة",
 "Revoked": "ملغاة",
-"Edit": "تعديل",
 "Revoke": "إلغاء",
 "Restore": "استعادة",
 "🗑 Delete": "🗑 حذف",
-"Save Changes": "حفظ التغييرات",
-"Cancel": "إلغاء",
 "Edit Certificate": "تعديل الشهادة",
-"Course Name": "اسم المادة",
 "Failed to update certificate.": "فشل تحديث الشهادة.",
 "Certificate updated ✅": "تم تحديث الشهادة ✅",
 "Revoke this certificate? The student will no longer see it.": "إلغاء هذه الشهادة؟ لن يتمكن الطالب من رؤيتها بعد الآن.",
@@ -913,34 +771,26 @@ const DICT = {
 "Nothing was updated — check RLS policies in Supabase.": "لم يتم تحديث أي شيء — تحقق من سياسات RLS في Supabase.",
 
 // ======= ADMIN DASHBOARD — COURSES SECTION =======
-"Add Course": "إضافة مادة",
-"Course Name": "اسم المادة",
-"Instructor": "المدرس",
-"All Courses": "جميع المواد",
-"No courses yet": "لا توجد مواد بعد",
-"Course name is required": "اسم المادة مطلوب",
-"Error updating course": "خطأ في تحديث المادة",
-"Course updated ✅": "تم تحديث المادة ✅",
-"Error adding course": "خطأ في إضافة المادة",
-"Course added ✅": "تمت إضافة المادة ✅",
-"Update Course": "تحديث المادة",
-"Delete this course? This cannot be undone.": "حذف هذه المادة؟ لا يمكن التراجع عن هذا الإجراء.",
-"Course deleted ✅": "تم حذف المادة ✅",
-"Level:": "المستوى:",
+"No courses yet": "لا توجد مقررات بعد",
+"Course name is required": "اسم المقرر مطلوب",
+"Error updating course": "خطأ في تحديث المقرر",
+"Course updated ✅": "تم تحديث المقرر ✅",
+"Error adding course": "خطأ في إضافة المقرر",
+"Course added ✅": "تمت إضافة المقرر ✅",
+"Update Course": "تحديث المقرر",
+"Delete this course? This cannot be undone.": "حذف هذا المقرر؟ لا يمكن التراجع عن هذا الإجراء.",
+"Course deleted ✅": "تم حذف المقرر ✅",
 "Instructor:": "المدرس:",
 
 // ======= ADMIN DASHBOARD — GENERAL =======
-"Grades Posted": "الدرجات المسجلة",
+"Grades Posted": "الدرجات المنشورة",
 "My Students": "طلابي",
-"My Courses": "موادي",
 "Grade released": "تم نشر الدرجة",
 "Grade hidden": "تم إخفاء الدرجة",
 "Nothing to undo": "لا يوجد شيء للتراجع عنه",
 "Undo successful": "تم التراجع بنجاح",
 "No role assigned": "لم يتم تعيين دور",
 "Manage Your Office": "أدر مكتبك",
-"Password must be at least 6 characters": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
-"Password updated successfully 🔐": "تم تحديث كلمة المرور بنجاح 🔐",
 "No pending welcome emails 🙂": "لا توجد رسائل ترحيب معلقة 🙂",
 "Failed to fetch students": "فشل في جلب بيانات الطلاب",
 "All welcome emails sent successfully 🎉": "تم إرسال جميع رسائل الترحيب بنجاح 🎉",
@@ -956,9 +806,8 @@ const DICT = {
 "Error saving": "خطأ في الحفظ",
 "Delete this record?": "حذف هذا السجل؟",
 "Toggle": "تبديل",
-"No role assigned": "لم يتم تعيين دور",
 "Failed to save student. See console.": "فشل حفظ الطالب. راجع وحدة التحكم.",
-"Failed to save payment. See console.": "فشل حفظ الدفع. راجع وحدة التحكم.",
+"Failed to save payment. See console.": "فشل حفظ الدفعة. راجع وحدة التحكم.",
 "Failed to save grade. See console.": "فشل حفظ الدرجة. راجع وحدة التحكم.",
 "Failed to save schedule. See console.": "فشل حفظ الجدول. راجع وحدة التحكم.",
 "Failed to save assessment": "فشل حفظ التقييم",
@@ -968,7 +817,6 @@ const DICT = {
 "Assessment added": "تمت إضافة التقييم",
 "Failed to update assessment": "فشل تحديث التقييم",
 "Unexpected error occurred": "حدث خطأ غير متوقع",
-"No pending welcome emails 🙂": "لا توجد رسائل ترحيب معلقة",
 
 "Privacy Policy": "سياسة الخصوصية",
 
@@ -981,14 +829,6 @@ NEW FILES START HERE
 ============================================================ */
 "Al-Bayan": "البيان",
 // NAV
-"Home":                                         "الرئيسية",
-"About":                                        "من نحن",
-"Courses":                                      "الدورات",
-"Register":                                     "التسجيل",
-"Dashboard":                                    "لوحة التحكم",
-"Payment":                                      "الدفع",
-"Contact":                                      "اتصل بنا",
-"Log in":                                       "تسجيل الدخول",
 
 // HERO
 "Online • Arabic • Islamic Sciences":           "أونلاين • عربية • علوم إسلامية",
@@ -996,7 +836,6 @@ NEW FILES START HERE
 "Structured online Arabic classes for beginners, intermediate and advanced learners, guided by qualified teachers.":
   "دروس عربية منظمة عبر الإنترنت للمبتدئين والمتوسطين والمتقدمين، بإشراف مدرسين مؤهلين.",
 "Get Started":                                  "ابدأ الآن",
-"Log In":                                       "تسجيل الدخول",
 
 // STATS
 "Students Enrolled":                            "طالب مسجّل",
@@ -1021,7 +860,7 @@ NEW FILES START HERE
   "تعلّم على يد مدرسين مؤهلين ومتحمسين ذوي معرفة إسلامية عميقة.",
 "Flexible Online Learning":                     "تعلم مرن عبر الإنترنت",
 "Access courses anytime, anywhere, on your own schedule.":
-  "الوصول إلى الدورات في أي وقت ومن أي مكان وفق جدولك الخاص.",
+  "الوصول إلى المقررات في أي وقت ومن أي مكان وفق جدولك الخاص.",
 "Comprehensive Curriculum":                     "منهج شامل",
 "From Qur'anic Arabic to conversational fluency — all levels covered.":
   "من العربية القرآنية إلى الطلاقة في المحادثة — جميع المستويات متاحة.",
@@ -1074,11 +913,8 @@ NEW FILES START HERE
 "Register Now — It's Free":                     "سجّل الآن — مجانًا",
 
 // FOOTER
-"Email":                                        "البريد الإلكتروني",
 "Phone: +234 705 471 1066": "الهاتف: ٠٧٠٥٤٧١١٠٦٦",   
 "Phone: +234 812 521 9561": "الهاتف: ٠٨١٢٥٢١٩٥٦١",                   
-"All rights reserved.":                         "جميع الحقوق محفوظة.",
-"Privacy Policy":                               "سياسة الخصوصية",
 
 /* ============================================================
    ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
@@ -1098,9 +934,6 @@ NEW FILES START HERE
 "Arabic & Islamic Sciences":    "العربية والعلوم الإسلامية",
 
 "Your Tools":                   "أدواتك",
-"Class Schedule":               "جدول الحصص",
-"Make Payment":                  "إجراء الدفع",
-"My Grades": "درجاتي",
 
 // WHO WE ARE
 "Who We Are": "من نحن",
@@ -1160,9 +993,7 @@ NEW FILES START HERE
 "Send Us a Message":                                        "أرسل لنا رسالة",
 "Fill out the form below and we'll get back to you as soon as possible.":
   "املأ النموذج أدناه وسنرد عليك في أقرب وقت ممكن.",
-"Full Name":                                                "الاسم الكامل",
 "Your full name":                                           "اسمك الكامل",
-"Email Address":                                            "البريد الإلكتروني",
 "Subject":                                                  "الموضوع",
 "What is this about?":                                      "ما الذي يتعلق به الأمر؟",
 "Message":                                                  "الرسالة",
@@ -1172,8 +1003,6 @@ NEW FILES START HERE
 // CONTACT CARDS
 "Other Ways to Reach Us":                                   "طرق أخرى للتواصل معنا",
 "Director":                                                 "المدير",
-"Registrar":                                                 "المسجل",
-"WhatsApp":                                                 "واتساب",
 
 "+234 705 471 1066":                                                 "٠٧٠٥٤٧١١٠٦٦",
 "+234 812 521 9561":                                                 "٠٨١٢٥٢١٩٥٦١",
@@ -1189,20 +1018,16 @@ NEW FILES START HERE
 
 // BANNER
 "Learn at your own pace":                                           "تعلّم بوتيرتك الخاصة",
-"Our Courses":                                                      "دوراتنا",
+"Our Courses":                                                      "مقرراتنا",
 "Choose your path in learning Arabic and Islamic sciences online.": "اختر مسارك في تعلم العربية والعلوم الإسلامية عبر الإنترنت.",
 
 // FILTER TABS
-"All Courses":       "جميع الدورات",
 "Arabic Language":   "اللغة العربية",
 "Qur'an & Tafseer": "القرآن والتفسير",
 "Islamic Sciences":  "العلوم الإسلامية",
 "Coming Soon":       "قريبًا",
 
 // LEVEL BADGES
-"Beginner":     "مبتدئ",
-"Intermediate": "متوسط",
-"Advanced":     "متقدم",
 "All Levels":   "جميع المستويات",
 "active":        "نشط",
 "inactive":      "غير نشط",
@@ -1236,12 +1061,12 @@ NEW FILES START HERE
   "صقّل طلاقتك مع النصوص والمحادثات العربية المعقدة.",
 
 "Nahw (Grammar)":
-  "النحو",
+  "النحو (القواعد)",
 "Learn Arabic sentence structure and grammar rules in depth.":
   "تعلّم تركيب الجملة العربية وقواعد النحو بعمق.",
 
 "Sarf (Morphology)":
-  "الصرف",
+  "الصرف (علم الصرف)",
 "Understand how Arabic words are derived and structured.":
   "افهم كيفية اشتقاق الكلمات العربية وبنيتها.",
 
@@ -1297,8 +1122,6 @@ NEW FILES START HERE
   "هل أنت مستعد للبدء في التعلم؟",
 "Register today and join our growing community of Arabic and Islamic studies learners.":
   "سجّل اليوم وانضم إلى مجتمعنا المتنامي من متعلمي العربية والدراسات الإسلامية.",
-"Register Now":
-  "سجّل الآن",
 
 /* ============================================================
    ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
@@ -1310,7 +1133,7 @@ NEW FILES START HERE
   "بوابتك نحو تعليم عربي وإسلامي منظم.",
 "Qualified Teachers": "مدرسون مؤهلون",
 "Flexible Schedule":  "جدول مرن",
-"Certified Courses":  "دورات معتمدة",
+"Certified Courses":  "مقررات معتمدة",
 
 // FORM HEADER
 "Welcome Back":                    "أهلاً بعودتك",
@@ -1319,16 +1142,8 @@ NEW FILES START HERE
 // FIELDS
 "Login As":         "تسجيل الدخول كـ",
 "Select user type": "اختر نوع المستخدم",
-"Admin":            "المسؤول",
-"Staff":            "موظف",
-"Student":          "طالب",
-"Email Address":    "البريد الإلكتروني",
-"Password":         "كلمة المرور",
-"Enter your password": "أدخل كلمة المرور",
 
 // OPTIONS
-"Remember Me":     "تذكّرني",
-"Forgot Password?": "نسيت كلمة المرور؟",
 
 // BUTTON
 "Sign In": "تسجيل الدخول",
@@ -1343,26 +1158,20 @@ NEW FILES START HERE
 ============================================================ */
 
 // BANNER
-"Arabic for Beginners":
-  "العربية للمبتدئين",
-"Start speaking, reading, and understanding Arabic with easy-to-follow lessons.":
-  "ابدأ التحدث والقراءة وفهم العربية من خلال دروس سهلة المتابعة.",
 
 // META BADGES
-"Beginner":          "مبتدئ",
-"Flexible Schedule": "جدول مرن",
 "Online":            "عبر الإنترنت",
 
 // ENROL BUTTON
 "Enrol Now": "سجّل الآن",
 
 // INTRO CARD
-"About This Course": "عن هذه الدورة",
+"About This Course": "عن هذا المقرر",
 "This course is designed for absolute beginners who want to speak, read, and understand Arabic in practical, everyday situations. Through simple and structured lessons, you will build a strong Arabic foundation from the ground up.":
-  "صُمِّمت هذه الدورة للمبتدئين تمامًا الذين يرغبون في التحدث والقراءة وفهم العربية في المواقف اليومية العملية. من خلال دروس بسيطة ومنظمة، ستبني أساسًا عربيًا متينًا من الصفر.",
+  "صُمِّم هذا المقرر للمبتدئين تمامًا الذين يرغبون في التحدث والقراءة وفهم العربية في المواقف اليومية العملية. من خلال دروس بسيطة ومنظمة، ستبني أساسًا عربيًا متينًا من الصفر.",
 
 // MODULES SECTION
-"Course Modules": "وحدات الدورة",
+"Course Modules": "وحدات المقرر",
 
 "Greetings & Introductions":
   "التحيات والتعريف بالنفس",
@@ -1394,8 +1203,6 @@ NEW FILES START HERE
   "هل أنت مستعد لبدء رحلتك العربية؟",
 "Join students from around the world learning Arabic online with qualified teachers.":
   "انضم إلى طلاب من حول العالم يتعلمون العربية عبر الإنترنت مع مدرسين مؤهلين.",
-"Register Now":
-  "سجّل الآن",
 
 /* ============================================================
    ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
@@ -1403,21 +1210,16 @@ NEW FILES START HERE
 ============================================================ */
 
 // BANNER
-"Intermediate Arabic":
-  "العربية للمتوسطين",
 "Enhance your Arabic vocabulary, grammar, and conversational skills with structured intermediate lessons.":
   "طوّر مفرداتك العربية وقواعدك ومهارات محادثتك من خلال دروس متوسطة منظمة.",
 
 // META BADGE
-"Intermediate": "متوسط",
 
 // INTRO CARD
-"About This Course": "عن هذه الدورة",
 "This course is ideal for learners who already have a basic knowledge of Arabic and are ready to take the next step. You will deepen your fluency, sharpen your grammar, and gain the confidence to communicate more naturally in Arabic.":
-  "هذه الدورة مثالية للمتعلمين الذين لديهم معرفة أساسية بالعربية وهم مستعدون للخطوة التالية. ستعمّق طلاقتك وتصقل قواعدك وتكتسب الثقة للتواصل بشكل أكثر طبيعية بالعربية.",
+  "هذا المقرر مثالي للمتعلمين الذين لديهم معرفة أساسية بالعربية وهم مستعدون للخطوة التالية. ستعمّق طلاقتك وتصقل قواعدك وتكتسب الثقة للتواصل بشكل أكثر طبيعية بالعربية.",
 
 // MODULES
-"Course Modules": "وحدات الدورة",
 
 "Vocabulary Expansion":
   "توسيع المفردات",
@@ -1449,8 +1251,6 @@ NEW FILES START HERE
   "هل أنت مستعد للارتقاء بعربيتك؟",
 "Take the next step in your Arabic learning journey and join our intermediate programme today.":
   "اخطُ الخطوة التالية في رحلة تعلّم العربية وانضم إلى برنامجنا المتوسط اليوم.",
-"Register Now":
-  "سجّل الآن",
 
 /* ============================================================
    ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
@@ -1458,21 +1258,16 @@ NEW FILES START HERE
 ============================================================ */
 
 // BANNER
-"Advanced Arabic":
-  "العربية المتقدمة",
 "Refine your fluency and master advanced Arabic grammar, vocabulary, and comprehension at the highest level.":
   "صقّل طلاقتك وأتقن قواعد العربية المتقدمة والمفردات والفهم في أعلى المستويات.",
 
 // META BADGE
-"Advanced": "متقدم",
 
 // INTRO CARD
-"About This Course": "عن هذه الدورة",
 "This course is built for learners who are serious about achieving true mastery of Arabic. Through advanced lessons, rich literary exposure, and intensive practice, you will refine every dimension of your Arabic — from grammar precision to eloquent expression.":
-  "صُمِّمت هذه الدورة للمتعلمين الجادين في تحقيق إتقان حقيقي للعربية. من خلال دروس متقدمة وتعرّض أدبي غني وممارسة مكثفة، ستصقل كل جوانب عربيتك — من دقة القواعد إلى البلاغة والتعبير.",
+  "صُمِّم هذا المقرر للمتعلمين الجادين في تحقيق إتقان حقيقي للعربية. من خلال دروس متقدمة وتعرّض أدبي غني وممارسة مكثفة، ستصقل كل جوانب عربيتك — من دقة القواعد إلى البلاغة والتعبير.",
 
 // MODULES
-"Course Modules": "وحدات الدورة",
 
 "Advanced Grammar":
   "القواعد المتقدمة",
@@ -1504,27 +1299,20 @@ NEW FILES START HERE
   "هل أنت مستعد لإتقان العربية؟",
 "Push your Arabic to its peak. Enrol in our advanced programme and achieve the fluency you have always aimed for.":
   "ادفع عربيتك إلى أعلى مستوياتها. سجّل في برنامجنا المتقدم وحقّق الطلاقة التي طالما سعيت إليها.",
-"Register Now":
-  "سجّل الآن",
 
-"Al-Fiqh": "الفقه",
 "Islamic Studies": "الدراسات الإسلامية",
 
 "Learn Islamic jurisprudence step by step from foundational principles to real-life rulings in worship, transactions, and family matters.":
 "تعلّم الفقه الإسلامي خطوة بخطوة من المبادئ الأساسية إلى الأحكام العملية في العبادات والمعاملات وأحكام الأسرة.",
 
 "Structured Levels": "مستويات منظمة",
-"Flexible Schedule": "جدول مرن",
-"Online": "عن بُعد",
 
 "Enroll Now": "سجّل الآن",
 
-"About This Course": "عن هذه الدورة",
 
 "This course builds a strong understanding of Islamic jurisprudence, guiding students from basic principles to practical applications in worship, daily life, family matters, and modern challenges.":
-"تبني هذه الدورة فهماً عميقاً للفقه الإسلامي، وتُرشد الطلاب من المبادئ الأساسية إلى التطبيقات العملية في العبادات والحياة اليومية والأسرة والقضايا المعاصرة.",
+"يبني هذا المقرر فهماً عميقاً للفقه الإسلامي، ويُرشد الطلاب من المبادئ الأساسية إلى التطبيقات العملية في العبادات والحياة اليومية والأسرة والقضايا المعاصرة.",
 
-"Course Modules": "وحدات الدورة",
 
 "Introduction to Fiqh": "مقدمة في الفقه",
 "Meaning of fiqh, its sources, and its role in guiding a Muslim’s life.":
@@ -1550,26 +1338,18 @@ NEW FILES START HERE
 "Join students worldwide learning authentic Islamic knowledge with structured guidance.":
 "انضم إلى طلاب من جميع أنحاء العالم لتعلّم العلم الشرعي بأسلوب منظم وموثوق.",
 
-"Register Now": "سجّل الآن",
 
-"Al-Hadeeth": "الحديث",
 "Al-Hadeeth - Prophetic Traditions": "الحديث - السنة النبوية",
 
-"Islamic Studies": "الدراسات الإسلامية",
 "Structured Learning": "تعلم منظم",
-"Flexible Schedule": "جدول مرن",
-"Online": "عن بُعد",
 
-"Enroll Now": "سجّل الآن",
-"Register Now": "سجّل الآن",
 
 "Study the sayings, actions, and approvals of the Prophet Muhammad ﷺ as a foundation for Islamic belief and practice.":
 "دراسة أقوال وأفعال وتقريرات النبي محمد ﷺ كأساس للعقيدة والممارسة الإسلامية.",
 
 "This course introduces students to the science of Hadith, including classification, major collections, and methods used by scholars to verify authenticity.":
-"تقدّم هذه الدورة علم الحديث، بما في ذلك التصنيف والمجموعات الرئيسية ومنهجية العلماء في التحقق من صحة الروايات.",
+"يقدّم هذا المقرر علم الحديث، بما في ذلك التصنيف والمجموعات الرئيسية ومنهجية العلماء في التحقق من صحة الروايات.",
 
-"Course Modules": "وحدات الدورة",
 
 "Introduction to Hadith": "مقدمة في الحديث",
 "Understanding Hadith and its importance alongside the Qur’an in Islamic guidance.":
@@ -1595,24 +1375,17 @@ NEW FILES START HERE
 "Join students worldwide learning authentic Prophetic traditions from qualified teachers.":
 "انضم إلى طلاب من جميع أنحاء العالم لتعلّم السنة النبوية الصحيحة مع معلمين مؤهلين.",
 
-"At-Tawheed": "التوحيد",
 "At-Tawheed - Islamic Monotheism": "التوحيد - التوحيد الإسلامي",
 
-"Islamic Studies": "الدراسات الإسلامية",
 "Foundational Creed": "العقيدة الأساسية",
-"Flexible Schedule": "جدول مرن",
-"Online": "عن بُعد",
 
-"Enroll Now": "سجّل الآن",
-"Register Now": "سجّل الآن",
 
 "Study the oneness of Allah and strengthen your belief through understanding the foundations of Islamic monotheism.":
 "دراسة توحيد الله وتعزيز الإيمان من خلال فهم أساسيات التوحيد الإسلامي.",
 
 "This course provides a complete understanding of Tawheed, its categories, and its importance in strengthening a Muslim’s faith and practice.":
-"تقدّم هذه الدورة فهماً شاملاً للتوحيد وأنواعه وأهميته في تقوية إيمان المسلم وممارساته.",
+"يقدّم هذا المقرر فهماً شاملاً للتوحيد وأنواعه وأهميته في تقوية إيمان المسلم وممارساته.",
 
-"Course Modules": "وحدات الدورة",
 
 "Introduction to Tawheed": "مقدمة في التوحيد",
 "Understanding the concept of monotheism and its central role in Islam.":
@@ -1641,21 +1414,15 @@ NEW FILES START HERE
 "Seerah & Taareekh": "السيرة والتاريخ",
 "Seerah & Islamic History": "السيرة والتاريخ الإسلامي",
 
-"Islamic Studies": "الدراسات الإسلامية",
 "Historical Studies": "الدراسات التاريخية",
-"Flexible Schedule": "جدول مرن",
-"Online": "عن بُعد",
 
-"Enroll Now": "سجّل الآن",
-"Register Now": "سجّل الآن",
 
 "Study the life of the Prophet Muhammad ﷺ and key moments in Islamic history to gain moral and spiritual lessons.":
 "دراسة حياة النبي محمد ﷺ وأهم محطات التاريخ الإسلامي لاستخلاص الدروس الأخلاقية والروحية.",
 
 "This course explores the biography of the Prophet ﷺ and major events in Islamic history, helping students understand faith through historical context.":
-"تستعرض هذه الدورة سيرة النبي ﷺ وأهم أحداث التاريخ الإسلامي لفهم الدين من خلال السياق التاريخي.",
+"يستعرض هذا المقرر سيرة النبي ﷺ وأهم أحداث التاريخ الإسلامي لفهم الدين من خلال السياق التاريخي.",
 
-"Course Modules": "وحدات الدورة",
 
 "Life of the Prophet ﷺ": "حياة النبي ﷺ",
 "Study the birth, prophethood, and major events in Makkah and Madinah.":
@@ -1681,7 +1448,6 @@ NEW FILES START HERE
 "Join students worldwide studying the life of the Prophet ﷺ and Islamic history with qualified teachers.":
 "انضم إلى طلاب من جميع أنحاء العالم لدراسة سيرة النبي ﷺ والتاريخ الإسلامي مع معلمين مؤهلين.",
 
-"Tafseerul Qur'an": "تفسير القرآن",
 "Qur'anic Studies": "الدراسات القرآنية",
 "Deep Learning": "تعلم متعمق",
 
@@ -1689,9 +1455,8 @@ NEW FILES START HERE
 "دراسة معاني القرآن وحكمته وهدايته من خلال شرح منظم وتأمل عميق.",
 
 "This course guides students through Tafseer, explaining Qur'anic verses, their context, and practical lessons for daily life.":
-"توجّه هذه الدورة الطلاب إلى علم التفسير، بشرح آيات القرآن وسياقها والدروس العملية للحياة اليومية.",
+"يوجّه هذا المقرر الطلاب إلى علم التفسير، بشرح آيات القرآن وسياقها والدروس العملية للحياة اليومية.",
 
-"Course Modules": "وحدات الدورة",
 
 "Introduction to Tafseer": "مقدمة في التفسير",
 "Understanding Tafseer and its importance in interpreting the Qur'an correctly.":
@@ -1709,7 +1474,6 @@ NEW FILES START HERE
 "Discover recurring themes and divine wisdom throughout the Qur'an.":
 "اكتشاف الموضوعات المتكررة والحِكم الإلهية في القرآن الكريم.",
 
-"Practical Application": "التطبيق العملي",
 "Apply Qur'anic teachings in personal, social, and spiritual life.":
 "تطبيق تعاليم القرآن في الحياة الشخصية والاجتماعية والروحية.",
 
@@ -1717,7 +1481,6 @@ NEW FILES START HERE
 "Join students worldwide learning Tafseer with clarity, depth, and qualified guidance.":
 "انضم إلى طلاب من مختلف أنحاء العالم لتعلّم التفسير بوضوح وعمق وإشراف معلمين مؤهلين.",
 
-"Tajweedul Qur'an": "تجويد القرآن",
 "Qur'anic Recitation": "تلاوة القرآن",
 "Skill Development": "تنمية المهارة",
 
@@ -1725,9 +1488,8 @@ NEW FILES START HERE
 "إتقان قواعد تلاوة القرآن وتحسين النطق من خلال تطبيق أحكام التجويد بشكل صحيح.",
 
 "This course trains students to recite the Qur'an correctly with Tajweed rules, focusing on clarity, fluency, and proper pronunciation.":
-"تعمل هذه الدورة على تدريب الطلاب على تلاوة القرآن الكريم بشكل صحيح وفق قواعد التجويد، مع التركيز على الوضوح والطلاقة وحسن النطق.",
+"يعمل هذا المقرر على تدريب الطلاب على تلاوة القرآن الكريم بشكل صحيح وفق قواعد التجويد، مع التركيز على الوضوح والطلاقة وحسن النطق.",
 
-"Course Modules": "وحدات الدورة",
 
 "Introduction to Tajweed": "مقدمة في التجويد",
 "Understanding the importance of Tajweed in Qur'anic recitation.":
@@ -1753,7 +1515,6 @@ NEW FILES START HERE
 "Join students learning Tajweed with expert guidance and structured practice sessions.":
 "انضم إلى طلاب يتعلمون التجويد بإشراف متخصصين وجلسات تدريب منظمة.",
 
-"Nahw (Grammar)": "النحو (القواعد)",
 "Arabic Grammar": "القواعد العربية",
 "Advanced Level": "مستوى متقدم",
 
@@ -1761,9 +1522,8 @@ NEW FILES START HERE
 "إتقان تركيب الجمل العربية وقواعد النحو لفهم أعمق للغة.",
 
 "This course focuses on Arabic grammar (Nahw), helping students understand sentence structure, syntax rules, and proper linguistic construction.":
-"تركز هذه الدورة على علم النحو، لمساعدة الطلاب على فهم تركيب الجمل والقواعد اللغوية بشكل صحيح.",
+"يركز هذا المقرر على علم النحو، لمساعدة الطلاب على فهم تركيب الجمل والقواعد اللغوية بشكل صحيح.",
 
-"Course Modules": "وحدات الدورة",
 
 "Nominal Sentences": "الجمل الاسمية",
 "Learn subject-predicate structure and usage of Arabic nominal sentences.":
@@ -1789,7 +1549,6 @@ NEW FILES START HERE
 "Join advanced students mastering Nahw with structured learning and clear explanations.":
 "انضم إلى الطلاب المتقدمين في إتقان النحو من خلال شرح منظم وواضح.",
 
-"Sarf (Morphology)": "الصرف (علم الصرف)",
 "Arabic Morphology": "علم الصرف العربي",
 "Advanced Study": "دراسة متقدمة",
 
@@ -1797,9 +1556,8 @@ NEW FILES START HERE
 "تعلم كيفية تكوين الكلمات العربية واشتقاقها وتغييرها وفق قواعد الصرف.",
 
 "This course teaches Arabic morphology (Sarf), focusing on word formation, verb patterns, and structural transformation of words.":
-"تعلّم هذه الدورة علم الصرف، مع التركيز على تكوين الكلمات وأوزان الأفعال والتحولات الصرفية.",
+"يعلّم هذا المقرر علم الصرف، مع التركيز على تكوين الكلمات وأوزان الأفعال والتحولات الصرفية.",
 
-"Course Modules": "وحدات الدورة",
 
 "Roots & Patterns": "الجذور والأوزان",
 "Understand how Arabic roots and patterns form word structures.":
@@ -1826,18 +1584,10 @@ NEW FILES START HERE
 "انضم إلى الطلاب الذين يتقنون علم الصرف بشرح منظم وتحليل عملي.",
 
 
-  "Arabic Language": "اللغة العربية",
-  "Arabic Literature": "الأدب العربي",
   "Explore classical and modern Arabic literature, its beauty, and depth.": "استكشف الأدب العربي القديم والحديث، وجماله وعمقه.",
-  "Advanced": "متقدم",
-  "Flexible Schedule": "جدول مرن",
-  "Online": "عبر الإنترنت",
-  "Enrol Now": "سجل الآن",
 
-  "About This Course": "عن هذه الدورة",
-  "This course introduces students to Arabic literature from classical poetry to modern writings, building deep reading and analytical skills.": "تقدم هذه الدورة للطلاب الأدب العربي من الشعر الكلاسيكي إلى الكتابات الحديثة، مع تطوير مهارات القراءة والتحليل العميق.",
+  "This course introduces students to Arabic literature from classical poetry to modern writings, building deep reading and analytical skills.": "يقدم هذا المقرر للطلاب الأدب العربي من الشعر الكلاسيكي إلى الكتابات الحديثة، مع تطوير مهارات القراءة والتحليل العميق.",
 
-  "Course Modules": "وحدات الدورة",
 
   "Classical Poetry": "الشعر الكلاسيكي",
   "Study pre-Islamic and classical Arabic poetry, its rhythm, themes, and literary beauty.": "دراسة الشعر العربي قبل الإسلام والشعر الكلاسيكي من حيث الوزن والموضوعات والجمال الأدبي.",
@@ -1854,23 +1604,14 @@ NEW FILES START HERE
   "Creative Writing": "الكتابة الإبداعية",
   "Practice writing expressive Arabic texts inspired by classical and modern styles.": "التدرب على كتابة نصوص عربية تعبيرية مستوحاة من الأساليب الكلاسيكية والحديثة.",
 
-  "Email": "البريد الإلكتروني",
   "Phone": "الهاتف",
-  "All rights reserved.": "جميع الحقوق محفوظة.",
 
 
-  "Arabic Poetry": "الشعر العربي",
   "Learn the beauty of Arabic poetry, its rhythm, meaning, and expression.": "تعلم جمال الشعر العربي وإيقاعه ومعناه وتعبيره.",
 
-  "Advanced": "متقدم",
-  "Flexible Schedule": "جدول مرن",
-  "Online": "عبر الإنترنت",
-  "Enrol Now": "سجل الآن",
 
-  "About This Course": "عن هذه الدورة",
-  "This course explores Arabic poetry from classical to modern forms, helping students understand meaning, rhythm, and expression.": "تستكشف هذه الدورة الشعر العربي من الكلاسيكي إلى الحديث، لمساعدة الطلاب على فهم المعنى والإيقاع والتعبير.",
+  "This course explores Arabic poetry from classical to modern forms, helping students understand meaning, rhythm, and expression.": "يستكشف هذا المقرر الشعر العربي من الكلاسيكي إلى الحديث، لمساعدة الطلاب على فهم المعنى والإيقاع والتعبير.",
 
-  "Course Modules": "وحدات الدورة",
 
   "Classical Arabic Poetry": "الشعر العربي الكلاسيكي",
   "Study pre-Islamic and classical poetry including meters, rhyme, and themes.": "دراسة الشعر الجاهلي والكلاسيكي بما في ذلك الأوزان والقوافي والموضوعات.",
@@ -1889,7 +1630,7 @@ NEW FILES START HERE
 
   "Arabic for Preliminary": "العربية للتمهيدين",
   "Learn how to read and write Arabic letters confidently from scratch.": "تعلم كيفية قراءة وكتابة الحروف العربية بثقة من الصفر.",
-  "This course is designed for absolute beginners who want to learn Arabic reading and writing step by step with clarity and ease.": "تم تصميم هذه الدورة للمبتدئين تمامًا الذين يرغبون في تعلم القراءة والكتابة العربية خطوة بخطوة بكل وضوح وسهولة.",
+  "This course is designed for absolute beginners who want to learn Arabic reading and writing step by step with clarity and ease.": "تم تصميم هذا المقرر للمبتدئين تمامًا الذين يرغبون في تعلم القراءة والكتابة العربية خطوة بخطوة بكل وضوح وسهولة.",
   
   "Module 1: Arabic Alphabet": "الوحدة 1: الحروف الهجائية العربية",
   "Introduction to Arabic letters, pronunciation, and writing foundations.": "مقدمة في الحروف العربية، والنطق، وأسس الكتابة.",
@@ -1914,7 +1655,7 @@ NEW FILES START HERE
 // BANNER
 "Join Our Community":   "انضم إلى مجتمعنا",
 "Online Registration":  "التسجيل الإلكتروني",
-"Join Al-Bayan Arabic Isntitute Online — fill in your details carefully.":
+"Join Al-Bayan Arabic Institute Online — fill in your details carefully.":
   "انضم إلى معهد البيان للدراسات العربية عبر الانترنت — أدخل بياناتك بعناية.",
 
 // PROGRESS STEPS
@@ -1928,29 +1669,20 @@ NEW FILES START HERE
 
 // STEP 1 — PERSONAL INFO
 "Personal Information":   "المعلومات الشخصية",
-"Full Name":              "الاسم الكامل",
 "Enter your full name":   "أدخل اسمك الكامل",
-"Email Address":          "البريد الإلكتروني",
-"Gender":                 "الجنس",
 "Select":                 "اختر",
 "Male":                   "ذكر",
 "Female":                 "أنثى",
-"Age":                    "العمر",
 "Your age":               "عمرك",
-"Nationality":            "الجنسية",
 "e.g. Nigerian":          "مثال: نيجيري",
 "Country of Residence":   "بلد الإقامة",
 "e.g. Nigeria":           "مثال: نيجيريا",
 "WhatsApp Number":        "رقم واتساب",
-"Next":                   "التالي",
 
 // STEP 2 — ACADEMIC INFO
 "Academic Information":                       "المعلومات الأكاديمية",
 "Current Level of Arabic":                    "مستواك الحالي في اللغة العربية",
 "Read & Write Arabic":                        "القراءة والكتابة بالعربية",
-"Beginner":                                   "مبتدئ",
-"Intermediate":                               "متوسط",
-"Advanced":                                   "متقدم",
 "Can you read the Qur'an with Tajweed?":      "هل تستطيع قراءة القرآن بالتجويد؟",
 "Yes":                                        "نعم",
 "No":                                         "لا",
@@ -1982,7 +1714,6 @@ NEW FILES START HERE
   "يجب ألا تتجاوز الصورة الشخصية 200 كيلوبايت.",
 "Do not submit this form more than once. Click the button only once and wait for confirmation.":
   "لا ترسل هذا النموذج أكثر من مرة. انقر الزر مرة واحدة فقط وانتظر التأكيد.",
-"Submit Registration":  "إرسال التسجيل",
 
 /* ============================================================
    ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
@@ -1991,7 +1722,6 @@ NEW FILES START HERE
 ============================================================ */
 
 // FORGOT PASSWORD
-"Forgot Password?":   "نسيت كلمة المرور؟",
 "Enter your email address and we'll send you a link to reset your password.":
   "أدخل بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور.",
 "Send Reset Link":    "إرسال رابط الاسترداد",
@@ -2001,11 +1731,7 @@ NEW FILES START HERE
 "Reset Password":     "إعادة تعيين كلمة المرور",
 "Choose a strong new password for your account.":
   "اختر كلمة مرور جديدة قوية لحسابك.",
-"New Password":           "كلمة المرور الجديدة",
-"Enter new password":     "أدخل كلمة المرور الجديدة",
-"Confirm Password":       "تأكيد كلمة المرور",
 "Repeat new password":    "أعد إدخال كلمة المرور الجديدة",
-"Update Password":        "تحديث كلمة المرور",
 
 
 /* ============================================================
@@ -2017,7 +1743,7 @@ NEW FILES START HERE
 "Secure & Easy":  "آمن وسهل",
 "Make a Payment": "أجرِ دفعة",
 "Pay for your courses securely and upload your receipt for confirmation.":
-  "ادفع مقابل دوراتك بأمان وارفع إيصالك للتأكيد.",
+  "ادفع مقابل مقرراتك بأمان وارفع إيصالك للتأكيد.",
 
 // HOW TO PAY STRIP
 "Choose a payment method below":                    "اختر طريقة الدفع أدناه",
@@ -2036,7 +1762,6 @@ NEW FILES START HERE
 "Click below to pay securely via Selar's online payment platform.":
   "انقر أدناه للدفع بأمان عبر منصة Selar للدفع الإلكتروني.",
 "Pay with Selar":       "الدفع عبر Selar",
-"Copied to clipboard":  "تم النسخ",
 
 // FORM HEADER
 "Upload Payment Receipt":                           "رفع إيصال الدفع",
@@ -2044,28 +1769,16 @@ NEW FILES START HERE
   "أدخل بياناتك وأرفق إيصال الدفع أدناه.",
 
 // FORM FIELDS
-"Full Name":            "الاسم الكامل",
-"Your full name":       "اسمك الكامل",
-"Email Address":        "البريد الإلكتروني",
-"Country":              "البلد",
 "Your country":         "بلدك",
-"Plan Type":            "نوع الخطة",
 "Select Plan":          "اختر خطة",
 "General":              "عام",
 "Premium":              "مميز",
-"Level":                "المستوى",
 "Choose Level":         "اختر المستوى",
-"Beginner":             "مبتدئ",
-"Intermediate":         "متوسط",
-"Advanced":             "متقدم",
 "Payment Method (Bank)": "طريقة الدفع (البنك)",
 "e.g. GTBank":          "مثال: GTBank",
-"Amount Paid":          "المبلغ المدفوع",
-"Currency":             "العملة",
 "Payment Date":         "تاريخ الدفع",
 "Payment Month":        "شهر الدفع",
 "Payment Year":         "سنة الدفع",
-"Select Month":         "اختر الشهر",
 "January":   "يناير",
 "February":  "فبراير",
 "March":     "مارس",
@@ -2078,7 +1791,6 @@ NEW FILES START HERE
 "October":   "أكتوبر",
 "November":  "نوفمبر",
 "December":  "ديسمبر",
-"Upload Receipt":                   "رفع الإيصال",
 "Click to choose receipt image":    "انقر لاختيار صورة الإيصال",
 "Submit Payment":                   "إرسال الدفعة",
 
@@ -2088,24 +1800,17 @@ NEW FILES START HERE
 ============================================================ */
 
 // BANNER
-"Conversational Arabic":
-  "العربية التحادثية",
 "Build real speaking confidence through practical, everyday Arabic conversations and real-life scenarios.":
   "ابنِ ثقة حقيقية في الكلام من خلال محادثات عربية يومية عملية وسيناريوهات الحياة الواقعية.",
 
 // META BADGE
-"All Levels": "جميع المستويات",
 
 // INTRO CARD
-"About This Course": "عن هذه الدورة",
 "This course is focused entirely on spoken Arabic. Whether you are a beginner or have some background, you will gain the confidence and vocabulary to handle real-life situations — from greetings and shopping to travel and social conversations.":
-  "تركّز هذه الدورة كليًا على العربية المنطوقة. سواء كنت مبتدئًا أو لديك بعض الخلفية، ستكتسب الثقة والمفردات للتعامل مع مواقف الحياة الواقعية — من التحيات والتسوق إلى السفر والمحادثات الاجتماعية.",
+  "يركّز هذا المقرر كليًا على العربية المنطوقة. سواء كنت مبتدئًا أو لديك بعض الخلفية، ستكتسب الثقة والمفردات للتعامل مع مواقف الحياة الواقعية — من التحيات والتسوق إلى السفر والمحادثات الاجتماعية.",
 
 // MODULES
-"Course Modules": "وحدات الدورة",
 
-"Greetings & Introductions":
-  "التحيات والتعريف بالنفس",
 "Learn how to greet people warmly, introduce yourself, and ask and answer basic questions in natural spoken Arabic.":
   "تعلّم كيفية تحية الناس بدفء وتعريف نفسك وطرح الأسئلة الأساسية والإجابة عنها بالعربية المنطوقة الطبيعية.",
 
@@ -2134,8 +1839,6 @@ NEW FILES START HERE
   "هل أنت مستعد لبدء التحدث بالعربية؟",
 "Gain the speaking confidence you need for real life. Enrol today and start having real Arabic conversations.":
   "اكتسب الثقة في الكلام التي تحتاجها في الحياة الواقعية. سجّل اليوم وابدأ في إجراء محادثات عربية حقيقية.",
-"Register Now":
-  "سجّل الآن",
 
 /* ============================================================
    ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
@@ -2155,11 +1858,8 @@ NEW FILES START HERE
   "لم يتم رفع أي مقاطع فيديو لمستواك حتى الآن. يرجى التحقق لاحقًا.",
 
 // MODAL
-"Watch on Telegram":  "شاهد على تيليغرام",
 
 // NAV (new items not in previous pages)
-"Videos":    "الفيديوهات",
-"Schedule":  "الجدول",
 
 /* ============================================================
    ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
@@ -2167,89 +1867,30 @@ NEW FILES START HERE
 ============================================================ */
 
 // NAV
-"Home":                "الرئيسية",
-"About":               "من نحن",
-"Courses":             "الدورات",
-"Register":            "التسجيل",
-"Student Dashboard":   "لوحة الطالب",
-"Admin Dashboard":     "لوحة الإدارة",
-"Emails":              "الرسائل",
-"Semester Work":       "العمل الفصلي",
-"Payments":            "المدفوعات",
-"Schedule":            "الجدول",
-"Contact":             "اتصل بنا",
-"Logout":              "تسجيل الخروج",
 
 // HERO
-"Admin Dashboard":     "لوحة الإدارة",
-"Manage Students, Payments, Grades & Schedule":
-  "إدارة الطلاب والمدفوعات والدرجات والجدول",
 
 // STATS
-"Students":   "الطلاب",
-"Payments":   "المدفوعات",
-"Amount Paid":"المبلغ المدفوع",
 
 // SECTION HEADERS
-"Add Student":    "إضافة طالب",
-"Add Payment":    "إضافة دفعة",
-"Add Grade":      "إضافة درجة",
-"Add Class":      "إضافة حصة",
 "Add Assessment": "إضافة اختبار",
-"Add Course":     "إضافة دورة",
-"All Courses":    "جميع الدورات",
 "Manage Student Fees": "إدارة رسوم الطلاب",
 
 // SEARCH PLACEHOLDERS
-"🔍 Search Students...":   "🔍 بحث عن الطلاب...",
-"🔍 Search Payments...":   "🔍 بحث عن المدفوعات...",
-"🔍 Search Grades...":     "🔍 بحث عن الدرجات...",
-"🔍 Search Schedule...":   "🔍 بحث في الجدول...",
-"🔍 Search Assessments...":"🔍 بحث عن الاختبارات...",
-"🔍 Search by matric...":  "🔍 البحث بالرقم الجامعي...",
 
 // TABLE HEADERS — STUDENTS
-"Photo":        "الصورة",
 "Matric No.":   "الرقم الجامعي",
-"Name":         "الاسم",
-"Email":        "البريد الإلكتروني",
-"WhatsApp":     "واتساب",
-"Country":      "البلد",
-"Gender":       "الجنس",
-"Age":          "العمر",
-"Level":        "المستوى",
-"Status":       "الحالة",
 "Admission":    "القبول",
-"Actions":      "الإجراءات",
 "Welcome Email":"البريد الترحيبي",
-"Edit":         "تعديل",
-"Delete":       "حذف",
-"Certificate":  "الشهادة",
 
 // TABLE HEADERS — PAYMENTS
 "Receipt":       "الإيصال",
-"Student Name":  "اسم الطالب",
-"Amount":        "المبلغ",
-"Month":         "الشهر",
-"Method":        "طريقة الدفع",
-"Date":          "التاريخ",
-"Mark":          "تحديد",
 
 
 // TABLE HEADERS — GRADES
 
-"Course":        "الدورة",
-"Semester":      "الفصل",
-"Assessment":    "التقييم",
-"Exam":          "الامتحان",
-"Total":         "المجموع",
-"Remark":        "الملاحظة",
-"Released":      "نُشر",
 
 // TABLE HEADERS — SCHEDULE
-"Instructor":    "المدرس",
-"Time":          "الوقت",
-"Link":          "الرابط",
 
 // TABLE HEADERS — ASSESSMENTS
 "Description":       "الوصف",
@@ -2259,96 +1900,43 @@ NEW FILES START HERE
 "Duration":          "المدة",
 "Start Time":        "وقت البداية",
 "End Time":          "وقت النهاية",
-"Active":            "نشط",
 
 // EMPTY ROWS
-"No students yet":    "لا يوجد طلاب بعد",
 "No payments yet":    "لا توجد مدفوعات بعد",
-"No grades yet":      "لا توجد درجات بعد",
-"No classes yet":     "لا توجد حصص بعد",
 "No assessments yet": "لا توجد اختبارات بعد",
 
 // FEE FORM
-"Select Student": "اختر طالبًا",
-"Select Month":   "اختر الشهر",
-"Save":           "حفظ",
 
 // MODAL — ADD STUDENT
-"Add Student":          "إضافة طالب",
-"Full Name":            "الاسم الكامل",
-"Email Address":        "البريد الإلكتروني",
-"Choose Level":         "-- اختر المستوى --",
 "Read and Write Arabic":"القراءة والكتابة بالعربية",
-"Beginner":             "مبتدئ",
-"Intermediate":         "متوسط",
-"Advanced":             "متقدم",
-"Active":               "نشط",
-"Inactive":             "غير نشط",
 "Approved":             "✅ مقبول",
 "Not Approved":         "❌ غير مقبول",
-"Passport Photo":       "الصورة الشخصية",
-"Cancel":               "إلغاء",
 
 // MODAL — ADD PAYMENT
-"Select a student":  "اختر طالبًا",
 "Select Level":      "-- اختر المستوى --",
-"Amount Paid":       "المبلغ المدفوع",
-"Currency":          "العملة",
-"Paid":              "مدفوع",
-"Pending":           "قيد الانتظار",
-"e.g. GTBank":       "مثال: GTBank",
 
 // MODAL — ADD GRADE
-"Assessment Score":  "درجة التقييم",
-"Exam Score":        "درجة الامتحان",
-"Total Score":       "المجموع",
-"Select Semester":   "-- اختر الفصل --",
-"First":             "الأول",
-"Second":            "الثاني",
 "Complete":          "مكتمل",
-"Loading":           "جارٍ التحميل",
-"Cancelled":         "ملغى",
-"Pass":              "ناجح",
-"Average":           "متوسط",
-"Fail":              "راسب",
-"Course Name":       "اسم الدورة",
 
 // MODAL — ADD CLASS
-"Meeting Link":  "رابط الاجتماع",
-"Scheduled":     "مجدول",
-"Completed":     "مكتمل",
 
 // MODAL — ASSESSMENT
 "Select Type":           "-- اختر النوع --",
 "Test":                  "اختبار",
-"Exam":                  "امتحان",
 "Select Status":         "-- اختر الحالة --",
 "Duration (minutes)":    "المدة (بالدقائق)",
 "Save Assessment":       "حفظ الاختبار",
 
 // MODAL — CERTIFICATE
-"Issue Certificate":     "إصدار شهادة",
-"Student Name":          "اسم الطالب",
-"Matric Number":         "الرقم الجامعي",
-"Grade Note (optional)": "ملاحظة الدرجة (اختياري)",
-"e.g. with a total score of 85%": "مثال: بمجموع 85%",
-"Select Course":         "اختر الدورة",
 
 // COURSES
-"Instructor Name":   "اسم المدرس",
 
 // PASSWORD SECTION
 "Change My Password":      "تغيير كلمة المرور",
 "Reset Student Password":  "إعادة تعيين كلمة الطالب",
-"Current Password":        "كلمة المرور الحالية",
-"New Password":            "كلمة المرور الجديدة",
-"Update Password":         "تحديث كلمة المرور",
-"Enter current password":  "أدخل كلمة المرور الحالية",
-"Enter new password":      "أدخل كلمة المرور الجديدة",
 
 // FOOTER
 
-"Privacy Policy":       "سياسة الخصوصية",
 
 /* ============================================================
    ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
@@ -2360,28 +1948,22 @@ NEW FILES START HERE
   "إدارة رسائل التواصل من الطلاب والزوار.",
 
 // FILTER PILLS
-"All":    "الكل",
 "Unread": "غير مقروء",
 "Read":   "مقروء",
 
 // MODAL ACTIONS
 "Mark as Read":   "تحديد كمقروء",
 "Mark as Unread": "تحديد كغير مقروء",
-"Delete":         "حذف",
 
 // ── semester-admin.html — translate.js DICT entries ──
 
 "Semester Management": "إدارة الفصل الدراسي",
-"Manage Activities & Course Outlines": "إدارة الأنشطة وخطط المواد",
+"Manage Activities & Course Outlines": "إدارة الأنشطة وخطط المقررات",
 "Add Entry": "إضافة سجل",
-"Semester": "الفصل الدراسي",
 "e.g., Spring 2025": "مثال: ربيع 2025",
-"Type": "النوع",
 "Activity": "نشاط",
-"Course Outline": "خطة المادة",
-"Title": "العنوان",
+"Course Outline": "خطة المقرر",
 "Entry Title": "عنوان السجل",
-"Description": "الوصف",
 "Enter description...": "أدخل الوصف...",
 "Start Date": "تاريخ البدء",
 "End Date": "تاريخ الانتهاء",
@@ -2389,18 +1971,13 @@ NEW FILES START HERE
 "Cancel Edit": "إلغاء التعديل",
 "All Entries": "جميع السجلات",
 "🔍 Search title...": "🔍 ابحث عن العنوان...",
-"All Semesters": "جميع الفصول",
+"All Semesters": "جميع الفصول الدراسية",
 "Harmattan": "الهرمتان",
 "Spring": "الربيع",
 "All Types": "جميع الأنواع",
 "Entry deleted.": "تم حذف السجل.",
 "Undo": "تراجع",
-"Semester Work": "أعمال الفصل",
-"Al-Bayan Arabic Isntitute Online.": "معهد البيان للدراسات العربية عبر الانترنت",
-"Email": "البريد الإلكتروني",
-"Phone": "الهاتف",
-"All rights reserved.": "جميع الحقوق محفوظة.",
-"Privacy Policy": "سياسة الخصوصية",
+"Al-Bayan Arabic Institute Online.": "معهد البيان للدراسات العربية عبر الانترنت",
 
 /* ============================================================
    ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
@@ -2408,44 +1985,15 @@ NEW FILES START HERE
 ============================================================ */
 
 // HERO BANNER
-"Student Dashboard":
-  "لوحة تحكم الطالب",
-"Welcome back! Manage your registration, payments, courses, resources, and online classes from one place.":
-  "مرحبًا بعودتك! يمكنك إدارة التسجيل، المدفوعات، الدورات، الموارد، والفصول الدراسية عبر الإنترنت من مكان واحد.",
 
 // HUB SECTION
-"Quick Access Tools":
-  "أدوات الوصول السريع",
-"Click any card below to manage your student activities.":
-  "انقر على أي بطاقة أدناه لإدارة أنشطتك الدراسية.",
 
 // HUB CARDS
-"My Profile":         "ملفي الشخصي",
-"Make Payment":       "إجراء الدفع",
-"Payment History":    "سجل المدفوعات",
-"All Courses":        "جميع الدورات",
-"Register Courses":   "تسجيل المواد",
-"My Courses":         "موادي",
-"Semester Activities": "أنشطة الفصل الدراسي",
-"Admission Letter":   "رسالة القبول",
-"My Certificates":    "شهاداتي",
-"Class Schedule":     "جدول الحصص",
-"Test/Exam Timetable": "جدول الاختبارات",
-"My Grades":          "درجاتي",
-"Learning Resources": "الموارد التعليمية",
-"Learning Videos":    "مقاطع الفيديو التعليمية",
-"Join Online Class":  "الانضمام إلى الفصل الإلكتروني",
-"Take Test/Exam":     "أداء الاختبار",
-"Contact / Support":  "التواصل / الدعم",
 
 // REMINDER MODAL
-"⚠️ Payment Reminder": "⚠️ تذكير بالدفع",
-"Pay Now":             "ادفع الآن",
-"Remind Me Later":     "ذكّرني لاحقًا",
 
 // NOTIFICATIONS
 "Notifications":       "الإشعارات",
-"🔔 Notifications":    "🔔 الإشعارات",
 
 /* ============================================================
    ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
@@ -2453,98 +2001,29 @@ NEW FILES START HERE
 ============================================================ */
 
 // NAV
-"My Dashboard":  "لوحتي",
-"Contact":       "اتصل بنا",
-"Logout":        "تسجيل الخروج",
 
 // HERO
 "Staff Dashboard":                          "لوحة الموظف",
-"Manage your courses, students and grades": "إدارة دوراتك وطلابك ودرجاتهم",
 
 // STATS
-"My Courses":    "دوراتي",
-"My Students":   "طلابي",
-"Grades Posted": "الدرجات المنشورة",
 
 // TAB BUTTONS
-"My Courses":   "دوراتي",
-"Grades":       "الدرجات",
-"Schedule":     "الجدول",
-"My Profile":   "ملفي الشخصي",
 
 // TAB — COURSES
-"My Courses & Students":    "دوراتي وطلابي",
-"🔍 Search students...":    "🔍 البحث عن طلاب...",
-"Loading your courses...":  "جارٍ تحميل دوراتك...",
 
 // TAB — GRADES
 "Post a Grade":         "نشر درجة",
 
-"Select Student":       "اختر طالبًا",
-"Course":               "الدورة",
-"Select Course":        "اختر الدورة",
-"Level":                "المستوى",
-"Semester":             "الفصل",
-"Select Semester":      "اختر الفصل",
-"First":                "الأول",
-"Second":               "الثاني",
-"Assessment Score":     "درجة التقييم",
-"Assessment":           "التقييم",
-"Exam Score":           "درجة الامتحان",
-"Exam":                 "الامتحان",
-"Total Score":          "المجموع",
-"Total":                "المجموع",
-"Status":               "الحالة",
-"Completed":            "مكتمل",
-"Loading":              "جارٍ التحميل",
-"Cancelled":            "ملغى",
-"Remark":               "الملاحظة",
-"Pass":                 "ناجح",
-"Average":              "متوسط",
-"Fail":                 "راسب",
-"Submit Grade":         "إرسال الدرجة",
 "Posted Grades":        "الدرجات المنشورة",
-"🔍 Search grades...":  "🔍 البحث عن درجات...",
-"Matric":               "الرقم الجامعي",
-"Released":             "نُشر",
-"Loading grades...":    "جارٍ تحميل الدرجات...",
 
 // TAB — SCHEDULE
-"Add Class":            "إضافة حصة",
 "My Class Schedule":    "جدول حصصي",
-"Date":                 "التاريخ",
-"Time":                 "الوقت",
-"Meeting Link":         "رابط الاجتماع",
-"Scheduled":            "مجدول",
-"Save Class":           "حفظ الحصة",
-"Cancel":               "إلغاء",
-"Link":                 "الرابط",
 "Action":               "الإجراء",
-"Loading schedule...":  "جارٍ تحميل الجدول...",
 
 // TAB — PROFILE
-"My Profile":              "ملفي الشخصي",
-"Full Name":               "الاسم الكامل",
-"Email":                   "البريد الإلكتروني",
-"Role":                    "الدور",
-"Save Profile":            "حفظ الملف",
-"Change Password":         "تغيير كلمة المرور",
-"New Password":            "كلمة المرور الجديدة",
-"Enter new password":      "أدخل كلمة المرور الجديدة",
-"Confirm Password":        "تأكيد كلمة المرور",
-"Confirm new password":    "أعد إدخال كلمة المرور الجديدة",
-"Update Password":         "تحديث كلمة المرور",
 
 // FOOTER
-"Al-Bayan Arabic Isntitute Online.":
-  "معهد البيان للدراسات العربية عبر الانترنت",
-"All rights reserved.":    "جميع الحقوق محفوظة.",
-"Privacy Policy":          "سياسة الخصوصية",
 
-"Your Tools": "أدواتك",
-"Class Schedule": "جدول الحصص",
-"Make Payment": "إجراء الدفع",
-"My Grades": "درجاتي",
 
 /* ============================================================
    ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
@@ -2553,26 +2032,14 @@ NEW FILES START HERE
 ============================================================ */
 
 // BANNER (new wording)
-"View and manage your personal information, registered courses, and progress": "عرض وإدارة معلوماتك الشخصية والدورات المسجلة ومستوى تقدمك",
 
 // INFO ROW LABELS (already in dict but listed for completeness)
-"Email Address:": "البريد الإلكتروني:",
-"WhatsApp:":      "واتساب:",
-"Student ID:":    "رقم الطالب:",
-"Level:":         "المستوى:",
 
 // BUTTONS
-"Edit Profile":   "تعديل الملف الشخصي",
-"Update Password": "تحديث كلمة المرور",
-"Save Changes":   "حفظ التغييرات",
 
 // PASSWORD LABELS
-"Current Password": "كلمة المرور الحالية",
-"New Password":     "كلمة المرور الجديدة",
-"Confirm Password": "تأكيد كلمة المرور",
 
 // MODAL
-"Change Passport (optional)": "تغيير الصورة الشخصية (اختياري)",
 
 /* ============================================================
    ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
@@ -2580,7 +2047,6 @@ NEW FILES START HERE
 ============================================================ */
 
 // NAV
-"Student Dashboard":  "لوحة الطالب",
 
 // RULES CARD
 "Before You Begin":
@@ -2595,15 +2061,6 @@ NEW FILES START HERE
   "يمكن الإجابة على كل سؤال مرة واحدة فقط. راجع إجاباتك قبل الإرسال.",
 
 // INFO CARD LABELS (injected by JS via t())
-"Level:":      "المستوى:",
-"Semester:":   "الفصل:",
-"Course:":     "الدورة:",
-"Type:":       "النوع:",
-"Duration:":   "المدة:",
-"minutes":     "دقيقة",
-"Status:":     "الحالة:",
-"Start Time:": "وقت البداية:",
-"End Time:":   "وقت النهاية:",
 
 /* ============================================================
    ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
@@ -2612,29 +2069,17 @@ NEW FILES START HERE
 
 // HEADER
 "Time Left":  "الوقت المتبقي",
-"Time":       "الوقت",
 "Progress":   "التقدم",
 "⚠️ Only 2 minutes remaining. Please finalize your answers":
   "⚠️ دقيقتان فقط متبقيتان. يرجى إنهاء إجاباتك",
 
 // NAV BUTTONS
-"Previous": "السابق",
-"Review":   "مراجعة",
-"Next":     "التالي",
 
 // REVIEW MODAL
-"Review Your Answers":            "مراجعة إجاباتك",
 "Check your answers before final submission.":
   "تحقق من إجاباتك قبل الإرسال النهائي.",
-"Back to Exam":                   "العودة إلى الاختبار",
-"Submit All Answers":             "إرسال جميع الإجابات",
 
 // COMPLETION MODAL
-"Test/Exam Submitted":            "تم تسليم الاختبار",
-"Thank you. Your test/exam has been successfully submitted. Results will be released later.":
-  "شكرًا لك. تم تسليم اختبارك بنجاح. سيتم الإعلان عن النتائج لاحقًا.",
-"Go to Dashboard":                "الذهاب إلى لوحة التحكم",
-"Logout":                         "تسجيل الخروج",
 
 "Restore Hidden Notifications": "استعادة الإشعارات المخفية",
 "🔍 Search notifications...": "🔍 بحث في الإشعارات...",
@@ -2646,13 +2091,11 @@ NEW FILES START HERE
 
 // BANNER
 "Live & Interactive":   "مباشر وتفاعلي",
-"Online Classes":       "الدروس الإلكترونية",
 "Access your Zoom, Telegram, WhatsApp and other online class platforms here.":
   "ادخل إلى منصات دروسك الإلكترونية عبر زوم وتيليغرام وواتساب وغيرها من هنا.",
 
 // SECTION HEADER
 "Live Sessions":            "الجلسات المباشرة",
-"Join Your Online Classes": "انضم إلى دروسك الإلكترونية",
 "Click the links below to enter your class sessions. Make sure you're logged in to the respective platform before joining.":
   "انقر على الروابط أدناه للدخول إلى جلسات دروسك. تأكد من تسجيل دخولك إلى المنصة المعنية قبل الانضمام.",
 
@@ -2665,7 +2108,6 @@ NEW FILES START HERE
 "Saturday":  "السبت",
 "Sunday":    "الأحد",
 "Telegram": "تيليغرام",
-"WhatsApp": "واتساب",
 "Zoom": "زوم",
 "Google Meet": "جوجل ميت",
 "Microsoft Teams": "مايكروسوفت تيمز",
@@ -2685,16 +2127,15 @@ NEW FILES START HERE
 
 // BANNER
 "Academic Calendar":    "التقويم الأكاديمي",
-"Semester Activities":  "الأنشطة الفصلية",
 "View your semester timeline, course outlines and key academic dates.":
   "اطّلع على جدول فصلك الدراسي والمناهج الدراسية والتواريخ الأكاديمية المهمة.",
 
 // LOADING / EMPTY
-"Loading semester data...":  "جارٍ تحميل بيانات الفصل...",
+"Loading semester data...":  "جارٍ تحميل بيانات الفصل الدراسي...",
 "No semester data available.":
   "لا توجد بيانات فصلية متاحة.",
 "Please check back later when semester activities have been published.":
-  "يرجى التحقق لاحقًا عند نشر الأنشطة الفصلية.",
+  "يرجى التحقق لاحقًا عند نشر أنشطة الفصل الدراسي.",
 
 // Staff Management Page
 "Staff Management": "إدارة الموظفين",
@@ -2702,16 +2143,10 @@ NEW FILES START HERE
 "Total Staff": "إجمالي الموظفين",
 "Active Staff": "الموظفون النشطون",
 "Monthly Payroll": "الرواتب الشهرية",
-"Staff": "موظف",
 "All Roles": "جميع الأدوار",
 "All Status": "جميع الحالات",
 "Add Staff": "إضافة موظف",
-"Photo": "الصورة",
-"Name": "الاسم",
-"Role": "الدور",
-"Type": "النوع",
 "Department": "القسم",
-"Phone": "الهاتف",
 "Joined": "تاريخ الانضمام",
 "Salary": "الراتب",
 "View / Edit": "عرض / تعديل",
@@ -2720,25 +2155,15 @@ NEW FILES START HERE
 "Note": "ملاحظة",
 "Any remarks...": "أي ملاحظات...",
 
-"No payments yet": "لا توجد مدفوعات بعد",
 
 "Search Staff...": "البحث في الموظفين...",
-"All Roles": "كل الأدوار",
-"Director": "المدير",
 "Asst. Director": "نائب المدير",
-"Head of Department": "رئيس القسم",
-"Bursar": "أمين الصندوق",
-"Registrar": "المسجل",
 "Teacher": "المعلم",
 
-"All Status": "كل الحالات",
 "On Leave": "في إجازة",
-"Add Staff": "إضافة موظف",
 
 // Add Staff Modal
 "Add Staff Record": "إضافة سجل موظف",
-"Full Name": "الاسم الكامل",
-"Email Address": "عنوان البريد الإلكتروني",
 "Phone Number": "رقم الهاتف",
 
 "-- Select Role --": "-- اختر الدور --",
@@ -2752,7 +2177,6 @@ NEW FILES START HERE
 
 "-- Select Department --": "-- اختر القسم --",
 "Teaching": "التدريس",
-"Admin": "الإدارة",
 "Finance": "المالية",
 "IT": "تقنية المعلومات",
 
@@ -2761,52 +2185,27 @@ NEW FILES START HERE
 "Monthly Salary (₦)": "الراتب الشهري (₦)",
 "0.00": "0.00",
 
-"Passport Photo": "صورة الجواز",
 "Save Staff": "حفظ الموظف",
 
 "Note: This creates a pending invite. Click the Invite button next to their name in the table to send them a registration email.": "ملاحظة: هذا ينشئ دعوة معلقة. اضغط زر الدعوة بجانب اسمهم في الجدول لإرسال بريد التسجيل.",
 
 // View/Edit Staff Modal
 "Details": "التفاصيل",
-"Payment History": "سجل المدفوعات",
-"Save Changes": "حفظ التغييرات",
 
 // Payment Modal
 "Record Payment": "تسجيل دفعة",
 "Edit Payment": "تعديل الدفعة",
-"Month": "الشهر",
 "Year": "السنة",
-"Amount Paid": "المبلغ المدفوع",
-"Currency": "العملة",
 "Date Paid": "تاريخ الدفع",
 "Note (optional)": "ملاحظة (اختياري)",
 "Save Payment": "حفظ الدفعة",
-"Paid": "مدفوع",
 "Partial": "جزئي",
 "Unpaid": "غير مدفوع",
-"Add Payment": "إضافة دفعة",
 
 // Status values
-"active": "نشط",
-"inactive": "غير نشط",
 "on_leave": "في إجازة",
-"On Leave": "في إجازة",
-"Active": "نشط",
-"Inactive": "غير نشط",
 
 // Month names
-"January": "يناير",
-"February": "فبراير",
-"March": "مارس",
-"April": "أبريل",
-"May": "مايو",
-"June": "يونيو",
-"July": "يوليو",
-"August": "أغسطس",
-"September": "سبتمبر",
-"October": "أكتوبر",
-"November": "نوفمبر",
-"December": "ديسمبر",
 
 // Toast / alerts
 "Staff record created successfully": "تم إنشاء سجل الموظف بنجاح",
@@ -2816,23 +2215,15 @@ NEW FILES START HERE
 "Failed to update staff. See console.": "فشل تحديث الموظف. راجع وحدة التحكم.",
 "Failed to delete staff. See console.": "فشل حذف الموظف. راجع وحدة التحكم.",
 "Payment recorded": "تم تسجيل الدفعة",
-"Payment updated": "تم تحديث الدفعة",
 "Payment deleted": "تم حذف الدفعة",
-"Failed to save payment. See console.": "فشل حفظ الدفعة. راجع وحدة التحكم.",
 "Failed to load staff": "فشل تحميل الموظفين",
-"Failed to load payments": "فشل تحميل المدفوعات",
 "Could not load staff record": "تعذّر تحميل سجل الموظف",
 "No staff yet": "لا يوجد موظفون بعد",
-"No payments yet": "لا توجد مدفوعات بعد",
-"Loading...": "جارٍ التحميل...",
 "Full name, email and role are required": "الاسم الكامل والبريد الإلكتروني والدور مطلوبة",
 "Full name and role are required": "الاسم الكامل والدور مطلوبان",
 "Month and year are required": "الشهر والسنة مطلوبان",
 "Are you sure you want to delete this staff record? This cannot be undone.": "هل أنت متأكد من حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء.",
 "Delete this payment record?": "هل تريد حذف هذه الدفعة؟",
-"Access Denied": "تم رفض الوصول",
-"Only image files are allowed": "يُسمح بملفات الصور فقط",
-"Passport must not exceed 200KB": "يجب ألا يتجاوز حجم الصورة 200 كيلوبايت",
 
 // Role tags
 "#Director": "#المدير",
@@ -2842,85 +2233,36 @@ NEW FILES START HERE
 "#Registrar": "#المسجل",
 "#Teacher": "#المعلم",
 "#Staff": "#موظف",
-"Director": "المدير",
-"Asst. Director": "نائب المدير",
-"Head of Department": "رئيس القسم",
-"Bursar": "أمين الصندوق",
-"Registrar": "المسجل",
-"Teacher": "المعلم",
-"Staff": "الموظف",
 
 // Department / type display
-"Full-time": "دوام كامل",
-"Part-time": "دوام جزئي",
 "🔍 Search Staff...": "🔍 البحث عن موظف...",
 
 // ─── Admin Dashboard (new tab system) ───────────────────
-"My Profile":        "ملفي الشخصي",
-"Students":          "الطلاب",
-"Payments":          "المدفوعات",
 "Fees":              "الرسوم",
-"Grades":            "الدرجات",
-"Schedule":          "الجدول",
-"Assessments":       "التقييمات",
-"Courses":           "المقررات",
 "Certificates":      "الشهادات",
 "Passwords":         "كلمات المرور",
 "Deleted":           "المحذوفون",
 "🗑️ Deleted Students": "🗑️ الطلاب المحذوفون",
 
 "Edit My Profile":      "تعديل ملفي الشخصي",
-"Change My Password":   "تغيير كلمتي المرور",
-"Current Password":     "كلمة المرور الحالية",
-"New Password":         "كلمة المرور الجديدة",
-"Update Password":      "تحديث كلمة المرور",
-"Save Profile":         "حفظ الملف الشخصي",
-"Profile updated successfully": "تم تحديث الملف الشخصي بنجاح",
 "Failed to save profile. See console.": "فشل حفظ الملف الشخصي. راجع وحدة التحكم.",
 "Full name is required": "الاسم الكامل مطلوب",
-"Enter current password": "أدخل كلمة المرور الحالية",
-"Enter new password":     "أدخل كلمة المرور الجديدة",
 
 "Open a student record and click Issue Certificate to generate.":
   "افتح سجل الطالب واضغط على إصدار الشهادة للإنشاء.",
 
 // ─── Staff Dashboard (new additions) ────────────────────
-"My Payments":       "مدفوعاتي",
 "My Salary Payments": "مدفوعات راتبي",
-"Monthly Salary":    "الراتب الشهري",
 "Months Paid":       "الأشهر المدفوعة",
 "Total Received":    "إجمالي المستلم",
 "Loading payments...": "جارٍ تحميل المدفوعات...",
 "No payment records yet.": "لا توجد سجلات دفع بعد.",
 "Failed to load payments.": "فشل تحميل المدفوعات.",
-"Date Paid":         "تاريخ الدفع",
-"Amount":            "المبلغ",
-"Currency":          "العملة",
-"Note":              "ملاحظة",
 
-"Staff Type":        "نوع الموظف",
-"Date Joined":       "تاريخ الانضمام",
-"Phone Number":      "رقم الهاتف",
-"Full-time":         "دوام كامل",
-"Part-time":         "دوام جزئي",
-"Contract":          "عقد",
-"Volunteer":         "متطوع",
-"Teaching":          "التدريس",
-"Admin":             "الإدارة",
-"Finance":           "المالية",
-"IT":                "تقنية المعلومات",
 
-"paid":    "مدفوع",
 "partial": "جزئي",
 "unpaid":  "غير مدفوع",
 
-"My Salary Payments":    "مدفوعات راتبي",
-"Monthly Salary":        "الراتب الشهري",
-"Months Paid":           "الأشهر المدفوعة",
-"Total Received":        "إجمالي المستلم",
-"No payment records yet.": "لا توجد سجلات دفع بعد.",
-"Loading payments...":   "جارٍ تحميل المدفوعات...",
-"Failed to load payments.": "فشل تحميل المدفوعات.",
 "Trash bin is empty.": "سلة المحذوفات فارغة.",
 "Loading history logs...": "جاري تحميل سجلّات الأرشيف...",
 "Date Issued": "تاريخ الإصدار",
@@ -2931,7 +2273,6 @@ NEW FILES START HERE
 "Loading sessions...": "جاري تحميل الجلسات...",
 "No attendance sessions yet": "لا توجد جلسات حضور بعد",
 
-"Loading...": "جاري التحميل...",
 
 "Attendance Records": "سجلات الحضور",
 
@@ -2940,7 +2281,6 @@ NEW FILES START HERE
 "Failed to load attendance sessions.": "فشل في تحميل جلسات الحضور.",
 "Failed to load records.": "فشل في تحميل السجلات.",
 
-"Fill all required fields": "املأ جميع الحقول المطلوبة",
 "Invalid date": "تاريخ غير صالح",
 "Closing time must be after opening time": "يجب أن يكون وقت الإغلاق بعد وقت الفتح",
 
@@ -2960,7 +2300,6 @@ NEW FILES START HERE
 
 "Copy attendance link": "نسخ رابط الحضور",
 
-"Edit": "تعديل",
 
     "Checking session...": "جاري التحقق من الجلسة...",
     "Please wait a moment.": "يرجى الانتظار لحظة.",
@@ -2982,7 +2321,6 @@ NEW FILES START HERE
     "This session opens at": "تبدأ هذه الجلسة في",
     "Attendance Window Closed": "انتهت فترة تسجيل الحضور",
     "This session closed at": "أُغلقت هذه الجلسة في",
-    "Something went wrong. Please try again.": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
     "Could not mark attendance. Please try again.": "تعذّر تسجيل الحضور. يرجى المحاولة مرة أخرى.",
     "You were already marked present for": "تم تسجيل حضورك مسبقًا في",
     "You've been marked present for": "تم تسجيل حضورك في",
@@ -2992,27 +2330,10 @@ NEW FILES START HERE
     "Opens": "تبدأ",
     "Closes": "تنتهي",
     "Present": "الحاضرون",
-    "No attendance sessions yet": "لا توجد جلسات حضور حتى الآن",
-    "Loading sessions...": "جاري تحميل الجلسات...",
-    "Failed to load attendance sessions.": "فشل تحميل جلسات الحضور.",
     "Create Attendance Session": "إنشاء جلسة حضور",
-    "Edit Attendance Session": "تعديل جلسة الحضور",
     "Class Link (Meet/Telegram/WhatsApp)": "رابط الحصة (ميت / تيليجرام / واتساب)",
     "Attendance Link (share this with students)": "رابط الحضور (شاركه مع الطلاب)",
     "Save Session": "حفظ الجلسة",
-    "Attendance Records": "سجلات الحضور",
-    "Matric Number": "الرقم الجامعي",
-    "Copy attendance link": "نسخ رابط الحضور",
-    "Link copied": "تم نسخ الرابط",
-    "Session updated": "تم تحديث الجلسة",
-    "Session created": "تم إنشاء الجلسة",
-    "Failed to save attendance session": "فشل حفظ جلسة الحضور",
-    "Failed to update session": "فشل تحديث الجلسة",
-    "Session activated": "تم تفعيل الجلسة",
-    "Session deactivated": "تم تعطيل الجلسة",
-    "Closing time must be after opening time": "يجب أن يكون وقت الإغلاق بعد وقت الفتح",
-    "No one has marked attendance yet.": "لم يسجل أحد حضوره حتى الآن.",
-    "Failed to load records.": "فشل تحميل السجلات.",
 
     /* ============================================================
    ADD THESE ENTRIES TO YOUR DICT OBJECT IN translate.js
@@ -3049,7 +2370,6 @@ NEW FILES START HERE
 "Balaghah": "البلاغة",
 "Taareekh": "التاريخ",
 "Classical Arabic Books":  "كتب العربية الكلاسيكية",
-"Other":    "أخرى",
 
 // SUBJECT TITLES (accordion headers)
 "📘 Madinah Arabic Reader":   "📘 سلسلة المدينة",
@@ -3065,7 +2385,6 @@ NEW FILES START HERE
 "📘 Adab":                    "📘 الأدب",
 "📘 Balaghah":                "📘 البلاغة",
 "📘 Taareekh":                "📘 التاريخ",
-"📘 Classical Arabic Books":  "📘 كتب العربية الكلاسيكية",
 "🎥 Videos":                  "🎥 الفيديوهات",
 
 // CARD ACTIONS
@@ -3075,9 +2394,6 @@ NEW FILES START HERE
 
     "My Attendance Sessions": "جلسات الحضور الخاصة بي",
     "Download Report": "تحميل التقرير",
-    "Close": "إغلاق",
-    "Please wait...": "يرجى الانتظار...",
-    "Choose Level": "اختر المستوى",
     "Failed to load session": "فشل تحميل الجلسة",
     
     "assessment": "تقييم",
@@ -3107,37 +2423,32 @@ NEW FILES START HERE
   "Tap to browse books":      "اضغط لتصفح الكتب",
    "Tap to see videos":        "اضغط لعرض الفيديوهات",
    "English":                   "إنجليزي",
-   "Arabic":                   "عربي",
+   "Arabic":                   "العربية",
    "Complete payment to unlock": "أكمل الدفع لفتح الفيديو",
    "Complete your payment to unlock this video.": "أكمل الدفع لفتح هذا الفيديو.",
-   "Videos":                   "الفيديوهات",
-   "Failed to load courses":   "فشل تحميل الكورسات",
+   "Failed to load courses":   "فشل تحميل المقررات",
    "Failed to load books":     "فشل تحميل الكتب",
    "Failed to load videos":    "فشل تحميل الفيديوهات",
    
      "Video Library":      "مكتبة الفيديوهات",
   "Add Book":             "إضافة كتاب",
   "All Books":            "جميع الكتب",
-  "Select courses":            "اختر المادة",
+  "Select courses":            "اختر المقررات",
   "Book Title":           "عنوان الكتاب",
   "Order":                "الترتيب",
-  "All Courses":          "جميع الكورسات",
-  "All Books":            "جميع الكتب",
   "Add Video":            "إضافة فيديو",
   "Book":                 "الكتاب",
   "Language":             "اللغة",
-  "YouTube":              "يوتيوب",
   "YouTube Video ID":     "معرّف فيديو يوتيوب",
   "Telegram Link":        "رابط تيليغرام",
   "Video Title":          "عنوان الفيديو",
   "Save Video":           "حفظ الفيديو",
-  "Select Course First":  "اختر الكورس أولاً",
+  "Select Course First":  "اختر المقرر أولاً",
   "No books yet":         "لا توجد كتب بعد",
   "No videos yet":        "لا توجد فيديوهات بعد",
 
   "Privacy & Data Protection": "الخصوصية وحماية البيانات",
-"Privacy Policy": "سياسة الخصوصية",
-"At Al-Bayan Arabic Isntitute Online, we respect your privacy and are committed to protecting your personal information. This page explains how we collect, use, and safeguard your information when you use our website or enroll in our programs.": "في معهد البيان العربي أونلاين، نحترم خصوصيتك ونلتزم بحماية معلوماتك الشخصية. توضح هذه الصفحة كيفية جمع معلوماتك واستخدامها وحمايتها عند استخدامك لموقعنا الإلكتروني أو التسجيل في برامجنا.",
+"At Al-Bayan Arabic Institute Online, we respect your privacy and are committed to protecting your personal information. This page explains how we collect, use, and safeguard your information when you use our website or enroll in our programs.": "في معهد البيان العربي أونلاين، نحترم خصوصيتك ونلتزم بحماية معلوماتك الشخصية. توضح هذه الصفحة كيفية جمع معلوماتك واستخدامها وحمايتها عند استخدامك لموقعنا الإلكتروني أو التسجيل في برامجنا.",
 "Information We Collect": "المعلومات التي نجمعها",
 "We may collect the following information during registration, enrollment, or payment verification:": "قد نقوم بجمع المعلومات التالية أثناء التسجيل أو الالتحاق أو التحقق من الدفع:",
 "Full name": "الاسم الكامل",
@@ -3154,7 +2465,7 @@ NEW FILES START HERE
 "To provide student support and guidance": "لتقديم الدعم والإرشاد للطلاب",
 "To improve learning experience and services": "لتحسين تجربة التعلم والخدمات",
 "Payment Processing": "معالجة الدفع",
-"Some payments may be processed through trusted third-party payment platforms. Al-Bayan Arabic Isntitute Online does not store your debit or credit card information.": "قد تتم معالجة بعض المدفوعات عبر منصات دفع موثوقة تابعة لجهات خارجية. لا يقوم معهد البيان العربي أونلاين بتخزين معلومات بطاقتك الائتمانية أو بطاقة الخصم.",
+"Some payments may be processed through trusted third-party payment platforms. Al-Bayan Arabic Institute Online does not store your debit or credit card information.": "قد تتم معالجة بعض المدفوعات عبر منصات دفع موثوقة تابعة لجهات خارجية. لا يقوم معهد البيان العربي أونلاين بتخزين معلومات بطاقتك الائتمانية أو بطاقة الخصم.",
 "Payment receipts submitted by students are used strictly for payment verification purposes.": "تُستخدم إيصالات الدفع المقدمة من الطلاب حصريًا لأغراض التحقق من الدفع.",
 "Data Protection": "حماية البيانات",
 "We take reasonable measures to protect student information against unauthorized access, misuse, or disclosure.": "نتخذ تدابير معقولة لحماية معلومات الطلاب من الوصول غير المصرح به أو إساءة الاستخدام أو الإفصاح.",
@@ -3169,14 +2480,11 @@ NEW FILES START HERE
 "Contact & Support": "التواصل والدعم",
 "If you have any questions regarding this Privacy Policy, please contact us:": "إذا كانت لديك أي أسئلة بخصوص سياسة الخصوصية هذه، يرجى التواصل معنا:",
 "Email:": "البريد الإلكتروني:",
-"WhatsApp:": "واتساب:",
-"Home": "الرئيسية",
-"Payments": "المدفوعات",
 "Support": "الدعم",
 
 "Payments & Refunds": "المدفوعات والاستردادات",
 "Refund Policy": "سياسة الاسترداد",
-"We want every student to feel confident enrolling with Al-Bayan Arabic Isntitute Online. This page explains when refunds are available, how to request one, and how long the process takes.": "نريد أن يشعر كل طالب بالثقة عند التسجيل في معهد البيان العربي أونلاين. توضح هذه الصفحة متى تتوفر الاستردادات، وكيفية طلبها، والمدة التي تستغرقها العملية.",
+"We want every student to feel confident enrolling with Al-Bayan Arabic Institute Online. This page explains when refunds are available, how to request one, and how long the process takes.": "نريد أن يشعر كل طالب بالثقة عند التسجيل في معهد البيان العربي أونلاين. توضح هذه الصفحة متى تتوفر الاستردادات، وكيفية طلبها، والمدة التي تستغرقها العملية.",
 "Eligibility for a Refund": "أهلية الاسترداد",
 "You may request a full refund if:": "يمكنك طلب استرداد كامل إذا:",
 "Your class has not yet started, and you cancel at least 48 hours before the first session": "لم تبدأ حصتك بعد، وقمت بالإلغاء قبل 48 ساعة على الأقل من الحصة الأولى",
@@ -3199,7 +2507,7 @@ NEW FILES START HERE
 
 "Terms of Use": "شروط الاستخدام",
 "Terms & Conditions": "الشروط والأحكام",
-"By registering for or attending classes with Al-Bayan Arabic Isntitute Online, you agree to the terms below. Please read them carefully before enrolling.": "من خلال التسجيل في الحصص أو حضورها مع معهد البيان العربي أونلاين، فإنك توافق على الشروط أدناه. يرجى قراءتها بعناية قبل التسجيل.",
+"By registering for or attending classes with Al-Bayan Arabic Institute Online, you agree to the terms below. Please read them carefully before enrolling.": "من خلال التسجيل في الحصص أو حضورها مع معهد البيان العربي أونلاين، فإنك توافق على الشروط أدناه. يرجى قراءتها بعناية قبل التسجيل.",
 "Enrollment & Eligibility": "التسجيل والأهلية",
 "Registration is open to anyone wishing to learn Arabic and Islamic studies through our programs, regardless of age or prior experience, unless a specific class states otherwise. You are responsible for providing accurate information during registration.": "التسجيل متاح لكل من يرغب في تعلم اللغة العربية والدراسات الإسلامية من خلال برامجنا، بغض النظر عن العمر أو الخبرة السابقة، ما لم تنص حصة معينة على خلاف ذلك. أنت مسؤول عن تقديم معلومات دقيقة أثناء التسجيل.",
 "Full payment is required to confirm your place in a class. Payments are processed via Selar, or by direct bank transfer with manual verification.": "يُطلب الدفع الكامل لتأكيد مكانك في الحصة. تتم معالجة المدفوعات عبر Selar، أو عن طريق التحويل البنكي المباشر مع التحقق اليدوي.",
@@ -3210,9 +2518,9 @@ NEW FILES START HERE
 "Class Scheduling & Changes": "جدولة الحصص والتغييرات",
 "Class times, instructors, or formats may occasionally change due to circumstances beyond our control. We will do our best to notify students in advance of any changes affecting their enrolled class.": "قد تتغير أوقات الحصص أو المعلمين أو الصيغ أحيانًا بسبب ظروف خارجة عن إرادتنا. سنبذل قصارى جهدنا لإخطار الطلاب مسبقًا بأي تغييرات تؤثر على حصتهم المسجلة.",
 "Intellectual Property": "الملكية الفكرية",
-"Course materials, recordings, and content provided during classes are the property of Al-Bayan Arabic Isntitute Online and are intended for personal use by enrolled students only. They may not be redistributed, resold, or shared publicly without our written permission.": "المواد الدراسية والتسجيلات والمحتوى المقدم أثناء الحصص هي ملك لمعهد البيان العربي أونلاين، وهي مخصصة للاستخدام الشخصي للطلاب المسجلين فقط. لا يجوز إعادة توزيعها أو بيعها أو مشاركتها علنًا دون إذن كتابي منا.",
+"Course materials, recordings, and content provided during classes are the property of Al-Bayan Arabic Institute Online and are intended for personal use by enrolled students only. They may not be redistributed, resold, or shared publicly without our written permission.": "المواد الدراسية والتسجيلات والمحتوى المقدم أثناء الحصص هي ملك لمعهد البيان العربي أونلاين، وهي مخصصة للاستخدام الشخصي للطلاب المسجلين فقط. لا يجوز إعادة توزيعها أو بيعها أو مشاركتها علنًا دون إذن كتابي منا.",
 "Limitation of Liability": "حدود المسؤولية",
-"We strive to provide accurate, high-quality instruction, but we do not guarantee specific learning outcomes or timelines. Al-Bayan Arabic Isntitute Online is not liable for any indirect loss arising from your use of our website or programs.": "نسعى لتقديم تعليم دقيق وعالي الجودة، لكننا لا نضمن نتائج تعليمية أو جداول زمنية محددة. لا يتحمل معهد البيان العربي أونلاين مسؤولية أي خسارة غير مباشرة ناتجة عن استخدامك لموقعنا أو برامجنا.",
+"We strive to provide accurate, high-quality instruction, but we do not guarantee specific learning outcomes or timelines. Al-Bayan Arabic Institute Online is not liable for any indirect loss arising from your use of our website or programs.": "نسعى لتقديم تعليم دقيق وعالي الجودة، لكننا لا نضمن نتائج تعليمية أو جداول زمنية محددة. لا يتحمل معهد البيان العربي أونلاين مسؤولية أي خسارة غير مباشرة ناتجة عن استخدامك لموقعنا أو برامجنا.",
 "Changes to These Terms": "التغييرات على هذه الشروط",
 "We may update these Terms & Conditions from time to time to reflect changes in our programs or policies. Continued use of our website or services after an update means you accept the revised terms.": "قد نقوم بتحديث هذه الشروط والأحكام من وقت لآخر لتعكس التغييرات في برامجنا أو سياساتنا. استمرارك في استخدام موقعنا أو خدماتنا بعد أي تحديث يعني موافقتك على الشروط المُعدَّلة.",
 "If you have any questions regarding these Terms & Conditions, please contact us:": "إذا كانت لديك أي أسئلة بخصوص هذه الشروط والأحكام، يرجى التواصل معنا:",
@@ -3230,11 +2538,11 @@ NEW FILES START HERE
 "Quizzes": "الاختبارات",
 "Practice Quizzes": "اختبارات تدريبية",
 
-"Course(s)": "الدورة (الدورات)",
-"Course Name(s)": "اسم الدورة (الدورات)",
-"For multiple courses, separate with a comma": "للدورات المتعددة، افصل بفاصلة",
-"Please select at least one course before issuing.": "يرجى اختيار دورة واحدة على الأقل قبل الإصدار.",
-"Tick every course this certificate should cover — pick one for a single-course certificate, or several for a full-program certificate.": "حدد كل دورة يجب أن تغطيها هذه الشهادة — اختر واحدة لشهادة دورة واحدة، أو عدة دورات لشهادة برنامج كامل.",
+"Course(s)": "المقرر (المقررات)",
+"Course Name(s)": "اسم المقرر (المقررات)",
+"For multiple courses, separate with a comma": "للمقررات المتعددة، افصل بفاصلة",
+"Please select at least one course before issuing.": "يرجى اختيار مقرر واحد على الأقل قبل الإصدار.",
+"Tick every course this certificate should cover — pick one for a single-course certificate, or several for a full-program certificate.": "حدد كل مقرر يجب أن تغطيه هذه الشهادة — اختر واحدًا لشهادة مقرر واحد، أو عدة مقررات لشهادة برنامج كامل.",
 "Batch": "الدفعة",
 "BATCH": "الدفعة",
 "Batch:": "الدفعة:",
@@ -3252,11 +2560,8 @@ NEW FILES START HERE
 "Unclaimed Only": "غير مطالب بها فقط",
 "Pending Only": "معلقة فقط",
 "Granted": "تم المنح",
-"All": "الكل",
-"Student": "الطالب",
 "Badge": "الشارة",
 "Tier": "المستوى",
-"Amount": "المبلغ",
 "Claimed": "تاريخ المطالبة",
 "Approved By": "تمت الموافقة بواسطة",
 "No rewards yet": "لا توجد مكافآت بعد",
@@ -3272,7 +2577,6 @@ NEW FILES START HERE
 
 /* status values passed through t(r.status) */
 "unclaimed": "غير مطالب بها",
-"pending": "معلقة",
 "granted": "ممنوحة",
 
 /* ── Carryover Access tab ── */
@@ -3288,7 +2592,6 @@ NEW FILES START HERE
 "No overrides yet": "لا توجد استثناءات بعد",
 "Loading overrides...": "جارٍ تحميل الاستثناءات...",
 "Failed to load overrides.": "فشل تحميل الاستثناءات.",
-"Revoke": "إلغاء",
 "Enter the student's matric number": "أدخل الرقم الجامعي للطالب",
 "Select a course": "اختر مقررًا",
 "No student found with that matric number": "لم يتم العثور على طالب بهذا الرقم الجامعي",
@@ -3299,13 +2602,12 @@ NEW FILES START HERE
 "Access revoked": "تم إلغاء الصلاحية",
 "Failed to revoke access": "فشل إلغاء الصلاحية",
 "Level (optional)": "المستوى (اختياري)",
-"All levels registered for this course": "جميع المستويات المسجلة في هذه الدورة",
+"All levels registered for this course": "جميع المستويات المسجلة في هذا المقرر",
 
 "Available Assessments": "التقييمات المتاحة",
 "View / Enter": "عرض / الدخول",
 "for": "لـ",
 "batch": "الدفعة",
-"All Levels": "جميع المستويات",
 "Upcoming": "قادم",
 
 "This month is already confirmed as paid and can no longer be edited.": "تم تأكيد هذا الشهر كمدفوع ولا يمكن تحريره بعد الآن.",
@@ -3314,7 +2616,6 @@ NEW FILES START HERE
 "Payment updated successfully. We will confirm shortly.": "تم تحديث الدفعة بنجاح. سنؤكد قريبًا.",
 "Payment updated 💰": "تم تحديث الدفعة 💰",
 
-"Access Denied": "تم رفض الوصول",
 "Contact Admin on WhatsApp": "تواصل مع المسؤول عبر واتساب",
 "Go to Payment": "الذهاب إلى الدفع",
 
@@ -3340,19 +2641,15 @@ NEW FILES START HERE
 "Selected": "المحددون",
 "Select country": "اختر الدولة",
 "Select Country": "اختر الدولة",
-"Select": "اختر",
 "Semester Total Score": "مجموع الدرجات للفصل الدراسي",
 "FIRST": "الأول",
 "SECOND": "الثاني",
 "first": "الأول",
 "second": "الثاني",
-"First": "الأول",
-"Second": "الثاني",
 "First Semester": "الفصل الدراسي الأول",
 "Second Semester": "الفصل الدراسي الثاني",
 
 "Africa": "أفريقيا",
-"Nigeria": "نيجيريا",
 "Algeria": "الجزائر",
 "Angola": "أنغولا",
 "Benin": "بنين",
@@ -3369,7 +2666,6 @@ NEW FILES START HERE
 "Democratic Republic of the Congo": "جمهورية الكونغو الديمقراطية",
 "Republic of the Congo": "جمهورية الكونغو",
 "Djibouti": "جيبوتي",
-"Egypt": "مصر",
 "Equatorial Guinea": "غينيا الاستوائية",
 "Eritrea": "إريتريا",
 "Eswatini": "إسواتيني",
@@ -3411,7 +2707,6 @@ NEW FILES START HERE
 "Zimbabwe": "زيمبابوي",
 "Other Countries": "دول أخرى",
 "United States": "الولايات المتحدة",
-"United Kingdom": "المملكة المتحدة",
 "Canada": "كندا",
 "Australia": "أستراليا",
 "New Zealand": "نيوزيلندا",
@@ -3434,7 +2729,6 @@ NEW FILES START HERE
 "Turkey": "تركيا",
 "Saudi Arabia": "المملكة العربية السعودية",
 "United Arab Emirates": "الإمارات العربية المتحدة",
-"UAE": "الإمارات العربية المتحدة",
 "Qatar": "قطر",
 "Kuwait": "الكويت",
 "Bahrain": "البحرين",
@@ -3505,13 +2799,10 @@ NEW FILES START HERE
 /* ---- admin-dashboard.html / admin-dashboard.js (staff-facing) ---- */
 "Open a student record and click Issue Certificate to generate — choose Per-Level or Full Programme in the modal that opens.":
   "افتح سجل الطالب واضغط على «إصدار شهادة» لإنشائها — اختر «حسب المستوى» أو «البرنامج الكامل» في النافذة التي تظهر.",
-"All": "الكل",
 "Per-Level": "حسب المستوى",
 "Full Programme": "البرنامج الكامل",
-"Type": "النوع",
 "Per-Level Certificate": "شهادة حسب المستوى",
 "Programme Track(s)": "مسار(ات) البرنامج",
-"Arabic": "العربية",
 "Islamic": "الإسلامية",
 "Tick Arabic and/or Islamic to record which track(s) this level's certificate covers.":
   "ضع علامة على العربية و/أو الإسلامية لتحديد المسار (المسارات) التي تغطيها شهادة هذا المستوى.",
@@ -3527,9 +2818,7 @@ NEW FILES START HERE
 "Programme": "برنامج",
 
 "Showing": "عرض",
-"Semester": "الفصل الدراسي",
-"All Semesters": "جميع الفصول الدراسية",
-"Back to current semester": "العودة إلى الفصل الحالي",
+"Back to current semester": "العودة إلى الفصل الدراسي الحالي",
 "Show full grade history": "عرض السجل الكامل للدرجات",
 "Full grade history": "السجل الكامل للدرجات",
 "No grades released yet": "لم يتم نشر أي درجات بعد",
@@ -3538,27 +2827,13 @@ NEW FILES START HERE
 "Download Semester Report": "تحميل تقرير الفصل الدراسي",
 "Choose which semester you'd like as a PDF": "اختر الفصل الدراسي الذي تريد تحميله كملف PDF",
 "All Remarks": "جميع الملاحظات",
-"Pass": "ناجح",
-"Average": "متوسط",
-"Fail": "راسب",
-"No grades found": "لم يتم العثور على درجات",
 "No semester available to report on.": "لا يوجد فصل دراسي متاح لإصدار تقرير عنه.",
-"No grades to download.": "لا توجد درجات للتحميل.",
-"Error downloading PDF. See console for details.": "حدث خطأ أثناء تحميل ملف PDF. يرجى مراجعة وحدة التحكم لمزيد من التفاصيل.",
-"Preliminary": "تمهيدي",
-"Beginner": "مبتدئ",
-"Intermediate": "متوسط",
-"Advanced": "متقدم",
-"First": "الأول",
-"Second": "الثاني",
 
 "No receipt":     "لا يوجد إيصال",
 "null":           "فارغ",
 "No file":        "لا يوجد ملف",
 "No file uploaded": "لم يتم رفع أي ملف",
 "Basic Arabic": "العربية الأساسية",
-"Intermediate Arabic": "العربية المتوسطة",
-"Advanced Arabic": "العربية المتقدمة",
 "Basic Islamic Studies": "الدراسات الإسلامية الأساسية",
 "Intermediate Islamic Studies": "الدراسات الإسلامية المتوسطة",
 "Advanced Islamic Studies": "الدراسات الإسلامية المتقدمة",
@@ -3589,7 +2864,6 @@ NEW FILES START HERE
 
 "Promote Students": "ترقية الطلاب",
 "Promote / Move Students": "ترقية / نقل الطلاب",
-"All Batches": "جميع الدفعات",
 "New Level": "المستوى الجديد",
 "Don't change": "بدون تغيير",
 "New Batch": "الدفعة الجديدة",
@@ -3631,7 +2905,6 @@ NEW FILES START HERE
 "Residence:": "الإقامة:",
 "Residence": "الإقامة",
 
-"Country": "الدولة",
 "State": "الولاية",
 "Address": "العنوان",
 "State / Region": "الولاية / المنطقة",
@@ -3648,10 +2921,8 @@ NEW FILES START HERE
 "Save Lead": "حفظ الطالب المحتمل",
 "Search by name or phone...": "ابحث بالاسم أو رقم الهاتف...",
 
-"Contact": "التواصل",
 "Source": "المصدر",
 "Added": "أُضيف",
-"Full Name": "الاسم الكامل",
 "Phone / WhatsApp": "الهاتف / واتساب",
 "Phone or WhatsApp Number": "رقم الهاتف أو الواتساب",
 "Email (optional)": "البريد الإلكتروني (اختياري)",
@@ -3664,10 +2935,8 @@ NEW FILES START HERE
 "Interested": "مهتم",
 "Enrolled": "تم التسجيل",
 "Not Interested": "غير مهتم",
-"WhatsApp": "واتساب",
 "Website": "الموقع الإلكتروني",
 "Referral": "إحالة",
-"Other": "أخرى",
 
 "No leads yet": "لا يوجد طلاب محتملون بعد",
 "Failed to load leads": "فشل تحميل الطلاب المحتملين",
@@ -3680,23 +2949,12 @@ NEW FILES START HERE
 "Failed to delete lead.": "فشل حذف الطالب المحتمل.",
 "Access denied.": "تم رفض الوصول.",
 
-"All Levels": "كل المستويات",
-"All Batches": "كل الدُفعات",
-"All Courses": "كل الدورات",
-"All Semesters": "كل الفصول الدراسية",
-"All Types": "كل الأنواع",
 "All Months": "كل الأشهر",
-"Level": "المستوى",
-"Batch": "الدُفعة",
 "Select your level and batch to see activities specific to you. Leave a field blank to keep it broad.": "اختر مستواك ودفعتك لعرض الأنشطة الخاصة بك. اترك الحقل فارغًا لعرض أوسع.",
 "e.g. June 2026 (leave blank for all batches)": "مثال: يونيو 2026 (اتركه فارغًا لجميع الدُفعات)",
-"Select Semester": "اختر الفصل الدراسي",
-"First Semester": "الفصل الدراسي الأول",
-"Second Semester": "الفصل الدراسي الثاني",
 
 "Attempted": "تمت المحاولة",
 "You have already attempted this assessment": "لقد قمت بهذه المحاولة مسبقًا",
-"Attempted": "تمت المحاولة",
 "Back to Assessments": "العودة إلى الاختبارات",
 
   "Graduated": "متخرج",
@@ -3716,9 +2974,7 @@ NEW FILES START HERE
 "Register for a course": "التسجيل في مقرر",
 "Section (teacher / batch)": "الشعبة (المعلم / الدفعة)",
 "Level and batch default to the student's current ones. Admin registration ignores the normal level/batch eligibility rules.": "يتم تعبئة المستوى والدفعة تلقائيًا من بيانات الطالب الحالية. تسجيل الإدارة يتجاوز شروط الأهلية المعتادة للمستوى والدفعة.",
-"Register": "تسجيل",
 "Unregister": "إلغاء التسجيل",
-"registered": "مسجّل",
 "Student registration is currently locked. You can still register or unregister on the student's behalf.": "تسجيل الطلاب مقفل حاليًا. لا يزال بإمكانك تسجيل الطالب أو إلغاء تسجيله نيابةً عنه.",
 "Failed to load sections": "تعذّر تحميل الشعب",
 "No sections (open course)": "لا توجد شعب (مقرر مفتوح)",
@@ -3749,6 +3005,8 @@ NEW FILES START HERE
 "student(s) have no matching section and will be registered without one.": "طالب/طلاب بلا شعبة مطابقة وسيُسجَّلون دون شعبة.",
 "Registered": "تم تسجيل",
 "Failed": "فشل",
+
+"Add teachers and batches from the course card below once it's created.": "أضف المعلمين والدفعات من بطاقة المقرر أدناه بمجرد إنشائه.",
 // ===== DYNAMIC TEMPLATES ===== 
 
 en: {
@@ -3890,7 +3148,7 @@ ar: {
 
   PAYMENT_RECORDED: "تم تسجيل دفعة قدرها {amount} لشهر {month}.",
   PAYMENT_CONFIRMED: "تم تأكيد دفعتك بقيمة {amount} لشهر {month}.",
-  GRADE_RELEASED: "تم نشر درجتك لمادة {course}.",
+  GRADE_RELEASED: "تم نشر درجتك لمقرر {course}.",
   CLASS_SCHEDULED: "تم تحديد حصة {course} بتاريخ {date} الساعة {time}.",
 
   month_payment: "دفع {month}",
@@ -3909,7 +3167,7 @@ ar: {
   register: "تسجيل",
   registered: "✅ تم التسجيل",
 
-  no_courses: "لم تقم بالتسجيل في أي مادة بعد.",
+  no_courses: "لم تقم بالتسجيل في أي مقرر بعد.",
 
   view_schedule: "عرض الجدول",
   unregister: "إلغاء التسجيل",
@@ -3940,7 +3198,7 @@ ar: {
   ASSESSMENT_DURATION: "المدة: {duration} دقيقة",
   ASSESSMENT_STATUS: "الحالة: {status}",
   ASSESSMENT_TYPE: "النوع: {type}",
-  ASSESSMENT_COURSE: "المادة: {course}",
+  ASSESSMENT_COURSE: "المقرر: {course}",
   ASSESSMENT_SEMESTER: "الفصل الدراسي: {semester}",
 
   ONGOING_ASSESSMENT: "الاختبار جارٍ حاليًا",
@@ -4015,12 +3273,12 @@ ar: {
 "Make Payment": "إجراء الدفع",
 "My Grades": "درجاتي",
   
-  "CERTIFICATE_ISSUED": "تم إصدار شهادتك لمادة {course}",
+  "CERTIFICATE_ISSUED": "تم إصدار شهادتك لمقرر {course}",
 "certificate_issued_title": "تم إصدار الشهادة 🎓",
-"GRADE_SUBMITTED": "تم إرسال الدرجة لمادة {course}",
+"GRADE_SUBMITTED": "تم إرسال الدرجة لمقرر {course}",
 "PROFILE_SAVED": "تم حفظ الملف الشخصي بنجاح",
-"NO_COURSES_ASSIGNED": "لم يتم تعيين أي مواد لك بعد",
-"NO_STUDENTS_ENROLLED": "لا يوجد طلاب مسجلون في هذه المادة",
+"NO_COURSES_ASSIGNED": "لم يتم تعيين أي مقررات لك بعد",
+"NO_STUDENTS_ENROLLED": "لا يوجد طلاب مسجلون في هذا المقرر",
 "already_registered": "مسجل بالفعل",
 "register_success": "تم تسجيل المقرر بنجاح",
 "unregister_success": "تم حذف المقرر بنجاح",
@@ -4216,7 +3474,7 @@ function updateYear() {
       `© 2025 - ${year} معهد البيان للدراسات العربية عبر الانترنت. جميع الحقوق محفوظة.`;
   } else {
     footer.textContent =
-      `© 2025 - ${year} Al-Bayan Arabic Isntitute Online. All rights reserved.`;
+      `© 2025 - ${year} Al-Bayan Arabic Institute Online. All rights reserved.`;
   }
 }
 
