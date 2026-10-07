@@ -835,83 +835,302 @@ async function loadStudents() {
 // ===========================
 // STUDENT COURSES MODAL
 // ===========================
-// Read-only view of everything a given student is registered for:
-// course, the level/batch captured in course_registrations at the time
-// they registered (not their current global level/batch, which may have
-// moved on since — same reasoning as autofillGradeLevelBatch above),
-// and whichever course_sections instructor currently covers that course
-// for that batch.
+// Shows every course a student is registered for (level/batch as captured
+// in course_registrations at registration time + the instructor of the
+// matching course_sections row). Roles with canDo("course_registrations")
+// can also register the student into a course or unregister them, on the
+// student's behalf, from this same modal.
+let scStudent = null;          // { matric, fullname, level, batch }
+let scRegistrations = [];      // rows currently shown
+let scAllCourses = null;       // cached non-deleted courses for the dropdown
+let scCourseNames = {};        // course_id -> name for the rows shown
+
+function scEscape(str) {
+  return String(str ?? "").replace(/[&<>"']/g, c => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+  ));
+}
+
+function scCanManage() {
+  return typeof window.canDo === "function" && !!window.canDo("course_registrations");
+}
+
 async function openStudentCoursesModal(matric, fullname) {
+  const row = (window.studentsRowCache || []).find(s => s.matric_number === matric) || {};
+  scStudent = {
+    matric,
+    fullname,
+    level: row.level_arabic || "",
+    batch: row.batch || ""
+  };
+
   const subtitle = document.getElementById("studentCoursesSubtitle");
   if (subtitle) subtitle.textContent = `${fullname} — ${matric}`;
 
+  openModal("studentCoursesModal");
+
+  const canManage = scCanManage();
+  document.getElementById("studentCoursesAddBox").style.display = canManage ? "" : "none";
+  document.getElementById("scActionsHead").style.display = canManage ? "" : "none";
+
+  // Lock notice (staff can still act — this is just so they know)
+  const lockEl = document.getElementById("studentCoursesLockNotice");
+  if (lockEl) {
+    if (window.registrationLocked) {
+      lockEl.textContent = "🔒 " + t("Student registration is currently locked. You can still register or unregister on the student's behalf.");
+      lockEl.style.display = "";
+    } else {
+      lockEl.style.display = "none";
+    }
+  }
+
+  if (canManage) {
+    document.getElementById("scAddLevel").value = scStudent.level || "Preliminary";
+    document.getElementById("scAddBatch").value = scStudent.batch;
+    await scLoadCourseOptions();
+  }
+
+  await loadStudentCourses();
+}
+
+async function loadStudentCourses() {
   const tbody = document.getElementById("student-courses-body");
+  const canManage = scCanManage();
+  const cols = canManage ? 5 : 4;
+
   if (tbody) {
-    tbody.innerHTML = `<tr><td colspan="4" class="empty-row">
+    tbody.innerHTML = `<tr><td colspan="${cols}" class="empty-row">
       <i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading...")}
     </td></tr>`;
   }
-
-  openModal("studentCoursesModal");
 
   try {
     const { data: registrations, error: regError } = await db
       .from("course_registrations")
       .select("*")
-      .eq("matric_number", matric);
+      .eq("matric_number", scStudent.matric);
 
     if (regError) throw regError;
+    scRegistrations = registrations || [];
 
-    if (!registrations || registrations.length === 0) {
-      if (tbody) tbody.innerHTML = `<tr><td colspan="4" class="empty-row" data-translate="No courses registered">${t("No courses registered")}</td></tr>`;
+    scMarkRegisteredInDropdown();
+
+    if (!scRegistrations.length) {
+      tbody.innerHTML = `<tr><td colspan="${cols}" class="empty-row">${t("No courses registered")}</td></tr>`;
       return;
     }
 
-    const courseIds = [...new Set(registrations.map(r => r.course_id))];
+    const courseIds = [...new Set(scRegistrations.map(r => r.course_id))];
 
     const { data: courseRows } = await db
-      .from("courses")
-      .select("id, course_name")
-      .in("id", courseIds);
-
-    const courseNameById = {};
-    (courseRows || []).forEach(c => { courseNameById[c.id] = c.course_name; });
+      .from("courses").select("id, course_name").in("id", courseIds);
+    scCourseNames = {};
+    (courseRows || []).forEach(c => { scCourseNames[c.id] = c.course_name; });
 
     const { data: sectionRows } = await db
-      .from("course_sections")
-      .select("course_id, instructor, batch")
-      .in("course_id", courseIds);
-
-    // For each (course, batch) pick the section matching that exact batch;
-    // if none, fall back to a section with batch = null (covers all batches).
+      .from("course_sections").select("id, course_id, instructor, batch").in("course_id", courseIds);
     const sectionsByCourse = {};
     (sectionRows || []).forEach(s => {
-      if (!sectionsByCourse[s.course_id]) sectionsByCourse[s.course_id] = [];
-      sectionsByCourse[s.course_id].push(s);
+      (sectionsByCourse[s.course_id] ||= []).push(s);
     });
 
-    function resolveInstructor(courseId, batch) {
-      const sections = sectionsByCourse[courseId] || [];
-      const exact = sections.find(s => s.batch && s.batch === batch);
+    // Prefer the exact section the registration was made against; then
+    // fall back to batch match, then an all-batches section.
+    function resolveInstructor(reg) {
+      const sections = sectionsByCourse[reg.course_id] || [];
+      const byId = reg.section_id && sections.find(s => String(s.id) === String(reg.section_id));
+      if (byId) return byId.instructor || t("No instructor");
+      const exact = sections.find(s => s.batch && s.batch === reg.batch);
       if (exact) return exact.instructor || t("No instructor");
-      const allBatches = sections.find(s => !s.batch);
-      if (allBatches) return allBatches.instructor || t("No instructor");
+      const open = sections.find(s => !s.batch);
+      if (open) return open.instructor || t("No instructor");
       return "—";
     }
 
-    if (tbody) {
-      tbody.innerHTML = registrations.map(r => `
-        <tr>
-          <td>${escapeForAttr(courseNameById[r.course_id] || t("Deleted course"))}</td>
-          <td>${escapeForAttr(r.level || "—")}</td>
-          <td>${escapeForAttr(r.batch || "—")}</td>
-          <td>${escapeForAttr(resolveInstructor(r.course_id, r.batch))}</td>
-        </tr>
-      `).join("");
-    }
+    tbody.innerHTML = scRegistrations.map(r => `
+      <tr>
+        <td>${scEscape(scCourseNames[r.course_id] || t("Deleted course"))}</td>
+        <td>${scEscape(r.level || "—")}</td>
+        <td>${scEscape(r.batch || "—")}</td>
+        <td>${scEscape(resolveInstructor(r))}</td>
+        ${canManage ? `<td>
+          <button class="btn btn-delete btn-small"
+                  onclick="adminUnregisterStudentCourse('${r.id}', '${r.course_id}')">
+            <i class="fa-solid fa-user-minus"></i> ${t("Unregister")}
+          </button>
+        </td>` : ""}
+      </tr>
+    `).join("");
   } catch (e) {
-    console.error("openStudentCoursesModal error:", e);
-    if (tbody) tbody.innerHTML = `<tr><td colspan="4" class="empty-row" style="color:red;">${t("Failed to load courses.")}</td></tr>`;
+    console.error("loadStudentCourses error:", e);
+    if (tbody) tbody.innerHTML = `<tr><td colspan="${cols}" class="empty-row" style="color:red;">${t("Failed to load courses.")}</td></tr>`;
+  }
+}
+
+/* ---------- Register (staff on behalf of student) ---------- */
+
+async function scLoadCourseOptions() {
+  const select = document.getElementById("scAddCourse");
+  if (!select) return;
+
+  const courses = await scGetCourses();
+
+  select.innerHTML = `<option value="">${t("Select Course")}</option>` +
+    courses.map(c => `<option value="${c.id}">${scEscape(c.label)}</option>`).join("");
+
+  const sec = document.getElementById("scAddSection");
+  sec.innerHTML = `<option value="">${t("Select Course First")}</option>`;
+  sec.disabled = true;
+}
+
+// Disable + tick courses the student already has, so they can't be picked twice.
+function scMarkRegisteredInDropdown() {
+  const select = document.getElementById("scAddCourse");
+  if (!select || !scAllCourses) return;
+  const registered = new Set(scRegistrations.map(r => String(r.course_id)));
+  [...select.options].forEach(opt => {
+    if (!opt.value) return;
+    const base = scAllCourses.find(c => String(c.id) === opt.value)?.label || opt.textContent;
+    const already = registered.has(opt.value);
+    opt.disabled = already;
+    opt.textContent = already ? `${base} ✓ ${t("registered")}` : base;
+  });
+}
+
+async function onStudentCoursesCourseChange() {
+  const courseId = document.getElementById("scAddCourse").value;
+  const sec = document.getElementById("scAddSection");
+
+  if (!courseId) {
+    sec.innerHTML = `<option value="">${t("Select Course First")}</option>`;
+    sec.disabled = true;
+    return;
+  }
+
+  sec.disabled = true;
+  sec.innerHTML = `<option value="">${t("Loading...")}</option>`;
+
+  const { data, error } = await db
+    .from("course_sections")
+    .select("id, instructor, batch")
+    .eq("course_id", courseId);
+
+  if (error) {
+    console.error("Load sections error:", error);
+    sec.innerHTML = `<option value="">${t("Failed to load sections")}</option>`;
+    return;
+  }
+
+  const sections = data || [];
+  if (!sections.length) {
+    // Legacy course with no sections on file — registers with section_id = null,
+    // same as the student page does for these.
+    sec.innerHTML = `<option value="">${t("No sections (open course)")}</option>`;
+    sec.disabled = false;
+    return;
+  }
+
+  sec.innerHTML = sections.map(s =>
+    `<option value="${s.id}">${scEscape(s.instructor || t("No instructor"))} — ${scEscape(s.batch || t("All Batches"))}</option>`
+  ).join("");
+  sec.disabled = false;
+
+  // Pre-select the section matching the student's batch, else an open one
+  const exact = sections.find(s => s.batch && s.batch === scStudent.batch);
+  const open = sections.find(s => !s.batch);
+  sec.value = (exact || open || sections[0]).id;
+}
+
+async function adminRegisterStudentCourse() {
+  if (!scCanManage()) { alert(t("Manage Your Office")); return; }
+
+  const btn = document.getElementById("scAddBtn");
+  const courseId = document.getElementById("scAddCourse").value;
+  const sectionId = document.getElementById("scAddSection").value || null;
+  const level = document.getElementById("scAddLevel").value;
+  const batch = document.getElementById("scAddBatch").value.trim();
+
+  if (!courseId) { alert(t("Select a course")); return; }
+  if (scRegistrations.some(r => String(r.course_id) === String(courseId))) {
+    alert(t("This student is already registered for that course")); return;
+  }
+
+  setLoading(btn, true);
+  try {
+    const { error } = await db.from("course_registrations").insert([{
+      matric_number: scStudent.matric,
+      course_id: courseId,
+      level: level || null,
+      batch: batch || null,
+      section_id: sectionId
+    }]);
+
+    if (error) {
+      if (error.code === "23505" || (error.message || "").includes("duplicate")) {
+        alert(t("This student is already registered for that course"));
+      } else {
+        console.error("adminRegisterStudentCourse error:", error);
+        // Shows the lock-trigger message if the trigger doesn't exempt staff
+        alert(t("Failed to register: ") + error.message);
+      }
+      return;
+    }
+
+    showToast(t("Student registered ✅"));
+    document.getElementById("scAddCourse").value = "";
+    await onStudentCoursesCourseChange();
+    await loadStudentCourses();
+  } catch (e) {
+    console.error("adminRegisterStudentCourse exception:", e);
+    alert(t("Error: ") + e.message);
+  } finally {
+    setLoading(btn, false);
+  }
+}
+
+/* ---------- Unregister ---------- */
+
+async function adminUnregisterStudentCourse(registrationId, courseId) {
+  if (!scCanManage()) { alert(t("Manage Your Office")); return; }
+
+  const courseName = scCourseNames[courseId] || "";
+
+  // Unregistering doesn't touch grades, so warn if any will be left behind
+  // (grades are keyed by course NAME, not id).
+  let warning = "";
+  if (courseName) {
+    const { count } = await db
+      .from("grades")
+      .select("id", { count: "exact", head: true })
+      .eq("matric_number", scStudent.matric)
+      .eq("course", courseName);
+    if (count > 0) {
+      warning = `\n\n⚠️ ${t("This student has")} ${count} ${t("grade record(s) for this course. They will NOT be deleted.")}`;
+    }
+  }
+
+  if (!confirm(`${t("Unregister")} ${scStudent.fullname} ${t("from")} "${courseName || t("this course")}"?${warning}`)) return;
+
+  try {
+    const { data, error } = await db
+      .from("course_registrations")
+      .delete()
+      .eq("id", registrationId)
+      .select();
+
+    if (error) throw error;
+
+    // RLS can "succeed" with zero rows if the role isn't allowed to delete
+    if (!data || !data.length) {
+      alert(t("Nothing was removed. You may not have permission to unregister students."));
+      return;
+    }
+
+    showToast(t("Student unregistered"));
+    await loadStudentCourses();
+  } catch (e) {
+    console.error("adminUnregisterStudentCourse error:", e);
+    alert(t("Failed to unregister: ") + e.message);
   }
 }
 
@@ -1989,6 +2208,294 @@ async function promoteSaveStudents() {
     closeModal("promoteStudentsModal");
     loadStudents();
     showToast(`${t("Updated")} ${matrics.length} ${t("student(s)")}`);
+  } finally {
+    setLoading(btn, false);
+  }
+}
+
+/* -------------------------------------------------------
+   BULK REGISTER STUDENTS — register many students into one
+   course in a single Save, filtered by level/batch exactly like
+   Promote Students. Each student is registered with their OWN
+   current level + batch (same snapshot the student page takes).
+   Section defaults to "Auto": each student gets the section that
+   matches their batch (else an all-batches section), or the admin
+   can force one specific section for everybody selected.
+------------------------------------------------------- */
+let brSections = [];            // sections of the currently chosen course
+let brRegisteredSet = new Set(); // matrics already registered for that course
+let brCourseLevels = [];        // levels the chosen course is tagged for
+
+async function scGetCourses() {
+  if (scAllCourses) return scAllCourses;
+
+  const { data, error } = await db
+    .from("courses")
+    .select("id, course_name, level")
+    .eq("deleted", false)
+    .order("course_name");
+  if (error) { console.error("scGetCourses error:", error); return []; }
+
+  const courses = data || [];
+  const ids = courses.map(c => c.id);
+
+  // Real tagged levels live in course_levels (courses.level only holds
+  // the first one picked), same source the student registration page uses.
+  const levelsByCourse = {};
+  if (ids.length) {
+    const { data: lvlRows, error: lvlErr } = await db
+      .from("course_levels").select("course_id, level").in("course_id", ids);
+    if (lvlErr) console.error("scGetCourses levels error:", lvlErr);
+    (lvlRows || []).forEach(r => { (levelsByCourse[r.course_id] ||= []).push(r.level); });
+  }
+
+  const sectionBatches = await fetchSectionBatchesByCourse(ids);
+
+  scAllCourses = courses.map(c => {
+    const levels = levelsByCourse[c.id] || (c.level ? [c.level] : []);
+    return {
+      id: c.id,
+      course_name: c.course_name,
+      levels,
+      label: `${c.course_name}${levels.length ? " — " + levels.join(", ") : ""}${batchLabelFor(c.id, sectionBatches)}`
+    };
+  });
+  return scAllCourses;
+}
+
+async function openBulkRegisterModal() {
+  if (!scCanManage()) { alert(t("Manage Your Office")); return; }
+
+  ["bulkRegLevelFilter", "bulkRegBatchFilter", "bulkRegSearch"].forEach(id => {
+    document.getElementById(id).value = "";
+  });
+  brSections = [];
+  brRegisteredSet = new Set();
+  brCourseLevels = [];
+
+  const lockEl = document.getElementById("bulkRegLockNotice");
+  if (lockEl) {
+    if (window.registrationLocked) {
+      lockEl.textContent = "🔒 " + t("Student registration is currently locked. You can still register students on their behalf.");
+      lockEl.style.display = "";
+    } else {
+      lockEl.style.display = "none";
+    }
+  }
+
+  const list = document.getElementById("bulkRegStudentList");
+  list.innerHTML = `<span>${t("Loading students...")}</span>`;
+
+  openModal("bulkRegisterModal");
+
+  const [courses, students] = await Promise.all([scGetCourses(), loadStudentsCache()]);
+
+  const courseSel = document.getElementById("bulkRegCourse");
+  courseSel.innerHTML = `<option value="">${t("Select Course")}</option>` +
+    courses.map(c => `<option value="${c.id}">${scEscape(c.label)}</option>`).join("");
+
+  const secSel = document.getElementById("bulkRegSection");
+  secSel.innerHTML = `<option value="">${t("Select Course First")}</option>`;
+  secSel.disabled = true;
+
+  if (!students.length) {
+    list.innerHTML = `<span>${t("No students found")}</span>`;
+    return;
+  }
+
+  const batches = [...new Set(students.map(s => s.batch).filter(Boolean))].sort();
+  document.getElementById("bulkRegBatchFilter").innerHTML =
+    `<option value="">${t("All Batches")}</option>` +
+    batches.map(b => `<option value="${scEscape(b)}">${scEscape(b)}</option>`).join("");
+
+  list.innerHTML = students.map((s, i) => `
+    <label class="bulkFeeStudentRow" data-matric="${scEscape(s.matric_number)}"
+           data-search="${scEscape((s.fullname + " " + s.matric_number).toLowerCase())}"
+           data-level="${scEscape(s.level_arabic || "")}" data-batch="${scEscape(s.batch || "")}">
+      <input type="checkbox" class="bulkRegStudentCheckbox" value="${scEscape(s.matric_number)}"
+             id="bulkRegCb${i}" onchange="updateBulkRegSelectedCount()">
+      <span class="bulkFeeStudentInfo">
+        <span class="bulkFeeStudentName">${scEscape(s.fullname)}<span class="br-tag"></span></span>
+        <span class="bulkFeeStudentMatric">${scEscape(s.matric_number)} • ${scEscape(s.level_arabic || "—")} • ${scEscape(s.batch || "—")}</span>
+      </span>
+    </label>
+  `).join("");
+
+  updateBulkRegSelectedCount();
+}
+
+// Course picked: load its sections, its tagged levels, and who is already in it.
+async function onBulkRegCourseChange() {
+  const courseId = document.getElementById("bulkRegCourse").value;
+  const secSel = document.getElementById("bulkRegSection");
+
+  brSections = [];
+  brRegisteredSet = new Set();
+  brCourseLevels = [];
+
+  if (!courseId) {
+    secSel.innerHTML = `<option value="">${t("Select Course First")}</option>`;
+    secSel.disabled = true;
+    brMarkRegisteredRows();
+    return;
+  }
+
+  secSel.disabled = true;
+  secSel.innerHTML = `<option value="">${t("Loading...")}</option>`;
+
+  const [secRes, regRes] = await Promise.all([
+    db.from("course_sections").select("id, instructor, batch").eq("course_id", courseId),
+    db.from("course_registrations").select("matric_number").eq("course_id", courseId)
+  ]);
+
+  if (secRes.error) console.error("Bulk reg sections error:", secRes.error);
+  if (regRes.error) console.error("Bulk reg existing registrations error:", regRes.error);
+
+  brSections = secRes.data || [];
+  brRegisteredSet = new Set((regRes.data || []).map(r => r.matric_number));
+  brCourseLevels = (scAllCourses || []).find(c => String(c.id) === String(courseId))?.levels || [];
+
+  secSel.innerHTML =
+    `<option value="__auto__">${t("Auto — match each student's batch")}</option>` +
+    brSections.map(s =>
+      `<option value="${s.id}">${scEscape(s.instructor || t("No instructor"))} — ${scEscape(s.batch || t("All Batches"))}</option>`
+    ).join("");
+  secSel.disabled = false;
+  secSel.value = "__auto__";
+
+  brMarkRegisteredRows();
+}
+
+// Grey out + untick students already in the chosen course.
+function brMarkRegisteredRows() {
+  document.querySelectorAll("#bulkRegStudentList .bulkFeeStudentRow").forEach(row => {
+    const cb = row.querySelector(".bulkRegStudentCheckbox");
+    const tag = row.querySelector(".br-tag");
+    const already = brRegisteredSet.has(row.dataset.matric);
+    row.classList.toggle("br-registered", already);
+    cb.disabled = already;
+    if (already) cb.checked = false;
+    if (tag) tag.textContent = already ? ` ✓ ${t("already registered")}` : "";
+  });
+  updateBulkRegSelectedCount();
+}
+
+function filterBulkRegStudents() {
+  const query = document.getElementById("bulkRegSearch").value.trim().toLowerCase();
+  const level = document.getElementById("bulkRegLevelFilter").value;
+  const batch = document.getElementById("bulkRegBatchFilter").value;
+
+  document.querySelectorAll("#bulkRegStudentList .bulkFeeStudentRow").forEach(row => {
+    const ok = row.dataset.search.includes(query) &&
+      (!level || row.dataset.level === level) &&
+      (!batch || row.dataset.batch === batch);
+    row.style.display = ok ? "flex" : "none";
+  });
+}
+
+function toggleAllBulkRegStudents(checked) {
+  // Only visible, not-yet-registered rows
+  document.querySelectorAll("#bulkRegStudentList .bulkFeeStudentRow").forEach(row => {
+    if (row.style.display === "none") return;
+    const cb = row.querySelector(".bulkRegStudentCheckbox");
+    if (cb && !cb.disabled) cb.checked = checked;
+  });
+  updateBulkRegSelectedCount();
+}
+
+function updateBulkRegSelectedCount() {
+  const n = document.querySelectorAll(".bulkRegStudentCheckbox:checked").length;
+  const el = document.getElementById("bulkRegSelectedCount");
+  if (el) el.textContent = `${n} ${t("selected")}`;
+}
+
+async function bulkRegisterStudents() {
+  if (!scCanManage()) { alert(t("Manage Your Office")); return; }
+
+  const courseId = document.getElementById("bulkRegCourse").value;
+  const sectionChoice = document.getElementById("bulkRegSection").value;
+  if (!courseId) { alert(t("Select a course")); return; }
+
+  const matrics = Array.from(document.querySelectorAll(".bulkRegStudentCheckbox:checked"))
+    .map(cb => cb.value);
+  if (!matrics.length) { alert(t("Select at least one student")); return; }
+
+  const byMatric = {};
+  (studentsCache || []).forEach(s => { byMatric[s.matric_number] = s; });
+
+  // Resolve each student's section + build rows
+  function sectionFor(student) {
+    if (sectionChoice && sectionChoice !== "__auto__") return sectionChoice;
+    if (!brSections.length) return null;
+    const exact = brSections.find(s => s.batch && s.batch === student.batch);
+    if (exact) return exact.id;
+    const open = brSections.find(s => !s.batch);
+    return open ? open.id : null;
+  }
+
+  const rows = matrics.map(m => {
+    const s = byMatric[m] || {};
+    return {
+      matric_number: m,
+      course_id: courseId,
+      level: s.level_arabic || null,
+      batch: s.batch || null,
+      section_id: sectionFor(s)
+    };
+  });
+
+  // Soft warnings — admin may override either, so they only inform the confirm.
+  const levelMismatch = brCourseLevels.length
+    ? rows.filter(r => r.level && !brCourseLevels.includes(r.level)).length : 0;
+  const noSection = brSections.length ? rows.filter(r => !r.section_id).length : 0;
+
+  const courseLabel = (scAllCourses || []).find(c => String(c.id) === String(courseId))?.label || "";
+  let msg = `${t("Register")} ${rows.length} ${t("student(s)")} ${t("in")} "${courseLabel}"?`;
+  if (levelMismatch) msg += `\n\n⚠️ ${levelMismatch} ${t("selected student(s) are at a level this course is not tagged for.")}`;
+  if (noSection) msg += `\n⚠️ ${noSection} ${t("student(s) have no matching section and will be registered without one.")}`;
+  if (!confirm(msg)) return;
+
+  const btn = document.getElementById("bulkRegSaveBtn");
+  setLoading(btn, true);
+
+  try {
+    let done = 0;
+    const failed = [];
+
+    // One request for the whole batch; if anything in it is rejected
+    // (duplicate race, trigger), fall back to row-by-row so one bad row
+    // doesn't sink everyone else.
+    const { error } = await db.from("course_registrations").insert(rows);
+
+    if (!error) {
+      done = rows.length;
+    } else {
+      console.warn("Bulk insert failed, retrying one by one:", error);
+      for (const row of rows) {
+        const { error: rowErr } = await db.from("course_registrations").insert([row]);
+        if (!rowErr || rowErr.code === "23505") {
+          done++;
+        } else {
+          failed.push({ matric: row.matric_number, message: rowErr.message });
+        }
+      }
+    }
+
+    if (failed.length) {
+      console.error("Bulk register failures:", failed);
+      alert(`${t("Registered")} ${done}. ${t("Failed")}: ${failed.length}\n\n` +
+        failed.slice(0, 5).map(f => `${f.matric}: ${f.message}`).join("\n") +
+        (failed.length > 5 ? "\n…" : ""));
+    } else {
+      showToast(`${t("Registered")} ${done} ${t("student(s)")} ✅`);
+      closeModal("bulkRegisterModal");
+    }
+
+    // Refresh "already registered" state if the modal is still open
+    if (failed.length) await onBulkRegCourseChange();
+  } catch (e) {
+    console.error("bulkRegisterStudents exception:", e);
+    alert(t("Error: ") + e.message);
   } finally {
     setLoading(btn, false);
   }

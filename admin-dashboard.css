@@ -2101,3 +2101,28 @@ input:checked + .slider:before { transform: translateX(22px); }
 #tab-students.students-readonly .student-write-btn {
   display: none !important;
 }
+
+/* STUDENT COURSES MODAL — admin register/unregister */
+.sc-lock-notice {
+  margin: 0 0 14px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #fff3cd;
+  color: #8a6d00;
+  font-size: 13px;
+}
+.sc-add-box {
+  padding: 14px 0 0;
+  border-top: 1px solid var(--border-light);
+}
+.sc-add-title {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* BULK REGISTER — students already in the chosen course */
+.bulkFeeStudentRow.br-registered { opacity: .55; cursor: not-allowed; }
+.bulkFeeStudentRow .br-tag { font-size: 11px; font-weight: normal; color: #8a6d00; margin-inline-start: 6px; }

@@ -389,6 +389,10 @@
         <i class="fa-solid fa-arrow-up-right-from-square"></i>
         <span data-translate="Promote Students">Promote Students</span>
       </button>
+      <button class="add-btn student-write-btn" onclick="openBulkRegisterModal()">
+        <i class="fa-solid fa-book-medical"></i>
+        <span data-translate="Bulk Register">Bulk Register</span>
+      </button>
     </div>
     <div class="table-container">
       <table id="students-table">
@@ -2494,6 +2498,44 @@
       <div class="cert-modal-form">
         <h2 data-translate="Registered Courses">Registered Courses</h2>
         <p id="studentCoursesSubtitle" style="color:#666;font-size:13px;margin:-10px 0 16px;"></p>
+        <p id="studentCoursesLockNotice" class="sc-lock-notice" style="display:none;"></p>
+
+        <!-- Admin-only: register this student into a course -->
+        <div id="studentCoursesAddBox" class="sc-add-box" style="display:none;">
+          <h3 class="sc-add-title">
+            <i class="fa-solid fa-circle-plus"></i>
+            <span data-translate="Register for a course">Register for a course</span>
+          </h3>
+          <div class="modal-grid">
+            <label data-translate="Course">Course</label>
+            <select id="scAddCourse" onchange="onStudentCoursesCourseChange()">
+              <option value="" data-translate="Select Course">Select Course</option>
+            </select>
+            <label data-translate="Section (teacher / batch)">Section (teacher / batch)</label>
+            <select id="scAddSection" disabled>
+              <option value="" data-translate="Select Course First">Select Course First</option>
+            </select>
+            <label data-translate="Level">Level</label>
+            <select id="scAddLevel">
+              <option value="Preliminary">Preliminary</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+            </select>
+            <label data-translate="Batch">Batch</label>
+            <input type="text" id="scAddBatch" placeholder="e.g. June 2026"
+                   data-translate-placeholder="e.g. June 2026">
+          </div>
+          <p class="course-form-hint" data-translate="Level and batch default to the student's current ones. Admin registration ignores the normal level/batch eligibility rules.">
+            Level and batch default to the student's current ones. Admin registration ignores the normal level/batch eligibility rules.
+          </p>
+          <div class="modal-actions" style="justify-content:flex-start;">
+            <button id="scAddBtn" class="btn btn-save" onclick="adminRegisterStudentCourse()">
+              <i class="fa-solid fa-plus"></i>
+              <span data-translate="Register">Register</span>
+            </button>
+          </div>
+        </div>
       </div>
       <div class="cert-modal-table-scroll">
         <div class="table-container">
@@ -2504,13 +2546,91 @@
                 <th data-translate="Level">Level</th>
                 <th data-translate="Batch">Batch</th>
                 <th data-translate="Instructor">Instructor</th>
+                <th id="scActionsHead" data-translate="Actions" style="display:none;">Actions</th>
               </tr>
             </thead>
             <tbody id="student-courses-body">
-              <tr><td colspan="4" class="empty-row" data-translate="No courses registered">No courses registered</td></tr>
+              <tr><td colspan="5" class="empty-row" data-translate="No courses registered">No courses registered</td></tr>
             </tbody>
           </table>
         </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- ================================================
+       BULK REGISTER MODAL — register many students into one
+       course in a single Save, filtered by level/batch like
+       Promote Students.
+  ================================================ -->
+  <div class="modal" id="bulkRegisterModal">
+    <div class="modal-content modal-large">
+      <button class="btn btn-close" onclick="closeModal('bulkRegisterModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 data-translate="Bulk Register Students">Bulk Register Students</h2>
+      <p id="bulkRegLockNotice" class="sc-lock-notice" style="display:none;"></p>
+
+      <div class="modal-grid">
+        <label data-translate="Course">Course</label>
+        <select id="bulkRegCourse" onchange="onBulkRegCourseChange()">
+          <option value="" data-translate="Select Course">Select Course</option>
+        </select>
+        <label data-translate="Section (teacher / batch)">Section (teacher / batch)</label>
+        <select id="bulkRegSection" disabled>
+          <option value="" data-translate="Select Course First">Select Course First</option>
+        </select>
+      </div>
+
+      <label data-translate="Students">Students</label>
+      <div class="bulk-fee-filters" style="display:flex; gap:8px; flex-wrap:wrap; margin:6px 0;">
+        <select id="bulkRegLevelFilter" onchange="filterBulkRegStudents()" style="flex:1; min-width:160px;">
+          <option value="" data-translate="All Levels">All Levels</option>
+          <option value="Preliminary" data-translate="Preliminary">Preliminary</option>
+          <option value="Beginner" data-translate="Beginner">Beginner</option>
+          <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
+          <option value="Advanced" data-translate="Advanced">Advanced</option>
+        </select>
+        <select id="bulkRegBatchFilter" onchange="filterBulkRegStudents()" style="flex:1; min-width:160px;">
+          <option value="" data-translate="All Batches">All Batches</option>
+        </select>
+      </div>
+      <input type="text" id="bulkRegSearch" class="search-input"
+             placeholder="🔍 Search by name or matric..."
+             data-translate-placeholder="🔍 Search by name or matric..."
+             oninput="filterBulkRegStudents()" style="width:100%; margin:6px 0;">
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <span id="bulkRegSelectedCount">0 <span data-translate="selected">selected</span></span>
+        <span>
+          <button type="button" class="btn btn-edit" onclick="toggleAllBulkRegStudents(true)">
+            <span data-translate="Select All">Select All</span>
+          </button>
+          <button type="button" class="btn btn-edit" onclick="toggleAllBulkRegStudents(false)">
+            <span data-translate="Clear">Clear</span>
+          </button>
+        </span>
+      </div>
+
+      <div id="bulkRegStudentList" class="cert-course-checklist"
+           style="display:flex; flex-direction:column; gap:6px; padding:10px;
+                  border:1px solid var(--border-color); border-radius:6px; max-height:280px; overflow-y:auto;">
+        <span data-translate="Loading students...">Loading students...</span>
+      </div>
+
+      <p style="font-size:0.85rem; opacity:0.75; margin:8px 0 0;"
+         data-translate="Pick a course, filter by level/batch, tick the students, then Save once. Each student is registered with their own current level and batch. Students already in the course are skipped.">
+        Pick a course, filter by level/batch, tick the students, then Save once. Each student is registered with their own current level and batch. Students already in the course are skipped.
+      </p>
+
+      <div class="modal-actions">
+        <button id="bulkRegSaveBtn" class="btn btn-save" onclick="bulkRegisterStudents()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span data-translate="Register Selected Students">Register Selected Students</span>
+        </button>
+        <button class="btn btn-cancel" onclick="closeModal('bulkRegisterModal')">
+          <span data-translate="Cancel">Cancel</span>
+        </button>
       </div>
     </div>
   </div>
