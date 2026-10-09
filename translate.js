@@ -3007,6 +3007,8 @@ NEW FILES START HERE
 "Failed": "فشل",
 
 "Add teachers and batches from the course card below once it's created.": "أضف المعلمين والدفعات من بطاقة المقرر أدناه بمجرد إنشائه.",
+"Add Teacher/Batch": "إضافة معلم/دفعة",
+"Batch (e.g. June 2026) — leave blank for all batches": "الدفعة (مثال: يونيو 2026) — اتركه فارغًا لجميع الدُفعات",
 // ===== DYNAMIC TEMPLATES ===== 
 
 en: {

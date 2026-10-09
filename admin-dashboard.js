@@ -3520,7 +3520,7 @@ async function loadCoursesAdmin() {
             ${teacherOptions}
           </select>
           <input type="text" id="sectionBatch-${course.id}"
-                 placeholder="${t('Batch (e.g. June 2026) — leave blank for all batches')}">
+                 placeholder="${t("Batch (e.g. June 2026) — leave blank for all batches")}">
           <button class="btn btn-primary" onclick="addCourseSection('${course.id}')">
             <i class="fa-solid fa-plus"></i> ${t("Add Teacher/Batch")}
           </button>

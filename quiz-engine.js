@@ -75,7 +75,7 @@ const studentData = (() => {
      last (hardest) level pays out the most. Edit the amounts below any time —
      they're matched to difficulty position, not by name, so this works
      whether a quiz has 3 levels or more. */
-  const LEVEL_MASTERY_REWARDS = [500, 1000, 2000]; // ₦ — index 0 = 1st difficulty (e.g. Beginner)
+  const LEVEL_MASTERY_REWARDS = [200, 500, 1000]; // ₦ — index 0 = 1st difficulty (e.g. Beginner)
   function getLevelMasteryAmount(diffIndex) {
     if (diffIndex < LEVEL_MASTERY_REWARDS.length) return LEVEL_MASTERY_REWARDS[diffIndex];
     // If a quiz ever has more difficulties than we've priced, keep scaling up
@@ -154,9 +154,9 @@ const studentData = (() => {
     tiers: [
       { level: 1, label: "Bronze", threshold: 1, rewardType: "title", rewardValue: "Perfectionist" },
       { level: 2, label: "Silver", threshold: 5, rewardType: "title", rewardValue: "Excellence" },
-      { level: 3, label: "Gold", threshold: 22, rewardType: "discount", rewardValue: 200 },
-      { level: 4, label: "Platinum", threshold: 30, rewardType: "discount", rewardValue: 500 },
-      { level: 5, label: "Diamond", threshold: 50, rewardType: "discount", rewardValue: 1000 },
+      { level: 3, label: "Gold", threshold: 22, rewardType: "discount", rewardValue: 100 },
+      { level: 4, label: "Platinum", threshold: 30, rewardType: "discount", rewardValue: 300 },
+      { level: 5, label: "Diamond", threshold: 50, rewardType: "discount", rewardValue: 500 },
     ]
   },
 
@@ -165,9 +165,9 @@ const studentData = (() => {
     tiers: [
       { level: 1, label: "Bronze", threshold: 1, rewardType: "title", rewardValue: "Reader" },
       { level: 2, label: "Silver", threshold: 3, rewardType: "title", rewardValue: "Dedicated Student" },
-      { level: 3, label: "Gold", threshold: 5, rewardType: "discount", rewardValue: 200 },
-      { level: 4, label: "Platinum", threshold: 10, rewardType: "discount", rewardValue: 500 },
-      { level: 5, label: "Diamond", threshold: 20, rewardType: "discount", rewardValue: 1000 },
+      { level: 3, label: "Gold", threshold: 5, rewardType: "discount", rewardValue: 100 },
+      { level: 4, label: "Platinum", threshold: 10, rewardType: "discount", rewardValue: 300 },
+      { level: 5, label: "Diamond", threshold: 20, rewardType: "discount", rewardValue: 500 },
     ]
   },
 
