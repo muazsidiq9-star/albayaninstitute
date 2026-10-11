@@ -196,6 +196,10 @@
       <i class="fa-solid fa-right-left"></i>
       <span data-translate="Course Bypass">Course Bypass</span>
     </button>
+    <button class="dash-tab" data-tab="tab-notifications" onclick="switchDashTab('tab-notifications', this)">
+      <i class="fa-solid fa-bell"></i>
+      <span data-translate="Notifications">Notifications</span>
+    </button>
     <button class="dash-tab" data-tab="tab-deleted" onclick="switchDashTab('tab-deleted', this)">
       <i class="fa-solid fa-trash"></i>
       <span data-translate="Deleted">Deleted</span>
@@ -587,6 +591,12 @@
       <button class="add-btn" onclick="openModal('gradeModal')">
         <i class="fa-solid fa-plus"></i>
         <span data-translate="Add Grade">Add Grade</span>
+      </button>
+      <button class="btn btn-save" id="releaseFilteredBtn" onclick="releaseFilteredGrades()" disabled
+              title="Release every grade currently shown in the table (respects the filters)">
+        <i class="fa-solid fa-eye"></i>
+        <span data-translate="Release Filtered">Release Filtered</span>
+        (<span id="releaseFilteredCount">0</span>)
       </button>
     </div>
     <div class="table-container">
@@ -1653,6 +1663,63 @@
   </div><!-- /tab-carryover -->
 
   <!-- ================================================
+       STUDENT NOTIFICATIONS (tab-notifications)
+       View, search, edit and delete the notifications students
+       see in their portal (notifications table). Deleting is a
+       soft delete -- recoverable from the Trash Bin tab.
+  ================================================ -->
+  <div class="dash-tab-panel" id="tab-notifications" style="display:none;">
+    <section class="dash-section">
+      <div class="section-header">
+        <h2 data-translate="Student Notifications">Student Notifications</h2>
+        <input type="text" id="searchNotifications" class="search-input"
+               placeholder="🔍 Search by student, title or message..."
+               data-translate-placeholder="🔍 Search by student, title or message...">
+        <select id="notifTypeFilter" class="search-input" style="max-width:180px;">
+          <option value="" data-translate="All Types">All Types</option>
+        </select>
+        <button class="add-btn" onclick="openSendNotificationModal()">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span data-translate="Send Notification">Send Notification</span>
+        </button>
+        <button class="btn btn-cancel btn-small" id="notifFillTypesBtn" onclick="fillEmptyNotificationTypes()">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span data-translate="Auto-fill empty types">Auto-fill empty types</span>
+        </button>
+        <button class="btn btn-delete btn-small" id="notifBulkDeleteBtn" onclick="deleteSelectedNotifications()" style="display:none;">
+          <i class="fa-solid fa-trash"></i>
+          <span data-translate="Delete Selected">Delete Selected</span>
+          (<span id="notifSelectedCount">0</span>)
+        </button>
+      </div>
+      <div id="notifSummaryBar" style="padding:10px 4px;font-size:14px;color:#555;font-weight:500;"></div>
+      <div class="table-container">
+        <table id="notifications-table">
+          <thead>
+            <tr>
+              <th style="width:36px;"><input type="checkbox" id="notifSelectAll" onchange="toggleSelectAllNotifications(this.checked)"></th>
+              <th data-translate="Student">Student</th>
+              <th data-translate="Title">Title</th>
+              <th data-translate="Message">Message</th>
+              <th data-translate="Type">Type</th>
+              <th data-translate="Date">Date</th>
+              <th data-translate="Actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="notifications-body">
+            <tr><td colspan="7" class="empty-row" data-translate="No notifications yet">No notifications yet</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="text-align:center;margin:14px 0;">
+        <button class="btn btn-cancel" id="notifLoadMoreBtn" onclick="loadMoreNotifications()" style="display:none;">
+          <span data-translate="Load more">Load more</span>
+        </button>
+      </div>
+    </section>
+  </div><!-- /tab-notifications -->
+
+  <!-- ================================================
        DELETED / TRASH BIN SECTION (tab-deleted)
        Consolidated trash bin for every soft-deletable table.
        Switch between entity types using the category chips;
@@ -2164,6 +2231,102 @@
           <span data-translate="Save">Save</span>
         </button>
         <button class="btn btn-cancel" onclick="closeModal('gradeModal')">
+          <span data-translate="Cancel">Cancel</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Send Notification Modal -->
+  <div class="modal" id="sendNotificationModal">
+    <div class="modal-content modal-large">
+      <button class="btn btn-close" onclick="closeModal('sendNotificationModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 data-translate="Send Notification">Send Notification</h2>
+      <div class="modal-grid">
+        <div class="notif-form-row">
+          <label data-translate="Send to">Send to</label>
+          <select id="sendNotifAudience" onchange="notifAudienceChanged()">
+            <option value="one" data-translate="One student">One student</option>
+            <option value="group" data-translate="A level / batch">A level / batch</option>
+            <option value="all" data-translate="All students">All students</option>
+          </select>
+        </div>
+        <div class="notif-form-row" id="sendNotifOneRow">
+          <label data-translate="Student">Student</label>
+          <input type="text" id="sendNotifStudent" list="sendNotifStudentList" autocomplete="off"
+                 placeholder="Name or matric number" data-translate-placeholder="Name or matric number"
+                 oninput="notifUpdateRecipientInfo()">
+          <datalist id="sendNotifStudentList"></datalist>
+        </div>
+        <div class="notif-form-row" id="sendNotifGroupRow" style="display:none;">
+          <label data-translate="Level">Level</label>
+          <select id="sendNotifLevel" onchange="notifUpdateRecipientInfo()"></select>
+          <label data-translate="Batch">Batch</label>
+          <select id="sendNotifBatch" onchange="notifUpdateRecipientInfo()"></select>
+        </div>
+        <div class="notif-form-row notif-recipient-info" id="sendNotifRecipientInfo"></div>
+        <div class="notif-form-row">
+          <label data-translate="Title">Title</label>
+          <input type="text" id="sendNotifTitle" maxlength="200">
+        </div>
+        <div class="notif-form-row">
+          <label data-translate="Message">Message</label>
+          <textarea id="sendNotifMessage" rows="5"></textarea>
+        </div>
+        <div class="notif-form-row">
+          <label data-translate="Type">Type</label>
+          <input type="text" id="sendNotifType" list="notifTypeList" placeholder="e.g. info"
+                 data-translate-placeholder="e.g. info">
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button id="sendNotificationBtn" class="btn btn-save" onclick="sendCustomNotification()">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span data-translate="Send">Send</span>
+        </button>
+        <button class="btn btn-cancel" onclick="closeModal('sendNotificationModal')">
+          <span data-translate="Cancel">Cancel</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Notification Modal -->
+  <div class="modal" id="notificationModal">
+    <div class="modal-content modal-large">
+      <button class="btn btn-close" onclick="closeModal('notificationModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 data-translate="Edit Notification">Edit Notification</h2>
+      <div class="modal-grid">
+        <label data-translate="Student">Student</label>
+        <input type="text" id="notifEditStudent" readonly>
+        <label data-translate="Title">Title</label>
+        <input type="text" id="notifEditTitle" maxlength="200">
+        <label data-translate="Message" style="grid-column:1 / -1;">Message</label>
+        <div id="notifEditMessageWrap" style="grid-column:1 / -1;">
+          <div id="notifEditTemplateBox" style="display:none;">
+            <div class="notif-preview" id="notifEditPreview"></div>
+            <div id="notifEditFields"></div>
+            <button type="button" class="btn btn-cancel btn-small" onclick="notifSwitchToPlain()">
+              <span data-translate="Replace with custom plain text">Replace with custom plain text</span>
+            </button>
+          </div>
+          <textarea id="notifEditMessage" rows="5"></textarea>
+        </div>
+        <label data-translate="Type">Type</label>
+        <input type="text" id="notifEditType" list="notifTypeList" placeholder="e.g. info"
+               data-translate-placeholder="e.g. info">
+        <datalist id="notifTypeList"></datalist>
+      </div>
+      <div class="modal-actions">
+        <button id="saveNotificationBtn" class="btn btn-save" onclick="saveNotificationEdit()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span data-translate="Save">Save</span>
+        </button>
+        <button class="btn btn-cancel" onclick="closeModal('notificationModal')">
           <span data-translate="Cancel">Cancel</span>
         </button>
       </div>
@@ -2793,8 +2956,8 @@
     // ===========================
     const TAB_ROLE_MAP = {
     
-    mudeer:           ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-grades","tab-schedule","tab-attendance","tab-rewards","tab-carryover","tab-assessments","tab-courses","tab-videos","tab-certificates","tab-passwords","tab-deleted"],
-  assistant_mudeer: ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-grades","tab-schedule","tab-attendance","tab-rewards","tab-carryover","tab-assessments","tab-courses","tab-videos","tab-certificates","tab-passwords","tab-deleted"],
+    mudeer:           ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-grades","tab-schedule","tab-attendance","tab-rewards","tab-carryover","tab-assessments","tab-courses","tab-videos","tab-certificates","tab-passwords","tab-notifications","tab-deleted"],
+  assistant_mudeer: ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-grades","tab-schedule","tab-attendance","tab-rewards","tab-carryover","tab-assessments","tab-courses","tab-videos","tab-certificates","tab-passwords","tab-notifications","tab-deleted"],
   registrar:        ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-attendance","tab-carryover","tab-courses","tab-videos"],
       h_o_d:           ["tab-profile","tab-mypayments","tab-students","tab-grades","tab-schedule","tab-assessments","tab-attendance","tab-courses","tab-passwords"],
       bursar:           ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-rewards"]
@@ -2880,6 +3043,10 @@
 
       if (tabId === "tab-carryover" && typeof loadCarryoverTab === "function") {
         loadCarryoverTab();
+      }
+
+      if (tabId === "tab-notifications" && typeof loadNotificationsTab === "function") {
+        loadNotificationsTab();
       }
       
       if (tabId === "tab-videos" && typeof loadVideoLibraryTab === "function") {

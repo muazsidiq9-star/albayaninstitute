@@ -430,6 +430,9 @@ function renderMessage(message) {
       data.amount = formatMoney(rawAmount, data.currency || studentDefaultCurrency);
     }
 
+    // Level-bearing notifications (e.g. CERTIFICATE_LEVEL_ISSUED): translate the level name
+    if (typeof data.level === "string") data.level = t(data.level);
+
     return tmpl(parsed.key, data);
   } catch {
     return message;
@@ -484,6 +487,7 @@ async function loadNotifications(matric) {
       .from("notifications")
       .select("message,title,created_at")
       .eq("matric_number", matric)
+      .or("deleted.is.null,deleted.eq.false")   // hide notifications the admin deleted
       .order("created_at", { ascending: false })
       .limit(15);
 

@@ -183,6 +183,28 @@
   <!-- SCRIPTS -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
+  <script>
+    /* Direct-link support: if someone opens this page (e.g. a shared
+       test-welcome.html?exam=<id> link) without a student session, remember
+       where they were going. login.js already sends students back to
+       "postLoginRedirect" after a successful login. Same session rule as
+       student-guard.js: sessionStorage first, then the 14-day localStorage one. */
+    (function () {
+      try {
+        var ok = sessionStorage.getItem("role") === "student" && !!sessionStorage.getItem("matric");
+        if (!ok) {
+          var raw = localStorage.getItem("studentSession");
+          var saved = raw ? JSON.parse(raw) : null;
+          ok = !!(saved && saved.expiresAt && Date.now() < saved.expiresAt);
+        }
+        if (!ok) {
+          // relative target only (file name + query), never a full URL
+          sessionStorage.setItem("postLoginRedirect", location.pathname.split("/").pop() + location.search);
+        }
+      } catch (e) { /* storage blocked: fall back to normal login flow */ }
+    })();
+  </script>
+
   <script src="student-guard.js"></script>
 
   <script>
@@ -204,6 +226,29 @@
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     const matric    = sessionStorage.getItem("matric");
+
+    /* ── Direct link: test-welcome.html?exam=<assessment id> ──
+       Only the id travels in the link. Eligibility (registered course,
+       level/batch, window, already attempted) is still decided below by the
+       same queries as before, so a shared link can't unlock anything. */
+    let linkedExamId = null;
+    if (matric) {
+      sessionStorage.removeItem("postLoginRedirect");   // we're logged in: nothing pending
+      const rawExam = new URLSearchParams(window.location.search).get("exam");
+      if (rawExam && /^[A-Za-z0-9_-]{1,64}$/.test(rawExam)) {
+        linkedExamId = rawExam;
+        localStorage.setItem("currentAssessmentId", rawExam);
+        history.replaceState(null, "", window.location.pathname);
+      }
+    }
+
+    function showLinkedExamNotice() {
+      const box = document.createElement("div");
+      box.setAttribute("role", "alert");
+      box.style.cssText = "margin:0 0 14px;padding:12px 14px;border-radius:8px;background:#fff4e5;color:#7a4a00;border:1px solid #f1c27d;font-size:0.95rem;line-height:1.5;";
+      box.textContent = t("That assessment isn't available for your account right now. It may have ended, already been attempted, or be for a different level or batch. Your available assessments are listed below.");
+      preloadScreen.insertBefore(box, preloadScreen.firstChild);
+    }
     const examTitle = document.getElementById("examTitle");
     const examMsg   = document.getElementById("examMessage");
     const badge     = document.getElementById("statusBadge");
@@ -672,6 +717,8 @@
         } else {
           showPreloadScreen();
         }
+
+        if (linkedExamId && !exam) showLinkedExamNotice();
 
       } catch (err) {
         console.error(err);

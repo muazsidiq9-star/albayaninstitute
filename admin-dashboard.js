@@ -613,13 +613,66 @@ function restrictPasswordSections() {
 /* -------------------------------------------------------
    NOTIFICATIONS
 ------------------------------------------------------- */
-async function sendNotification(matric, title, message) {
-  await db.from("notifications").insert([{
+// ref = { table, id } of the record this notification is about (payment, grade,
+// schedule, certificate). The database uses it to delete / hide / restore the
+// notification automatically when that record is deleted / soft-deleted / restored.
+async function sendNotification(matric, title, message, type, ref) {
+  const row = {
     matric_number: matric,
     title: title,
     message: message,
+    // type is optional: when a caller doesn't pass one, work it out from the message
+    type: type || inferNotificationType(title, message),
     created_at: new Date()
-  }]);
+  };
+  if (ref && ref.table && ref.id != null) {
+    row.ref_table = ref.table;
+    row.ref_id = String(ref.id);
+  }
+
+  let { error } = await db.from("notifications").insert([row]);
+
+  if (error && row.ref_table) {
+    // ref_table / ref_id columns not created in this project yet: send it without them
+    console.warn("Notification insert with ref failed, retrying without it:", error.message);
+    delete row.ref_table;
+    delete row.ref_id;
+    ({ error } = await db.from("notifications").insert([row]));
+  }
+  if (error) console.error("sendNotification error:", error);
+}
+
+// Same notification to many students in one go (chunks of 200). Returns how many were sent.
+async function sendNotificationToMany(matrics, title, message, type, ref) {
+  const list = [...new Set((matrics || []).filter(Boolean))];
+  if (!list.length) return 0;
+
+  const created_at = new Date().toISOString();
+  const resolvedType = type || inferNotificationType(title, message);
+  let withRef = !!(ref && ref.table && ref.id != null);
+  let sent = 0;
+
+  for (let i = 0; i < list.length; i += 200) {
+    const build = useRef => list.slice(i, i + 200).map(m => {
+      const row = { matric_number: m, title, message, type: resolvedType, created_at };
+      if (useRef) { row.ref_table = ref.table; row.ref_id = String(ref.id); }
+      return row;
+    });
+
+    let rows = build(withRef);
+    let { error } = await db.from("notifications").insert(rows);
+
+    if (error && withRef) {
+      // ref_table / ref_id columns not created in this project yet: send without them
+      console.warn("Bulk notification insert with ref failed, retrying without it:", error.message);
+      withRef = false;
+      rows = build(false);
+      ({ error } = await db.from("notifications").insert(rows));
+    }
+    if (error) { console.error("sendNotificationToMany error:", error); continue; }
+    sent += rows.length;
+  }
+  return sent;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -1444,13 +1497,13 @@ async function addPayment() {
         .eq("matric_number", matric_number)
         .single();
 
-      await db.from("payments").insert([{
+      const { data: newPayment } = await db.from("payments").insert([{
         matric_number, payer_email, level_arabic, batch, amount, currency,
         month, payment_method, created_at, status,
         payer_name: studentInfo?.fullname || null,
         country: studentInfo?.country || null,
         plan_type: studentInfo?.plan_type || null
-      }]);
+      }]).select("id").single();
 
       await sendNotification(
         matric_number,
@@ -1458,7 +1511,9 @@ async function addPayment() {
         JSON.stringify({
           key: "PAYMENT_RECORDED",
           data: { amount, currency, month } // raw amount + its currency, formatted client-side on read
-        })
+        }),
+        undefined,
+        newPayment ? { table: "payments", id: newPayment.id } : null
       );
       showToast(t("Payment added"));
     }
@@ -1552,7 +1607,9 @@ async function markPaid(btn, id, matric, amount, month, currency) {
       JSON.stringify({
         key: "PAYMENT_CONFIRMED",
         data: { amount, currency, month } // raw amount + its currency, formatted client-side on read
-      })
+      }),
+      undefined,
+      { table: "payments", id }
     );
 
     await loadPayments();
@@ -2501,6 +2558,607 @@ async function bulkRegisterStudents() {
   }
 }
 
+/* -------------------------------------------------------
+   STUDENT NOTIFICATIONS TAB (tab-notifications)
+   Lists rows from the "notifications" table (server-side paged),
+   lets the admin edit title / message / type, and soft-delete
+   (deleted = true) with undo + Trash Bin restore.
+   Primary key is (id, matric_number), so every write matches both.
+
+   Messages are usually stored as JSON -- {"key":"PAYMENT_RECORDED",
+   "data":{...}} -- and rendered with tmpl() (translate.js), exactly
+   like the student dashboard does. The same rendering is used here.
+------------------------------------------------------- */
+const NOTIF_PAGE_SIZE = 25;
+const notifState = { page: 0, total: 0, rows: [], selected: new Set(), wired: false, editing: null, loading: false };
+
+function notifEsc(v) {
+  return String(v == null ? "" : v)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+function notifShort(v, n) {
+  const s = String(v == null ? "" : v);
+  return s.length > n ? s.slice(0, n).trimEnd() + "…" : s;
+}
+
+// {"key":..., "data":{...}} -> { key, data }   |   plain text -> null
+function notifParse(message) {
+  try {
+    const p = JSON.parse(message);
+    if (p && typeof p === "object" && p.key) {
+      return { key: p.key, data: (p.data && typeof p.data === "object") ? p.data : {} };
+    }
+  } catch (e) { /* plain text */ }
+  return null;
+}
+
+// Same logic as renderMessage() in the student dashboard
+function notifRenderMessage(message) {
+  const p = notifParse(message);
+  if (!p) return String(message == null ? "" : message);
+
+  const data = { ...p.data };
+  if (typeof data.level === "string" && typeof t === "function") data.level = t(data.level);
+  if (data.amount !== undefined && typeof formatMoney === "function") {
+    const raw = typeof data.amount === "string" ? data.amount.replace(/,/g, "") : data.amount;
+    data.amount = formatMoney(raw, data.currency || "NGN");
+  }
+  try {
+    if (typeof tmpl === "function") {
+      const out = tmpl(p.key, data);
+      if (out && out !== p.key) return out;
+    }
+  } catch (e) { console.warn("tmpl failed for", p.key, e); }
+
+  // Fallback: no template found -- show the key and its values instead of raw JSON
+  const vals = Object.entries(p.data).map(([k, v]) => `${k}: ${v}`).join(", ");
+  return vals ? `${p.key} (${vals})` : p.key;
+}
+
+async function loadNotificationsTab() {
+  if (!notifState.wired) {
+    notifState.wired = true;
+    let timer = null;
+    document.getElementById("searchNotifications")?.addEventListener("input", () => {
+      clearTimeout(timer);
+      timer = setTimeout(reloadNotifications, 350);
+    });
+    document.getElementById("notifTypeFilter")?.addEventListener("change", reloadNotifications);
+  }
+  await loadNotificationTypes();
+  await reloadNotifications();
+}
+
+async function loadNotificationTypes() {
+  try {
+    const { data } = await db
+      .from("notifications")
+      .select("type")
+      .or("deleted.eq.false,deleted.is.null")
+      .not("type", "is", null)
+      .limit(1000);
+    const types = [...new Set((data || []).map(r => r.type).filter(Boolean))].sort();
+
+    const sel = document.getElementById("notifTypeFilter");
+    if (sel) {
+      const current = sel.value;
+      sel.innerHTML = `<option value="">${t("All Types")}</option>` +
+        types.map(x => `<option value="${notifEsc(x)}">${notifEsc(x)}</option>`).join("");
+      sel.value = types.includes(current) ? current : "";
+    }
+    const dl = document.getElementById("notifTypeList");
+    if (dl) dl.innerHTML = [...new Set([...NOTIF_DEFAULT_TYPES, ...types])].map(x => `<option value="${notifEsc(x)}"></option>`).join("");
+  } catch (e) {
+    console.error("loadNotificationTypes error:", e);
+  }
+}
+
+async function reloadNotifications() {
+  notifState.page = 0;
+  notifState.rows = [];
+  notifState.selected.clear();
+  await fetchNotificationsPage();
+}
+// Kept as a stable name for the Trash Bin restore hook
+const loadNotificationsList = reloadNotifications;
+
+async function loadMoreNotifications() {
+  notifState.page += 1;
+  await fetchNotificationsPage();
+}
+
+async function fetchNotificationsPage() {
+  if (notifState.loading) return;
+  notifState.loading = true;
+
+  const tbody = document.getElementById("notifications-body");
+  if (!tbody) { notifState.loading = false; return; }
+
+  if (notifState.page === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" class="empty-row">
+      <i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading notifications...")}
+    </td></tr>`;
+  }
+
+  try {
+    const typeFilter = document.getElementById("notifTypeFilter")?.value || "";
+    const rawSearch = (document.getElementById("searchNotifications")?.value || "").trim();
+    // Strip characters that would break PostgREST's or()/in() syntax
+    const term = rawSearch.replace(/[,()%*\\"]/g, " ").replace(/\s+/g, " ").trim();
+
+    let query = db
+      .from("notifications")
+      .select("*", { count: "exact" })
+      .or("deleted.eq.false,deleted.is.null")
+      .order("created_at", { ascending: false });
+
+    if (typeFilter) query = query.eq("type", typeFilter);
+
+    if (term) {
+      // Match student by name too (notifications only store the matric number)
+      const students = await loadStudentsCache();
+      const lower = term.toLowerCase();
+      const matrics = (students || [])
+        .filter(s => (s.fullname || "").toLowerCase().includes(lower))
+        .map(s => String(s.matric_number || "").replace(/"/g, ""))
+        .filter(Boolean)
+        .slice(0, 60);
+
+      const parts = [
+        `title.ilike.%${term}%`,
+        `message.ilike.%${term}%`,
+        `matric_number.ilike.%${term}%`
+      ];
+      if (matrics.length) parts.push(`matric_number.in.(${matrics.map(m => `"${m}"`).join(",")})`);
+      query = query.or(parts.join(","));
+    }
+
+    const from = notifState.page * NOTIF_PAGE_SIZE;
+    query = query.range(from, from + NOTIF_PAGE_SIZE - 1);
+
+    const { data, error, count } = await query;
+    if (error) throw error;
+
+    notifState.total = count || 0;
+    notifState.rows = notifState.rows.concat(data || []);
+    renderNotificationsTable();
+  } catch (e) {
+    console.error("fetchNotificationsPage error:", e);
+    if (notifState.page === 0) {
+      tbody.innerHTML = `<tr><td colspan="7" class="empty-row" style="color:red;">${t("Failed to load notifications.")}</td></tr>`;
+    } else {
+      notifState.page -= 1;
+      alert(t("Failed to load notifications."));
+    }
+  } finally {
+    notifState.loading = false;
+  }
+}
+
+async function renderNotificationsTable() {
+  const tbody = document.getElementById("notifications-body");
+  if (!tbody) return;
+
+  const summary = document.getElementById("notifSummaryBar");
+  const moreBtn = document.getElementById("notifLoadMoreBtn");
+
+  if (!notifState.rows.length) {
+    tbody.innerHTML = `<tr><td colspan="7" class="empty-row">${t("No notifications yet")}</td></tr>`;
+    if (summary) summary.textContent = "";
+    if (moreBtn) moreBtn.style.display = "none";
+    updateNotifSelectionUI();
+    return;
+  }
+
+  const students = await loadStudentsCache();
+  const nameMap = {};
+  (students || []).forEach(s => { nameMap[s.matric_number] = s.fullname; });
+
+  tbody.innerHTML = notifState.rows.map(n => {
+    const text = notifRenderMessage(n.message);
+    return `
+    <tr>
+      <td><input type="checkbox" class="notif-check" ${notifState.selected.has(n.id) ? "checked" : ""}
+                 onchange="toggleNotificationSelected('${n.id}', this.checked)"></td>
+      <td>${notifEsc(nameMap[n.matric_number] || "—")}<br><span style="color:#888;font-size:12px;">${notifEsc(n.matric_number)}</span></td>
+      <td><strong>${notifEsc(n.title)}</strong></td>
+      <td class="notif-msg-cell" title="${notifEsc(text)}">${notifEsc(notifShort(text, 220))}</td>
+      <td>${n.type ? `<span class="notif-badge">${notifEsc(n.type)}</span>` : "—"}</td>
+      <td>${formatDate(n.created_at)}</td>
+      <td>
+        <div class="table-row-actions">
+          <button class="btn btn-edit btn-small" onclick="editNotification('${n.id}')">${t("Edit")}</button>
+          <button class="btn btn-delete btn-small" onclick="deleteNotification('${n.id}')">${t("Delete")}</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join("");
+
+  if (summary) summary.textContent = `${t("Showing")} ${notifState.rows.length} ${t("of")} ${notifState.total}`;
+  if (moreBtn) moreBtn.style.display = notifState.rows.length < notifState.total ? "" : "none";
+  updateNotifSelectionUI();
+}
+
+/* ---------- notification type (category) ---------- */
+// The "type" column is a short category used for filtering in the Notifications tab.
+const NOTIF_DEFAULT_TYPES = ["payment", "grade", "schedule", "certificate", "account", "announcement", "reminder", "general"];
+
+// Works out the category from the message key (preferred) or the title/text.
+// Used for every automatic notification and for "Auto-fill empty types".
+function inferNotificationType(title, message) {
+  const p = notifParse(message);
+  const key = p ? String(p.key).toUpperCase() : "";
+  if (key.startsWith("PAYMENT_")) return "payment";
+  if (key.startsWith("GRADE_")) return "grade";
+  if (key.startsWith("CLASS_") || key.startsWith("SCHEDULE_")) return "schedule";
+  if (key.startsWith("CERTIFICATE_")) return "certificate";
+
+  const s = (String(title || "") + " " + (p ? "" : String(message || ""))).toLowerCase();
+  if (/payment|fee|receipt|دفع|سداد/.test(s)) return "payment";
+  if (/grade|result|score|درجة|نتيج/.test(s)) return "grade";
+  if (/class|schedule|timetable|جدول|حصة/.test(s)) return "schedule";
+  if (/certificate|شهادة/.test(s)) return "certificate";
+  if (/password|account|login|كلمة المرور|حساب/.test(s)) return "account";
+  return "general";
+}
+
+async function fillEmptyNotificationTypes() {
+  if (!confirm(t("Fill the empty Type column automatically, based on each message? Types that are already set are not changed."))) return;
+
+  const btn = document.getElementById("notifFillTypesBtn");
+  setLoading(btn, true);
+  let total = 0;
+
+  try {
+    for (let round = 0; round < 60; round++) {
+      const { data, error } = await db
+        .from("notifications")
+        .select("id,title,message")
+        .is("type", null)
+        .range(0, 999);
+      if (error) throw error;
+      if (!data || !data.length) break;
+
+      const groups = {};
+      data.forEach(r => {
+        const ty = inferNotificationType(r.title, r.message);
+        (groups[ty] = groups[ty] || []).push(r.id);
+      });
+
+      let updated = 0;
+      for (const [ty, ids] of Object.entries(groups)) {
+        for (let i = 0; i < ids.length; i += 200) {
+          const { data: upd, error: e2 } = await db
+            .from("notifications")
+            .update({ type: ty })
+            .in("id", ids.slice(i, i + 200))
+            .select("id");
+          if (e2) throw e2;
+          updated += (upd || []).length;
+        }
+      }
+      if (!updated) {
+        alert(t("Nothing was updated — check your Supabase RLS UPDATE policy for this table."));
+        break;
+      }
+      total += updated;
+      if (data.length < 1000) break;
+    }
+
+    showToast(total ? `${total} ${t("notification(s) updated ✅")}` : t("No empty types found"));
+    await loadNotificationTypes();
+    await reloadNotifications();
+  } catch (e) {
+    console.error("fillEmptyNotificationTypes error:", e);
+    alert(t("Failed to update notification. See console."));
+  } finally {
+    setLoading(btn, false);
+  }
+}
+
+/* ---------- send a custom notification ---------- */
+const sendNotifState = { students: [] };
+
+function notifResolveStudent(input) {
+  const v = String(input || "").trim().toLowerCase();
+  if (!v) return null;
+  const list = sendNotifState.students;
+  const exact = list.find(s => `${s.fullname} (${s.matric_number})`.toLowerCase() === v)
+             || list.find(s => String(s.matric_number).toLowerCase() === v);
+  if (exact) return exact;
+  const byName = list.filter(s => String(s.fullname || "").toLowerCase() === v);
+  return byName.length === 1 ? byName[0] : null;
+}
+
+function notifSendRecipients() {
+  const audience = document.getElementById("sendNotifAudience").value;
+  const all = sendNotifState.students;
+  if (audience === "all") return all;
+  if (audience === "group") {
+    const level = document.getElementById("sendNotifLevel").value;
+    const batch = document.getElementById("sendNotifBatch").value;
+    return all.filter(s => (!level || s.level_arabic === level) && (!batch || s.batch === batch));
+  }
+  const one = notifResolveStudent(document.getElementById("sendNotifStudent").value);
+  return one ? [one] : [];
+}
+
+function notifAudienceChanged() {
+  const audience = document.getElementById("sendNotifAudience").value;
+  document.getElementById("sendNotifOneRow").style.display = audience === "one" ? "" : "none";
+  document.getElementById("sendNotifGroupRow").style.display = audience === "group" ? "" : "none";
+  notifUpdateRecipientInfo();
+}
+
+function notifUpdateRecipientInfo() {
+  const el = document.getElementById("sendNotifRecipientInfo");
+  if (!el) return;
+  const audience = document.getElementById("sendNotifAudience").value;
+  const list = notifSendRecipients();
+  if (audience === "one") {
+    const typed = document.getElementById("sendNotifStudent").value.trim();
+    el.textContent = !typed ? "" : list.length ? `✔ ${list[0].fullname} (${list[0].matric_number})` : t("Student not found");
+    return;
+  }
+  el.textContent = `${t("This will be sent to")} ${list.length} ${t("student(s)")}`;
+}
+
+async function openSendNotificationModal() {
+  openModal("sendNotificationModal");
+
+  const students = await loadStudentsCache();
+  sendNotifState.students = students || [];
+
+  const levels = [...new Set(sendNotifState.students.map(s => s.level_arabic).filter(Boolean))].sort();
+  const batches = [...new Set(sendNotifState.students.map(s => s.batch).filter(Boolean))].sort();
+  document.getElementById("sendNotifLevel").innerHTML =
+    `<option value="">${t("All Levels")}</option>` + levels.map(l => `<option value="${notifEsc(l)}">${notifEsc(l)}</option>`).join("");
+  document.getElementById("sendNotifBatch").innerHTML =
+    `<option value="">${t("All Batches")}</option>` + batches.map(b => `<option value="${notifEsc(b)}">${notifEsc(b)}</option>`).join("");
+  document.getElementById("sendNotifStudentList").innerHTML =
+    sendNotifState.students.map(s => `<option value="${notifEsc(s.fullname)} (${notifEsc(s.matric_number)})"></option>`).join("");
+
+  document.getElementById("sendNotifAudience").value = "one";
+  document.getElementById("sendNotifStudent").value = "";
+  document.getElementById("sendNotifTitle").value = "";
+  document.getElementById("sendNotifMessage").value = "";
+  document.getElementById("sendNotifType").value = "announcement";
+  notifAudienceChanged();
+}
+
+async function sendCustomNotification() {
+  const title = document.getElementById("sendNotifTitle").value.trim();
+  const message = document.getElementById("sendNotifMessage").value.trim();
+  const type = document.getElementById("sendNotifType").value.trim() || "general";
+
+  if (!title) { alert(t("Title is required")); return; }
+  if (!message) { alert(t("Message is required")); return; }
+  // A message that is valid JSON (e.g. just "123") would be misread by the student dashboard
+  try { JSON.parse(message); alert(t("Please write a real message, not just a number or code.")); return; } catch (e) { /* plain text: fine */ }
+
+  const recipients = notifSendRecipients();
+  if (!recipients.length) { alert(t("No students match.")); return; }
+  if (recipients.length > 1 &&
+      !confirm(`${t("Send to")} ${recipients.length} ${t("student(s)")}?`)) return;
+
+  const btn = document.getElementById("sendNotificationBtn");
+  setLoading(btn, true);
+
+  try {
+    const now = new Date().toISOString();
+    const rows = recipients.map(s => ({
+      matric_number: s.matric_number, title, message, type, created_at: now
+    }));
+    for (let i = 0; i < rows.length; i += 200) {
+      const { error } = await db.from("notifications").insert(rows.slice(i, i + 200));
+      if (error) throw error;
+    }
+
+    closeModal("sendNotificationModal");
+    showToast(`${t("Sent to")} ${rows.length} ${t("student(s)")} ✅`);
+    await loadNotificationTypes();
+    await reloadNotifications();
+  } catch (e) {
+    console.error("sendCustomNotification error:", e);
+    alert(t("Failed to send notifications. See console."));
+  } finally {
+    setLoading(btn, false);
+  }
+}
+
+/* ---------- selection ---------- */
+function toggleNotificationSelected(id, checked) {
+  if (checked) notifState.selected.add(id); else notifState.selected.delete(id);
+  updateNotifSelectionUI();
+}
+function toggleSelectAllNotifications(checked) {
+  notifState.selected.clear();
+  if (checked) notifState.rows.forEach(n => notifState.selected.add(n.id));
+  document.querySelectorAll("#notifications-body .notif-check").forEach(cb => { cb.checked = checked; });
+  updateNotifSelectionUI();
+}
+function updateNotifSelectionUI() {
+  const n = notifState.selected.size;
+  const btn = document.getElementById("notifBulkDeleteBtn");
+  const cnt = document.getElementById("notifSelectedCount");
+  const all = document.getElementById("notifSelectAll");
+  if (cnt) cnt.textContent = n;
+  if (btn) btn.style.display = n ? "" : "none";
+  if (all) all.checked = notifState.rows.length > 0 && n === notifState.rows.length;
+}
+
+/* ---------- edit ---------- */
+// Templated messages: the admin edits the *values* (amount, month, course...)
+// and the key stays, so the message keeps translating for the student.
+function notifCollectData() {
+  const out = {};
+  document.querySelectorAll("#notifEditFields [data-key]").forEach(inp => {
+    const k = inp.dataset.key;
+    const kind = inp.dataset.kind;
+    const v = inp.value;
+    if (kind === "number") {
+      const num = Number(String(v).replace(/,/g, ""));
+      out[k] = (v.trim() !== "" && Number.isFinite(num)) ? num : v;
+    } else if (kind === "boolean") {
+      out[k] = v.trim().toLowerCase() === "true";
+    } else if (kind === "object") {
+      try { out[k] = JSON.parse(v); } catch (e) { out[k] = v; }
+    } else {
+      out[k] = v;
+    }
+  });
+  return out;
+}
+
+function notifUpdatePreview() {
+  const ed = notifState.editing;
+  const el = document.getElementById("notifEditPreview");
+  if (!ed || !el || ed.mode !== "template") return;
+  el.textContent = notifRenderMessage(JSON.stringify({ key: ed.key, data: notifCollectData() }));
+}
+
+function notifSwitchToPlain() {
+  const ed = notifState.editing;
+  if (!ed) return;
+  if (!confirm(t("Replace this with plain text? It will no longer be translated for the student."))) return;
+  document.getElementById("notifEditMessage").value = document.getElementById("notifEditPreview").textContent;
+  document.getElementById("notifEditTemplateBox").style.display = "none";
+  document.getElementById("notifEditMessage").style.display = "";
+  ed.mode = "plain";
+}
+
+async function editNotification(id) {
+  const n = notifState.rows.find(r => r.id === id);
+  if (!n) return;
+
+  const parsed = notifParse(n.message);
+  notifState.editing = {
+    id: n.id,
+    matric_number: n.matric_number,
+    key: parsed ? parsed.key : null,
+    mode: parsed ? "template" : "plain"
+  };
+
+  openModal("notificationModal");   // resets + enables fields
+
+  const students = await loadStudentsCache();
+  const studentName = (students || []).find(s => s.matric_number === n.matric_number)?.fullname;
+  document.getElementById("notifEditStudent").value = studentName ? `${studentName} (${n.matric_number})` : n.matric_number;
+  document.getElementById("notifEditTitle").value = n.title || "";
+  document.getElementById("notifEditType").value = n.type || "";
+
+  const tplBox = document.getElementById("notifEditTemplateBox");
+  const plain = document.getElementById("notifEditMessage");
+
+  if (parsed) {
+    tplBox.style.display = "";
+    plain.style.display = "none";
+    plain.value = "";
+    document.getElementById("notifEditFields").innerHTML = Object.entries(parsed.data).map(([k, v]) => {
+      const kind = (v !== null && typeof v === "object") ? "object" : typeof v === "number" ? "number" : typeof v === "boolean" ? "boolean" : "string";
+      const val = kind === "object" ? JSON.stringify(v) : String(v == null ? "" : v);
+      return `
+        <div class="notif-tpl-field">
+          <label>${notifEsc(k)}</label>
+          <input type="text" data-key="${notifEsc(k)}" data-kind="${kind}" value="${notifEsc(val)}" oninput="notifUpdatePreview()">
+        </div>`;
+    }).join("") || `<p style="color:#888;font-size:13px;margin:6px 0;">${t("This message has no editable values.")}</p>`;
+    notifUpdatePreview();
+  } else {
+    tplBox.style.display = "none";
+    plain.style.display = "";
+    plain.value = n.message || "";
+  }
+}
+
+async function saveNotificationEdit() {
+  const ed = notifState.editing;
+  if (!ed) return;
+
+  const title = document.getElementById("notifEditTitle").value.trim();
+  const type = document.getElementById("notifEditType").value.trim();
+  if (!title) { alert(t("Title is required")); return; }
+
+  let message;
+  if (ed.mode === "template") {
+    message = JSON.stringify({ key: ed.key, data: notifCollectData() });
+  } else {
+    message = document.getElementById("notifEditMessage").value.trim();
+    if (!message) { alert(t("Message is required")); return; }
+  }
+
+  const btn = document.getElementById("saveNotificationBtn");
+  setLoading(btn, true);
+
+  try {
+    const { data, error } = await db
+      .from("notifications")
+      .update({ title, message, type: type || null })
+      .eq("id", ed.id)
+      .eq("matric_number", ed.matric_number)
+      .select();
+
+    if (error) throw error;
+    if (!data || data.length === 0) {
+      alert(t("Nothing was updated — check your Supabase RLS UPDATE policy for this table."));
+      return;
+    }
+
+    const idx = notifState.rows.findIndex(r => r.id === ed.id);
+    if (idx !== -1) notifState.rows[idx] = { ...notifState.rows[idx], ...data[0] };
+
+    closeModal("notificationModal");
+    notifState.editing = null;
+    showToast(t("Notification updated ✅"));
+    renderNotificationsTable();
+    loadNotificationTypes();
+  } catch (e) {
+    console.error("saveNotificationEdit error:", e);
+    alert(t("Failed to update notification. See console."));
+  } finally {
+    setLoading(btn, false);
+  }
+}
+
+/* ---------- delete (soft, undoable) ---------- */
+function deleteNotification(id) {
+  const n = notifState.rows.find(r => r.id === id);
+  if (!n) return;
+  softDelete({
+    table: "notifications",
+    match: { id: n.id, matric_number: n.matric_number },
+    label: t("notification"),
+    reloadFn: () => reloadNotifications()
+  });
+}
+
+async function deleteSelectedNotifications() {
+  const ids = [...notifState.selected];
+  if (!ids.length) return;
+  if (!confirm(`${t("Delete")} ${ids.length} ${t("notification(s)?")} ${t("You can restore them from the Trash Bin.")}`)) return;
+
+  try {
+    const { data, error } = await db
+      .from("notifications")
+      .update({ deleted: true })
+      .in("id", ids)
+      .select();
+
+    if (error) throw error;
+    if (!data || data.length === 0) {
+      alert(t("Nothing was deleted — check your Supabase RLS UPDATE policy for this table."));
+      return;
+    }
+
+    showToast(`${data.length} ${t("notification(s) deleted 🗑️")}`);
+    reloadNotifications();
+  } catch (e) {
+    console.error("deleteSelectedNotifications error:", e);
+    alert(t("Failed to delete. See console."));
+  }
+}
+
 async function toggleStatus(matric, month, currentStatus) {
   const newStatus = currentStatus === "paid" ? "unpaid" : "paid";
   await db
@@ -2728,13 +3386,15 @@ async function addGrade() {
       showToast(t("Grade updated"));
       window.editingGradeId = null;
     } else {
-      const { error } = await db.from("grades").insert([gradeData]);
+      const { data: newGrade, error } = await db.from("grades").insert([gradeData]).select("id").single();
       if (error) throw error;
 
       await sendNotification(
         matric_number,
         t("New Grade Posted"),
-        JSON.stringify({ key: "GRADE_RELEASED", data: { course } })
+        JSON.stringify({ key: "GRADE_RELEASED", data: { course } }),
+        undefined,
+        newGrade ? { table: "grades", id: newGrade.id } : null
       );
       showToast(t("Grade added"));
     }
@@ -2806,6 +3466,7 @@ async function loadGrades() {
       });
     }
     document.getElementById("grades-table")?._applyRowFilters?.();
+    updateReleaseFilteredCount();
     window.reTranslate?.();
   } catch (e) {
     console.error("Failed to load grades:", e);
@@ -2959,20 +3620,25 @@ async function addSchedule() {
       showToast(t("Schedule updated"));
       window.editingScheduleId = null;
     } else {
-      await db.from("schedule").insert([{
+      const { data: newSchedule } = await db.from("schedule").insert([{
         level_arabic, batch, course, instructor, class_date, class_time, meeting_link, status
-      }]);
+      }]).select("id").single();
 
-      const { data: students } = await db.from("students").select("matric_number");
-      students?.forEach(s => {
-        sendNotification(
-          s.matric_number,
-          t("New Class Scheduled"),
-          JSON.stringify({ key: "CLASS_SCHEDULED", data: { course, date: class_date, time: class_time } })
-        );
-      });
+      // Only the class's own level (and batch, when the class has one) is notified
+      let studentsQuery = db.from("students").select("matric_number").eq("deleted", false);
+      if (level_arabic) studentsQuery = studentsQuery.eq("level_arabic", level_arabic);
+      if (batch) studentsQuery = studentsQuery.eq("batch", batch);
+      const { data: students } = await studentsQuery;
 
-      showToast(t("Schedule added"));
+      const notified = await sendNotificationToMany(
+        (students || []).map(s => s.matric_number),
+        t("New Class Scheduled"),
+        JSON.stringify({ key: "CLASS_SCHEDULED", data: { course, date: class_date, time: class_time } }),
+        undefined,
+        newSchedule ? { table: "schedule", id: newSchedule.id } : null
+      );
+
+      showToast(`${t("Schedule added")} — ${notified} ${t("student(s) notified")}`);
     }
 
     closeModal("scheduleModal");
@@ -3240,6 +3906,7 @@ async function loadAssessments() {
             <div class="table-row-actions">
               <button class="btn btn-edit" onclick="editAssessment('${a.id}')">${t("Edit")}</button>
               <button class="btn btn-access" onclick="openAssessmentAccessModal('${a.id}', '${escapeForAttr(a.title)}')">${t("Access")}</button>
+              <button class="btn btn-edit btn-icon-only" onclick="copyAssessmentLink('${a.id}')" title="${t('Copy student link')}"><i class="fa-solid fa-link"></i></button>
               <button class="btn btn-delete" onclick="deleteAssessment('${a.id}')">${t("Delete")}</button>
               <button class="btn btn-danger btn-icon-only" onclick="permanentDeleteAssessment('${a.id}')" title="${t('Permanently Delete')}">🗑️</button>
             </div>
@@ -3831,7 +4498,8 @@ const TRASH_SYNC_RELOAD = {
   courses: () => typeof loadCoursesAdmin === "function" && loadCoursesAdmin(),
   attendance_sessions: () => typeof loadAttendanceSessions === "function" && loadAttendanceSessions(),
   student_fee_status: () => typeof loadFees === "function" && loadFees(),
-  certificates: () => typeof loadCertificatesRegistryData === "function" && loadCertificatesRegistryData()
+  certificates: () => typeof loadCertificatesRegistryData === "function" && loadCertificatesRegistryData(),
+  notifications: () => typeof loadNotificationsList === "function" && loadNotificationsList()
 };
 
 async function restoreDeleted({ table, match, reloadFn }) {
@@ -4020,8 +4688,121 @@ async function toggleReleased(gradeId, isReleased) {
   try {
     await db.from("grades").update({ released: isReleased }).eq("id", gradeId);
     showToast(isReleased ? t("Grade released") : t("Grade hidden"));
+    updateReleaseFilteredCount();
   } catch (e) {
     console.error("Error toggling released:", e);
+  }
+}
+
+/* -------------------------------------------------------
+   RELEASE FILTERED GRADES
+   Releases every grade the Grades table is currently *showing*
+   (i.e. after the Level / Batch / Semester filters and the search box).
+   Rows hidden by a filter are never touched.
+------------------------------------------------------- */
+function getVisibleGradeRows() {
+  return Array.from(document.querySelectorAll("#grades-table tbody tr"))
+    .filter(tr => tr.dataset.rowKey && tr.style.display !== "none");
+}
+
+function getVisibleUnreleasedGradeRows() {
+  return getVisibleGradeRows().filter(tr => !tr.querySelector('input[type="checkbox"]')?.checked);
+}
+
+function updateReleaseFilteredCount() {
+  const countEl = document.getElementById("releaseFilteredCount");
+  const btn = document.getElementById("releaseFilteredBtn");
+  if (!countEl || !btn) return;
+  const pending = getVisibleUnreleasedGradeRows().length;
+  countEl.textContent = pending;
+  btn.disabled = pending === 0;
+}
+
+// Keep the count on the button in step with the filters / search box.
+// setTimeout(0) so it always runs after the table's own filter handler.
+(function wireReleaseFilteredCount() {
+  const hook = () => {
+    ["searchGrades", "gradesLevelFilter", "gradesBatchFilter", "gradesSemesterFilter"].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el || el.dataset.releaseWired) return;
+      el.dataset.releaseWired = "1";
+      el.addEventListener(id === "searchGrades" ? "keyup" : "change", () => setTimeout(updateReleaseFilteredCount, 0));
+    });
+  };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", hook);
+  else hook();
+})();
+
+async function releaseFilteredGrades() {
+  const shown = getVisibleGradeRows();
+  if (!shown.length) { alert(t("No grades are shown in the table.")); return; }
+
+  const pendingRows = getVisibleUnreleasedGradeRows();
+  if (!pendingRows.length) { alert(t("All the grades shown are already released.")); return; }
+
+  // Spell out exactly which filters are active so nothing is released by surprise
+  const describe = (id, label) => {
+    const sel = document.getElementById(id);
+    return sel && sel.value ? `${t(label)}: ${sel.selectedOptions[0]?.textContent.trim() || sel.value}` : null;
+  };
+  const search = (document.getElementById("searchGrades")?.value || "").trim();
+  const parts = [
+    describe("gradesLevelFilter", "Level"),
+    describe("gradesBatchFilter", "Batch"),
+    describe("gradesSemesterFilter", "Semester"),
+    search ? `${t("Search")}: ${search}` : null
+  ].filter(Boolean);
+  const scope = parts.length ? parts.join("  •  ") : t("No filters — this is ALL grades");
+
+  if (!confirm(`${t("Release")} ${pendingRows.length} ${t("grade(s) currently shown in the table?")}\n\n${scope}`)) return;
+
+  const btn = document.getElementById("releaseFilteredBtn");
+  setLoading(btn, true);
+
+  try {
+    const ids = pendingRows.map(tr => tr.dataset.rowKey);
+    let released = 0;
+
+    for (let i = 0; i < ids.length; i += 200) {
+      const { data, error } = await db
+        .from("grades")
+        .update({ released: true })
+        .in("id", ids.slice(i, i + 200))
+        .select("id");
+      if (error) throw error;
+      released += (data || []).length;
+    }
+
+    if (!released) {
+      alert(t("Nothing was updated — check your Supabase RLS UPDATE policy for this table."));
+      return;
+    }
+
+    showToast(`${released} ${t("grade(s) released ✅")}`);
+    await loadGrades();
+  } catch (e) {
+    console.error("releaseFilteredGrades error:", e);
+    alert(t("Failed to release grades. See console."));
+  } finally {
+    setLoading(btn, false);
+    updateReleaseFilteredCount();
+  }
+}
+
+/* -------------------------------------------------------
+   COPY DIRECT CBT LINK
+   Link opens the student's test welcome page straight on this assessment.
+   Not logged in -> login -> back to the exam page (see login.js).
+------------------------------------------------------- */
+async function copyAssessmentLink(id) {
+  const url = new URL("test-welcome.html", window.location.href);
+  url.searchParams.set("exam", id);
+  const link = url.href;
+  try {
+    await navigator.clipboard.writeText(link);
+    showToast(t("Student link copied ✅"));
+  } catch (e) {
+    window.prompt(t("Copy this link:"), link);
   }
 }
 
@@ -4659,7 +5440,7 @@ async function issueLevelCertificate() {
   const grade_note = document.getElementById("certGradeNote")?.value.trim() || "";
 
   // Insert only the real columns that exist in the certificates table
-  const { error } = await db.from("certificates").insert([{
+  const { data: newCert, error } = await db.from("certificates").insert([{
     matric_number: matric,
     student_name: fullname,
     course_name: course_name,
@@ -4669,7 +5450,7 @@ async function issueLevelCertificate() {
     grade_note: grade_note,
     cert_type: "level",
     deleted: false
-  }]);
+  }]).select("id").single();
 
   if (error) {
     console.error("Certificate insert error:", error);
@@ -4680,7 +5461,9 @@ async function issueLevelCertificate() {
   await sendNotification(
     matric,
     t("Certificate Issued"),
-    JSON.stringify({ key: "CERTIFICATE_ISSUED", data: { course: course_name } })
+    JSON.stringify({ key: "CERTIFICATE_LEVEL_ISSUED", data: { level } }),
+    undefined,
+    newCert ? { table: "certificates", id: newCert.id } : null
   );
 
   closeModal("certificateModal");
@@ -4714,7 +5497,7 @@ async function issueFullProgrammeCertificate() {
 
   const grade_note = document.getElementById("certProgrammeGradeNote")?.value.trim() || "";
 
-  const { error } = await db.from("certificates").insert([{
+  const { data: newCert, error } = await db.from("certificates").insert([{
     matric_number: matric,
     student_name: fullname,
     course_name: programme_name,
@@ -4724,7 +5507,7 @@ async function issueFullProgrammeCertificate() {
     grade_note: grade_note,
     cert_type: "programme",
     deleted: false
-  }]);
+  }]).select("id").single();
 
   if (error) {
     console.error("Programme certificate insert error:", error);
@@ -4735,7 +5518,9 @@ async function issueFullProgrammeCertificate() {
   await sendNotification(
     matric,
     t("Certificate Issued"),
-    JSON.stringify({ key: "CERTIFICATE_ISSUED", data: { course: programme_name } })
+    JSON.stringify({ key: "CERTIFICATE_ISSUED", data: { course: programme_name } }),
+    undefined,
+    newCert ? { table: "certificates", id: newCert.id } : null
   );
 
   closeModal("certificateModal");
@@ -5553,6 +6338,20 @@ const TRASH_CATEGORIES = {
       <td>${c.issued_at ? new Date(c.issued_at).toLocaleDateString() : "—"}</td>
     `,
     match: c => ({ id: c.id })
+  },
+  notifications: {
+    labelKey: "Notifications",
+    table: "notifications",
+    orderCol: "created_at",
+    ascending: false,
+    headers: () => [t("Matric Number"), t("Title"), t("Message"), t("Date")],
+    row: n => `
+      <td>${notifEsc(n.matric_number)}</td>
+      <td><strong>${notifEsc(n.title)}</strong></td>
+      <td>${notifEsc(notifShort(notifRenderMessage(n.message), 100))}</td>
+      <td>${n.created_at ? new Date(n.created_at).toLocaleDateString() : "—"}</td>
+    `,
+    match: n => ({ id: n.id, matric_number: n.matric_number })
   }
 };
 
