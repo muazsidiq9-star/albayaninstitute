@@ -25,6 +25,49 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="staff-dashboard.css">
+  <style>
+    /* ── Leads table: Notes column wide enough to read the message ── */
+    #leads-table th:nth-child(8),
+    #leads-table td:nth-child(8),
+    #leads-table td.lead-notes-cell {
+      min-width: 280px;
+      max-width: 340px;
+      white-space: normal;
+      word-break: break-word;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    /* ── Stats: compact 2-column grid on phones (6 cards for officers
+          become 3 short rows instead of 6 tall ones) ── */
+    @media (max-width: 640px) {
+      .stats {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+        padding: 0 14px !important;
+        margin: 16px auto !important;
+      }
+      .stats .stat-card {
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 12px 10px !important;
+        gap: 10px !important;
+        flex-direction: row !important;
+        align-items: center !important;
+      }
+      .stats .stat-icon {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        font-size: 1rem !important;
+      }
+      .stats .stat-info h3 { font-size: 1.35rem !important; margin: 0 !important; }
+      .stats .stat-info p  { font-size: 0.68rem !important; margin: 2px 0 0 !important; line-height: 1.2 !important; }
+    }
+  </style>
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -683,6 +726,7 @@
               <th data-translate="Contact">Contact</th>
               <th data-translate="Email">Email</th>
               <th data-translate="Country">Country</th>
+              <th data-translate="Occupation">Occupation</th>
               <th data-translate="Source">Source</th>
               <th data-translate="Status">Status</th>
               <th data-translate="Notes">Notes</th>
@@ -692,7 +736,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td colspan="8" class="empty-state">
+            <tr><td colspan="11" class="empty-state">
               <i class="fa-solid fa-spinner fa-spin"></i> <span data-translate="Loading...">Loading...</span>
             </td></tr>
           </tbody>
@@ -794,6 +838,10 @@
               <option value="Other" data-translate="Other">Other</option>
         
         </select>
+
+        <label data-translate="Occupation">Occupation</label>
+        <input type="text" id="leadOccupation" placeholder="Occupation (optional)"
+               data-translate-placeholder="Occupation (optional)">
 
         <label data-translate="Source">Source</label>
         <select id="leadSource">

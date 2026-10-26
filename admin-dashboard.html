@@ -111,18 +111,21 @@
         <p data-translate="Students">Students</p>
       </div>
     </div>
-    <div class="stat-card" data-tab="tab-payments">
-      <div class="stat-icon payments"><i class="fa-solid fa-money-bill-wave"></i></div>
-      <div class="stat-info">
-        <h3 id="totalPayments" data-no-translate="true">0</h3>
-        <p data-translate="Payments">Payments</p>
-      </div>
-    </div>
-    <div class="stat-card" data-tab="tab-payments">
+    <div class="stat-card stat-card-payments" data-tab="tab-payments">
       <div class="stat-icon amount"><i class="fa-solid fa-naira-sign"></i></div>
       <div class="stat-info">
+        <!-- Month picker: the month name + arrow are what you see; the real <select>
+             sits invisibly on top so tapping them opens the list of months. -->
+        <label class="stat-month">
+          <span id="statsMonthLabel" data-no-translate="true">All Months</span>
+          <i class="fa-solid fa-chevron-down"></i>
+          <select id="statsMonthFilter" class="stat-month-select" aria-label="Show payment figures for">
+            <option value="" data-translate="All Months">All Months</option>
+          </select>
+        </label>
         <h3 id="totalAmountPaid" data-no-translate="true">₦0</h3>
         <p data-translate="Amount Paid">Amount Paid</p>
+        <p class="stat-sub"><span id="totalPayments" data-no-translate="true">0</span> <span data-translate="Payments">Payments</span></p>
       </div>
     </div>
   </section>
@@ -167,6 +170,10 @@
     <button class="dash-tab" data-tab="tab-assessments" onclick="switchDashTab('tab-assessments', this)">
       <i class="fa-solid fa-file-pen"></i>
       <span data-translate="Assessments">Assessments</span>
+    </button>
+    <button class="dash-tab" data-tab="tab-resets" onclick="switchDashTab('tab-resets', this)">
+      <i class="fa-solid fa-rotate-left"></i>
+      <span data-translate="Reset Attempts">Reset Attempts</span>
     </button>
     <button class="dash-tab" data-tab="tab-courses" onclick="switchDashTab('tab-courses', this)">
       <i class="fa-solid fa-book-open"></i>
@@ -596,7 +603,7 @@
               title="Release every grade currently shown in the table (respects the filters)">
         <i class="fa-solid fa-eye"></i>
         <span data-translate="Release Filtered">Release Filtered</span>
-        (<span id="releaseFilteredCount">0</span>)
+        (<span id="releaseFilteredCount" class="btn-count">0</span>)
       </button>
     </div>
     <div class="table-container">
@@ -796,6 +803,110 @@
     </div>
   </section>
   </div><!-- /tab-assessments -->
+
+  <!-- ================================================
+       RESET ATTEMPTS (tab-resets)
+       Lets Mudeer / Assistant Mudeer / H.O.D give selected students a
+       fresh retake: deletes their attempt + answers and resets the
+       grade for that one assessment. All the work happens inside the
+       database functions admin_attempts_preview / admin_reset_attempts /
+       admin_reset_history (see reset-attempts.sql), which re-check the
+       caller's role on the server.
+  ================================================ -->
+  <div class="dash-tab-panel" id="tab-resets" style="display:none;">
+  <section class="dash-section">
+    <div class="section-header">
+      <h2 data-translate="Reset Attempts">Reset Attempts</h2>
+    </div>
+    <p style="color:#666;font-size:14px;margin:0 0 16px;" data-translate="Pick an assessment, tick the students who must retake it, then reset. Their attempt, saved answers and the score for this assessment are cleared so they can start fresh. This cannot be undone.">
+      Pick an assessment, tick the students who must retake it, then reset. Their attempt, saved answers and the score for this assessment are cleared so they can start fresh. This cannot be undone.
+    </p>
+
+    <!-- Step 1: find the assessment (filters + searchable card list) -->
+    <div class="reset-filters">
+      <select id="resetLevelFilter" onchange="renderResetAssessmentList()" aria-label="Filter by level"></select>
+      <select id="resetBatchFilter" onchange="renderResetAssessmentList()" aria-label="Filter by batch"></select>
+      <select id="resetSemesterFilter" onchange="renderResetAssessmentList()" aria-label="Filter by semester"></select>
+      <select id="resetTypeFilter" onchange="renderResetAssessmentList()" aria-label="Filter by type">
+        <option value="" data-translate="All types">All types</option>
+        <option value="test" data-translate="Test">Test</option>
+        <option value="exam" data-translate="Exam">Exam</option>
+      </select>
+    </div>
+    <input type="text" id="resetAssessmentSearch" class="search-input reset-assess-search"
+           placeholder="🔍 Search assessment title or course..."
+           data-translate-placeholder="🔍 Search assessment title or course..."
+           oninput="renderResetAssessmentList()">
+
+    <div id="resetAssessmentList" class="reset-assess-list"></div>
+    <div id="resetPickedBar" class="reset-picked" style="display:none;"></div>
+
+    <!-- Step 2: pick the students -->
+    <div class="reset-student-tools">
+      <input type="text" id="resetSearch" class="search-input"
+             placeholder="🔍 Search student by matric or name..."
+             data-translate-placeholder="🔍 Search student by matric or name..."
+             oninput="renderResetRows()">
+      <button class="add-btn" onclick="loadResetPreview()">
+        <i class="fa-solid fa-rotate"></i>
+        <span data-translate="Refresh">Refresh</span>
+      </button>
+    </div>
+
+    <div id="resetSummaryBar" style="padding:6px 4px 10px;font-size:14px;color:#555;font-weight:500;"></div>
+
+    <div class="table-container">
+      <table id="reset-table">
+        <thead>
+          <tr>
+            <th style="width:36px;"><input type="checkbox" id="resetSelectAll" onchange="toggleResetSelectAll(this.checked)"></th>
+            <th data-translate="Student">Student</th>
+            <th data-translate="Started">Started</th>
+            <th data-translate="Finished">Finished</th>
+            <th data-translate="Answers">Answers</th>
+            <th data-translate="Test Score">Test Score</th>
+            <th data-translate="Exam Score">Exam Score</th>
+            <th data-translate="Total">Total</th>
+            <th data-translate="Released">Released</th>
+          </tr>
+        </thead>
+        <tbody id="reset-body">
+          <tr><td colspan="9" class="empty-row" data-translate="Select an assessment to see students who attempted it">Select an assessment to see students who attempted it</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:16px;">
+      <button class="btn btn-delete" id="resetSelectedBtn" onclick="resetSelectedAttempts()" disabled>
+        <i class="fa-solid fa-rotate-left"></i>
+        <span data-translate="Reset selected">Reset selected</span>
+        (<span id="resetSelectedCount" class="btn-count">0</span>)
+      </button>
+    </div>
+  </section>
+
+  <section class="dash-section">
+    <div class="section-header">
+      <h2 data-translate="Recent Resets">Recent Resets</h2>
+    </div>
+    <div class="table-container">
+      <table id="reset-history-table">
+        <thead>
+          <tr>
+            <th data-translate="Date">Date</th>
+            <th data-translate="Done by">Done by</th>
+            <th data-translate="Assessment">Assessment</th>
+            <th data-translate="Students">Students</th>
+            <th data-translate="Cleared">Cleared</th>
+          </tr>
+        </thead>
+        <tbody id="reset-history-body">
+          <tr><td colspan="5" class="empty-row" data-translate="No resets yet">No resets yet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  </div><!-- /tab-resets -->
 
   <!-- ================================================
        COURSES SECTION (tab-courses)
@@ -1689,7 +1800,7 @@
         <button class="btn btn-delete btn-small" id="notifBulkDeleteBtn" onclick="deleteSelectedNotifications()" style="display:none;">
           <i class="fa-solid fa-trash"></i>
           <span data-translate="Delete Selected">Delete Selected</span>
-          (<span id="notifSelectedCount">0</span>)
+          (<span id="notifSelectedCount" class="btn-count">0</span>)
         </button>
       </div>
       <div id="notifSummaryBar" style="padding:10px 4px;font-size:14px;color:#555;font-weight:500;"></div>
@@ -1733,6 +1844,16 @@
         <input type="text" id="searchTrashTab" class="search-input"
                placeholder="🔍 Search in Trash Bin..."
                data-translate-placeholder="🔍 Search in Trash Bin...">
+        <button class="btn btn-save btn-small" id="trashBulkRestoreBtn" onclick="bulkTrashAction('restore')" style="display:none;">
+          <i class="fa-solid fa-trash-arrow-up"></i>
+          <span data-translate="Restore Selected">Restore Selected</span>
+          (<span class="trash-selected-count btn-count">0</span>)
+        </button>
+        <button class="btn btn-danger btn-small" id="trashBulkDeleteBtn" onclick="bulkTrashAction('permanent')" style="display:none;">
+          <i class="fa-solid fa-trash"></i>
+          <span data-translate="Delete Selected">Delete Selected</span>
+          (<span class="trash-selected-count btn-count">0</span>)
+        </button>
       </div>
       <div class="trash-chip-row" id="trashCategoryChips"></div>
       <div class="table-container">
@@ -2203,6 +2324,7 @@
           <option value="First" data-translate="First">First</option>
           <option value="Second" data-translate="Second">Second</option>
         </select>
+        <p style="grid-column:1/-1;margin:0 0 4px;color:#666;font-size:12.5px;" data-translate="Leave a score empty if it is not graded yet (saved as blank). Type 0 only when the score is really zero.">Leave a score empty if it is not graded yet (saved as blank). Type 0 only when the score is really zero.</p>
         <label data-translate="Assessment Score">Assessment Score</label>
         <input type="number" id="gradeAssessment" placeholder="Assessment"
                data-translate-placeholder="Assessment">
@@ -2956,10 +3078,10 @@
     // ===========================
     const TAB_ROLE_MAP = {
     
-    mudeer:           ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-grades","tab-schedule","tab-attendance","tab-rewards","tab-carryover","tab-assessments","tab-courses","tab-videos","tab-certificates","tab-passwords","tab-notifications","tab-deleted"],
-  assistant_mudeer: ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-grades","tab-schedule","tab-attendance","tab-rewards","tab-carryover","tab-assessments","tab-courses","tab-videos","tab-certificates","tab-passwords","tab-notifications","tab-deleted"],
+    mudeer:           ["tab-profile","tab-resets","tab-mypayments","tab-students","tab-payments","tab-fees","tab-grades","tab-schedule","tab-attendance","tab-rewards","tab-carryover","tab-assessments","tab-courses","tab-videos","tab-certificates","tab-passwords","tab-notifications","tab-deleted"],
+  assistant_mudeer: ["tab-profile","tab-resets","tab-mypayments","tab-students","tab-payments","tab-fees","tab-grades","tab-schedule","tab-attendance","tab-rewards","tab-carryover","tab-assessments","tab-courses","tab-videos","tab-certificates","tab-passwords","tab-notifications","tab-deleted"],
   registrar:        ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-attendance","tab-carryover","tab-courses","tab-videos"],
-      h_o_d:           ["tab-profile","tab-mypayments","tab-students","tab-grades","tab-schedule","tab-assessments","tab-attendance","tab-courses","tab-passwords"],
+      h_o_d:           ["tab-profile","tab-resets","tab-mypayments","tab-students","tab-grades","tab-schedule","tab-assessments","tab-attendance","tab-courses","tab-passwords"],
       bursar:           ["tab-profile","tab-mypayments","tab-students","tab-payments","tab-fees","tab-rewards"]
     };
 
@@ -3043,6 +3165,10 @@
 
       if (tabId === "tab-carryover" && typeof loadCarryoverTab === "function") {
         loadCarryoverTab();
+      }
+
+      if (tabId === "tab-resets" && typeof loadResetAttemptsTab === "function") {
+        loadResetAttemptsTab();
       }
 
       if (tabId === "tab-notifications" && typeof loadNotificationsTab === "function") {

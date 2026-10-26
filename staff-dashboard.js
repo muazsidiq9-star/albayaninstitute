@@ -164,14 +164,14 @@ async function loadLeads() {
   const tbody = document.querySelector("#leads-table tbody");
   if (!tbody) return;
 
-  tbody.innerHTML = `<tr><td colspan="8" class="empty-state">
+  tbody.innerHTML = `<tr><td colspan="11" class="empty-state">
     <i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading...")}
   </td></tr>`;
 
   try {
     const { data, error } = await db
       .from("admission_leads")
-      .select("id, full_name, phone, email, country, source, status, notes, created_at")
+      .select("id, full_name, phone, email, country, occupation, source, status, notes, created_at")
       .order("created_at", { ascending: false });
 
     if (error) throw error;
@@ -182,7 +182,7 @@ async function loadLeads() {
 
   } catch (e) {
     console.error("Load leads error:", e);
-    tbody.innerHTML = `<tr><td colspan="8" class="empty-state">${t("Failed to load leads")}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="11" class="empty-state">${t("Failed to load leads")}</td></tr>`;
   }
 }
 
@@ -234,12 +234,22 @@ function formatLeadSource(source) {
   return map[source] || source;
 }
 
+// Website leads are typed by the public — never inject them into the page raw
+function escapeLeadHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function renderLeadsTable(data) {
   const tbody = document.querySelector("#leads-table tbody");
   if (!tbody) return;
 
   if (!data || data.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="8" class="empty-state">${t("No leads yet")}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="11" class="empty-state">${t("No leads yet")}</td></tr>`;
     return;
   }
 
@@ -252,17 +262,18 @@ function renderLeadsTable(data) {
       ? new Date(lead.created_at).toLocaleDateString()
       : "—";
     const notesPreview = lead.notes
-      ? (lead.notes.length > 40 ? lead.notes.slice(0, 40) + "…" : lead.notes)
+      ? escapeLeadHtml(lead.notes.length > 120 ? lead.notes.slice(0, 120) + "…" : lead.notes)
       : "—";
 
     tr.innerHTML = `
-      <td>${lead.full_name || "—"}</td>
-      <td>${lead.phone || "—"}</td>
-      <td>${lead.email || "—"}</td>
-      <td>${lead.country || "—"}</td>
-      <td>${formatLeadSource(lead.source)}</td>
-      <td><span class="badge ${statusBadge}">${formatLeadStatus(lead.status)}</span></td>
-      <td title="${(lead.notes || "").replace(/"/g, "&quot;")}">${notesPreview}</td>
+      <td>${escapeLeadHtml(lead.full_name) || "—"}</td>
+      <td>${escapeLeadHtml(lead.phone) || "—"}</td>
+      <td>${escapeLeadHtml(lead.email) || "—"}</td>
+      <td>${escapeLeadHtml(lead.country) || "—"}</td>
+      <td>${escapeLeadHtml(lead.occupation) || "—"}</td>
+      <td>${escapeLeadHtml(formatLeadSource(lead.source))}</td>
+      <td><span class="badge ${statusBadge}">${escapeLeadHtml(formatLeadStatus(lead.status))}</span></td>
+      <td class="lead-notes-cell" title="${escapeLeadHtml(lead.notes || "")}">${notesPreview}</td>
       <td>${addedDate}</td>
       <td>
         <button class="btn btn-edit" onclick="openEditLeadModal('${lead.id}')">
@@ -305,7 +316,8 @@ function filterLeadsTable() {
       (lead.full_name || "").toLowerCase().includes(search) ||
       (lead.phone || "").toLowerCase().includes(search) ||
       (lead.email || "").toLowerCase().includes(search) ||
-      (lead.country || "").toLowerCase().includes(search);
+      (lead.country || "").toLowerCase().includes(search) ||
+      (lead.occupation || "").toLowerCase().includes(search);
     const matchesStatus = !statusFilter || lead.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -325,6 +337,7 @@ function openAddLeadModal() {
   document.getElementById("leadPhone").value = "";
   document.getElementById("leadEmail").value = "";
   document.getElementById("leadCountry").value = "";
+  document.getElementById("leadOccupation").value = "";
   document.getElementById("leadSource").value = "whatsapp";
   document.getElementById("leadStatus").value = "new";
   document.getElementById("leadNotes").value = "";
@@ -341,6 +354,7 @@ function openEditLeadModal(leadId) {
   document.getElementById("leadPhone").value = lead.phone || "";
   document.getElementById("leadEmail").value = lead.email || "";
   document.getElementById("leadCountry").value = lead.country || "";
+  document.getElementById("leadOccupation").value = lead.occupation || "";
   document.getElementById("leadSource").value = lead.source || "whatsapp";
   document.getElementById("leadStatus").value = lead.status || "new";
   document.getElementById("leadNotes").value = lead.notes || "";
@@ -356,6 +370,7 @@ async function saveLead() {
     const phone = document.getElementById("leadPhone")?.value.trim();
     const email = document.getElementById("leadEmail")?.value.trim();
     const country = document.getElementById("leadCountry")?.value.trim();
+    const occupation = document.getElementById("leadOccupation")?.value.trim();
     const source = document.getElementById("leadSource")?.value;
     const status = document.getElementById("leadStatus")?.value;
     const notes = document.getElementById("leadNotes")?.value.trim();
@@ -370,6 +385,7 @@ async function saveLead() {
       phone,
       email: email || null,
       country: country || null,
+      occupation: occupation || null,
       source,
       status,
       notes: notes || null

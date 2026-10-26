@@ -4,10 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google" content="notranslate">
-  <title>My Grades - Al-Bayan Arabic Institute Online Online</title>
+  <meta name="theme-color" content="#1647a3">
+  <title>My Grades | Al-Bayan Arabic Institute Online</title>
+  <meta name="description" content="View your grades and assessment results.">
+  <link rel="canonical" href="https://albayaninstitute.netlify.app/student-grades.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://albayaninstitute.netlify.app/student-grades.html">
+  <meta property="og:title" content="My Grades | Al-Bayan Arabic Institute Online">
+  <meta property="og:description" content="View your grades and assessment results.">
+  <meta property="og:image" content="https://albayaninstitute.netlify.app/og-student-grades.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="My Grades | Al-Bayan Arabic Institute Online">
+  <meta name="twitter:description" content="View your grades and assessment results.">
+  <meta name="twitter:image" content="https://albayaninstitute.netlify.app/og-student-grades.png">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="student-grades.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -38,7 +55,7 @@
   </nav>
 
   <!-- PAGE BANNER -->
-  <header class="sg-banner" style="background-image: url('result-check.jpg');">
+  <header class="sg-banner" style="background-image: url('result.jpg');">
     <div class="sg-banner-overlay"></div>
     <div class="sg-banner-content">
       <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
@@ -59,7 +76,13 @@
       <div class="gf-context">
         <i class="fa-solid fa-layer-group"></i>
         <span data-translate="Showing">Showing</span>:
-        <strong id="gfContextLabel">—</strong>
+        <strong id="gfContextLabel" data-no-translate="true">—</strong>
+      </div>
+
+      <div class="gf-stats" aria-live="polite">
+        <div class="gf-stat"><span class="gf-stat-value" id="statCourses" data-no-translate="true">0</span><span class="gf-stat-label" data-translate="Courses">Courses</span></div>
+        <div class="gf-stat"><span class="gf-stat-value" id="statAverage" data-no-translate="true">--</span><span class="gf-stat-label" data-translate="Average">Average</span></div>
+        <div class="gf-stat"><span class="gf-stat-value" id="statPassed" data-no-translate="true">0</span><span class="gf-stat-label" data-translate="Passed">Passed</span></div>
       </div>
 
       <div class="gf-tabs" id="levelTabs" role="tablist" aria-label="Level"></div>
@@ -85,16 +108,15 @@
     <table class="grades-table">
       <thead>
         <tr>
-          <th>Matric Number</th>
-          <th>Level</th>
-          <th>Batch</th>
-          <th>Course</th>
-          <th>Semester</th>
-          <th>Assessment</th>
-          <th>Exam</th>
-          <th>Total Score</th>
-          <th>Remark</th>
-          <th>Status</th>
+          <th scope="col" data-translate="Level">Level</th>
+          <th scope="col" data-translate="Batch">Batch</th>
+          <th scope="col" data-translate="Course">Course</th>
+          <th scope="col" data-translate="Semester">Semester</th>
+          <th scope="col" data-translate="Assessment">Assessment</th>
+          <th scope="col" data-translate="Exam">Exam</th>
+          <th scope="col" data-translate="Total Score">Total Score</th>
+          <th scope="col" data-translate="Remark">Remark</th>
+          <th scope="col" data-translate="Status">Status</th>
         </tr>
       </thead>
       <tbody id="gradesBody">
@@ -135,7 +157,7 @@
 
   <!-- FOOTER -->
 <footer>
-    <p data-translate="Al-Bayan Arabic Institute Online Online">Al-Bayan Arabic Institute Online Online</p>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
     <p>
       <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
       <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
@@ -168,6 +190,24 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+  <script>
+    /* Direct-link support: if someone opens this page without a student
+       session, remember it so login.js sends them back here afterwards.
+       Same session rule as student-guard.js: sessionStorage first, then the
+       14-day localStorage one. Relative target only, never a full URL. */
+    (function () {
+      try {
+        var ok = sessionStorage.getItem("role") === "student" && !!sessionStorage.getItem("matric");
+        if (!ok) {
+          var raw = localStorage.getItem("studentSession");
+          var saved = raw ? JSON.parse(raw) : null;
+          ok = !!(saved && saved.expiresAt && Date.now() < saved.expiresAt);
+        }
+        if (!ok) sessionStorage.setItem("postLoginRedirect", location.pathname.split("/").pop() + location.search);
+      } catch (e) { /* storage blocked: normal login flow */ }
+    })();
+  </script>
 
   <script src="student-guard.js"></script>
   

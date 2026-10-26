@@ -66,36 +66,151 @@ function normalizeGradeRow(g) {
   };
 }
 
+/* Safe label helper: t() can choke on null/undefined (a grade row with no
+   level or semester), which used to abort the whole render and leave the
+   "Showing" label stuck on its placeholder. */
+const tt = v => (v ? t(v) : "--");
+
+/* Summary text (Showing label + stat cards) is "locked": if anything else —
+   e.g. translate.js restoring the placeholder text the HTML shipped with —
+   changes it after we set it, it is put straight back. Only re-sets when the
+   text differs, so it can't loop. */
+const summaryDesired = {};
+const summaryObserver = new MutationObserver(() => {
+  Object.entries(summaryDesired).forEach(([id, txt]) => {
+    const el = document.getElementById(id);
+    if (el && el.textContent !== txt) el.textContent = txt;
+  });
+});
+function setSummaryText(id, text) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  text = String(text);
+  if (!(id in summaryDesired)) {
+    summaryObserver.observe(el, { childList: true, characterData: true, subtree: true });
+  }
+  summaryDesired[id] = text;
+  if (el.textContent !== text) el.textContent = text;
+}
+
+function escapeHtml(v) {
+  return String(v ?? "").replace(/[&<>"']/g, c => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+  ));
+}
+
+/* --------------------------------
+   CURRENT LEVEL + SEMESTER
+   Level comes from the student's own record (students.level_arabic),
+   NOT from whichever grade row happened to be created last — admins can
+   enter or release old results late, which used to make "current" jump
+   to the wrong level/semester. If the student's level has no released
+   grades yet, fall back to the highest level that does. Semester = the
+   latest one released inside that level.
+--------------------------------- */
+let profileLevel = null;
+
+function readSessionLevel() {
+  try { return JSON.parse(sessionStorage.getItem("currentStudent") || "{}").level || null; }
+  catch (e) { return null; }
+}
+
+function getCurrentContext() {
+  if (!allGrades.length) return { level: null, semester: null };
+
+  const present = [...new Set(allGrades.map(g => g.level_arabic).filter(Boolean))];
+  let level = canonicalize(profileLevel, LEVEL_ORDER);
+  if (!level || !present.includes(level)) {
+    const known = LEVEL_ORDER.filter(l => present.includes(l));
+    level = known.length ? known[known.length - 1] : (present[present.length - 1] || null);
+  }
+
+  const sems = [...new Set(
+    allGrades.filter(g => !level || g.level_arabic === level).map(g => g.semester).filter(Boolean)
+  )];
+  const knownSems = SEMESTER_ORDER.filter(x => sems.includes(x));
+  const semester = knownSems.length ? knownSems[knownSems.length - 1] : (sems[0] || null);
+
+  return { level, semester };
+}
+
 /* --------------------------------
    STUDENT GUARD
 --------------------------------- */
-(function () {
-  const role  = sessionStorage.getItem("role");
-  const matric = sessionStorage.getItem("matric");
-  if (role !== "student" || !matric) {
-    alert("Student login required");
-    window.location.href = "login.html";
-  }
+/* Direct-link support (same rule as test-welcome.html / student-guard.js):
+   1. sessionStorage session -> fine.
+   2. Otherwise, a still-valid 14-day "studentSession" in localStorage
+      -> restore it into sessionStorage and carry on, no login needed.
+   3. Otherwise remember this page in "postLoginRedirect" (login.js sends
+      the student back to it after a successful login) and go to login.
+   Only a relative target (file name + query) is stored, never a full URL. */
+const studentAuthorized = (function () {
+  try {
+    let ok = sessionStorage.getItem("role") === "student" && !!sessionStorage.getItem("matric");
+
+    if (!ok) {
+      const raw   = localStorage.getItem("studentSession");
+      const saved = raw ? JSON.parse(raw) : null;
+      if (saved && saved.role === "student" && saved.matric &&
+          saved.expiresAt && Date.now() < saved.expiresAt) {
+        sessionStorage.setItem("role", "student");
+        sessionStorage.setItem("matric", saved.matric);
+        if (saved.currentStudent) sessionStorage.setItem("currentStudent", saved.currentStudent);
+        ok = true;
+      }
+    }
+
+    if (ok) {
+      sessionStorage.removeItem("postLoginRedirect"); // logged in: nothing pending
+      return true;
+    }
+
+    sessionStorage.setItem(
+      "postLoginRedirect",
+      location.pathname.split("/").pop() + location.search
+    );
+  } catch (e) { /* storage blocked: fall back to the normal login flow */ }
+
+  window.location.replace("login.html");
+  return false;
 })();
 
 /* --------------------------------
    LOAD GRADES (ONLY RELEASED)
 --------------------------------- */
+function setGradesMessage(html) {
+  gradesBody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:28px; color:var(--text-muted);">${html}</td></tr>`;
+}
+
 async function loadStudentGrades() {
+  if (!studentAuthorized) return; // redirecting to login; don't query without a matric
+  setGradesMessage(`<i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading grades...")}`);
+  setSummaryText("gfContextLabel", t("Loading..."));
+
   try {
     const matric = sessionStorage.getItem("matric");
-    const { data, error } = await db
-      .from("grades")
-      .select("matric_number, level_arabic, batch, course, semester, assessment_score, exam_score, total_score, remark, status, created_at")
-      .eq("matric_number", matric)
-      .eq("released", true)
-      .order("created_at", { ascending: false });
+    const [gradesRes, studentRes] = await Promise.all([
+      db.from("grades")
+        .select("matric_number, level_arabic, batch, course, semester, assessment_score, exam_score, total_score, remark, status, created_at")
+        .eq("matric_number", matric)
+        .eq("released", true)
+        .order("created_at", { ascending: false }),
+      db.from("students").select("level_arabic").eq("matric_number", matric).maybeSingle()
+    ]);
 
-    if (error) throw error;
-    allGrades = (data || []).map(normalizeGradeRow);
+    if (gradesRes.error) throw gradesRes.error;
+    profileLevel = studentRes.data?.level_arabic || readSessionLevel();
+    allGrades = (gradesRes.data || []).map(normalizeGradeRow);
     initFilterPanel();
   } catch (err) {
     console.error("Load grades error:", err);
+    setSummaryText("gfContextLabel", "—");
+    setGradesMessage(
+      `${t("Could not load your grades.")}<br>
+       <button type="button" class="gf-history-toggle" style="margin:10px auto 0;" onclick="loadStudentGrades()">
+         <i class="fa-solid fa-rotate-right"></i> ${t("Try again")}
+       </button>`
+    );
   }
 }
 
@@ -119,8 +234,9 @@ function initFilterPanel() {
     return;
   }
 
-  selectedLevel    = allGrades[0].level_arabic || null;
-  selectedSemester = allGrades[0].semester || null;
+  const ctx = getCurrentContext();
+  selectedLevel    = ctx.level;
+  selectedSemester = ctx.semester;
   historyMode      = false;
   if (historyBtn) historyBtn.style.display = "";
 
@@ -146,8 +262,9 @@ function toggleHistoryMode() {
     levelTabs?.classList.remove("gf-tabs-dimmed");
     semesterTabs?.classList.remove("gf-tabs-dimmed");
     // Jump back to the student's actual current level/semester
-    selectedLevel    = allGrades[0]?.level_arabic || null;
-    selectedSemester = allGrades[0]?.semester || null;
+    const ctx = getCurrentContext();
+    selectedLevel    = ctx.level;
+    selectedSemester = ctx.semester;
     renderLevelTabs();
     renderSemesterTabs();
   }
@@ -225,24 +342,27 @@ function renderSemesterTabs() {
 }
 
 function updateContextLabel() {
-  const label = document.getElementById("gfContextLabel");
-  if (!label) return;
-
-  if (!allGrades.length) {
-    label.textContent = t("No grades released yet");
-  } else if (historyMode) {
-    label.textContent = t("Full grade history");
-  } else if (selectedSemester === "ALL") {
-    label.textContent = `${t(selectedLevel) || "--"} · ${t("All Semesters")}`;
-  } else {
-    label.textContent = `${t(selectedLevel) || "--"} · ${semesterLabel(selectedSemester)}`;
-  }
+  let text;
+  if (!allGrades.length)               text = t("No grades released yet");
+  else if (historyMode)                text = t("Full grade history");
+  else if (selectedSemester === "ALL") text = `${tt(selectedLevel)} · ${t("All Semesters")}`;
+  else                                 text = `${tt(selectedLevel)} · ${semesterLabel(selectedSemester)}`;
+  setSummaryText("gfContextLabel", text);
 }
 
 /* --------------------------------
    RENDER TABLE
 --------------------------------- */
+function updateStats(grades) {
+  const set = setSummaryText;
+  const scores = grades.filter(g => g.total_score != null).map(g => Number(g.total_score)).filter(Number.isFinite);
+  set("statCourses", grades.length);
+  set("statAverage", scores.length ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) + "%" : "--");
+  set("statPassed", grades.filter(g => (g.remark || "").toLowerCase() === "pass").length);
+}
+
 function renderGrades(grades) {
+  updateStats(grades);
   gradesBody.innerHTML = "";
 
   if (grades.length === 0) {
@@ -251,37 +371,41 @@ function renderGrades(grades) {
       : "";
     gradesBody.innerHTML = `
       <tr>
-        <td colspan="10" style="text-align:center; padding:28px; color:var(--text-muted);">
+        <td colspan="9" style="text-align:center; padding:28px; color:var(--text-muted);">
           ${t("No grades found")}${hint}
         </td>
       </tr>`;
     return;
   }
 
-  grades.forEach(g => {
-    const remark = (g.remark || "").toLowerCase();
-    const status = (g.status || "").toLowerCase();
-    gradesBody.innerHTML += `
+  gradesBody.innerHTML = grades.map(g => {
+    const remark = (g.remark || "").toLowerCase().replace(/[^a-z]/g, "");
+    const status = (g.status || "").toLowerCase().replace(/[^a-z]/g, "");
+    const e = v => escapeHtml(v || "--");
+    return `
       <tr>
-        <td>${g.matric_number || "--"}</td>
-        <td>${g.level_arabic  || "--"}</td>
-        <td>${g.batch         || "--"}</td>
-        <td>${g.course        || "--"}</td>
-        <td>${g.semester      || "--"}</td>
-        <td>${g.assessment_score ?? "--"}</td>
-        <td>${g.exam_score    ?? "--"}</td>
-        <td><strong>${g.total_score !== undefined ? g.total_score : "--"}</strong></td>
-        <td>${g.remark ? `<span class="remark-badge remark-${remark}">${translateRemark(g.remark)}</span>` : "--"}</td>
-        <td>${g.status ? `<span class="sg-badge ${status}">${translateCourseStatus(g.status)}</span>` : "--"}</td>
+        <td>${e(g.level_arabic)}</td>
+        <td>${e(g.batch)}</td>
+        <td>${e(g.course)}</td>
+        <td>${e(g.semester)}</td>
+        <td>${escapeHtml(g.assessment_score ?? "--")}</td>
+        <td>${escapeHtml(g.exam_score ?? "--")}</td>
+        <td><strong>${escapeHtml(g.total_score ?? "--")}</strong></td>
+        <td>${g.remark ? `<span class="remark-badge remark-${remark}">${escapeHtml(translateRemark(g.remark))}</span>` : "--"}</td>
+        <td>${g.status ? `<span class="sg-badge ${status}">${escapeHtml(translateCourseStatus(g.status))}</span>` : "--"}</td>
       </tr>`;
-  });
+  }).join("");
 
   // Rows above are freshly injected raw (English) DOM, so translate.js's
   // one-time pass on language toggle never touches them. Re-run it here
   // so every re-render (search, tabs, remark filter) keeps whatever
   // language is currently active instead of silently reverting to English.
-  if (typeof translate === "function" && typeof currentLang !== "undefined") {
-    translate(currentLang);
+  try {
+    if (typeof translate === "function" && typeof currentLang !== "undefined") {
+      translate(currentLang);
+    }
+  } catch (e) {
+    console.warn("translate() failed after render:", e);
   }
 }
 
@@ -314,8 +438,8 @@ function applyFilters() {
   let filtered = allGrades;
 
   if (!historyMode) {
-    filtered = filtered.filter(g => g.level_arabic === selectedLevel);
-    if (selectedSemester !== "ALL") {
+    if (selectedLevel) filtered = filtered.filter(g => g.level_arabic === selectedLevel);
+    if (selectedSemester && selectedSemester !== "ALL") {
       filtered = filtered.filter(g => g.semester === selectedSemester);
     }
   }
@@ -374,11 +498,15 @@ function populateSemesterReportOptions() {
 
   wrap.innerHTML = combos.map(c => `
     <button type="button" class="sr-modal-option"
-      onclick="downloadSemesterReport('${c.level}', '${c.semester}')">
-      <span>${t(c.level)} — ${semesterLabel(c.semester)}</span>
+      data-level="${escapeHtml(c.level)}" data-semester="${escapeHtml(c.semester)}">
+      <span>${escapeHtml(t(c.level))} — ${escapeHtml(semesterLabel(c.semester))}</span>
       <i class="fa-solid fa-chevron-right"></i>
     </button>
   `).join("");
+
+  wrap.querySelectorAll(".sr-modal-option").forEach(btn =>
+    btn.addEventListener("click", () => downloadSemesterReport(btn.dataset.level, btn.dataset.semester))
+  );
 }
 
 function openSemesterReportModal() {
@@ -676,7 +804,7 @@ async function drawClosingAndSignature(doc, pw, ph, ML, MR, startY, { matric, re
 
   const sigY = msgY + 70;
 
-  const sign = new Image(); sign.src = "sign.png";
+  const sign = new Image(); sign.src = "stamp.png";
   await new Promise(resolve => {
     sign.onload  = () => { doc.addImage(sign, "PNG", ML, sigY, 150, 56); resolve(); };
     sign.onerror = resolve;
@@ -687,7 +815,7 @@ async function drawClosingAndSignature(doc, pw, ph, ML, MR, startY, { matric, re
   doc.setFont("helvetica", "bold");
   doc.setFontSize(10);
   doc.setTextColor(5, 21, 196);        // --primary-dark
-  doc.text("Ustadh Muhammad Hassan", ML, sigY + 76);
+  doc.text("Ustadh Omodadi Mustafa", ML, sigY + 76);
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(8.5);

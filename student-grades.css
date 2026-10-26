@@ -564,7 +564,7 @@ html, body { overflow-x: hidden; }
 /* ================= TABLE ================= */
 .grades-table {
   width: 100%;
-  min-width: 800px; /* keeps horizontal scroll */
+  min-width: 720px; /* keeps horizontal scroll */
   border-collapse: collapse;
   background: var(--card-color);
   color: var(--text-color);
@@ -627,7 +627,7 @@ html, body { overflow-x: hidden; }
 /* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
   .grades-table {
-    min-width: 750px;
+    min-width: 680px;
   }
 
   .page-header.grades-header {
@@ -672,4 +672,35 @@ html, body { overflow-x: hidden; }
 .grades-table th,
 .grades-table td {
   text-align: center;
+}
+
+/* ================= SUMMARY STATS (current view) ================= */
+.gf-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.gf-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 8px;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  background: var(--card-color);
+}
+
+.gf-stat-value {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--primary-dark);
+}
+
+.gf-stat-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }

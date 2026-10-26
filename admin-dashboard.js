@@ -740,6 +740,51 @@ function toggleStatsVisibility() {
   applyStatsVisibility();
 }
 
+/* -------------------------------------------------------
+   PAYMENT STATS BY MONTH
+   The Payments card (amount + number of payments) follows the month picked
+   inside it. It opens on the CURRENT month; "All Months" = every month.
+   Payments are fetched once per loadStats(); changing the month only
+   re-adds the cached rows, so it is instant and costs no extra requests.
+------------------------------------------------------- */
+// true  = only payments marked "paid" count (money actually received)
+// false = pending payments count too (how the cards worked before)
+const STATS_PAID_ONLY = true;
+
+let statsPayments = [];                                   // [{ amount, currency, month, status }]
+let statsRates = { NGN: 1, USD: 1600, EUR: 1750, GBP: 2000 };
+
+function currentMonthLabel() {
+  const d = new Date();
+  return `${MONTH_NAMES[d.getMonth()]} ${d.getFullYear()}`;   // e.g. "October 2026"
+}
+
+function renderPaymentStats() {
+  const pEl = document.getElementById("totalPayments");
+  const aEl = document.getElementById("totalAmountPaid");
+  if (!pEl || !aEl) return;
+
+  const sel = document.getElementById("statsMonthFilter");
+  const label = document.getElementById("statsMonthLabel");
+  if (label && sel && sel.selectedIndex >= 0) label.textContent = sel.options[sel.selectedIndex].text;
+
+  const month = sel?.value || "";
+  const rows = statsPayments.filter(p =>
+    (!STATS_PAID_ONLY || p.status === "paid") && (!month || p.month === month)
+  );
+
+  const totalNGN = rows.reduce((sum, p) => {
+    const rate = statsRates[p.currency || "NGN"] || 1;
+    return sum + (Number(p.amount || 0) * rate);
+  }, 0);
+
+  pEl.dataset.value = rows.length;
+  pEl.textContent = pEl.dataset.value;
+  aEl.dataset.value = "₦" + Math.round(totalNGN).toLocaleString();
+  aEl.textContent = aEl.dataset.value;
+  applyStatsVisibility();
+}
+
 async function loadStats() {
   // NOTE: no `role` argument on purpose. Four callers (add student, add /
   // edit payment, confirm payment, permanent delete) call loadStats() with
@@ -763,17 +808,18 @@ async function loadStats() {
       }
     }
 
-    if (canViewPayments) {
-      let rates = { NGN: 1, USD: 1600, EUR: 1750, GBP: 2000 };
+    const monthSel = document.getElementById("statsMonthFilter");
 
+    if (canViewPayments) {
       try {
         const ratesRes = await fetch("https://api.exchangerate-api.com/v4/latest/NGN");
         if (ratesRes.ok) {
           const ratesData = await ratesRes.json();
-          rates = { NGN: 1 };
+          const live = { NGN: 1 };
           for (const [currency, rate] of Object.entries(ratesData.rates)) {
-            rates[currency] = 1 / rate;
+            live[currency] = 1 / rate;
           }
+          statsRates = live;
         }
       } catch (rateErr) {
         console.warn("Could not fetch live rates, using fallback:", rateErr);
@@ -781,22 +827,23 @@ async function loadStats() {
 
       const { data: payments, error: pErr } = await db
         .from("payments")
-        .select("amount, currency");
+        .select("amount, currency, month, status")
+        .eq("deleted", false);
 
       if (!pErr && payments) {
-        const pEl = document.getElementById("totalPayments");
-        pEl.dataset.value = payments.length;
-        pEl.textContent = pEl.dataset.value;
+        statsPayments = payments;
 
-        const totalNGN = payments.reduce((sum, p) => {
-          const currency = p.currency || "NGN";
-          const rate = rates[currency] || 1;
-          return sum + (Number(p.amount || 0) * rate);
-        }, 0);
+        if (monthSel) {
+          // the current month is always listed, even before its first payment
+          populateMonthFilter("statsMonthFilter", [...payments.map(p => p.month), currentMonthLabel()]);
 
-        const aEl = document.getElementById("totalAmountPaid");
-        aEl.dataset.value = "₦" + Math.round(totalNGN).toLocaleString();
-        aEl.textContent = aEl.dataset.value;
+          if (!monthSel.dataset.ready) {          // first load: open on the current month, wire the dropdown
+            monthSel.dataset.ready = "1";
+            monthSel.value = currentMonthLabel();
+            monthSel.addEventListener("change", renderPaymentStats);
+          }
+        }
+        renderPaymentStats();
       }
     }
 
@@ -3348,6 +3395,20 @@ async function autofillGradeLevelBatch() {
   }
 }
 
+// "" -> null (not graded yet).  "0" -> 0.  "12" -> 12.
+function parseGradeScore(raw) {
+  const s = String(raw ?? "").trim();
+  if (s === "") return null;
+  const n = Number(s);
+  return Number.isFinite(n) ? n : null;
+}
+
+// Both empty -> null. Otherwise add what exists (an empty one counts as nothing).
+function sumGradeScores(a, b) {
+  if (a === null && b === null) return null;
+  return (a ?? 0) + (b ?? 0);
+}
+
 async function addGrade() {
   try {
     const matric_number = document.getElementById("gradeStudent")?.value;
@@ -3360,9 +3421,10 @@ async function addGrade() {
     const semester = document.getElementById("gradeSemester")?.value;
     const level_arabic = document.getElementById("gradeLevel")?.value;
     const batch = document.getElementById("gradeBatch")?.value;
-    const a = Number(document.getElementById("gradeAssessment")?.value || 0);
-    const b = Number(document.getElementById("gradeExams")?.value || 0);
-    const total_score = a + b;
+    // Empty box = NULL ("not graded yet"). Only a typed 0 is saved as 0.
+    const a = parseGradeScore(document.getElementById("gradeAssessment")?.value);
+    const b = parseGradeScore(document.getElementById("gradeExams")?.value);
+    const total_score = sumGradeScores(a, b);
     const status = document.getElementById("gradeStatus")?.value;
     const remark = document.getElementById("gradeRemark")?.value;
 
@@ -3443,9 +3505,9 @@ async function loadGrades() {
           <td>${g.batch || ""}</td>
           <td>${g.course}</td>
           <td>${g.semester}</td>
-          <td>${g.assessment_score}</td>
-          <td>${g.exam_score}</td>
-          <td><strong>${g.total_score}</strong></td>
+          <td>${g.assessment_score ?? "—"}</td>
+          <td>${g.exam_score ?? "—"}</td>
+          <td><strong>${g.total_score ?? "—"}</strong></td>
           <td><span class="badge ${gradeStatusClass[g.status] || "badge-default"}">${t(g.status)}</span></td>
           <td><span class="remark-badge remark-${g.remark}">${t(g.remark)}</span></td>
           <td>
@@ -3480,7 +3542,8 @@ function enableGradeAutoTotal() {
   if (!assessment || !exams || !total) return;
 
   function calculate() {
-    total.value = (Number(assessment.value || 0) + Number(exams.value || 0));
+    const s = sumGradeScores(parseGradeScore(assessment.value), parseGradeScore(exams.value));
+    total.value = s === null ? "" : s;
   }
   assessment.addEventListener("input", calculate);
   exams.addEventListener("input", calculate);
@@ -3521,9 +3584,9 @@ async function editGrade(id) {
     }
 
     document.getElementById("gradeSemester").value = g.semester;
-    document.getElementById("gradeAssessment").value = g.assessment_score;
-    document.getElementById("gradeExams").value = g.exam_score;
-    document.getElementById("gradeTotal").value = g.total_score;
+    document.getElementById("gradeAssessment").value = g.assessment_score ?? "";
+    document.getElementById("gradeExams").value = g.exam_score ?? "";
+    document.getElementById("gradeTotal").value = g.total_score ?? "";
     document.getElementById("gradeStatus").value = g.status;
     document.getElementById("gradeRemark").value = g.remark;
   } catch (e) {
@@ -6391,10 +6454,10 @@ async function loadDeletedTabPanelContent(category) {
   if (!tbody) return;
 
   const headerLabels = cat.headers();
-  const colCount = headerLabels.length + 1; // + Actions column
+  const colCount = headerLabels.length + 2; // + checkbox + Actions columns
 
   if (thead) {
-    thead.innerHTML = `<tr>${headerLabels.map(h => `<th>${h}</th>`).join("")}<th>${t("Actions")}</th></tr>`;
+    thead.innerHTML = `<tr><th class="trash-check-col"><input type="checkbox" id="trashSelectAll" onchange="toggleSelectAllTrash(this.checked)"></th>${headerLabels.map(h => `<th>${h}</th>`).join("")}<th>${t("Actions")}</th></tr>`;
   }
 
   try {
@@ -6419,6 +6482,7 @@ async function loadDeletedTabPanelContent(category) {
       const matchAttr = JSON.stringify(cat.match(row)).replace(/'/g, "&#39;");
       return `
         <tr>
+          <td><input type="checkbox" class="trash-check" data-match='${matchAttr}' onchange="updateTrashSelectionUI()"></td>
           ${cat.row(row)}
           <td>
             <div class="table-row-actions">
@@ -6436,14 +6500,121 @@ async function loadDeletedTabPanelContent(category) {
 
     if (!window._trashSearchWired) {
       enableTableSearch("searchTrashTab", "students-trash-panel-table");
+      document.getElementById("searchTrashTab")?.addEventListener("input", () => setTimeout(updateTrashSelectionUI, 0));
       window._trashSearchWired = true;
     }
     window.reTranslate?.();
   } catch (err) {
     console.error("Trash panel rendering failure:", err);
+  } finally {
+    updateTrashSelectionUI();
   }
 }
 window.fetchAndRenderTrashTab = loadDeletedTabPanelContent;
+
+/* -------------------------------------------------------
+   TRASH BIN: BULK SELECT
+   Tick rows (or the header box for every row currently shown), then
+   Restore Selected / Delete Selected. Only rows that are ticked AND still
+   visible count, so a search filter can never act on rows you can't see.
+------------------------------------------------------- */
+function getTrashSelection() {
+  const out = [];
+  document.querySelectorAll("#trashTabPanelBody tr").forEach(tr => {
+    const cb = tr.querySelector(".trash-check");
+    if (!cb || !cb.checked || tr.style.display === "none") return;
+    try { out.push(JSON.parse(cb.getAttribute("data-match"))); } catch (e) { /* skip bad row */ }
+  });
+  return out;
+}
+
+function updateTrashSelectionUI() {
+  const rows = [...document.querySelectorAll("#trashTabPanelBody tr")]
+    .filter(tr => tr.querySelector(".trash-check") && tr.style.display !== "none");
+  const n = rows.filter(tr => tr.querySelector(".trash-check").checked).length;
+
+  const restoreBtn = document.getElementById("trashBulkRestoreBtn");
+  const deleteBtn = document.getElementById("trashBulkDeleteBtn");
+  if (restoreBtn) restoreBtn.style.display = n ? "" : "none";
+  if (deleteBtn) deleteBtn.style.display = n ? "" : "none";
+  document.querySelectorAll(".trash-selected-count").forEach(el => { el.textContent = n; });
+
+  const all = document.getElementById("trashSelectAll");
+  if (all) all.checked = rows.length > 0 && n === rows.length;
+}
+
+function toggleSelectAllTrash(checked) {
+  document.querySelectorAll("#trashTabPanelBody tr").forEach(tr => {
+    const cb = tr.querySelector(".trash-check");
+    if (cb && tr.style.display !== "none") cb.checked = checked;
+  });
+  updateTrashSelectionUI();
+}
+
+// Rows keyed by a lone "id" go in batches of 200; composite keys (fees, notifications)
+// are done one by one, ten at a time. Returns how many rows were actually changed.
+async function trashApply(table, matches, mode) {
+  const base = () => mode === "restore"
+    ? db.from(table).update({ deleted: false }).select()
+    : db.from(table).delete().select();
+  const run = async q => { const { data, error } = await q; if (error) throw error; return (data || []).length; };
+
+  let done = 0;
+  const idOnly = matches.every(m => Object.keys(m).length === 1 && m.id !== undefined);
+
+  if (idOnly) {
+    for (let i = 0; i < matches.length; i += 200) {
+      done += await run(base().in("id", matches.slice(i, i + 200).map(m => m.id)));
+    }
+  } else {
+    for (let i = 0; i < matches.length; i += 10) {
+      const counts = await Promise.all(matches.slice(i, i + 10).map(m => {
+        let q = base();
+        Object.entries(m).forEach(([col, val]) => { q = q.eq(col, val); });
+        return run(q);
+      }));
+      done += counts.reduce((a, b) => a + b, 0);
+    }
+  }
+  return done;
+}
+
+async function bulkTrashAction(mode) {
+  const cat = TRASH_CATEGORIES[window.currentTrashCategory];
+  const matches = getTrashSelection();
+  if (!cat || !matches.length) return;
+
+  const msg = mode === "restore"
+    ? `${t("Restore")} ${matches.length} ${t("item(s)?")}`
+    : `${t("Permanently delete")} ${matches.length} ${t("item(s)?")} ${t("This cannot be undone.")}`;
+  if (!confirm(msg)) return;
+
+  const btn = document.getElementById(mode === "restore" ? "trashBulkRestoreBtn" : "trashBulkDeleteBtn");
+  setLoading(btn, true);
+
+  try {
+    const done = await trashApply(cat.table, matches, mode);
+
+    if (!done) {
+      alert(mode === "restore"
+        ? t("Nothing was restored — check your Supabase RLS UPDATE policy for this table.")
+        : t("Nothing was deleted — check your Supabase RLS DELETE policy for this table."));
+      return;
+    }
+
+    showToast(`${done} ${mode === "restore" ? t("item(s) restored ✅") : t("item(s) permanently deleted 🗑️")}`);
+    if (done < matches.length) alert(`${matches.length - done} ${t("item(s) could not be processed")}`);
+
+    if (mode === "restore" && typeof TRASH_SYNC_RELOAD[cat.table] === "function") TRASH_SYNC_RELOAD[cat.table]();
+    await loadDeletedTabPanelContent();
+  } catch (e) {
+    console.error(`Bulk trash ${mode} (${cat.table}) error:`, e);
+    alert(mode === "restore" ? t("Failed to restore. See console.") : t("Failed to permanently delete. See console."));
+  } finally {
+    setLoading(btn, false);
+    updateTrashSelectionUI();
+  }
+}
 
 // Single delegated listener handles Restore + Permanent Delete for every
 // category — avoids the quote-escaping issues that inline onclick handlers
@@ -7885,4 +8056,311 @@ async function vlLoadFilterBooks() {
     (books || []).map(b => `<option value="${b.id}">${b.title}</option>`).join("");
 
   await vlLoadVideos();
+}
+
+/* -------------------------------------------------------
+   RESET ATTEMPTS (tab-resets)
+   Mudeer / Assistant Mudeer / H.O.D only (also enforced in the
+   database: the admin_* functions check profiles.role themselves).
+   Talks to three RPCs: admin_attempts_preview,
+   admin_reset_attempts, admin_reset_history.
+------------------------------------------------------- */
+let resetRows = [];
+let resetStudentNames = {};
+
+function resetEsc(v) {
+  return String(v ?? "").replace(/[&<>"']/g, c => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+  ));
+}
+
+async function loadResetAttemptsTab() {
+  await populateResetAssessments();
+  await loadResetHistory();
+}
+
+let resetAssessments = [];
+let resetPickedId = "";
+
+async function populateResetAssessments() {
+  const { data, error } = await db
+    .from("assessments")
+    .select("id, title, course, type, level_arabic, batch, semester, start_time")
+    .eq("deleted", false)
+    .order("start_time", { ascending: false });
+
+  if (error) {
+    console.error("Load assessments (reset) error:", error);
+    showToast(t("Failed to load assessments"));
+    return;
+  }
+
+  resetAssessments = data || [];
+  const uniq = key => [...new Set(resetAssessments.map(a => a[key]).filter(Boolean))];
+
+  fillResetFilter("resetLevelFilter",    t("All levels"),    uniq("level_arabic"));
+  fillResetFilter("resetBatchFilter",    t("All batches"),   uniq("batch"));
+  fillResetFilter("resetSemesterFilter", t("All semesters"), uniq("semester"));
+
+  // Forget the pick if that assessment no longer exists
+  if (resetPickedId && !resetAssessments.some(a => a.id === resetPickedId)) resetPickedId = "";
+
+  renderResetAssessmentList();
+  updateResetPickedBar();
+}
+
+function fillResetFilter(id, allLabel, values) {
+  const sel = document.getElementById(id);
+  if (!sel) return;
+  const current = sel.value;
+  sel.innerHTML = `<option value="">${resetEsc(allLabel)}</option>` +
+    values.map(v => `<option value="${resetEsc(v)}">${resetEsc(v)}</option>`).join("");
+  if (values.includes(current)) sel.value = current;
+}
+
+function renderResetAssessmentList() {
+  const list = document.getElementById("resetAssessmentList");
+  if (!list) return;
+
+  const lvl  = document.getElementById("resetLevelFilter")?.value || "";
+  const bat  = document.getElementById("resetBatchFilter")?.value || "";
+  const sem  = document.getElementById("resetSemesterFilter")?.value || "";
+  const type = document.getElementById("resetTypeFilter")?.value || "";
+  const q    = (document.getElementById("resetAssessmentSearch")?.value || "").trim().toLowerCase();
+
+  const rows = resetAssessments.filter(a =>
+    (!lvl  || a.level_arabic === lvl) &&
+    (!bat  || a.batch === bat) &&
+    (!sem  || a.semester === sem) &&
+    (!type || a.type === type) &&
+    (!q    || `${a.title || ""} ${a.course || ""}`.toLowerCase().includes(q))
+  );
+
+  if (!rows.length) {
+    list.innerHTML = `<div class="reset-assess-empty">${t("No assessments match these filters")}</div>`;
+    return;
+  }
+
+  list.innerHTML = rows.map(a => `
+    <button type="button" class="reset-assess-card ${a.id === resetPickedId ? "selected" : ""}"
+            onclick="selectResetAssessment('${a.id}')">
+      <span class="reset-assess-top">
+        <span class="reset-assess-title">${resetEsc(a.title || "—")}</span>
+        <span class="reset-type-badge ${a.type === "exam" ? "exam" : "test"}">${resetEsc(t(a.type || ""))}</span>
+      </span>
+      <span class="reset-assess-course">${resetEsc(a.course || "—")}</span>
+      <span class="reset-assess-meta">
+        ${a.level_arabic ? `<span>${resetEsc(a.level_arabic)}</span>` : ""}
+        ${a.batch ? `<span>${resetEsc(a.batch)}</span>` : ""}
+        ${a.semester ? `<span>${resetEsc(a.semester)}</span>` : ""}
+      </span>
+    </button>
+  `).join("");
+}
+
+function resetPickedLabel() {
+  const a = resetAssessments.find(x => x.id === resetPickedId);
+  if (!a) return "";
+  return [a.title, a.course, a.level_arabic, a.batch, a.semester].filter(Boolean).join(" — ") +
+         ` [${t(a.type || "")}]`;
+}
+
+function updateResetPickedBar() {
+  const bar = document.getElementById("resetPickedBar");
+  if (!bar) return;
+  if (!resetPickedId) { bar.style.display = "none"; bar.textContent = ""; return; }
+  bar.style.display = "";
+  bar.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${t("Selected")}: <strong>${resetEsc(resetPickedLabel())}</strong>`;
+}
+
+function selectResetAssessment(id) {
+  resetPickedId = id;
+  renderResetAssessmentList();
+  updateResetPickedBar();
+  loadResetPreview();
+}
+
+async function loadResetPreview() {
+  const id = resetPickedId;
+  const tbody = document.getElementById("reset-body");
+  if (!tbody) return;
+
+  resetRows = [];
+  updateResetSelection();
+
+  if (!id) {
+    document.getElementById("resetSummaryBar").textContent = "";
+    tbody.innerHTML = `<tr><td colspan="9" class="empty-row">${t("Select an assessment to see students who attempted it")}</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = `<tr><td colspan="9" class="empty-row">
+    <i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading...")}
+  </td></tr>`;
+
+  try {
+    const [{ data, error }, students] = await Promise.all([
+      db.rpc("admin_attempts_preview", { p_assessment_id: id }),
+      loadStudentsCache()
+    ]);
+    if (error) throw error;
+
+    resetStudentNames = {};
+    (students || []).forEach(s => { resetStudentNames[s.matric_number] = s.fullname; });
+
+    resetRows = data || [];
+    renderResetRows();
+  } catch (e) {
+    console.error("loadResetPreview error:", e);
+    tbody.innerHTML = `<tr><td colspan="9" class="empty-row" style="color:red;">${t("Failed to load attempts.")}</td></tr>`;
+  }
+}
+
+function renderResetRows() {
+  const tbody = document.getElementById("reset-body");
+  if (!tbody) return;
+
+  // Keep ticks across re-renders (e.g. while typing in the search box)
+  const ticked = new Set(getResetSelected());
+
+  const q = (document.getElementById("resetSearch")?.value || "").trim().toLowerCase();
+  const rows = resetRows.filter(r =>
+    !q ||
+    r.matric_number.toLowerCase().includes(q) ||
+    (resetStudentNames[r.matric_number] || "").toLowerCase().includes(q)
+  );
+
+  document.getElementById("resetSummaryBar").textContent =
+    resetRows.length
+      ? `${rows.length} / ${resetRows.length} ${t("students with an attempt")}`
+      : "";
+
+  if (!rows.length) {
+    tbody.innerHTML = `<tr><td colspan="9" class="empty-row">${
+      resetRows.length ? t("No student matches your search") : t("No one has attempted this assessment yet")
+    }</td></tr>`;
+    updateResetSelection();
+    return;
+  }
+
+  tbody.innerHTML = rows.map(r => {
+    const name = resetStudentNames[r.matric_number];
+    return `
+      <tr>
+        <td><input type="checkbox" class="reset-cb" value="${resetEsc(r.matric_number)}"
+                   ${ticked.has(r.matric_number) ? "checked" : ""} onchange="updateResetSelection()"></td>
+        <td>${resetEsc(name || "—")}<br><span style="color:#888;font-size:12px;">${resetEsc(r.matric_number)}</span></td>
+        <td>${formatDate(r.started_at)}</td>
+        <td>${r.finalized_at ? formatDate(r.finalized_at) : t("In progress")}</td>
+        <td>${r.answers ?? 0}</td>
+        <td>${r.assessment_score ?? "—"}</td>
+        <td>${r.exam_score ?? "—"}</td>
+        <td>${r.total_score ?? "—"}</td>
+        <td>${r.released ? t("Yes") : t("No")}</td>
+      </tr>`;
+  }).join("");
+
+  updateResetSelection();
+}
+
+function getResetSelected() {
+  return [...document.querySelectorAll("#reset-body .reset-cb:checked")].map(cb => cb.value);
+}
+
+function toggleResetSelectAll(checked) {
+  document.querySelectorAll("#reset-body .reset-cb").forEach(cb => { cb.checked = checked; });
+  updateResetSelection();
+}
+
+function updateResetSelection() {
+  const n = getResetSelected().length;
+  const total = document.querySelectorAll("#reset-body .reset-cb").length;
+  const countEl = document.getElementById("resetSelectedCount");
+  const btn = document.getElementById("resetSelectedBtn");
+  const all = document.getElementById("resetSelectAll");
+  if (countEl) countEl.textContent = n;
+  if (btn) btn.disabled = n === 0;
+  if (all) {
+    all.checked = total > 0 && n === total;
+    all.indeterminate = n > 0 && n < total;
+  }
+}
+
+async function resetSelectedAttempts() {
+  const assessmentId = resetPickedId;
+  const matrics = getResetSelected();
+  if (!assessmentId || !matrics.length) return;
+
+  const label = resetPickedLabel();
+
+  const typed = prompt(
+    `${t("You are about to reset")} ${matrics.length} ${t("student(s) for")}:\n\n${label}\n\n` +
+    `${t("This deletes their attempt and answers and clears their score for this assessment. It cannot be undone.")}\n\n` +
+    `${t("Type RESET to confirm")}:`
+  );
+  if (typed === null) return;
+  if (typed.trim() !== "RESET") {
+    alert(t("Cancelled — you must type RESET exactly."));
+    return;
+  }
+
+  const btn = document.getElementById("resetSelectedBtn");
+  btn.disabled = true;
+
+  try {
+    const { data, error } = await db.rpc("admin_reset_attempts", {
+      p_assessment_id: assessmentId,
+      p_matric: matrics
+    });
+    if (error) throw error;
+
+    const r = Array.isArray(data) ? data[0] : data;
+    showToast(t("Reset complete ✅"));
+    alert(
+      `${t("Reset complete")}\n\n` +
+      `${t("Attempts deleted")}: ${r?.attempts_deleted ?? 0}\n` +
+      `${t("Answers deleted")}: ${r?.answers_deleted ?? 0}\n` +
+      `${t("Grades reset")}: ${r?.grades_reset ?? 0}\n` +
+      `${t("Empty grade rows removed")}: ${r?.grades_removed ?? 0}`
+    );
+
+    await loadResetPreview();
+    loadResetHistory();
+  } catch (e) {
+    console.error("resetSelectedAttempts error:", e);
+    alert(`${t("Reset failed")}: ${e.message || e}`);
+    updateResetSelection();
+  }
+}
+
+async function loadResetHistory() {
+  const tbody = document.getElementById("reset-history-body");
+  if (!tbody) return;
+
+  try {
+    const { data, error } = await db.rpc("admin_reset_history", { p_limit: 30 });
+    if (error) throw error;
+
+    if (!data || !data.length) {
+      tbody.innerHTML = `<tr><td colspan="5" class="empty-row">${t("No resets yet")}</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = data.map(h => {
+      const list = h.matric_numbers || [];
+      const shown = list.slice(0, 4).map(resetEsc).join(", ") + (list.length > 4 ? ` +${list.length - 4}` : "");
+      const d = h.details || {};
+      return `
+        <tr>
+          <td>${formatDate(h.created_at)}</td>
+          <td>${resetEsc(h.admin_name || "—")}</td>
+          <td>${resetEsc(h.assessment_title || "—")}</td>
+          <td>${list.length}<br><span style="color:#888;font-size:12px;">${shown}</span></td>
+          <td style="font-size:13px;">${d.attempts ?? 0} ${t("attempts")}, ${d.answers ?? 0} ${t("answers")}</td>
+        </tr>`;
+    }).join("");
+  } catch (e) {
+    console.error("loadResetHistory error:", e);
+    tbody.innerHTML = `<tr><td colspan="5" class="empty-row" style="color:red;">${t("Failed to load history.")}</td></tr>`;
+  }
 }

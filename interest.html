@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" content="notranslate">
+  <meta name="theme-color" content="#1647a3">
+  <title>Stay in Touch - Al-Bayan Arabic Institute Online</title>
+  <meta name="description" content="Interested in Al-Bayan Arabic Institute Online? Leave your details and our admissions team will reach out to you.">
+  <link rel="canonical" href="https://albayaninstitute.netlify.app/interest.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://albayaninstitute.netlify.app/interest.html">
+  <meta property="og:title" content="Stay in Touch - Al-Bayan Arabic Institute Online">
+  <meta property="og:description" content="Interested in Al-Bayan Arabic Institute Online? Leave your details and our admissions team will reach out to you.">
+  <meta property="og:image" content="https://albayaninstitute.netlify.app/og-register-banner.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Stay in Touch - Al-Bayan Arabic Institute Online">
+  <meta name="twitter:description" content="Interested in Al-Bayan Arabic Institute Online? Leave your details and our admissions team will reach out to you.">
+  <meta name="twitter:image" content="https://albayaninstitute.netlify.app/og-register-banner.png">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="master.css">
+  <link rel="stylesheet" href="register.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+
+  <style>
+    /* Honeypot — hidden from humans, bots fill it in */
+    .hp-field { position:absolute !important; left:-9999px !important; width:1px; height:1px; overflow:hidden; opacity:0; }
+    .submit-btn:disabled { opacity:.65; cursor:not-allowed; transform:none; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="master-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Al-Bayan Logo">
+        <span>Al-Bayan</span>
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" data-translate="Home">Home</a>
+        <a href="about.html" data-translate="About">About</a>
+        <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="payment.html" data-translate="Payment">Payment</a>
+        <a href="contact.html" data-translate="Contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================================================
+       PAGE BANNER
+  ================================================ -->
+  <header class="page-banner" style="background-image: url('Background-Register.jpg');">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+      <img src="logo.png" alt="Al-Bayan Logo" class="header-logo">
+      <p class="banner-eyebrow" data-translate="Stay Connected">Stay Connected</p>
+      <h1 data-translate="Show Your Interest">Show Your Interest</h1>
+      <p data-translate="Not ready to register yet? Leave your details and our admissions team will reach out to you.">
+        Not ready to register yet? Leave your details and our admissions team will reach out to you.
+      </p>
+    </div>
+  </header>
+
+  <!-- ================================================
+       FORM SECTION
+  ================================================ -->
+  <section class="register-section">
+
+    <!-- NOTE -->
+    <div class="register-note">
+      <i class="fa-solid fa-circle-info"></i>
+      <span data-translate="Please fill in all required fields (*) correctly. Do not submit the form more than once.">
+        Please fill in all required fields (*) correctly. Do not submit the form more than once.
+      </span>
+    </div>
+
+    <form id="lead-form" novalidate>
+
+      <div class="form-step active" id="step1">
+        <h3 class="step-title">
+          <i class="fa-solid fa-address-card"></i>
+          <span data-translate="Your Details">Your Details</span>
+        </h3>
+
+        <div class="form-grid">
+
+          <div class="form-group full">
+            <label for="fullname">
+              <span data-translate="Full Name">Full Name</span> <span class="req">*</span>
+            </label>
+            <input type="text" id="fullname" name="fullname" maxlength="120"
+                   placeholder="Enter your full name"
+                   data-translate-placeholder="Enter your full name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">
+              <span data-translate="WhatsApp Number">WhatsApp Number</span> <span class="req">*</span>
+            </label>
+            <input type="tel" id="phone" name="phone" maxlength="25"
+                   placeholder="+234..."
+                   data-translate-placeholder="+234..."
+                   pattern="[+0-9\s\-\(\)]{7,25}" inputmode="tel" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">
+              <span data-translate="Email Address">Email Address</span>
+            </label>
+            <input type="email" id="email" name="email" maxlength="150"
+                   placeholder="your@email.com">
+          </div>
+
+          <div class="form-group">
+            <label for="country">
+              <span data-translate="Country of Residence">Country of Residence</span> <span class="req">*</span>
+            </label>
+            <select id="country" name="country" required>
+                <option value="" data-translate="Select">Select</option>
+                <optgroup label="Africa">
+                  <option value="Algeria" data-translate="Algeria">Algeria</option>
+                  <option value="Angola" data-translate="Angola">Angola</option>
+                  <option value="Benin" data-translate="Benin">Benin</option>
+                  <option value="Botswana" data-translate="Botswana">Botswana</option>
+                  <option value="Burkina Faso" data-translate="Burkina Faso">Burkina Faso</option>
+                  <option value="Burundi" data-translate="Burundi">Burundi</option>
+                  <option value="Cabo Verde" data-translate="Cabo Verde">Cabo Verde</option>
+                  <option value="Cameroon" data-translate="Cameroon">Cameroon</option>
+                  <option value="Central African Republic" data-translate="Central African Republic">Central African Republic</option>
+                  <option value="Chad" data-translate="Chad">Chad</option>
+                  <option value="Comoros" data-translate="Comoros">Comoros</option>
+                  <option value="Democratic Republic of the Congo" data-translate="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
+                  <option value="Republic of the Congo" data-translate="Republic of the Congo">Republic of the Congo</option>
+                  <option value="Djibouti" data-translate="Djibouti">Djibouti</option>
+                  <option value="Egypt" data-translate="Egypt">Egypt</option>
+                  <option value="Equatorial Guinea" data-translate="Equatorial Guinea">Equatorial Guinea</option>
+                  <option value="Eritrea" data-translate="Eritrea">Eritrea</option>
+                  <option value="Eswatini" data-translate="Eswatini">Eswatini</option>
+                  <option value="Ethiopia" data-translate="Ethiopia">Ethiopia</option>
+                  <option value="Gabon" data-translate="Gabon">Gabon</option>
+                  <option value="Gambia" data-translate="Gambia">Gambia</option>
+                  <option value="Ghana" data-translate="Ghana">Ghana</option>
+                  <option value="Guinea" data-translate="Guinea">Guinea</option>
+                  <option value="Guinea-Bissau" data-translate="Guinea-Bissau">Guinea-Bissau</option>
+                  <option value="Ivory Coast" data-translate="Ivory Coast">Ivory Coast</option>
+                  <option value="Kenya" data-translate="Kenya">Kenya</option>
+                  <option value="Lesotho" data-translate="Lesotho">Lesotho</option>
+                  <option value="Liberia" data-translate="Liberia">Liberia</option>
+                  <option value="Libya" data-translate="Libya">Libya</option>
+                  <option value="Madagascar" data-translate="Madagascar">Madagascar</option>
+                  <option value="Malawi" data-translate="Malawi">Malawi</option>
+                  <option value="Mali" data-translate="Mali">Mali</option>
+                  <option value="Mauritania" data-translate="Mauritania">Mauritania</option>
+                  <option value="Mauritius" data-translate="Mauritius">Mauritius</option>
+                  <option value="Morocco" data-translate="Morocco">Morocco</option>
+                  <option value="Mozambique" data-translate="Mozambique">Mozambique</option>
+                  <option value="Namibia" data-translate="Namibia">Namibia</option>
+                  <option value="Niger" data-translate="Niger">Niger</option>
+                  <option value="Nigeria" data-translate="Nigeria">Nigeria</option>
+                  <option value="Rwanda" data-translate="Rwanda">Rwanda</option>
+                  <option value="Sao Tome and Principe" data-translate="Sao Tome and Principe">Sao Tome and Principe</option>
+                  <option value="Senegal" data-translate="Senegal">Senegal</option>
+                  <option value="Seychelles" data-translate="Seychelles">Seychelles</option>
+                  <option value="Sierra Leone" data-translate="Sierra Leone">Sierra Leone</option>
+                  <option value="Somalia" data-translate="Somalia">Somalia</option>
+                  <option value="South Africa" data-translate="South Africa">South Africa</option>
+                  <option value="South Sudan" data-translate="South Sudan">South Sudan</option>
+                  <option value="Sudan" data-translate="Sudan">Sudan</option>
+                  <option value="Tanzania" data-translate="Tanzania">Tanzania</option>
+                  <option value="Togo" data-translate="Togo">Togo</option>
+                  <option value="Tunisia" data-translate="Tunisia">Tunisia</option>
+                  <option value="Uganda" data-translate="Uganda">Uganda</option>
+                  <option value="Zambia" data-translate="Zambia">Zambia</option>
+                  <option value="Zimbabwe" data-translate="Zimbabwe">Zimbabwe</option>
+                </optgroup>
+                <optgroup label="Other Countries">
+                  <option value="United States" data-translate="United States">United States</option>
+                  <option value="United Kingdom" data-translate="United Kingdom">United Kingdom</option>
+                  <option value="Canada" data-translate="Canada">Canada</option>
+                  <option value="Saudi Arabia" data-translate="Saudi Arabia">Saudi Arabia</option>
+                  <option value="United Arab Emirates" data-translate="United Arab Emirates">United Arab Emirates</option>
+                  <option value="India" data-translate="India">India</option>
+                  <option value="Pakistan" data-translate="Pakistan">Pakistan</option>
+                  <option value="Malaysia" data-translate="Malaysia">Malaysia</option>
+                  <option value="Indonesia" data-translate="Indonesia">Indonesia</option>
+                  <option value="Australia" data-translate="Australia">Australia</option>
+                  <option value="Other" data-translate="Other">Other</option>
+                </optgroup>
+              </select>
+          </div>
+
+          <div class="form-group">
+            <label for="occupation">
+              <span data-translate="Occupation">Occupation</span>
+            </label>
+            <input type="text" id="occupation" name="occupation" maxlength="120"
+                   placeholder="e.g. Student, Teacher, Engineer"
+                   data-translate-placeholder="e.g. Student, Teacher, Engineer">
+          </div>
+
+          <div class="form-group full">
+            <label for="notes">
+              <span data-translate="Message">Message</span>
+            </label>
+            <textarea id="notes" name="notes" rows="4" maxlength="1000"
+                      placeholder="Anything you'd like to ask or tell us..."
+                      data-translate-placeholder="Anything you'd like to ask or tell us..."></textarea>
+          </div>
+
+          <!-- Honeypot (spam trap) -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+        </div>
+
+        <div class="register-warning">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span data-translate="Do not submit this form more than once. Click the button only once and wait for confirmation.">
+            Do not submit this form more than once. Click the button only once and wait for confirmation.
+          </span>
+        </div>
+
+        <div class="terms-agreement">
+          <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+          <label for="agreeTerms">
+            <span data-translate="I agree to the">I agree to the</span>
+            <a href="terms.html" target="_blank" data-translate="Terms & Conditions">Terms &amp; Conditions</a>,
+            <a href="privacy.html" target="_blank" data-translate="Privacy Policy">Privacy Policy</a>,
+            <span data-translate="and">and</span>
+            <a href="refund-policy.html" target="_blank" data-translate="Refund Policy">Refund Policy</a>.
+          </label>
+        </div>
+
+        <div class="step-nav">
+          <button type="submit" class="submit-btn" id="submitBtn">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span data-translate="Submit">Submit</span>
+          </button>
+        </div>
+
+        <p id="success-msg" style="display:none;"></p>
+        <p id="error-msg"   style="display:none;"></p>
+
+      </div>
+
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p data-translate="Al-Bayan Arabic Institute Online">Al-Bayan Arabic Institute Online</p>
+    <p>
+      <span data-translate="Email">Email</span>: albayaninstitute068@gmail.com &nbsp;|&nbsp;
+      <span data-translate="Phone: +234 705 471 1066">Phone: +234 705 471 1066</span>
+    </p>
+    <p id="footerCopyright"></p>
+    <a href="privacy.html" data-translate="Privacy Policy">Privacy Policy</a>
+    <a href="terms.html" data-translate="Terms & Conditions">Terms & Conditions</a>
+    <a href="refund-policy.html" data-translate="Refund Policy">Refund Policy</a>
+    <a href="contact.html" data-translate="Contact">Contact</a>
+  </footer>
+
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
+    <img src="whatsapp-icon.png" alt="WhatsApp">
+  </a>
+
+  <!-- SUPABASE -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  </script>
+
+  <script>
+    /* ── Nav toggle ── */
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
+    }
+    document.addEventListener('click', function (e) {
+      const nav = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+    });
+
+    /* ── Lead form ── */
+    (function () {
+      const form    = document.getElementById('lead-form');
+      const btn     = document.getElementById('submitBtn');
+      const okMsg   = document.getElementById('success-msg');
+      const errMsg  = document.getElementById('error-msg');
+      const btnHTML = btn.innerHTML;
+
+      function show(el, text) {
+        okMsg.style.display = 'none';
+        errMsg.style.display = 'none';
+        el.textContent = text;
+        el.style.display = 'block';
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      // Same approach as the register page: native validation, field by field
+      function validate() {
+        for (const field of form.querySelectorAll('input, select, textarea')) {
+          if (!field.checkValidity()) {
+            field.reportValidity();
+            field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return false;
+          }
+        }
+        return true;
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        okMsg.style.display = 'none';
+        errMsg.style.display = 'none';
+
+        // Bots fill the honeypot — pretend success and stop
+        if (document.getElementById('website').value.trim() !== '') {
+          show(okMsg, 'Thank you! We will contact you soon.');
+          form.reset();
+          return;
+        }
+
+        if (!validate()) return;
+
+        const val = id => document.getElementById(id).value.trim();
+
+        const payload = {
+          full_name:  val('fullname'),
+          phone:      val('phone'),
+          email:      val('email')      || null,
+          country:    val('country'),
+          occupation: val('occupation') || null,
+          notes:      val('notes')      || null,
+          source:     'website',
+          status:     'new'
+        };
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Submitting...</span>';
+
+        try {
+          // No .select() on purpose — public visitors can insert but not read leads
+          const { error } = await window.sb.from('admission_leads').insert(payload);
+          if (error) throw error;
+
+          form.reset();
+          show(okMsg, 'Thank you! Your details have been received. Our admissions team will contact you soon, in shā’ Allāh.');
+        } catch (err) {
+          console.error('Lead submit error:', err);
+          show(errMsg, 'Sorry, something went wrong. Please try again or message us on WhatsApp.');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = btnHTML;
+        }
+      });
+    })();
+  </script>
+
+  <script src="translate.js"></script>
+</body>
+</html>
