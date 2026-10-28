@@ -27,8 +27,8 @@
   <link rel="stylesheet" href="staff-dashboard.css">
   <style>
     /* ── Leads table: Notes column wide enough to read the message ── */
-    #leads-table th:nth-child(8),
-    #leads-table td:nth-child(8),
+    #leads-table th:nth-child(10),
+    #leads-table td:nth-child(10),
     #leads-table td.lead-notes-cell {
       min-width: 280px;
       max-width: 340px;
@@ -727,6 +727,8 @@
               <th data-translate="Email">Email</th>
               <th data-translate="Country">Country</th>
               <th data-translate="Occupation">Occupation</th>
+              <th data-translate="Inquiring For">Inquiring For</th>
+              <th data-translate="Age">Age</th>
               <th data-translate="Source">Source</th>
               <th data-translate="Status">Status</th>
               <th data-translate="Notes">Notes</th>
@@ -736,7 +738,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td colspan="11" class="empty-state">
+            <tr><td colspan="13" class="empty-state">
               <i class="fa-solid fa-spinner fa-spin"></i> <span data-translate="Loading...">Loading...</span>
             </td></tr>
           </tbody>
@@ -842,6 +844,19 @@
         <label data-translate="Occupation">Occupation</label>
         <input type="text" id="leadOccupation" placeholder="Occupation (optional)"
                data-translate-placeholder="Occupation (optional)">
+
+        <label data-translate="Inquiring For">Inquiring For</label>
+        <select id="leadInquiringFor">
+          <option value="" data-translate="Not specified">Not specified</option>
+          <option value="myself" data-translate="Myself">Myself</option>
+          <option value="child" data-translate="My child">My child</option>
+          <option value="someone_else" data-translate="Someone else">Someone else</option>
+        </select>
+
+        <label data-translate="Age">Age</label>
+        <input type="number" id="leadAge" min="3" max="100" step="1"
+               placeholder="Age (optional)"
+               data-translate-placeholder="Age (optional)">
 
         <label data-translate="Source">Source</label>
         <select id="leadSource">

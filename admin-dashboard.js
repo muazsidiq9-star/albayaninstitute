@@ -413,6 +413,18 @@ async function updateUnreadCounter() {
   if (counter) counter.textContent = count || 0;
 }
 
+// Clears every field of the Add/Edit Student window (it has no <form>, so the
+// generic reset never touched it and edited values leaked into the next "Add").
+function resetStudentModalFields() {
+  const modal = document.getElementById("studentModal");
+  if (!modal) return;
+  modal.querySelectorAll("input, textarea").forEach(el => {
+    if (el.type === "checkbox" || el.type === "radio") el.checked = false;
+    else el.value = "";
+  });
+  modal.querySelectorAll("select").forEach(sel => { sel.selectedIndex = 0; });
+}
+
 function openModal(id) {
   const modal = document.getElementById(id);
   if (!modal) return;
@@ -435,6 +447,9 @@ function openModal(id) {
 
   const key = editMap[id];
   if (key) window[key] = null;
+
+  // A fresh "Add Student" must not show the previous student's values
+  if (id === "studentModal") resetStudentModalFields();
 
   // Add Payment starts on the current year (the edit flow sets it from the record)
   if (id === "paymentModal") fillYearSelect("paymentYear");
@@ -472,6 +487,7 @@ function closeModal(id) {
 
   // Clear stale certificate student context when certificate modal closes
   if (id === "certificateModal") window.certStudentData = null;
+  if (id === "studentModal") resetStudentModalFields();
 
   const form = modal.querySelector("form");
   if (form) form.reset();
@@ -857,6 +873,380 @@ async function loadStats() {
 /* -------------------------------------------------------
    STUDENTS
 ------------------------------------------------------- */
+
+/* -------------------------------------------------------
+   LEADS TAB (Mudeer / Assistant Mudeer) — table admission_leads
+------------------------------------------------------- */
+let allLeadsData = [];
+let editingLeadId = null;
+let leadsListenersReady = false;
+
+async function loadLeadsTab() {
+  // The tab is hidden for other roles; the database policy is the real lock
+  if (window.isTabAllowed && !window.isTabAllowed("tab-leads")) return;
+
+  const tbody = document.querySelector("#leads-table tbody");
+  if (!tbody) return;
+
+  if (!leadsListenersReady) {
+    document.getElementById("searchLeads")?.addEventListener("keyup", filterLeadsTable);
+    document.getElementById("filterLeadStatus")?.addEventListener("change", filterLeadsTable);
+    leadsListenersReady = true;
+  }
+
+  try {
+    const { data, error } = await db
+      .from("admission_leads")
+      .select("id, full_name, phone, email, country, occupation, inquiring_for, age, source, status, notes, created_at")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    allLeadsData = data || [];
+    filterLeadsTable();
+    updateLeadsSummary(allLeadsData);
+  } catch (e) {
+    console.error("Load leads error:", e);
+    tbody.innerHTML = `<tr><td colspan="13" class="empty-row" style="color:red;">${t("Failed to load leads")}</td></tr>`;
+  }
+}
+
+function updateLeadsSummary(data) {
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set("leadsTotal", data.length);
+  set("leadsFollowUp", data.filter(l => ["new", "contacted", "follow_up"].includes(l.status)).length);
+  set("leadsEnrolled", data.filter(l => l.status === "enrolled").length);
+}
+
+function getLeadStatusBadgeClass(status) {
+  const map = {
+    new: "badge-info", contacted: "badge-warning", follow_up: "badge-warning",
+    interested: "badge-success", enrolled: "badge-success", not_interested: "badge-danger"
+  };
+  return map[status] || "badge-default";
+}
+
+function formatLeadStatus(status) {
+  const map = {
+    new: t("New"), contacted: t("Contacted"), follow_up: t("Follow-up"),
+    interested: t("Interested"), enrolled: t("Enrolled"), not_interested: t("Not Interested")
+  };
+  return map[status] || status || "";
+}
+
+function formatLeadSource(source) {
+  const map = { whatsapp: t("WhatsApp"), website: t("Website"), referral: t("Referral"), other: t("Other") };
+  return map[source] || source || "";
+}
+
+function formatInquiringFor(value) {
+  const map = { myself: "Myself", child: "My child", someone_else: "Someone else" };
+  return map[value] ? t(map[value]) : "";
+}
+
+function renderLeadsTable(data) {
+  const tbody = document.querySelector("#leads-table tbody");
+  if (!tbody) return;
+
+  if (!data.length) {
+    tbody.innerHTML = `<tr><td colspan="13" class="empty-row">${t("No leads yet")}</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = data.map(lead => {
+    const notes = lead.notes || "";
+    const preview = notes.length > 120 ? notes.slice(0, 120) + "…" : notes;
+    const phone = (lead.phone || "").trim();
+    const digits = phone.replace(/[\s-]/g, "");
+    const phoneHtml = !phone ? "—" : /^\+\d{7,15}$/.test(digits)
+      ? `<a href="https://wa.me/${escHtml(digits.slice(1))}" target="_blank" rel="noopener">${escHtml(phone)}</a>`
+      : escHtml(phone);
+
+    return `
+      <tr>
+        <td>${escHtml(lead.full_name) || "—"}</td>
+        <td>${phoneHtml}</td>
+        <td>${escHtml(lead.email) || "—"}</td>
+        <td>${escHtml(lead.country) || "—"}</td>
+        <td>${escHtml(lead.occupation) || "—"}</td>
+        <td>${escHtml(formatInquiringFor(lead.inquiring_for)) || "—"}</td>
+        <td>${lead.age ?? "—"}</td>
+        <td>${escHtml(formatLeadSource(lead.source))}</td>
+        <td><span class="badge ${getLeadStatusBadgeClass(lead.status)}">${escHtml(formatLeadStatus(lead.status))}</span></td>
+        <td title="${escHtml(notes)}">${escHtml(preview) || "—"}</td>
+        <td>${lead.created_at ? escHtml(new Date(lead.created_at).toLocaleDateString()) : "—"}</td>
+        <td><button class="btn btn-edit" onclick="openEditLeadModal('${lead.id}')"><i class="fa-solid fa-pen"></i></button></td>
+        <td><button class="btn btn-delete" onclick="deleteLead('${lead.id}')"><i class="fa-solid fa-trash"></i></button></td>
+      </tr>`;
+  }).join("");
+}
+
+function filterLeadsTable() {
+  const search = (document.getElementById("searchLeads")?.value || "").toLowerCase();
+  const statusFilter = document.getElementById("filterLeadStatus")?.value || "";
+
+  const filtered = allLeadsData.filter(lead => {
+    const matchesSearch = !search ||
+      (lead.full_name || "").toLowerCase().includes(search) ||
+      (lead.phone || "").toLowerCase().includes(search) ||
+      (lead.email || "").toLowerCase().includes(search) ||
+      (lead.country || "").toLowerCase().includes(search) ||
+      (lead.occupation || "").toLowerCase().includes(search);
+    return matchesSearch && (!statusFilter || lead.status === statusFilter);
+  });
+
+  renderLeadsTable(filtered);
+}
+
+function openAddLeadModal() {
+  editingLeadId = null;
+  document.getElementById("leadModalTitle").textContent = t("Add Lead");
+  ["leadName", "leadPhone", "leadEmail", "leadOccupation", "leadAge", "leadNotes"]
+    .forEach(id => { document.getElementById(id).value = ""; });
+  document.getElementById("leadCountry").value = "";
+  document.getElementById("leadInquiringFor").value = "";
+  document.getElementById("leadSource").value = "whatsapp";
+  document.getElementById("leadStatus").value = "new";
+  document.getElementById("leadModal").classList.add("show");
+}
+
+function openEditLeadModal(leadId) {
+  const lead = allLeadsData.find(l => l.id === leadId);
+  if (!lead) return;
+
+  editingLeadId = leadId;
+  document.getElementById("leadModalTitle").textContent = t("Edit Lead");
+  document.getElementById("leadName").value = lead.full_name || "";
+  document.getElementById("leadPhone").value = lead.phone || "";
+  document.getElementById("leadEmail").value = lead.email || "";
+
+  // Website leads can come from any country — keep it selectable even if it isn't in this list
+  const countryEl = document.getElementById("leadCountry");
+  if (lead.country && ![...countryEl.options].some(o => o.value === lead.country)) {
+    countryEl.add(new Option(lead.country, lead.country));
+  }
+  countryEl.value = lead.country || "";
+
+  document.getElementById("leadOccupation").value = lead.occupation || "";
+  document.getElementById("leadInquiringFor").value = lead.inquiring_for || "";
+  document.getElementById("leadAge").value = lead.age ?? "";
+  document.getElementById("leadSource").value = lead.source || "whatsapp";
+  document.getElementById("leadStatus").value = lead.status || "new";
+  document.getElementById("leadNotes").value = lead.notes || "";
+  document.getElementById("leadModal").classList.add("show");
+}
+
+async function saveLead() {
+  const btn = document.getElementById("saveLeadBtn");
+  if (btn) btn.disabled = true;
+
+  try {
+    const val = id => document.getElementById(id)?.value.trim();
+    const full_name = val("leadName");
+    const phone = val("leadPhone");
+    const ageRaw = val("leadAge");
+    const age = ageRaw ? parseInt(ageRaw, 10) : null;
+
+    if (!full_name || !phone) {
+      alert(t("Full name and phone are required"));
+      return;
+    }
+    if (age !== null && (!Number.isFinite(age) || age < 3 || age > 100)) {
+      alert(t("Age must be between 3 and 100"));
+      return;
+    }
+
+    const payload = {
+      full_name,
+      phone,
+      email: val("leadEmail") || null,
+      country: val("leadCountry") || null,
+      occupation: val("leadOccupation") || null,
+      inquiring_for: document.getElementById("leadInquiringFor")?.value || null,
+      age,
+      source: document.getElementById("leadSource")?.value,
+      status: document.getElementById("leadStatus")?.value,
+      notes: val("leadNotes") || null
+    };
+
+    let error;
+    if (editingLeadId) {
+      ({ error } = await db.from("admission_leads").update(payload).eq("id", editingLeadId));
+    } else {
+      const { data: { user } } = await db.auth.getUser();
+      ({ error } = await db.from("admission_leads").insert([{ ...payload, created_by: user?.id || null }]));
+    }
+    if (error) throw error;
+
+    showToast(editingLeadId ? t("Lead updated") : t("Lead added"));
+    document.getElementById("leadModal").classList.remove("show");
+    editingLeadId = null;
+    await loadLeadsTab();
+  } catch (e) {
+    console.error("Save lead error:", e);
+    alert(t("Failed to save lead. See console."));
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+async function deleteLead(leadId) {
+  if (!confirm(t("Delete this lead? This cannot be undone."))) return;
+
+  try {
+    const { error } = await db.from("admission_leads").delete().eq("id", leadId);
+    if (error) throw error;
+    showToast(t("Lead deleted"));
+    await loadLeadsTab();
+  } catch (e) {
+    console.error("Delete lead error:", e);
+    alert(t("Failed to delete lead."));
+  }
+}
+
+/* ---- STUDENT DETAILS START ---- */
+// Escapes text before it goes into innerHTML (registration data is typed by the public)
+function escHtml(v) {
+  return String(v ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+// Safe value for a '...' string inside an inline onclick="" attribute
+function jsAttrArg(v) {
+  const js = String(v ?? "")
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'")
+    .replace(/\r?\n/g, " ")
+    .replace(/</g, "\\x3C");
+  return escHtml(js);
+}
+
+function sendSingleEmailById(id) {
+  const s = (window.studentsRowCache || []).find(x => String(x.id) === String(id));
+  if (s) sendSingleEmail(s);
+}
+
+// Default placeholders stored by the database mean "not provided"
+function sdVal(v) {
+  if (v === null || v === undefined) return "";
+  const s = String(v).trim();
+  return (s === "" || s === "Optional" || s === "Required") ? "" : s;
+}
+
+function openStudentDetails(id) {
+  const s = (window.studentsRowCache || []).find(x => String(x.id) === String(id));
+  const body = document.getElementById("studentDetailsBody");
+  if (!s || !body) return;
+  window.currentDetailsStudentId = s.id;
+
+  const dash = "—";
+  const text = v => { const x = sdVal(v); return x ? escHtml(x) : ""; };
+  const item = (label, html, full) => `
+    <div class="sd-item${full ? " sd-full" : ""}">
+      <span class="sd-label">${escHtml(t(label))}</span>
+      <span class="sd-value">${html || dash}</span>
+    </div>`;
+
+  const registeredForMap = { myself: "Myself", child: "My child", someone_else: "Someone else" };
+  const registeredFor = registeredForMap[s.enrolling_for] ? escHtml(t(registeredForMap[s.enrolling_for])) : "";
+
+  const email = sdVal(s.email);
+  const emailHtml = email ? `<a href="mailto:${escHtml(email)}">${escHtml(email)}</a>` : "";
+
+  const wa = sdVal(s.whatsapp);
+  const waDigits = wa.replace(/[\s-]/g, "");
+  const waHtml = !wa ? "" : /^\+\d{7,15}$/.test(waDigits)
+    ? `<a href="https://wa.me/${escHtml(waDigits.slice(1))}" target="_blank" rel="noopener">${escHtml(wa)}</a>`
+    : escHtml(wa);
+
+  const photoUrl = /^https?:\/\//i.test(s.passport_url || "") ? s.passport_url : "";
+  const photoHtml = photoUrl
+    ? `<img class="sd-photo" src="${escHtml(photoUrl)}" alt="" onclick="openPassportModal('${jsAttrArg(photoUrl)}')">`
+    : `<img class="sd-photo" src="passport-placeholder.png" alt="">`;
+
+  const days = sdVal(s.preferred_days);
+  const daysHtml = days
+    ? `<span class="sd-chips">${days.split(",").map(d => `<span class="sd-chip">${escHtml(t(d.trim()))}</span>`).join("")}</span>`
+    : "";
+
+  const pay = sdVal(s.payment_status).toLowerCase();
+  const payCls = pay === "paid" ? "badge-success" : pay === "unpaid" ? "badge-warning" : "badge-info";
+  const payHtml = pay ? `<span class="badge ${payCls}">${escHtml(t(sdVal(s.payment_status)))}</span>` : "";
+
+  const admissionHtml = `<span class="approval-status ${s.admission_approved ? "approved" : "not-approved"}">${
+    s.admission_approved ? t("✅ Approved") : t("❌ Not Approved")}</span>`;
+
+  const amountHtml = s.amount_due != null ? escHtml(formatMoney(s.amount_due, s.currency_due)) : "";
+  const regDate = s.created_at ? escHtml(new Date(s.created_at).toLocaleDateString()) : "";
+
+  body.innerHTML = `
+    <div class="sd-head">
+      ${photoHtml}
+      <div>
+        <div class="sd-name">${escHtml(s.fullname)}</div>
+        <div class="sd-meta">
+          <span>${escHtml(s.matric_number)}</span>
+          ${admissionHtml}
+          ${payHtml}
+        </div>
+      </div>
+    </div>
+
+    <h4 class="sd-section">${escHtml(t("Personal Information"))}</h4>
+    <div class="sd-grid">
+      ${item("Registered For", registeredFor)}
+      ${item("Parent / Guardian Name", text(s.guardian_name))}
+      ${item("Gender", text(s.gender))}
+      ${item("Student's Age", text(s.age))}
+      ${item("Nationality", text(s.nationality))}
+      ${item("Country", text(s.country))}
+      ${item("State of Residence", text(s.state))}
+    </div>
+
+    <h4 class="sd-section">${escHtml(t("Contact"))}</h4>
+    <div class="sd-grid">
+      ${item("Email", emailHtml)}
+      ${item("WhatsApp", waHtml)}
+    </div>
+
+    <h4 class="sd-section">${escHtml(t("Learning"))}</h4>
+    <div class="sd-grid">
+      ${item("Level", text(s.level_arabic))}
+      ${item("Batch", text(s.batch))}
+      ${item("Plan", text(s.plan_type))}
+      ${item("Can Read Quran", text(s.read_quran))}
+      ${item("Attends Online Classes", text(s.attend_online))}
+      ${item("Preferred Class Time", text(s.class_time))}
+      ${item("Preferred Days", daysHtml, true)}
+      ${item("Describe Your Current Level", text(s.level_description), true)}
+      ${item("Reason for Learning", text(s.reason_arabic), true)}
+      ${item("Additional Information", text(s.additional), true)}
+      ${item("How They Heard About Us", text(s.hear_about))}
+    </div>
+
+    <h4 class="sd-section">${escHtml(t("Admission & Payment"))}</h4>
+    <div class="sd-grid">
+      ${item("Status", escHtml(t(sdVal(s.status))))}
+      ${item("Amount Due", amountHtml)}
+      ${item("Welcome Email Sent", escHtml(s.welcome_email_sent ? t("Yes") : t("No")))}
+      ${item("Registered On", regDate)}
+    </div>
+  `;
+
+  document.getElementById("studentDetailsModal").classList.add("show");
+}
+
+function editFromStudentDetails() {
+  const id = window.currentDetailsStudentId;
+  closeModal("studentDetailsModal");
+  if (id != null) editStudent(id);
+}
+/* ---- STUDENT DETAILS END ---- */
+
 async function loadStudents() {
   const { data } = await db
     .from("students")
@@ -875,21 +1265,25 @@ async function loadStudents() {
       html: `
         <td>
           ${s.passport_url
-            ? `<img src="${s.passport_url}" class="passport-thumb" loading="lazy" onclick="openPassportModal('${s.passport_url}')">`
+            ? `<img src="${escHtml(s.passport_url)}" class="passport-thumb" loading="lazy" onclick="openPassportModal('${jsAttrArg(s.passport_url)}')">`
             : `<img src="passport-placeholder.png" class="passport-thumb" loading="lazy">`}
         </td>
-        <td>${s.matric_number}</td>
-        <td>${s.fullname}</td>
-        <td>${s.email}</td>
-        <td>${s.whatsapp}</td>
-        <td>${s.country}</td>
-        <td>${s.gender}</td>
-        <td>${s.age}</td>
-        <td>${s.level_arabic}</td>
-        <td>${s.batch || "—"}</td>
-        <td>${s.plan_type || "—"}</td>
+        <td>${escHtml(s.matric_number)}</td>
+        <td>
+          <button type="button" class="student-name-link" onclick="openStudentDetails('${s.id}')">${escHtml(s.fullname)}</button>
+          ${s.enrolling_for && s.enrolling_for !== "myself" && sdVal(s.guardian_name)
+            ? `<div class="student-sub">${escHtml(t("Guardian"))}: ${escHtml(s.guardian_name)}</div>` : ""}
+        </td>
+        <td>${escHtml(s.email)}</td>
+        <td>${escHtml(s.whatsapp)}</td>
+        <td>${escHtml(s.country)}</td>
+        <td>${escHtml(s.gender)}</td>
+        <td>${escHtml(s.age)}</td>
+        <td>${escHtml(s.level_arabic)}</td>
+        <td>${escHtml(s.batch || "—")}</td>
+        <td>${escHtml(s.plan_type || "—")}</td>
         <td>${s.amount_due != null ? formatMoney(s.amount_due, s.currency_due) : "—"}</td>
-        <td>${t(s.status)}</td>
+        <td>${escHtml(t(s.status))}</td>
         <td>
           <span class="approval-status ${s.admission_approved ? 'approved' : 'not-approved'}">
             ${s.admission_approved ? t('✅ Approved') : t('❌ Not Approved')}
@@ -899,12 +1293,12 @@ async function loadStudents() {
           ${s.admission_approved ? '' : `<button class="btn-approve" onclick="approveStudent('${s.id}')">${t("Approve")}</button>`}
         </td>
         <td>
-          <button class="btn btn-small" onclick="openStudentCoursesModal('${s.matric_number}', '${(s.fullname || "").replace(/'/g, "\\'")}')">
+          <button class="btn btn-small" onclick="openStudentCoursesModal('${jsAttrArg(s.matric_number)}', '${jsAttrArg(s.fullname)}')">
             📚 ${t("Courses")}
           </button>
         </td>
         <td class="student-action-col">
-          <button class="btn btn-small" onclick='sendSingleEmail(${JSON.stringify(s)})'>
+          <button class="btn btn-small" onclick="sendSingleEmailById('${s.id}')">
             ${t("Send Email")}
           </button>
         </td>
@@ -921,7 +1315,7 @@ async function loadStudents() {
     🗑️
   </button>
 </td>
-        <td class="student-action-col"><button class="btn btn-cert" onclick="openCertificateModal('${s.id}', '${s.matric_number}', '${s.fullname}', '${s.level_arabic}', '${s.batch || ""}')">🎓 ${t("Issue")}</button></td>
+        <td class="student-action-col"><button class="btn btn-cert" onclick="openCertificateModal('${s.id}', '${jsAttrArg(s.matric_number)}', '${jsAttrArg(s.fullname)}', '${jsAttrArg(s.level_arabic)}', '${jsAttrArg(s.batch || "")}')">🎓 ${t("Issue")}</button></td>
       `
     }));
   }
@@ -1318,6 +1712,19 @@ async function addStudent() {
     const admission_approved = document.getElementById("studentAdmission")?.value.trim();
     const passportFile = document.getElementById("studentPassport")?.files[0];
 
+    // Registration details added later (all optional except guardian for child / someone else)
+    const enrolling_for = document.getElementById("studentEnrollingFor")?.value || null;
+    const guardian_name = document.getElementById("studentGuardian")?.value.trim() || null;
+    const state = document.getElementById("studentState")?.value.trim() || null;
+    const level_description = document.getElementById("studentLevelDescription")?.value.trim() || null;
+    const preferred_days = Array.from(document.querySelectorAll('input[name="studentPreferredDays"]:checked'))
+      .map(cb => cb.value).join(", ") || null;
+
+    if (enrolling_for && enrolling_for !== "myself" && !guardian_name) {
+      alert(t("Parent / Guardian name is required"));
+      return;
+    }
+
     if (!fullname || !email || !whatsapp || !country || !gender || !age || !level_arabic || !status || !admission_approved) {
       alert(t("Fill all required fields"));
       return;
@@ -1401,6 +1808,7 @@ if (passportFile) {
       await db.from("students").update({
   fullname, email, whatsapp, country, gender, age,
   level_arabic, batch, plan_type, amount_due, currency_due, status, admission_approved,
+  enrolling_for, guardian_name, state, level_description, preferred_days,
   ...(passport_url ? { passport_url, passport_path } : {})
 }).eq("id", window.editingStudentId);
 
@@ -1415,6 +1823,7 @@ if (passportFile) {
       await db.from("students").insert([{
   fullname, email, whatsapp, country, gender, age,
   level_arabic, batch, plan_type, amount_due, currency_due, status, admission_approved,
+  enrolling_for, guardian_name, state, level_description, preferred_days,
   passport_url,
   passport_path
 }]);
@@ -1464,6 +1873,15 @@ async function editStudent(id) {
   document.getElementById("studentCurrencyDue").value = s.currency_due || "NGN";
   document.getElementById("studentStatus").value = s.status;
   document.getElementById("studentAdmission").value = s.admission_approved;
+
+  document.getElementById("studentEnrollingFor").value = s.enrolling_for || "";
+  document.getElementById("studentGuardian").value = s.guardian_name || "";
+  document.getElementById("studentState").value = s.state || "";
+  document.getElementById("studentLevelDescription").value = s.level_description || "";
+  const savedDays = (s.preferred_days || "").split(",").map(d => d.trim()).filter(Boolean);
+  document.querySelectorAll('input[name="studentPreferredDays"]').forEach(cb => {
+    cb.checked = savedDays.includes(cb.value);
+  });
 
   // ✅ ADD THIS (important for deletion)
   window.editingStudentPassportPath = s.passport_path || null;

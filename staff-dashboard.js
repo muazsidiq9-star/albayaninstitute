@@ -164,14 +164,14 @@ async function loadLeads() {
   const tbody = document.querySelector("#leads-table tbody");
   if (!tbody) return;
 
-  tbody.innerHTML = `<tr><td colspan="11" class="empty-state">
+  tbody.innerHTML = `<tr><td colspan="13" class="empty-state">
     <i class="fa-solid fa-spinner fa-spin"></i> ${t("Loading...")}
   </td></tr>`;
 
   try {
     const { data, error } = await db
       .from("admission_leads")
-      .select("id, full_name, phone, email, country, occupation, source, status, notes, created_at")
+      .select("id, full_name, phone, email, country, occupation, inquiring_for, age, source, status, notes, created_at")
       .order("created_at", { ascending: false });
 
     if (error) throw error;
@@ -182,7 +182,7 @@ async function loadLeads() {
 
   } catch (e) {
     console.error("Load leads error:", e);
-    tbody.innerHTML = `<tr><td colspan="11" class="empty-state">${t("Failed to load leads")}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="13" class="empty-state">${t("Failed to load leads")}</td></tr>`;
   }
 }
 
@@ -244,12 +244,17 @@ function escapeLeadHtml(value) {
     .replace(/'/g, "&#39;");
 }
 
+function formatInquiringFor(value) {
+  const map = { myself: "Myself", child: "My child", someone_else: "Someone else" };
+  return map[value] || "";
+}
+
 function renderLeadsTable(data) {
   const tbody = document.querySelector("#leads-table tbody");
   if (!tbody) return;
 
   if (!data || data.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="11" class="empty-state">${t("No leads yet")}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="13" class="empty-state">${t("No leads yet")}</td></tr>`;
     return;
   }
 
@@ -271,6 +276,8 @@ function renderLeadsTable(data) {
       <td>${escapeLeadHtml(lead.email) || "—"}</td>
       <td>${escapeLeadHtml(lead.country) || "—"}</td>
       <td>${escapeLeadHtml(lead.occupation) || "—"}</td>
+      <td>${escapeLeadHtml(formatInquiringFor(lead.inquiring_for)) || "—"}</td>
+      <td>${lead.age ?? "—"}</td>
       <td>${escapeLeadHtml(formatLeadSource(lead.source))}</td>
       <td><span class="badge ${statusBadge}">${escapeLeadHtml(formatLeadStatus(lead.status))}</span></td>
       <td class="lead-notes-cell" title="${escapeLeadHtml(lead.notes || "")}">${notesPreview}</td>
@@ -338,6 +345,8 @@ function openAddLeadModal() {
   document.getElementById("leadEmail").value = "";
   document.getElementById("leadCountry").value = "";
   document.getElementById("leadOccupation").value = "";
+  document.getElementById("leadInquiringFor").value = "";
+  document.getElementById("leadAge").value = "";
   document.getElementById("leadSource").value = "whatsapp";
   document.getElementById("leadStatus").value = "new";
   document.getElementById("leadNotes").value = "";
@@ -353,8 +362,14 @@ function openEditLeadModal(leadId) {
   document.getElementById("leadName").value = lead.full_name || "";
   document.getElementById("leadPhone").value = lead.phone || "";
   document.getElementById("leadEmail").value = lead.email || "";
-  document.getElementById("leadCountry").value = lead.country || "";
+  const leadCountryEl = document.getElementById("leadCountry");
+  if (lead.country && ![...leadCountryEl.options].some(o => o.value === lead.country)) {
+    leadCountryEl.add(new Option(lead.country, lead.country));
+  }
+  leadCountryEl.value = lead.country || "";
   document.getElementById("leadOccupation").value = lead.occupation || "";
+  document.getElementById("leadInquiringFor").value = lead.inquiring_for || "";
+  document.getElementById("leadAge").value = lead.age ?? "";
   document.getElementById("leadSource").value = lead.source || "whatsapp";
   document.getElementById("leadStatus").value = lead.status || "new";
   document.getElementById("leadNotes").value = lead.notes || "";
@@ -371,12 +386,21 @@ async function saveLead() {
     const email = document.getElementById("leadEmail")?.value.trim();
     const country = document.getElementById("leadCountry")?.value.trim();
     const occupation = document.getElementById("leadOccupation")?.value.trim();
+    const inquiringFor = document.getElementById("leadInquiringFor")?.value;
     const source = document.getElementById("leadSource")?.value;
     const status = document.getElementById("leadStatus")?.value;
     const notes = document.getElementById("leadNotes")?.value.trim();
 
+    const ageRaw = document.getElementById("leadAge")?.value.trim();
+    const age = ageRaw ? parseInt(ageRaw, 10) : null;
+
     if (!full_name || !phone) {
       alert(t("Full name and phone are required"));
+      return;
+    }
+
+    if (age !== null && (!Number.isFinite(age) || age < 3 || age > 100)) {
+      alert(t("Age must be between 3 and 100"));
       return;
     }
 
@@ -386,6 +410,8 @@ async function saveLead() {
       email: email || null,
       country: country || null,
       occupation: occupation || null,
+      inquiring_for: inquiringFor || null,
+      age,
       source,
       status,
       notes: notes || null

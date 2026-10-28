@@ -23,6 +23,7 @@
   <meta name="twitter:image" content="https://albayaninstitute.netlify.app/og-register-banner.png">
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/css/intlTelInput.css">
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="register.css">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -122,6 +123,26 @@
           </div>
 
           <div class="form-group full">
+            <label for="enrollingFor">
+              <span data-translate="Who is this for?">Who is this for?</span> <span class="req">*</span>
+            </label>
+            <select id="enrollingFor" name="enrollingFor" required>
+              <option value="myself" data-translate="Myself">Myself</option>
+              <option value="child" data-translate="My child">My child</option>
+              <option value="someone_else" data-translate="Someone else">Someone else</option>
+            </select>
+          </div>
+
+          <div class="form-group full" id="guardianGroup" hidden>
+            <label for="guardianName">
+              <span data-translate="Parent / Guardian Name">Parent / Guardian Name</span> <span class="req">*</span>
+            </label>
+            <input type="text" id="guardianName" name="guardianName"
+                   placeholder="Enter parent or guardian name"
+                   data-translate-placeholder="Enter parent or guardian name">
+          </div>
+
+          <div class="form-group full">
             <label for="email">
               <span data-translate="Email Address">Email Address</span> <span class="req">*</span>
             </label>
@@ -142,7 +163,7 @@
 
           <div class="form-group">
             <label for="age">
-              <span data-translate="Age">Age</span> <span class="req">*</span>
+              <span data-translate="Student's Age">Student's Age</span> <span class="req">*</span>
             </label>
             <input type="number" id="age" name="age" min="5" max="100"
                    placeholder="Your age"
@@ -162,7 +183,7 @@
             <label for="country">
               <span data-translate="Country of Residence">Country of Residence</span> <span class="req">*</span>
             </label>
-            <select id="country" name="country" required>
+            <select id="country" name="country" required data-country-picker>
               <option value="" data-translate="Select">Select</option>
               <optgroup label="Africa">
                 <option value="Algeria" data-translate="Algeria">Algeria</option>
@@ -236,13 +257,58 @@
             </select>
           </div>
 
+          <div class="form-group" id="stateGroup" hidden>
+            <label for="stateResidence">
+              <span data-translate="State of Residence">State of Residence</span> <span class="req">*</span>
+            </label>
+            <select id="stateResidence" name="state">
+              <option value="" data-translate="Select">Select</option>
+              <option value="Abia">Abia</option>
+              <option value="Adamawa">Adamawa</option>
+              <option value="Akwa Ibom">Akwa Ibom</option>
+              <option value="Anambra">Anambra</option>
+              <option value="Bauchi">Bauchi</option>
+              <option value="Bayelsa">Bayelsa</option>
+              <option value="Benue">Benue</option>
+              <option value="Borno">Borno</option>
+              <option value="Cross River">Cross River</option>
+              <option value="Delta">Delta</option>
+              <option value="Ebonyi">Ebonyi</option>
+              <option value="Edo">Edo</option>
+              <option value="Ekiti">Ekiti</option>
+              <option value="Enugu">Enugu</option>
+              <option value="FCT Abuja">FCT Abuja</option>
+              <option value="Gombe">Gombe</option>
+              <option value="Imo">Imo</option>
+              <option value="Jigawa">Jigawa</option>
+              <option value="Kaduna">Kaduna</option>
+              <option value="Kano">Kano</option>
+              <option value="Katsina">Katsina</option>
+              <option value="Kebbi">Kebbi</option>
+              <option value="Kogi">Kogi</option>
+              <option value="Kwara">Kwara</option>
+              <option value="Lagos">Lagos</option>
+              <option value="Nasarawa">Nasarawa</option>
+              <option value="Niger">Niger</option>
+              <option value="Ogun">Ogun</option>
+              <option value="Ondo">Ondo</option>
+              <option value="Osun">Osun</option>
+              <option value="Oyo">Oyo</option>
+              <option value="Plateau">Plateau</option>
+              <option value="Rivers">Rivers</option>
+              <option value="Sokoto">Sokoto</option>
+              <option value="Taraba">Taraba</option>
+              <option value="Yobe">Yobe</option>
+              <option value="Zamfara">Zamfara</option>
+            </select>
+          </div>
+
           <div class="form-group full">
             <label for="whatsapp">
               <span data-translate="WhatsApp Number">WhatsApp Number</span> <span class="req">*</span>
             </label>
-            <input type="tel" id="whatsapp" name="whatsapp"
-                   placeholder="+234..."
-                   data-translate-placeholder="+234..." required>
+            <input type="tel" id="whatsapp" name="whatsapp" maxlength="20"
+                   inputmode="tel" autocomplete="tel" required>
           </div>
 
         </div>
@@ -275,6 +341,16 @@
               <option value="Intermediate" data-translate="Intermediate">Intermediate</option>
               <option value="Advanced" data-translate="Advanced">Advanced</option>
             </select>
+          </div>
+
+          <div class="form-group full">
+            <label for="levelDescription">
+              <span data-translate="Describe Your Current Level">Describe Your Current Level</span>
+            </label>
+            <textarea id="levelDescription" name="levelDescription" rows="3" maxlength="500"
+                      placeholder="e.g. I can read Arabic letters but cannot form sentences yet"
+                      data-translate-placeholder="e.g. I can read Arabic letters but cannot form sentences yet"></textarea>
+            <small class="hint" data-translate="This helps us place you in the right class.">This helps us place you in the right class.</small>
           </div>
 
           <!-- ── BATCH ── -->
@@ -351,6 +427,21 @@
             <input type="text" id="classTime" name="classTime"
                    placeholder="Include your time zone"
                    data-translate-placeholder="Include your time zone">
+          </div>
+
+          <div class="form-group full" id="daysGroup" hidden>
+            <label>
+              <span data-translate="Preferred Days">Preferred Days</span>
+            </label>
+            <div class="day-options">
+              <label class="day-option"><input type="checkbox" name="preferredDays" value="Monday"><span data-translate="Monday">Monday</span></label>
+              <label class="day-option"><input type="checkbox" name="preferredDays" value="Tuesday"><span data-translate="Tuesday">Tuesday</span></label>
+              <label class="day-option"><input type="checkbox" name="preferredDays" value="Wednesday"><span data-translate="Wednesday">Wednesday</span></label>
+              <label class="day-option"><input type="checkbox" name="preferredDays" value="Thursday"><span data-translate="Thursday">Thursday</span></label>
+              <label class="day-option"><input type="checkbox" name="preferredDays" value="Friday"><span data-translate="Friday">Friday</span></label>
+              <label class="day-option"><input type="checkbox" name="preferredDays" value="Saturday"><span data-translate="Saturday">Saturday</span></label>
+              <label class="day-option"><input type="checkbox" name="preferredDays" value="Sunday"><span data-translate="Sunday">Sunday</span></label>
+            </div>
           </div>
 
           <div class="form-group full">
@@ -476,6 +567,7 @@
   </a>
 
   <!-- SUPABASE -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/intlTelInput.min.js"></script>
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
     const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
@@ -510,6 +602,12 @@
           field.scrollIntoView({ behavior: 'smooth', block: 'center' });
           return false;
         }
+      }
+      // Step 1: WhatsApp number must be valid for the chosen country
+      if (stepEl.id === 'step1' && window.waIti && window.waIti.isValidNumber() === false) {
+        alert(t('Please enter a valid WhatsApp number for the selected country.'));
+        document.getElementById('whatsapp').focus();
+        return false;
       }
       return true;
     }
@@ -556,6 +654,7 @@
     });
   </script>
 
+  <script src="country-picker.js"></script>
   <script src="register.js" defer></script>
   <script src="translate.js"></script>
 </body>

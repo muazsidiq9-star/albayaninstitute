@@ -2337,3 +2337,56 @@ input:checked + .slider:before { transform: translateX(22px); }
   .reset-student-tools { flex-direction: column; align-items: stretch; }
   .reset-student-tools .add-btn { width: 100%; justify-content: center; }
 }
+
+/* ============================================================
+   STUDENT DETAILS (read-only modal) + clickable name
+============================================================ */
+.student-name-link {
+  background: none; border: 0; padding: 0; font: inherit; font-weight: 700;
+  color: var(--primary); cursor: pointer; text-align: start;
+  text-decoration: underline dotted;
+}
+.student-name-link:hover { text-decoration: underline; }
+.student-sub { font-size: 0.75rem; opacity: 0.75; margin-top: 2px; }
+
+.sd-head { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+.sd-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-color); cursor: pointer; flex-shrink: 0; }
+.sd-name { font-size: 1.1rem; font-weight: 800; color: var(--text-color); }
+.sd-meta { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; margin-top: 4px; font-size: 0.82rem; color: var(--text-color); }
+.sd-section {
+  margin: 18px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border-color);
+  font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--primary);
+}
+.sd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+.sd-item { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.sd-full { grid-column: 1 / -1; }
+.sd-label { font-size: 0.72rem; font-weight: 700; opacity: 0.65; color: var(--text-color); }
+.sd-value { font-size: 0.9rem; color: var(--text-color); overflow-wrap: anywhere; white-space: pre-wrap; }
+.sd-value a { color: var(--primary); }
+.sd-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.sd-chip { padding: 3px 10px; border-radius: 999px; background: var(--surface-color); border: 1px solid var(--border-color); font-size: 0.78rem; font-weight: 600; }
+@media (max-width: 640px) { .sd-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   LEADS TAB + student form extras
+============================================================ */
+.leads-summary { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+.leads-chip {
+  padding: 6px 12px; border-radius: 999px; font-size: 0.82rem;
+  background: var(--surface-color); border: 1px solid var(--border-color); color: var(--text-color);
+}
+.leads-chip b { color: var(--primary); margin-inline-end: 4px; }
+
+#leads-table th:nth-child(10),
+#leads-table td:nth-child(10) {
+  min-width: 280px; max-width: 340px; white-space: normal; word-break: break-word; line-height: 1.5; text-align: start;
+}
+#leads-table a { color: var(--primary); font-weight: 600; }
+
+.modal-grid .day-checks { display: flex; flex-wrap: wrap; gap: 8px; }
+.modal-grid .day-checks label {
+  display: inline-flex; align-items: center; gap: 6px; margin: 0;
+  padding: 6px 10px; border: 1px solid var(--border-color); border-radius: 999px;
+  background: var(--surface-color); font-size: 0.8rem; font-weight: 600; cursor: pointer;
+}
+.modal-grid .day-checks input { width: auto; padding: 0; margin: 0; }

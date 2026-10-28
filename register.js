@@ -73,6 +73,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const planTypeSelect = document.getElementById("planType");
   const planPriceStrip = document.getElementById("planPriceStrip");
   const countrySelect = document.getElementById("country");
+  const whatsappInput = document.getElementById("whatsapp");
+  const enrollingFor = document.getElementById("enrollingFor");
+  const guardianGroup = document.getElementById("guardianGroup");
+  const guardianName = document.getElementById("guardianName");
+  const stateGroup = document.getElementById("stateGroup");
+  const stateResidence = document.getElementById("stateResidence");
+  const daysGroup = document.getElementById("daysGroup");
 
     // ===========================
   // Auto-populate Batch with current Month Year
@@ -174,6 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".plan-price-card").forEach((card) => {
       card.addEventListener("click", () => {
         planTypeSelect.value = card.dataset.plan;
+        planTypeSelect.dispatchEvent(new Event("change"));
         document.querySelectorAll(".plan-price-card").forEach(c => c.classList.remove("selected"));
         card.classList.add("selected");
       });
@@ -189,6 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
           Please select your country in Step 1 first.
         </p>`;
       planTypeSelect.innerHTML = `<option value="" data-translate="Select">Select</option>`;
+      toggleDays();
       if (typeof translate === "function") translate(localStorage.getItem("lang") || "en");
       return;
     }
@@ -218,6 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }).join("");
 
     attachPlanCardListeners();
+    toggleDays();
     if (typeof translate === "function") translate(localStorage.getItem("lang") || "en");
   }
 
@@ -225,6 +235,55 @@ document.addEventListener("DOMContentLoaded", () => {
     countrySelect.addEventListener("change", renderPlanOptions);
     renderPlanOptions();
   }
+
+  // ===========================
+  // WhatsApp number with country-code picker (saved as +234...)
+  // ===========================
+  window.waIti = window.intlTelInput(whatsappInput, {
+    initialCountry: "ng",
+    preferredCountries: ["ng", "gh", "sl", "gb", "us", "ca", "sa", "ae"],
+    separateDialCode: true,
+    nationalMode: true,
+    autoPlaceholder: "polite",
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/utils.js"
+  });
+
+  // ===========================
+  // Parent / Guardian name — only when registering for someone else
+  // ===========================
+  function toggleGuardian() {
+    const needed = enrollingFor.value !== "myself";
+    guardianGroup.hidden = !needed;
+    guardianName.required = needed;
+    if (!needed) guardianName.value = "";
+  }
+  enrollingFor.addEventListener("change", toggleGuardian);
+  toggleGuardian();
+
+  // ===========================
+  // State of residence — only for Nigeria
+  // ===========================
+  function toggleState() {
+    const isNigeria = (countrySelect.value || "").trim().toLowerCase() === "nigeria";
+    stateGroup.hidden = !isNigeria;
+    stateResidence.required = isNigeria;
+    if (!isNigeria) stateResidence.value = "";
+  }
+  countrySelect.addEventListener("change", toggleState);
+  toggleState();
+
+  // ===========================
+  // Preferred days — only for the Premium plan
+  // ===========================
+  function toggleDays() {
+    const isPremium = planTypeSelect.value === "Premium";
+    daysGroup.hidden = !isPremium;
+    if (!isPremium) {
+      daysGroup.querySelectorAll('input[type="checkbox"]').forEach((cb) => { cb.checked = false; });
+    }
+  }
+  planTypeSelect.addEventListener("change", toggleDays);
+  toggleDays();
 
   // Reads amount + currency from the selected plan card (single source of truth for pricing)
   function getSelectedPlanPricing() {
@@ -258,7 +317,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const age = formData.get("age");
       const nationality = formData.get("nationality")?.trim();
       const country = formData.get("country")?.trim();
-      const whatsapp = formData.get("whatsapp")?.trim();
+      const whatsapp = window.waIti.getNumber() ||
+        ("+" + window.waIti.getSelectedCountryData().dialCode + whatsappInput.value.replace(/\D/g, ""));
       const levelArabic = formData.get("levelArabic");
       const batch = formData.get("batch")?.trim() || null;
       const planType = formData.get("planType");
@@ -268,6 +328,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const classTime = formData.get("classTime")?.trim();
       const reasonArabic = formData.get("reasonArabic");
       const additional = formData.get("additional")?.trim();
+      const enrollingForVal = formData.get("enrollingFor");
+      const guardian = formData.get("guardianName")?.trim() || null;
+      const stateVal = formData.get("state") || null;
+      const levelDescription = formData.get("levelDescription")?.trim() || null;
+      const preferredDays = formData.getAll("preferredDays").join(", ") || null;
 
       if (!email || !fullName) {
         alert(t("Full Name and Email are required."));
@@ -277,6 +342,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const agreeTermsCheckbox = document.getElementById("agreeTerms");
       if (agreeTermsCheckbox && !agreeTermsCheckbox.checked) {
         alert(t("Please agree to the Terms & Conditions, Privacy Policy, and Refund Policy before submitting."));
+        return;
+      }
+
+      if (window.waIti.isValidNumber() === false) {
+        alert(t("Please enter a valid WhatsApp number for the selected country."));
+        goStep(1);
+        whatsappInput.focus();
         return;
       }
 
@@ -377,6 +449,11 @@ document.addEventListener("DOMContentLoaded", () => {
             attend_online: attendOnline,
             hear_about: hearAbout,
             class_time: classTime,
+            enrolling_for: enrollingForVal,
+            guardian_name: guardian,
+            state: stateVal,
+            level_description: levelDescription,
+            preferred_days: preferredDays,
             reason_arabic: reasonArabic,
             additional: additional,
             passport_url: passportUrl,
@@ -414,6 +491,11 @@ Email: ${email}
 WhatsApp: ${whatsapp}
 Country: ${country}
 Level: ${levelArabic}
+Level details: ${levelDescription || "—"}
+Registering for: ${enrollingForVal}
+Guardian: ${guardian || "—"}
+State: ${stateVal || "—"}
+Preferred days: ${preferredDays || "—"}
 Plan: ${planType}
 Batch: ${batch}
 Matric: ${data.matric_number}
@@ -488,6 +570,10 @@ function showSuccessNotification(matricNumber) {
 showSuccessNotification(data.matric_number);
 
       form.reset();
+      window.waIti.setNumber("");
+      toggleGuardian();
+      toggleState();
+      toggleDays();
       passportPreview.src = "passport-placeholder.png";
 
     } catch (err) {

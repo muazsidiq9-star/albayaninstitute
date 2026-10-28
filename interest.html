@@ -23,6 +23,7 @@
   <meta name="twitter:image" content="https://albayaninstitute.netlify.app/og-register-banner.png">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/css/intlTelInput.css">
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="register.css">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -34,7 +35,68 @@
   <style>
     /* Honeypot — hidden from humans, bots fill it in */
     .hp-field { position:absolute !important; left:-9999px !important; width:1px; height:1px; overflow:hidden; opacity:0; }
-    .submit-btn:disabled { opacity:.65; cursor:not-allowed; transform:none; }
+
+    html { scroll-behavior: smooth; }
+    .page-banner { height: auto; min-height: 48vh; padding: 36px 0; }
+    #interest-form, #how-it-works, #lp-videos { scroll-margin-top: 80px; }
+
+    /* ── Banner buttons ── */
+    .lp-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 18px; }
+    .lp-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 999px; font-weight: 700; font-size: .95rem; text-decoration: none; background: #fff; color: var(--primary, #1647a3); border: 2px solid #fff; transition: transform .15s; }
+    .lp-btn:hover { transform: translateY(-2px); }
+    .lp-btn.alt { background: transparent; color: #fff; }
+    .lp-btn.solid { background: var(--primary, #1647a3); color: #fff; border-color: var(--primary, #1647a3); }
+
+    /* ── Landing sections ── */
+    .lp-section { max-width: 1000px; margin: 0 auto; padding: 40px 20px 8px; }
+    .lp-head { text-align: center; margin-bottom: 22px; }
+    .lp-head h2 { font-size: clamp(1.25rem, 3.2vw, 1.7rem); margin: 0 0 6px; color: var(--text-color); }
+    .lp-head p { margin: 0; font-size: .92rem; opacity: .8; color: var(--text-color); }
+
+    /* ── Videos ── */
+    .lp-videos { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .video-card { margin: 0; }
+    .video-frame { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #0b1220; border: 1px solid var(--border-light); }
+    .video-frame iframe, .video-frame .video-play { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .video-play { display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer; background-size: cover; background-position: center; }
+    .video-play::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.28); }
+    .video-play i { position: relative; font-size: 1.6rem; color: #fff; background: rgba(0,0,0,.55); width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding-left: 4px; }
+    .video-empty { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: #cbd5e1; font-size: .88rem; text-align: center; padding: 16px; }
+    .video-empty i { font-size: 2rem; opacity: .7; }
+    .video-card figcaption { margin-top: 10px; font-weight: 700; font-size: .95rem; color: var(--text-color); }
+    .video-card figcaption span { display: block; font-weight: 400; font-size: .82rem; opacity: .75; margin-top: 2px; }
+    @media (max-width: 760px) { .lp-videos { grid-template-columns: 1fr; } }
+
+    /* ── Is it for you ── */
+    .lp-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .lp-chips li { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--border-light); background: var(--card-color); font-size: .88rem; font-weight: 600; color: var(--text-color); }
+    .lp-chips i { color: var(--primary, #1647a3); }
+    .lp-cta-row { text-align: center; margin-top: 22px; }
+
+    /* ── How it works ── */
+    .hiw-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .hiw-step { display: flex; gap: 10px; align-items: flex-start; padding: 12px; border: 1px solid var(--border-light); border-radius: 12px; background: var(--card-color); }
+    .hiw-num { flex: 0 0 30px; height: 30px; border-radius: 50%; background: var(--primary, #1647a3); color: #fff; font-weight: 700; font-size: .9rem; display: flex; align-items: center; justify-content: center; }
+    .hiw-step h4 { margin: 0 0 2px; font-size: .92rem; color: var(--text-color); }
+    .hiw-step p { margin: 0; font-size: .8rem; line-height: 1.45; opacity: .8; color: var(--text-color); }
+    @media (max-width: 760px) { .hiw-steps { grid-template-columns: 1fr; } }
+
+    /* ── FAQ ── */
+    .lead-faq { margin-top: 32px; }
+    .lead-faq details { border: 1px solid var(--border-light); border-radius: 10px; background: var(--card-color); margin-bottom: 10px; padding: 0 14px; }
+    .lead-faq summary { cursor: pointer; font-weight: 600; font-size: .95rem; padding: 14px 0; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--text-color); }
+    .lead-faq summary::-webkit-details-marker { display: none; }
+    .lead-faq summary::after { content: "+"; font-size: 1.2rem; color: var(--primary, #1647a3); flex-shrink: 0; }
+    .lead-faq details[open] summary::after { content: "\2212"; }
+    .lead-faq details p { margin: 0 0 14px; font-size: .88rem; line-height: 1.6; opacity: .85; color: var(--text-color); }
+    .lead-faq .lp-head { margin-bottom: 14px; }
+
+    /* ── Form extras ── */
+    .hint { font-size: .75rem; opacity: .7; color: var(--text-color); }
+    .iti { width: 100%; }
+    .iti__country-list { background: var(--card-color); color: var(--text-color); border-color: var(--border-light); }
+    .iti__country.iti__highlight { background: var(--surface-color); }
+    .iti__divider { border-bottom-color: var(--border-light); }
   </style>
 </head>
 <body>
@@ -69,19 +131,140 @@
       <p data-translate="Not ready to register yet? Leave your details and our admissions team will reach out to you.">
         Not ready to register yet? Leave your details and our admissions team will reach out to you.
       </p>
+      <div class="lp-btns">
+        <a href="#interest-form" class="lp-btn">
+          <i class="fa-solid fa-pen-to-square"></i>
+          <span data-translate="Register Now">Register Now</span>
+        </a>
+        <a href="#how-it-works" class="lp-btn alt">
+          <span data-translate="See How It Works">See How It Works</span>
+        </a>
+      </div>
     </div>
   </header>
 
   <!-- ================================================
+       VIDEOS  (paste a YouTube link or video ID into data-youtube="")
+  ================================================ -->
+  <section class="lp-section" id="lp-videos">
+    <div class="lp-head">
+      <h2 data-translate="See Who We Are">See Who We Are</h2>
+      <p data-translate="A few minutes with us is the best way to know what to expect.">A few minutes with us is the best way to know what to expect.</p>
+    </div>
+    <div class="lp-videos">
+      <figure class="video-card">
+        <div class="video-frame" data-youtube="https://www.youtube.com/embed/kziSbE1-PIo" data-title="A Word from the Founder">
+          <div class="video-empty">
+            <i class="fa-brands fa-youtube"></i>
+            <span data-translate="Video coming soon">Video coming soon</span>
+          </div>
+        </div>
+        <figcaption>
+          <span style="opacity:1;font-weight:700;font-size:.95rem;margin:0;" data-translate="A Word from the Founder">A Word from the Founder</span>
+          <span data-translate="Why we started and what we stand for.">Why we started and what we stand for.</span>
+        </figcaption>
+      </figure>
+      <figure class="video-card">
+        <div class="video-frame" data-youtube="https://www.youtube.com/embed/10YTX_OBBKU" data-title="Hear from a Student">
+          <div class="video-empty">
+            <i class="fa-brands fa-youtube"></i>
+            <span data-translate="Video coming soon">Video coming soon</span>
+          </div>
+        </div>
+        <figcaption>
+          <span style="opacity:1;font-weight:700;font-size:.95rem;margin:0;" data-translate="Hear from a Student">Hear from a Student</span>
+          <span data-translate="A real student shares their experience.">A real student shares their experience.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================================================
+       IS IT FOR YOU
+  ================================================ -->
+  <section class="lp-section" id="lp-for-you">
+    <div class="lp-head">
+      <h2 data-translate="Is Al-Bayan for You?">Is Al-Bayan for You?</h2>
+      <p data-translate="Whatever your starting point, there is a place for you.">Whatever your starting point, there is a place for you.</p>
+    </div>
+    <ul class="lp-chips">
+      <li><i class="fa-solid fa-circle-check"></i><span data-translate="Complete beginners">Complete beginners</span></li>
+      <li><i class="fa-solid fa-circle-check"></i><span data-translate="Students and youth">Students and youth</span></li>
+      <li><i class="fa-solid fa-circle-check"></i><span data-translate="Busy professionals">Busy professionals</span></li>
+      <li><i class="fa-solid fa-circle-check"></i><span data-translate="Parents who want their children to learn">Parents who want their children to learn</span></li>
+      <li><i class="fa-solid fa-circle-check"></i><span data-translate="Anyone who wants to understand Arabic">Anyone who wants to understand Arabic</span></li>
+    </ul>
+    <div class="lp-cta-row">
+      <a href="courses.html" class="lp-btn solid">
+        <i class="fa-solid fa-book-open"></i>
+        <span data-translate="Explore Our Courses">Explore Our Courses</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================================================
+       HOW IT WORKS
+  ================================================ -->
+  <section class="lp-section" id="how-it-works">
+    <div class="lp-head">
+      <h2 data-translate="How It Works">How It Works</h2>
+    </div>
+    <ol class="hiw-steps">
+      <li class="hiw-step">
+        <span class="hiw-num">1</span>
+        <div>
+          <h4 data-translate="Share Your Details">Share Your Details</h4>
+          <p data-translate="Fill in this short form. It takes about a minute.">Fill in this short form. It takes about a minute.</p>
+        </div>
+      </li>
+      <li class="hiw-step">
+        <span class="hiw-num">2</span>
+        <div>
+          <h4 data-translate="We Contact You">We Contact You</h4>
+          <p data-translate="Our admissions team reaches out to you on WhatsApp.">Our admissions team reaches out to you on WhatsApp.</p>
+        </div>
+      </li>
+      <li class="hiw-step">
+        <span class="hiw-num">3</span>
+        <div>
+          <h4 data-translate="Confirm Your Level">Confirm Your Level</h4>
+          <p data-translate="We help you find the right level and class for you.">We help you find the right level and class for you.</p>
+        </div>
+      </li>
+      <li class="hiw-step">
+        <span class="hiw-num">4</span>
+        <div>
+          <h4 data-translate="Register and Start">Register and Start</h4>
+          <p data-translate="Complete your registration and begin your classes.">Complete your registration and begin your classes.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ================================================
        FORM SECTION
   ================================================ -->
-  <section class="register-section">
+  <section class="register-section" id="interest-form">
+
+    <div class="lp-head">
+      <h2 data-translate="Leave Your Details">Leave Your Details</h2>
+      <p data-translate="Tell us a little about you and we will reach out.">Tell us a little about you and we will reach out.</p>
+    </div>
+
 
     <!-- NOTE -->
     <div class="register-note">
       <i class="fa-solid fa-circle-info"></i>
       <span data-translate="Please fill in all required fields (*) correctly. Do not submit the form more than once.">
         Please fill in all required fields (*) correctly. Do not submit the form more than once.
+      </span>
+    </div>
+
+    <!-- NO PAYMENT REASSURANCE -->
+    <div class="register-note">
+      <i class="fa-solid fa-circle-check"></i>
+      <span data-translate="No payment is needed at this stage. Just leave your details and we will guide you from there.">
+        No payment is needed at this stage. Just leave your details and we will guide you from there.
       </span>
     </div>
 
@@ -105,13 +288,29 @@
           </div>
 
           <div class="form-group">
+            <label for="inquiringFor">
+              <span data-translate="Who is this for?">Who is this for?</span> <span class="req">*</span>
+            </label>
+            <select id="inquiringFor" name="inquiringFor" required>
+              <option value="myself" data-translate="Myself">Myself</option>
+              <option value="child" data-translate="My child">My child</option>
+              <option value="someone_else" data-translate="Someone else">Someone else</option>
+            </select>
+            <small class="hint" data-translate="We will contact you on the WhatsApp number you give us.">We will contact you on the WhatsApp number you give us.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="age">
+              <span data-translate="Student's Age">Student's Age</span>
+            </label>
+            <input type="number" id="age" name="age" min="3" max="100" step="1" inputmode="numeric">
+          </div>
+
+          <div class="form-group">
             <label for="phone">
               <span data-translate="WhatsApp Number">WhatsApp Number</span> <span class="req">*</span>
             </label>
-            <input type="tel" id="phone" name="phone" maxlength="25"
-                   placeholder="+234..."
-                   data-translate-placeholder="+234..."
-                   pattern="[+0-9\s\-\(\)]{7,25}" inputmode="tel" required>
+            <input type="tel" id="phone" name="phone" maxlength="20" inputmode="tel" autocomplete="tel" required>
           </div>
 
           <div class="form-group">
@@ -126,7 +325,7 @@
             <label for="country">
               <span data-translate="Country of Residence">Country of Residence</span> <span class="req">*</span>
             </label>
-            <select id="country" name="country" required>
+            <select id="country" name="country" required data-country-picker>
                 <option value="" data-translate="Select">Select</option>
                 <optgroup label="Africa">
                   <option value="Algeria" data-translate="Algeria">Algeria</option>
@@ -211,11 +410,11 @@
 
           <div class="form-group full">
             <label for="notes">
-              <span data-translate="Message">Message</span>
+              <span data-translate="What would you like to learn?">What would you like to learn?</span>
             </label>
             <textarea id="notes" name="notes" rows="4" maxlength="1000"
-                      placeholder="Anything you'd like to ask or tell us..."
-                      data-translate-placeholder="Anything you'd like to ask or tell us..."></textarea>
+                      placeholder="Tell us your current level and what you would like to learn..."
+                      data-translate-placeholder="Tell us your current level and what you would like to learn..."></textarea>
           </div>
 
           <!-- Honeypot (spam trap) -->
@@ -257,6 +456,31 @@
       </div>
 
     </form>
+
+    <!-- FAQ -->
+    <div class="lead-faq">
+      <div class="lp-head"><h2 data-translate="Frequently Asked Questions">Frequently Asked Questions</h2></div>
+
+      <details>
+        <summary><span data-translate="Are the classes online?">Are the classes online?</span></summary>
+        <p data-translate="Yes. Al-Bayan Arabic Institute is an online institute, so you can learn from wherever you are.">Yes. Al-Bayan Arabic Institute is an online institute, so you can learn from wherever you are.</p>
+      </details>
+
+      <details>
+        <summary><span data-translate="I am a complete beginner. Can I join?">I am a complete beginner. Can I join?</span></summary>
+        <p data-translate="Yes. We will ask about your current level when we contact you and guide you to the right class.">Yes. We will ask about your current level when we contact you and guide you to the right class.</p>
+      </details>
+
+      <details>
+        <summary><span data-translate="Do I have to pay to leave my details?">Do I have to pay to leave my details?</span></summary>
+        <p data-translate="No. Leaving your details is free and does not commit you to anything.">No. Leaving your details is free and does not commit you to anything.</p>
+      </details>
+
+      <details>
+        <summary><span data-translate="What happens after I submit?">What happens after I submit?</span></summary>
+        <p data-translate="Our admissions team will contact you to answer your questions and help you choose the right level. When you are ready, you can complete the full registration.">Our admissions team will contact you to answer your questions and help you choose the right level. When you are ready, you can complete the full registration.</p>
+      </details>
+    </div>
   </section>
 
   <!-- FOOTER -->
@@ -279,6 +503,8 @@
   </a>
 
   <!-- SUPABASE -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/intlTelInput.min.js"></script>
+  <script src="country-picker.js"></script>
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
     const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
@@ -305,6 +531,17 @@
       const errMsg  = document.getElementById('error-msg');
       const btnHTML = btn.innerHTML;
 
+      // WhatsApp number with country-code picker (stored as +234...)
+      const phoneInput = document.getElementById('phone');
+      const iti = window.intlTelInput(phoneInput, {
+        initialCountry: 'ng',
+        preferredCountries: ['ng', 'gh', 'gb', 'us', 'ca', 'sa', 'ae'],
+        separateDialCode: true,
+        nationalMode: true,
+        autoPlaceholder: 'polite',
+        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/utils.js'
+      });
+
       function show(el, text) {
         okMsg.style.display = 'none';
         errMsg.style.display = 'none';
@@ -321,6 +558,12 @@
             field.scrollIntoView({ behavior: 'smooth', block: 'center' });
             return false;
           }
+        }
+        // Phone must be a real number for the chosen country
+        if (iti.isValidNumber() === false) {
+          show(errMsg, 'Please enter a valid WhatsApp number for the selected country.');
+          phoneInput.focus();
+          return false;
         }
         return true;
       }
@@ -341,12 +584,17 @@
 
         const val = id => document.getElementById(id).value.trim();
 
+        const phoneValue = iti.getNumber() ||
+          ('+' + iti.getSelectedCountryData().dialCode + phoneInput.value.replace(/\D/g, ''));
+
         const payload = {
           full_name:  val('fullname'),
-          phone:      val('phone'),
+          phone:      phoneValue,
           email:      val('email')      || null,
           country:    val('country'),
           occupation: val('occupation') || null,
+          inquiring_for: val('inquiringFor') || 'myself',
+          age:        val('age') ? parseInt(val('age'), 10) : null,
           notes:      val('notes')      || null,
           source:     'website',
           status:     'new'
@@ -369,6 +617,37 @@
           btn.disabled = false;
           btn.innerHTML = btnHTML;
         }
+      });
+    })();
+  </script>
+
+  <script>
+    /* ── YouTube facades: paste a link or ID into data-youtube="" ── */
+    (function () {
+      function ytId(v) {
+        v = (v || '').trim();
+        if (!v) return '';
+        if (/^[\w-]{11}$/.test(v)) return v;
+        var m = v.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/|\/live\/)([\w-]{11})/);
+        return m ? m[1] : '';
+      }
+      document.querySelectorAll('.video-frame').forEach(function (frame) {
+        var id = ytId(frame.getAttribute('data-youtube'));
+        if (!id) return;                       // no link yet: keep the "coming soon" box
+        var title = frame.getAttribute('data-title') || 'Video';
+        frame.innerHTML = '';
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'video-play';
+        btn.setAttribute('aria-label', 'Play video: ' + title);
+        btn.style.backgroundImage = 'url(https://i.ytimg.com/vi/' + id + '/hqdefault.jpg)';
+        btn.innerHTML = '<i class="fa-solid fa-play"></i>';
+        btn.addEventListener('click', function () {
+          frame.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + id +
+            '?autoplay=1&rel=0" title="' + title + '" loading="lazy" ' +
+            'allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+        });
+        frame.appendChild(btn);
       });
     })();
   </script>
