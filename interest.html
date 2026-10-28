@@ -48,24 +48,38 @@
     .lp-btn.solid { background: var(--primary, #1647a3); color: #fff; border-color: var(--primary, #1647a3); }
 
     /* ── Landing sections ── */
-    .lp-section { max-width: 1000px; margin: 0 auto; padding: 40px 20px 8px; }
+    .lp-section { width: 100%; box-sizing: border-box; max-width: 1000px; margin: 0 auto; padding: 40px 20px 8px; }
     .lp-head { text-align: center; margin-bottom: 22px; }
     .lp-head h2 { font-size: clamp(1.25rem, 3.2vw, 1.7rem); margin: 0 0 6px; color: var(--text-color); }
     .lp-head p { margin: 0; font-size: .92rem; opacity: .8; color: var(--text-color); }
 
     /* ── Videos ── */
-    .lp-videos { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .video-card { margin: 0; }
-    .video-frame { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #0b1220; border: 1px solid var(--border-light); }
+    .lp-videos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; width: 100%; }
+    .video-card { margin: 0; min-width: 0; }
+    .video-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #0b1220; border: 1px solid var(--border-light); }
     .video-frame iframe, .video-frame .video-play { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-    .video-play { display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer; background-size: cover; background-position: center; }
-    .video-play::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.28); }
-    .video-play i { position: relative; font-size: 1.6rem; color: #fff; background: rgba(0,0,0,.55); width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding-left: 4px; }
+    /* Thumbnail is a <div>, not a <button>, so global button hover styles can't move it */
+    .video-play { display: block; overflow: hidden; cursor: pointer; background: #0b1220; }
+    .video-play img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .video-play::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.28); z-index: 1; }
+    .video-play i {
+      position: absolute; top: 50%; left: 50%; z-index: 2;
+      transform: translate(-50%, -50%);
+      width: 64px; height: 64px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; padding-left: 4px;
+      font-size: 1.6rem; color: #fff; background: rgba(0,0,0,.55);
+      transition: background .2s;
+    }
+    .video-play:hover i, .video-play:focus-visible i { background: rgba(0,0,0,.8); }
+    .video-play:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
+    /* Nothing inside the video box may move, resize or shift on hover */
+    .video-frame, .video-frame:hover, .video-play, .video-play:hover, .video-play:active,
+    .video-play img, .video-play:hover img { transform: none !important; margin: 0 !important; }
     .video-empty { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: #cbd5e1; font-size: .88rem; text-align: center; padding: 16px; }
     .video-empty i { font-size: 2rem; opacity: .7; }
     .video-card figcaption { margin-top: 10px; font-weight: 700; font-size: .95rem; color: var(--text-color); }
     .video-card figcaption span { display: block; font-weight: 400; font-size: .82rem; opacity: .75; margin-top: 2px; }
-    @media (max-width: 760px) { .lp-videos { grid-template-columns: 1fr; } }
+    @media (max-width: 760px) { .lp-videos { grid-template-columns: minmax(0, 1fr); } }
 
     /* ── Is it for you ── */
     .lp-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
@@ -636,16 +650,21 @@
         if (!id) return;                       // no link yet: keep the "coming soon" box
         var title = frame.getAttribute('data-title') || 'Video';
         frame.innerHTML = '';
-        var btn = document.createElement('button');
-        btn.type = 'button';
+        var btn = document.createElement('div');
         btn.className = 'video-play';
+        btn.setAttribute('role', 'button');
+        btn.setAttribute('tabindex', '0');
         btn.setAttribute('aria-label', 'Play video: ' + title);
-        btn.style.backgroundImage = 'url(https://i.ytimg.com/vi/' + id + '/hqdefault.jpg)';
-        btn.innerHTML = '<i class="fa-solid fa-play"></i>';
-        btn.addEventListener('click', function () {
+        btn.innerHTML = '<img src="https://i.ytimg.com/vi/' + id + '/hqdefault.jpg" alt="" loading="lazy">' +
+                        '<i class="fa-solid fa-play"></i>';
+        function play() {
           frame.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + id +
             '?autoplay=1&rel=0" title="' + title + '" loading="lazy" ' +
             'allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+        }
+        btn.addEventListener('click', play);
+        btn.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
         });
         frame.appendChild(btn);
       });

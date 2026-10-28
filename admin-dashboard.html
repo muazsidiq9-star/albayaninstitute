@@ -3308,6 +3308,14 @@
       <h2 data-translate="Student Details">Student Details</h2>
       <div id="studentDetailsBody"></div>
       <div class="modal-actions">
+        <button class="btn btn-save" onclick="copyStudentDetails(false)">
+          <i class="fa-regular fa-copy"></i>
+          <span data-translate="Copy Summary">Copy Summary</span>
+        </button>
+        <button class="btn btn-cancel" onclick="copyStudentDetails(true)">
+          <i class="fa-solid fa-clipboard-list"></i>
+          <span data-translate="Copy All Details">Copy All Details</span>
+        </button>
         <button class="btn btn-edit student-write-btn" onclick="editFromStudentDetails()">
           <i class="fa-solid fa-pen"></i>
           <span data-translate="Edit">Edit</span>

@@ -578,3 +578,72 @@ section > p {
     grid-template-columns: 1fr;
   }
 }
+
+/* ============================================================
+   VIDEO CLICK-TO-PLAY THUMBNAIL (no YouTube code until clicked)
+============================================================ */
+.video-wrap .video-play {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  background: #0b1220;
+}
+
+.video-wrap .video-play img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.video-wrap .video-play::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.28);
+  z-index: 1;
+}
+
+.video-wrap .video-play i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 4px;
+  font-size: 1.6rem;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  transition: background 0.2s;
+}
+
+.video-wrap .video-play:hover i,
+.video-wrap .video-play:focus-visible i {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.video-wrap .video-play:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -3px;
+}
+
+/* The thumbnail itself never moves or resizes on hover */
+.video-wrap .video-play,
+.video-wrap .video-play:hover,
+.video-wrap .video-play:active,
+.video-wrap .video-play img,
+.video-wrap .video-play:hover img {
+  transform: none !important;
+  margin: 0 !important;
+}

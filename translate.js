@@ -3237,6 +3237,10 @@ NEW FILES START HERE
 "Welcome Email Sent": "تم إرسال رسالة الترحيب",
 "Registered On": "تاريخ التسجيل",
 "Close": "إغلاق",
+"Copy Summary": "نسخ الملخص",
+"Copy All Details": "نسخ جميع البيانات",
+"Student details copied": "تم نسخ بيانات الطالب",
+"Copy failed. Please copy manually.": "تعذّر النسخ. يرجى النسخ يدويًا.",
 
 "Leads": "المهتمون",
 "🔍 Search by name or phone...": "🔍 ابحث بالاسم أو الهاتف...",

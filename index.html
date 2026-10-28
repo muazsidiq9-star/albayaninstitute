@@ -122,24 +122,15 @@
     </p>
     <div class="videos-grid">
       <div class="video-card">
-        <div class="video-wrap">
-          <iframe src="https://www.youtube.com/embed/kziSbE1-PIo"
-                  title="Institute Tour" allowfullscreen loading="lazy"></iframe>
-        </div>
+        <div class="video-wrap" data-youtube="kziSbE1-PIo" data-title="Institute Tour"></div>
         <p data-translate="Institute Tour">Institute Tour</p>
       </div>
       <div class="video-card">
-        <div class="video-wrap">
-          <iframe src="https://www.youtube.com/embed/Vc1B5ZXfu7o"
-                  title="Class Experience" allowfullscreen loading="lazy"></iframe>
-        </div>
+        <div class="video-wrap" data-youtube="Vc1B5ZXfu7o" data-title="Class Experience"></div>
         <p data-translate="Experience Our Arabic Classes">Experience Our Arabic Classes</p>
       </div>
       <div class="video-card">
-        <div class="video-wrap">
-          <iframe src="https://www.youtube.com/embed/10YTX_OBBKU"
-                  title="Student Testimonials" allowfullscreen loading="lazy"></iframe>
-        </div>
+        <div class="video-wrap" data-youtube="10YTX_OBBKU" data-title="Student Testimonials"></div>
         <p data-translate="Hear from Our Students">Hear from Our Students</p>
       </div>
     </div>
@@ -365,6 +356,42 @@
 
     document.querySelectorAll('.feature-card, .testimonial-card, .stat-item, .video-card')
       .forEach(el => observer.observe(el));
+  </script>
+  <script>
+    /* ── YouTube click-to-play: nothing from YouTube loads until a video is tapped ── */
+    (function () {
+      function ytId(v) {
+        v = (v || '').trim();
+        if (!v) return '';
+        if (/^[\w-]{11}$/.test(v)) return v;
+        var m = v.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/|\/live\/)([\w-]{11})/);
+        return m ? m[1] : '';
+      }
+      document.querySelectorAll('.video-wrap[data-youtube]').forEach(function (wrap) {
+        var id = ytId(wrap.getAttribute('data-youtube'));
+        if (!id) return;
+        var title = wrap.getAttribute('data-title') || 'Video';
+
+        var btn = document.createElement('div');
+        btn.className = 'video-play';
+        btn.setAttribute('role', 'button');
+        btn.setAttribute('tabindex', '0');
+        btn.setAttribute('aria-label', 'Play video: ' + title);
+        btn.innerHTML = '<img src="https://i.ytimg.com/vi/' + id + '/hqdefault.jpg" alt="" loading="lazy">' +
+                        '<i class="fa-solid fa-play"></i>';
+
+        function play() {
+          wrap.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + id +
+            '?autoplay=1&rel=0" title="' + title + '" ' +
+            'allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+        }
+        btn.addEventListener('click', play);
+        btn.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
+        });
+        wrap.appendChild(btn);
+      });
+    })();
   </script>
   <script src="translate.js"></script>
 </body>

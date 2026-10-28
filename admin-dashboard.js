@@ -1240,6 +1240,101 @@ function openStudentDetails(id) {
   document.getElementById("studentDetailsModal").classList.add("show");
 }
 
+// Plain-text version of a student's details, ready to paste into WhatsApp / email.
+// full = false -> short summary (what staff or the student need for clearance)
+// full = true  -> everything shown in the Student Details window
+function buildStudentDetailsText(s, full) {
+  const line = (label, value) => { const v = sdVal(value); return v ? `${label}: ${v}` : ""; };
+  const forMap = { myself: "Myself", child: "My child", someone_else: "Someone else" };
+  const pay = sdVal(s.payment_status);
+  const owing = s.amount_due != null && pay.toLowerCase() !== "paid"
+    ? ` (${formatMoney(s.amount_due, s.currency_due)} due)` : "";
+  const regDate = s.created_at
+    ? new Date(s.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "";
+
+  const sections = [
+    ["Al-Bayan Arabic Institute Online", "STUDENT DETAILS"],
+    [
+      line("Name", s.fullname),
+      line("Matric No", s.matric_number),
+      line("Level", s.level_arabic),
+      line("Batch", s.batch),
+      line("Plan", s.plan_type),
+      `Admission: ${s.admission_approved ? "Approved" : "Not approved"}`,
+      pay ? `Payment: ${pay}${owing}` : "",
+      line("Status", s.status),
+      line("Email", s.email),
+      line("WhatsApp", s.whatsapp)
+    ]
+  ];
+
+  if (full) {
+    sections.push(
+      [
+        "PERSONAL",
+        line("Gender", s.gender),
+        line("Age", s.age),
+        line("Nationality", s.nationality),
+        line("Country", s.country),
+        line("State", s.state),
+        line("Registered for", forMap[s.enrolling_for] || ""),
+        line("Parent / Guardian", s.guardian_name)
+      ],
+      [
+        "LEARNING",
+        line("Can read Quran", s.read_quran),
+        line("Attends online classes", s.attend_online),
+        line("Preferred class time", s.class_time),
+        line("Preferred days", s.preferred_days),
+        line("Current level (own words)", s.level_description),
+        line("Reason for learning", s.reason_arabic),
+        line("Additional information", s.additional),
+        line("Heard about us", s.hear_about)
+      ],
+      [
+        "REGISTRATION",
+        line("Registered on", regDate),
+        s.welcome_email_sent ? "Welcome email: sent" : "Welcome email: not sent"
+      ]
+    );
+  }
+
+  // Drop empty lines, and drop a section that only has its heading left
+  return sections
+    .map(sec => sec.filter(Boolean))
+    .filter((sec, i) => i === 0 || sec.length > (full && i > 1 ? 1 : 0))
+    .map(sec => sec.join("\n"))
+    .join("\n\n");
+}
+
+async function copyStudentDetails(full) {
+  const s = (window.studentsRowCache || []).find(x => String(x.id) === String(window.currentDetailsStudentId));
+  if (!s) return;
+  const text = buildStudentDetailsText(s, !!full);
+
+  let copied = false;
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      copied = true;
+    }
+  } catch (e) { /* fall through to the older method */ }
+
+  if (!copied) {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.cssText = "position:fixed;top:0;left:0;opacity:0;";
+    document.body.appendChild(ta);
+    ta.select();
+    try { copied = document.execCommand("copy"); } catch (e) { copied = false; }
+    document.body.removeChild(ta);
+  }
+
+  if (copied) showToast(t("Student details copied"));
+  else alert(t("Copy failed. Please copy manually.") + "\n\n" + text);
+}
+
 function editFromStudentDetails() {
   const id = window.currentDetailsStudentId;
   closeModal("studentDetailsModal");
