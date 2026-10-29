@@ -5,31 +5,120 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google" content="notranslate">
   <meta name="theme-color" content="#1647a3">
-  <title>Home - Al-Bayan Arabic Institute Online</title>
-  <meta name="description" content="Welcome to the Al-Bayan Arabic Institute Online! Your gateway to structured Arabic and Islamic education.">
-  <link rel="canonical" href="https://albayaninstitute.netlify.app/index.html">
+  <title>Stay in Touch - Al-Bayan Arabic Institute Online</title>
+  <meta name="description" content="Interested in Al-Bayan Arabic Institute Online? Leave your details and our admissions team will reach out to you.">
+  <link rel="canonical" href="https://albayaninstitute.netlify.app/interest.html">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://albayaninstitute.netlify.app/index.html">
-  <meta property="og:title" content="Home - Al-Bayan Arabic Institute Online">
-  <meta property="og:description" content="Welcome to the Al-Bayan Arabic Institute Online! Your gateway to structured Arabic and Islamic education.">
-  <meta property="og:image" content="https://albayaninstitute.netlify.app/og-index-banner.png">
+  <meta property="og:url" content="https://albayaninstitute.netlify.app/interest.html">
+  <meta property="og:title" content="Stay in Touch - Al-Bayan Arabic Institute Online">
+  <meta property="og:description" content="Interested in Al-Bayan Arabic Institute Online? Leave your details and our admissions team will reach out to you.">
+  <meta property="og:image" content="https://albayaninstitute.netlify.app/og-register-banner.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Home - Al-Bayan Arabic Institute Online">
-  <meta name="twitter:description" content="Welcome to the Al-Bayan Arabic Institute Online! Your gateway to structured Arabic and Islamic education.">
-  <meta name="twitter:image" content="https://albayaninstitute.netlify.app/og-index-banner.png">
-  
+  <meta name="twitter:title" content="Stay in Touch - Al-Bayan Arabic Institute Online">
+  <meta name="twitter:description" content="Interested in Al-Bayan Arabic Institute Online? Leave your details and our admissions team will reach out to you.">
+  <meta name="twitter:image" content="https://albayaninstitute.netlify.app/og-register-banner.png">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/css/intlTelInput.css">
   <link rel="stylesheet" href="master.css">
-  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="register.css">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="icon" href="favicon.ico">
   <link rel="manifest" href="site.webmanifest">
+
+  <style>
+    /* Honeypot — hidden from humans, bots fill it in */
+    .hp-field { position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; opacity: 0; pointer-events: none; }
+
+    html { scroll-behavior: smooth; }
+    .page-banner { height: auto; min-height: 48vh; padding: 36px 0; }
+    #interest-form, #how-it-works, #lp-videos { scroll-margin-top: 80px; }
+
+    /* ── Banner buttons ── */
+    .lp-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 18px; }
+    .lp-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 999px; font-weight: 700; font-size: .95rem; text-decoration: none; background: #fff; color: var(--primary, #1647a3); border: 2px solid #fff; transition: transform .15s; }
+    .lp-btn:hover { transform: translateY(-2px); }
+    .lp-btn.alt { background: transparent; color: #fff; }
+    .lp-btn.solid { background: var(--primary, #1647a3); color: #fff; border-color: var(--primary, #1647a3); }
+    /* Phones: keep the two banner buttons side by side, equal width */
+    @media (max-width: 520px) {
+      .lp-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 380px; margin: 18px auto 0; }
+      .lp-btn { justify-content: center; padding: 12px 8px; font-size: .82rem; gap: 6px; text-align: center; line-height: 1.25; }
+    }
+
+    /* ── Landing sections ── */
+    .lp-section { width: 100%; box-sizing: border-box; max-width: 1000px; margin: 0 auto; padding: 40px 20px 8px; }
+    .lp-head { text-align: center; margin-bottom: 22px; }
+    .lp-head h2 { font-size: clamp(1.25rem, 3.2vw, 1.7rem); margin: 0 0 6px; color: var(--text-color); }
+    .lp-head p { margin: 0; font-size: .92rem; opacity: .8; color: var(--text-color); }
+
+    /* ── Videos ── */
+    .lp-videos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; width: 100%; }
+    .video-card { margin: 0; min-width: 0; }
+    .video-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #0b1220; border: 1px solid var(--border-light); }
+    .video-frame iframe, .video-frame .video-play { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    /* Thumbnail is a <div>, not a <button>, so global button hover styles can't move it */
+    .video-play { display: block; overflow: hidden; cursor: pointer; background: #0b1220; }
+    .video-play img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .video-play::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.28); z-index: 1; }
+    .video-play i {
+      position: absolute; top: 50%; left: 50%; z-index: 2;
+      transform: translate(-50%, -50%);
+      width: 64px; height: 64px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; padding-left: 4px;
+      font-size: 1.6rem; color: #fff; background: rgba(0,0,0,.55);
+      transition: background .2s;
+    }
+    .video-play:hover i, .video-play:focus-visible i { background: rgba(0,0,0,.8); }
+    .video-play:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
+    /* Nothing inside the video box may move, resize or shift on hover */
+    .video-frame, .video-frame:hover, .video-play, .video-play:hover, .video-play:active,
+    .video-play img, .video-play:hover img { transform: none !important; margin: 0 !important; }
+    .video-empty { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: #cbd5e1; font-size: .88rem; text-align: center; padding: 16px; }
+    .video-empty i { font-size: 2rem; opacity: .7; }
+    .video-card figcaption { margin-top: 10px; font-weight: 700; font-size: .95rem; color: var(--text-color); }
+    .video-card figcaption span { display: block; font-weight: 400; font-size: .82rem; opacity: .75; margin-top: 2px; }
+    @media (max-width: 760px) { .lp-videos { grid-template-columns: minmax(0, 1fr); } }
+
+    /* ── Is it for you ── */
+    .lp-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .lp-chips li { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--border-light); background: var(--card-color); font-size: .88rem; font-weight: 600; color: var(--text-color); }
+    .lp-chips i { color: var(--primary, #1647a3); }
+    .lp-cta-row { text-align: center; margin-top: 22px; }
+
+    /* ── How it works ── */
+    .hiw-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .hiw-step { display: flex; gap: 10px; align-items: flex-start; padding: 12px; border: 1px solid var(--border-light); border-radius: 12px; background: var(--card-color); }
+    .hiw-num { flex: 0 0 30px; height: 30px; border-radius: 50%; background: var(--primary, #1647a3); color: #fff; font-weight: 700; font-size: .9rem; display: flex; align-items: center; justify-content: center; }
+    .hiw-step h4 { margin: 0 0 2px; font-size: .92rem; color: var(--text-color); }
+    .hiw-step p { margin: 0; font-size: .8rem; line-height: 1.45; opacity: .8; color: var(--text-color); }
+    @media (max-width: 760px) { .hiw-steps { grid-template-columns: 1fr; } }
+
+    /* ── FAQ ── */
+    .lead-faq { margin-top: 32px; }
+    .lead-faq details { border: 1px solid var(--border-light); border-radius: 10px; background: var(--card-color); margin-bottom: 10px; padding: 0 14px; }
+    .lead-faq summary { cursor: pointer; font-weight: 600; font-size: .95rem; padding: 14px 0; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--text-color); }
+    .lead-faq summary::-webkit-details-marker { display: none; }
+    .lead-faq summary::after { content: "+"; font-size: 1.2rem; color: var(--primary, #1647a3); flex-shrink: 0; }
+    .lead-faq details[open] summary::after { content: "\2212"; }
+    .lead-faq details p { margin: 0 0 14px; font-size: .88rem; line-height: 1.6; opacity: .85; color: var(--text-color); }
+    .lead-faq .lp-head { margin-bottom: 14px; }
+
+    /* ── Form extras ── */
+    .hint { font-size: .75rem; opacity: .7; color: var(--text-color); }
+    .iti { width: 100%; }
+    .iti__country-list { background: var(--card-color); color: var(--text-color); border-color: var(--border-light); }
+    .iti__country.iti__highlight { background: var(--surface-color); }
+    .iti__divider { border-bottom-color: var(--border-light); }
+; }
+    .iti__divider { border-bottom-color: var(--border-light); }
+  </style>
 </head>
 <body>
 
@@ -42,270 +131,375 @@
       </a>
       <div class="hamburger" onclick="toggleMenu()">☰</div>
       <div class="nav-links" id="navLinks">
-        <a href="index.html" class="active" data-translate="Home">Home</a>
+        <a href="index.html" data-translate="Home">Home</a>
         <a href="about.html" data-translate="About">About</a>
-        <a href="courses.html" data-translate="Courses">Courses</a>
-        <a href="register.html" data-translate="Register">Register</a>
-        <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
-<a href="quizzes.html" data-translate="Quizzes">Quizzes</a>
         <a href="payment.html" data-translate="Payment">Payment</a>
         <a href="contact.html" data-translate="Contact">Contact</a>
-        <a href="login.html" class="login-btn" data-translate="Log in">Log in</a>
       </div>
     </div>
   </nav>
 
   <!-- ================================================
-       HERO SECTION
+       PAGE BANNER
   ================================================ -->
-  <header class="home-header">
-    <video class="hero-video" autoplay muted loop playsinline>
-      <source src="background-all.mp4" type="video/mp4">
-    </video>
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
+  <header class="page-banner" style="background-image: url('Background-Register.jpg');">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
       <img src="logo.png" alt="Al-Bayan Logo" class="header-logo">
-
-      <p class="hero-eyebrow" data-translate="Online • Arabic • Islamic Sciences">Online &bull; Arabic &bull; Islamic Sciences</p>
-
-      <h1 data-translate="Al-Bayan Arabic Institute Online">
-        Al-Bayan Arabic Institute Online
-      </h1>
-
-      <p class="hero-sub" data-translate="Structured online Arabic classes for beginners, intermediate and advanced learners, guided by qualified teachers.">
-        Structured online Arabic classes for beginners, intermediate and advanced learners, guided by qualified teachers.
+      <p class="banner-eyebrow" data-translate="Stay Connected">Stay Connected</p>
+      <h1 data-translate="Show Your Interest">Show Your Interest</h1>
+      <p data-translate="Not ready to register yet? Leave your details and our admissions team will reach out to you.">
+        Not ready to register yet? Leave your details and our admissions team will reach out to you.
       </p>
-
-      <div class="cta-group">
-        <a href="register.html" class="cta-btn pulse" data-translate="Get Started">Get Started</a>
-        <a href="login.html" class="cta-btn cta-outline" data-translate="Log In">Log In</a>
+      <div class="lp-btns">
+        <a href="#interest-form" class="lp-btn">
+          <i class="fa-solid fa-pen-to-square"></i>
+          <span data-translate="Register Now">Register Now</span>
+        </a>
+        <a href="#how-it-works" class="lp-btn alt">
+          <span data-translate="See How It Works">See How It Works</span>
+        </a>
       </div>
     </div>
   </header>
 
   <!-- ================================================
-       STATS STRIP
+       VIDEOS  (paste a YouTube link or video ID into data-youtube="")
   ================================================ -->
-  <section class="stats-strip">
-    <div class="stats-inner">
-      <div class="stat-item">
-        <span class="stat-num">500+</span>
-        <span class="stat-label" data-translate="Students Enrolled">Students Enrolled</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-num">4</span>
-        <span class="stat-label" data-translate="Levels of Study">Levels of Study</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-num">100%</span>
-        <span class="stat-label" data-translate="Online & Flexible">Online &amp; Flexible</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-num">10+</span>
-        <span class="stat-label" data-translate="Countries Represented">Countries Represented</span>
-      </div>
+  <section class="lp-section" id="lp-videos">
+    <div class="lp-head">
+      <h2 data-translate="See Who We Are">See Who We Are</h2>
+      <p data-translate="A few minutes with us is the best way to know what to expect.">A few minutes with us is the best way to know what to expect.</p>
+    </div>
+    <div class="lp-videos">
+      <figure class="video-card">
+        <div class="video-frame" data-youtube="https://www.youtube.com/embed/kziSbE1-PIo" data-title="A Word from the Founder">
+          <div class="video-empty">
+            <i class="fa-brands fa-youtube"></i>
+            <span data-translate="Video coming soon">Video coming soon</span>
+          </div>
+        </div>
+        <figcaption>
+          <span style="opacity:1;font-weight:700;font-size:.95rem;margin:0;" data-translate="A Word from the Founder">A Word from the Founder</span>
+          <span data-translate="Why we started and what we stand for.">Why we started and what we stand for.</span>
+        </figcaption>
+      </figure>
+      <figure class="video-card">
+        <div class="video-frame" data-youtube="https://www.youtube.com/embed/10YTX_OBBKU" data-title="Hear from a Student">
+          <div class="video-empty">
+            <i class="fa-brands fa-youtube"></i>
+            <span data-translate="Video coming soon">Video coming soon</span>
+          </div>
+        </div>
+        <figcaption>
+          <span style="opacity:1;font-weight:700;font-size:.95rem;margin:0;" data-translate="Hear from a Student">Hear from a Student</span>
+          <span data-translate="A real student shares their experience.">A real student shares their experience.</span>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
   <!-- ================================================
-       HIGHLIGHT VIDEOS  (moved up — first impression)
+       IS IT FOR YOU
   ================================================ -->
-  <section class="home-videos">
-    <div class="section-label" data-translate="See Us in Action">See Us in Action</div>
-    <h2 data-translate="Watch Our Highlights">Watch Our Highlights</h2>
-    <p data-translate="See how Al-Bayan brings learning to life for students across the globe.">
-      See how Al-Bayan brings learning to life for students across the globe.
-    </p>
-    <div class="videos-grid">
-      <div class="video-card">
-        <div class="video-wrap" data-youtube="kziSbE1-PIo" data-title="Institute Tour"></div>
-        <p data-translate="Institute Tour">Institute Tour</p>
-      </div>
-      <div class="video-card">
-        <div class="video-wrap" data-youtube="Vc1B5ZXfu7o" data-title="Class Experience"></div>
-        <p data-translate="Experience Our Arabic Classes">Experience Our Arabic Classes</p>
-      </div>
-      <div class="video-card">
-        <div class="video-wrap" data-youtube="10YTX_OBBKU" data-title="Student Testimonials"></div>
-        <p data-translate="Hear from Our Students">Hear from Our Students</p>
-      </div>
+  <section class="lp-section" id="lp-for-you">
+    <div class="lp-head">
+      <h2 data-translate="Is Al-Bayan for You?">Is Al-Bayan for You?</h2>
+      <p data-translate="Whatever your starting point, there is a place for you.">Whatever your starting point, there is a place for you.</p>
+    </div>
+    <ul class="lp-chips">
+      <li><i class="fa-solid fa-circle-check"></i><span data-translate="Complete beginners">Complete beginners</span></li>
+      <li><i class="fa-solid fa-circle-check"></i><span data-translate="Students and youth">Students and youth</span></li>
+      <li><i class="fa-solid fa-circle-check"></i><span data-translate="Busy professionals">Busy professionals</span></li>
+      <li><i class="fa-solid fa-circle-check"></i><span data-translate="Parents who want their children to learn">Parents who want their children to learn</span></li>
+      <li><i class="fa-solid fa-circle-check"></i><span data-translate="Anyone who wants to understand Arabic">Anyone who wants to understand Arabic</span></li>
+    </ul>
+    <div class="lp-cta-row">
+      <a href="#interest-form" class="lp-btn solid">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <span data-translate="Register Now">Register Now</span>
+      </a>
     </div>
   </section>
 
   <!-- ================================================
-       WHY CHOOSE US
+       HOW IT WORKS
   ================================================ -->
-  <section class="features">
-    <div class="section-label" data-translate="Our Strengths">Our Strengths</div>
-    <h2 data-translate="Why Choose Al-Bayan?">Why Choose Al-Bayan?</h2>
-
-    <div class="cards-grid">
-
-      <div class="feature-card">
-        <div class="icon-circle green">
-          <i class="fa-solid fa-chalkboard-user"></i>
-        </div>
-        <h3 data-translate="Expert Teachers">Expert Teachers</h3>
-        <p data-translate="Learn from qualified and passionate Arabic educators with deep Islamic knowledge.">
-          Learn from qualified and passionate Arabic educators with deep Islamic knowledge.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="icon-circle orange">
-          <i class="fa-solid fa-laptop-code"></i>
-        </div>
-        <h3 data-translate="Flexible Online Learning">Flexible Online Learning</h3>
-        <p data-translate="Access courses anytime, anywhere, on your own schedule.">
-          Access courses anytime, anywhere, on your own schedule.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="icon-circle teal">
-          <i class="fa-solid fa-book-open"></i>
-        </div>
-        <h3 data-translate="Comprehensive Curriculum">Comprehensive Curriculum</h3>
-        <p data-translate="From Qur'anic Arabic to conversational fluency — all levels covered.">
-          From Qur'anic Arabic to conversational fluency &mdash; all levels covered.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="icon-circle green">
-          <i class="fa-solid fa-users"></i>
-        </div>
-        <h3 data-translate="Global Community">Global Community</h3>
-        <p data-translate="Join a worldwide community of learners united by a love for Arabic and Islam.">
-          Join a worldwide community of learners united by a love for Arabic and Islam.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="icon-circle orange">
-          <i class="fa-solid fa-globe"></i>
-        </div>
-        <h3 data-translate="Internationally Recognised">Internationally Recognised</h3>
-        <p data-translate="Earn certificates respected across borders for Arabic and Islamic studies.">
-          Earn certificates respected across borders for Arabic and Islamic studies.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="icon-circle teal">
-          <i class="fa-solid fa-brain"></i>
-        </div>
-        <h3 data-translate="Modern Teaching Methods">Modern Teaching Methods</h3>
-        <p data-translate="Interactive lessons designed to boost retention, confidence and love for the language.">
-          Interactive lessons designed to boost retention, confidence and love for the language.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="icon-circle green">
-          <i class="fa-solid fa-clock"></i>
-        </div>
-        <h3 data-translate="Self-Paced Options">Self-Paced Options</h3>
-        <p data-translate="Learn at your own speed with recorded lessons and practice materials.">
-          Learn at your own speed with recorded lessons and practice materials.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="icon-circle orange">
-          <i class="fa-solid fa-award"></i>
-        </div>
-        <h3 data-translate="Proven Results">Proven Results</h3>
-        <p data-translate="Hundreds of students have successfully mastered Arabic and Islamic sciences with us.">
-          Hundreds of students have successfully mastered Arabic and Islamic sciences with us.
-        </p>
-      </div>
-
+  <section class="lp-section" id="how-it-works">
+    <div class="lp-head">
+      <h2 data-translate="How It Works">How It Works</h2>
     </div>
+    <ol class="hiw-steps">
+      <li class="hiw-step">
+        <span class="hiw-num">1</span>
+        <div>
+          <h4 data-translate="Share Your Details">Share Your Details</h4>
+          <p data-translate="Fill in this short form. It takes about a minute.">Fill in this short form. It takes about a minute.</p>
+        </div>
+      </li>
+      <li class="hiw-step">
+        <span class="hiw-num">2</span>
+        <div>
+          <h4 data-translate="We Contact You">We Contact You</h4>
+          <p data-translate="Our admissions team reaches out to you on WhatsApp.">Our admissions team reaches out to you on WhatsApp.</p>
+        </div>
+      </li>
+      <li class="hiw-step">
+        <span class="hiw-num">3</span>
+        <div>
+          <h4 data-translate="Confirm Your Level">Confirm Your Level</h4>
+          <p data-translate="We help you find the right level and class for you.">We help you find the right level and class for you.</p>
+        </div>
+      </li>
+      <li class="hiw-step">
+        <span class="hiw-num">4</span>
+        <div>
+          <h4 data-translate="Register and Start">Register and Start</h4>
+          <p data-translate="Complete your registration and begin your classes.">Complete your registration and begin your classes.</p>
+        </div>
+      </li>
+    </ol>
   </section>
 
   <!-- ================================================
-       TESTIMONIALS
+       FORM SECTION
   ================================================ -->
-  <section class="testimonials">
-    <div class="section-label" data-translate="Student Voices">Student Voices</div>
-    <h2 data-translate="What Our Students Say">What Our Students Say</h2>
+  <section class="register-section" id="interest-form">
 
-    <div class="testimonial-grid">
-
-      <div class="testimonial-card">
-        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
-        <p data-translate="I improved my Arabic in just 3 months! The teachers are amazing and very patient.">
-          I improved my Arabic in just 3 months! The teachers are amazing and very patient.
-        </p>
-        <div class="testimonial-author">
-          <div class="author-avatar">H</div>
-          <div>
-            <strong>Hafsah</strong>
-            <span data-translate="Nigeria">Nigeria</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-card">
-        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
-        <p data-translate="Flexible classes and practical lessons make learning fun and easy.">
-          Flexible classes and practical lessons make learning fun and easy.
-        </p>
-        <div class="testimonial-author">
-          <div class="author-avatar">O</div>
-          <div>
-            <strong>Omar</strong>
-            <span data-translate="UAE">UAE</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-card">
-        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
-        <p data-translate="The community and support kept me motivated throughout my learning journey.">
-          The community and support kept me motivated throughout my learning journey.
-        </p>
-        <div class="testimonial-author">
-          <div class="author-avatar">F</div>
-          <div>
-            <strong>Fatima</strong>
-            <span data-translate="Egypt">Egypt</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-card">
-        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
-        <p data-translate="The Qur'an and Arabic lessons are well-structured and easy to follow. I now feel confident understanding Islamic texts.">
-          The Qur'an and Arabic lessons are well-structured and easy to follow. I now feel confident understanding Islamic texts.
-        </p>
-        <div class="testimonial-author">
-          <div class="author-avatar">A</div>
-          <div>
-            <strong>Ahmad</strong>
-            <span data-translate="United Kingdom">United Kingdom</span>
-          </div>
-        </div>
-      </div>
-
+    <div class="lp-head">
+      <h2 data-translate="Leave Your Details">Leave Your Details</h2>
+      <p data-translate="Tell us a little about you and we will reach out.">Tell us a little about you and we will reach out.</p>
     </div>
-  </section>
 
-  <!-- ================================================
-       CALL TO ACTION
-  ================================================ -->
-  <section class="cta-section">
-    <div class="cta-inner">
-      <h2 data-translate="Begin Your Arabic Journey Today">Begin Your Arabic Journey Today</h2>
-      <p data-translate="Join thousands of learners worldwide and take the first step towards understanding the Qur'an and Islamic sciences.">
-        Join thousands of learners worldwide and take the first step towards understanding the Qur'an and Islamic sciences.
-      </p>
-      <a href="register.html" class="cta-btn pulse" data-translate="Register Now — It's Free">Register Now &mdash; It's Free</a>
+
+    <!-- NOTE -->
+    <div class="register-note">
+      <i class="fa-solid fa-circle-info"></i>
+      <span data-translate="Please fill in all required fields (*) correctly. Do not submit the form more than once.">
+        Please fill in all required fields (*) correctly. Do not submit the form more than once.
+      </span>
+    </div>
+
+    <!-- NO PAYMENT REASSURANCE -->
+    <div class="register-note">
+      <i class="fa-solid fa-circle-check"></i>
+      <span data-translate="No payment is needed at this stage. Just leave your details and we will guide you from there.">
+        No payment is needed at this stage. Just leave your details and we will guide you from there.
+      </span>
+    </div>
+
+    <form id="lead-form" novalidate>
+
+      <div class="form-step active" id="step1">
+        <h3 class="step-title">
+          <i class="fa-solid fa-address-card"></i>
+          <span data-translate="Your Details">Your Details</span>
+        </h3>
+
+        <div class="form-grid">
+
+          <div class="form-group full">
+            <label for="fullname">
+              <span data-translate="Full Name">Full Name</span> <span class="req">*</span>
+            </label>
+            <input type="text" id="fullname" name="fullname" maxlength="120"
+                   placeholder="Enter your full name"
+                   data-translate-placeholder="Enter your full name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="inquiringFor">
+              <span data-translate="Who is this for?">Who is this for?</span> <span class="req">*</span>
+            </label>
+            <select id="inquiringFor" name="inquiringFor" required>
+              <option value="myself" data-translate="Myself">Myself</option>
+              <option value="child" data-translate="My child">My child</option>
+              <option value="someone_else" data-translate="Someone else">Someone else</option>
+            </select>
+            <small class="hint" data-translate="We will contact you on the WhatsApp number you give us.">We will contact you on the WhatsApp number you give us.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="age">
+              <span data-translate="Student's Age">Student's Age</span>
+            </label>
+            <input type="number" id="age" name="age" min="3" max="100" step="1" inputmode="numeric">
+          </div>
+
+          <div class="form-group">
+            <label for="phone">
+              <span data-translate="WhatsApp Number">WhatsApp Number</span> <span class="req">*</span>
+            </label>
+            <input type="tel" id="phone" name="phone" maxlength="20" inputmode="tel" autocomplete="tel" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">
+              <span data-translate="Email Address">Email Address</span>
+            </label>
+            <input type="email" id="email" name="email" maxlength="150"
+                   placeholder="your@email.com">
+          </div>
+
+          <div class="form-group">
+            <label for="country">
+              <span data-translate="Country of Residence">Country of Residence</span> <span class="req">*</span>
+            </label>
+            <select id="country" name="country" required data-country-picker>
+                <option value="" data-translate="Select">Select</option>
+                <optgroup label="Africa">
+                  <option value="Algeria" data-translate="Algeria">Algeria</option>
+                  <option value="Angola" data-translate="Angola">Angola</option>
+                  <option value="Benin" data-translate="Benin">Benin</option>
+                  <option value="Botswana" data-translate="Botswana">Botswana</option>
+                  <option value="Burkina Faso" data-translate="Burkina Faso">Burkina Faso</option>
+                  <option value="Burundi" data-translate="Burundi">Burundi</option>
+                  <option value="Cabo Verde" data-translate="Cabo Verde">Cabo Verde</option>
+                  <option value="Cameroon" data-translate="Cameroon">Cameroon</option>
+                  <option value="Central African Republic" data-translate="Central African Republic">Central African Republic</option>
+                  <option value="Chad" data-translate="Chad">Chad</option>
+                  <option value="Comoros" data-translate="Comoros">Comoros</option>
+                  <option value="Democratic Republic of the Congo" data-translate="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
+                  <option value="Republic of the Congo" data-translate="Republic of the Congo">Republic of the Congo</option>
+                  <option value="Djibouti" data-translate="Djibouti">Djibouti</option>
+                  <option value="Egypt" data-translate="Egypt">Egypt</option>
+                  <option value="Equatorial Guinea" data-translate="Equatorial Guinea">Equatorial Guinea</option>
+                  <option value="Eritrea" data-translate="Eritrea">Eritrea</option>
+                  <option value="Eswatini" data-translate="Eswatini">Eswatini</option>
+                  <option value="Ethiopia" data-translate="Ethiopia">Ethiopia</option>
+                  <option value="Gabon" data-translate="Gabon">Gabon</option>
+                  <option value="Gambia" data-translate="Gambia">Gambia</option>
+                  <option value="Ghana" data-translate="Ghana">Ghana</option>
+                  <option value="Guinea" data-translate="Guinea">Guinea</option>
+                  <option value="Guinea-Bissau" data-translate="Guinea-Bissau">Guinea-Bissau</option>
+                  <option value="Ivory Coast" data-translate="Ivory Coast">Ivory Coast</option>
+                  <option value="Kenya" data-translate="Kenya">Kenya</option>
+                  <option value="Lesotho" data-translate="Lesotho">Lesotho</option>
+                  <option value="Liberia" data-translate="Liberia">Liberia</option>
+                  <option value="Libya" data-translate="Libya">Libya</option>
+                  <option value="Madagascar" data-translate="Madagascar">Madagascar</option>
+                  <option value="Malawi" data-translate="Malawi">Malawi</option>
+                  <option value="Mali" data-translate="Mali">Mali</option>
+                  <option value="Mauritania" data-translate="Mauritania">Mauritania</option>
+                  <option value="Mauritius" data-translate="Mauritius">Mauritius</option>
+                  <option value="Morocco" data-translate="Morocco">Morocco</option>
+                  <option value="Mozambique" data-translate="Mozambique">Mozambique</option>
+                  <option value="Namibia" data-translate="Namibia">Namibia</option>
+                  <option value="Niger" data-translate="Niger">Niger</option>
+                  <option value="Nigeria" data-translate="Nigeria">Nigeria</option>
+                  <option value="Rwanda" data-translate="Rwanda">Rwanda</option>
+                  <option value="Sao Tome and Principe" data-translate="Sao Tome and Principe">Sao Tome and Principe</option>
+                  <option value="Senegal" data-translate="Senegal">Senegal</option>
+                  <option value="Seychelles" data-translate="Seychelles">Seychelles</option>
+                  <option value="Sierra Leone" data-translate="Sierra Leone">Sierra Leone</option>
+                  <option value="Somalia" data-translate="Somalia">Somalia</option>
+                  <option value="South Africa" data-translate="South Africa">South Africa</option>
+                  <option value="South Sudan" data-translate="South Sudan">South Sudan</option>
+                  <option value="Sudan" data-translate="Sudan">Sudan</option>
+                  <option value="Tanzania" data-translate="Tanzania">Tanzania</option>
+                  <option value="Togo" data-translate="Togo">Togo</option>
+                  <option value="Tunisia" data-translate="Tunisia">Tunisia</option>
+                  <option value="Uganda" data-translate="Uganda">Uganda</option>
+                  <option value="Zambia" data-translate="Zambia">Zambia</option>
+                  <option value="Zimbabwe" data-translate="Zimbabwe">Zimbabwe</option>
+                </optgroup>
+                <optgroup label="Other Countries">
+                  <option value="United States" data-translate="United States">United States</option>
+                  <option value="United Kingdom" data-translate="United Kingdom">United Kingdom</option>
+                  <option value="Canada" data-translate="Canada">Canada</option>
+                  <option value="Saudi Arabia" data-translate="Saudi Arabia">Saudi Arabia</option>
+                  <option value="United Arab Emirates" data-translate="United Arab Emirates">United Arab Emirates</option>
+                  <option value="India" data-translate="India">India</option>
+                  <option value="Pakistan" data-translate="Pakistan">Pakistan</option>
+                  <option value="Malaysia" data-translate="Malaysia">Malaysia</option>
+                  <option value="Indonesia" data-translate="Indonesia">Indonesia</option>
+                  <option value="Australia" data-translate="Australia">Australia</option>
+                  <option value="Other" data-translate="Other">Other</option>
+                </optgroup>
+              </select>
+          </div>
+
+          <div class="form-group">
+            <label for="occupation">
+              <span data-translate="Occupation">Occupation</span>
+            </label>
+            <input type="text" id="occupation" name="occupation" maxlength="120"
+                   placeholder="e.g. Student, Teacher, Engineer"
+                   data-translate-placeholder="e.g. Student, Teacher, Engineer">
+          </div>
+
+          <div class="form-group full">
+            <label for="notes">
+              <span data-translate="What would you like to learn?">What would you like to learn?</span>
+            </label>
+            <textarea id="notes" name="notes" rows="4" maxlength="1000"
+                      placeholder="Tell us your current level and what you would like to learn..."
+                      data-translate-placeholder="Tell us your current level and what you would like to learn..."></textarea>
+          </div>
+
+          <!-- Honeypot (spam trap) -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+        </div>
+
+        <div class="register-warning">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span data-translate="Do not submit this form more than once. Click the button only once and wait for confirmation.">
+            Do not submit this form more than once. Click the button only once and wait for confirmation.
+          </span>
+        </div>
+
+        <div class="terms-agreement">
+          <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+          <label for="agreeTerms">
+            <span data-translate="I agree to the">I agree to the</span>
+            <a href="terms.html" target="_blank" data-translate="Terms & Conditions">Terms &amp; Conditions</a>,
+            <a href="privacy.html" target="_blank" data-translate="Privacy Policy">Privacy Policy</a>,
+            <span data-translate="and">and</span>
+            <a href="refund-policy.html" target="_blank" data-translate="Refund Policy">Refund Policy</a>.
+          </label>
+        </div>
+
+        <div class="step-nav">
+          <button type="submit" class="submit-btn" id="submitBtn">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span data-translate="Submit">Submit</span>
+          </button>
+        </div>
+
+        <p id="success-msg" style="display:none;"></p>
+        <p id="error-msg"   style="display:none;"></p>
+
+      </div>
+
+    </form>
+
+    <!-- FAQ -->
+    <div class="lead-faq">
+      <div class="lp-head"><h2 data-translate="Frequently Asked Questions">Frequently Asked Questions</h2></div>
+
+      <details>
+        <summary><span data-translate="Are the classes online?">Are the classes online?</span></summary>
+        <p data-translate="Yes. Al-Bayan Arabic Institute is an online institute, so you can learn from wherever you are.">Yes. Al-Bayan Arabic Institute is an online institute, so you can learn from wherever you are.</p>
+      </details>
+
+      <details>
+        <summary><span data-translate="I am a complete beginner. Can I join?">I am a complete beginner. Can I join?</span></summary>
+        <p data-translate="Yes. We will ask about your current level when we contact you and guide you to the right class.">Yes. We will ask about your current level when we contact you and guide you to the right class.</p>
+      </details>
+
+      <details>
+        <summary><span data-translate="Do I have to pay to leave my details?">Do I have to pay to leave my details?</span></summary>
+        <p data-translate="No. Leaving your details is free and does not commit you to anything.">No. Leaving your details is free and does not commit you to anything.</p>
+      </details>
+
+      <details>
+        <summary><span data-translate="What happens after I submit?">What happens after I submit?</span></summary>
+        <p data-translate="Our admissions team will contact you to answer your questions and help you choose the right level. When you are ready, you can complete the full registration.">Our admissions team will contact you to answer your questions and help you choose the right level. When you are ready, you can complete the full registration.</p>
+      </details>
     </div>
   </section>
 
@@ -328,37 +522,127 @@
     <img src="whatsapp-icon.png" alt="WhatsApp">
   </a>
 
-  <!-- SCRIPTS -->
+  <!-- SUPABASE -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/intlTelInput.min.js"></script>
+  <script src="country-picker.js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
-    
+    const SUPABASE_URL = "https://cjrpjekmqrckozrbtwps.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_nR5kvC32lYVX0OflJM8sUA_tBaqRy1b";
+    window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  </script>
 
+  <script>
+    /* ── Nav toggle ── */
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('show');
     }
-
     document.addEventListener('click', function (e) {
       const nav = document.getElementById('navLinks');
       const hamburger = document.querySelector('.hamburger');
-      if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
-        nav.classList.remove('show');
-      }
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
     });
 
-    /* Scroll-reveal for cards */
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
+    /* ── Lead form ── */
+    (function () {
+      const form    = document.getElementById('lead-form');
+      const btn     = document.getElementById('submitBtn');
+      const okMsg   = document.getElementById('success-msg');
+      const errMsg  = document.getElementById('error-msg');
+      const btnHTML = btn.innerHTML;
+
+      // WhatsApp number with country-code picker (stored as +234...)
+      const phoneInput = document.getElementById('phone');
+      const iti = window.intlTelInput(phoneInput, {
+        initialCountry: 'ng',
+        preferredCountries: ['ng', 'gh', 'gb', 'us', 'ca', 'sa', 'ae'],
+        separateDialCode: true,
+        nationalMode: true,
+        autoPlaceholder: 'polite',
+        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/utils.js'
+      });
+
+      function show(el, text) {
+        okMsg.style.display = 'none';
+        errMsg.style.display = 'none';
+        el.textContent = text;
+        el.style.display = 'block';
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      // Same approach as the register page: native validation, field by field
+      function validate() {
+        for (const field of form.querySelectorAll('input, select, textarea')) {
+          if (!field.checkValidity()) {
+            field.reportValidity();
+            field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return false;
+          }
+        }
+        // Phone must be a real number for the chosen country
+        if (iti.isValidNumber() === false) {
+          show(errMsg, 'Please enter a valid WhatsApp number for the selected country.');
+          phoneInput.focus();
+          return false;
+        }
+        return true;
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        okMsg.style.display = 'none';
+        errMsg.style.display = 'none';
+
+        // Bots fill the honeypot — pretend success and stop
+        if (document.getElementById('website').value.trim() !== '') {
+          show(okMsg, 'Thank you! We will contact you soon.');
+          form.reset();
+          return;
+        }
+
+        if (!validate()) return;
+
+        const val = id => document.getElementById(id).value.trim();
+
+        const phoneValue = iti.getNumber() ||
+          ('+' + iti.getSelectedCountryData().dialCode + phoneInput.value.replace(/\D/g, ''));
+
+        const payload = {
+          full_name:  val('fullname'),
+          phone:      phoneValue,
+          email:      val('email')      || null,
+          country:    val('country'),
+          occupation: val('occupation') || null,
+          inquiring_for: val('inquiringFor') || 'myself',
+          age:        val('age') ? parseInt(val('age'), 10) : null,
+          notes:      val('notes')      || null,
+          source:     'website',
+          status:     'new'
+        };
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Submitting...</span>';
+
+        try {
+          // No .select() on purpose — public visitors can insert but not read leads
+          const { error } = await window.sb.from('admission_leads').insert(payload);
+          if (error) throw error;
+
+          form.reset();
+          show(okMsg, 'Thank you! Your details have been received. Our admissions team will contact you soon, in shā’ Allāh.');
+        } catch (err) {
+          console.error('Lead submit error:', err);
+          show(errMsg, 'Sorry, something went wrong. Please try again or message us on WhatsApp.');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = btnHTML;
         }
       });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.feature-card, .testimonial-card, .stat-item, .video-card')
-      .forEach(el => observer.observe(el));
+    })();
   </script>
+
   <script>
-    /* ── YouTube click-to-play: nothing from YouTube loads until a video is tapped ── */
+    /* ── YouTube facades: paste a link or ID into data-youtube="" ── */
     (function () {
       function ytId(v) {
         v = (v || '').trim();
@@ -367,11 +651,11 @@
         var m = v.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/|\/live\/)([\w-]{11})/);
         return m ? m[1] : '';
       }
-      document.querySelectorAll('.video-wrap[data-youtube]').forEach(function (wrap) {
-        var id = ytId(wrap.getAttribute('data-youtube'));
-        if (!id) return;
-        var title = wrap.getAttribute('data-title') || 'Video';
-
+      document.querySelectorAll('.video-frame').forEach(function (frame) {
+        var id = ytId(frame.getAttribute('data-youtube'));
+        if (!id) return;                       // no link yet: keep the "coming soon" box
+        var title = frame.getAttribute('data-title') || 'Video';
+        frame.innerHTML = '';
         var btn = document.createElement('div');
         btn.className = 'video-play';
         btn.setAttribute('role', 'button');
@@ -379,20 +663,20 @@
         btn.setAttribute('aria-label', 'Play video: ' + title);
         btn.innerHTML = '<img src="https://i.ytimg.com/vi/' + id + '/hqdefault.jpg" alt="" loading="lazy">' +
                         '<i class="fa-solid fa-play"></i>';
-
         function play() {
-          wrap.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + id +
-            '?autoplay=1&rel=0" title="' + title + '" ' +
+          frame.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + id +
+            '?autoplay=1&rel=0" title="' + title + '" loading="lazy" ' +
             'allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
         }
         btn.addEventListener('click', play);
         btn.addEventListener('keydown', function (e) {
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
         });
-        wrap.appendChild(btn);
+        frame.appendChild(btn);
       });
     })();
   </script>
+
   <script src="translate.js"></script>
 </body>
 </html>
