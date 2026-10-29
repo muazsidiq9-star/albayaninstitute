@@ -46,6 +46,11 @@
     .lp-btn:hover { transform: translateY(-2px); }
     .lp-btn.alt { background: transparent; color: #fff; }
     .lp-btn.solid { background: var(--primary, #1647a3); color: #fff; border-color: var(--primary, #1647a3); }
+    /* Phones: keep the two banner buttons side by side, equal width */
+    @media (max-width: 520px) {
+      .lp-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 380px; margin: 18px auto 0; }
+      .lp-btn { justify-content: center; padding: 12px 8px; font-size: .82rem; gap: 6px; text-align: center; line-height: 1.25; }
+    }
 
     /* ── Landing sections ── */
     .lp-section { width: 100%; box-sizing: border-box; max-width: 1000px; margin: 0 auto; padding: 40px 20px 8px; }
@@ -127,8 +132,12 @@
         <a href="index.html" data-translate="Home">Home</a>
         <a href="about.html" data-translate="About">About</a>
         <a href="courses.html" data-translate="Courses">Courses</a>
+        <a href="register.html" data-translate="Register">Register</a>
+        <a href="students-dashboard.html" data-translate="Dashboard">Dashboard</a>
+
         <a href="payment.html" data-translate="Payment">Payment</a>
         <a href="contact.html" data-translate="Contact">Contact</a>
+        <a href="login.html" class="login-btn" data-translate="Log in">Log in</a>
       </div>
     </div>
   </nav>
