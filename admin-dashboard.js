@@ -8052,14 +8052,24 @@ async function addAttendanceSession() {
     } else {
       const token = generateAttendanceToken();
 
-      const { data, error } = await db.from("attendance_sessions").insert([{
-        title, level, batch, opens_at: opensAt, closes_at: closesAt,
-        platform_link: platformLink || null,
-        attendance_token: token,
-        is_active: true
-      }]).select().single();
+      const { data: { user }, error: authError } = await db.auth.getUser();
 
-      if (error) { console.error("Insert error:", error); throw error; }
+if (authError || !user) {
+  throw new Error("Unable to identify authenticated user.");
+}
+
+const { data, error } = await db.from("attendance_sessions").insert([{
+  title, level, batch, opens_at: opensAt, closes_at: closesAt,
+  platform_link: platformLink || null,
+  attendance_token: token,
+  is_active: true,
+  created_by: user.id
+}]).select().single();
+
+if (error) {
+  console.error("Attendance INSERT error:", error);
+  throw error;
+}
 
       showToast(t("Session created"));
 
@@ -8073,11 +8083,12 @@ async function addAttendanceSession() {
     loadAttendanceSessions();
 
   } catch (e) {
-    console.error("Add/Edit attendance session error:", e);
-    alert(t("Failed to save attendance session"));
-  } finally {
-    setLoading(btn, false);
-  }
+  console.error("Attendance session error:", e.message, e);
+
+  alert("Failed to save attendance session: " + e.message);
+} finally {
+  setLoading(btn, false);
+}
 }
 
 async function editAttendanceSession(id) {
