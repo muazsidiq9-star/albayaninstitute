@@ -57,5 +57,33 @@
     }
   }
 
+  // Direct-link support. Runs immediately (before DOMContentLoaded), so the
+  // deleted-account check below also covers students arriving with only the
+  // 14-day saved session:
+  //   - sessionStorage already has a student session -> nothing to do
+  //   - else a still-valid localStorage "studentSession" -> restore it
+  //   - else remember this page in "postLoginRedirect" so login.js sends the
+  //     student back here after login (the page's own guard does the redirect)
+  // Relative target only (file name + query), never a full URL.
+  function restoreSavedSession() {
+    try {
+      if (sessionStorage.getItem("role") === "student" && sessionStorage.getItem("matric")) return;
+
+      const raw   = localStorage.getItem("studentSession");
+      const saved = raw ? JSON.parse(raw) : null;
+      if (saved && saved.role === "student" && saved.matric &&
+          saved.expiresAt && Date.now() < saved.expiresAt) {
+        sessionStorage.setItem("role", "student");
+        sessionStorage.setItem("matric", saved.matric);
+        if (saved.currentStudent) sessionStorage.setItem("currentStudent", saved.currentStudent);
+        return;
+      }
+
+      sessionStorage.setItem("postLoginRedirect", location.pathname.split("/").pop() + location.search);
+    } catch (e) { /* storage blocked: normal login flow */ }
+  }
+
+  restoreSavedSession();
+
   document.addEventListener("DOMContentLoaded", checkStudentStillActive);
 })();
