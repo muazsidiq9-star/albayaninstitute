@@ -856,13 +856,14 @@
             <th data-translate="Duration">Duration</th>
             <th data-translate="Start Time">Start Time</th>
             <th data-translate="End Time">End Time</th>
+            <th data-translate="Note">Note</th>
             <th data-translate="Status">Status</th>
             <th data-translate="Active">Active</th>
             <th data-translate="Actions">Actions</th>
           </tr>
         </thead>
         <tbody id="assessments-body">
-          <tr><td colspan="14" class="empty-row" data-translate="No assessments yet">No assessments yet</td></tr>
+          <tr><td colspan="15" class="empty-row" data-translate="No assessments yet">No assessments yet</td></tr>
         </tbody>
       </table>
     </div>
@@ -2769,6 +2770,9 @@
         <input type="datetime-local" id="assessmentStart">
         <label data-translate="End Time">End Time</label>
         <input type="datetime-local" id="assessmentEnd">
+        <label data-translate="Note">Note</label>
+        <input type="text" id="assessmentNote" placeholder="e.g. Book 1"
+               data-translate-placeholder="e.g. Book 1">
         <label data-translate="Status">Status</label>
         <select id="assessmentStatus">
           <option value="" data-translate="Select Status">Select Status</option>
