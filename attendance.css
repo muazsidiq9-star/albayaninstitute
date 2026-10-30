@@ -58,41 +58,50 @@
 
 /* ============================================================
    JOIN CLASS LINKS (<a class="submit-btn">)
-   master.css styles .submit-btn for <button>; anchors need the
-   same look spelled out (display, colour, underline, centering).
+   Sized to match the <button class="submit-btn"> "Mark Me Present"
 ============================================================ */
 a.submit-btn {
   box-sizing: border-box;
-  width: 100%;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 14px 20px;
-  background: var(--primary, #1f7a4d);
+  width: auto;
+  margin: 0 auto;
+  padding: 8px 18px;
+  background: var(--primary, #3f51b5);
   color: #fff;
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   font-family: inherit;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 400;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 /* Only force flex when JS reveals the link, so display:none still hides it */
 a.submit-btn:not([style*="display: none"]):not([style*="display:none"]) {
-  display: flex;
+  display: inline-flex;
 }
 
+a.submit-btn:visited,
 a.submit-btn:hover {
-  background: var(--primary-dark, #166039);
   color: #fff;
   text-decoration: none;
-  transform: translateY(-1px);
 }
 
-a.submit-btn:visited {
-  color: #fff;
+/* ============================================================
+   ICON CIRCLE (.login-icon) — fixes the full-width strip
+============================================================ */
+.login-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 14px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  font-size: 1.5rem;
 }
