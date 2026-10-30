@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (data.platform_link) {
           joinBtnAlready.href = data.platform_link;
-          joinBtnAlready.style.display = "flex";
+          joinBtnAlready.style.display = "inline-flex";
         } else {
           joinBtnAlready.style.display = "none";
         }
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (data.platform_link) {
           joinBtnSuccess.href = data.platform_link;
-          joinBtnSuccess.style.display = "flex";
+          joinBtnSuccess.style.display = "inline-flex";
         } else {
           joinBtnSuccess.style.display = "none";
         }
