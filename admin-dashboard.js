@@ -4370,9 +4370,10 @@ async function addAssessment() {
 
     const startUTC = new Date(start_time).toISOString();
     const endUTC = new Date(end_time).toISOString();
+    const note = document.getElementById("assessmentNote").value;
     const status = document.getElementById("assessmentStatus").value;
 
-    if (!description || !title || !course_id || !semester || !type || !max_score || !duration_minutes || !start_time || !end_time || !status) {
+    if (!description || !title || !course_id || !semester || !type || !max_score || !duration_minutes || !start_time || !end_time || !note || !status) {
       alert(t("Fill all fields"));
       setLoading(btn, false);
       return;
@@ -4382,7 +4383,7 @@ async function addAssessment() {
       const { error } = await db.from("assessments").update({
         description, title, level_arabic, batch, course, course_id, semester, type,
         max_score, duration_minutes: parseInt(duration_minutes),
-        start_time: startUTC, end_time: endUTC,
+        start_time: startUTC, end_time: endUTC, note,
         status, is_active: status === "active"
       }).eq("id", window.editingAssessmentId);
 
@@ -4393,7 +4394,7 @@ async function addAssessment() {
       const { error } = await db.from("assessments").insert([{
         description, title, level_arabic, batch, course, course_id, semester, type,
         max_score, duration_minutes: parseInt(duration_minutes),
-        start_time: startUTC, end_time: endUTC,
+        start_time: startUTC, end_time: endUTC, note,
         status, is_active: status === "active"
       }]);
 
@@ -4434,6 +4435,7 @@ async function editAssessment(id) {
   document.getElementById("assessmentDuration").value = a.duration_minutes;
   document.getElementById("assessmentStart").value = a.start_time ? formatForInput(a.start_time) : "";
   document.getElementById("assessmentEnd").value = a.end_time ? formatForInput(a.end_time) : "";
+  document.getElementById("assessmentNote").value = a.note;
   document.getElementById("assessmentStatus").value = a.status;
 
   // Course dropdown must be populated before we can select the right option
@@ -4467,6 +4469,7 @@ async function loadAssessments() {
           <td>${a.duration_minutes}</td>
           <td>${formatDate(a.start_time)}</td>
           <td>${formatDate(a.end_time)}</td>
+          <td>${a.note}</td>
           <td>${t(a.status)}</td>
           <td>
             <label class="switch">
