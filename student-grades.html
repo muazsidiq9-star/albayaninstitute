@@ -55,7 +55,7 @@
   </nav>
 
   <!-- PAGE BANNER -->
-  <header class="sg-banner" style="background-image: url('result.jpg');">
+  <header class="sg-banner" style="background-image: url('result-check.jpg');">
     <div class="sg-banner-overlay"></div>
     <div class="sg-banner-content">
       <img src="logo.png" class="header-logo" alt="Al-Bayan Logo">
@@ -190,24 +190,6 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
-  <script>
-    /* Direct-link support: if someone opens this page without a student
-       session, remember it so login.js sends them back here afterwards.
-       Same session rule as student-guard.js: sessionStorage first, then the
-       14-day localStorage one. Relative target only, never a full URL. */
-    (function () {
-      try {
-        var ok = sessionStorage.getItem("role") === "student" && !!sessionStorage.getItem("matric");
-        if (!ok) {
-          var raw = localStorage.getItem("studentSession");
-          var saved = raw ? JSON.parse(raw) : null;
-          ok = !!(saved && saved.expiresAt && Date.now() < saved.expiresAt);
-        }
-        if (!ok) sessionStorage.setItem("postLoginRedirect", location.pathname.split("/").pop() + location.search);
-      } catch (e) { /* storage blocked: normal login flow */ }
-    })();
-  </script>
 
   <script src="student-guard.js"></script>
   
