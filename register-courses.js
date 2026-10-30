@@ -1,5 +1,32 @@
 console.log("REGISTER COURSES PAGE LOADED");
 
+/* Direct-link support (same rule as the grades page / student-guard.js):
+   1. sessionStorage student session -> fine.
+   2. Else a still-valid 14-day "studentSession" in localStorage -> restore
+      it into sessionStorage, no login needed.
+   3. Else remember this page in "postLoginRedirect" (login.js returns the
+      student here after login) and go to login. Relative target only. */
+function ensureStudentSession() {
+  try {
+    let ok = sessionStorage.getItem("role") === "student" && !!sessionStorage.getItem("matric");
+    if (!ok) {
+      const raw   = localStorage.getItem("studentSession");
+      const saved = raw ? JSON.parse(raw) : null;
+      if (saved && saved.role === "student" && saved.matric &&
+          saved.expiresAt && Date.now() < saved.expiresAt) {
+        sessionStorage.setItem("role", "student");
+        sessionStorage.setItem("matric", saved.matric);
+        if (saved.currentStudent) sessionStorage.setItem("currentStudent", saved.currentStudent);
+        ok = true;
+      }
+    }
+    if (ok) { sessionStorage.removeItem("postLoginRedirect"); return true; }
+    sessionStorage.setItem("postLoginRedirect", location.pathname.split("/").pop() + location.search);
+  } catch (e) { /* storage blocked: normal login flow */ }
+  window.location.replace("login.html");
+  return false;
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   await initRegisterCourses();
 });
@@ -11,11 +38,8 @@ async function initRegisterCourses() {
     return;
   }
 
+  if (!ensureStudentSession()) return;
   const matric = sessionStorage.getItem("matric");
-  if (!matric) {
-    window.location.href = "login.html";
-    return;
-  }
 
   try {
     /* ── 0. Is registration currently locked by admin? ──
