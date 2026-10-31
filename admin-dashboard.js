@@ -8173,6 +8173,14 @@ function getAttendanceSessionMeta(sessionId, fallbackTitle) {
   return cached || { id: sessionId, title: fallbackTitle || "attendance" };
 }
 
+// Same as above, but if level/batch aren't in the cache, load the session from the DB.
+async function ensureAttendanceSessionMeta(sessionId, fallbackTitle) {
+  const meta = getAttendanceSessionMeta(sessionId, fallbackTitle);
+  if (meta.level !== undefined) return meta;
+  const { data } = await db.from("attendance_sessions").select("*").eq("id", sessionId).single();
+  return data || meta;
+}
+
 // Fetch the present-list for one session, with student names resolved.
 async function fetchAttendanceRows(sessionId) {
   const { data: records, error } = await db
@@ -8227,11 +8235,12 @@ function buildAttendanceCsv(session, rows) {
     [attTr("Total Present"), rows.length]
   ].map(r => r.map(csvCell).join(","));
 
-  const header = ["#", attTr("Matric Number"), attTr("Name"), attTr("Time")]
+  const header = ["#", attTr("Matric Number"), attTr("Name"), attTr("Level"), attTr("Batch"), attTr("Session"), attTr("Time")]
     .map(csvCell).join(",");
 
   const body = rows.map((r, i) =>
-    [i + 1, r.matric_number, r.fullname, formatDate(r.attended_at)].map(csvCell).join(",")
+    [i + 1, r.matric_number, r.fullname, session?.level || "", session?.batch || "",
+     session?.title || "", formatDate(r.attended_at)].map(csvCell).join(",")
   );
 
   return "\uFEFF" + [...meta, "", header, ...body].join("\r\n");
@@ -8240,9 +8249,9 @@ function buildAttendanceCsv(session, rows) {
 // WhatsApp-friendly plain text (also used by Copy).
 function buildAttendanceText(session, rows) {
   const lines = [`*${session?.title || attTr("Attendance")}*`];
-  const sub = [session?.level, session?.batch].filter(Boolean).join(" • ");
-  if (sub) lines.push(sub);
-  if (session?.opens_at) lines.push(formatDate(session.opens_at));
+  lines.push(`${attTr("Level")}: ${session?.level || "—"}`);
+  lines.push(`${attTr("Batch")}: ${session?.batch || "—"}`);
+  if (session?.opens_at) lines.push(`${attTr("Date")}: ${formatDate(session.opens_at)}`);
   lines.push(`${attTr("Total Present")}: ${rows.length}`, "");
   rows.forEach((r, i) => lines.push(`${i + 1}. ${r.fullname} (${r.matric_number})`));
   return lines.join("\n");
@@ -8321,8 +8330,11 @@ window.copyAttendanceList    = () => copyAttendanceRows(currentAttendanceSession
 async function quickDownloadAttendance(sessionId) {
   try {
     showToast(attTr("Preparing download..."));
-    const rows = await fetchAttendanceRows(sessionId);
-    downloadAttendanceRows(getAttendanceSessionMeta(sessionId), rows);
+    const [rows, session] = await Promise.all([
+      fetchAttendanceRows(sessionId),
+      ensureAttendanceSessionMeta(sessionId)
+    ]);
+    downloadAttendanceRows(session, rows);
   } catch (e) {
     console.error("quickDownloadAttendance error:", e);
     alert(attTr("Failed to load records."));
@@ -8331,8 +8343,10 @@ async function quickDownloadAttendance(sessionId) {
 
 async function quickShareAttendance(sessionId) {
   try {
-    const rows = await fetchAttendanceRows(sessionId);
-    const session = getAttendanceSessionMeta(sessionId);
+    const [rows, session] = await Promise.all([
+      fetchAttendanceRows(sessionId),
+      ensureAttendanceSessionMeta(sessionId)
+    ]);
     try {
       // Needs a fresh tap on some browsers; if blocked we open the viewer
       // where the Share button is a direct tap.
@@ -8357,6 +8371,8 @@ async function quickShareAttendance(sessionId) {
 async function viewAttendanceRecords(sessionId, sessionTitle) {
   currentAttendanceSession = getAttendanceSessionMeta(sessionId, sessionTitle);
   currentAttendanceRecords = [];
+  const metaEl = document.getElementById("attendanceRecordsMeta");
+  if (metaEl) metaEl.textContent = "";
 
   document.getElementById("attendanceRecordsTitle").textContent =
     `${t("Attendance Records")} — ${currentAttendanceSession.title}`;
@@ -8373,8 +8389,15 @@ async function viewAttendanceRecords(sessionId, sessionTitle) {
   openModal("attendanceRecordsModal");
 
   try {
-    const rows = await fetchAttendanceRows(sessionId);
+    const [rows, session] = await Promise.all([
+      fetchAttendanceRows(sessionId),
+      ensureAttendanceSessionMeta(sessionId, sessionTitle)
+    ]);
+    currentAttendanceSession = session;
     currentAttendanceRecords = rows;
+    if (metaEl) {
+      metaEl.textContent = `${attTr("Level")}: ${session.level || "—"}  •  ${attTr("Batch")}: ${session.batch || "—"}`;
+    }
 
     if (rows.length === 0) {
       tbody.innerHTML = `<tr><td colspan="3" class="empty-row">${t("No one has marked attendance yet.")}</td></tr>`;
