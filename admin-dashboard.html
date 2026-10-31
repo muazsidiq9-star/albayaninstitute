@@ -2702,6 +2702,23 @@
         <i class="fa-solid fa-xmark"></i>
       </button>
       <h2 id="attendanceRecordsTitle" data-translate="Attendance Records">Attendance Records</h2>
+      <div class="attendance-toolbar">
+        <span id="attendanceRecordsCount" class="attendance-count"></span>
+        <div class="table-row-actions">
+          <button class="btn btn-edit attendance-export-btn" onclick="downloadAttendanceCsv()" disabled>
+            <i class="fa-solid fa-download"></i>
+            <span data-translate="Download">Download</span>
+          </button>
+          <button class="btn btn-edit attendance-export-btn" onclick="shareAttendanceList()" disabled>
+            <i class="fa-solid fa-share-nodes"></i>
+            <span data-translate="Share">Share</span>
+          </button>
+          <button class="btn btn-edit attendance-export-btn" onclick="copyAttendanceList()" disabled>
+            <i class="fa-solid fa-copy"></i>
+            <span data-translate="Copy List">Copy List</span>
+          </button>
+        </div>
+      </div>
       <div class="table-container">
         <table id="attendance-records-table">
           <thead>
