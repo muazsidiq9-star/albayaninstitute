@@ -7244,6 +7244,12 @@ async function loadAttendanceSessions() {
             <button class="btn btn-edit btn-small" onclick="copySessionLinkDirect('${s.attendance_token}')" title="${t('Copy attendance link')}">
               <i class="fa-solid fa-link"></i>
             </button>
+            <button class="btn btn-edit btn-small" onclick="quickDownloadAttendance('${s.id}')" title="${t('Download attendance list')}">
+              <i class="fa-solid fa-download"></i>
+            </button>
+            <button class="btn btn-edit btn-small" onclick="quickShareAttendance('${s.id}')" title="${t('Share attendance list')}">
+              <i class="fa-solid fa-share-nodes"></i>
+            </button>
             <button class="btn btn-edit btn-small" onclick="editAttendanceSession('${s.id}')">
               ${t("Edit")}
             </button>
@@ -8143,9 +8149,221 @@ function copyAttendanceLink() {
     .catch(() => alert(linkInput.value));
 }
 
+/* -------------------------------------------------------
+   ATTENDANCE RECORDS + EXPORT (download / share / copy)
+   - One shared loader used by the viewer modal AND the quick
+     download/share buttons on each session row.
+   - CSV is UTF-8 with BOM so Arabic names open correctly in Excel,
+     values are properly quoted, and cells that start with = + - @
+     are neutralised (spreadsheet formula injection).
+------------------------------------------------------- */
+let currentAttendanceRecords = [];   // rows currently shown in the modal
+let currentAttendanceSession = null; // session meta for the modal
+
+const attTr = k => (typeof t === "function" ? t(k) : k);
+
+function escapeHtmlText(v) {
+  return String(v ?? "").replace(/[&<>"']/g, c => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+  ));
+}
+
+function getAttendanceSessionMeta(sessionId, fallbackTitle) {
+  const cached = (window.attendanceSessionsRowCache || []).find(x => x.id === sessionId);
+  return cached || { id: sessionId, title: fallbackTitle || "attendance" };
+}
+
+// Fetch the present-list for one session, with student names resolved.
+async function fetchAttendanceRows(sessionId) {
+  const { data: records, error } = await db
+    .from("attendance_records")
+    .select("attended_at, student_matric")
+    .eq("session_id", sessionId)
+    .order("attended_at", { ascending: true });
+  if (error) throw error;
+  if (!records || records.length === 0) return [];
+
+  const matrics = [...new Set(records.map(r => r.student_matric))];
+  const { data: students, error: sErr } = await db
+    .from("students")
+    .select("matric_number, fullname")
+    .in("matric_number", matrics);
+  if (sErr) throw sErr;
+
+  const map = {};
+  (students || []).forEach(s => { map[s.matric_number] = s; });
+
+  return records.map(r => {
+    const s = map[r.student_matric] || {};
+    return {
+      matric_number: s.matric_number || r.student_matric || "—",
+      fullname: s.fullname || "—",
+      attended_at: r.attended_at
+    };
+  });
+}
+
+function csvCell(v) {
+  let s = String(v ?? "");
+  if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;      // block formula injection
+  return `"${s.replace(/"/g, '""')}"`;
+}
+
+function attendanceFileBase(session) {
+  const safe = String(session?.title || "attendance")
+    .replace(/[^\p{L}\p{N}]+/gu, "_")
+    .replace(/^_+|_+$/g, "")
+    .slice(0, 60) || "attendance";
+  const day = session?.opens_at ? new Date(session.opens_at).toISOString().slice(0, 10) : "";
+  return `${safe}${day ? "_" + day : ""}_attendance`;
+}
+
+function buildAttendanceCsv(session, rows) {
+  const meta = [
+    [attTr("Session"), session?.title || ""],
+    [attTr("Level"), session?.level || ""],
+    [attTr("Batch"), session?.batch || ""],
+    [attTr("Opens"), session?.opens_at ? formatDate(session.opens_at) : ""],
+    [attTr("Total Present"), rows.length]
+  ].map(r => r.map(csvCell).join(","));
+
+  const header = ["#", attTr("Matric Number"), attTr("Name"), attTr("Time")]
+    .map(csvCell).join(",");
+
+  const body = rows.map((r, i) =>
+    [i + 1, r.matric_number, r.fullname, formatDate(r.attended_at)].map(csvCell).join(",")
+  );
+
+  return "\uFEFF" + [...meta, "", header, ...body].join("\r\n");
+}
+
+// WhatsApp-friendly plain text (also used by Copy).
+function buildAttendanceText(session, rows) {
+  const lines = [`*${session?.title || attTr("Attendance")}*`];
+  const sub = [session?.level, session?.batch].filter(Boolean).join(" • ");
+  if (sub) lines.push(sub);
+  if (session?.opens_at) lines.push(formatDate(session.opens_at));
+  lines.push(`${attTr("Total Present")}: ${rows.length}`, "");
+  rows.forEach((r, i) => lines.push(`${i + 1}. ${r.fullname} (${r.matric_number})`));
+  return lines.join("\n");
+}
+
+function makeAttendanceFile(session, rows) {
+  return new File([buildAttendanceCsv(session, rows)], `${attendanceFileBase(session)}.csv`,
+    { type: "text/csv;charset=utf-8" });
+}
+
+function triggerFileDownload(file) {
+  const url = URL.createObjectURL(file);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = file.name;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function downloadAttendanceRows(session, rows) {
+  if (!rows || rows.length === 0) {
+    showToast(attTr("No one has marked attendance yet."));
+    return;
+  }
+  triggerFileDownload(makeAttendanceFile(session, rows));
+  showToast(attTr("Download started"));
+}
+
+// Share the CSV through the device share sheet (WhatsApp, Telegram, email...).
+// Falls back to sharing plain text, then to a WhatsApp link on desktop.
+async function shareAttendanceRows(session, rows) {
+  if (!rows || rows.length === 0) {
+    showToast(attTr("No one has marked attendance yet."));
+    return;
+  }
+  const file = makeAttendanceFile(session, rows);
+  const text = buildAttendanceText(session, rows);
+  const title = `${session?.title || attTr("Attendance")} — ${attTr("Attendance")}`;
+
+  try {
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file], title, text });
+    } else if (navigator.share) {
+      await navigator.share({ title, text });
+    } else {
+      window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener");
+    }
+  } catch (e) {
+    if (e && e.name === "AbortError") return;           // user closed the share sheet
+    console.error("shareAttendanceRows error:", e);
+    // Last resort: let them at least get the file
+    triggerFileDownload(file);
+    showToast(attTr("Sharing not available — file downloaded instead"));
+  }
+}
+
+function copyAttendanceRows(session, rows) {
+  if (!rows || rows.length === 0) {
+    showToast(attTr("No one has marked attendance yet."));
+    return;
+  }
+  const text = buildAttendanceText(session, rows).replace(/\*/g, "");
+  navigator.clipboard.writeText(text)
+    .then(() => showToast(attTr("List copied")))
+    .catch(() => alert(text));
+}
+
+// ---- Buttons inside the records modal (use the already-loaded list) ----
+window.downloadAttendanceCsv = () => downloadAttendanceRows(currentAttendanceSession, currentAttendanceRecords);
+window.shareAttendanceList   = () => shareAttendanceRows(currentAttendanceSession, currentAttendanceRecords);
+window.copyAttendanceList    = () => copyAttendanceRows(currentAttendanceSession, currentAttendanceRecords);
+
+// ---- Quick buttons on each session row (no need to open the modal) ----
+async function quickDownloadAttendance(sessionId) {
+  try {
+    showToast(attTr("Preparing download..."));
+    const rows = await fetchAttendanceRows(sessionId);
+    downloadAttendanceRows(getAttendanceSessionMeta(sessionId), rows);
+  } catch (e) {
+    console.error("quickDownloadAttendance error:", e);
+    alert(attTr("Failed to load records."));
+  }
+}
+
+async function quickShareAttendance(sessionId) {
+  try {
+    const rows = await fetchAttendanceRows(sessionId);
+    const session = getAttendanceSessionMeta(sessionId);
+    try {
+      // Needs a fresh tap on some browsers; if blocked we open the viewer
+      // where the Share button is a direct tap.
+      if (navigator.canShare && navigator.canShare({ files: [makeAttendanceFile(session, rows)] }) && rows.length) {
+        await navigator.share({
+          files: [makeAttendanceFile(session, rows)],
+          title: session.title,
+          text: buildAttendanceText(session, rows)
+        });
+        return;
+      }
+    } catch (e) {
+      if (e && e.name === "AbortError") return;
+    }
+    viewAttendanceRecords(sessionId, session.title);
+  } catch (e) {
+    console.error("quickShareAttendance error:", e);
+    alert(attTr("Failed to load records."));
+  }
+}
+
 async function viewAttendanceRecords(sessionId, sessionTitle) {
+  currentAttendanceSession = getAttendanceSessionMeta(sessionId, sessionTitle);
+  currentAttendanceRecords = [];
+
   document.getElementById("attendanceRecordsTitle").textContent =
-    `${t("Attendance Records")} — ${sessionTitle}`;
+    `${t("Attendance Records")} — ${currentAttendanceSession.title}`;
+
+  const countEl = document.getElementById("attendanceRecordsCount");
+  if (countEl) countEl.textContent = "";
+  document.querySelectorAll(".attendance-export-btn").forEach(b => { b.disabled = true; });
 
   const tbody = document.getElementById("attendance-records-body");
   tbody.innerHTML = `<tr><td colspan="3" class="empty-row">
@@ -8155,48 +8373,33 @@ async function viewAttendanceRecords(sessionId, sessionTitle) {
   openModal("attendanceRecordsModal");
 
   try {
-    const { data: records, error } = await db
-      .from("attendance_records")
-      .select("attended_at, student_matric")
-      .eq("session_id", sessionId)
-      .order("attended_at", { ascending: true });
+    const rows = await fetchAttendanceRows(sessionId);
+    currentAttendanceRecords = rows;
 
-    if (error) throw error;
-
-    if (!records || records.length === 0) {
+    if (rows.length === 0) {
       tbody.innerHTML = `<tr><td colspan="3" class="empty-row">${t("No one has marked attendance yet.")}</td></tr>`;
       return;
     }
 
-    // Resolve student names/matric numbers in one batch query
-    const matricNumbers = records.map(r => r.student_matric);
+    if (countEl) countEl.textContent = `${attTr("Total Present")}: ${rows.length}`;
+    document.querySelectorAll(".attendance-export-btn").forEach(b => { b.disabled = false; });
 
-const { data: students } = await db
-  .from("students")
-  .select("matric_number, fullname")
-  .in("matric_number", matricNumbers);
-
-const studentMap = {};
-(students || []).forEach(s => {
-  studentMap[s.matric_number] = s;
-});
-
-    tbody.innerHTML = records.map(r => {
-      const s = studentMap[r.student_matric] || {};
-      return `
-        <tr>
-          <td>${s.matric_number || "—"}</td>
-          <td>${s.fullname || "—"}</td>
-          <td>${formatDate(r.attended_at)}</td>
-        </tr>
-      `;
-    }).join("");
+    tbody.innerHTML = rows.map(r => `
+      <tr>
+        <td>${escapeHtmlText(r.matric_number)}</td>
+        <td>${escapeHtmlText(r.fullname)}</td>
+        <td>${formatDate(r.attended_at)}</td>
+      </tr>
+    `).join("");
 
   } catch (e) {
     console.error("viewAttendanceRecords error:", e);
     tbody.innerHTML = `<tr><td colspan="3" class="empty-row" style="color:red;">${t("Failed to load records.")}</td></tr>`;
   }
 }
+
+window.quickDownloadAttendance = quickDownloadAttendance;
+window.quickShareAttendance = quickShareAttendance;
 
 window.loadAttendanceSessions = loadAttendanceSessions;
 
