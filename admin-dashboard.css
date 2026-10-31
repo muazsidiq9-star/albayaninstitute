@@ -2390,3 +2390,15 @@ input:checked + .slider:before { transform: translateX(22px); }
   background: var(--surface-color); font-size: 0.8rem; font-weight: 600; cursor: pointer;
 }
 .modal-grid .day-checks input { width: auto; padding: 0; margin: 0; }
+
+/* Attendance records export toolbar */
+.attendance-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 4px 0 12px;
+}
+.attendance-count { font-weight: 600; opacity: 0.8; }
+.attendance-export-btn:disabled { opacity: 0.5; cursor: not-allowed; }
