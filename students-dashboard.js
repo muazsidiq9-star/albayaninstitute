@@ -253,7 +253,7 @@ if (hasOutstanding) {
       `Hello Sir/Madam, Please I will complete my payment for ${outstandingMonths} soon in sha Allah.`
     );
 
-    whatsappBtn.href = `https://wa.me/2347054711066?text=${message}`;
+    whatsappBtn.href = `https://wa.me/2347048783082?text=${message}`;
 
     modal.classList.remove("hidden");
 
