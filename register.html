@@ -31,6 +31,12 @@
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="icon" href="favicon.ico">
   <link rel="manifest" href="site.webmanifest">
+  <style>
+    /* Email "Did you mean…?" hint (a <span>, so global button styles can't affect it) */
+    .email-suggest { margin-top: 6px; font-size: .82rem; color: var(--text-color); }
+    .email-fix { font-weight: 700; color: var(--primary); text-decoration: underline; cursor: pointer; }
+    .email-fix:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 3px; }
+  </style>
 </head>
 <body>
 
@@ -146,8 +152,27 @@
             <label for="email">
               <span data-translate="Email Address">Email Address</span> <span class="req">*</span>
             </label>
-            <input type="email" id="email" name="email"
-                   placeholder="your@email.com" required>
+            <input type="text" id="email" name="email"
+                   placeholder="your@email.com" required
+                   inputmode="email" autocomplete="email"
+                   autocapitalize="none" autocorrect="off" spellcheck="false">
+            <small class="hint" data-translate="Double-check your email. Your welcome email will be sent here.">Double-check your email. Your welcome email will be sent here.</small>
+            <div class="email-suggest" id="emailSuggest" hidden>
+              <span data-translate="Did you mean">Did you mean</span>
+              <span class="email-fix" id="emailFix" role="button" tabindex="0"></span>?
+            </div>
+          </div>
+
+          <div class="form-group full">
+            <label for="emailConfirm">
+              <span data-translate="Confirm Email Address">Confirm Email Address</span> <span class="req">*</span>
+            </label>
+            <input type="text" id="emailConfirm" name="emailConfirm"
+                   placeholder="Type your email again"
+                   data-translate-placeholder="Type your email again" required
+                   inputmode="email" autocomplete="off"
+                   autocapitalize="none" autocorrect="off" spellcheck="false"
+                   onpaste="return false" ondrop="return false">
           </div>
 
           <div class="form-group">
@@ -595,6 +620,8 @@
     // required input/select already marked up in the HTML.
     function validateStep(stepEl) {
       if (!stepEl) return true;
+      // Step 1: tidy the email boxes and refresh their error messages first
+      if (stepEl.id === 'step1' && window.refreshEmailValidity) window.refreshEmailValidity();
       const fields = stepEl.querySelectorAll('[required]');
       for (const field of fields) {
         if (!field.checkValidity()) {
