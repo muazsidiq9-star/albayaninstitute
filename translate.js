@@ -3249,6 +3249,28 @@ NEW FILES START HERE
 "Student's own description of their level (optional)": "وصف الطالب لمستواه (اختياري)",
 "Parent / Guardian name is required": "اسم الوالد / ولي الأمر مطلوب",
 
+"Session": "الجلسة",
+"Opens": "يفتح في",
+"Attendance": "الحضور",
+"Total Present": "إجمالي الحضور",
+"Download": "تنزيل",
+"Share": "مشاركة",
+"Copy List": "نسخ القائمة",
+"Download attendance list": "تنزيل قائمة الحضور",
+"Share attendance list": "مشاركة قائمة الحضور",
+"Preparing download...": "جارٍ تجهيز التنزيل...",
+"Download started": "بدأ التنزيل",
+"List copied": "تم نسخ القائمة",
+"Sharing not available — file downloaded instead": "المشاركة غير متاحة — تم تنزيل الملف بدلاً من ذلك",
+
+"Confirm Email Address": "تأكيد البريد الإلكتروني",
+"Type your email again": "اكتب بريدك الإلكتروني مرة أخرى",
+"Double-check your email. Your welcome email will be sent here.": "تحقق من بريدك الإلكتروني جيدًا. سترسل رسالة الترحيب إليه.",
+"Did you mean": "هل تقصد",
+"Please enter a valid email address, for example name@gmail.com": "يرجى إدخال بريد إلكتروني صحيح، مثل name@gmail.com",
+"The two email addresses do not match.": "عنوانا البريد الإلكتروني غير متطابقين.",
+"Please check your email address. It must be valid and typed the same in both boxes.": "يرجى التحقق من بريدك الإلكتروني. يجب أن يكون صحيحًا ومتطابقًا في الخانتين.",
+
 
 // ===== DYNAMIC TEMPLATES ===== 
 
