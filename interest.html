@@ -116,6 +116,11 @@
     .iti__country-list { background: var(--card-color); color: var(--text-color); border-color: var(--border-light); }
     .iti__country.iti__highlight { background: var(--surface-color); }
     .iti__divider { border-bottom-color: var(--border-light); }
+
+    /* Email "Did you mean…?" hint */
+    .email-suggest { margin-top: 6px; font-size: .82rem; color: var(--text-color); }
+    .email-fix { font-weight: 700; color: var(--primary, #1647a3); text-decoration: underline; cursor: pointer; }
+    .email-fix:focus-visible { outline: 2px solid var(--primary, #1647a3); outline-offset: 2px; border-radius: 3px; }
   </style>
 </head>
 <body>
@@ -335,8 +340,14 @@
             <label for="email">
               <span data-translate="Email Address">Email Address</span> <span class="req">*</span>
             </label>
-            <input type="email" id="email" name="email" maxlength="150"
-                   placeholder="your@email.com" required>
+            <input type="text" id="email" name="email" maxlength="150"
+                   placeholder="your@email.com" required
+                   inputmode="email" autocomplete="email"
+                   autocapitalize="none" autocorrect="off" spellcheck="false">
+            <div class="email-suggest" id="emailSuggest" hidden>
+              <span data-translate="Did you mean">Did you mean</span>
+              <span class="email-fix" id="emailFix" role="button" tabindex="0"></span>?
+            </div>
           </div>
 
           <div class="form-group">
@@ -560,6 +571,79 @@
         utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/utils.js'
       });
 
+      // ── Email: small letters only, strict format, "did you mean" hint ──
+      const emailInput = document.getElementById('email');
+      const emailSuggest = document.getElementById('emailSuggest');
+      const emailFix = document.getElementById('emailFix');
+
+      const EMAIL_RE = /^[a-z0-9](?:[a-z0-9._%+\-]*[a-z0-9])?@(?:[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?\.)+[a-z]{2,}$/;
+      const COMMON_DOMAINS = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com',
+                              'live.com', 'aol.com', 'ymail.com', 'protonmail.com', 'proton.me'];
+      const OK_DOMAINS = new Set(COMMON_DOMAINS.concat(['mail.com', 'email.com', 'gmx.com', 'zoho.com', 'me.com',
+        'msn.com', 'googlemail.com', 'yahoo.co.uk', 'yahoo.fr', 'yahoo.com.ng', 'hotmail.co.uk', 'hotmail.fr', 'outlook.sa']));
+
+      const cleanEmail = v => String(v || '').replace(/\s+/g, '').toLowerCase();
+
+      function lowerInput(el) {
+        const cleaned = cleanEmail(el.value);
+        if (cleaned === el.value) return;
+        const start = el.selectionStart;
+        const removed = el.value.length - cleaned.length;
+        el.value = cleaned;
+        if (start !== null) { try { el.setSelectionRange(Math.max(0, start - removed), Math.max(0, start - removed)); } catch (e) {} }
+      }
+
+      function levenshtein(a, b) {
+        const dp = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+        for (let j = 1; j <= b.length; j++) dp[0][j] = j;
+        for (let i = 1; i <= a.length; i++) {
+          for (let j = 1; j <= b.length; j++) {
+            dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+          }
+        }
+        return dp[a.length][b.length];
+      }
+
+      function suggestDomain(domain) {
+        if (!domain || OK_DOMAINS.has(domain)) return null;
+        let best = null, bestDist = 99;
+        COMMON_DOMAINS.forEach(known => {
+          const dist = levenshtein(domain, known);
+          if (dist <= (known.length >= 8 ? 2 : 1) && dist < bestDist) { best = known; bestDist = dist; }
+        });
+        return best;
+      }
+
+      function showEmailSuggestion() {
+        const v = cleanEmail(emailInput.value);
+        const at = v.lastIndexOf('@');
+        const fix = at > 0 ? suggestDomain(v.slice(at + 1)) : null;
+        if (fix) { emailFix.textContent = v.slice(0, at + 1) + fix; emailSuggest.hidden = false; }
+        else { emailSuggest.hidden = true; }
+      }
+
+      function refreshEmailValidity() {
+        lowerInput(emailInput);
+        const v = cleanEmail(emailInput.value);
+        emailInput.setCustomValidity(
+          v && (!EMAIL_RE.test(v) || v.includes('..'))
+            ? 'Please enter a valid email address, for example name@gmail.com' : '');
+        return emailInput.checkValidity();
+      }
+
+      function applyEmailSuggestion() {
+        if (!emailFix.textContent) return;
+        emailInput.value = emailFix.textContent;
+        emailSuggest.hidden = true;
+        refreshEmailValidity();
+      }
+
+      emailInput.addEventListener('input', () => { refreshEmailValidity(); emailSuggest.hidden = true; });
+      emailInput.addEventListener('change', () => { refreshEmailValidity(); showEmailSuggestion(); });
+      emailInput.addEventListener('blur', showEmailSuggestion);
+      emailFix.addEventListener('click', applyEmailSuggestion);
+      emailFix.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); applyEmailSuggestion(); } });
+
       function show(el, text) {
         okMsg.style.display = 'none';
         errMsg.style.display = 'none';
@@ -570,6 +654,7 @@
 
       // Same approach as the register page: native validation, field by field
       function validate() {
+        refreshEmailValidity();
         for (const field of form.querySelectorAll('input, select, textarea')) {
           if (!field.checkValidity()) {
             field.reportValidity();
@@ -608,7 +693,7 @@
         const payload = {
           full_name:  val('fullname'),
           phone:      phoneValue,
-          email:      val('email')      || null,
+          email:      cleanEmail(val('email')),
           country:    val('country'),
           occupation: val('occupation') || null,
           inquiring_for: val('inquiringFor') || 'myself',
@@ -627,6 +712,7 @@
           if (error) throw error;
 
           form.reset();
+          emailSuggest.hidden = true;
           show(okMsg, 'Thank you! Your details have been received. Our admissions team will contact you soon, in shā’ Allāh.');
         } catch (err) {
           console.error('Lead submit error:', err);
