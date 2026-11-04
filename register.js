@@ -285,6 +285,122 @@ document.addEventListener("DOMContentLoaded", () => {
   planTypeSelect.addEventListener("change", toggleDays);
   toggleDays();
 
+  /* EMAIL-BLOCK START */
+  // ===========================
+  // Email: always small letters, strict format, confirm box, "did you mean" hint
+  // ===========================
+  const emailInput = document.getElementById("email");
+  const emailConfirm = document.getElementById("emailConfirm");
+  const emailSuggest = document.getElementById("emailSuggest");
+  const emailFix = document.getElementById("emailFix");
+
+  // name@domain.tld — no spaces, no double dots, real ending (letters only, 2+)
+  const EMAIL_RE = /^[a-z0-9](?:[a-z0-9._%+\-]*[a-z0-9])?@(?:[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?\.)+[a-z]{2,}$/;
+
+  const COMMON_DOMAINS = [
+    "gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "icloud.com",
+    "live.com", "aol.com", "ymail.com", "protonmail.com", "proton.me"
+  ];
+  // Real domains that merely look like a typo of the ones above — never "correct" these
+  const OK_DOMAINS = new Set(COMMON_DOMAINS.concat([
+    "mail.com", "email.com", "gmx.com", "zoho.com", "me.com", "msn.com", "googlemail.com",
+    "yahoo.co.uk", "yahoo.fr", "yahoo.com.ng", "hotmail.co.uk", "hotmail.fr", "outlook.sa"
+  ]));
+
+  const cleanEmail = (v) => String(v || "").replace(/\s+/g, "").toLowerCase();
+
+  // Lowercase as they type, keeping the cursor where it was
+  function lowerInput(el) {
+    const cleaned = cleanEmail(el.value);
+    if (cleaned === el.value) return;
+    const start = el.selectionStart;
+    const removed = el.value.length - cleaned.length;
+    el.value = cleaned;
+    if (start !== null) {
+      try { el.setSelectionRange(Math.max(0, start - removed), Math.max(0, start - removed)); } catch (e) {}
+    }
+  }
+
+  function levenshtein(a, b) {
+    const dp = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+    for (let j = 1; j <= b.length; j++) dp[0][j] = j;
+    for (let i = 1; i <= a.length; i++) {
+      for (let j = 1; j <= b.length; j++) {
+        dp[i][j] = Math.min(
+          dp[i - 1][j] + 1,
+          dp[i][j - 1] + 1,
+          dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
+        );
+      }
+    }
+    return dp[a.length][b.length];
+  }
+
+  function suggestDomain(domain) {
+    if (!domain || OK_DOMAINS.has(domain)) return null;
+    let best = null, bestDist = 99;
+    for (const known of COMMON_DOMAINS) {
+      const limit = known.length >= 8 ? 2 : 1;
+      const dist = levenshtein(domain, known);
+      if (dist <= limit && dist < bestDist) { best = known; bestDist = dist; }
+    }
+    return best;
+  }
+
+  function showEmailSuggestion() {
+    const v = cleanEmail(emailInput.value);
+    const at = v.lastIndexOf("@");
+    const fix = at > 0 ? suggestDomain(v.slice(at + 1)) : null;
+    if (fix) {
+      emailFix.textContent = v.slice(0, at + 1) + fix;
+      emailSuggest.hidden = false;
+    } else {
+      emailSuggest.hidden = true;
+    }
+  }
+
+  function applyEmailSuggestion() {
+    const fixed = emailFix.textContent;
+    if (!fixed) return;
+    const old = cleanEmail(emailInput.value);
+    emailInput.value = fixed;
+    if (cleanEmail(emailConfirm.value) === old) emailConfirm.value = fixed;
+    emailSuggest.hidden = true;
+    refreshEmailValidity();
+  }
+
+  // Sets the browser's own error bubbles; returns true when both boxes are fine
+  function refreshEmailValidity() {
+    lowerInput(emailInput);
+    lowerInput(emailConfirm);
+    const v = cleanEmail(emailInput.value);
+
+    emailInput.setCustomValidity("");
+    emailConfirm.setCustomValidity("");
+
+    if (v && (!EMAIL_RE.test(v) || v.includes(".."))) {
+      emailInput.setCustomValidity(t("Please enter a valid email address, for example name@gmail.com"));
+    } else if (v && emailConfirm.value && cleanEmail(emailConfirm.value) !== v) {
+      emailConfirm.setCustomValidity(t("The two email addresses do not match."));
+    }
+    return emailInput.checkValidity() && emailConfirm.checkValidity();
+  }
+  window.refreshEmailValidity = refreshEmailValidity;
+
+  emailInput.addEventListener("input", () => { lowerInput(emailInput); emailSuggest.hidden = true; refreshEmailValidity(); });
+  emailInput.addEventListener("change", () => { refreshEmailValidity(); showEmailSuggestion(); });
+  emailInput.addEventListener("blur", showEmailSuggestion);
+  emailConfirm.addEventListener("input", () => { lowerInput(emailConfirm); refreshEmailValidity(); });
+  emailConfirm.addEventListener("change", refreshEmailValidity);
+  emailFix.addEventListener("click", applyEmailSuggestion);
+  emailFix.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); applyEmailSuggestion(); }
+  });
+
+  // "_" and "%" are wildcards in LIKE searches — match them literally
+  const escapeLike = (s) => s.replace(/[\\%_]/g, "\\$&");
+  /* EMAIL-BLOCK END */
+
   // Reads amount + currency from the selected plan card (single source of truth for pricing)
   function getSelectedPlanPricing() {
     const selectedPlan = planTypeSelect.value;
@@ -312,7 +428,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const formData = new FormData(form);
 
       const fullName = formData.get("fullname")?.trim();
-      const email = formData.get("email")?.trim();
+      const email = cleanEmail(formData.get("email"));
       const gender = formData.get("gender");
       const age = formData.get("age");
       const nationality = formData.get("nationality")?.trim();
@@ -352,11 +468,18 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // ----- Check if student already registered -----
+      if (!refreshEmailValidity()) {
+        alert(t("Please check your email address. It must be valid and typed the same in both boxes."));
+        goStep(1);
+        emailInput.focus();
+        return;
+      }
+
+      // ----- Check if student already registered (ignoring capital letters) -----
       const { data: existingStudent, error: checkError } = await sb
         .from("students")
         .select("matric_number")
-        .eq("email", email)
+        .ilike("email", escapeLike(email))
         .maybeSingle();
 
       if (checkError && checkError.code !== "PGRST116") {
@@ -570,6 +693,7 @@ function showSuccessNotification(matricNumber) {
 showSuccessNotification(data.matric_number);
 
       form.reset();
+      emailSuggest.hidden = true;
       window.waIti.setNumber("");
       toggleGuardian();
       toggleState();
