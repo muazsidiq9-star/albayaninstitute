@@ -116,8 +116,6 @@
     .iti__country-list { background: var(--card-color); color: var(--text-color); border-color: var(--border-light); }
     .iti__country.iti__highlight { background: var(--surface-color); }
     .iti__divider { border-bottom-color: var(--border-light); }
-; }
-    .iti__divider { border-bottom-color: var(--border-light); }
   </style>
 </head>
 <body>
@@ -321,9 +319,9 @@
 
           <div class="form-group">
             <label for="age">
-              <span data-translate="Student's Age">Student's Age</span>
+              <span data-translate="Student's Age">Student's Age</span> <span class="req">*</span>
             </label>
-            <input type="number" id="age" name="age" min="3" max="100" step="1" inputmode="numeric">
+            <input type="number" id="age" name="age" min="3" max="100" step="1" inputmode="numeric" required>
           </div>
 
           <div class="form-group">
@@ -335,10 +333,10 @@
 
           <div class="form-group">
             <label for="email">
-              <span data-translate="Email Address">Email Address</span>
+              <span data-translate="Email Address">Email Address</span> <span class="req">*</span>
             </label>
             <input type="email" id="email" name="email" maxlength="150"
-                   placeholder="your@email.com">
+                   placeholder="your@email.com" required>
           </div>
 
           <div class="form-group">
@@ -421,20 +419,20 @@
 
           <div class="form-group">
             <label for="occupation">
-              <span data-translate="Occupation">Occupation</span>
+              <span data-translate="Occupation">Occupation</span> <span class="req">*</span>
             </label>
             <input type="text" id="occupation" name="occupation" maxlength="120"
                    placeholder="e.g. Student, Teacher, Engineer"
-                   data-translate-placeholder="e.g. Student, Teacher, Engineer">
+                   data-translate-placeholder="e.g. Student, Teacher, Engineer" required>
           </div>
 
           <div class="form-group full">
             <label for="notes">
-              <span data-translate="What would you like to learn?">What would you like to learn?</span>
+              <span data-translate="What would you like to learn?">What would you like to learn?</span> <span class="req">*</span>
             </label>
             <textarea id="notes" name="notes" rows="4" maxlength="1000"
                       placeholder="Tell us your current level and what you would like to learn..."
-                      data-translate-placeholder="Tell us your current level and what you would like to learn..."></textarea>
+                      data-translate-placeholder="Tell us your current level and what you would like to learn..." required></textarea>
           </div>
 
           <!-- Honeypot (spam trap) -->
