@@ -404,6 +404,10 @@
         <i class="fa-solid fa-arrow-up-right-from-square"></i>
         <span data-translate="Promote Students">Promote Students</span>
       </button>
+      <button class="add-btn" onclick="openMassEmailModal()">
+        <i class="fa-solid fa-envelope"></i>
+        <span data-translate="Email All">Email All</span>
+      </button>
       <button class="add-btn student-write-btn" onclick="openBulkRegisterModal()">
         <i class="fa-solid fa-book-medical"></i>
         <span data-translate="Bulk Register">Bulk Register</span>
@@ -2696,6 +2700,28 @@
   </div>
 
   <!-- Attendance Records Viewer Modal (who's present for a session) -->
+  <div class="modal" id="massEmailModal">
+    <div class="modal-content">
+      <button class="btn btn-close" onclick="closeModal('massEmailModal')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 data-translate="Email Students">Email Students</h2>
+      <p id="massEmailSummary" class="attendance-count"></p>
+      <div class="modal-grid mass-email-grid">
+        <label data-translate="Subject">Subject</label>
+        <input type="text" id="massEmailSubject" maxlength="150" oninput="renderMassEmailParts()">
+        <label data-translate="Message">Message</label>
+        <textarea id="massEmailBody" rows="6" maxlength="700" oninput="renderMassEmailParts()"></textarea>
+      </div>
+      <p class="mass-email-note" data-translate="Recipients are added as BCC so students cannot see each other's emails.">Recipients are added as BCC so students cannot see each other's emails.</p>
+      <div id="massEmailParts" class="mass-email-parts"></div>
+      <button type="button" class="btn btn-small" onclick="copyMassEmailAddresses()">
+        <i class="fa-solid fa-copy"></i>
+        <span data-translate="Copy all emails">Copy all emails</span>
+      </button>
+    </div>
+  </div>
+
   <div class="modal" id="attendanceRecordsModal">
     <div class="modal-content modal-large">
       <button class="btn btn-close" onclick="closeModal('attendanceRecordsModal')">
