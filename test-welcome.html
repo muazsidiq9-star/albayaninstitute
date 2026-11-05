@@ -25,6 +25,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="master.css">
   <link rel="stylesheet" href="test-welcome.css">
+  <style>
+    /* Register-first modal (shown when an eligible assessment is for a course the student hasn't registered for) */
+    .tw-reg-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:10000}
+    .tw-reg-modal{background:#fff;color:#1f2937;border-radius:14px;max-width:420px;width:100%;padding:24px 22px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+    .tw-reg-icon{font-size:2.2rem;color:#1647a3;margin-bottom:10px}
+    .tw-reg-modal h3{margin:0 0 8px;font-size:1.2rem}
+    .tw-reg-course{display:inline-block;margin:4px 0 10px;padding:4px 12px;border-radius:999px;background:#eef3fc;color:#1647a3;font-weight:600;font-size:.95rem}
+    .tw-reg-modal p{margin:0 0 18px;line-height:1.55;font-size:.97rem}
+    .tw-reg-actions{display:flex;flex-direction:column;gap:10px}
+    .tw-reg-actions .btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+    .tw-reg-close{background:none;border:none;color:#6b7280;font-size:.95rem;cursor:pointer;padding:8px}
+  </style>
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -195,6 +207,25 @@
   <a href="https://wa.me/2347054711066" class="whatsapp-float" target="_blank" rel="noopener">
     <img src="whatsapp-icon.png" alt="WhatsApp">
   </a>
+
+  <!-- REGISTER-FIRST MODAL -->
+  <div class="tw-reg-overlay" id="regModal" role="dialog" aria-modal="true" aria-labelledby="regModalTitle">
+    <div class="tw-reg-modal">
+      <div class="tw-reg-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+      <h3 id="regModalTitle" data-translate="Course Registration Required">Course Registration Required</h3>
+      <div class="tw-reg-course" id="regModalCourse" data-no-translate="true"></div>
+      <p data-translate="You have not registered for this course yet. Please register for it first, then come back to take this assessment.">
+        You have not registered for this course yet. Please register for it first, then come back to take this assessment.
+      </p>
+      <div class="tw-reg-actions">
+        <a href="register-courses.html" class="btn-primary" id="regModalGo">
+          <i class="fa-solid fa-arrow-right"></i>
+          <span data-translate="Register Courses">Register Courses</span>
+        </a>
+        <button type="button" class="tw-reg-close" id="regModalClose" data-translate="Close">Close</button>
+      </div>
+    </div>
+  </div>
 
   <!-- SCRIPTS -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
@@ -438,6 +469,21 @@
       return attempted;
     }
 
+    /* ── Register-first modal ── */
+    function showRegisterModal(exam) {
+      document.getElementById("regModalCourse").textContent = exam.course || exam.title || "";
+      document.getElementById("regModal").style.display = "flex";
+      document.getElementById("regModalGo").focus();
+    }
+    function hideRegisterModal() {
+      document.getElementById("regModal").style.display = "none";
+    }
+    document.getElementById("regModalClose").addEventListener("click", hideRegisterModal);
+    document.getElementById("regModal").addEventListener("click", e => {
+      if (e.target.id === "regModal") hideRegisterModal();
+    });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") hideRegisterModal(); });
+
     /* ── Render one exam into the hero + info card + wire its Attempt button ── */
     function renderExam(exam, now) {
       selectedExamId = exam.id;
@@ -452,6 +498,14 @@
       const btn = document.getElementById("attemptBtn");
       btn.onclick = async () => {
         if (btn.disabled) return;
+
+        // Eligible by level/batch, but not registered for this course:
+        // explain and send them to registration instead of the exam hall.
+        if (exam._needsRegistration) {
+          showRegisterModal(exam);
+          return;
+        }
+
         btn.disabled  = true;
         btn.innerHTML = `<span class="spinner" data-no-translate="true"></span><span data-no-translate="true"> Loading...</span>`;
         await new Promise(r => setTimeout(r, 100));
@@ -565,6 +619,8 @@
       }
 
       try {
+        // 0. The student's CURRENT level + batch decide which assessments
+        //    are eligible to be shown at all.
         const { data: student, error: studentErr } = await sb
           .from("students")
           .select("level_arabic, batch")
@@ -572,33 +628,44 @@
           .single();
         if (studentErr) throw studentErr;
 
-        // 1. Which courses is this student actually registered for?
-        //    Pull each registration's own snapshotted level + batch too —
-        //    a promotion changing the student's *current* level/batch must
-        //    never retroactively break matching for a course they registered
-        //    for back when they were at a different level/batch.
+        // true  = assessment batch must equal the student's batch (blank = open to all)
+        // false = only level is enforced. Keep in sync with student-exam-timetable.js
+        // and test-hall.js.
+        const STRICT_BATCH = true;
+        const norm = v => String(v ?? "").trim().toLowerCase();
+        const myLevel = norm(student && student.level_arabic);
+        const myBatch = norm(student && student.batch);
+
+        // Blank level/batch on an assessment = open to all.
+        const matchesLevelBatch = exam => {
+          if (myLevel) {
+            const al = norm(exam.level_arabic);
+            if (al && al !== myLevel) return false;
+          }
+          if (STRICT_BATCH && myBatch) {
+            const ab = norm(exam.batch);
+            if (ab && ab !== myBatch) return false;
+          }
+          return true;
+        };
+
+        // 1. Registered courses. These no longer decide what the student
+        //    SEES -- only whether he can ENTER (unregistered ones show a
+        //    "register first" modal on the Attempt button).
         const { data: registrations, error: regErr } = await sb
           .from("course_registrations")
-          .select("course_id, level, batch")
+          .select("course_id")
           .eq("matric_number", matric);
 
         if (regErr) throw regErr;
 
-        const registeredCourseIds = (registrations || []).map(r => r.course_id).filter(Boolean);
-        const registeredLevelByCourse = {};
-        const registeredBatchByCourse = {};
-        (registrations || []).forEach(r => {
-          if (r.course_id) {
-            registeredLevelByCourse[r.course_id] = r.level;
-            registeredBatchByCourse[r.course_id] = r.batch;
-          }
-        });
+        const registeredCourseSet = new Set(
+          (registrations || []).map(r => r.course_id).filter(Boolean)
+        );
 
-        // 1b. Course-level bypass (course_access_overrides): courses this
-        //     student was granted access to directly, without a normal
-        //     registration row (e.g. carryover/transfer). These must be
-        //     included in the fetch below too, or their assessments never
-        //     even get pulled from the DB in the first place.
+        // 1b. Course-level bypass (course_access_overrides): carryover/transfer
+        //     courses. Shown regardless of current level/batch, and never
+        //     asks for registration.
         const { data: courseOverrides, error: courseOverrideErr } = await sb
           .from("course_access_overrides")
           .select("course_id")
@@ -606,25 +673,13 @@
 
         if (courseOverrideErr) throw courseOverrideErr;
 
-        const overrideCourseIds = (courseOverrides || []).map(o => o.course_id).filter(Boolean);
-        const courseOverrideSet = new Set(overrideCourseIds);
-
-        const courseIds = [...new Set([...registeredCourseIds, ...overrideCourseIds])];
-
-        if (!courseIds.length) {
-          showDetailsScreen();
-          setBadge("none");
-          skeleton.style.display = "none";
-          examTitle.textContent = "No Test / Exam";
-          examMsg.textContent   = "You are not registered for any course yet";
-          return;
-        }
+        const courseOverrideSet = new Set(
+          (courseOverrides || []).map(o => o.course_id).filter(Boolean)
+        );
 
         // 1c. Per-assessment restriction (assessment_access_overrides): this
         //     student's own individually-granted assessment ids (e.g. a
-        //     resit/makeup). These must be fetched directly by id, since
-        //     the assessment's course may not be one this student is
-        //     registered for (or bypassed) at all.
+        //     resit/makeup), fetched directly by id below.
         const { data: myAssessmentOverrides, error: myOverrideErr } = await sb
           .from("assessment_access_overrides")
           .select("assessment_id")
@@ -635,13 +690,14 @@
         const myOverrideAssessmentIds = (myAssessmentOverrides || []).map(o => o.assessment_id);
         const myOverrideSet = new Set(myOverrideAssessmentIds);
 
-        // 2. Pull exams for the courses this student is registered for or
-        //    bypassed into, PLUS any individually-granted assessment ids
-        //    that fall outside those courses entirely.
-        const { data: courseExams, error: examsErr } = await sb
+        // 2. Pull every assessment that hasn't ended (small 1-day margin for
+        //    timezone safety; ended ones are filtered out client-side anyway),
+        //    PLUS any individually-granted assessment ids.
+        const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+        const { data: liveExams, error: examsErr } = await sb
           .from("assessments")
           .select("*")
-          .in("course_id", courseIds)
+          .gte("end_time", cutoff)
           .order("start_time", { ascending: true });
 
         if (examsErr) throw examsErr;
@@ -657,36 +713,36 @@
         }
 
         const examMap = {};
-        [...(courseExams || []), ...extraExams].forEach(e => { examMap[e.id] = e; });
-        const allExams = Object.values(examMap);
+        [...(liveExams || []), ...extraExams].forEach(e => { examMap[e.id] = e; });
+        const allExams = Object.values(examMap)
+          .sort((a, b) => new Date(a.start_time) - new Date(b.start_time));
 
-        // 2b. Per-assessment restriction is governed by assessments.access_mode
-        //     (already present on each exam row via select("*")), not by
-        //     whether any row exists in assessment_access_overrides -- a
-        //     row there can also mean "grant an exception" (open mode),
-        //     which must NOT hide the assessment from the rest of the
-        //     class. Only "restricted" mode hides it from everyone except
-        //     the matrics explicitly listed (myOverrideSet).
-
-        // 3. Client-side gate, same three-tier precedence as test-hall.js:
+        // 3. Client-side gate:
         //    (a) "restricted" mode wins outright -- only listed matrics see it;
-        //    (b) course-level bypass skips registration/level/batch;
-        //    (c) otherwise, normal level + batch match against this
-        //        student's registration for that specific course.
-        const exams = allExams.filter(exam => {
+        //    (b) course-level bypass (carryover) skips level/batch/registration;
+        //    (c) otherwise the student's CURRENT level + batch must match.
+        //        If he isn't registered for that course, it is still shown,
+        //        flagged _needsRegistration so Attempt opens the modal.
+        //    (a per-assessment override row on an OPEN assessment is only a
+        //     payment exception, so it grants no extra access here.)
+        const exams = [];
+        allExams.forEach(exam => {
           if (exam.access_mode === 'restricted') {
-            return myOverrideSet.has(exam.id);
+            if (myOverrideSet.has(exam.id)) exams.push({ ...exam, _needsRegistration: false });
+            return;
           }
 
           if (exam.course_id && courseOverrideSet.has(exam.course_id)) {
-            return true;
+            exams.push({ ...exam, _needsRegistration: false });
+            return;
           }
 
-          const regLevel   = registeredLevelByCourse[exam.course_id];
-          const regBatch   = registeredBatchByCourse[exam.course_id];
-          const levelMatch = !exam.level_arabic || exam.level_arabic === regLevel;
-          const batchMatch = !exam.batch || exam.batch === regBatch;
-          return levelMatch && batchMatch;
+          if (!matchesLevelBatch(exam)) return;
+
+          exams.push({
+            ...exam,
+            _needsRegistration: !!exam.course_id && !registeredCourseSet.has(exam.course_id)
+          });
         });
 
         examsList = exams;
