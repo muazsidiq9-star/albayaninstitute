@@ -168,21 +168,6 @@ html, body {
   background: var(--primary-xlight);
 }
 
-/* Sticky first column */
-.schedule-table th:first-child,
-.schedule-table td:first-child {
-  position: sticky;
-  left: 0;
-  z-index: 4;
-  background: var(--card-color);
-  box-shadow: 2px 0 6px rgba(0,0,0,0.07);
-}
-
-.schedule-table thead th:first-child {
-  z-index: 6;
-  background: var(--primary-dark);
-}
-
 .schedule-table td:nth-child(1) {
   font-weight: 700;
   color: var(--border-color);
