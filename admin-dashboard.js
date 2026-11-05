@@ -1369,8 +1369,15 @@ async function loadStudents() {
           ${s.enrolling_for && s.enrolling_for !== "myself" && sdVal(s.guardian_name)
             ? `<div class="student-sub">${escHtml(t("Guardian"))}: ${escHtml(s.guardian_name)}</div>` : ""}
         </td>
-        <td>${escHtml(s.email)}</td>
-        <td>${escHtml(s.whatsapp)}</td>
+        <td>${s.email
+          ? `<a class="contact-link" href="mailto:${escHtml(s.email)}" onclick="return openStudentEmail(event, '${s.id}')" title="${escHtml(t('Email this student'))}">${escHtml(s.email)}</a>`
+          : ""}</td>
+        <td>${(() => {
+          const wa = waDigitsFor(s.whatsapp, s.country);
+          return wa
+            ? `<a class="contact-link" href="https://wa.me/${wa}" target="_blank" rel="noopener" title="${escHtml(t('Message on WhatsApp'))}">${escHtml(s.whatsapp)}</a>`
+            : escHtml(s.whatsapp);
+        })()}</td>
         <td>${escHtml(s.country)}</td>
         <td>${escHtml(s.gender)}</td>
         <td>${escHtml(s.age)}</td>
@@ -1393,7 +1400,7 @@ async function loadStudents() {
           </button>
         </td>
         <td class="student-action-col">
-          <button class="btn btn-small" onclick="sendSingleEmailById('${s.id}')">
+          <button class="btn btn-small" onclick="emailStudentWelcome('${s.id}')">
             ${t("Send Email")}
           </button>
         </td>
@@ -9117,3 +9124,194 @@ async function loadResetHistory() {
     tbody.innerHTML = `<tr><td colspan="5" class="empty-row" style="color:red;">${t("Failed to load history.")}</td></tr>`;
   }
 }
+
+
+/* =======================================================
+   STUDENT CONTACT: WhatsApp links + Gmail / mail-app compose
+   No server needed — buttons open Gmail (web on desktop, the
+   phone's mail app on mobile) with the address(es) prefilled.
+======================================================= */
+
+// Digits for a wa.me link, or "" if the number can't be used safely.
+function waDigitsFor(phone, country) {
+  const raw = sdVal(phone);
+  if (!raw) return "";
+  let d = raw.replace(/[\s\-().]/g, "");
+  if (d.startsWith("+")) d = d.slice(1);
+  else if (d.startsWith("00")) d = d.slice(2);
+  else if (d.startsWith("0") && /^nigeria$/i.test(String(country || "").trim()) && d.length === 11) {
+    d = "234" + d.slice(1);                       // 0803... -> 234803...
+  } else if (d.startsWith("0")) return "";        // local number, country unknown
+  return /^\d{8,15}$/.test(d) ? d : "";
+}
+
+function isMobileDevice() {
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || "");
+}
+
+function mailAddr(e) {                            // encode but keep @ readable
+  return encodeURIComponent(e).replace(/%40/g, "@");
+}
+
+// o = { to: [], bcc: [], subject: "", body: "" }
+function openEmailCompose(o) {
+  const to  = (o.to  || []).map(mailAddr).join(",");
+  const bcc = (o.bcc || []).map(mailAddr).join(",");
+  const su  = o.subject ? encodeURIComponent(o.subject) : "";
+  const body = o.body ? encodeURIComponent(o.body) : "";
+
+  if (isMobileDevice()) {
+    // mailto opens the phone's default mail app (Gmail app if it is the default)
+    const q = [];
+    if (bcc) q.push("bcc=" + bcc);
+    if (su) q.push("subject=" + su);
+    if (body) q.push("body=" + body);
+    window.location.href = "mailto:" + to + (q.length ? "?" + q.join("&") : "");
+  } else {
+    const q = ["view=cm", "fs=1"];
+    if (to) q.push("to=" + to);
+    if (bcc) q.push("bcc=" + bcc);
+    if (su) q.push("su=" + su);
+    if (body) q.push("body=" + body);
+    window.open("https://mail.google.com/mail/?" + q.join("&"), "_blank", "noopener");
+  }
+}
+
+function findStudentById(id) {
+  return (window.studentsRowCache || []).find(x => String(x.id) === String(id));
+}
+
+// <a href="mailto:..."> click handler: phones use the native mailto, desktops use Gmail web.
+function openStudentEmail(ev, id) {
+  const s = findStudentById(id);
+  if (!s || !s.email) return true;
+  if (isMobileDevice()) return true;              // let the browser follow mailto:
+  ev.preventDefault();
+  openEmailCompose({ to: [s.email] });
+  return false;
+}
+
+// Edit this text to change the welcome email that opens in Gmail.
+const WELCOME_EMAIL = {
+  subject: "Welcome to Al-Bayan Arabic Institute Online",
+  body: (s) =>
+`Assalamu alaikum ${s.fullname},
+
+Welcome to Al-Bayan Arabic Institute Online! We are happy to have you with us.
+
+Matric number: ${s.matric_number || "—"}
+Level: ${s.level_arabic || "—"}
+Batch: ${s.batch || "—"}
+
+Please keep your matric number safe — you will need it for your classes and records.
+
+JazakAllahu khairan,
+Al-Bayan Arabic Institute Online`
+};
+
+function emailStudentWelcome(id) {
+  const s = findStudentById(id);
+  if (!s) return;
+  if (!s.email) { alert(t("This student has no email address.")); return; }
+  openEmailCompose({
+    to: [s.email],
+    subject: WELCOME_EMAIL.subject,
+    body: WELCOME_EMAIL.body(s)
+  });
+  showToast(t("Mail opened — press Send there"));
+}
+
+/* ---------- Email all (respects the current Level / Batch / search filters) ---------- */
+let massEmailRecipients = [];
+
+function getVisibleStudents() {
+  const out = [];
+  document.querySelectorAll("#students-table tbody tr[data-row-key]").forEach(tr => {
+    if (tr.style.display === "none") return;
+    const s = findStudentById(tr.dataset.rowKey);
+    if (s) out.push(s);
+  });
+  return out;
+}
+
+function chunkEmails(emails, subject, body) {
+  const fixed = encodeURIComponent(subject || "").length + encodeURIComponent(body || "").length + 150;
+  const budget = Math.max(400, 1900 - fixed);     // keep the link short enough for Gmail / mail apps
+  const chunks = [];
+  let cur = [], len = 0;
+  emails.forEach(e => {
+    const l = mailAddr(e).length + 1;
+    if (cur.length && len + l > budget) { chunks.push(cur); cur = []; len = 0; }
+    cur.push(e); len += l;
+  });
+  if (cur.length) chunks.push(cur);
+  return chunks;
+}
+
+function openMassEmailModal() {
+  const visible = getVisibleStudents();
+  const seen = new Set();
+  massEmailRecipients = [];
+  let skipped = 0;
+  visible.forEach(s => {
+    const e = String(s.email || "").trim();
+    const key = e.toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e) || seen.has(key)) { skipped++; return; }
+    seen.add(key);
+    massEmailRecipients.push(e);
+  });
+
+  const lvl = document.getElementById("studentsLevelFilter")?.value;
+  const bat = document.getElementById("studentsBatchFilter")?.value;
+  const q = (document.getElementById("searchStudents")?.value || "").trim();
+  const scope = [lvl, bat, q && `"${q}"`].filter(Boolean).join(" • ") || t("All students");
+
+  document.getElementById("massEmailSummary").textContent =
+    `${scope} — ${massEmailRecipients.length} ${t("recipients")}` +
+    (skipped ? ` (${skipped} ${t("skipped: no valid email / duplicate")})` : "");
+  document.getElementById("massEmailSubject").value = "";
+  document.getElementById("massEmailBody").value = "";
+
+  renderMassEmailParts();
+  openModal("massEmailModal");
+}
+
+function renderMassEmailParts() {
+  const box = document.getElementById("massEmailParts");
+  if (!box) return;
+  if (!massEmailRecipients.length) {
+    box.innerHTML = `<p class="empty-row">${escHtml(t("No student emails to send to."))}</p>`;
+    return;
+  }
+  const subject = document.getElementById("massEmailSubject").value;
+  const body = document.getElementById("massEmailBody").value;
+  const chunks = chunkEmails(massEmailRecipients, subject, body);
+
+  box.innerHTML = chunks.map((c, i) => `
+    <button type="button" class="btn btn-edit" onclick="sendMassEmailPart(${i})">
+      <i class="fa-solid fa-envelope"></i>
+      ${chunks.length > 1 ? `${escHtml(t("Part"))} ${i + 1}/${chunks.length} — ` : ""}${c.length} ${escHtml(t("recipients"))}
+    </button>`).join("");
+}
+
+function sendMassEmailPart(i) {
+  const subject = document.getElementById("massEmailSubject").value.trim();
+  const body = document.getElementById("massEmailBody").value;
+  const chunks = chunkEmails(massEmailRecipients, subject, body);
+  if (!chunks[i]) return;
+  openEmailCompose({ bcc: chunks[i], subject, body });   // BCC: students can't see each other
+}
+
+function copyMassEmailAddresses() {
+  if (!massEmailRecipients.length) return;
+  navigator.clipboard.writeText(massEmailRecipients.join(", "))
+    .then(() => showToast(t("Emails copied")))
+    .catch(() => prompt(t("Copy the emails:"), massEmailRecipients.join(", ")));
+}
+
+window.openStudentEmail = openStudentEmail;
+window.emailStudentWelcome = emailStudentWelcome;
+window.openMassEmailModal = openMassEmailModal;
+window.renderMassEmailParts = renderMassEmailParts;
+window.sendMassEmailPart = sendMassEmailPart;
+window.copyMassEmailAddresses = copyMassEmailAddresses;
