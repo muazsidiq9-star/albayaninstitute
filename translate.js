@@ -2362,6 +2362,7 @@ NEW FILES START HERE
 "Sarf":     "الصرف",
 "Qira'ah":  "القراءة",
 "Ta'beer":    "التعبير",
+"Ta'bir":    "التعبير",
 "Writing / Kitaabah":  "الكتابة / الكتابة",
 "Writing":  "الكتابة",
 "Fiqh":     "الفقه",
