@@ -65,7 +65,7 @@ function checkAuth() {
 
 // true  = assessment batch must equal the student's batch (blank = open to all)
 // false = only level is enforced; every batch of the same level/course shares the timetable
-const STRICT_BATCH = true;
+const STRICT_BATCH = false;
 
 const norm = v => String(v ?? "").trim().toLowerCase();
 
