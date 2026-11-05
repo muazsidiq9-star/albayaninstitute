@@ -3271,6 +3271,31 @@ NEW FILES START HERE
 "The two email addresses do not match.": "عنوانا البريد الإلكتروني غير متطابقين.",
 "Please check your email address. It must be valid and typed the same in both boxes.": "يرجى التحقق من بريدك الإلكتروني. يجب أن يكون صحيحًا ومتطابقًا في الخانتين.",
 
+"Email All": "مراسلة الجميع",
+"Email Students": "مراسلة الطلاب",
+"Subject": "الموضوع",
+"Message": "الرسالة",
+"Recipients are added as BCC so students cannot see each other's emails.": "يتم إضافة المستلمين في خانة النسخة المخفية (BCC) حتى لا يرى الطلاب عناوين بعضهم.",
+"Copy all emails": "نسخ جميع البريد الإلكتروني",
+"Email this student": "مراسلة هذا الطالب",
+"Message on WhatsApp": "مراسلة عبر واتساب",
+"This student has no email address.": "ليس لدى هذا الطالب بريد إلكتروني.",
+"Mail opened — press Send there": "تم فتح البريد — اضغط إرسال هناك",
+"All students": "جميع الطلاب",
+"recipients": "مستلمين",
+"skipped: no valid email / duplicate": "تم التخطي: بريد غير صالح أو مكرر",
+"No student emails to send to.": "لا توجد عناوين بريد للطلاب للإرسال إليها.",
+"Part": "الجزء",
+"Emails copied": "تم نسخ عناوين البريد",
+"Copy the emails:": "انسخ عناوين البريد:",
+
+"Course Registration Required": "التسجيل في المقرر مطلوب",
+"You have not registered for this course yet. Please register for it first, then come back to take this assessment.": "لم تسجّل في هذا المقرر بعد. يُرجى التسجيل فيه أولاً، ثم العودة لأداء هذا التقييم.",
+"Register Courses": "تسجيل المقررات",
+"Course not registered": "المقرر غير مسجَّل",
+"Unable to verify": "تعذّر التحقق",
+"Could not verify your level/batch. Please try again": "تعذّر التحقق من مستواك/دفعتك. يُرجى المحاولة مرة أخرى",
+
 
 // ===== DYNAMIC TEMPLATES ===== 
 
