@@ -2402,3 +2402,11 @@ input:checked + .slider:before { transform: translateX(22px); }
 }
 .attendance-count { font-weight: 600; opacity: 0.8; }
 .attendance-export-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+
+/* Student contact links + mass email modal */
+.contact-link { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.contact-link:hover { color: var(--primary); }
+.mass-email-grid { grid-template-columns: 1fr; margin: 10px 0; }
+.mass-email-note { font-size: 0.8rem; opacity: 0.75; margin: 4px 0 10px; }
+.mass-email-parts { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
