@@ -167,6 +167,36 @@ async function checkFees() {
     return true;
 }    
 
+// true  = assessment batch must equal the student's batch (blank = open to all)
+// false = only level is enforced. Keep in sync with test-welcome.html and
+// student-exam-timetable.js.
+const STRICT_BATCH = true;
+const normLB = v => String(v ?? "").trim().toLowerCase();
+
+// The student's CURRENT level + batch (live from the students table, never
+// the registration snapshot, so a promotion takes effect immediately).
+async function fetchCurrentLevelBatch() {
+    const { data, error } = await supabaseClient
+        .from('students')
+        .select('level_arabic, batch')
+        .eq('matric_number', matricNumber)
+        .maybeSingle();
+    if (error) throw error;
+    return { level: normLB(data && data.level_arabic), batch: normLB(data && data.batch) };
+}
+
+function assessmentMatchesLevelBatch(exam, lb) {
+    if (lb.level) {
+        const al = normLB(exam.level_arabic);
+        if (al && al !== lb.level) return false;
+    }
+    if (STRICT_BATCH && lb.batch) {
+        const ab = normLB(exam.batch);
+        if (ab && ab !== lb.batch) return false;
+    }
+    return true;
+}
+
 async function loadActiveAssessment() {
     // test-welcome.html already resolved the correct assessment for this
     // student's registered course and stored its id. Trust that instead of
@@ -274,16 +304,32 @@ async function loadActiveAssessment() {
     // still goes through the normal registration + level/batch gate below.
     // (hasOverride was already computed above, alongside the fee check.)
 
-    // Safety net: confirm this student is actually registered for the
-    // course this assessment belongs to, in case examId was tampered with
-    // or stale in sessionStorage. Also re-check level + batch using what
-    // was snapshotted onto the registration at the time they registered —
-    // never the student's current/live level or batch, which may have
-    // moved on since (e.g. after a level promotion).
+    // Safety net (the welcome page already flags unregistered courses with a
+    // "register first" modal, but examId in sessionStorage can be stale or
+    // tampered with, so enforce here too):
+    //   1. the student's CURRENT level + batch must match the assessment;
+    //   2. the student must be registered for the assessment's course.
+    // Carryover (hasOverride) skips both.
     if (assessment.course_id && !hasOverride) {
+        let lb;
+        try {
+            lb = await fetchCurrentLevelBatch();
+        } catch (e) {
+            console.error('Level/batch lookup failed:', e);
+            examTitle.textContent = "Unable to verify";
+            examMessage.textContent = "Could not verify your level/batch. Please try again";
+            return;
+        }
+
+        if (!assessmentMatchesLevelBatch(assessment, lb)) {
+            examTitle.textContent = "Not Available";
+            examMessage.textContent = "This exam is not available for your level/batch";
+            return;
+        }
+
         const { data: reg, error: regErr } = await supabaseClient
             .from('course_registrations')
-            .select('id, level, batch')
+            .select('id')
             .eq('matric_number', matricNumber)
             .eq('course_id', assessment.course_id)
             .limit(1);
@@ -291,17 +337,6 @@ async function loadActiveAssessment() {
         if (regErr || !reg || reg.length === 0) {
             examTitle.textContent = "Not Registered";
             examMessage.textContent = "You are not registered for this course";
-            return;
-        }
-
-        const registeredLevel = reg[0].level;
-        const registeredBatch = reg[0].batch;
-        const levelMatch = !assessment.level_arabic || assessment.level_arabic === registeredLevel;
-        const batchMatch = !assessment.batch || assessment.batch === registeredBatch;
-
-        if (!levelMatch || !batchMatch) {
-            examTitle.textContent = "Not Available";
-            examMessage.textContent = "This exam is not available for your level/batch";
             return;
         }
     }
@@ -1122,16 +1157,11 @@ async function hasMoreAvailableAssessments() {
     try {
         const { data: regs } = await supabaseClient
             .from('course_registrations')
-            .select('course_id, level, batch')
+            .select('course_id')
             .eq('matric_number', matricNumber);
 
-        const levelByCourse = {}, batchByCourse = {};
-        (regs || []).forEach(r => {
-            if (r.course_id) {
-                levelByCourse[r.course_id] = r.level;
-                batchByCourse[r.course_id] = r.batch;
-            }
-        });
+        const registeredSet = new Set((regs || []).map(r => r.course_id).filter(Boolean));
+        const lb = await fetchCurrentLevelBatch();
 
         const { data: courseOv } = await supabaseClient
             .from('course_access_overrides')
@@ -1173,9 +1203,10 @@ async function hasMoreAvailableAssessments() {
             if (exam.access_mode === 'restricted') return overrideSet.has(exam.id);
             if (exam.course_id && courseOverrideSet.has(exam.course_id)) return true;
 
-            const levelMatch = !exam.level_arabic || exam.level_arabic === levelByCourse[exam.course_id];
-            const batchMatch = !exam.batch || exam.batch === batchByCourse[exam.course_id];
-            return levelMatch && batchMatch;
+            // current level/batch, and (since this decides whether there is
+            // something he can actually go and take) registered for the course
+            if (!assessmentMatchesLevelBatch(exam, lb)) return false;
+            return !exam.course_id || registeredSet.has(exam.course_id);
         });
 
         if (!candidates.length) return false;
