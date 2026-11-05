@@ -51,9 +51,53 @@ function checkAuth() {
 // ============================================
 // LOAD TIMETABLE
 // ============================================
+// Order of checks:
+//   1. The student's CURRENT level + batch (students table) decide which
+//      assessments are even eligible.
+//   2. Courses the student is NOT registered for are still listed (so he
+//      knows about them) but flagged _needsRegistration; the Enter button
+//      leads to test-welcome.html, whose Attempt button opens the
+//      "register first" modal.
+// Carryover (course_access_overrides) and per-assessment grants
+// (assessment_access_overrides) intentionally BYPASS the level/batch check,
+// because they exist to give access to something outside the student's
+// current level (e.g. an Intermediate carryover after promotion).
+
+// true  = assessment batch must equal the student's batch (blank = open to all)
+// false = only level is enforced; every batch of the same level/course shares the timetable
+const STRICT_BATCH = true;
+
+const norm = v => String(v ?? "").trim().toLowerCase();
 
 async function loadTimetable(matric) {
   try {
+    // 0. The student's current level + batch
+    const { data: student, error: stuErr } = await db
+      .from("students")
+      .select("level_arabic, batch")
+      .eq("matric_number", matric)
+      .maybeSingle();
+
+    if (stuErr) throw stuErr;
+
+    const myLevel = norm(student && student.level_arabic);
+    const myBatch = norm(student && student.batch);
+
+    if (!myLevel) console.warn("Timetable: student has no level on record, level filter skipped.");
+
+    // Blank level/batch on an assessment = open to all.
+    const matchesLevelBatch = a => {
+      if (myLevel) {
+        const al = norm(a.level_arabic);
+        if (al && al !== myLevel) return false;
+      }
+      if (STRICT_BATCH && myBatch) {
+        const ab = norm(a.batch);
+        if (ab && ab !== myBatch) return false;
+      }
+      return true;
+    };
+
     // 1. Which courses is this student actually registered for?
     const { data: registrations, error: regErr } = await db
       .from("course_registrations")
@@ -63,6 +107,7 @@ async function loadTimetable(matric) {
     if (regErr) throw regErr;
 
     const registeredCourseIds = (registrations || []).map(r => r.course_id).filter(Boolean);
+    const registeredCourseSet = new Set(registeredCourseIds);
 
     // 1b. Course-level bypass (course_access_overrides): courses this
     //     student was granted access to directly, without a normal
@@ -75,6 +120,7 @@ async function loadTimetable(matric) {
     if (courseOverrideErr) throw courseOverrideErr;
 
     const overrideCourseIds = (courseOverrides || []).map(o => o.course_id).filter(Boolean);
+    const overrideCourseSet = new Set(overrideCourseIds);
     const courseIds = [...new Set([...registeredCourseIds, ...overrideCourseIds])];
 
     // 1c. Per-assessment restriction (assessment_access_overrides): this
@@ -91,20 +137,15 @@ async function loadTimetable(matric) {
     const myOverrideAssessmentIds = (myAssessmentOverrides || []).map(o => o.assessment_id);
     const myOverrideSet = new Set(myOverrideAssessmentIds);
 
-    if (!courseIds.length && !myOverrideAssessmentIds.length) {
-      renderTimetable([]);
-      return;
-    }
-
-    // 2. Pull assessments for the courses this student registered for or
-    //    was bypassed into, PLUS any individually-granted assessment ids
-    //    that fall outside those courses entirely. Each course row already
-    //    encodes its own level/batch, so this alone keeps Advanced and
-    //    Intermediate exams from mixing, even if both courses share the
-    //    same name.
+    // 2. Pull assessments:
+    //    (a) full history for the registered / bypassed courses, and
+    //    (b) everything that hasn't ended yet (1-day margin for timezone
+    //        safety), so assessments for the student's current level/batch
+    //        show up even when he hasn't registered for the course, and
+    //    (c) any individually-granted assessment ids.
     const selectCols = "id, title, description, course_id, type, duration_minutes, start_time, end_time, is_active, semester, course, level_arabic, batch, status, access_mode";
 
-    let courseExams = [];
+    let historyExams = [];
     if (courseIds.length) {
       const { data: ce, error: ceErr } = await db
         .from("assessments")
@@ -112,8 +153,17 @@ async function loadTimetable(matric) {
         .in("course_id", courseIds)
         .order("start_time", { ascending: true });
       if (ceErr) throw ceErr;
-      courseExams = ce || [];
+      historyExams = ce || [];
     }
+
+    const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const { data: le, error: leErr } = await db
+      .from("assessments")
+      .select(selectCols)
+      .gte("end_time", cutoff)
+      .order("start_time", { ascending: true });
+    if (leErr) throw leErr;
+    const liveExams = le || [];
 
     let extraExams = [];
     if (myOverrideAssessmentIds.length) {
@@ -126,18 +176,38 @@ async function loadTimetable(matric) {
     }
 
     const examMap = {};
-    [...courseExams, ...extraExams].forEach(a => { examMap[a.id] = a; });
+    [...historyExams, ...liveExams, ...extraExams].forEach(a => { examMap[a.id] = a; });
     const allExams = Object.values(examMap);
 
-    // 2b. Per-assessment restriction is governed by assessments.access_mode
-    //     (fetched above via selectCols), not by whether any row exists in
-    //     assessment_access_overrides -- a row there can also mean "grant
-    //     an exception" (open mode), which must NOT hide the assessment
-    //     from the rest of the class. Only "restricted" mode hides it from
-    //     everyone except the matrics explicitly listed (myOverrideSet).
-    const data = allExams
-      .filter(a => a.access_mode !== 'restricted' || myOverrideSet.has(a.id))
-      .sort((a, b) => new Date(a.start_time) - new Date(b.start_time));
+    // 2b. Gate:
+    //     (a) "restricted" mode wins outright: only listed matrics see it;
+    //     (b) course-level bypass (carryover) skips level/batch/registration;
+    //     (c) otherwise the student's CURRENT level + batch must match, and
+    //         if he isn't registered for that course the row is still shown,
+    //         flagged _needsRegistration.
+    //     (a per-assessment override row on an OPEN assessment is only a
+    //      payment exception, so it grants no extra access here.)
+    const data = [];
+    allExams.forEach(a => {
+      if (a.access_mode === 'restricted') {
+        if (myOverrideSet.has(a.id)) data.push({ ...a, _needsRegistration: false });
+        return;
+      }
+
+      if (a.course_id && overrideCourseSet.has(a.course_id)) {
+        data.push({ ...a, _needsRegistration: false });
+        return;
+      }
+
+      if (!matchesLevelBatch(a)) return;
+
+      data.push({
+        ...a,
+        _needsRegistration: !!a.course_id && !registeredCourseSet.has(a.course_id)
+      });
+    });
+
+    data.sort((a, b) => new Date(a.start_time) - new Date(b.start_time));
 
     // 3. Which of these has this student already submitted (is_final = true)?
     const attemptedIds = await fetchAttemptedIds(matric, data.map(a => a.id));
@@ -279,12 +349,21 @@ function renderTimetable(data, attemptedIds = new Set()) {
 
     tbody.appendChild(tr);
   });
+
+  if (window.reTranslate) reTranslate();
 }
 
 
 // ============================================
 // ENTER EXAM BUTTON LOGIC
 // ============================================
+
+// Small note shown under the action when the student is eligible by
+// level/batch but hasn't registered for the course yet.
+function regNote(a) {
+  if (!a._needsRegistration) return "";
+  return `<div style="font-size:0.78rem;color:#b45309;margin-top:4px;"><i class="fa-solid fa-triangle-exclamation"></i> <span data-translate="Course not registered">Course not registered</span></div>`;
+}
 
 function getActionButton(a, status) {
   if (status === "Attempted") {
@@ -296,11 +375,12 @@ function getActionButton(a, status) {
       <button class="btn btn-start" onclick="enterExam('${a.id}')">
         Enter Exam
       </button>
+      ${regNote(a)}
     `;
   }
 
   if (status === "Upcoming") {
-    return `<span style="color: #888;">Not yet</span>`;
+    return `<span style="color: #888;">Not yet</span>${regNote(a)}`;
   }
 
   return `<span style="color: #aaa;">Closed</span>`;
