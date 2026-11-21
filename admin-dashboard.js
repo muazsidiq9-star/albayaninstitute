@@ -1350,6 +1350,7 @@ async function loadStudents() {
     .order("created_at", { ascending: false });
 
   window.studentsRowCache = data || [];
+  populateBatchFilterOptions("studentsBatchFilter", window.studentsRowCache);
 
   const tbody = document.querySelector("#students-table tbody");
   if (!tbody) return;
@@ -1423,7 +1424,6 @@ async function loadStudents() {
   }
 
   populateStudentSelects();
-  populateBatchFilterOptions();
   document.getElementById("students-table")?._applyRowFilters?.();
   window.reTranslate?.();
 }
@@ -2109,6 +2109,7 @@ async function loadPayments() {
     .order("created_at", { ascending: false });
 
   window.paymentsRowCache = data || [];
+  populateBatchFilterOptions("paymentsBatchFilter", window.paymentsRowCache);
   populateMonthFilter("paymentsMonthFilter", (data || []).map(p => p.month));
 
   const tbody = document.querySelector("#payments-table tbody");
@@ -2117,8 +2118,8 @@ async function loadPayments() {
   if (!window.editingPaymentId) {
     renderTableRowsDiff(tbody, data, "id", p => ({
       dataset: {
-        level: p.students?.level_arabic || p.level_arabic || "",
-        batch: p.students?.batch || p.batch || "",
+        level: p.level_arabic || p.students?.level_arabic || "",
+        batch: p.batch || p.students?.batch || "",
         month: p.month || ""
       },
       html: `
@@ -2130,8 +2131,8 @@ async function loadPayments() {
         <td>${p.students?.fullname || p.payer_name || t("Guest")}</td>
         <td>${p.matric_number || "—"}</td>
         <td>${p.payer_email || "—"}</td>
-        <td>${p.students?.level_arabic || p.level_arabic || "—"}</td>
-        <td>${p.students?.batch || p.batch || "—"}</td>
+        <td>${p.level_arabic || p.students?.level_arabic || "—"}</td>
+        <td>${p.batch || p.students?.batch || "—"}</td>
         <td>${formatMoney(p.amount, p.currency)}</td>
         <td>${p.month}</td>
         <td>${p.payment_method}</td>
@@ -4004,6 +4005,7 @@ async function loadGrades() {
     if (error) throw error;
 
     window.gradesRowCache = grades || [];
+    populateBatchFilterOptions("gradesBatchFilter", window.gradesRowCache);
 
     const tbody = document.querySelector("#grades-table tbody");
     if (!tbody) return;
@@ -4238,6 +4240,7 @@ async function loadSchedule() {
   try {
     const { data } = await db.from("schedule").select("*").eq("deleted", false).order("class_date");
     window.scheduleRowCache = data || [];
+    populateBatchFilterOptions("scheduleBatchFilter", window.scheduleRowCache);
     const tbody = document.querySelector("#schedule-table tbody");
     if (!tbody) return;
 
@@ -4458,6 +4461,7 @@ async function loadAssessments() {
   try {
     const { data } = await db.from("assessments").select("*").eq("deleted", false).order("start_time");
     window.assessmentsRowCache = data || [];
+    populateBatchFilterOptions("assessmentsBatchFilter", window.assessmentsRowCache);
     const tbody = document.querySelector("#assessments-table tbody");
     if (!tbody) return;
 
@@ -5544,28 +5548,26 @@ function enableTableFiltering(tableId, config) {
   applyFilters();
 }
 
-// Batch names are free-text (unlike Level/Semester, which are a fixed,
-// known set already hardcoded into every Level/Semester <select> in this
-// file), so the Batch filter options are rebuilt from whatever batches
-// actually exist on the students list — same pattern as
-// promoteBatchFilter/bulkFeeBatchFilter already use.
-function populateBatchFilterOptions() {
-  const batches = [...new Set((window.studentsRowCache || []).map(s => s.batch).filter(Boolean))].sort();
-  const optionsHtml = `<option value="" data-translate="All Batches">${t("All Batches")}</option>` +
-    batches.map(b => `<option value="${b}">${b}</option>`).join("");
+// Each tab builds its Batch dropdown from the rows loaded from its own
+// table. This keeps historical/promoted batches filterable even when they
+// no longer exist in the current students table.
+function populateBatchFilterOptions(selectId, rows) {
+  const select = document.getElementById(selectId);
+  if (!select) return;
 
-  [
-    "studentsBatchFilter", "paymentsBatchFilter", "gradesBatchFilter",
-    "scheduleBatchFilter", "assessmentsBatchFilter", "attendanceBatchFilter",
-    "feesBatchFilter"
-  ].forEach(id => {
-    const select = document.getElementById(id);
-    if (!select) return;
-    const current = select.value;
-    select.innerHTML = optionsHtml;
-    if (batches.includes(current)) select.value = current;
-  });
+  const batches = [...new Set((rows || [])
+    .map(row => String(row.batch || "").trim())
+    .filter(Boolean))]
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }));
 
+  const current = select.value;
+  select.innerHTML =
+    `<option value="" data-translate="All Batches">${t("All Batches")}</option>` +
+    batches.map(batch =>
+      `<option value="${escHtml(batch)}">${escHtml(batch)}</option>`
+    ).join("");
+
+  if (batches.includes(current)) select.value = current;
   window.reTranslate?.();
 }
 
@@ -7209,6 +7211,7 @@ async function loadAttendanceSessions() {
     if (error) throw error;
 
     window.attendanceSessionsRowCache = sessions || [];
+    populateBatchFilterOptions("attendanceBatchFilter", window.attendanceSessionsRowCache);
 
     if (!sessions || sessions.length === 0) {
       tbody.innerHTML = `<tr><td colspan="8" class="empty-row">${t("No attendance sessions yet")}</td></tr>`;
